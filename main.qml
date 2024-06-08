@@ -10,6 +10,10 @@ Window {
     visible: true
     width: 1280
     height: 800
+    x:0
+    property int mode: 0
+    property int equipmentCount: 1
+    property int equipmentCurrentIndex: 0
     property string fontNormal: "思源黑体 CN Normal"
     property string fontBold: "思源黑体 CN Bold"
     property bool altitudeModel: false //高度模式
@@ -17,18 +21,19 @@ Window {
         var ret = (r << 16 | g << 8 | b)
         return ("#"+ret.toString(16)).toUpperCase();
     }
-//    function disableConsoleLog() {
-//        // 重定向 console.log() 到一个空函数
-//        console.log = function() {};
-//    }
+    //    function disableConsoleLog() {
+    //        // 重定向 console.log() 到一个空函数
+    //        console.log = function() {};
+    //    }
 
-//    Component.onCompleted: {
-//        // 调用函数来禁用控制台打印
-//        disableConsoleLog();
-//    }
+    //    Component.onCompleted: {
+    //        // 调用函数来禁用控制台打印
+    //        disableConsoleLog();
+    //    }
     // 缓存已加载的视图
     property var cachedViews: []
     signal sigSwitch(var id)
+    signal sigEquipmentCountChanged(var id)
     function switchUI(id){
         sigSwitch(id)
     }
@@ -56,7 +61,9 @@ Window {
     function formatTimeComponent(component) {
         return component < 10 ? "0" + component : component
     }
-
+    onEquipmentCountChanged: {
+        sigEquipmentCountChanged(equipmentCount)
+    }
 
     StackView{
         id:stackView
@@ -74,7 +81,8 @@ Window {
                 id:stackView1
                 anchors.top: p1.bottom
                 Component.onCompleted: {
-                    loadView(1,pro)
+                    loadView(1,multipro)
+                    sigEquipmentCountChanged(3)
                 }
             }
             Connections{
@@ -126,7 +134,7 @@ Window {
     Component{
         id:pro
         ProductionModule{
-            id:p2
+            id:s1
             width: 1280
             height: 740
         }
@@ -134,7 +142,6 @@ Window {
     Component{
         id:his
         HistoryModule{
-            id:p2
             width: 1280
             height: 740
         }
@@ -142,12 +149,32 @@ Window {
     Component{
         id:sys
         SystemConfig{
-            id:p2
             width: 1280
             height: 740
         }
     }
-
+    Component{
+        id:multipro
+        MultideviceProductionModule{
+            id:mupMode
+            width: 1280
+            height: 740
+            Connections{
+                target: window
+                function onSigEquipmentCountChanged(id){
+                    mupMode.itemCount = id
+                }
+            }
+        }
+    }
+    Component{
+        id:swipepro
+        SwipeProductionModule{
+            id:swpMode
+            width: 1280
+            height: 740
+        }
+    }
     InputPanel
     {
         id: inputPannelID

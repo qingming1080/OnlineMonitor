@@ -167,6 +167,7 @@ debug\qrc_qml.cpp: qml.qrc \
 		image\??.png \
 		image\??.png \
 		image\??.png \
+		image\??.png \
 		image\load.png \
 		image\??.png \
 		image\title.png \
@@ -181,11 +182,13 @@ debug\qrc_qml.cpp: qml.qrc \
 		qmlSource\SystemConfig.qml \
 		qmlSource\WeldingTrend.qml \
 		qmlSource\WeldingParameter.qml \
+		qmlSource\SwipeProductionModule.qml \
 		qmlSource\CustomComboBox.qml \
 		qmlSource\Load.qml \
 		qmlSource\TopModule.qml \
 		qmlSource\HistoryModule.qml \
-		qmlSource\EquipmentInfor.qml
+		qmlSource\EquipmentInfor.qml \
+		qmlSource\MultideviceProductionModule.qml
 	E:\qt5.15\5.15.2\msvc2019_64\bin\rcc.exe -name qml qml.qrc -o debug\qrc_qml.cpp
 
 compiler_moc_predefs_make_all: debug\moc_predefs.h
@@ -253,7 +256,7 @@ debug\moc_fileobject.cpp: fileobject.h \
 		E:\qt5.15\5.15.2\msvc2019_64\include\QtCore\qobject_impl.h \
 		debug\moc_predefs.h \
 		E:\qt5.15\5.15.2\msvc2019_64\bin\moc.exe
-	E:\qt5.15\5.15.2\msvc2019_64\bin\moc.exe $(DEFINES) --compiler-flavor=msvc --include D:/Test/qml/qml/debug/moc_predefs.h -IE:/qt5.15/5.15.2/msvc2019_64/mkspecs/win32-msvc -ID:/Test/qml/qml -IE:/qt5.15/5.15.2/msvc2019_64/include -IE:/qt5.15/5.15.2/msvc2019_64/include/QtVirtualKeyboard -IE:/qt5.15/5.15.2/msvc2019_64/include/QtQuick -IE:/qt5.15/5.15.2/msvc2019_64/include/QtCharts -IE:/qt5.15/5.15.2/msvc2019_64/include/QtWidgets -IE:/qt5.15/5.15.2/msvc2019_64/include/QtGui -IE:/qt5.15/5.15.2/msvc2019_64/include/QtANGLE -IE:/qt5.15/5.15.2/msvc2019_64/include/QtQmlModels -IE:/qt5.15/5.15.2/msvc2019_64/include/QtQml -IE:/qt5.15/5.15.2/msvc2019_64/include/QtNetwork -IE:/qt5.15/5.15.2/msvc2019_64/include/QtCore -I"D:\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\ATLMFC\include" -I"D:\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include" -I"C:\Program Files (x86)\Windows Kits\NETFXSDK\4.8\include\um" -I"D:\Windows Kits\10\include\10.0.19041.0\ucrt" -I"D:\Windows Kits\10\include\10.0.19041.0\shared" -I"D:\Windows Kits\10\include\10.0.19041.0\um" -I"D:\Windows Kits\10\include\10.0.19041.0\winrt" -I"D:\Windows Kits\10\include\10.0.19041.0\cppwinrt" fileobject.h -o debug\moc_fileobject.cpp
+	E:\qt5.15\5.15.2\msvc2019_64\bin\moc.exe $(DEFINES) --compiler-flavor=msvc --include D:/Test/qml/OnlineMonitor/debug/moc_predefs.h -IE:/qt5.15/5.15.2/msvc2019_64/mkspecs/win32-msvc -ID:/Test/qml/OnlineMonitor -IE:/qt5.15/5.15.2/msvc2019_64/include -IE:/qt5.15/5.15.2/msvc2019_64/include/QtVirtualKeyboard -IE:/qt5.15/5.15.2/msvc2019_64/include/QtQuick -IE:/qt5.15/5.15.2/msvc2019_64/include/QtCharts -IE:/qt5.15/5.15.2/msvc2019_64/include/QtWidgets -IE:/qt5.15/5.15.2/msvc2019_64/include/QtGui -IE:/qt5.15/5.15.2/msvc2019_64/include/QtANGLE -IE:/qt5.15/5.15.2/msvc2019_64/include/QtQmlModels -IE:/qt5.15/5.15.2/msvc2019_64/include/QtQml -IE:/qt5.15/5.15.2/msvc2019_64/include/QtNetwork -IE:/qt5.15/5.15.2/msvc2019_64/include/QtCore -I"D:\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\ATLMFC\include" -I"D:\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include" -I"C:\Program Files (x86)\Windows Kits\NETFXSDK\4.8\include\um" -I"D:\Windows Kits\10\include\10.0.19041.0\ucrt" -I"D:\Windows Kits\10\include\10.0.19041.0\shared" -I"D:\Windows Kits\10\include\10.0.19041.0\um" -I"D:\Windows Kits\10\include\10.0.19041.0\winrt" -I"D:\Windows Kits\10\include\10.0.19041.0\cppwinrt" fileobject.h -o debug\moc_fileobject.cpp
 
 compiler_moc_objc_header_make_all:
 compiler_moc_objc_header_clean:

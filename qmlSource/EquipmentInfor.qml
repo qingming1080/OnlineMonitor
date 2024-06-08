@@ -10,7 +10,7 @@ Rectangle {
     Text {
         text: qsTr("设备信息")
         font.family: fontBold
-        font.pixelSize: 20
+        font.pixelSize: mode === 1 ? 17:20
         color: pRgb(153, 204, 255)
         x:17
         y:9
@@ -25,16 +25,16 @@ Rectangle {
         id:t1
         text: qsTr("设备名称: ") + eqText1
         font.family: fontBold
-        font.pixelSize: 16
+        font.pixelSize: mode === 1 ? 14 : 16
         color: pRgb(171, 206, 213)
-        x:39
-        y:63
+        x:mode === 1 ? 33 : 39
+        y:mode === 1 ? 54 : 63
     }
     Text {
         id:t2
         text: qsTr("设备型号: ") + eqText2
         font.family: fontBold
-        font.pixelSize: 16
+        font.pixelSize: mode === 1 ? 14 : 16
         color: pRgb(171, 206, 213)
         anchors.top:t1.bottom
         anchors.left: t1.left
@@ -44,7 +44,7 @@ Rectangle {
         id:t3
         text: qsTr("连接方式: ") + eqText3
         font.family: fontBold
-        font.pixelSize: 16
+        font.pixelSize: mode === 1 ? 14 : 16
         color: pRgb(171, 206, 213)
         anchors.top:t2.bottom
         anchors.left: t2.left
@@ -54,7 +54,7 @@ Rectangle {
         id:t4
         text: qsTr("设备状态: ") + eqText4
         font.family: fontBold
-        font.pixelSize: 16
+        font.pixelSize: mode === 1 ? 14 : 16
         color: pRgb(171, 206, 213)
         anchors.top:t3.bottom
         anchors.left: t3.left

@@ -3,8 +3,8 @@ import QtQuick 2.0
 Item {
     id: control
 
-    implicitHeight: 172.5
-    implicitWidth: 172.5
+    implicitHeight: 172
+    implicitWidth: 172
 
     property real from: 0 //最小值
     property real to: 100 //最大值

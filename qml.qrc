@@ -34,5 +34,8 @@
         <file>qmlSource/YieldTrend.qml</file>
         <file>image/高度.png</file>
         <file>qmlSource/WeldingParameter.qml</file>
+        <file>qmlSource/MultideviceProductionModule.qml</file>
+        <file>image/缩小.png</file>
+        <file>qmlSource/SwipeProductionModule.qml</file>
     </qresource>
 </RCC>

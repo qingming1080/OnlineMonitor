@@ -5,12 +5,40 @@ import QtCharts 2.15
 Rectangle {
     property var startTime: Date.fromLocaleString(Qt.locale(), "2001-01-01 01:00:00", "yyyy-MM-dd hh:mm:ss")
     property var endTime: Date.fromLocaleString(Qt.locale(), "2001-01-01 02:00:00", "yyyy-MM-dd hh:mm:ss")
+    onHeightChanged: {
+        if(height < 260){
+            if(mode == 1){
+                btns.x = 180
+                chart.width = 500
+                chart.height = 200
+            }
+            else{
+                btns.x = 200
+                chart.width = 540
+                chart.height = 220
+            }
+        }
+        else{
+            btns.x =  269
+            chart.width = 590
+            chart.height = 240
+        }
+    }
+    onVisibleChanged: {
+        if(visible){
+            enabled = true
+        }
+        else{
+            enabled = false
+        }
+    }
+
     color: pRgb(43, 112, 173)
     radius: 3
     Text {
-        text: qsTr("设备信息")
+        text: qsTr("良率趋势")
         font.family: fontBold
-        font.pixelSize: 20
+        font.pixelSize: mode === 1 ? 17 : 20
         color: pRgb(153, 204, 255)
         x:17
         y:9
@@ -23,12 +51,11 @@ Rectangle {
         color: pRgb(174, 210, 216)
     }
     Rectangle{
+        id:btns
         width: 320
         height: 34
-        anchors.top: parent.top
-        anchors.left: parent.left
-        anchors.topMargin: 12
-        anchors.leftMargin: 269
+        x:269
+        y:12
         border.color: "#195f9f"
         border.width: 2
         radius: 4
@@ -179,6 +206,7 @@ Rectangle {
 
     property int timer: 0
     ChartView {
+        id:chart
         anchors.top: line.bottom // 使图表的顶部与父项的顶部对齐
         width: 590
         height: 240

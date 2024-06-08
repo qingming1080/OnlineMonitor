@@ -5,7 +5,6 @@ import QtQuick.Controls 2.5
 import Qt.labs.qmlmodels 1.0
 Rectangle {
     color: pRgb(153, 204, 255)
-    readonly property int qmlscreenIndicator:  2
     Component.onCompleted: {
         bt1.checkable = true
     }

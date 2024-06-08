@@ -3,7 +3,7 @@ import QtQuick.Controls 2.5
 
 Rectangle {
     color: pRgb(153, 204, 255)
-    readonly property int qmlscreenIndicator: 3
+
     Rectangle{
         x:30
         y:25

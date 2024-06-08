@@ -3,14 +3,19 @@ import QtQuick.Controls 1.4
 import QtQuick.Controls 2.15
 Rectangle {
     color: pRgb(153, 204, 255)
-    readonly property int qmlscreenIndicator:  1
     property bool tableFlag: false
+
+    Component.onCompleted: {
+        mode = 0
+    }
+
     EquipmentInfor{
         id:s1
-        x:29
-        y:20
-        width: 243
-        height: 258
+        x:mode === 1 ? 52 : 29
+        y:mode === 1 ? 35 : 20
+        width: mode === 1 ? 208 : 243
+        height: mode === 1 ? 203 : 258
+        color: mode === 1 ? "#0c5696" : pRgb(43, 112, 173)
     }
 
     Loader{
@@ -23,10 +28,11 @@ Rectangle {
         Item {
             WeldingResult{
                 id:s3
-                width: 245
-                height: 249
-                x:29
-                y:289
+                width: mode === 1 ? 212 : 245
+                height: mode === 1 ? 215 : 249
+                x: mode === 1 ? 50 : 29
+                y: mode === 1 ? 248 : 289
+                color: mode === 1 ? "#0c5696" : pRgb(43, 112, 173)
             }
         }
     }
@@ -35,27 +41,28 @@ Rectangle {
         Item {
             WeldingParameter{
                 id:s3_1
-                width: 245
-                height: 249
-                x:29
-                y:289
+                width: mode === 1 ? 212 : 245
+                height: mode === 1 ? 215 : 249
+                x: mode === 1 ? 50 : 29
+                y: mode === 1 ? 248 : 289
+                color: mode === 1 ? "#0c5696" : pRgb(43, 112, 173)
             }
         }
     }
     Button{
         id:s4
-        x:31
-        y:553
-        width: 243
-        height: 52
+        x:mode === 1 ? 50 : 31
+        y:mode === 1 ? 482 : 553
+        width: mode === 1 ?  210 :243
+        height: mode === 1 ? 45 : 52
         background: Rectangle{
             radius: 6
-            color: pRgb(43, 112, 173)
+            color: mode === 1 ? "#0c5696" : pRgb(43, 112, 173)
         }
         contentItem: Text {
             id: mt1
             text: "新建模型"
-            font.pixelSize: 20
+            font.pixelSize: mode === 1 ? 17:20
             color: pRgb(153, 204, 255)
             anchors.centerIn: parent  // 确保文本在按钮内居中对齐
             horizontalAlignment: Text.AlignHCenter
@@ -73,18 +80,18 @@ Rectangle {
         id:s5
         anchors.left: s4.left
         anchors.top: s4.bottom
-        anchors.topMargin: 31
-        width: 243
-        height: 52
+        anchors.topMargin: mode === 1 ? 23 : 31
+        width: mode === 1 ?  210 :243
+        height: mode === 1 ? 45 : 52
         background: Rectangle{
             radius: 6
-            color: pRgb(43, 112, 173)
+            color: mode === 1 ? "#0c5696" : pRgb(43, 112, 173)
         }
         contentItem: Text {
             id:mt2
             anchors.centerIn: parent
             text: "新增设备"
-            font.pixelSize: 20
+            font.pixelSize:mode === 1 ? 17: 20
             color: pRgb(153, 204, 255)
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
@@ -103,31 +110,35 @@ Rectangle {
             x:0
             RealtimeYield{
                 id:s2
-                width: 346
-                height: 283
-                x:286
-                y:20
+                width: mode === 1 ? 288:346
+                height: mode === 1 ? 235:283
+                x:mode === 1 ? 269:286
+                y:mode === 1 ? 35:20
+                color: mode === 1 ? "#0c5696" : pRgb(43, 112, 173)
             }
             YieldTrend{
                 id:s6
-                width: 609
-                height: 283
-                x:645
-                y:20
+                width: mode === 1 ? 514:609
+                height: mode === 1 ? 235:283
+                x:mode === 1 ? 568:645
+                y:mode === 1 ? 35:20
+                color: mode === 1 ? "#0c5696" : pRgb(43, 112, 173)
             }
             WeldingTrend{
                 id:s7
-                width: 596
-                height: 370
-                x:286
-                y:318
+                width: mode === 1 ? 502:596
+                height: mode === 1 ? 311:370
+                x:mode === 1 ? 269:286
+                y:mode === 1 ? 284:318
+                color: mode === 1 ? "#0c5696" : pRgb(43, 112, 173)
             }
             AbnormalInfor{
                 id:s8
-                width: 359
-                height: 370
-                x:895
-                y:318
+                width: mode === 1 ? 303:359
+                height: mode === 1 ? 311:370
+                x:mode === 1 ? 778:895
+                y:mode === 1 ? 284:318
+                color: mode === 1 ? "#0c5696" : pRgb(43, 112, 173)
             }
         }
     }
@@ -136,27 +147,26 @@ Rectangle {
         Item {
             Rectangle{
                 id:rect
-                x:287
-                y:20
-                width: 964
-                height: 668
-                color: pRgb(43, 112, 173)
+                x:mode === 1 ? 269:287
+                y:mode === 1 ? 36:20
+                width: mode === 1 ? 812 : 964
+                height: mode === 1 ? 560:668
+                color: mode === 1 ? "#0c5696" : pRgb(43, 112, 173)
                 radius: 3
             }
 
             TableView {
                 id: tableView
-                width: 960
-                height: 664
-                x:289
-                y:22
+                width: mode === 1 ? 808:960
+                height: mode === 1 ? 556:664
+                x:mode === 1 ? 272:289
+                y:mode === 1 ? 37:22
                 horizontalScrollBarPolicy: Qt.ScrollBarAlwaysOff//隐藏水平滚动条
                 verticalScrollBarPolicy: Qt.ScrollBarAlwaysOff//隐藏竖直滚动条
                 frameVisible: false
                 clip: true
                 itemDelegate: Rectangle {
                     height: 38
-                    width: 244
                     color: styleData.row % 2 === 0 ? "#2d71ae" : "#b1d5db"  // 奇偶行不同背景色
                     Text {
                         anchors.centerIn: parent
@@ -267,28 +277,28 @@ Rectangle {
                 TableViewColumn {
                     role: "num"
                     title: "序号"
-                    width: 120
+                    width: mode === 1 ? 90 :120
                 }
                 TableViewColumn {
                     role: "weldTime"
                     title: "焊接时间"
-                    width: 120
+                    width: mode === 1 ? 90 :120
                 }
 
                 TableViewColumn {
                     role: "power"
                     title: "功率"
-                    width: 120
+                    width: mode === 1 ? 90 :120
                 }
                 TableViewColumn {
                     role: "energy"
                     title: "能量"
-                    width: 120
+                    width: mode === 1 ? 90 :120
                 }
                 TableViewColumn {
                     role: "date"
                     title: "日期"
-                    width: 120
+                    width: mode === 1 ? 90 :120
                 }
                 TableViewColumn {
                     role: "date"

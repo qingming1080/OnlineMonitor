@@ -15,11 +15,21 @@ Rectangle {
         }
     }
     property var imgWidHei:{
-        if(altitudeModel){
-            return 24
+        if(mode == 1){
+            if(altitudeModel){
+                return 20
+            }
+            else{
+                return 31
+            }
         }
         else{
-            return 36
+            if(altitudeModel){
+                return 24
+            }
+            else{
+                return 36
+            }
         }
     }
     color: pRgb(43, 112, 173)
@@ -27,7 +37,7 @@ Rectangle {
     Text {
         text: qsTr("焊接结果")
         font.family: fontBold
-        font.pixelSize: 20
+        font.pixelSize: mode === 1 ? 17 : 20
         color: pRgb(153, 204, 255)
         x:17
         y:9
@@ -40,25 +50,35 @@ Rectangle {
     }
     Text {
         id:t1
-        x:92
+        x:mode == 1 ? 80 : 92
         y:{
-            if(altitudeModel){
-                return 59
+            if(mode == 1){
+                if(altitudeModel){
+                    return 46
+                }
+                else{
+                    return 72
+                }
             }
             else{
-                return 85
+                if(altitudeModel){
+                    return 59
+                }
+                else{
+                    return 85
+                }
             }
         }
         text: qsTr("功率: ") + eqText1 + "W"
         font.family: fontBold
-        font.pixelSize: 16
+        font.pixelSize:mode === 1 ? 14: 16
         color: pRgb(171, 206, 213)
     }
     Text {
         id:t2
         text: qsTr("时间: ") + eqText2 + "S"
         font.family: fontBold
-        font.pixelSize: 16
+        font.pixelSize:mode === 1 ? 14: 16
         color: pRgb(171, 206, 213)
         anchors.left: t1.left
         anchors.top: t1.bottom
@@ -68,7 +88,7 @@ Rectangle {
         id:t3
         text: qsTr("能量: ") + eqText3 + "J"
         font.family: fontBold
-        font.pixelSize: 16
+        font.pixelSize:mode === 1 ? 14: 16
         color: pRgb(171, 206, 213)
         anchors.left: t2.left
         anchors.top: t2.bottom
@@ -78,7 +98,7 @@ Rectangle {
         id:t4
         text: qsTr("焊前高度: ") + eqText4 + "mm"
         font.family: fontBold
-        font.pixelSize: 16
+        font.pixelSize: mode === 1 ? 14:16
         color: pRgb(171, 206, 213)
         anchors.left: t3.left
         anchors.top: t3.bottom
@@ -89,7 +109,7 @@ Rectangle {
         id:t5
         text: qsTr("焊后高度: ") + eqText5 + "mm"
         font.family: fontBold
-        font.pixelSize: 16
+        font.pixelSize: mode === 1 ? 14:16
         color: pRgb(171, 206, 213)
         anchors.left: t4.left
         anchors.top: t4.bottom
@@ -100,13 +120,23 @@ Rectangle {
         id: im1
         width: imgWidHei
         height: imgWidHei
-        x:39
+        x:mode == 1 ? 33 : 39
         y:{
-            if(altitudeModel){
-                return 59
+            if(mode == 1){
+                if(altitudeModel){
+                    return 48
+                }
+                else{
+                    return 68
+                }
             }
             else{
-                return 79
+                if(altitudeModel){
+                    return 59
+                }
+                else{
+                    return 79
+                }
             }
         }
         source: "qrc:/image/组件.png"

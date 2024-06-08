@@ -4,10 +4,16 @@ import QtQuick.Controls 2.15
 Rectangle {
     color: pRgb(43, 112, 173)
     radius: 3
+    Rectangle{
+        y:42
+        height: 1
+        width: 97
+        color: pRgb(174, 210, 216)
+    }
     Text {
         text: qsTr("焊接参数")
         font.family: fontBold
-        font.pixelSize: 20
+        font.pixelSize: mode === 1 ? 17:20
         color: pRgb(153, 204, 255)
         x:17
         y:9
@@ -36,7 +42,7 @@ Rectangle {
         id: t1
         text: qsTr("能量")
         font.family: fontBold
-        font.pixelSize: 16
+        font.pixelSize: mode === 1 ?14:16
         color: pRgb(171, 206, 213)
         x:75
         y:61
@@ -45,7 +51,7 @@ Rectangle {
         id: t2
         text: qsTr("振幅")
         font.family: fontBold
-        font.pixelSize: 16
+        font.pixelSize: mode === 1 ?14:16
         color: pRgb(171, 206, 213)
         anchors.top: t1.bottom
         anchors.left: t1.left
@@ -55,7 +61,7 @@ Rectangle {
         id: t3
         text: qsTr("压力")
         font.family: fontBold
-        font.pixelSize: 16
+        font.pixelSize: mode === 1 ?14:16
         color: pRgb(171, 206, 213)
         anchors.top: t2.bottom
         anchors.left: t2.left
@@ -63,7 +69,7 @@ Rectangle {
     }
     TextField{
         id:f1
-        width: 98
+        width: mode === 1 ? 75:98
         height: 30
         x:126
         y:59
@@ -80,11 +86,11 @@ Rectangle {
     }
     TextField{
         id:f2
-        width: 98
+        width: mode === 1 ? 75:98
         height: 30
         anchors.left: f1.left
         anchors.top: f1.bottom
-        anchors.topMargin: 25
+        anchors.topMargin: mode === 1 ? 20:25
         horizontalAlignment: TextInput.AlignHCenter
         verticalAlignment: TextInput.AlignVCenter
         color: pRgb(43, 112, 173)
@@ -98,11 +104,11 @@ Rectangle {
     }
     TextField{
         id:f3
-        width: 98
+        width: mode === 1 ? 75:98
         height: 30
         anchors.left: f2.left
         anchors.top: f2.bottom
-        anchors.topMargin: 25
+        anchors.topMargin: mode === 1 ? 20:25
         horizontalAlignment: TextInput.AlignHCenter
         verticalAlignment: TextInput.AlignVCenter
         color: pRgb(43, 112, 173)
