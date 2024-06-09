@@ -61,9 +61,6 @@ Window {
     function formatTimeComponent(component) {
         return component < 10 ? "0" + component : component
     }
-    onEquipmentCountChanged: {
-        sigEquipmentCountChanged(equipmentCount)
-    }
 
     StackView{
         id:stackView
@@ -91,12 +88,15 @@ Window {
                     stackView1.pop()
                     if(id === 1){
                         loadView(id,pro)
+                        sigEquipmentCountChanged(3)
                     }
                     else if(id === 2){
                         loadView(id,his)
+                        sigEquipmentCountChanged(3)
                     }
                     else if(id === 3){
                         loadView(id,sys)
+                        sigEquipmentCountChanged(3)
                     }
                 }
             }
@@ -142,15 +142,29 @@ Window {
     Component{
         id:his
         HistoryModule{
+            id:hisin
             width: 1280
             height: 740
+            Connections{
+                target: window
+                function onSigEquipmentCountChanged(id){
+                    hisin.itemCount = id
+                }
+            }
         }
     }
     Component{
         id:sys
         SystemConfig{
+            id: sysin
             width: 1280
             height: 740
+            Connections{
+                target: window
+                function onSigEquipmentCountChanged(id){
+                    sysin.itemCount = id
+                }
+            }
         }
     }
     Component{

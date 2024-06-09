@@ -171,23 +171,24 @@ release\qrc_qml.cpp: qml.qrc \
 		image\??.png \
 		image\title.png \
 		image\??.png \
-		qmlSource\YieldTrend.qml \
-		qmlSource\RealtimeYield.qml \
-		qmlSource\CustomRipple.qml \
 		qmlSource\WeldingResult.qml \
-		qmlSource\AbnormalInfor.qml \
-		qmlSource\CustomBtn.qml \
-		qmlSource\ProductionModule.qml \
+		qmlSource\MultideviceSystemConfig.qml \
 		qmlSource\SystemConfig.qml \
+		qmlSource\CustomBtn.qml \
 		qmlSource\WeldingTrend.qml \
 		qmlSource\WeldingParameter.qml \
-		qmlSource\SwipeProductionModule.qml \
-		qmlSource\CustomComboBox.qml \
+		qmlSource\CustomRipple.qml \
 		qmlSource\Load.qml \
-		qmlSource\TopModule.qml \
-		qmlSource\HistoryModule.qml \
 		qmlSource\EquipmentInfor.qml \
-		qmlSource\MultideviceProductionModule.qml
+		qmlSource\MultideviceProductionModule.qml \
+		qmlSource\CustomComboBox.qml \
+		qmlSource\TopModule.qml \
+		qmlSource\YieldTrend.qml \
+		qmlSource\RealtimeYield.qml \
+		qmlSource\HistoryModule.qml \
+		qmlSource\SwipeProductionModule.qml \
+		qmlSource\AbnormalInfor.qml \
+		qmlSource\ProductionModule.qml
 	E:\qt5.15\5.15.2\msvc2019_64\bin\rcc.exe -name qml qml.qrc -o release\qrc_qml.cpp
 
 compiler_moc_predefs_make_all: release\moc_predefs.h

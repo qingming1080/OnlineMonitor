@@ -37,5 +37,6 @@
         <file>qmlSource/MultideviceProductionModule.qml</file>
         <file>image/缩小.png</file>
         <file>qmlSource/SwipeProductionModule.qml</file>
+        <file>qmlSource/MultideviceSystemConfig.qml</file>
     </qresource>
 </RCC>

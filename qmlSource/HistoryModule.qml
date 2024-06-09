@@ -4,9 +4,32 @@ import QtQml.Models 2.2
 import QtQuick.Controls 2.5
 import Qt.labs.qmlmodels 1.0
 Rectangle {
+    property int itemCount: 0
     color: pRgb(153, 204, 255)
     Component.onCompleted: {
         bt1.checkable = true
+    }
+    onItemCountChanged: {
+        if(itemCount == 1){
+            bt3.visible = false
+            bt4.visible = false
+            bt5.visible = false
+        }
+        else if(itemCount == 2){
+            bt3.visible = true
+            bt4.visible = false
+            bt5.visible = false
+        }
+        else if(itemCount == 3){
+            bt3.visible = true
+            bt4.visible = true
+            bt5.visible = false
+        }
+        else if(itemCount == 4){
+            bt3.visible = true
+            bt4.visible = true
+            bt5.visible = true
+        }
     }
 
     ButtonGroup {
@@ -120,6 +143,14 @@ Rectangle {
                 border.color: bt3.checked ? "#afc3d8" : "#0068a8"
                 border.width: 2
             }
+            onVisibleChanged: {
+                if(visible){
+                    enabled = true
+                }
+                else{
+                    enabled = false
+                }
+            }
         }
         Text {
             id: b3
@@ -130,6 +161,7 @@ Rectangle {
             color: pRgb(177, 213, 219)
             font.family: fontBold
             font.pixelSize: 20
+            visible: bt3.visible
         }
 
         RadioButton{
@@ -149,6 +181,14 @@ Rectangle {
                 border.color: bt4.checked ? "#afc3d8" : "#0068a8"
                 border.width: 2
             }
+            onVisibleChanged: {
+                if(visible){
+                    enabled = true
+                }
+                else{
+                    enabled = false
+                }
+            }
         }
         Text {
             id: b4
@@ -159,6 +199,7 @@ Rectangle {
             color: pRgb(177, 213, 219)
             font.family: fontBold
             font.pixelSize: 20
+            visible: bt4.visible
         }
 
         RadioButton{
@@ -178,6 +219,14 @@ Rectangle {
                 border.color: bt5.checked ? "#afc3d8" : "#0068a8"
                 border.width: 2
             }
+            onVisibleChanged: {
+                if(visible){
+                    enabled = true
+                }
+                else{
+                    enabled = false
+                }
+            }
         }
         Text {
             id: b5
@@ -188,6 +237,7 @@ Rectangle {
             color: pRgb(177, 213, 219)
             font.family: fontBold
             font.pixelSize: 20
+            visible: bt5.visible
         }
 
         Text {
