@@ -38,7 +38,7 @@ Rectangle {
     Loader{
         id:loader1
         asynchronous:true
-        sourceComponent: musys
+        sourceComponent: syscfg
     }
 
     Component{

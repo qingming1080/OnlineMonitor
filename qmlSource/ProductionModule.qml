@@ -6,7 +6,7 @@ Rectangle {
     property bool tableFlag: false
 
     Component.onCompleted: {
-        mode = 0
+        mode = 1
     }
 
     EquipmentInfor{

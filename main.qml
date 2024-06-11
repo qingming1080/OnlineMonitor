@@ -78,8 +78,8 @@ Window {
                 id:stackView1
                 anchors.top: p1.bottom
                 Component.onCompleted: {
-                    loadView(1,multipro)
-                    sigEquipmentCountChanged(3)
+                    loadView(1,swipepro)
+//                    sigEquipmentCountChanged(4)
                 }
             }
             Connections{
@@ -88,15 +88,15 @@ Window {
                     stackView1.pop()
                     if(id === 1){
                         loadView(id,pro)
-                        sigEquipmentCountChanged(3)
+//                        sigEquipmentCountChanged(4)
                     }
                     else if(id === 2){
                         loadView(id,his)
-                        sigEquipmentCountChanged(3)
+//                        sigEquipmentCountChanged(4)
                     }
                     else if(id === 3){
                         loadView(id,sys)
-                        sigEquipmentCountChanged(3)
+//                        sigEquipmentCountChanged(4)
                     }
                 }
             }
