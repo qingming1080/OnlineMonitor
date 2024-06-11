@@ -4,7 +4,7 @@ import QtQml.Models 2.2
 import QtQuick.Controls 2.5
 import Qt.labs.qmlmodels 1.0
 Rectangle {
-    property int itemCount: 0
+    property int itemCount: equipmentCount
     color: pRgb(153, 204, 255)
     Component.onCompleted: {
         bt1.checkable = true

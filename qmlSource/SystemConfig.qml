@@ -4,7 +4,7 @@ import QtQuick.Controls 2.5
 //系统配置
 Rectangle {
     id: sysUI
-    property int itemCount: 0
+    property int itemCount: equipmentCount
     property bool musysTmp1: false
     property bool musysTmp2: false
     property bool musysTmp3: false
@@ -775,6 +775,10 @@ Rectangle {
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
             font.family: fontBold
+        }
+        onPressed: {
+            switchUI(1)
+            equipmentCount++
         }
     }
     Text {

@@ -2,6 +2,37 @@ import QtQuick 2.0
 import QtQuick.Controls 2.5
 Rectangle {
     color: pRgb(43, 112, 173)
+
+    function bt1Check(){
+        bt1.cbtnText.color = pRgb(177, 213, 219)
+        bt1.btnCheck.visible = true
+        bt2.cbtnText.color = pRgb(153, 204, 255)
+        bt2.btnCheck.visible = false
+        bt3.cbtnText.color = pRgb(153, 204, 255)
+        bt3.btnCheck.visible = false
+        bt2.tmp = false
+        bt3.tmp = false
+    }
+    function bt2Check(){
+        bt2.cbtnText.color = pRgb(177, 213, 219)
+        bt2.btnCheck.visible = true
+        bt1.cbtnText.color = pRgb(153, 204, 255)
+        bt1.btnCheck.visible = false
+        bt3.cbtnText.color = pRgb(153, 204, 255)
+        bt3.btnCheck.visible = false
+        bt1.tmp = false
+        bt3.tmp = false
+    }
+    function bt3Check(){
+        bt3.cbtnText.color = pRgb(177, 213, 219)
+        bt3.btnCheck.visible = true
+        bt2.cbtnText.color = pRgb(153, 204, 255)
+        bt2.btnCheck.visible = false
+        bt1.cbtnText.color = pRgb(153, 204, 255)
+        bt1.btnCheck.visible = false
+        bt2.tmp = false
+        bt1.tmp = false
+    }
     Button{
         x:20
         y:12
@@ -50,24 +81,21 @@ Rectangle {
     Connections{
         target: bt1
         function onSigBtnSwitch(){
-            bt2.tmp = false
-            bt3.tmp = false
+            bt1Check()
             switchUI(1)
         }
     }
     Connections{
         target: bt2
         function onSigBtnSwitch(){
-            bt1.tmp = false
-            bt3.tmp = false
+            bt2Check()
             switchUI(2)
         }
     }
     Connections{
         target: bt3
         function onSigBtnSwitch(){
-            bt2.tmp = false
-            bt1.tmp = false
+            bt3Check()
             switchUI(3)
         }
     }

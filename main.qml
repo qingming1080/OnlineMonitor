@@ -35,8 +35,10 @@ Window {
     signal sigSwitch(var id)
     signal sigEquipmentCountChanged(var id)
     function switchUI(id){
+        equipmentCurrentIndex = id
         sigSwitch(id)
     }
+
     // 获取当前时间的函数
     function getCurrentTime() {
         var date = new Date()
@@ -78,8 +80,7 @@ Window {
                 id:stackView1
                 anchors.top: p1.bottom
                 Component.onCompleted: {
-                    loadView(1,swipepro)
-//                    sigEquipmentCountChanged(4)
+                    loadView(1,pro)
                 }
             }
             Connections{
@@ -88,15 +89,15 @@ Window {
                     stackView1.pop()
                     if(id === 1){
                         loadView(id,pro)
-//                        sigEquipmentCountChanged(4)
+                        p1.bt1Check()
                     }
                     else if(id === 2){
                         loadView(id,his)
-//                        sigEquipmentCountChanged(4)
+                        p1.bt2Check()
                     }
                     else if(id === 3){
                         loadView(id,sys)
-//                        sigEquipmentCountChanged(4)
+                        p1.bt3Check()
                     }
                 }
             }
@@ -145,12 +146,6 @@ Window {
             id:hisin
             width: 1280
             height: 740
-            Connections{
-                target: window
-                function onSigEquipmentCountChanged(id){
-                    hisin.itemCount = id
-                }
-            }
         }
     }
     Component{
@@ -159,28 +154,9 @@ Window {
             id: sysin
             width: 1280
             height: 740
-            Connections{
-                target: window
-                function onSigEquipmentCountChanged(id){
-                    sysin.itemCount = id
-                }
-            }
         }
     }
-    Component{
-        id:multipro
-        MultideviceProductionModule{
-            id:mupMode
-            width: 1280
-            height: 740
-            Connections{
-                target: window
-                function onSigEquipmentCountChanged(id){
-                    mupMode.itemCount = id
-                }
-            }
-        }
-    }
+
     Component{
         id:swipepro
         SwipeProductionModule{
