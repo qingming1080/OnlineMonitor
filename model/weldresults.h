@@ -32,13 +32,9 @@ public:
 signals:
 
     void powerChanged();
-
     void timeChanged();
-
     void energyChanged();
-
     void heightPreChanged();
-
     void heightPostChanged();
 
 private:
