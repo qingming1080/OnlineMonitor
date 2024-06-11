@@ -292,10 +292,10 @@ Makefile: qml.pro E:\qt5.15\5.15.2\msvc2019_64\mkspecs\win32-msvc\qmake.conf E:\
 		E:\qt5.15\5.15.2\msvc2019_64\mkspecs\features\yacc.prf \
 		E:\qt5.15\5.15.2\msvc2019_64\mkspecs\features\lex.prf \
 		qml.pro \
-		E:\qt5.15\5.15.2\msvc2019_64\lib\Qt5VirtualKeyboard.prl \
-		E:\qt5.15\5.15.2\msvc2019_64\lib\Qt5Quick.prl \
 		E:\qt5.15\5.15.2\msvc2019_64\lib\Qt5Charts.prl \
 		E:\qt5.15\5.15.2\msvc2019_64\lib\Qt5Widgets.prl \
+		E:\qt5.15\5.15.2\msvc2019_64\lib\Qt5VirtualKeyboard.prl \
+		E:\qt5.15\5.15.2\msvc2019_64\lib\Qt5Quick.prl \
 		E:\qt5.15\5.15.2\msvc2019_64\lib\Qt5Gui.prl \
 		E:\qt5.15\5.15.2\msvc2019_64\lib\Qt5QmlModels.prl \
 		E:\qt5.15\5.15.2\msvc2019_64\lib\Qt5Qml.prl \
@@ -304,10 +304,10 @@ Makefile: qml.pro E:\qt5.15\5.15.2\msvc2019_64\mkspecs\win32-msvc\qmake.conf E:\
 		E:\qt5.15\5.15.2\msvc2019_64\lib\qtmain.prl \
 		E:\qt5.15\5.15.2\msvc2019_64\mkspecs\features\build_pass.prf \
 		qml.qrc \
-		E:\qt5.15\5.15.2\msvc2019_64\lib\Qt5VirtualKeyboardd.prl \
-		E:\qt5.15\5.15.2\msvc2019_64\lib\Qt5Quickd.prl \
 		E:\qt5.15\5.15.2\msvc2019_64\lib\Qt5Chartsd.prl \
 		E:\qt5.15\5.15.2\msvc2019_64\lib\Qt5Widgetsd.prl \
+		E:\qt5.15\5.15.2\msvc2019_64\lib\Qt5VirtualKeyboardd.prl \
+		E:\qt5.15\5.15.2\msvc2019_64\lib\Qt5Quickd.prl \
 		E:\qt5.15\5.15.2\msvc2019_64\lib\Qt5Guid.prl \
 		E:\qt5.15\5.15.2\msvc2019_64\lib\Qt5QmlModelsd.prl \
 		E:\qt5.15\5.15.2\msvc2019_64\lib\Qt5Qmld.prl \
@@ -523,10 +523,10 @@ E:\qt5.15\5.15.2\msvc2019_64\mkspecs\features\exceptions.prf:
 E:\qt5.15\5.15.2\msvc2019_64\mkspecs\features\yacc.prf:
 E:\qt5.15\5.15.2\msvc2019_64\mkspecs\features\lex.prf:
 qml.pro:
-E:\qt5.15\5.15.2\msvc2019_64\lib\Qt5VirtualKeyboard.prl:
-E:\qt5.15\5.15.2\msvc2019_64\lib\Qt5Quick.prl:
 E:\qt5.15\5.15.2\msvc2019_64\lib\Qt5Charts.prl:
 E:\qt5.15\5.15.2\msvc2019_64\lib\Qt5Widgets.prl:
+E:\qt5.15\5.15.2\msvc2019_64\lib\Qt5VirtualKeyboard.prl:
+E:\qt5.15\5.15.2\msvc2019_64\lib\Qt5Quick.prl:
 E:\qt5.15\5.15.2\msvc2019_64\lib\Qt5Gui.prl:
 E:\qt5.15\5.15.2\msvc2019_64\lib\Qt5QmlModels.prl:
 E:\qt5.15\5.15.2\msvc2019_64\lib\Qt5Qml.prl:
@@ -535,10 +535,10 @@ E:\qt5.15\5.15.2\msvc2019_64\lib\Qt5Core.prl:
 E:\qt5.15\5.15.2\msvc2019_64\lib\qtmain.prl:
 E:\qt5.15\5.15.2\msvc2019_64\mkspecs\features\build_pass.prf:
 qml.qrc:
-E:\qt5.15\5.15.2\msvc2019_64\lib\Qt5VirtualKeyboardd.prl:
-E:\qt5.15\5.15.2\msvc2019_64\lib\Qt5Quickd.prl:
 E:\qt5.15\5.15.2\msvc2019_64\lib\Qt5Chartsd.prl:
 E:\qt5.15\5.15.2\msvc2019_64\lib\Qt5Widgetsd.prl:
+E:\qt5.15\5.15.2\msvc2019_64\lib\Qt5VirtualKeyboardd.prl:
+E:\qt5.15\5.15.2\msvc2019_64\lib\Qt5Quickd.prl:
 E:\qt5.15\5.15.2\msvc2019_64\lib\Qt5Guid.prl:
 E:\qt5.15\5.15.2\msvc2019_64\lib\Qt5QmlModelsd.prl:
 E:\qt5.15\5.15.2\msvc2019_64\lib\Qt5Qmld.prl:

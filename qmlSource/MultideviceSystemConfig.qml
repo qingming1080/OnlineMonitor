@@ -16,9 +16,11 @@ Rectangle {
         onPressed: {
             if(color == "#4a8ac4"){
                 color = pRgb(43, 112, 173)
+                currIndex = 0
             }
             else{
                 sysCheck(sysCurrIndex)
+                currIndex = sysCurrIndex
             }
         }
     }

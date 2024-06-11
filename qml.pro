@@ -1,4 +1,4 @@
-QT += quick virtualkeyboard charts
+QT += widgets quick virtualkeyboard charts
 
 CONFIG += c++11
 msvc {

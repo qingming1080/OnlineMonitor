@@ -363,9 +363,10 @@ Rectangle {
                 horizontalAlignment: Text.AlignHCenter
             }
         }
-        rowDelegate: ItemDelegate {
+        rowDelegate: Rectangle {
             height: 40
         }
+
         headerDelegate: Rectangle {
             height: 40
             color: "#004b8d"
@@ -405,9 +406,11 @@ Rectangle {
             title: "结果"
             width: 244
         }
-        model: ListModel {
+        model: tableModel
+        ListModel {
+            id: tableModel
             ListElement { name: "Item 1"; date: "1" ;energy: "2";power: "2";result: "3";}
-            ListElement { name: "Item 2"; date: "2" ;energy: "2";power: "2";result: "3";}
+            ListElement { name: "Item 2"; date: "2" ;energy: "2";power: "2";result: "4";}
             ListElement { name: "Item 2"; date: "3" ;energy: "2";power: "2";result: "3";}
             ListElement { name: "Item 2"; date: "3" ;energy: "2";power: "2";result: "3";}
             ListElement { name: "Item 2"; date: "3" ;energy: "2";power: "2";result: "3";}
@@ -426,6 +429,7 @@ Rectangle {
             ListElement { name: "Item 2"; date: "3" ;energy: "2";power: "2";result: "3";}
         }
     }
+
     Text {
         id: version
         color: "#639ed6"

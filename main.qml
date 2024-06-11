@@ -17,6 +17,7 @@ Window {
     property string fontNormal: "思源黑体 CN Normal"
     property string fontBold: "思源黑体 CN Bold"
     property bool altitudeModel: false //高度模式
+    property bool isAdd: false
     function pRgb(r, g, b){
         var ret = (r << 16 | g << 8 | b)
         return ("#"+ret.toString(16)).toUpperCase();
@@ -33,7 +34,7 @@ Window {
     // 缓存已加载的视图
     property var cachedViews: []
     signal sigSwitch(var id)
-    signal sigEquipmentCountChanged(var id)
+    signal sigSysConfig()
     function switchUI(id){
         equipmentCurrentIndex = id
         sigSwitch(id)
@@ -90,12 +91,17 @@ Window {
                     if(id === 1){
                         loadView(id,pro)
                         p1.bt1Check()
+                        isAdd = false
                     }
                     else if(id === 2){
                         loadView(id,his)
                         p1.bt2Check()
+                        isAdd = false
                     }
                     else if(id === 3){
+                        isAdd = false
+                        sigSysConfig()
+                        Qt.callLater(sigSysConfig)//立即执行
                         loadView(id,sys)
                         p1.bt3Check()
                     }

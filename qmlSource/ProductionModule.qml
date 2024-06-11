@@ -34,6 +34,10 @@ Rectangle {
                 mode = 1
                 loadView(2,multipro)
             }
+            else{
+                mode = 0
+                loadView(1,autopro)
+            }
         }
     }
 
@@ -54,7 +58,6 @@ Rectangle {
 
             Loader{
                 id:loader1
-                asynchronous:true
                 sourceComponent: weld1
             }
             Component{
@@ -133,11 +136,12 @@ Rectangle {
                 }
                 onPressed: {
                     switchUI(3)
+                    isAdd = true
+                    sigSysConfig()
                 }
             }
             Loader{
                 id:loader
-                asynchronous:true
                 sourceComponent: mode1
             }
 
@@ -400,12 +404,7 @@ Rectangle {
             id:mupMode
             width: 1280
             height: 740
-            Connections{
-                target: window
-                function onSigEquipmentCountChanged(id){
-                    mupMode.itemCount = id
-                }
-            }
+            itemCount:equipmentCount
         }
     }
 

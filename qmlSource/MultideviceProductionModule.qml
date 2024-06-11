@@ -339,6 +339,11 @@ Rectangle {
             verticalAlignment: Text.AlignVCenter
             font.family: fontBold
         }
+        onPressed: {
+            switchUI(3)
+            isAdd = true
+            sigSysConfig()
+        }
     }
     Button{
         id:b3
