@@ -17,8 +17,15 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+        devicemanager.cpp \
         fileobject.cpp \
-        main.cpp
+        main.cpp \
+        model/device.cpp \
+        model/deviceinformation.cpp \
+        model/realtimeyield.cpp \
+        model/systeminformation.cpp \
+        model/weldresults.cpp \
+        model/yidldtrend.cpp
 
 RESOURCES += qml.qrc
 
@@ -34,4 +41,11 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 HEADERS += \
-    fileobject.h
+    devicemanager.h \
+    fileobject.h \
+    model/device.h \
+    model/deviceinformation.h \
+    model/realtimeyield.h \
+    model/systeminformation.h \
+    model/weldresults.h \
+    model/yidldtrend.h

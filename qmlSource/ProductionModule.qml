@@ -28,11 +28,11 @@ Rectangle {
         Item {
             WeldingResult{
                 id:s3
-                width: mode === 1 ? 212 : 245
-                height: mode === 1 ? 215 : 249
-                x: mode === 1 ? 50 : 29
-                y: mode === 1 ? 248 : 289
-                color: mode === 1 ? "#0c5696" : pRgb(43, 112, 173)
+                width: mode == 1 ? 212 : 245
+                height: mode == 1 ? 215 : 249
+                x: mode == 1 ? 50 : 29
+                y: mode == 1 ? 248 : 289
+                color: mode == 1 ? "#0c5696" : pRgb(43, 112, 173)
             }
         }
     }
@@ -41,28 +41,28 @@ Rectangle {
         Item {
             WeldingParameter{
                 id:s3_1
-                width: mode === 1 ? 212 : 245
-                height: mode === 1 ? 215 : 249
-                x: mode === 1 ? 50 : 29
-                y: mode === 1 ? 248 : 289
-                color: mode === 1 ? "#0c5696" : pRgb(43, 112, 173)
+                width: mode == 1 ? 212 : 245
+                height: mode == 1 ? 215 : 249
+                x: mode == 1 ? 50 : 29
+                y: mode == 1 ? 248 : 289
+                color: mode == 1 ? "#0c5696" : pRgb(43, 112, 173)
             }
         }
     }
     Button{
         id:s4
-        x:mode === 1 ? 50 : 31
-        y:mode === 1 ? 482 : 553
-        width: mode === 1 ?  210 :243
-        height: mode === 1 ? 45 : 52
+        x:mode == 1 ? 50 : 31
+        y:mode == 1 ? 482 : 553
+        width: mode == 1 ?  210 :243
+        height: mode == 1 ? 45 : 52
         background: Rectangle{
             radius: 6
-            color: mode === 1 ? "#0c5696" : pRgb(43, 112, 173)
+            color: mode == 1 ? "#0c5696" : pRgb(43, 112, 173)
         }
         contentItem: Text {
             id: mt1
             text: "新建模型"
-            font.pixelSize: mode === 1 ? 17:20
+            font.pixelSize: mode == 1 ? 17:20
             color: pRgb(153, 204, 255)
             anchors.centerIn: parent  // 确保文本在按钮内居中对齐
             horizontalAlignment: Text.AlignHCenter
@@ -80,18 +80,18 @@ Rectangle {
         id:s5
         anchors.left: s4.left
         anchors.top: s4.bottom
-        anchors.topMargin: mode === 1 ? 23 : 31
-        width: mode === 1 ?  210 :243
-        height: mode === 1 ? 45 : 52
+        anchors.topMargin: mode == 1 ? 23 : 31
+        width: mode == 1 ?  210 :243
+        height: mode == 1 ? 45 : 52
         background: Rectangle{
             radius: 6
-            color: mode === 1 ? "#0c5696" : pRgb(43, 112, 173)
+            color: mode == 1 ? "#0c5696" : pRgb(43, 112, 173)
         }
         contentItem: Text {
             id:mt2
             anchors.centerIn: parent
             text: "新增设备"
-            font.pixelSize:mode === 1 ? 17: 20
+            font.pixelSize:mode == 1 ? 17: 20
             color: pRgb(153, 204, 255)
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
