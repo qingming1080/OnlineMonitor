@@ -24,6 +24,7 @@ SOURCES += \
         model/deviceinformation.cpp \
         model/realtimeyield.cpp \
         model/systeminformation.cpp \
+        model/weldparam.cpp \
         model/weldresults.cpp \
         model/yidldtrend.cpp
 
@@ -47,5 +48,6 @@ HEADERS += \
     model/deviceinformation.h \
     model/realtimeyield.h \
     model/systeminformation.h \
+    model/weldparam.h \
     model/weldresults.h \
     model/yidldtrend.h
