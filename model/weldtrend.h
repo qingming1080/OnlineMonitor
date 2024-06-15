@@ -1,17 +1,16 @@
-#ifndef YIDLDTREND_H
-#define YIDLDTREND_H
+#ifndef WELDTREND_H
+#define WELDTREND_H
 
 #include <QAbstractListModel>
 
 ///
-/// \brief The YidldTrend class : 良率趋势_折现(暂不实现)
+/// \brief The WeldTrend class : 焊接趋势_折线(暂不实现)
 ///
-class YidldTrend : public QAbstractListModel
+class WeldTrend : public QAbstractListModel
 {
     Q_OBJECT
 public:
-    static YidldTrend* getInstance();
-
+    explicit WeldTrend(QObject *parent = nullptr);
 
 protected:
     // QML获取列表数量
@@ -20,12 +19,6 @@ protected:
     virtual QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
     // QML获取列名
     virtual QHash<int, QByteArray> roleNames() const override;
-
-private:
-    explicit YidldTrend();
-
-private:
-    static YidldTrend* s_pYidldTrend;
 };
 
-#endif // YIDLDTREND_H
+#endif // WELDTREND_H

@@ -10,11 +10,6 @@
 class DeviceManager : public QObject
 {
     Q_OBJECT
-    // 四个设备
-    Q_PROPERTY(Device *device_1 READ device_1)
-    Q_PROPERTY(Device *device_2 READ device_1)
-    Q_PROPERTY(Device *device_3 READ device_1)
-    Q_PROPERTY(Device *device_4 READ device_1)
     // 当前设备数量
     Q_PROPERTY(int deviceNum READ deviceNum WRITE setDeviceNum NOTIFY deviceNumChanged)
 public:

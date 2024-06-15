@@ -22,11 +22,14 @@ SOURCES += \
         main.cpp \
         model/device.cpp \
         model/deviceinformation.cpp \
+        model/history.cpp \
         model/realtimeyield.cpp \
         model/systeminformation.cpp \
         model/weldparam.cpp \
         model/weldresults.cpp \
-        model/yidldtrend.cpp
+        model/weldtrend.cpp \
+        model/yieldmodel.cpp \
+        model/yieldtrend.cpp
 
 RESOURCES += qml.qrc
 
@@ -46,8 +49,12 @@ HEADERS += \
     fileobject.h \
     model/device.h \
     model/deviceinformation.h \
+    model/history.h \
     model/realtimeyield.h \
     model/systeminformation.h \
     model/weldparam.h \
     model/weldresults.h \
-    model/yidldtrend.h
+    model/weldtrend.h \
+    model/yieldmodel.h \
+    model/yieldtrend.h \
+    qmlenum.h

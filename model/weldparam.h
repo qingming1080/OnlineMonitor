@@ -15,14 +15,14 @@ class WeldParam : public QObject
 public:
     explicit WeldParam(QObject *parent = nullptr);
 
-    double energy() const;
-    void setEnergy(double newEnergy);
+    Q_INVOKABLE double energy() const;
+    Q_INVOKABLE void setEnergy(double newEnergy);
 
-    double amplitude() const;
-    void setAmplitude(double newAmplitude);
+    Q_INVOKABLE double amplitude() const;
+    Q_INVOKABLE void setAmplitude(double newAmplitude);
 
-    double pressure() const;
-    void setPressure(double newPressure);
+    Q_INVOKABLE double pressure() const;
+    Q_INVOKABLE void setPressure(double newPressure);
 
 signals:
 
