@@ -11,6 +11,7 @@ class WeldResults;
 class WeldTrend;
 class YieldTrend;
 class YieldModel;
+class SystemConfig;
 
 ///
 /// \brief The Device class : 单个设备
@@ -25,6 +26,7 @@ class Device : public QObject
     Q_PROPERTY(WeldTrend *pWeldTrend                 READ pWeldTrend)           // 焊接趋势_折线
     Q_PROPERTY(YieldTrend *pYieldTrend               READ pYieldTrend)          // 良率趋势_折线
     Q_PROPERTY(YieldModel *pYieldModel               READ pYieldModel)          // 生产模型
+    Q_PROPERTY(SystemConfig *pSystemConfig           READ pSystemConfig)        // 系统配置
 
 public:
     explicit Device(QObject *parent = nullptr);
@@ -37,6 +39,9 @@ public:
     Q_INVOKABLE WeldTrend *pWeldTrend() const;
     Q_INVOKABLE YieldTrend *pYieldTrend() const;
     Q_INVOKABLE YieldModel *pYieldModel() const;
+
+    SystemConfig *pSystemConfig() const;
+    void setPSystemConfig(SystemConfig *newPSystemConfig);
 
 signals:
 
@@ -53,6 +58,8 @@ signals:
 
     void pYieldModelChanged();
 
+    void pSystemConfigChanged();
+
 private:
     SystemInformation* m_pSystemInformation{nullptr};   // 系统消息
     DeviceInformation* m_pDeviceInformation{nullptr};   // 设备信息
@@ -61,6 +68,7 @@ private:
     WeldTrend*         m_pWeldTrend{nullptr};           // 焊接趋势_折线
     YieldTrend*        m_pYieldTrend{nullptr};          // 良率趋势_折线
     YieldModel*        m_pYieldModel{nullptr};          // 生产模型
+    SystemConfig*      m_pSystemConfig{nullptr};        // 系统配置
 };
 
 #endif // DEVICE_H

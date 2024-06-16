@@ -1,4 +1,4 @@
-QT += widgets quick virtualkeyboard charts
+QT += widgets quick virtualkeyboard charts serialport
 
 CONFIG += c++11
 msvc {
@@ -24,6 +24,7 @@ SOURCES += \
         model/deviceinformation.cpp \
         model/history.cpp \
         model/realtimeyield.cpp \
+        model/systemconfig.cpp \
         model/systeminformation.cpp \
         model/weldparam.cpp \
         model/weldresults.cpp \
@@ -52,6 +53,7 @@ HEADERS += \
     model/deviceinformation.h \
     model/history.h \
     model/realtimeyield.h \
+    model/systemconfig.h \
     model/systeminformation.h \
     model/weldparam.h \
     model/weldresults.h \

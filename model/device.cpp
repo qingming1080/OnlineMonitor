@@ -6,6 +6,7 @@
 #include "model/weldtrend.h"
 #include "model/yieldtrend.h"
 #include "model/yieldmodel.h"
+#include "model/systemconfig.h"
 
 Device::Device(QObject *parent)
     : QObject{parent}
@@ -17,6 +18,7 @@ Device::Device(QObject *parent)
     m_pWeldTrend          = new WeldTrend();
     m_pYieldTrend         = new YieldTrend();
     m_pYieldModel         = new YieldModel();
+    m_pSystemConfig       = new SystemConfig();
 }
 
 SystemInformation *Device::pSystemInformation() const
@@ -53,3 +55,9 @@ YieldModel *Device::pYieldModel() const
 {
     return m_pYieldModel;
 }
+
+SystemConfig *Device::pSystemConfig() const
+{
+    return m_pSystemConfig;
+}
+
