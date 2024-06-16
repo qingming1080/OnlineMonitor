@@ -1,22 +1,41 @@
 #include "weldtrend.h"
 
-WeldTrend::WeldTrend(QObject *parent)
-    : QAbstractListModel{parent}
+WeldTrend::WeldTrend()
 {
-
+    init();
 }
 
-int WeldTrend::rowCount(const QModelIndex &parent) const
+
+QStandardItemModel *WeldTrend::pBeforeModel() const
 {
-    return 0;
+    return m_pBeforeModel;
 }
 
-QVariant WeldTrend::data(const QModelIndex &index, int role) const
+QStandardItemModel *WeldTrend::pAfterModel() const
 {
-    return QVariant();
+    return m_pAfterModel;
 }
 
-QHash<int, QByteArray> WeldTrend::roleNames() const
+QStandardItemModel *WeldTrend::pTimeModel() const
 {
-    return QHash<int, QByteArray>();
+    return m_pTimeModel;
 }
+
+QStandardItemModel *WeldTrend::pPowerModel() const
+{
+    return m_pPowerModel;
+}
+
+void WeldTrend::init()
+{
+    m_pBeforeModel  = new QStandardItemModel();
+    m_pAfterModel   = new QStandardItemModel();
+    m_pTimeModel    = new QStandardItemModel();
+    m_pPowerModel   = new QStandardItemModel();
+
+    m_pBeforeModel->setColumnCount(3);
+    m_pAfterModel->setColumnCount(3);
+    m_pTimeModel->setColumnCount(3);
+    m_pPowerModel->setColumnCount(3);
+}
+

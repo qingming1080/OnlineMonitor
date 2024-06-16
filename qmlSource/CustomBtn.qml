@@ -4,6 +4,8 @@ Rectangle {
     border.color: "transparent"
     property string btnText: ""
     property bool tmp: false
+    property alias cbtnText: btText
+    property alias btnCheck: btnStatus
     signal sigBtnSwitch()
     color: pRgb(43, 112, 173)
     onTmpChanged: {

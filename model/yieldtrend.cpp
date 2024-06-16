@@ -2,22 +2,31 @@
 
 YieldTrend::YieldTrend()
 {
-
+    m_pItemModel = new QStandardItemModel();
+    /// 设置模型三列 0_行数  1_x轴  2_y轴
+    m_pItemModel->setColumnCount(3);
 }
 
-
-int YieldTrend::rowCount(const QModelIndex &parent) const
+QStandardItemModel *YieldTrend::getModel()
 {
-    return 0;
+    return m_pItemModel;
 }
 
-QVariant YieldTrend::data(const QModelIndex &index, int role) const
+void YieldTrend::addRow(int x, int y)
 {
-    return QVariant();
+    int row = m_pItemModel->rowCount();
+
+    QStandardItem* rowItem = new QStandardItem(QString::number(row));
+    QStandardItem* xItem   = new QStandardItem(QString::number(x));
+    QStandardItem* yItem   = new QStandardItem(QString::number(y));
+
+    m_pItemModel->QStandardItemModel::setItem(row, 0, rowItem);
+    m_pItemModel->QStandardItemModel::setItem(row, 1, xItem);
+    m_pItemModel->QStandardItemModel::setItem(row, 2, yItem);
 }
 
-QHash<int, QByteArray> YieldTrend::roleNames() const
+void YieldTrend::clear()
 {
-    return QHash<int, QByteArray>();
+    m_pItemModel->clear();
 }
 

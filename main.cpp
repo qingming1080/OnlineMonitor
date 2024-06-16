@@ -1,5 +1,10 @@
 #include <QApplication>
 #include <QQmlApplicationEngine>
+
+#include <QQmlContext>
+
+#include "model/yieldtrend.h"
+
 // 自定义消息处理程序
 void myMessageHandler(QtMsgType type, const QMessageLogContext &context, const QString &msg)
 {
@@ -28,6 +33,9 @@ int main(int argc, char *argv[])
     QApplication app(argc, argv);
 
     QQmlApplicationEngine engine;
+    QQmlContext* pQmlContext = engine.rootContext();
+    pQmlContext->setContextProperty("YieldTrendModel", new YieldTrend);
+
     const QUrl url(QStringLiteral("qrc:/main.qml"));
     QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,
                      &app, [url](QObject *obj, const QUrl &objUrl) {

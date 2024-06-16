@@ -10,7 +10,7 @@ class SystemInformation : public QAbstractListModel
 {
     Q_OBJECT
     enum SYSTEMINFORMATION_ROLE{
-        _Date = 0,      // 日期时间     dateTime
+        _Date = 0,      // 日期时间     dateTimeB
         _Information    // 信息         information
     };
     struct _SystemInformation_Data{

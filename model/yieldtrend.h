@@ -1,29 +1,28 @@
 #ifndef YIELDTREND_H
 #define YIELDTREND_H
 
-#include <QAbstractListModel>
+#include <QStandardItemModel>
 
 ///
-/// \brief The YidldTrend class : 良率趋势_折线(暂不实现)
+/// \brief The YidldTrend class : 良率趋势_折线
 ///
-class YieldTrend : public QAbstractListModel
+class YieldTrend : public QObject
 {
     Q_OBJECT
 public:
     explicit YieldTrend();
 
+    Q_INVOKABLE QStandardItemModel* getModel();
 
-protected:
-    // QML获取列表数量
-    virtual int rowCount(const QModelIndex &parent = QModelIndex()) const override;
-    // QML获取列表数据
-    virtual QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
-    // QML获取列名
-    virtual QHash<int, QByteArray> roleNames() const override;
+    ///
+    /// \brief addRow : 添加一行数据
+    ///
+    void addRow(int x, int y);
+
+    void clear();
 
 private:
-
-
+    QStandardItemModel* m_pItemModel{nullptr};   // 良品折线模型
 };
 
 #endif // YIELDTREND_H

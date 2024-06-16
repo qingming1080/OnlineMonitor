@@ -1,24 +1,36 @@
 #ifndef WELDTREND_H
 #define WELDTREND_H
 
-#include <QAbstractListModel>
+#include <QStandardItemModel>
 
 ///
-/// \brief The WeldTrend class : 焊接趋势_折线(暂不实现)
+/// \brief The WeldTrend class : 焊接趋势_折线
 ///
-class WeldTrend : public QAbstractListModel
+class WeldTrend : public QObject
 {
     Q_OBJECT
+    Q_PROPERTY(QStandardItemModel *pBeforeModel READ pBeforeModel)
+    Q_PROPERTY(QStandardItemModel *pAfterModel  READ pAfterModel)
+    Q_PROPERTY(QStandardItemModel *pTimeModel   READ pTimeModel)
+    Q_PROPERTY(QStandardItemModel *pPowerModel  READ pPowerModel)
 public:
-    explicit WeldTrend(QObject *parent = nullptr);
+    explicit WeldTrend();
 
-protected:
-    // QML获取列表数量
-    virtual int rowCount(const QModelIndex &parent = QModelIndex()) const override;
-    // QML获取列表数据
-    virtual QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
-    // QML获取列名
-    virtual QHash<int, QByteArray> roleNames() const override;
+
+    Q_INVOKABLE QStandardItemModel *pBeforeModel() const;
+    Q_INVOKABLE QStandardItemModel *pAfterModel() const;
+    Q_INVOKABLE QStandardItemModel *pTimeModel() const;
+    Q_INVOKABLE QStandardItemModel *pPowerModel() const;
+
+private:
+    void init();
+
+private:
+    QStandardItemModel* m_pBeforeModel;     // 焊前高度
+    QStandardItemModel* m_pAfterModel;      // 焊后高度
+    QStandardItemModel* m_pTimeModel;       // 时间
+    QStandardItemModel* m_pPowerModel;      // 功率
+
 };
 
 #endif // WELDTREND_H

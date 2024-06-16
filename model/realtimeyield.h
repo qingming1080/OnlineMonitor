@@ -13,7 +13,7 @@ class RealTimeYield : public QObject
     Q_PROPERTY(int passNum      READ passNum    WRITE setPassNum    NOTIFY passNumChanged)      // 合格
     Q_PROPERTY(int dubiousNum   READ dubiousNum WRITE setDubiousNum NOTIFY dubiousNumChanged)   // 可疑
     Q_PROPERTY(int rejectNum    READ rejectNum  WRITE setRejectNum  NOTIFY rejectNumChanged)    // 次品
-    Q_PROPERTY(int sumNum       READ sumNum     WRITE setSumNum     NOTIFY sumNumChanged)       // 总是
+    Q_PROPERTY(int sumNum       READ sumNum     WRITE setSumNum     NOTIFY sumNumChanged)       // 总数
 public:
     explicit RealTimeYield(QObject *parent = nullptr);
 

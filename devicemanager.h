@@ -16,12 +16,11 @@ public:
     static DeviceManager* getInstance();
 
     /// 已暴露属性
-    Q_INVOKABLE Device *device_1() const;
-    Q_INVOKABLE Device *device_2() const;
-    Q_INVOKABLE Device *device_3() const;
-    Q_INVOKABLE Device *device_4() const;
     Q_INVOKABLE int deviceNum() const;
     Q_INVOKABLE void setDeviceNum(int newDeviceNum);    // 不建议前端直接使用
+
+    /// 通过设备号获取设备
+    Q_INVOKABLE Device *device(int index) const;
 
     ///
     /// \brief addDevice : 新增一台设备

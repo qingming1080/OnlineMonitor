@@ -5,7 +5,7 @@
 #include "qmlenum.h"
 
 ///
-/// \brief The History class : 历史记录(不属于如何设备)
+/// \brief The History class : 历史记录(不属于任何设备)
 ///
 class History : public QAbstractListModel
 {

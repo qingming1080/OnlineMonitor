@@ -29,6 +29,14 @@ void DeviceManager::setDeviceNum(int newDeviceNum)
     emit deviceNumChanged();
 }
 
+Device *DeviceManager::device(int index) const
+{
+    if(index < 1 || index > 4)
+        return nullptr;
+
+    return m_device[index-1];
+}
+
 void DeviceManager::addDevice()
 {
     if(deviceNum() >= 4)
@@ -37,24 +45,3 @@ void DeviceManager::addDevice()
     m_device[deviceNum()] = new Device();
     setDeviceNum(deviceNum()+1);
 }
-
-Device *DeviceManager::device_1() const
-{
-    return m_device[0];
-}
-
-Device *DeviceManager::device_2() const
-{
-    return m_device[1];
-}
-
-Device *DeviceManager::device_3() const
-{
-    return m_device[2];
-}
-
-Device *DeviceManager::device_4() const
-{
-    return m_device[3];
-}
-

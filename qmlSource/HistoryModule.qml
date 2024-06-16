@@ -4,7 +4,7 @@ import QtQml.Models 2.2
 import QtQuick.Controls 2.5
 import Qt.labs.qmlmodels 1.0
 Rectangle {
-    property int itemCount: 0
+    property int itemCount: equipmentCount
     color: pRgb(153, 204, 255)
     Component.onCompleted: {
         bt1.checkable = true
@@ -363,7 +363,7 @@ Rectangle {
                 horizontalAlignment: Text.AlignHCenter
             }
         }
-        rowDelegate: ItemDelegate {
+        rowDelegate: Rectangle {
             height: 40
             visible:{
                 console.log(tableView.model.data(listModel.index(styleData.row, listModel.name), Qt.DisplayRole))
@@ -372,6 +372,7 @@ Rectangle {
                 tableView.model.data(listModel.index(styleData.row, name), Qt.DisplayRole)!=="Item 1"
             }
         }
+
         headerDelegate: Rectangle {
             height: 40
             color: "#004b8d"
@@ -411,28 +412,9 @@ Rectangle {
             title: "结果"
             width: 244
         }
-        model: ListModel {
-            id: listModel
-            ListElement { name: "Item 1"; date: "1" ;energy: "2";power: "2";result: "4";}
-            ListElement { name: "Item 2"; date: "2" ;energy: "2";power: "2";result: "2";}
-            ListElement { name: "Item 2"; date: "3" ;energy: "2";power: "2";result: "1";}
-            ListElement { name: "Item 2"; date: "3" ;energy: "2";power: "2";result: "0";}
-            ListElement { name: "Item 2"; date: "3" ;energy: "2";power: "2";result: "3";}
-            ListElement { name: "Item 2"; date: "3" ;energy: "2";power: "2";result: "3";}
-            ListElement { name: "Item 2"; date: "3" ;energy: "2";power: "2";result: "3";}
-            ListElement { name: "Item 2"; date: "3" ;energy: "2";power: "2";result: "3";}
-            ListElement { name: "Item 2"; date: "3" ;energy: "2";power: "2";result: "3";}
-            ListElement { name: "Item 2"; date: "3" ;energy: "2";power: "2";result: "3";}
-            ListElement { name: "Item 2"; date: "3" ;energy: "2";power: "2";result: "3";}
-            ListElement { name: "Item 2"; date: "3" ;energy: "2";power: "2";result: "3";}
-            ListElement { name: "Item 2"; date: "3" ;energy: "2";power: "2";result: "3";}
-            ListElement { name: "Item 2"; date: "3" ;energy: "2";power: "2";result: "3";}
-            ListElement { name: "Item 2"; date: "3" ;energy: "2";power: "2";result: "3";}
-            ListElement { name: "Item 2"; date: "3" ;energy: "2";power: "2";result: "3";}
-            ListElement { name: "Item 2"; date: "3" ;energy: "2";power: "2";result: "3";}
-            ListElement { name: "Item 2"; date: "3" ;energy: "2";power: "2";result: "3";}
-        }
+        model: tableModel
     }
+
     Text {
         id: version
         color: "#639ed6"

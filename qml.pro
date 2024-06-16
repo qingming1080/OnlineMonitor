@@ -1,4 +1,4 @@
-QT += quick virtualkeyboard charts
+QT += widgets quick virtualkeyboard charts
 
 CONFIG += c++11
 msvc {
@@ -29,7 +29,8 @@ SOURCES += \
         model/weldresults.cpp \
         model/weldtrend.cpp \
         model/yieldmodel.cpp \
-        model/yieldtrend.cpp
+        model/yieldtrend.cpp \
+        qmlcache.cpp
 
 RESOURCES += qml.qrc
 
@@ -57,4 +58,5 @@ HEADERS += \
     model/weldtrend.h \
     model/yieldmodel.h \
     model/yieldtrend.h \
+    qmlcache.h \
     qmlenum.h
