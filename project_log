@@ -1,0 +1,124 @@
+1、	软件启动时，怎么确定连接设备个数  
+     根据已配置的设备个数来显示
+2、	软件启动后，新增连接设备怎么告知软件，还是只能由软件新增连接设备？
+           新增设备根据  配置R232/网络 等连接方式  配置成功后 能读入数据则配置成功 即新增设备成功   只能由软件本身去新增设备  
+3、	设备状态怎么确定
+     设备状态不存入数据库
+有数据输入时确定设备为生产状态
+无数据输入时确定设备为未连接状态
+创建模型时设备确定设备为学习中
+
+Database
+
+Configuration_network Table description 
+
+字段名	
+welder_id：  	焊机ID
+welder_name：	焊机名称
+welder_type： 	焊机型号
+production_bacth	最大生产批量
+model_sample	学习样本数
+lower_limit	良率下限
+height_option	高度模式
+
+
+Connection_network Table description 
+字段名	
+id	网口号
+type	类型
+protocol	协议
+local_port	本地IP
+remote_ip	远程IP
+server_prot	服务器端口
+user	用户
+配置设备只能从id >=2 开始
+
+
+type	protocol	user
+0：Server	0：TCP/IP	branson
+1：Client	1:  OPCUA	hb
+
+Connection_rs232 Table description
+字段名	
+id	串口id
+Prot	串口号
+baud_rate	波特率
+data_bit	数据位
+parity_bit	奇偶校验位
+stop_bit	停止位
+
+
+ 
+Io_data Table description
+
+字段名	
+id	io_id
+welder_id	焊机id
+type	输入输出
+pin	pin
+available	有效的
+siganl	信号
+
+
+type	     available	  signal
+0: input	  0：off	    0:  alarm
+1: output	  1:  on	    1： reset
+	              	      2:  not_definite
+
+
+Model Table description
+
+字段名	
+id	Model_id
+welder_id	焊机id
+energy	能量
+amplitude	振幅
+pressure	压力
+welder_time	焊机时间
+Serial_number	序号
+power	功率
+create_time	创建时间
+tensile_force	撕拉力
+residual_degree	残留度
+
+
+Production Table description
+
+字段名	
+Batch_id	生产id
+welder_id	焊机id
+power	功率
+welder_time	焊接时间
+energy	能量
+pre_height	焊前高度
+post_height	焊后高度
+create_time	创建时间
+good_rate	良率
+counting_total_cycles	总计
+good_subtotal_cycles	合格
+suspect_subtotal_cycles	次品
+not_definite_subtotal_cycles	可疑
+
+System_conf Table description
+
+字段名	
+id	id
+user_id	用户id
+Single_fact_setting	单因素设置
+general_fact_setting	通用系数设置
+0ther_fact_setting	其他系数设置
+auto_model_limit	自动学习上限
+
+User Table description
+
+字段名	
+id	用户id
+user_name	用户名称
+User_password	用户密码
+level	用户级别
+
+level
+1:  root用户
+2: 普通用户
+
+
