@@ -5,6 +5,8 @@
 
 #include "model/yieldtrend.h"
 
+#include "DataBase/databasemanager.h"
+
 // 自定义消息处理程序
 void myMessageHandler(QtMsgType type, const QMessageLogContext &context, const QString &msg)
 {
@@ -27,22 +29,27 @@ int main(int argc, char *argv[])
 {
     qputenv("QT_IM_MODULE", QByteArray("qtvirtualkeyboard"));
 
+    _Network_Data data{2, 2, 0, "11",  1, "11",1, "HB"};
+    DataBaseManager::getInstance();
+    DataBaseManager::getInstance()->getRS232Data();
+//    qDebug() << DataBaseManager::getInstance()->insertNetworkRow(data);
+
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     // 安装自定义消息处理程序
 //    qInstallMessageHandler(myMessageHandler);
     QApplication app(argc, argv);
 
-    QQmlApplicationEngine engine;
-    QQmlContext* pQmlContext = engine.rootContext();
-    pQmlContext->setContextProperty("YieldTrendModel", new YieldTrend);
+//    QQmlApplicationEngine engine;
+//    QQmlContext* pQmlContext = engine.rootContext();
+//    pQmlContext->setContextProperty("YieldTrendModel", new YieldTrend);
 
-    const QUrl url(QStringLiteral("qrc:/main.qml"));
-    QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,
-                     &app, [url](QObject *obj, const QUrl &objUrl) {
-        if (!obj && url == objUrl)
-            QCoreApplication::exit(-1);
-    }, Qt::QueuedConnection);
-    engine.load(url);
+//    const QUrl url(QStringLiteral("qrc:/main.qml"));
+//    QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,
+//                     &app, [url](QObject *obj, const QUrl &objUrl) {
+//        if (!obj && url == objUrl)
+//            QCoreApplication::exit(-1);
+//    }, Qt::QueuedConnection);
+//    engine.load(url);
 
     return app.exec();
 }

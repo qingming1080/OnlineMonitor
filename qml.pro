@@ -1,4 +1,4 @@
-QT += widgets quick virtualkeyboard charts serialport
+QT += widgets quick virtualkeyboard charts serialport sql
 
 CONFIG += c++11
 msvc {
@@ -17,6 +17,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+        DataBase/databasemanager.cpp \
         devicemanager.cpp \
         fileobject.cpp \
         main.cpp \
@@ -47,6 +48,8 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 HEADERS += \
+    DataBase/databasemanager.h \
+    define.h \
     devicemanager.h \
     fileobject.h \
     model/device.h \
