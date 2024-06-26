@@ -8,6 +8,11 @@
 #define CONFIGURATION_TABLENAME     QString("configuration")
 #define NETWORK_TABLENAME           QString("connection_network")
 #define RS232_TABLENAME             QString("connection_rs232")
+#define IO_TABLENAME                QString("io_data")
+#define MODEL_TABLENAME             QString("model")
+#define PRODUCTION_TABLENAME        QString("production")
+#define SYSTEM_TABLENAME            QString("system_conf")
+#define USER_TABLENAME              QString("user")
 
 class DataBaseManager : public QObject
 {
@@ -20,6 +25,7 @@ public:
 
     ~DataBaseManager();
 
+/////////////////////////configuration////////////////////////////////
     ///
     /// \brief getConfigurationData : 获取Configuration表格数据
     /// \return : 数据
@@ -50,7 +56,7 @@ public:
     bool insertConfigurationDevice(_Configuration_Data data);
 
 
-
+/////////////////////////connection_network////////////////////////////////
     ///
     /// \brief getNetworkData : 获取connection_network表格数据
     /// \return : 数据
@@ -80,6 +86,7 @@ public:
     ///
     bool insertNetworkRow(_Network_Data data);
 
+/////////////////////////connection_rs232////////////////////////////////
     ///
     /// \brief getRS232Data : 获取connection_rs232表格数据
     /// \return : 数据
@@ -104,10 +111,107 @@ public:
 
     ///
     /// \brief insertRS232Row : 插入RS232表格一行数据
-    /// \param data : 串口id
+    /// \param data : 数据
     /// \return : 插入结果
     ///
     bool insertRS232Row(_RS232_Data data);
+
+/////////////////////////io_data////////////////////////////////
+    ///
+    /// \brief getIOData : 获取io_data表格数据
+    /// \return : 数据
+    ///
+    QList<_IO_Data> getIOData();
+
+    ///
+    /// \brief setIOData : 设置io_data表格数据
+    /// \param id : io_id
+    /// \param column : 列号
+    /// \param data : 新数据
+    /// \return : 设置结果
+    ///
+    bool setIOData(int id, _IO_COLUMN column, QVariant data);
+
+    ///
+    /// \brief removeIOData : 删除io_data表格一行数据
+    /// \param id : io_id
+    /// \return : 删除结果
+    ///
+    bool removeIOData(int id);
+
+    ///
+    /// \brief insertIORow : 插入io_data表格一行数据
+    /// \param data : 数据
+    /// \return : 插入结果
+    ///
+    bool insertIORow(_IO_Data data);
+
+/////////////////////////model////////////////////////////////
+    ///
+    /// \brief getModelData : 获取model表格数据
+    /// \return : 数据
+    ///
+    QList<_Model_Data> getModelData();
+
+    ///
+    /// \brief removeModelRow : 删除model表格一行数据
+    /// \param id : model_id
+    /// \return : 删除结果
+    ///
+    bool removeModelRow(int id);
+
+    ///
+    /// \brief insertModelRow : 插入model表格一行数据
+    /// \param data : 数据
+    /// \return : 插入结果
+    ///
+    bool insertModelRow(_Model_Data data);
+
+/////////////////////////production////////////////////////////////
+    ///
+    /// \brief getProductionData : 获取production表格数据
+    /// \return : 数据
+    ///
+    QList<_Production_Data> getProductionData();
+
+    ///
+    /// \brief removeProductionRow : 删除production表格一行数据
+    /// \param id : 生产id
+    /// \return : 删除结果
+    ///
+    bool removeProductionRow(int id);
+
+    ///
+    /// \brief insertProductionRow : 插入production表格一行数据
+    /// \param data : 数据
+    /// \return : 插入结果
+    ///
+    bool insertProductionRow(_Production_Data data);
+
+/////////////////////////production////////////////////////////////
+    ///
+    /// \brief getSystemData : 获取system_conf表格数据
+    /// \return : 数据
+    ///
+    QList<_System_Data> getSystemData();
+
+    ///
+    /// \brief setIOData : 设置system_conf表格数据
+    /// \param id : id
+    /// \param column : 列号
+    /// \param data : 新数据
+    /// \return : 设置结果
+    ///
+    bool setSystemData(int id, _SYSTEM_COLUMN column, QVariant data);
+
+/////////////////////////user////////////////////////////////
+
+    ///
+    /// \brief getLevelByPassword : 通过密码获取用户等级
+    /// \param password : 密码
+    /// \return : 用户等级，1最大，0无效
+    ///
+    int getLevelByPassword(QString password);
 signals:
 
 private:
@@ -135,6 +239,34 @@ private:
     /// \return : 列名
     ///
     QString getRS232_ColumnName(_RS232_COLUMN column);
+
+    ///
+    /// \brief getIO_ColumnName : 通过io_data列号获取列名
+    /// \param column : 列号
+    /// \return : 列名
+    ///
+    QString getIO_ColumnName(_IO_COLUMN column);
+
+    ///
+    /// \brief getModel_ColumnName : 通过model列号获取列名
+    /// \param column : 列号
+    /// \return : 列名
+    ///
+    QString getModel_ColumnName(_MODEL_COLUMN column);
+
+    ///
+    /// \brief getProduction_ColumnName : 通过production列号获取列名
+    /// \param column : 列号
+    /// \return : 列名
+    ///
+    QString getProduction_ColumnName(_PRODUCTION_COLUMN column);
+
+    ///
+    /// \brief getSystem_ColumnName : 通过system_conf列号获取列名
+    /// \param column : 列号
+    /// \return : 列名
+    ///
+    QString getSystem_ColumnName(_SYSTEM_COLUMN column);
 
 private:
     static DataBaseManager* s_pDataBaseManager;
