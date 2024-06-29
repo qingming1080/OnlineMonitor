@@ -9,6 +9,7 @@
 #define NETWORK_TABLENAME           QString("connection_network")
 #define RS232_TABLENAME             QString("connection_rs232")
 #define IO_TABLENAME                QString("io_data")
+#define MANUAL_TABLENAME            QString("manual")
 #define MODEL_TABLENAME             QString("model")
 #define PRODUCTION_TABLENAME        QString("production")
 #define SYSTEM_TABLENAME            QString("system_conf")
@@ -146,6 +147,19 @@ public:
     ///
     bool insertIORow(_IO_Data data);
 
+/////////////////////////manual////////////////////////////////
+    ///
+    /// \brief getManualData : 获取manual表格数据
+    /// \return : 数据
+    ///
+    QList<_Manual_Data> getManualData();
+
+    bool setManualData(int id, _MANUAL_COLUMN column, QVariant data);
+
+    bool removeManualRow(int id);
+
+    bool insertManualRow(_Manual_Data data);
+
 /////////////////////////model////////////////////////////////
     ///
     /// \brief getModelData : 获取model表格数据
@@ -246,6 +260,13 @@ private:
     /// \return : 列名
     ///
     QString getIO_ColumnName(_IO_COLUMN column);
+
+    ///
+    /// \brief getManuaal_ColumnName : 通过manual列号获取列名
+    /// \param column : 列号
+    /// \return : 列名
+    ///
+    QString getManual_ColumnName(_MANUAL_COLUMN column);
 
     ///
     /// \brief getModel_ColumnName : 通过model列号获取列名
