@@ -26,6 +26,10 @@ public:
 
     ~DataBaseManager();
 
+    void openTransaction();
+
+    void closeTransaction();
+
 /////////////////////////configuration////////////////////////////////
     ///
     /// \brief getConfigurationData : 获取Configuration表格数据
@@ -174,6 +178,8 @@ public:
     ///
     bool removeModelRow(int id);
 
+    bool clearModel();
+
     ///
     /// \brief insertModelRow : 插入model表格一行数据
     /// \param data : 数据
@@ -194,6 +200,8 @@ public:
     /// \return : 删除结果
     ///
     bool removeProductionRow(int id);
+
+    bool clearProduction();
 
     ///
     /// \brief insertProductionRow : 插入production表格一行数据

@@ -13,6 +13,11 @@ DeviceManager *DeviceManager::getInstance()
 DeviceManager::DeviceManager(QObject *parent)
     : QObject{parent}
 {
+    init();
+}
+
+void DeviceManager::init()
+{
 
 }
 
@@ -29,19 +34,24 @@ void DeviceManager::setDeviceNum(int newDeviceNum)
     emit deviceNumChanged();
 }
 
-Device *DeviceManager::device(int index) const
+bool DeviceManager::hasDevice(int index) const
 {
-    if(index < 1 || index > 4)
-        return nullptr;
-
-    return m_device[index-1];
+    return m_deviceMap.count(index)!=0?true:false;
 }
 
-void DeviceManager::addDevice()
+Device *DeviceManager::device(int index) const
 {
-    if(deviceNum() >= 4)
+    if(m_deviceMap.count(index) != 0)
+        return m_deviceMap.value(index);
+
+    return nullptr;
+}
+
+void DeviceManager::addDevice(int index)
+{
+    if(m_deviceMap.count(index) != 0)
         return;
 
-    m_device[deviceNum()] = new Device();
+    m_deviceMap[index] = new Device();
     setDeviceNum(deviceNum()+1);
 }

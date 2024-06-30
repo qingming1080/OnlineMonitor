@@ -23,14 +23,15 @@ SOURCES += \
         main.cpp \
         model/device.cpp \
         model/deviceinformation.cpp \
-        model/history.cpp \
-        model/realtimeyield.cpp \
-        model/systemconfig.cpp \
-        model/systeminformation.cpp \
-        model/weldparam.cpp \
-        model/weldresults.cpp \
+        model/iomodel.cpp \
+        model/manual.cpp \
+        model/message.cpp \
+        model/model.cpp \
+        model/networkmodel.cpp \
+        model/production.cpp \
+        model/rs232model.cpp \
+        model/system.cpp \
         model/weldtrend.cpp \
-        model/yieldmodel.cpp \
         model/yieldtrend.cpp \
         qmlcache.cpp
 
@@ -54,14 +55,15 @@ HEADERS += \
     fileobject.h \
     model/device.h \
     model/deviceinformation.h \
-    model/history.h \
-    model/realtimeyield.h \
-    model/systemconfig.h \
-    model/systeminformation.h \
-    model/weldparam.h \
-    model/weldresults.h \
+    model/iomodel.h \
+    model/manual.h \
+    model/message.h \
+    model/model.h \
+    model/networkmodel.h \
+    model/production.h \
+    model/rs232model.h \
+    model/system.h \
     model/weldtrend.h \
-    model/yieldmodel.h \
     model/yieldtrend.h \
     qmlcache.h \
     qmlenum.h

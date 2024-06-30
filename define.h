@@ -225,7 +225,7 @@ struct _Production_Data
     int energy;                            // 能量
     int amplitude;                         // 振幅
     int pressure;                          // 压力
-    int time;                              // 焊接时间
+    QString time;                              // 焊接时间
     int power;                             // 功率
     int pre_height;                        // 焊前高度
     int post_height;                       // 焊后高度

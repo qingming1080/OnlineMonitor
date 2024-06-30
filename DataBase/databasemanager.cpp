@@ -21,6 +21,16 @@ DataBaseManager::~DataBaseManager()
 
 }
 
+void DataBaseManager::openTransaction()
+{
+    m_database.transaction();
+}
+
+void DataBaseManager::closeTransaction()
+{
+    m_database.commit();
+}
+
 QList<_Configuration_Data> DataBaseManager::getConfigurationData()
 {
     QList<_Configuration_Data> list;
@@ -537,6 +547,14 @@ bool DataBaseManager::removeModelRow(int id)
     return query.exec();
 }
 
+bool DataBaseManager::clearModel()
+{
+    QSqlQuery query;
+    QString execStr = QString("TRUNCATE TABLE %1").arg(MODEL_TABLENAME);
+
+    return query.exec(execStr);
+}
+
 bool DataBaseManager::insertModelRow(_Model_Data data)
 {
     QSqlQuery query;
@@ -613,7 +631,7 @@ QList<_Production_Data> DataBaseManager::getProductionData()
         data.energy                   = query.value(_PRODUCTION_COLUMN::_PRODUCTION_energy).toInt();
         data.amplitude                = query.value(_PRODUCTION_COLUMN::_PRODUCTION_amplitude).toInt();
         data.pressure                 = query.value(_PRODUCTION_COLUMN::_PRODUCTION_pressure).toInt();
-        data.time                     = query.value(_PRODUCTION_COLUMN::_PRODUCTION_time).toInt();
+        data.time                     = query.value(_PRODUCTION_COLUMN::_PRODUCTION_time).toString();
         data.power                    = query.value(_PRODUCTION_COLUMN::_PRODUCTION_power).toInt();
         data.pre_height               = query.value(_PRODUCTION_COLUMN::_PRODUCTION_pre_height).toInt();
         data.post_height              = query.value(_PRODUCTION_COLUMN::_PRODUCTION_post_height).toInt();
@@ -643,6 +661,14 @@ bool DataBaseManager::removeProductionRow(int id)
     query.bindValue(":id", id);
 
     return query.exec();
+}
+
+bool DataBaseManager::clearProduction()
+{
+    QSqlQuery query;
+    QString execStr = QString("TRUNCATE TABLE %1").arg(PRODUCTION_TABLENAME);
+
+    return query.exec(execStr);
 }
 
 bool DataBaseManager::insertProductionRow(_Production_Data data)
@@ -842,6 +868,8 @@ QString DataBaseManager::getRS232_ColumnName(_RS232_COLUMN column)
     {
     case _RS232_id:
         return "id";
+
+
     case _RS232_port:
         return "port";
     case _RS232_baud_rate:

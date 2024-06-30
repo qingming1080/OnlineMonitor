@@ -32,28 +32,93 @@ void DeviceInformation::setModel(const QString &newModel)
     emit modelChanged();
 }
 
-QString DeviceInformation::connectMethod() const
+QmlEnum::_CONNECTTYPE DeviceInformation::connectType() const
 {
-    return m_connectMethod;
+    return m_connectType;
 }
 
-void DeviceInformation::setConnectMethod(const QString &newConnectMethod)
+void DeviceInformation::setConnectType(const QmlEnum::_CONNECTTYPE &newconnectType)
 {
-    if (m_connectMethod == newConnectMethod)
+    if (m_connectType == newconnectType)
         return;
-    m_connectMethod = newConnectMethod;
-    emit connectMethodChanged();
+    m_connectType = newconnectType;
+    emit connectTypeChanged();
 }
 
-QString DeviceInformation::state() const
+int DeviceInformation::id() const
 {
-    return m_state;
+    return m_id;
 }
 
-void DeviceInformation::setState(const QString &newState)
+void DeviceInformation::setId(int newId)
 {
-    if (m_state == newState)
+    if (m_id == newId)
         return;
-    m_state = newState;
-    emit stateChanged();
+    m_id = newId;
+    emit idChanged();
+}
+
+int DeviceInformation::maxBacth() const
+{
+    return m_maxBacth;
+}
+
+void DeviceInformation::setMaxBacth(int newMaxBacth)
+{
+    if (m_maxBacth == newMaxBacth)
+        return;
+    m_maxBacth = newMaxBacth;
+    emit maxBacthChanged();
+}
+
+int DeviceInformation::sample() const
+{
+    return m_sample;
+}
+
+void DeviceInformation::setSample(int newSample)
+{
+    if (m_sample == newSample)
+        return;
+    m_sample = newSample;
+    emit sampleChanged();
+}
+
+int DeviceInformation::heightOption() const
+{
+    return m_heightOption;
+}
+
+void DeviceInformation::setHeightOption(int newHeightOption)
+{
+    if (m_heightOption == newHeightOption)
+        return;
+    m_heightOption = newHeightOption;
+    emit heightOptionChanged();
+}
+
+int DeviceInformation::lowerLimit() const
+{
+    return m_lowerLimit;
+}
+
+void DeviceInformation::setLowerLimit(int newLowerLimit)
+{
+    if (m_lowerLimit == newLowerLimit)
+        return;
+    m_lowerLimit = newLowerLimit;
+    emit lowerLimitChanged();
+}
+
+int DeviceInformation::connectID() const
+{
+    return m_connectID;
+}
+
+void DeviceInformation::setConnectID(int newConnectID)
+{
+    if (m_connectID == newConnectID)
+        return;
+    m_connectID = newConnectID;
+    emit connectIDChanged();
 }
