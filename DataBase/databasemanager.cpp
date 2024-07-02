@@ -31,19 +31,40 @@ void DataBaseManager::closeTransaction()
     m_database.commit();
 }
 
-QList<_Configuration_Data> DataBaseManager::getConfigurationData()
+QList<int> DataBaseManager::getDeviceNums()
 {
-    QList<_Configuration_Data> list;
-
     QSqlQuery query;
     // %1_表格名称
     QString execStr = QString("SELECT * FROM %1").arg(CONFIGURATION_TABLENAME);
+
     if (!query.exec(execStr))
     {
         qDebug() << "查询失败: " << query.lastError();
     }
 
-    while(query.next())
+    QList<int> nums;
+    while(query.next()){
+        nums.push_back(query.value(_CONFIGURATION_COLUMN::_CONFIGURATION_welder_id).toInt());
+    }
+
+    return nums;
+}
+
+_Configuration_Data DataBaseManager::getConfigurationData(int welderID)
+{
+    QSqlQuery query;
+    // %1_表格名称
+    QString execStr = QString("SELECT * FROM %1 WHERE %2 = :welderID").arg(CONFIGURATION_TABLENAME, getConfiguration_ColumnName(_CONFIGURATION_welder_id));
+
+    query.prepare(execStr);
+    query.bindValue(":welderID", welderID);
+
+    if (!query.exec())
+    {
+        qDebug() << "查询失败: " << query.lastError();
+    }
+
+    if(query.next())
     {
         _Configuration_Data data;
         data.welder_id        = query.value(_CONFIGURATION_COLUMN::_CONFIGURATION_welder_id).toInt();
@@ -56,10 +77,11 @@ QList<_Configuration_Data> DataBaseManager::getConfigurationData()
         data.connect_type     = query.value(_CONFIGURATION_COLUMN::_CONFIGURATION_connect_type).toInt();
         data.connect_id       = query.value(_CONFIGURATION_COLUMN::_CONFIGURATION_connect_id).toInt();
 
-        list.push_back(data);
+        return data;
     }
 
-    return list;
+    _Configuration_Data data;
+    return data;
 }
 
 bool DataBaseManager::setConfigurationData(int deviceID, _CONFIGURATION_COLUMN column, QVariant data)
@@ -813,7 +835,7 @@ DataBaseManager::DataBaseManager(QObject *parent)
 void DataBaseManager::init()
 {
     m_database = QSqlDatabase::addDatabase("QSQLITE");
-    m_database.setDatabaseName("C:\\Users\\cxy\\Desktop\\HB平台\\数据库格式.db");
+    m_database.setDatabaseName("C:\\Users\\cxy\\Desktop\\HB平台\\onlinemonitor_new.db");
     if (!m_database.open())
     {
         qDebug() << "Database Open Fail ";

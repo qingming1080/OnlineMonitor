@@ -12,13 +12,12 @@ class DeviceManager : public QObject
 {
     Q_OBJECT
     // 当前设备数量
-    Q_PROPERTY(int deviceNum READ deviceNum WRITE setDeviceNum NOTIFY deviceNumChanged)
+    Q_PROPERTY(int deviceNum READ deviceNum NOTIFY deviceNumChanged)
 public:
     static DeviceManager* getInstance();
 
     /// 已暴露属性
     Q_INVOKABLE int deviceNum() const;
-    Q_INVOKABLE void setDeviceNum(int newDeviceNum);    // 不建议前端直接使用
 
     /// 是否有设备
     Q_INVOKABLE bool hasDevice(int index) const;
@@ -28,7 +27,11 @@ public:
     ///
     /// \brief addDevice : 新增一台设备
     ///
-    Q_INVOKABLE void addDevice(int index);
+    Q_INVOKABLE void addDevice();
+    ///
+    /// \brief removeDevice : 删除一台设备
+    ///
+    Q_INVOKABLE void removeDevice(int welderID);
 
 signals:
 

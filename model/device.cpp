@@ -12,7 +12,7 @@
 Device::Device(int welderID, QObject *parent)
     : QObject{parent}, m_welderID(welderID)
 {
-    m_pDeviceInformation  = new DeviceInformation();
+    m_pDeviceInformation  = new DeviceInformation(m_welderID);
     m_pIOModel            = new IOModel(m_welderID);
     m_pManual             = new Manual(m_welderID);
     m_pProduction         = new Production(m_welderID);

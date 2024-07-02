@@ -5,6 +5,9 @@
 
 #include "model/yieldtrend.h"
 
+#include "DataBase/databasemanager.h"
+#include "devicemanager.h"
+
 // 自定义消息处理程序
 void myMessageHandler(QtMsgType type, const QMessageLogContext &context, const QString &msg)
 {
@@ -30,6 +33,9 @@ int main(int argc, char *argv[])
     // 安装自定义消息处理程序
 //    qInstallMessageHandler(myMessageHandler);
     QApplication app(argc, argv);
+
+    qDebug() << DataBaseManager::getInstance()->getDeviceNums();
+    DeviceManager::getInstance();
 
     QQmlApplicationEngine engine;
     QQmlContext* pQmlContext = engine.rootContext();

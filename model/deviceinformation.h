@@ -11,7 +11,7 @@ class DeviceInformation : public QObject
 {
     Q_OBJECT
     // 焊机ID
-    Q_PROPERTY(int id                               READ id            WRITE setId              NOTIFY idChanged)
+    Q_PROPERTY(int id                               READ id            /*WRITE setId */             NOTIFY idChanged)
     // 焊机名称
     Q_PROPERTY(QString name                         READ name          WRITE setName            NOTIFY nameChanged)
     // 焊机型号
@@ -29,8 +29,11 @@ class DeviceInformation : public QObject
     Q_PROPERTY(QmlEnum::_CONNECTTYPE connectType    READ connectType   WRITE setConnectType     NOTIFY connectTypeChanged)
     // 连接方式ID
     Q_PROPERTY(int connectID                        READ connectID     WRITE setConnectID       NOTIFY connectIDChanged)
+
+    // 设备状态(生产中，待机等)
+    Q_PROPERTY(QString state                        READ state         WRITE setState           NOTIFY stateChanged)
 public:
-    explicit DeviceInformation(QObject *parent = nullptr);
+    explicit DeviceInformation(int welderID, QObject *parent = nullptr);
 
     Q_INVOKABLE QString name() const;
     Q_INVOKABLE void setName(const QString &newName);
@@ -42,7 +45,7 @@ public:
     Q_INVOKABLE void setConnectType(const QmlEnum::_CONNECTTYPE &newconnectType);
 
     Q_INVOKABLE int id() const;
-    Q_INVOKABLE void setId(int newId);
+//    Q_INVOKABLE void setId(int newId);
 
     Q_INVOKABLE int maxBacth() const;
     Q_INVOKABLE void setMaxBacth(int newMaxBacth);
@@ -58,6 +61,9 @@ public:
 
     Q_INVOKABLE int connectID() const;
     Q_INVOKABLE void setConnectID(int newConnectID);
+
+    QString state() const;
+    void setState(const QString &newState);
 
 signals:
 
@@ -79,7 +85,7 @@ signals:
     void connectIDChanged();
 
 private:
-    int m_id{-1};
+    const int m_id;
     QString m_name{};
     QString m_model{};
     int m_maxBacth;
@@ -88,6 +94,8 @@ private:
     int m_heightOption;
     QmlEnum::_CONNECTTYPE m_connectType;
     int m_connectID;
+
+    QString m_state;
 };
 
 #endif // DEVICEINFORMATION_H

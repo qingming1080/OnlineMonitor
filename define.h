@@ -30,15 +30,15 @@ enum _CONFIGURATION_COLUMN
 
 struct _Configuration_Data
 {
-    int welder_id;           // 焊机ID
-    QString welder_name;     // 焊机名称
-    QString welder_type;     // 焊机型号
-    int production_bacth;    // 最大生产批量
-    int model_sample;        // 学习样本数
-    int lower_limit;         // 良率下限
-    int height_option;       // 高度模式
-    int connect_type;        // 连接方式     0_RS232  1_Network
-    int connect_id;          // 连接方式ID
+    int welder_id{0};           // 焊机ID
+    QString welder_name{""};    // 焊机名称
+    QString welder_type{""};    // 焊机型号
+    int production_bacth{0};    // 最大生产批量
+    int model_sample{0};        // 学习样本数
+    int lower_limit{0};         // 良率下限
+    int height_option{0};       // 高度模式
+    int connect_type{0};        // 连接方式     0_RS232  1_Network
+    int connect_id{0};          // 连接方式ID
 };
 Q_DECLARE_METATYPE(_Configuration_Data)
 

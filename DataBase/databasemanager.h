@@ -31,11 +31,14 @@ public:
     void closeTransaction();
 
 /////////////////////////configuration////////////////////////////////
+
+    QList<int> getDeviceNums();
+
     ///
     /// \brief getConfigurationData : 获取Configuration表格数据
     /// \return : 数据
     ///
-    QList<_Configuration_Data> getConfigurationData();
+    _Configuration_Data getConfigurationData(int welderID);
 
     ///
     /// \brief setConfigurationData : 设置Configuration表格数据
