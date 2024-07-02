@@ -52,6 +52,6 @@ void DeviceManager::addDevice(int index)
     if(m_deviceMap.count(index) != 0)
         return;
 
-    m_deviceMap[index] = new Device();
+    m_deviceMap[index] = new Device(index);
     setDeviceNum(deviceNum()+1);
 }

@@ -126,7 +126,7 @@ public:
     /// \brief getIOData : 获取io_data表格数据
     /// \return : 数据
     ///
-    QList<_IO_Data> getIOData();
+    QList<_IO_Data> getIOData(int welderID);
 
     ///
     /// \brief setIOData : 设置io_data表格数据
@@ -156,7 +156,7 @@ public:
     /// \brief getManualData : 获取manual表格数据
     /// \return : 数据
     ///
-    QList<_Manual_Data> getManualData();
+    QList<_Manual_Data> getManualData(int welderID);
 
     bool setManualData(int id, _MANUAL_COLUMN column, QVariant data);
 
@@ -192,7 +192,7 @@ public:
     /// \brief getProductionData : 获取production表格数据
     /// \return : 数据
     ///
-    QList<_Production_Data> getProductionData();
+    QList<_Production_Data> getProductionData(int welderID);
 
     ///
     /// \brief removeProductionRow : 删除production表格一行数据
@@ -215,7 +215,7 @@ public:
     /// \brief getSystemData : 获取system_conf表格数据
     /// \return : 数据
     ///
-    QList<_System_Data> getSystemData();
+    QList<_System_Data> getSystemData(int welderID);
 
     ///
     /// \brief setIOData : 设置system_conf表格数据

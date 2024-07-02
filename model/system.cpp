@@ -1,15 +1,12 @@
 #include "system.h"
 #include "DataBase/databasemanager.h"
 
-System* System::s_pSystem = nullptr;
-
-System *System::getInstance()
+System::System(int welderID, QObject *parent)
+    : QAbstractListModel{parent}, m_welderID(welderID)
 {
-    if(s_pSystem == nullptr)
-        s_pSystem = new System();
-
-    return s_pSystem;
+    m_data = DataBaseManager::getInstance()->getSystemData(m_welderID);
 }
+
 
 int System::rowCount(const QModelIndex &parent) const
 {
@@ -137,8 +134,3 @@ void System::setSystemData(int id, _SYSTEM_COLUMN column, QVariant data)
     }
 }
 
-System::System(QObject *parent)
-    : QAbstractListModel{parent}
-{
-    m_data = DataBaseManager::getInstance()->getSystemData();
-}

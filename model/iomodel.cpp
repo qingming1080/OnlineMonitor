@@ -1,14 +1,11 @@
 #include "iomodel.h"
 #include "DataBase/databasemanager.h"
 
-IOModel* IOModel::s_pIOModel = nullptr;
 
-IOModel *IOModel::getInstance()
+IOModel::IOModel(int welderID, QObject *parent)
+    : QAbstractListModel{parent}, m_welderID(welderID)
 {
-    if(s_pIOModel == nullptr)
-        s_pIOModel = new IOModel();
-
-    return s_pIOModel;
+    m_data = DataBaseManager::getInstance()->getIOData(m_welderID);
 }
 
 int IOModel::rowCount(const QModelIndex &parent) const
@@ -125,8 +122,3 @@ void IOModel::setIOData(int id, _IO_COLUMN column, QVariant data)
     }
 }
 
-IOModel::IOModel(QObject *parent)
-    : QAbstractListModel{parent}
-{
-    m_data = DataBaseManager::getInstance()->getIOData();
-}

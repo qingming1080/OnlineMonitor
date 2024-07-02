@@ -305,14 +305,18 @@ bool DataBaseManager::insertRS232Row(_RS232_Data data)
     return query.exec();
 }
 
-QList<_IO_Data> DataBaseManager::getIOData()
+QList<_IO_Data> DataBaseManager::getIOData(int welderID)
 {
     QList<_IO_Data> list;
 
     QSqlQuery query;
     // %1_表格名称
-    QString execStr = QString("SELECT * FROM %1").arg(IO_TABLENAME);
-    if (!query.exec(execStr))
+    QString execStr = QString("SELECT * FROM %1 WHERE %2 = :welderID").arg(IO_TABLENAME, getIO_ColumnName(_IO_COLUMN::_IO_welder_id));
+
+    query.prepare(execStr);
+    query.bindValue(":welderID", welderID);
+
+    if (!query.exec())
     {
         qDebug() << "查询失败: " << query.lastError();
     }
@@ -385,14 +389,18 @@ bool DataBaseManager::insertIORow(_IO_Data data)
     return query.exec();
 }
 
-QList<_Manual_Data> DataBaseManager::getManualData()
+QList<_Manual_Data> DataBaseManager::getManualData(int welderID)
 {
     QList<_Manual_Data> list;
 
     QSqlQuery query;
     // %1_表格名称
-    QString execStr = QString("SELECT * FROM %1").arg(MANUAL_TABLENAME);
-    if (!query.exec(execStr))
+    QString execStr = QString("SELECT * FROM %1 WHERE %2 = :welderID").arg(MANUAL_TABLENAME, getManual_ColumnName(_MANUAL_COLUMN::_MANUAL_welder_id));
+
+    query.prepare(execStr);
+    query.bindValue(":welderID", welderID);
+
+    if (!query.exec())
     {
         qDebug() << "查询失败: " << query.lastError();
     }
@@ -606,14 +614,18 @@ bool DataBaseManager::insertModelRow(_Model_Data data)
     return query.exec();
 }
 
-QList<_Production_Data> DataBaseManager::getProductionData()
+QList<_Production_Data> DataBaseManager::getProductionData(int welderID)
 {
     QList<_Production_Data> list;
 
     QSqlQuery query;
     // %1_表格名称
-    QString execStr = QString("SELECT * FROM %1").arg(PRODUCTION_TABLENAME);
-    if (!query.exec(execStr))
+    QString execStr = QString("SELECT * FROM %1 WHERE %2 = :welderID").arg(PRODUCTION_TABLENAME, getProduction_ColumnName(_PRODUCTION_COLUMN::_PRODUCTION_welder_id));
+
+    query.prepare(execStr);
+    query.bindValue(":welderID", welderID);
+
+    if (!query.exec())
     {
         qDebug() << "查询失败: " << query.lastError();
     }
@@ -726,14 +738,18 @@ bool DataBaseManager::insertProductionRow(_Production_Data data)
     return query.exec();
 }
 
-QList<_System_Data> DataBaseManager::getSystemData()
+QList<_System_Data> DataBaseManager::getSystemData(int welderID)
 {
     QList<_System_Data> list;
 
     QSqlQuery query;
     // %1_表格名称
-    QString execStr = QString("SELECT * FROM %1").arg(SYSTEM_TABLENAME);
-    if (!query.exec(execStr))
+    QString execStr = QString("SELECT * FROM %1 WHERE %2 = :welderID").arg(SYSTEM_TABLENAME, getSystem_ColumnName(_SYSTEM_COLUMN::_SYSTEM_welder_id));
+
+    query.prepare(execStr);
+    query.bindValue(":welderID", welderID);
+
+    if (!query.exec())
     {
         qDebug() << "查询失败: " << query.lastError();
     }

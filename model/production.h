@@ -11,7 +11,7 @@ class Production : public QAbstractListModel
 {
     Q_OBJECT
 public:
-    static Production* getInstance();
+    explicit Production(int welderID, QObject *parent = nullptr);
 
     // QAbstractItemModel interface
 public:
@@ -24,10 +24,10 @@ public:
 
     Q_INVOKABLE void save();
 private:
-    explicit Production(QObject *parent = nullptr);
+
 
 private:
-    static Production* s_pProduction;
+    const int m_welderID;
 
     QList<_Production_Data> m_data;
 };

@@ -5,7 +5,7 @@
 #include "define.h"
 
 ///
-/// \brief The Model class : model
+/// \brief The Model class : model(无效，暂不删除)
 ///
 class Model : public QAbstractListModel
 {

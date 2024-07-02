@@ -11,7 +11,7 @@ class System : public QAbstractListModel
 {
     Q_OBJECT
 public:
-    static System* getInstance();
+   explicit System(int welderID, QObject *parent = nullptr);
 
     // QAbstractItemModel interface
 public:
@@ -23,10 +23,10 @@ public:
     Q_INVOKABLE void setSystemData(int id, _SYSTEM_COLUMN column, QVariant data);
 
 private:
-    explicit System(QObject *parent = nullptr);
+
 
 private:
-    static System* s_pSystem;
+    const int m_welderID;
 
     QList<_System_Data> m_data;
 };

@@ -11,7 +11,7 @@ class IOModel : public QAbstractListModel
 {
     Q_OBJECT
 public:
-    static IOModel* getInstance();
+    explicit IOModel(int welderID, QObject *parent = nullptr);
 
     // QAbstractItemModel interface
 public:
@@ -23,11 +23,10 @@ public:
     Q_INVOKABLE void setIOData(int id, _IO_COLUMN column, QVariant data);
 
 private:
-    explicit IOModel(QObject *parent = nullptr);
+
 
 private:
-    static IOModel* s_pIOModel;
-
+    const int m_welderID;
     QList<_IO_Data> m_data;
 };
 

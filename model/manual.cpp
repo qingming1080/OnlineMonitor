@@ -1,14 +1,10 @@
 #include "manual.h"
 #include "DataBase/databasemanager.h"
 
-Manual* Manual::s_pManual = nullptr;
-
-Manual *Manual::getInstance()
+Manual::Manual(int welderID, QObject *parent)
+    : QAbstractListModel{parent}, m_welderID(welderID)
 {
-    if(s_pManual == nullptr)
-        s_pManual = new Manual();
-
-    return s_pManual;
+    m_data = DataBaseManager::getInstance()->getManualData(m_welderID);
 }
 
 int Manual::rowCount(const QModelIndex &parent) const
@@ -224,8 +220,4 @@ void Manual::setManualData(int id, _MANUAL_COLUMN column, QVariant data)
     }
 }
 
-Manual::Manual(QObject *parent)
-    : QAbstractListModel{parent}
-{
-    m_data = DataBaseManager::getInstance()->getManualData();
-}
+

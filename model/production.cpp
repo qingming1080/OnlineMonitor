@@ -1,14 +1,10 @@
 #include "production.h"
 #include "DataBase/databasemanager.h"
 
-Production* Production::s_pProduction = nullptr;
-
-Production *Production::getInstance()
+Production::Production(int welderID, QObject *parent)
+    : QAbstractListModel{parent}, m_welderID(welderID)
 {
-    if(s_pProduction == nullptr)
-        s_pProduction = new Production();
-
-    return s_pProduction;
+    m_data = DataBaseManager::getInstance()->getProductionData(m_welderID);
 }
 
 int Production::rowCount(const QModelIndex &parent) const
@@ -279,10 +275,4 @@ void Production::save()
         DataBaseManager::getInstance()->insertProductionRow(m_data.at(i));
 
     DataBaseManager::getInstance()->closeTransaction();
-}
-
-Production::Production(QObject *parent)
-    : QAbstractListModel{parent}
-{
-    m_data = DataBaseManager::getInstance()->getProductionData();
 }

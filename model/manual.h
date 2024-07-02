@@ -11,7 +11,7 @@ class Manual : public QAbstractListModel
 {
     Q_OBJECT
 public:
-    static Manual* getInstance();
+    explicit Manual(int welderID, QObject *parent = nullptr);
 
     // QAbstractItemModel interface
 public:
@@ -23,10 +23,10 @@ public:
     Q_INVOKABLE void setManualData(int id, _MANUAL_COLUMN column, QVariant data);
 
 private:
-    explicit Manual(QObject *parent = nullptr);
+
 
 private:
-    static Manual* s_pManual;
+    const int m_welderID;
 
     QList<_Manual_Data> m_data;
 };
