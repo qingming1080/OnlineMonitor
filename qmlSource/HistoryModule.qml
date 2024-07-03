@@ -1,8 +1,9 @@
-import QtQuick 2.12
+import QtQuick 2.15
 import QtQuick.Controls 1.4
 import QtQml.Models 2.2
 import QtQuick.Controls 2.5
 import Qt.labs.qmlmodels 1.0
+import QtQuick.Controls.Styles 1.4
 Rectangle {
     property int itemCount: equipmentCount
     color: pRgb(153, 204, 255)
@@ -365,12 +366,6 @@ Rectangle {
         }
         rowDelegate: Rectangle {
             height: 40
-            visible:{
-                console.log(tableView.model.data(listModel.index(styleData.row, listModel.name), Qt.DisplayRole))
-                console.log(tableView.model.data(listModel.index(styleData.row, listModel.result), Qt.DisplayRole))
-                console.log(tableView.model.data(listModel.index(styleData.row, listModel.date), Qt.DisplayRole))
-                tableView.model.data(listModel.index(styleData.row, name), Qt.DisplayRole)!=="Item 1"
-            }
         }
 
         headerDelegate: Rectangle {
@@ -413,6 +408,27 @@ Rectangle {
             width: 244
         }
         model: tableModel
+        ListModel {
+            id: tableModel
+            ListElement { name: "Item 1"; date: "1" ;energy: "2";power: "2";result: "3";}
+            ListElement { name: "Item 2"; date: "2" ;energy: "2";power: "2";result: "4";}
+            ListElement { name: "Item 2"; date: "3" ;energy: "2";power: "2";result: "3";}
+            ListElement { name: "Item 2"; date: "3" ;energy: "2";power: "2";result: "3";}
+            ListElement { name: "Item 2"; date: "3" ;energy: "2";power: "2";result: "3";}
+            ListElement { name: "Item 2"; date: "3" ;energy: "2";power: "2";result: "3";}
+            ListElement { name: "Item 2"; date: "3" ;energy: "2";power: "2";result: "3";}
+            ListElement { name: "Item 2"; date: "3" ;energy: "2";power: "2";result: "3";}
+            ListElement { name: "Item 2"; date: "3" ;energy: "2";power: "2";result: "3";}
+            ListElement { name: "Item 2"; date: "3" ;energy: "2";power: "2";result: "3";}
+            ListElement { name: "Item 2"; date: "3" ;energy: "2";power: "2";result: "3";}
+            ListElement { name: "Item 2"; date: "3" ;energy: "2";power: "2";result: "3";}
+            ListElement { name: "Item 2"; date: "3" ;energy: "2";power: "2";result: "3";}
+            ListElement { name: "Item 2"; date: "3" ;energy: "2";power: "2";result: "3";}
+            ListElement { name: "Item 2"; date: "3" ;energy: "2";power: "2";result: "3";}
+            ListElement { name: "Item 2"; date: "3" ;energy: "2";power: "2";result: "3";}
+            ListElement { name: "Item 2"; date: "3" ;energy: "2";power: "2";result: "3";}
+            ListElement { name: "Item 2"; date: "3" ;energy: "2";power: "2";result: "3";}
+        }
     }
 
     Text {

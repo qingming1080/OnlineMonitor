@@ -38,5 +38,12 @@
         <file>image/缩小.png</file>
         <file>qmlSource/SwipeProductionModule.qml</file>
         <file>qmlSource/MultideviceSystemConfig.qml</file>
+        <file>qmlSource/SwipePage.qml</file>
+        <file>qmlSource/CustomDialog.qml</file>
+        <file>image/关闭.png</file>
+        <file>image/日程-参与者-待定.png</file>
+        <file>fonts/SourceHanSansCN-Bold.ttf</file>
+        <file>fonts/SourceHanSansCN-Normal.ttf</file>
+        <file>qmlSource/RootConfig.qml</file>
     </qresource>
 </RCC>

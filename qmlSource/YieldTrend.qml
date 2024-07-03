@@ -5,6 +5,8 @@ import QtCharts 2.15
 Rectangle {
     property var startTime: Date.fromLocaleString(Qt.locale(), "2001-01-01 01:00:00", "yyyy-MM-dd hh:mm:ss")
     property var endTime: Date.fromLocaleString(Qt.locale(), "2001-01-01 02:00:00", "yyyy-MM-dd hh:mm:ss")
+    property int equiInforIndex: 0
+    property int btnIndex: 1
     onHeightChanged: {
         if(height < 260){
             if(mode == 1){
@@ -24,6 +26,53 @@ Rectangle {
             chart.height = 240
         }
     }
+    function btnSwitch(){
+        if(btnIndex === 1){
+            bbbb.border.color = "#007dbc"
+            b.border.color = "#00488d"
+            bb.border.color = "#007dbc"
+            bbb.border.color = "#007dbc"
+            t1.color = "#00488d"
+            t2.color = "#b1d5db"
+            t3.color = "#b1d5db"
+            t4.color = "#b1d5db"
+        }
+        else if(btnIndex === 2){
+            bbbb.border.color = "#007dbc"
+            b.border.color = "#007dbc"
+            bb.border.color = "#00488d"
+            bbb.border.color = "#007dbc"
+            t2.color = "#00488d"
+            t1.color = "#b1d5db"
+            t3.color = "#b1d5db"
+            t4.color = "#b1d5db"
+        }
+        else if(btnIndex === 3){
+            bbbb.border.color = "#007dbc"
+            b.border.color = "#007dbc"
+            bb.border.color = "#007dbc"
+            bbb.border.color = "#00488d"
+            t3.color = "#00488d"
+            t2.color = "#b1d5db"
+            t1.color = "#b1d5db"
+            t4.color = "#b1d5db"
+        }
+        else if(btnIndex === 4){
+            bbbb.border.color = "#00488d"
+            b.border.color = "#007dbc"
+            bb.border.color = "#007dbc"
+            bbb.border.color = "#007dbc"
+            t4.color = "#00488d"
+            t3.color = "#b1d5db"
+            t2.color = "#b1d5db"
+            t1.color = "#b1d5db"
+        }
+    }
+
+    onBtnIndexChanged: {
+        btnSwitch()
+    }
+
     onVisibleChanged: {
         if(visible){
             enabled = true
@@ -32,7 +81,6 @@ Rectangle {
             enabled = false
         }
     }
-
     color: pRgb(43, 112, 173)
     radius: 3
     Text {
@@ -61,16 +109,8 @@ Rectangle {
         radius: 4
         color:"#007dbc"
         Component.onCompleted: {
-            bbbb.border.color = "#007dbc"
-            b.border.color = "#00488d"
-            bb.border.color = "#007dbc"
-            bbb.border.color = "#007dbc"
-            t1.color = "#00488d"
-            t2.color = "#b1d5db"
-            t3.color = "#b1d5db"
-            t4.color = "#b1d5db"
+            btnSwitch()
         }
-
         Button{
             id:b1
             anchors.top: parent.top
@@ -94,6 +134,7 @@ Rectangle {
                 t2.color = "#b1d5db"
                 t3.color = "#b1d5db"
                 t4.color = "#b1d5db"
+                buttonSynchronization(equiInforIndex,1)
             }
             contentItem: Text {
                 id:t1
@@ -126,6 +167,7 @@ Rectangle {
                 t1.color = "#b1d5db"
                 t3.color = "#b1d5db"
                 t4.color = "#b1d5db"
+                buttonSynchronization(equiInforIndex,2)
             }
             contentItem: Text {
                 id:t2
@@ -158,6 +200,7 @@ Rectangle {
                 t2.color = "#b1d5db"
                 t1.color = "#b1d5db"
                 t4.color = "#b1d5db"
+                buttonSynchronization(equiInforIndex,3)
             }
             contentItem: Text {
                 id:t3
@@ -190,6 +233,7 @@ Rectangle {
                 t3.color = "#b1d5db"
                 t2.color = "#b1d5db"
                 t1.color = "#b1d5db"
+                buttonSynchronization(equiInforIndex,4)
             }
             contentItem: Text {
                 id:t4

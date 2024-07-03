@@ -39,7 +39,9 @@ int main(int argc, char *argv[])
 
     QQmlApplicationEngine engine;
     QQmlContext* pQmlContext = engine.rootContext();
+    pQmlContext->setContextProperty("DeviceManager", DeviceManager::getInstance());
     pQmlContext->setContextProperty("YieldTrendModel", new YieldTrend);
+
 
     const QUrl url(QStringLiteral("qrc:/main.qml"));
     QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,

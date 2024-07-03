@@ -6,14 +6,23 @@ Rectangle {
     id: sysUI
     property int itemCount: equipmentCount
     property int currIndex: 0
+    property int currentConfigId: 0 // 多设备时放大界面数据判断
     property bool musysTmp1: false
     property bool musysTmp2: false
     property bool musysTmp3: false
     property bool musysTmp4: false
+
+    property bool undetermined1: false
+    property bool undetermined2: false
+    property bool undetermined3: false
+    property bool undetermined4: false
+    property bool undeterMined: false
+    property bool altitudMode:false
     property bool oneself: false
+    property bool btnDefault: false
     property var sysViews: []
     Component.onCompleted: {
-        loadView(1,syscfg)
+        loadViewsys(1,syscfg)
     }
 
     color: pRgb(153, 204, 255)
@@ -22,7 +31,7 @@ Rectangle {
     function sysCheck(id){
         sigSysCheck(id)
     }
-    function loadView(viewName, component) {
+    function loadViewsys(viewName, component) {
         loader1.pop()
         if (sysViews[viewName]) {
             // 如果视图已缓存，直接显示
@@ -37,20 +46,52 @@ Rectangle {
     Connections{
         target: window
         function onSigSysConfig(){
-            configCheck()
+            Qt.callLater(configCheck)
+        }
+        function onSigUndetermined(index){
+            if(currentConfigId == 1){
+                undeterMined = undetermined1
+            }
+            else if(currentConfigId == 2){
+                undeterMined = undetermined2
+            }
+            else if(currentConfigId == 3){
+                undeterMined = undetermined3
+            }
+            else if(currentConfigId == 4){
+                undeterMined = undetermined4
+            }
+        }
+        function onSigUpdateUI(index){
+            if(index === 0){
+                altitudMode = altitudeModel1
+                btnDefault = altitudeModel1
+            }
+            else if(index === 1){
+                altitudMode = altitudeModel2
+                btnDefault = altitudeModel2
+            }
+            else if(index === 2){
+                altitudMode = altitudeModel3
+                btnDefault = altitudeModel3
+            }
+            else if(index === 3){
+                altitudMode = altitudeModel4
+                btnDefault = altitudeModel4
+            }
         }
     }
 
     function configCheck(){
         if(isAdd){
-            loadView(1,syscfg)
+            loadViewsys(1,syscfg)
         }
         else{
             if(itemCount == 1){
-                loadView(1,syscfg)
+                loadViewsys(1,syscfg)
             }
             else{
-                loadView(2,musys)
+                loadViewsys(2,musys)
                 currIndex = 0
             }
         }
@@ -58,7 +99,7 @@ Rectangle {
 
     onItemCountChanged: {
         if(itemCount == 1){
-            loadView(1,syscfg)
+            loadViewsys(1,syscfg)
         }
         else if(itemCount == 2){
             musysTmp1 = true
@@ -261,17 +302,45 @@ Rectangle {
                     anchors.top: parent.top
                     anchors.leftMargin: 214
                     anchors.topMargin: 283
+                    checked: btnDefault
                     indicator: Rectangle
                     {
                         width: 30
                         height: 30
                         radius: 15
-                        color: bt1.checked ? "#0d988c" : pRgb(232, 232, 232)
+                        color: altitudMode ? "#0d988c" : pRgb(232, 232, 232)
                         border.color: "#b1d5db"
                         border.width: 2
                     }
                     onPressed: {
-                        altitudeModel = true
+                        if(equipmentCount > 1){
+                            if(currentConfigId == 1){
+                                altitudeModel1 = true
+                                btnDefault = true
+                                altitudMode = true
+                            }
+                            else if(currentConfigId == 2){
+                                altitudeModel2 = true
+                                btnDefault = true
+                                altitudMode = true
+                            }
+                            else if(currentConfigId == 3){
+                                altitudeModel3 = true
+                                btnDefault = true
+                                altitudMode = true
+                            }
+                            else if(currentConfigId == 4){
+                                altitudeModel4 = true
+                                btnDefault = true
+                                altitudMode = true
+                            }
+                            sigUndetermined(currentConfigId)
+                        }
+                        else{
+                            btnDefault = true
+                            altitudeModel1 = true
+                            altitudMode = true
+                        }
                     }
                 }
                 Text {
@@ -291,18 +360,20 @@ Rectangle {
                     anchors.left: bt1.right
                     anchors.top: bt1.top
                     anchors.leftMargin: 90
-                    checked: true
+                    checked: !btnDefault
                     indicator: Rectangle
                     {
                         width: 30
                         height: 30
                         radius: 15
-                        color: bt2.checked ? "#0d988c" : pRgb(232, 232, 232)
+                        color: !altitudMode ? "#0d988c" : pRgb(232, 232, 232)
                         border.color: "#b1d5db"
                         border.width: 2
                     }
                     onPressed: {
-                        altitudeModel = false
+                        btnDefault = false
+                        altitudeModel1 = false
+                        altitudMode = false
                     }
                 }
                 Text {
@@ -319,6 +390,35 @@ Rectangle {
                     x:269
                     y:356
                     onClicked: {
+                        if(equipmentCount >1){
+                            if(currentConfigId == 1){
+                                undetermined1 = !undetermined1
+                            }
+                            else if(currentConfigId == 2){
+                                undetermined2 = !undetermined2
+                            }
+                            else if(currentConfigId == 3){
+                                undetermined3 = !undetermined3
+                            }
+                            else if(currentConfigId == 4){
+                                undetermined4 = !undetermined4
+                            }
+                        }
+                        else{
+                            undetermined1 = !undetermined1
+                        }
+                        if(currentConfigId == 1){
+                            undeterMined = undetermined1
+                        }
+                        else if(currentConfigId == 2){
+                            undeterMined = undetermined2
+                        }
+                        else if(currentConfigId == 3){
+                            undeterMined = undetermined3
+                        }
+                        else if(currentConfigId == 4){
+                            undeterMined = undetermined4
+                        }
                     }
 
                     indicator: Rectangle{
@@ -344,12 +444,12 @@ Rectangle {
                             //改变小圆点位置
                             NumberAnimation on x{
                                 to:smallRect.width
-                                running: ctl.checked? true : false
+                                running: undeterMined? true : false
                                 duration: 0
                             }
                             NumberAnimation on x{
                                 to:6
-                                running: ctl.checked? false : true;
+                                running: undeterMined? false : true;
                                 duration: 0
                             }
                         }
@@ -359,7 +459,7 @@ Rectangle {
                             anchors.topMargin: 5
                             anchors.leftMargin: 25
                             text: qsTr("关闭")
-                            color: ctl.checked? pRgb(43, 112, 173) : "#e5e6e7"
+                            color: undeterMined? pRgb(43, 112, 173) : "#e5e6e7"
                             font.family: fontBold
                             font.pixelSize: 16
                         }
@@ -369,7 +469,7 @@ Rectangle {
                             anchors.topMargin: 5
                             anchors.rightMargin: 25
                             text: qsTr("启动")
-                            color: ctl.checked? "#e5e6e7" : pRgb(43, 112, 173)
+                            color: undeterMined? "#e5e6e7" : pRgb(43, 112, 173)
                             font.family: fontBold
                             font.pixelSize: 16
                         }
@@ -420,7 +520,9 @@ Rectangle {
                 }
                 Image {
                     id: im3
-                    source: "qrc:/image/待定.png"
+                    width: 30
+                    height: 30
+                    source: !undeterMined ? "qrc:/image/日程-参与者-待定.png" : "qrc:/image/待定.png"
                     anchors.left: im2.left
                     anchors.top: im2.bottom
                     anchors.topMargin: 13
@@ -781,6 +883,24 @@ Rectangle {
                         }
                     }
                 }
+                Button{
+                    id:full
+                    width: 30
+                    height: 30
+                    x:1170
+                    y:10
+                    visible: equipmentCount > 1 ? true : false
+                    background: Rectangle{
+                        color: "transparent"
+                        Image {
+                            anchors.fill: parent
+                            source: "qrc:/image/缩小.png"
+                        }
+                    }
+                    onPressed: {
+                        loadViewsys(2,musys)
+                    }
+                }
             }
             Button{
                 id:bt3
@@ -807,10 +927,14 @@ Rectangle {
                             switchUI(1)
                         }
                         else{
-                            loadView(2,musys)
+                            loadViewsys(2,musys)
                         }
-                        equipmentCount++
+                        DeviceManager.addDevice()
                         oneself = false
+                        sigUndetermined(1)
+                    }
+                    if(full.visible){//设置多设备时配置存储
+
                     }
                 }
             }
@@ -825,6 +949,11 @@ Rectangle {
                 y:68
                 sysCurrIndex:1
                 visible: musysTmp1
+                onSigAltitudeModel: {
+                    if(visible){
+                        altitudeModel1 = tmp
+                    }
+                }
             }
             MultideviceSystemConfig{
                 id:s2
@@ -832,6 +961,11 @@ Rectangle {
                 y:68
                 sysCurrIndex:2
                 visible: musysTmp2
+                onSigAltitudeModel: {
+                    if(visible){
+                        altitudeModel2 = tmp
+                    }
+                }
             }
             MultideviceSystemConfig{
                 id:s3
@@ -839,6 +973,11 @@ Rectangle {
                 y:68
                 sysCurrIndex:3
                 visible: musysTmp3
+                onSigAltitudeModel: {
+                    if(visible){
+                        altitudeModel3 = tmp
+                    }
+                }
             }
             MultideviceSystemConfig{
                 id:s4
@@ -846,6 +985,11 @@ Rectangle {
                 y:68
                 sysCurrIndex:4
                 visible: musysTmp4
+                onSigAltitudeModel: {
+                    if(visible){
+                        altitudeModel4 = tmp
+                    }
+                }
             }
             Connections{
                 target: sysUI
@@ -866,6 +1010,15 @@ Rectangle {
                     else if(id === 4){
                         s4.color = "#4a8ac4"
                     }
+                }
+            }
+            Connections{
+                target: window
+                function onSigStatusReset(){
+                    s1.color = pRgb(43, 112, 173)
+                    s2.color = pRgb(43, 112, 173)
+                    s3.color = pRgb(43, 112, 173)
+                    s4.color = pRgb(43, 112, 173)
                 }
             }
             Button{
@@ -919,18 +1072,110 @@ Rectangle {
                     font.family: fontBold
                 }
                 onPressed: {
-                    equipmentCount--
+                    DeviceManager.removeDevice(currIndex)
+                    var a = altitudeModel1
+                    var b = altitudeModel2
+                    var c = altitudeModel3
+                    var d = altitudeModel4
+                    var p1 = undetermined1
+                    var p2 = undetermined2
+                    var p3 = undetermined3
+                    var p4 = undetermined4
+                    altitudeModel1 = false
+                    altitudeModel2 = false
+                    altitudeModel3 = false
+                    altitudeModel4 = false
+                    undetermined1 = false
+                    undetermined2 = false
+                    undetermined3 = false
+                    undetermined4 = false
                     if(currIndex == 1){
                         s1.color = pRgb(43, 112, 173)
+                        if(equipmentCount == 3){
+                            altitudeModel1 = b
+                            altitudeModel2 = c
+                            altitudeModel3 = d
+                            undetermined1 = p2
+                            undetermined2 = p3
+                            undetermined3 = p4
+                        }
+                        else if(equipmentCount == 2){
+                            altitudeModel1 = b
+                            altitudeModel2 = c
+                            undetermined1 = p2
+                            undetermined2 = p3
+                        }
+                        else if(equipmentCount == 1){
+                            altitudeModel1 = b
+                            btnDefault = b
+                            undetermined1 = p2
+                        }
                     }
                     else if(currIndex == 2){
                         s2.color = pRgb(43, 112, 173)
+                        if(equipmentCount == 3){
+                            altitudeModel1 = a
+                            altitudeModel2 = c
+                            altitudeModel3 = d
+                            undetermined1 = p1
+                            undetermined2 = p3
+                            undetermined3 = p4
+                        }
+                        else if(equipmentCount == 2){
+                            altitudeModel1 = a
+                            altitudeModel2 = c
+                            undetermined1 = p1
+                            undetermined2 = p3
+                        }
+                        else if(equipmentCount == 1){
+                            altitudeModel1 = a
+                            btnDefault = a
+                            undetermined1 = p1
+                        }
                     }
                     else if(currIndex == 3){
                         s3.color = pRgb(43, 112, 173)
+                        if(equipmentCount == 3){
+                            altitudeModel1 = a
+                            altitudeModel2 = b
+                            altitudeModel3 = d
+                            undetermined1 = p1
+                            undetermined2 = p2
+                            undetermined3 = p4
+                        }
+                        else if(equipmentCount == 2){
+                            altitudeModel1 = a
+                            altitudeModel2 = b
+                            undetermined1 = p1
+                            undetermined2 = p2
+                        }
+                        else if(equipmentCount == 1){
+                            altitudeModel1 = a
+                            btnDefault = a
+                            undetermined1 = p1
+                        }
                     }
                     else if(currIndex == 4){
                         s4.color = pRgb(43, 112, 173)
+                        if(equipmentCount == 3){
+                            altitudeModel1 = a
+                            altitudeModel2 = b
+                            altitudeModel3 = c
+                            undetermined1 = p1
+                            undetermined2 = p2
+                            undetermined3 = p3
+                        }
+                        else if(equipmentCount == 2){
+                            altitudeModel1 = a
+                            altitudeModel2 = b
+                            undetermined1 = p1
+                            undetermined2 = p2
+                        }
+                        else if(equipmentCount == 1){
+                            altitudeModel1 = a
+                            btnDefault = a
+                            undetermined1 = p1
+                        }
                     }
                     currIndex = 0
                 }

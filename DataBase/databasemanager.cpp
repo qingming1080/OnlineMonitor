@@ -5,7 +5,7 @@
 #include <QSqlError>
 #include <QSqlRecord>
 #include <QSqlDriver>
-
+#include <QApplication>
 DataBaseManager* DataBaseManager::s_pDataBaseManager = nullptr;
 
 DataBaseManager *DataBaseManager::getInstance()
@@ -835,7 +835,7 @@ DataBaseManager::DataBaseManager(QObject *parent)
 void DataBaseManager::init()
 {
     m_database = QSqlDatabase::addDatabase("QSQLITE");
-    m_database.setDatabaseName("C:\\Users\\cxy\\Desktop\\HB平台\\onlinemonitor_new.db");
+    m_database.setDatabaseName("./onlinemonitor_new.db");
     if (!m_database.open())
     {
         qDebug() << "Database Open Fail ";

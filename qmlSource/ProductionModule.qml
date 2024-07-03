@@ -2,20 +2,38 @@ import QtQuick 2.15
 import QtQuick.Controls 1.4
 import QtQuick.Controls 2.15
 Rectangle {
+    id:mpro
     color: pRgb(153, 204, 255)
     property bool tableFlag: false
     property var proViews: []
+    property int rect1: 1
+    property int rect2: 1
+    property int swipeIndex: 0
+    signal sigBtnSynchronization(var index,var time)
+    signal sigSwipeCurrIndex(var index)
+    onRect1Changed: {
+        sigBtnSynchronization(1,rect1)
+    }
+    onRect2Changed: {
+        sigBtnSynchronization(2,rect2)
+    }
+
+    onSwipeIndexChanged: {
+        sigSwipeCurrIndex(swipeIndex)
+    }
+
     Component.onCompleted: {
+
         if(equipmentCount > 1){
             mode = 1
-            loadView(2,multipro)
+            loadViewpro(2,multipro)
         }
         else{
             mode = 0
-            loadView(1,autopro)
+            loadViewpro(1,autopro)
         }
     }
-    function loadView(viewName, component) {
+    function loadViewpro(viewName, component) {
         prostack.pop()
         if (proViews[viewName]) {
             // 如果视图已缓存，直接显示
@@ -27,16 +45,25 @@ Rectangle {
             prostack.push(newItem);
         }
     }
+    function buttonSynchronization(index,time){
+        if(index === 1){
+            rect1 = time
+        }
+        else if(index === 2){
+            rect2 = time
+        }
+    }
+
     Connections{
         target: window
         function onEquipmentCountChanged(){
             if(equipmentCount > 1){
                 mode = 1
-                loadView(2,multipro)
+                loadViewpro(2,multipro)
             }
             else{
                 mode = 0
-                loadView(1,autopro)
+                loadViewpro(1,autopro)
             }
         }
     }
@@ -127,7 +154,7 @@ Rectangle {
                 contentItem: Text {
                     id:mt2
                     anchors.centerIn: parent
-                    text: "新增设备"
+                    text:"新增设备"
                     font.pixelSize:mode == 1 ? 17: 20
                     color: pRgb(153, 204, 255)
                     horizontalAlignment: Text.AlignHCenter
@@ -135,9 +162,11 @@ Rectangle {
                     font.family: fontBold
                 }
                 onPressed: {
-                    switchUI(3)
-                    isAdd = true
-                    sigSysConfig()
+                    if(mt2.text == "新增设备"){
+                        switchUI(3)
+                        isAdd = true
+                        sigSysConfig()
+                    }
                 }
             }
             Loader{
@@ -164,6 +193,7 @@ Rectangle {
                         x:mode === 1 ? 568:645
                         y:mode === 1 ? 35:20
                         color: mode === 1 ? "#0c5696" : pRgb(43, 112, 173)
+                        equiInforIndex:1
                     }
                     WeldingTrend{
                         id:s7
@@ -398,6 +428,7 @@ Rectangle {
             }
         }
     }
+
     Component{
         id:multipro
         MultideviceProductionModule{
@@ -408,6 +439,14 @@ Rectangle {
         }
     }
 
+    Component{
+        id:swipe
+        SwipeProductionModule{
+            id:mupMode
+            width: 1280
+            height: 740
+        }
+    }
 
     Text {
         id: version

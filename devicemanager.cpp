@@ -1,6 +1,6 @@
 #include "devicemanager.h"
 #include "DataBase/databasemanager.h"
-
+#include <qdebug.h>
 DeviceManager* DeviceManager::s_pInstance = nullptr;
 
 DeviceManager *DeviceManager::getInstance()
@@ -29,7 +29,7 @@ void DeviceManager::init()
 
 int DeviceManager::deviceNum() const
 {
-    return m_deviceNum;
+    return m_deviceMap.size();
 }
 
 bool DeviceManager::hasDevice(int index) const

@@ -6,32 +6,193 @@ Rectangle {
     property string eqText3: ""
     property string eqText4: ""
     property string eqText5: ""
-    property var textMargin:{
-        if(altitudeModel){
-            return 17
-        }
-        else{
-            return 30
-        }
-    }
-    property var imgWidHei:{
-        if(mode == 1){
-            if(altitudeModel){
-                return 20
+    property bool altitudeMode:false
+    property int powerY: 1
+    property int imgY: 1
+    property int imgtopMargin: 1
+    property int imgcenterX: 1
+    property int imgcenterY: 1
+    Connections{
+        target: window
+        function onSigUpdateUI(index){
+            if(mode == 1){
+                if(index === 0){
+                    altitudeMode = altitudeModel1
+                    if(altitudeModel1){
+                        imgcenterY = 4
+                        imgcenterX = 10
+                        imgtopMargin = 14
+                        textMargin = 17
+                        imgWidHei = 20
+                        powerY = 46
+                        imgY = 48
+                    }
+                    else{
+                        imgcenterY = 6
+                        imgcenterX = 17
+                        imgtopMargin = 17
+                        textMargin = 30
+                        imgWidHei = 31
+                        powerY = 72
+                        imgY = 68
+                    }
+                }
+                else if(index === 1){
+                    altitudeMode = altitudeModel2
+                    if(altitudeModel2){
+                        imgcenterY = 4
+                        imgcenterX = 10
+                        imgtopMargin = 14
+                        textMargin = 17
+                        imgWidHei = 20
+                        powerY = 46
+                        imgY = 48
+                    }
+                    else{
+                        imgcenterY = 6
+                        imgcenterX = 17
+                        imgtopMargin = 17
+                        textMargin = 30
+                        imgWidHei = 31
+                        powerY = 72
+                        imgY = 68
+                    }
+                }
+                else if(index === 2){
+                    altitudeMode = altitudeModel3
+                    if(altitudeModel3){
+                        imgcenterY = 4
+                        imgcenterX = 10
+                        imgtopMargin = 14
+                        textMargin = 17
+                        imgWidHei = 20
+                        powerY = 46
+                        imgY = 48
+                    }
+                    else{
+                        imgcenterY = 6
+                        imgcenterX = 17
+                        imgtopMargin = 17
+                        textMargin = 30
+                        imgWidHei = 31
+                        powerY = 72
+                        imgY = 68
+                    }
+                }
+                else if(index === 3){
+                    altitudeMode = altitudeModel4
+                    if(altitudeModel4){
+                        imgcenterY = 4
+                        imgcenterX = 10
+                        imgtopMargin = 14
+                        textMargin = 17
+                        imgWidHei = 20
+                        powerY = 46
+                        imgY = 48
+                    }
+                    else{
+                        imgcenterY = 6
+                        imgcenterX = 17
+                        imgtopMargin = 17
+                        textMargin = 30
+                        imgWidHei = 31
+                        powerY = 72
+                        imgY = 68
+                    }
+                }
             }
             else{
-                return 31
-            }
-        }
-        else{
-            if(altitudeModel){
-                return 24
-            }
-            else{
-                return 36
+                if(index === 0){
+                    altitudeMode = altitudeModel1
+                    if(altitudeModel1){
+                        imgcenterY = 4
+                        imgcenterX = 10
+                        imgtopMargin = 14
+                        textMargin = 17
+                        imgWidHei = 24
+                        powerY = 59
+                        imgY = 59
+                    }
+                    else{
+                        imgcenterY = 6
+                        imgcenterX = 17
+                        imgtopMargin = 17
+                        textMargin = 30
+                        imgWidHei = 36
+                        powerY = 85
+                        imgY = 79
+                    }
+                }
+                else if(index === 1){
+                    altitudeMode = altitudeModel2
+                    if(altitudeModel2){
+                        imgcenterY = 4
+                        imgcenterX = 10
+                        imgtopMargin = 14
+                        textMargin = 17
+                        imgWidHei = 24
+                        powerY = 59
+                        imgY = 59
+                    }
+                    else{
+                        imgcenterY = 6
+                        imgcenterX = 17
+                        imgtopMargin = 17
+                        textMargin = 30
+                        imgWidHei = 36
+                        powerY = 85
+                        imgY = 79
+                    }
+                }
+                else if(index === 2){
+                    altitudeMode = altitudeModel3
+                    if(altitudeModel3){
+                        imgcenterY = 4
+                        imgcenterX = 10
+                        imgtopMargin = 14
+                        textMargin = 17
+                        imgWidHei = 24
+                        powerY = 59
+                        imgY = 59
+                    }
+                    else{
+                        imgcenterY = 6
+                        imgcenterX = 17
+                        imgtopMargin = 17
+                        textMargin = 30
+                        imgWidHei = 36
+                        powerY = 85
+                        imgY = 79
+                    }
+                }
+                else if(index === 3){
+                    altitudeMode = altitudeModel4
+                    if(altitudeModel4){
+                        imgcenterY = 4
+                        imgcenterX = 10
+                        imgtopMargin = 14
+                        textMargin = 17
+                        imgWidHei = 24
+                        powerY = 59
+                        imgY = 59
+                    }
+                    else{
+                        imgcenterY = 6
+                        imgcenterX = 17
+                        imgtopMargin = 17
+                        textMargin = 30
+                        imgWidHei = 36
+                        powerY = 85
+                        imgY = 79
+                    }
+                }
             }
         }
     }
+
+    property int textMargin:1
+    property int imgWidHei:1
+
     color: pRgb(43, 112, 173)
     radius: 3
     Text {
@@ -51,24 +212,7 @@ Rectangle {
     Text {
         id:t1
         x:mode == 1 ? 80 : 92
-        y:{
-            if(mode == 1){
-                if(altitudeModel){
-                    return 46
-                }
-                else{
-                    return 72
-                }
-            }
-            else{
-                if(altitudeModel){
-                    return 59
-                }
-                else{
-                    return 85
-                }
-            }
-        }
+        y:powerY
         text: qsTr("功率: ") + eqText1 + "W"
         font.family: fontBold
         font.pixelSize:mode === 1 ? 14: 16
@@ -103,7 +247,8 @@ Rectangle {
         anchors.left: t3.left
         anchors.top: t3.bottom
         anchors.topMargin: textMargin
-        visible: altitudeModel
+        visible:altitudeMode
+
     }
     Text {
         id:t5
@@ -114,31 +259,14 @@ Rectangle {
         anchors.left: t4.left
         anchors.top: t4.bottom
         anchors.topMargin: textMargin
-        visible: altitudeModel
+        visible: altitudeMode
     }
     Image {
         id: im1
         width: imgWidHei
         height: imgWidHei
         x:mode == 1 ? 33 : 39
-        y:{
-            if(mode == 1){
-                if(altitudeModel){
-                    return 48
-                }
-                else{
-                    return 68
-                }
-            }
-            else{
-                if(altitudeModel){
-                    return 59
-                }
-                else{
-                    return 79
-                }
-            }
-        }
+        y:imgY
         source: "qrc:/image/组件.png"
     }
     Image {
@@ -147,25 +275,11 @@ Rectangle {
         height: imgWidHei
         anchors.left: im1.left
         anchors.top: im1.bottom
-        anchors.topMargin: {
-            if(altitudeModel){
-                return 14
-            }
-            else{
-                return 17
-            }
-        }
+        anchors.topMargin: imgtopMargin
         source: "qrc:/image/实例.png"
         Image{
-            x:{
-                if(altitudeModel){
-                    return 12
-                }
-                else{
-                    return 17
-                }
-            }
-            y:6
+            x:imgcenterX
+            y:imgcenterY
             source: "qrc:/image/矢量 3.png"
         }
     }
@@ -190,7 +304,7 @@ Rectangle {
         anchors.top: im3.bottom
         anchors.topMargin: 17
         source: "qrc:/image/高度.png"
-        visible: altitudeModel
+        visible:altitudeMode
     }
     Image {
         id: im5
@@ -200,6 +314,6 @@ Rectangle {
         anchors.top: im4.bottom
         anchors.topMargin: 17
         source: "qrc:/image/高度.png"
-        visible: altitudeModel
+        visible: altitudeMode
     }
 }

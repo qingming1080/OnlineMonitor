@@ -1,22 +1,35 @@
 import QtQuick 2.6
 import QtQuick.Window 2.12
+import QtQuick.Window 2.3
 import QtQuick.Layouts 1.12
 import QtQuick.VirtualKeyboard 2.2
 import QtQuick.Controls 2.5
 import QtQuick.VirtualKeyboard.Settings 2.2
 import "./qmlSource"
-Window {
+Window  {
     id: window
     visible: true
     width: 1280
     height: 800
     x:0
     property int mode: 0
-    property int equipmentCount: 1
+    property int equipmentCount: DeviceManager.deviceNum
     property int equipmentCurrentIndex: 0
-    property string fontNormal: "思源黑体 CN Normal"
-    property string fontBold: "思源黑体 CN Bold"
-    property bool altitudeModel: false //高度模式
+    property int swipeCurrIndex: 0
+    FontLoader {
+        id: normal
+        source: "qrc:/fonts/SourceHanSansCN-Normal.ttf"
+    }
+    FontLoader {
+        id: bold
+        source: "qrc:/fonts/SourceHanSansCN-Bold.ttf"
+    }
+    property string fontNormal: normal.name
+    property string fontBold: bold.name
+    property bool altitudeModel1: false
+    property bool altitudeModel2: false
+    property bool altitudeModel3: false
+    property bool altitudeModel4: false
     property bool isAdd: false
     function pRgb(r, g, b){
         var ret = (r << 16 | g << 8 | b)
@@ -35,9 +48,13 @@ Window {
     property var cachedViews: []
     signal sigSwitch(var id)
     signal sigSysConfig()
+    signal sigStatusReset()
+    signal sigUpdateUI(var index)
+    signal sigUndetermined(var index)
     function switchUI(id){
         equipmentCurrentIndex = id
         sigSwitch(id)
+        sigUpdateUI(swipeCurrIndex)
     }
 
     // 获取当前时间的函数
@@ -82,6 +99,7 @@ Window {
                 anchors.top: p1.bottom
                 Component.onCompleted: {
                     loadView(1,pro)
+                    sigUpdateUI(0)
                 }
             }
             Connections{
@@ -103,6 +121,7 @@ Window {
                         sigSysConfig()
                         Qt.callLater(sigSysConfig)//立即执行
                         loadView(id,sys)
+                        sigStatusReset()
                         p1.bt3Check()
                     }
                 }
@@ -171,6 +190,18 @@ Window {
             height: 740
         }
     }
+    CustomDialog{
+        id:popup
+        width: 567
+        height: 271
+        anchors.centerIn: parent
+    }
+    RootConfig{
+        id:swpMode
+        width: 1280
+        height: 740
+    }
+
     InputPanel
     {
         id: inputPannelID
