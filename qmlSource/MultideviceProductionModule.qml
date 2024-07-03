@@ -5,6 +5,17 @@ import QtQuick.Controls 2.15
 Rectangle {
     color: pRgb(153, 204, 255)
     property int itemCount: 0
+    Connections{
+        target: mpro
+        function onSigBtnSynchronization(index,time){
+            if(index === 1){
+                s5.btnIndex = time
+            }
+            else if(index === 2){
+                s6.btnIndex = time
+            }
+        }
+    }
     function swichCount(){
         if(itemCount == 2){
             r1.height = 581
@@ -81,7 +92,6 @@ Rectangle {
     onItemCountChanged: {
         swichCount()
     }
-
     Rectangle{
         id:r1
         x:28
@@ -107,6 +117,7 @@ Rectangle {
             height: 237
             radius: 3
             color: "#0c5596"
+            eqText1:DeviceManager.device(1).pDeviceInformation.name
         }
         RealtimeYield{
             id:s2
@@ -125,6 +136,8 @@ Rectangle {
             y:298
             radius: 3
             color: "#0c5596"
+            equiInforIndex:1
+            btnIndex:rect1
         }
         Button{
             width: 24
@@ -137,6 +150,11 @@ Rectangle {
                     anchors.fill: parent
                     source: "qrc:/image/expand-全屏化.png"
                 }
+            }
+            onPressed: {
+                mpro.swipeIndex = 0
+                loadViewpro(3,swipe)
+                sigUpdateUI(0)
             }
         }
     }
@@ -182,6 +200,8 @@ Rectangle {
             y:298
             radius: 3
             color: "#0c5596"
+            equiInforIndex:2
+            btnIndex:rect2
         }
         Button{
             width: 24
@@ -194,6 +214,11 @@ Rectangle {
                     anchors.fill: parent
                     source: "qrc:/image/expand-全屏化.png"
                 }
+            }
+            onPressed: {
+                mpro.swipeIndex = 1
+                loadViewpro(3,swipe)
+                sigUpdateUI(1)
             }
         }
     }
@@ -244,6 +269,11 @@ Rectangle {
                     source: "qrc:/image/expand-全屏化.png"
                 }
             }
+            onPressed: {
+                mpro.swipeIndex = 2
+                loadViewpro(3,swipe)
+                sigUpdateUI(2)
+            }
         }
     }
     Rectangle{
@@ -292,6 +322,16 @@ Rectangle {
                     source: "qrc:/image/expand-全屏化.png"
                 }
             }
+            onPressed: {
+                if(equipmentCount === 4){
+                    mpro.swipeIndex = 3
+                }
+                else{
+                    mpro.swipeIndex = 2
+                }
+                loadViewpro(3,swipe)
+                sigUpdateUI(3)
+            }
         }
     }
 
@@ -314,6 +354,10 @@ Rectangle {
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
             font.family: fontBold
+        }
+        onClicked: {
+            mt1.text = "创建模型"
+            mt2.text = "清除数据"
         }
     }
     Button{
@@ -340,9 +384,11 @@ Rectangle {
             font.family: fontBold
         }
         onPressed: {
-            switchUI(3)
-            isAdd = true
-            sigSysConfig()
+            if(mt2.text == "新增设备"){
+                switchUI(3)
+                isAdd = true
+                sigSysConfig()
+            }
         }
     }
     Button{

@@ -1,52 +1,110 @@
 import QtQuick 2.0
 import QtQuick.Controls 1.4
 import QtQuick.Controls 2.15
+import QtQml.Models 2.15
 Rectangle {
     color: pRgb(153, 204, 255)
-    SwipeView{
-        id:view
+    Connections{
+        target: window
+        function onEquipmentCountChanged(){
+            updateUI()
+        }
+    }
+    Connections{
+        target: mpro
+        function onSigSwipeCurrIndex(index){
+            view.setCurrentIndex(index)
+        }
+    }
+    function updateUI(){
+        view.removePage()
+        for(var j = 0; j < equipmentCount;j++){
+            view.addPage(j)
+        }
+        sigUpdateUI(view.currentIndex)
+    }
+    Rectangle{
         x:78
         y:29
         width: 1133
         height: 664
-        background: Rectangle{
-            radius: 5
-            color: pRgb(43, 112, 173)
-            Button{
-                x:1098
-                y:5
-                width: 30
-                height: 30
-                background: Rectangle{
-                    color: "transparent"
-                    Image {
-                        anchors.fill: parent
-                        source: "qrc:/image/缩小.png"
+        color: pRgb(43, 112, 173)
+        radius: 5
+        SwipeView{
+            id:view
+            anchors.fill: parent
+            clip: true
+            Component.onCompleted: {
+                for(var j = 0; j < equipmentCount;j++){
+                    addPage(j)
+                }
+                view.setCurrentIndex(swipeIndex)
+            }
+            onCurrentIndexChanged: {
+                swipeCurrIndex = view.currentIndex
+                sigUpdateUI(view.currentIndex)
+            }
+            function addPage(index) {
+                var pageComponent = Qt.createComponent("SwipePage.qml");
+                if (pageComponent.status === Component.Ready) {
+                    if(index === 0){
+                        var page = pageComponent.createObject(view, {"pbtnIndex":rect1,"width": view.width, "height": view.height,"color":"transparent"});
+                    }
+                    else if(index === 1){
+                        page = pageComponent.createObject(view, {"pbtnIndex":rect2,"width": view.width, "height": view.height,"color":"transparent"});
+                    }
+                    else{
+                        page = pageComponent.createObject(view, {"width": view.width, "height": view.height,"color":"transparent"});
+                    }
+                    view.addItem(page)
+                }
+            }
+            function removePage() {
+                if (view.count > 0) {
+                    var num = view.count
+                    for(var i = 0;i < num;i++){
+                        var lastPage = view.contentChildren[i]
+                        view.removeItem(lastPage);
                     }
                 }
             }
         }
-        ProductionModule{
+        PageIndicator {
+            id: indicator
 
-        }
-        ProductionModule{
-
-        }
-        ProductionModule{
-
-        }
-        ProductionModule{
-
+            count: equipmentCount
+            currentIndex: view.currentIndex
+            spacing: 33
+            anchors.bottom: view.bottom
+            anchors.bottomMargin: 20
+            anchors.horizontalCenter: parent.horizontalCenter
+            delegate: Rectangle {
+                width: 20
+                height: 20
+                radius: 10
+                border.width: 2
+                border.color: "#149bff"
+                color: index === indicator.currentIndex ? "#0c5696" : "#e8e8e8"
+            }
         }
     }
-    PageIndicator {
-        id: indicator
 
-        count: view.count
-        currentIndex: view.currentIndex
 
-        anchors.bottom: view.bottom
-        anchors.horizontalCenter: parent.horizontalCenter
+    Button{
+        x:1176
+        y:34
+        width: 30
+        height: 30
+        background: Rectangle{
+            color: "transparent"
+            Image {
+                anchors.fill: parent
+                source: "qrc:/image/缩小.png"
+            }
+        }
+        onPressed: {
+            loadViewpro(2,multipro)
+        }
     }
     Text {
         id: version

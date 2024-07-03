@@ -300,6 +300,8 @@ Makefile: qml.pro E:\qt5.15\5.15.2\msvc2019_64\mkspecs\win32-msvc\qmake.conf E:\
 		E:\qt5.15\5.15.2\msvc2019_64\lib\Qt5QmlModels.prl \
 		E:\qt5.15\5.15.2\msvc2019_64\lib\Qt5Qml.prl \
 		E:\qt5.15\5.15.2\msvc2019_64\lib\Qt5Network.prl \
+		E:\qt5.15\5.15.2\msvc2019_64\lib\Qt5SerialPort.prl \
+		E:\qt5.15\5.15.2\msvc2019_64\lib\Qt5Sql.prl \
 		E:\qt5.15\5.15.2\msvc2019_64\lib\Qt5Core.prl \
 		E:\qt5.15\5.15.2\msvc2019_64\lib\qtmain.prl \
 		E:\qt5.15\5.15.2\msvc2019_64\mkspecs\features\build_pass.prf \
@@ -312,6 +314,8 @@ Makefile: qml.pro E:\qt5.15\5.15.2\msvc2019_64\mkspecs\win32-msvc\qmake.conf E:\
 		E:\qt5.15\5.15.2\msvc2019_64\lib\Qt5QmlModelsd.prl \
 		E:\qt5.15\5.15.2\msvc2019_64\lib\Qt5Qmld.prl \
 		E:\qt5.15\5.15.2\msvc2019_64\lib\Qt5Networkd.prl \
+		E:\qt5.15\5.15.2\msvc2019_64\lib\Qt5SerialPortd.prl \
+		E:\qt5.15\5.15.2\msvc2019_64\lib\Qt5Sqld.prl \
 		E:\qt5.15\5.15.2\msvc2019_64\lib\Qt5Cored.prl \
 		E:\qt5.15\5.15.2\msvc2019_64\lib\qtmaind.prl
 	$(QMAKE) -o Makefile qml.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug"
@@ -531,6 +535,8 @@ E:\qt5.15\5.15.2\msvc2019_64\lib\Qt5Gui.prl:
 E:\qt5.15\5.15.2\msvc2019_64\lib\Qt5QmlModels.prl:
 E:\qt5.15\5.15.2\msvc2019_64\lib\Qt5Qml.prl:
 E:\qt5.15\5.15.2\msvc2019_64\lib\Qt5Network.prl:
+E:\qt5.15\5.15.2\msvc2019_64\lib\Qt5SerialPort.prl:
+E:\qt5.15\5.15.2\msvc2019_64\lib\Qt5Sql.prl:
 E:\qt5.15\5.15.2\msvc2019_64\lib\Qt5Core.prl:
 E:\qt5.15\5.15.2\msvc2019_64\lib\qtmain.prl:
 E:\qt5.15\5.15.2\msvc2019_64\mkspecs\features\build_pass.prf:
@@ -543,6 +549,8 @@ E:\qt5.15\5.15.2\msvc2019_64\lib\Qt5Guid.prl:
 E:\qt5.15\5.15.2\msvc2019_64\lib\Qt5QmlModelsd.prl:
 E:\qt5.15\5.15.2\msvc2019_64\lib\Qt5Qmld.prl:
 E:\qt5.15\5.15.2\msvc2019_64\lib\Qt5Networkd.prl:
+E:\qt5.15\5.15.2\msvc2019_64\lib\Qt5SerialPortd.prl:
+E:\qt5.15\5.15.2\msvc2019_64\lib\Qt5Sqld.prl:
 E:\qt5.15\5.15.2\msvc2019_64\lib\Qt5Cored.prl:
 E:\qt5.15\5.15.2\msvc2019_64\lib\qtmaind.prl:
 qmake: FORCE

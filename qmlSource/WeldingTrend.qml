@@ -3,6 +3,25 @@ import QtCharts 2.15
 //焊接趋势
 Rectangle {
     color: pRgb(43, 112, 173)
+    property bool altitudeMode:false
+    Connections{
+        target: window
+        function onSigUpdateUI(index){
+            if(index === 0){
+                altitudeMode = altitudeModel1
+            }
+            else if(index === 1){
+                altitudeMode = altitudeModel2
+            }
+            else if(index === 2){
+                altitudeMode = altitudeModel3
+            }
+            else if(index === 3){
+                altitudeMode = altitudeModel4
+            }
+        }
+    }
+
     radius: 3
     Text {
         text: qsTr("焊接趋势")
@@ -20,16 +39,11 @@ Rectangle {
     }
     property int timer: 0
     ChartView {
-        //        anchors.left: parent.left
-        //        anchors.leftMargin: 28
-        //        anchors.top: parent.top
-        //        anchors.topMargin: 26
+        id:chartView
         width: parent.width // 使图表的宽度等于父项的宽度
         height: parent.height // 使图表的高度等于父项的高度
         anchors.top: parent.top // 使图表的顶部与父项的顶部对齐
         anchors.right: parent.right // 使图表的右侧与父项的右侧对齐
-        //        width: 560
-        //        height: 340
         antialiasing: true
         backgroundColor: "transparent"
         animationOptions: ChartView.SeriesAnimations
@@ -67,7 +81,7 @@ Rectangle {
             labelFormat: '%d'
             gridVisible:false
             color:"#1398fa"
-            visible: altitudeModel
+            visible: altitudeMode
         }
         ValueAxis{
             id:myAxisY1
@@ -80,7 +94,7 @@ Rectangle {
             labelFormat: '%d'
             gridVisible:false
             color:"#ccb2f8"
-            visible: altitudeModel
+            visible: altitudeMode
         }
         ValueAxis{
             id:myAxisY2
@@ -113,7 +127,7 @@ Rectangle {
             axisY:myAxisY
             color: "#1398fa"
             width: 3
-            visible: altitudeModel
+            visible: altitudeMode
         }
         LineSeries {
             id:lineSeries3
@@ -122,7 +136,7 @@ Rectangle {
             axisY:myAxisY1
             color: "#ccb2f8"
             width: 3
-            visible: altitudeModel
+            visible: altitudeMode
         }
         LineSeries {
             id:lineSeries

@@ -39,8 +39,13 @@ int main(int argc, char *argv[])
     QQmlApplicationEngine engine;
     QQmlContext* pQmlContext = engine.rootContext();
     pQmlContext->setContextProperty("DeviceManager", DeviceManager::getInstance());
+<<<<<<< HEAD
     qmlRegisterUncreatableType<Device>("Device",1,0,"Device","can not instantiate Device in qml");
     qmlRegisterUncreatableType<DeviceInformation>("DeviceInformation",1,0,"DeviceInformation","can not instantiate DeviceInformation in qml");
+=======
+    pQmlContext->setContextProperty("YieldTrendModel", new YieldTrend);
+>>>>>>> 0e792ce475351b12d2ad79d17594e31c1baa68ad
+
 
     const QUrl url(QStringLiteral("qrc:/main.qml"));
     QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,

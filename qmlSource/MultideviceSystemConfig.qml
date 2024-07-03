@@ -7,6 +7,26 @@ Rectangle {
     property string eqText3: ""
     property string eqText4: ""
     property int sysCurrIndex: 0
+    property bool undetermined: false
+    Connections{
+        target: window
+        function onSigUndetermined(index){
+            if(sysCurrIndex === 1){
+                undetermined = undetermined1
+            }
+            else if(sysCurrIndex === 2){
+                undetermined = undetermined2
+            }
+            else if(sysCurrIndex === 3){
+                undetermined = undetermined3
+            }
+            else if(sysCurrIndex === 4){
+                undetermined = undetermined4
+            }
+        }
+    }
+
+    signal sigAltitudeModel(var tmp)
     radius: 5
     width: 281
     height: 504
@@ -98,6 +118,12 @@ Rectangle {
                 source: "qrc:/image/expand-全屏化.png"
             }
         }
+        onPressed: {
+            loadViewsys(1,syscfg)
+            currentConfigId = sysCurrIndex
+            sigUndetermined(sysCurrIndex)
+            sigUpdateUI(sysCurrIndex-1)
+        }
     }
     Text {
         id: s4
@@ -135,7 +161,8 @@ Rectangle {
             border.width: 2
         }
         onPressed: {
-
+            sigAltitudeModel(true)
+            sigUpdateUI(sysCurrIndex)
         }
     }
     Text {
@@ -166,7 +193,8 @@ Rectangle {
             border.width: 2
         }
         onPressed: {
-            altitudeModel = false
+            sigAltitudeModel(false)
+            sigUpdateUI(sysCurrIndex)
         }
     }
     Text {
@@ -183,6 +211,19 @@ Rectangle {
         x:150
         y:317
         onClicked: {
+            if(sysCurrIndex == 1){
+                undetermined1 = !undetermined1
+            }
+            else if(sysCurrIndex ==2){
+                undetermined2 = !undetermined2
+            }
+            else if(sysCurrIndex ==3){
+                undetermined3 = !undetermined3
+            }
+            else if(sysCurrIndex ==4){
+                undetermined4 = !undetermined4
+            }
+            sigUndetermined(sysCurrIndex)
         }
 
         indicator: Rectangle{
@@ -208,12 +249,12 @@ Rectangle {
                 //改变小圆点位置
                 NumberAnimation on x{
                     to:smallRect.width
-                    running: ctl.checked? true : false
+                    running: undetermined
                     duration: 0
                 }
                 NumberAnimation on x{
                     to:6
-                    running: ctl.checked? false : true;
+                    running: !undetermined
                     duration: 0
                 }
             }
@@ -223,7 +264,7 @@ Rectangle {
                 anchors.topMargin: 3
                 anchors.leftMargin: 14
                 text: qsTr("关闭")
-                color: ctl.checked? pRgb(43, 112, 173) : "#e5e6e7"
+                color: undetermined? pRgb(43, 112, 173) : "#e5e6e7"
                 font.family: fontBold
                 font.pixelSize: 14
             }
@@ -233,7 +274,7 @@ Rectangle {
                 anchors.topMargin: 3
                 anchors.rightMargin: 14
                 text: qsTr("启动")
-                color: ctl.checked? "#e5e6e7" : pRgb(43, 112, 173)
+                color: undetermined? "#e5e6e7" : pRgb(43, 112, 173)
                 font.family: fontBold
                 font.pixelSize: 14
             }
@@ -287,7 +328,7 @@ Rectangle {
     }
     Image {
         id: im3
-        source: "qrc:/image/待定.png"
+        source: undetermined ? "qrc:/image/待定.png" : "qrc:/image/日程-参与者-待定.png"
         anchors.left: im2.left
         anchors.top: im2.bottom
         anchors.topMargin: 18
