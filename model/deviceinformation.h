@@ -33,7 +33,7 @@ class DeviceInformation : public QObject
     // 设备状态(生产中，待机等)
     Q_PROPERTY(QString state                        READ state         WRITE setState           NOTIFY stateChanged)
 public:
-    explicit DeviceInformation(int welderID, QObject *parent = nullptr);
+    explicit DeviceInformation(int welderID = 0, QObject *parent = nullptr);
 
     Q_INVOKABLE QString name() const;
     Q_INVOKABLE void setName(const QString &newName);

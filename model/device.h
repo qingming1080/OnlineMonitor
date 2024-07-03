@@ -30,7 +30,7 @@ class Device : public QObject
     Q_PROPERTY(YieldTrend *pYieldTrend               READ pYieldTrend)          // 良率趋势_折线
 
 public:
-    explicit Device(int welderID, QObject *parent = nullptr);
+    explicit Device(int welderID = 0, QObject *parent = nullptr);
 
     Q_INVOKABLE DeviceInformation *pDeviceInformation() const;
     Q_INVOKABLE IOModel *pIOModel() const;

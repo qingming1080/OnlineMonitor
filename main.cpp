@@ -3,10 +3,10 @@
 
 #include <QQmlContext>
 
-#include "model/yieldtrend.h"
 
-#include "DataBase/databasemanager.h"
 #include "devicemanager.h"
+#include "model/device.h"
+#include "model/deviceinformation.h"
 
 // 自定义消息处理程序
 void myMessageHandler(QtMsgType type, const QMessageLogContext &context, const QString &msg)
@@ -34,12 +34,13 @@ int main(int argc, char *argv[])
 //    qInstallMessageHandler(myMessageHandler);
     QApplication app(argc, argv);
 
-    qDebug() << DataBaseManager::getInstance()->getDeviceNums();
-    DeviceManager::getInstance();
+
 
     QQmlApplicationEngine engine;
     QQmlContext* pQmlContext = engine.rootContext();
-    pQmlContext->setContextProperty("YieldTrendModel", new YieldTrend);
+    pQmlContext->setContextProperty("DeviceManager", DeviceManager::getInstance());
+    qmlRegisterUncreatableType<Device>("Device",1,0,"Device","can not instantiate Device in qml");
+    qmlRegisterUncreatableType<DeviceInformation>("DeviceInformation",1,0,"DeviceInformation","can not instantiate DeviceInformation in qml");
 
     const QUrl url(QStringLiteral("qrc:/main.qml"));
     QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,

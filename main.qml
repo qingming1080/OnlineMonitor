@@ -5,6 +5,10 @@ import QtQuick.VirtualKeyboard 2.2
 import QtQuick.Controls 2.5
 import QtQuick.VirtualKeyboard.Settings 2.2
 import "./qmlSource"
+
+import Device 1.0
+import DeviceInformation 1.0
+
 Window {
     id: window
     visible: true
@@ -82,6 +86,7 @@ Window {
                 anchors.top: p1.bottom
                 Component.onCompleted: {
                     loadView(1,pro)
+                    console.log(DeviceManager.device(1).pDeviceInformation.name)
                 }
             }
             Connections{
