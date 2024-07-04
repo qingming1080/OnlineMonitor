@@ -1,6 +1,8 @@
 import QtQuick 2.0
 import QtQuick.Controls 1.4
 import QtQuick.Controls 2.15
+import Device 1.0
+import DeviceInformation 1.0
 //多设备生产界面
 Rectangle {
     color: pRgb(153, 204, 255)
@@ -118,6 +120,10 @@ Rectangle {
             radius: 3
             color: "#0c5596"
             eqText1:DeviceManager.device(1).pDeviceInformation.name
+            eqText2:DeviceManager.device(1).pDeviceInformation.model
+            eqText3:DeviceManager.device(1).pDeviceInformation.connectType === 1
+                    ? "RS232" : "网络连接"
+            eqText4:DeviceManager.device(1).pDeviceInformation.state
         }
         RealtimeYield{
             id:s2
@@ -182,6 +188,11 @@ Rectangle {
             height: 237
             radius: 3
             color: "#0c5596"
+            eqText1:DeviceManager.device(2).pDeviceInformation.name
+            eqText2:DeviceManager.device(2).pDeviceInformation.model
+            eqText3:DeviceManager.device(2).pDeviceInformation.connectType === 1
+                    ? "RS232" : "网络连接"
+            eqText4:DeviceManager.device(2).pDeviceInformation.state
         }
         RealtimeYield{
             id:s4
@@ -247,6 +258,11 @@ Rectangle {
             height: 227
             radius: 3
             color: "#0c5596"
+            eqText1:DeviceManager.device(3).pDeviceInformation.name
+            eqText2:DeviceManager.device(3).pDeviceInformation.model
+            eqText3:DeviceManager.device(3).pDeviceInformation.connectType === 1
+                    ? "RS232" : "网络连接"
+            eqText4:DeviceManager.device(3).pDeviceInformation.state
         }
         RealtimeYield{
             id:s8
@@ -300,6 +316,11 @@ Rectangle {
             height: 227
             radius: 3
             color: "#0c5596"
+            eqText1:DeviceManager.device(4).pDeviceInformation.name
+            eqText2:DeviceManager.device(4).pDeviceInformation.model
+            eqText3:DeviceManager.device(4).pDeviceInformation.connectType === 1
+                    ? "RS232" : "网络连接"
+            eqText4:DeviceManager.device(4).pDeviceInformation.state
         }
         RealtimeYield{
             id:s11

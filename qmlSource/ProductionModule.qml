@@ -1,6 +1,8 @@
 import QtQuick 2.15
 import QtQuick.Controls 1.4
 import QtQuick.Controls 2.15
+import Device 1.0
+import DeviceInformation 1.0
 Rectangle {
     id:mpro
     color: pRgb(153, 204, 255)
@@ -81,6 +83,11 @@ Rectangle {
                 width: mode == 1 ? 208 : 243
                 height: mode == 1 ? 203 : 258
                 color: mode == 1 ? "#0c5696" : pRgb(43, 112, 173)
+                eqText1:DeviceManager.device(1).pDeviceInformation.name
+                eqText2:DeviceManager.device(1).pDeviceInformation.model
+                eqText3:DeviceManager.device(1).pDeviceInformation.connectType === 1
+                        ? "RS232" : "网络连接"
+                eqText4:DeviceManager.device(1).pDeviceInformation.state
             }
 
             Loader{

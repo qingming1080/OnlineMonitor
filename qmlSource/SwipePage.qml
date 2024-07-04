@@ -2,6 +2,8 @@ import QtQuick 2.0
 import QtQuick.Controls 1.4
 import QtQuick.Controls 2.15
 import QtQml.Models 2.15
+import Device 1.0
+import DeviceInformation 1.0
 Rectangle {
     color: pRgb(153, 204, 255)
     radius: 5
@@ -13,6 +15,16 @@ Rectangle {
         width:  208
         height: 203
         color: "#0c5696"
+        eqText1:DeviceManager.deviceNum
+//        eqText2:{
+//            return DeviceManager.device(1).pDeviceInformation.name
+//        }
+//        eqText3:DeviceManager.device(1).pDeviceInformation.connectType === 1
+//                ? "RS232" : "网络连接"
+//        eqText4:DeviceManager.device(1).pDeviceInformation.state
+        Component.onCompleted: {
+            eqText2 = DeviceManager.device(1).pDeviceInformation.name
+        }
     }
 
     Loader{

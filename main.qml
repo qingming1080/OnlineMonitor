@@ -196,11 +196,11 @@ Window  {
         height: 271
         anchors.centerIn: parent
     }
-    RootConfig{
-        id:swpMode
-        width: 1280
-        height: 740
-    }
+//    RootConfig{
+//        id:swpMode
+//        width: 1280
+//        height: 740
+//    }
 
     InputPanel
     {
