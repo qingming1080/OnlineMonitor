@@ -15,15 +15,38 @@ Rectangle {
         width:  208
         height: 203
         color: "#0c5696"
-        eqText1:DeviceManager.deviceNum
-//        eqText2:{
-//            return DeviceManager.device(1).pDeviceInformation.name
-//        }
-//        eqText3:DeviceManager.device(1).pDeviceInformation.connectType === 1
-//                ? "RS232" : "网络连接"
-//        eqText4:DeviceManager.device(1).pDeviceInformation.state
-        Component.onCompleted: {
-            eqText2 = DeviceManager.device(1).pDeviceInformation.name
+        eqText1:{
+            if(DeviceManager.deviceList[swipeCurrIndex]){
+                return DeviceManager.deviceList[swipeCurrIndex].pDeviceInformation.name
+            }
+            else{
+                return ""
+            }
+        }
+        eqText2:{
+            if(DeviceManager.deviceList[swipeCurrIndex]){
+                return DeviceManager.deviceList[swipeCurrIndex].pDeviceInformation.model
+            }
+            else{
+                return ""
+            }
+        }
+        eqText3:{
+            if(DeviceManager.deviceList[swipeCurrIndex]){
+                return DeviceManager.deviceList[swipeCurrIndex].pDeviceInformation.connectType === 1
+                        ? "RS232" : "网络连接"
+            }
+            else{
+                return ""
+            }
+        }
+        eqText4:{
+            if(DeviceManager.deviceList[swipeCurrIndex]){
+                return DeviceManager.deviceList[swipeCurrIndex].pDeviceInformation.state
+            }
+            else{
+                return ""
+            }
         }
     }
 
@@ -38,9 +61,50 @@ Rectangle {
                 id:s3
                 width:  212
                 height:  215
-                x:  50
-                y:  248
+                x:50
+                y:248
                 color: "#0c5696"
+                eqText1:{
+                    if(DeviceManager.deviceList[swipeCurrIndex]){
+                        return DeviceManager.deviceList[swipeCurrIndex].pDeviceInformation.power
+                    }
+                    else{
+                        return ""
+                    }
+                }
+                eqText2:{
+                    if(DeviceManager.deviceList[swipeCurrIndex]){
+                        return DeviceManager.deviceList[swipeCurrIndex].pDeviceInformation.time
+                    }
+                    else{
+                        return ""
+                    }
+                }
+
+                eqText3:{
+                    if(DeviceManager.deviceList[swipeCurrIndex]){
+                        return DeviceManager.deviceList[swipeCurrIndex].pDeviceInformation.energy
+                    }
+                    else{
+                        return ""
+                    }
+                }
+                eqText4:{
+                    if(DeviceManager.deviceList[swipeCurrIndex]){
+                        return DeviceManager.deviceList[swipeCurrIndex].pDeviceInformation.heightPre
+                    }
+                    else{
+                        return ""
+                    }
+                }
+                eqText5:{
+                    if(DeviceManager.deviceList[swipeCurrIndex]){
+                        return DeviceManager.deviceList[swipeCurrIndex].pDeviceInformation.heightPost
+                    }
+                    else{
+                        return ""
+                    }
+                }
             }
         }
     }
@@ -132,6 +196,48 @@ Rectangle {
                 x: 269
                 y: 35
                 color:  "#0c5696"
+                eqText1:{
+                    if(DeviceManager.deviceList[swipeCurrIndex]){
+                        return DeviceManager.deviceList[swipeCurrIndex].pDeviceInformation.goodCycles
+                    }
+                    else{
+                        return ""
+                    }
+                }
+                eqText2:{
+                    if(DeviceManager.deviceList[swipeCurrIndex]){
+                        return DeviceManager.deviceList[swipeCurrIndex].pDeviceInformation.suspectCycles
+                    }
+                    else{
+                        return ""
+                    }
+                }
+                eqText3:{
+                    if(DeviceManager.deviceList[swipeCurrIndex]){
+                        return DeviceManager.deviceList[swipeCurrIndex].pDeviceInformation.notDefinite
+                    }
+                    else{
+                        return ""
+                    }
+                }
+                eqText4:{
+                    if(DeviceManager.deviceList[swipeCurrIndex]){
+                        return DeviceManager.deviceList[swipeCurrIndex].pDeviceInformation.goodCycles
+                        + DeviceManager.deviceList[swipeCurrIndex].pDeviceInformation.notDefinite
+                        +DeviceManager.deviceList[swipeCurrIndex].pDeviceInformation.suspectCycles
+                    }
+                    else{
+                        return ""
+                    }
+                }
+                eqText5:{
+                    if(DeviceManager.deviceList[swipeCurrIndex]){
+                        return DeviceManager.deviceList[swipeCurrIndex].pDeviceInformation.goodRate
+                    }
+                    else{
+                        return ""
+                    }
+                }
             }
             YieldTrend{
                 id:s6

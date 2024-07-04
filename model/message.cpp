@@ -24,14 +24,25 @@ QVariant Message::data(const QModelIndex &index, int role) const
     return m_data.at(index.row());
 }
 
+QHash<int, QByteArray> Message::roleNames() const
+{
+    QHash<int, QByteArray> roles;
+
+    roles[0] = "messegStr";
+
+    return roles;
+}
+
 void Message::addMessage(QString message)
 {
     beginInsertRows(QModelIndex(), rowCount(), rowCount());
     m_data.push_back(message);
+    endInsertRows();
 }
 
 Message::Message(QObject *parent)
     : QAbstractListModel{parent}
 {
-
+    addMessage("1111111");
+    addMessage("222222");
 }

@@ -11,7 +11,7 @@ class Manual : public QAbstractListModel
 {
     Q_OBJECT
 public:
-    explicit Manual(int welderID, QObject *parent = nullptr);
+    explicit Manual(int welderID = 0, QObject *parent = nullptr);
 
     // QAbstractItemModel interface
 public:

@@ -1,5 +1,7 @@
 import QtQuick 2.0
 import QtCharts 2.15
+import Device 1.0
+import WeldTrend 1.0
 //焊接趋势
 Rectangle {
     color: pRgb(43, 112, 173)
@@ -128,6 +130,13 @@ Rectangle {
             color: "#1398fa"
             width: 3
             visible: altitudeMode
+            VXYModelMapper{
+                model: DeviceManager.deviceList[0].pWeldTrend.pBeforeModel
+                series: lineSeries2
+                firstRow: 0
+                xColumn: 1
+                yColumn: 2
+            }
         }
         LineSeries {
             id:lineSeries3
@@ -137,6 +146,13 @@ Rectangle {
             color: "#ccb2f8"
             width: 3
             visible: altitudeMode
+            VXYModelMapper{
+                model: DeviceManager.deviceList[0].pWeldTrend.pAfterModel
+                series: lineSeries3
+                firstRow: 0
+                xColumn: 1
+                yColumn: 2
+            }
         }
         LineSeries {
             id:lineSeries
@@ -145,6 +161,13 @@ Rectangle {
             axisY:myAxisY2
             color: "#d5b989"
             width: 3
+            VXYModelMapper{
+                model: DeviceManager.deviceList[0].pWeldTrend.pPowerModel
+                series: lineSeries
+                firstRow: 0
+                xColumn: 1
+                yColumn: 2
+            }
         }
         LineSeries {
             id:lineSeries1
@@ -153,18 +176,25 @@ Rectangle {
             axisY:myAxisY3
             color: "#cd9caa"
             width: 3
-        }
-        Timer{
-            interval: 1000
-            running: true
-            repeat: true
-            onTriggered: {
-                lineSeries1.append(timer,Math.random()*50)
-                lineSeries2.append(timer,Math.random()*50)
-                lineSeries3.append(timer,Math.random()*50)
-                lineSeries.append(timer,Math.random()*50)
-                timer = timer+1
+            VXYModelMapper{
+                model: DeviceManager.deviceList[0].pWeldTrend.pTimeModel
+                series: lineSeries1
+                firstRow: 0
+                xColumn: 1
+                yColumn: 2
             }
         }
+//        Timer{
+//            interval: 1000
+//            running: true
+//            repeat: true
+//            onTriggered: {
+//                lineSeries1.append(timer,Math.random()*50)
+//                lineSeries2.append(timer,Math.random()*50)
+//                lineSeries3.append(timer,Math.random()*50)
+//                lineSeries.append(timer,Math.random()*50)
+//                timer = timer+1
+//            }
+//        }
     }
 }

@@ -1,4 +1,4 @@
-QT += widgets quick virtualkeyboard charts serialport sql
+QT += widgets quick virtualkeyboard charts serialport sql qml
 
 CONFIG += c++11
 msvc {

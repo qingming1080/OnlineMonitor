@@ -315,6 +315,7 @@ debug\qrc_qml.cpp: qml.qrc \
 		qmlSource\SystemConfig.qml \
 		qmlSource\CustomBtn.qml \
 		qmlSource\CustomDialog.qml \
+		qmlSource\RootConfigView.qml \
 		qmlSource\SwipePage.qml \
 		qmlSource\WeldingTrend.qml \
 		qmlSource\WeldingParameter.qml \
@@ -1985,25 +1986,25 @@ debug\main.obj: main.cpp E:\qt5.15\5.15.2\msvc2019_64\include\QtWidgets\QApplica
 		E:\qt5.15\5.15.2\msvc2019_64\include\QtQml\qqmlerror.h \
 		E:\qt5.15\5.15.2\msvc2019_64\include\QtQml\QQmlContext \
 		E:\qt5.15\5.15.2\msvc2019_64\include\QtQml\qqmlcontext.h \
+		E:\qt5.15\5.15.2\msvc2019_64\include\QtQml\QQmlEngine \
 		model\yieldtrend.h \
 		E:\qt5.15\5.15.2\msvc2019_64\include\QtGui\QStandardItemModel \
 		E:\qt5.15\5.15.2\msvc2019_64\include\QtGui\qstandarditemmodel.h \
 		E:\qt5.15\5.15.2\msvc2019_64\include\QtCore\qabstractitemmodel.h \
 		E:\qt5.15\5.15.2\msvc2019_64\include\QtGui\qicon.h \
-		DataBase\databasemanager.h \
+		devicemanager.h \
 		E:\qt5.15\5.15.2\msvc2019_64\include\QtCore\QObject \
-		E:\qt5.15\5.15.2\msvc2019_64\include\QtSql\QSqlDatabase \
-		E:\qt5.15\5.15.2\msvc2019_64\include\QtSql\qsqldatabase.h \
-		E:\qt5.15\5.15.2\msvc2019_64\include\QtSql\qtsqlglobal.h \
-		E:\qt5.15\5.15.2\msvc2019_64\include\QtSql\qtsql-config.h \
+		E:\qt5.15\5.15.2\msvc2019_64\include\QtCore\QMap \
+		model\device.h \
+		model\deviceinformation.h \
+		qmlenum.h \
+		model\manual.h \
+		E:\qt5.15\5.15.2\msvc2019_64\include\QtCore\QAbstractListModel \
 		define.h \
 		E:\qt5.15\5.15.2\msvc2019_64\include\QtCore\QString \
 		E:\qt5.15\5.15.2\msvc2019_64\include\QtCore\QByteArray \
 		E:\qt5.15\5.15.2\msvc2019_64\include\QtCore\QDateTime \
-		E:\qt5.15\5.15.2\msvc2019_64\include\QtCore\qdatetime.h \
-		devicemanager.h \
-		E:\qt5.15\5.15.2\msvc2019_64\include\QtCore\QMap \
-		model\device.h
+		E:\qt5.15\5.15.2\msvc2019_64\include\QtCore\qdatetime.h
 
 debug\device.obj: model\device.cpp model\device.h \
 		E:\qt5.15\5.15.2\msvc2019_64\include\QtCore\QObject \

@@ -2,31 +2,23 @@
 
 YieldTrend::YieldTrend()
 {
-    m_pItemModel = new QStandardItemModel();
     /// 设置模型三列 0_行数  1_x轴  2_y轴
-    m_pItemModel->setColumnCount(3);
+    setColumnCount(3);
+
+    for(int i = 10; i < 20; ++i)
+        addRow(QDateTime::fromString(QString("2001-01-01 01:%1:00").arg(i), "yyyy-MM-dd hh:mm:ss"),i);
 }
 
-QStandardItemModel *YieldTrend::getModel()
+void YieldTrend::addRow(QDateTime x, int y)
 {
-    return m_pItemModel;
-}
-
-void YieldTrend::addRow(int x, int y)
-{
-    int row = m_pItemModel->rowCount();
+    int row = rowCount();
 
     QStandardItem* rowItem = new QStandardItem(QString::number(row));
-    QStandardItem* xItem   = new QStandardItem(QString::number(x));
+    QStandardItem* xItem   = new QStandardItem(QString::number(x.toMSecsSinceEpoch()));
     QStandardItem* yItem   = new QStandardItem(QString::number(y));
 
-    m_pItemModel->QStandardItemModel::setItem(row, 0, rowItem);
-    m_pItemModel->QStandardItemModel::setItem(row, 1, xItem);
-    m_pItemModel->QStandardItemModel::setItem(row, 2, yItem);
-}
-
-void YieldTrend::clear()
-{
-    m_pItemModel->clear();
+    QStandardItemModel::setItem(row, 0, rowItem);
+    QStandardItemModel::setItem(row, 1, xItem);
+    QStandardItemModel::setItem(row, 2, yItem);
 }
 

@@ -15,6 +15,14 @@ DeviceInformation::DeviceInformation(int welderID, QObject *parent)
     m_heightOption = data.height_option;
     m_connectType = static_cast<QmlEnum::_CONNECTTYPE>(data.connect_type);
     m_connectID = data.connect_id;
+    if(welderID == 1){
+        m_goodRate = 22;
+        m_power = 12;
+    }
+    if(welderID == 4){
+        m_power = 16;
+        m_goodRate = 30;
+    }
 }
 
 QString DeviceInformation::name() const
@@ -161,4 +169,121 @@ void DeviceInformation::setState(const QString &newState)
         return;
     m_state = newState;
     emit stateChanged();
+}
+
+int DeviceInformation::goodRate() const
+{
+    return m_goodRate;
+}
+
+void DeviceInformation::setGoodRate(int newGoodRate)
+{
+    if (m_goodRate == newGoodRate)
+        return;
+    m_goodRate = newGoodRate;
+    emit goodRateChanged();
+}
+
+int DeviceInformation::goodCycles() const
+{
+    return m_goodCycles;
+}
+
+void DeviceInformation::setGoodCycles(int newGoodCycles)
+{
+    if (m_goodCycles == newGoodCycles)
+        return;
+    m_goodCycles = newGoodCycles;
+    emit goodCyclesChanged();
+}
+
+int DeviceInformation::suspectCycles() const
+{
+    return m_suspectCycles;
+}
+
+void DeviceInformation::setSuspectCycles(int newSuspectCycles)
+{
+    if (m_suspectCycles == newSuspectCycles)
+        return;
+    m_suspectCycles = newSuspectCycles;
+    emit suspectCyclesChanged();
+}
+
+int DeviceInformation::notDefinite() const
+{
+    return m_notDefinite;
+}
+
+void DeviceInformation::setNotDefinite(int newNotDefinite)
+{
+    if (m_notDefinite == newNotDefinite)
+        return;
+    m_notDefinite = newNotDefinite;
+    emit notDefiniteChanged();
+}
+
+int DeviceInformation::power() const
+{
+    return m_power;
+}
+
+void DeviceInformation::setPower(int newPower)
+{
+    if (m_power == newPower)
+        return;
+    m_power = newPower;
+    emit powerChanged();
+}
+
+int DeviceInformation::time() const
+{
+    return m_time;
+}
+
+void DeviceInformation::setTime(int newTime)
+{
+    if (m_time == newTime)
+        return;
+    m_time = newTime;
+    emit timeChanged();
+}
+
+int DeviceInformation::energy() const
+{
+    return m_energy;
+}
+
+void DeviceInformation::setEnergy(int newEnergy)
+{
+    if (m_energy == newEnergy)
+        return;
+    m_energy = newEnergy;
+    emit energyChanged();
+}
+
+int DeviceInformation::heightPre() const
+{
+    return m_heightPre;
+}
+
+void DeviceInformation::setHeightPre(int newHeightPre)
+{
+    if (m_heightPre == newHeightPre)
+        return;
+    m_heightPre = newHeightPre;
+    emit heightPreChanged();
+}
+
+int DeviceInformation::heightPost() const
+{
+    return m_heightPost;
+}
+
+void DeviceInformation::setHeightPost(int newHeightPost)
+{
+    if (m_heightPost == newHeightPost)
+        return;
+    m_heightPost = newHeightPost;
+    emit heightPostChanged();
 }

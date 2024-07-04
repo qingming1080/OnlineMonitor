@@ -1,6 +1,9 @@
 import QtQuick 2.0
 import QtQuick.Controls 1.4
 import QtQuick.Controls 2.5
+import Device 1.0
+import DeviceInformation 1.0
+//import IOModel 1.0
 //系统配置
 Rectangle {
     id: sysUI
@@ -216,6 +219,14 @@ Rectangle {
                         border.width: 3
                         border.color: "#99ccff"
                     }
+                    text:{
+                        if(DeviceManager.deviceList[currentConfigId-1]){
+                            DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.maxBacth
+                        }
+                        else{
+                            return ""
+                        }
+                    }
                 }
 
                 Text {
@@ -245,6 +256,14 @@ Rectangle {
                         border.width: 3
                         border.color: "#99ccff"
                     }
+                    text:{
+                        if(DeviceManager.deviceList[currentConfigId-1]){
+                            DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.sample
+                        }
+                        else{
+                            return ""
+                        }
+                    }
                 }
                 Text {
                     id: s3
@@ -272,6 +291,14 @@ Rectangle {
                         radius: 6
                         border.width: 3
                         border.color: "#99ccff"
+                    }
+                    text:{
+                        if(DeviceManager.deviceList[currentConfigId-1]){
+                            DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.lowerLimit
+                        }
+                        else{
+                            return ""
+                        }
                     }
                 }
                 Text {
@@ -584,6 +611,14 @@ Rectangle {
                         border.width: 3
                         border.color: "#99ccff"
                     }
+                    text:{
+                        if(DeviceManager.deviceList[currentConfigId-1]){
+                            DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.name
+                        }
+                        else{
+                            return ""
+                        }
+                    }
                 }
                 Text {
                     id: s15
@@ -604,6 +639,14 @@ Rectangle {
                     anchors.left: s15.right
                     anchors.leftMargin: 23
                     model: ["L20-VG", "L20-TS", "20DP", "20MA", "自定义"]
+                    displayText:{
+                        if(DeviceManager.deviceList[currentConfigId-1]){
+                            DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.model
+                        }
+                        else{
+                            return ""
+                        }
+                    }
                 }
                 Switch{
                     id:ctl1
@@ -948,7 +991,48 @@ Rectangle {
                 x:41
                 y:68
                 sysCurrIndex:1
+                heightOpation:{
+                    if(DeviceManager.deviceList[0]){
+                        return DeviceManager.deviceList[0].pDeviceInformation.heightOption
+                                === 1 ? true:false
+                    }
+                    else{
+                        return false
+                    }
+                }
                 visible: musysTmp1
+                eqText1:{
+                    if(DeviceManager.deviceList[0]){
+                        DeviceManager.deviceList[0].pDeviceInformation.name
+                    }
+                    else{
+                        return ""
+                    }
+                }
+                eqText2:{
+                    if(DeviceManager.deviceList[0]){
+                        DeviceManager.deviceList[0].pDeviceInformation.model
+                    }
+                    else{
+                        return ""
+                    }
+                }
+                eqText3:{
+                    if(DeviceManager.deviceList[0]){
+                        DeviceManager.deviceList[0].pDeviceInformation.connectType === 1  ? "网络连接" : "RS232"
+                    }
+                    else{
+                        return ""
+                    }
+                }
+                eqText4:{
+                    if(DeviceManager.deviceList[0]){
+                        DeviceManager.deviceList[0].pDeviceInformation.state
+                    }
+                    else{
+                        return ""
+                    }
+                }
                 onSigAltitudeModel: {
                     if(visible){
                         altitudeModel1 = tmp
@@ -959,8 +1043,49 @@ Rectangle {
                 id:s2
                 x:347
                 y:68
+                heightOpation:{
+                    if(DeviceManager.deviceList[1]){
+                        return DeviceManager.deviceList[1].pDeviceInformation.heightOption
+                                === 1 ? true:false
+                    }
+                    else{
+                        return false
+                    }
+                }
                 sysCurrIndex:2
                 visible: musysTmp2
+                eqText1:{
+                    if(DeviceManager.deviceList[1]){
+                        DeviceManager.deviceList[1].pDeviceInformation.name
+                    }
+                    else{
+                        return ""
+                    }
+                }
+                eqText2:{
+                    if(DeviceManager.deviceList[1]){
+                        DeviceManager.deviceList[1].pDeviceInformation.model
+                    }
+                    else{
+                        return ""
+                    }
+                }
+                eqText3:{
+                    if(DeviceManager.deviceList[1]){
+                        DeviceManager.deviceList[1].pDeviceInformation.connectType === 1  ? "网络连接" : "RS232"
+                    }
+                    else{
+                        return ""
+                    }
+                }
+                eqText4:{
+                    if(DeviceManager.deviceList[1]){
+                        DeviceManager.deviceList[1].pDeviceInformation.state
+                    }
+                    else{
+                        return ""
+                    }
+                }
                 onSigAltitudeModel: {
                     if(visible){
                         altitudeModel2 = tmp
@@ -972,10 +1097,67 @@ Rectangle {
                 x:654
                 y:68
                 sysCurrIndex:3
+                heightOpation:{
+                    if(DeviceManager.deviceList[2]){
+                        return DeviceManager.deviceList[2].pDeviceInformation.heightOption
+                                === 1 ? true:false
+                    }
+                    else if(DeviceManager.deviceList[3]){
+                        return DeviceManager.deviceList[3].pDeviceInformation.heightOption
+                                === 1 ? true:false
+                    }
+                    else{
+                        return false
+                    }
+                }
                 visible: musysTmp3
+                eqText1:{
+                    if(DeviceManager.deviceList[2]){
+                        DeviceManager.deviceList[2].pDeviceInformation.name
+                    }
+                    else if(DeviceManager.deviceList[3]){
+                        DeviceManager.deviceList[3].pDeviceInformation.name
+                    }
+                    else{
+                        return ""
+                    }
+                }
+                eqText2:{
+                    if(DeviceManager.deviceList[2]){
+                        DeviceManager.deviceList[2].pDeviceInformation.model
+                    }
+                    else if(DeviceManager.deviceList[3]){
+                        DeviceManager.deviceList[3].pDeviceInformation.model
+                    }
+                    else{
+                        return ""
+                    }
+                }
+                eqText3:{
+                    if(DeviceManager.deviceList[2]){
+                        DeviceManager.deviceList[2].pDeviceInformation.connectType === 1  ? "网络连接" : "RS232"
+                    }
+                    else if(DeviceManager.deviceList[3]){
+                        DeviceManager.deviceList[3].pDeviceInformation.connectType === 1  ? "网络连接" : "RS232"
+                    }
+                    else{
+                        return ""
+                    }
+                }
+                eqText4:{
+                    if(DeviceManager.deviceList[2]){
+                        DeviceManager.deviceList[2].pDeviceInformation.state
+                    }
+                    else if(DeviceManager.deviceList[3]){
+                        DeviceManager.deviceList[3].pDeviceInformation.state
+                    }
+                    else{
+                        return ""
+                    }
+                }
                 onSigAltitudeModel: {
                     if(visible){
-                        altitudeModel3 = tmp
+                        altitudeModel2 = tmp
                     }
                 }
             }
@@ -985,6 +1167,63 @@ Rectangle {
                 y:68
                 sysCurrIndex:4
                 visible: musysTmp4
+                heightOpation:{
+                    if(DeviceManager.deviceList[3]){
+                        return DeviceManager.deviceList[3].pDeviceInformation.heightOption
+                                === 1 ? true:false
+                    }
+                    else if(DeviceManager.deviceList[2]){
+                        return DeviceManager.deviceList[2].pDeviceInformation.heightOption
+                                === 1 ? true:false
+                    }
+                    else{
+                        return false
+                    }
+                }
+                eqText1:{
+                    if(DeviceManager.deviceList[3]){
+                        DeviceManager.deviceList[3].pDeviceInformation.name
+                    }
+                    else if(DeviceManager.deviceList[2]){
+                        DeviceManager.deviceList[2].pDeviceInformation.name
+                    }
+                    else{
+                        return ""
+                    }
+                }
+                eqText2:{
+                    if(DeviceManager.deviceList[3]){
+                        DeviceManager.deviceList[3].pDeviceInformation.model
+                    }
+                    else if(DeviceManager.deviceList[2]){
+                        DeviceManager.deviceList[2].pDeviceInformation.model
+                    }
+                    else{
+                        return ""
+                    }
+                }
+                eqText3:{
+                    if(DeviceManager.deviceList[3]){
+                        DeviceManager.deviceList[3].pDeviceInformation.connectType === 1  ? "网络连接" : "RS232"
+                    }
+                    else if(DeviceManager.deviceList[2]){
+                        DeviceManager.deviceList[2].pDeviceInformation.connectType === 1  ? "网络连接" : "RS232"
+                    }
+                    else{
+                        return ""
+                    }
+                }
+                eqText4:{
+                    if(DeviceManager.deviceList[3]){
+                        DeviceManager.deviceList[3].pDeviceInformation.state
+                    }
+                    else if(DeviceManager.deviceList[2]){
+                        DeviceManager.deviceList[2].pDeviceInformation.state
+                    }
+                    else{
+                        return ""
+                    }
+                }
                 onSigAltitudeModel: {
                     if(visible){
                         altitudeModel4 = tmp

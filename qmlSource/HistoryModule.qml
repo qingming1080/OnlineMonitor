@@ -337,99 +337,202 @@ Rectangle {
             font.pixelSize: 20
         }
     }
-
-    TableView {
-        id: tableView
+    Rectangle{
         width: 1220
         height: 605
         anchors.top: top.bottom
         anchors.left: top.left
         anchors.leftMargin: 1
-        horizontalScrollBarPolicy: Qt.ScrollBarAlwaysOff//隐藏水平滚动条
-        verticalScrollBarPolicy: Qt.ScrollBarAlwaysOff//隐藏竖直滚动条
-        frameVisible: false
-        clip: true
-        itemDelegate: Rectangle {
-            height: 38
-            width: 244
-            color: styleData.row % 2 === 0 ? "#2d71ae" : "#b1d5db"  // 奇偶行不同背景色
-            Text {
-                anchors.centerIn: parent
-                elide: styleData.elideMode
-                text: styleData.value
-                color: styleData.row % 2 === 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)  // 奇偶行不同背景色
-                font.family: fontBold
-                font.pixelSize: 16
-                verticalAlignment: Text.AlignVCenter
-                horizontalAlignment: Text.AlignHCenter
+        color: "#004b8d"
+        Text{
+            id:t1
+            x:1220/5/2-width/2
+            y:5
+            font.pixelSize: 16
+            text: "设备名称"
+            font.family: fontBold
+            color: pRgb(153, 204, 255)
+        }
+        Text{
+            x:1220/5*1 + 1220/5/2-width/2
+            y:5
+            font.pixelSize: 16
+            text: "日期"
+            font.family: fontBold
+            color: pRgb(153, 204, 255)
+        }
+        Text{
+            x:1220/5*2 + 1220/5/2-width/2
+            y:5
+            font.pixelSize: 16
+            text: "能量"
+            font.family: fontBold
+            color: pRgb(153, 204, 255)
+        }
+        Text{
+            x:1220/5*3 + 1220/5/2-width/2
+            y:5
+            font.pixelSize: 16
+            text: "功率"
+            font.family: fontBold
+            color: pRgb(153, 204, 255)
+        }
+        Text{
+            x:1220/5*4 + 1220/5/2-width/2
+            y:5
+            font.pixelSize: 16
+            text: "结果"
+            font.family: fontBold
+            color: pRgb(153, 204, 255)
+        }
+        ListView{
+            id: taskplanView
+            width: 1220
+            height: 550
+            y:35
+            model: 2
+            delegate: Rectangle{
+                id: regionItem
+                height: 36
+                width: 1220
+                color: index % 2 === 0 ? "#2d71ae" : "#b1d5db"
+                Text{
+                    x:1220/5/2-width/2
+                    anchors.verticalCenter: parent.verticalCenter
+                    font.pixelSize: 16
+                    text: "messegStr"
+                    font.family: fontBold
+                    color: index % 2 === 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
+                }
+                Text{
+                    anchors.verticalCenter: parent.verticalCenter
+                    x:1220/5*1 + 1220/5/2-width/2
+                    font.pixelSize: 16
+                    text: "messegStr"
+                    font.family: fontBold
+                    color: index % 2 === 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
+                }
+                Text{
+                    anchors.verticalCenter: parent.verticalCenter
+                    x:1220/5*2 + 1220/5/2-width/2
+                    font.pixelSize: 16
+                    text: "messegStr"
+                    font.family: fontBold
+                    color: index % 2 === 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
+                }
+                Text{
+                    anchors.verticalCenter: parent.verticalCenter
+                    x:1220/5*3 + 1220/5/2-width/2
+                    font.pixelSize: 16
+                    text: "messegStr"
+                    font.family: fontBold
+                    color: index % 2 === 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
+                }
+                Text{
+                    anchors.verticalCenter: parent.verticalCenter
+                    x:1220/5*4 + 1220/5/2-width/2
+                    font.pixelSize: 16
+                    text: "messegStr"
+                    font.family: fontBold
+                    color: index % 2 === 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
+                }
             }
-        }
-        rowDelegate: Rectangle {
-            height: 40
-        }
-
-        headerDelegate: Rectangle {
-            height: 40
-            color: "#004b8d"
-            Text {
-                anchors.centerIn: parent
-                text: styleData.value
-                color: "#b1d5db"
-                font.family: fontBold
-                font.pixelSize: 14
-            }
-        }
-
-        TableViewColumn {
-            role: "name"
-            title: "设备名称"
-            width: 244
-        }
-
-        TableViewColumn {
-            role: "date"
-            title: "日期"
-            width: 244
-        }
-        TableViewColumn {
-            role: "energy"
-            title: "能量"
-            width: 244
-        }
-
-        TableViewColumn {
-            role: "power"
-            title: "功率"
-            width: 244
-        }
-        TableViewColumn {
-            role: "result"
-            title: "结果"
-            width: 244
-        }
-        model: tableModel
-        ListModel {
-            id: tableModel
-            ListElement { name: "Item 1"; date: "1" ;energy: "2";power: "2";result: "3";}
-            ListElement { name: "Item 2"; date: "2" ;energy: "2";power: "2";result: "4";}
-            ListElement { name: "Item 2"; date: "3" ;energy: "2";power: "2";result: "3";}
-            ListElement { name: "Item 2"; date: "3" ;energy: "2";power: "2";result: "3";}
-            ListElement { name: "Item 2"; date: "3" ;energy: "2";power: "2";result: "3";}
-            ListElement { name: "Item 2"; date: "3" ;energy: "2";power: "2";result: "3";}
-            ListElement { name: "Item 2"; date: "3" ;energy: "2";power: "2";result: "3";}
-            ListElement { name: "Item 2"; date: "3" ;energy: "2";power: "2";result: "3";}
-            ListElement { name: "Item 2"; date: "3" ;energy: "2";power: "2";result: "3";}
-            ListElement { name: "Item 2"; date: "3" ;energy: "2";power: "2";result: "3";}
-            ListElement { name: "Item 2"; date: "3" ;energy: "2";power: "2";result: "3";}
-            ListElement { name: "Item 2"; date: "3" ;energy: "2";power: "2";result: "3";}
-            ListElement { name: "Item 2"; date: "3" ;energy: "2";power: "2";result: "3";}
-            ListElement { name: "Item 2"; date: "3" ;energy: "2";power: "2";result: "3";}
-            ListElement { name: "Item 2"; date: "3" ;energy: "2";power: "2";result: "3";}
-            ListElement { name: "Item 2"; date: "3" ;energy: "2";power: "2";result: "3";}
-            ListElement { name: "Item 2"; date: "3" ;energy: "2";power: "2";result: "3";}
-            ListElement { name: "Item 2"; date: "3" ;energy: "2";power: "2";result: "3";}
         }
     }
+
+
+    //    TableView {
+    //        id: tableView
+    //        width: 1220
+    //        height: 605
+    //        anchors.top: top.bottom
+    //        anchors.left: top.left
+    //        anchors.leftMargin: 1
+    //        horizontalScrollBarPolicy: Qt.ScrollBarAlwaysOff//隐藏水平滚动条
+    //        verticalScrollBarPolicy: Qt.ScrollBarAlwaysOff//隐藏竖直滚动条
+    //        frameVisible: false
+    //        clip: true
+    //        itemDelegate: Rectangle {
+    //            height: 38
+    //            width: 244
+    //            color: styleData.row % 2 === 0 ? "#2d71ae" : "#b1d5db"  // 奇偶行不同背景色
+    //            Text {
+    //                anchors.centerIn: parent
+    //                elide: styleData.elideMode
+    //                text: styleData.value
+    //                color: styleData.row % 2 === 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)  // 奇偶行不同背景色
+    //                font.family: fontBold
+    //                font.pixelSize: 16
+    //                verticalAlignment: Text.AlignVCenter
+    //                horizontalAlignment: Text.AlignHCenter
+    //            }
+    //        }
+    //        rowDelegate: Rectangle {
+    //            height: 40
+    //        }
+
+    //        headerDelegate: Rectangle {
+    //            height: 40
+    //            color: "#004b8d"
+    //            Text {
+    //                anchors.centerIn: parent
+    //                text: styleData.value
+    //                color: "#b1d5db"
+    //                font.family: fontBold
+    //                font.pixelSize: 14
+    //            }
+    //        }
+
+    //        TableViewColumn {
+    //            role: "name"
+    //            title: "设备名称"
+    //            width: 244
+    //        }
+
+    //        TableViewColumn {
+    //            role: "date"
+    //            title: "日期"
+    //            width: 244
+    //        }
+    //        TableViewColumn {
+    //            role: "energy"
+    //            title: "能量"
+    //            width: 244
+    //        }
+
+    //        TableViewColumn {
+    //            role: "power"
+    //            title: "功率"
+    //            width: 244
+    //        }
+    //        TableViewColumn {
+    //            role: "result"
+    //            title: "结果"
+    //            width: 244
+    //        }
+    //        model: tableModel
+    //        ListModel {
+    //            id: tableModel
+    //            ListElement { name: "Item 1"; date: "1" ;energy: "2";power: "2";result: "3";}
+    //            ListElement { name: "Item 2"; date: "2" ;energy: "2";power: "2";result: "4";}
+    //            ListElement { name: "Item 2"; date: "3" ;energy: "2";power: "2";result: "3";}
+    //            ListElement { name: "Item 2"; date: "3" ;energy: "2";power: "2";result: "3";}
+    //            ListElement { name: "Item 2"; date: "3" ;energy: "2";power: "2";result: "3";}
+    //            ListElement { name: "Item 2"; date: "3" ;energy: "2";power: "2";result: "3";}
+    //            ListElement { name: "Item 2"; date: "3" ;energy: "2";power: "2";result: "3";}
+    //            ListElement { name: "Item 2"; date: "3" ;energy: "2";power: "2";result: "3";}
+    //            ListElement { name: "Item 2"; date: "3" ;energy: "2";power: "2";result: "3";}
+    //            ListElement { name: "Item 2"; date: "3" ;energy: "2";power: "2";result: "3";}
+    //            ListElement { name: "Item 2"; date: "3" ;energy: "2";power: "2";result: "3";}
+    //            ListElement { name: "Item 2"; date: "3" ;energy: "2";power: "2";result: "3";}
+    //            ListElement { name: "Item 2"; date: "3" ;energy: "2";power: "2";result: "3";}
+    //            ListElement { name: "Item 2"; date: "3" ;energy: "2";power: "2";result: "3";}
+    //            ListElement { name: "Item 2"; date: "3" ;energy: "2";power: "2";result: "3";}
+    //            ListElement { name: "Item 2"; date: "3" ;energy: "2";power: "2";result: "3";}
+    //            ListElement { name: "Item 2"; date: "3" ;energy: "2";power: "2";result: "3";}
+    //            ListElement { name: "Item 2"; date: "3" ;energy: "2";power: "2";result: "3";}
+    //        }
+    //    }
 
     Text {
         id: version

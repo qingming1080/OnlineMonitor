@@ -45,5 +45,6 @@
         <file>fonts/SourceHanSansCN-Bold.ttf</file>
         <file>fonts/SourceHanSansCN-Normal.ttf</file>
         <file>qmlSource/RootConfig.qml</file>
+        <file>qmlSource/RootConfigView.qml</file>
     </qresource>
 </RCC>

@@ -27,7 +27,7 @@ class Device : public QObject
     Q_PROPERTY(System *pSystem                       READ pSystem)              // System表格
 
     Q_PROPERTY(WeldTrend *pWeldTrend                 READ pWeldTrend)           // 焊接趋势_折线
-    Q_PROPERTY(YieldTrend *pYieldTrend               READ pYieldTrend)          // 良率趋势_折线
+    Q_PROPERTY(YieldTrend *pYieldTrend               READ pYieldTrend NOTIFY pYieldTrendChanged)          // 良率趋势_折线
 
 public:
     explicit Device(int welderID = 0, QObject *parent = nullptr);
@@ -52,6 +52,7 @@ signals:
 
     void pSystemChanged();
 
+    void pYieldTrendChanged();
 private:
     const int m_welderID;
 

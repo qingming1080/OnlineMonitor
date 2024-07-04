@@ -119,11 +119,39 @@ Rectangle {
             height: 237
             radius: 3
             color: "#0c5596"
-            eqText1:DeviceManager.device(1).pDeviceInformation.name
-            eqText2:DeviceManager.device(1).pDeviceInformation.model
-            eqText3:DeviceManager.device(1).pDeviceInformation.connectType === 1
-                    ? "RS232" : "网络连接"
-            eqText4:DeviceManager.device(1).pDeviceInformation.state
+            eqText1:{
+                if(DeviceManager.deviceList[0]){
+                    return DeviceManager.deviceList[0].pDeviceInformation.name
+                }
+                else{
+                    return ""
+                }
+            }
+            eqText2:{
+                if(DeviceManager.deviceList[0]){
+                    return DeviceManager.deviceList[0].pDeviceInformation.model
+                }
+                else{
+                    return ""
+                }
+            }
+            eqText3:{
+                if(DeviceManager.deviceList[0]){
+                    return DeviceManager.deviceList[0].pDeviceInformation.connectType === 1
+                            ? "RS232" : "网络连接"
+                }
+                else{
+                    return ""
+                }
+            }
+            eqText4:{
+                if(DeviceManager.deviceList[0]){
+                    return DeviceManager.deviceList[0].pDeviceInformation.state
+                }
+                else{
+                    return ""
+                }
+            }
         }
         RealtimeYield{
             id:s2
@@ -133,6 +161,48 @@ Rectangle {
             y:42
             radius: 3
             color: "#0c5596"
+            eqText1:{
+                if(DeviceManager.deviceList[0]){
+                    return DeviceManager.deviceList[0].pDeviceInformation.goodCycles
+                }
+                else{
+                    return ""
+                }
+            }
+            eqText2:{
+                if(DeviceManager.deviceList[0]){
+                    return DeviceManager.deviceList[0].pDeviceInformation.suspectCycles
+                }
+                else{
+                    return ""
+                }
+            }
+            eqText3:{
+                if(DeviceManager.deviceList[0]){
+                    return DeviceManager.deviceList[0].pDeviceInformation.notDefinite
+                }
+                else{
+                    return ""
+                }
+            }
+            eqText4:{
+                if(DeviceManager.deviceList[0]){
+                    return DeviceManager.deviceList[0].pDeviceInformation.goodCycles
+                    + DeviceManager.deviceList[0].pDeviceInformation.notDefinite
+                    +DeviceManager.deviceList[0].pDeviceInformation.suspectCycles
+                }
+                else{
+                    return ""
+                }
+            }
+            eqText5:{
+                if(DeviceManager.deviceList[0]){
+                    return DeviceManager.deviceList[0].pDeviceInformation.goodRate
+                }
+                else{
+                    return ""
+                }
+            }
         }
         YieldTrend{
             id:s5
@@ -188,11 +258,39 @@ Rectangle {
             height: 237
             radius: 3
             color: "#0c5596"
-            eqText1:DeviceManager.device(2).pDeviceInformation.name
-            eqText2:DeviceManager.device(2).pDeviceInformation.model
-            eqText3:DeviceManager.device(2).pDeviceInformation.connectType === 1
-                    ? "RS232" : "网络连接"
-            eqText4:DeviceManager.device(2).pDeviceInformation.state
+            eqText1:{
+                if(DeviceManager.deviceList[1]){
+                    return DeviceManager.deviceList[1].pDeviceInformation.name
+                }
+                else{
+                    return ""
+                }
+            }
+            eqText2:{
+                if(DeviceManager.deviceList[1]){
+                    return DeviceManager.deviceList[1].pDeviceInformation.model
+                }
+                else{
+                    return ""
+                }
+            }
+            eqText3:{
+                if(DeviceManager.deviceList[1]){
+                    return DeviceManager.deviceList[1].pDeviceInformation.connectType === 1
+                            ? "RS232" : "网络连接"
+                }
+                else{
+                    return ""
+                }
+            }
+            eqText4:{
+                if(DeviceManager.deviceList[1]){
+                    return DeviceManager.deviceList[1].pDeviceInformation.state
+                }
+                else{
+                    return ""
+                }
+            }
         }
         RealtimeYield{
             id:s4
@@ -202,6 +300,48 @@ Rectangle {
             y:42
             radius: 3
             color: "#0c5596"
+            eqText1:{
+                if(DeviceManager.deviceList[1]){
+                    return DeviceManager.deviceList[1].pDeviceInformation.goodCycles
+                }
+                else{
+                    return ""
+                }
+            }
+            eqText2:{
+                if(DeviceManager.deviceList[1]){
+                    return DeviceManager.deviceList[1].pDeviceInformation.suspectCycles
+                }
+                else{
+                    return ""
+                }
+            }
+            eqText3:{
+                if(DeviceManager.deviceList[1]){
+                    return DeviceManager.deviceList[1].pDeviceInformation.notDefinite
+                }
+                else{
+                    return ""
+                }
+            }
+            eqText4:{
+                if(DeviceManager.deviceList[1]){
+                    return DeviceManager.deviceList[1].pDeviceInformation.goodCycles
+                    + DeviceManager.deviceList[1].pDeviceInformation.notDefinite
+                    +DeviceManager.deviceList[1].pDeviceInformation.suspectCycles
+                }
+                else{
+                    return ""
+                }
+            }
+            eqText5:{
+                if(DeviceManager.deviceList[1]){
+                    return DeviceManager.deviceList[1].pDeviceInformation.goodRate
+                }
+                else{
+                    return ""
+                }
+            }
         }
         YieldTrend{
             id:s6
@@ -258,11 +398,52 @@ Rectangle {
             height: 227
             radius: 3
             color: "#0c5596"
-            eqText1:DeviceManager.device(3).pDeviceInformation.name
-            eqText2:DeviceManager.device(3).pDeviceInformation.model
-            eqText3:DeviceManager.device(3).pDeviceInformation.connectType === 1
-                    ? "RS232" : "网络连接"
-            eqText4:DeviceManager.device(3).pDeviceInformation.state
+            eqText1:{
+                if(DeviceManager.deviceList[2]){
+                    return DeviceManager.deviceList[2].pDeviceInformation.name
+                }
+                else if(DeviceManager.deviceList[3]){
+                    return DeviceManager.deviceList[3].pDeviceInformation.name
+                }
+                else{
+                    return ""
+                }
+            }
+            eqText2:{
+                if(DeviceManager.deviceList[2]){
+                    return DeviceManager.deviceList[2].pDeviceInformation.model
+                }
+                else if(DeviceManager.deviceList[3]){
+                    return DeviceManager.deviceList[3].pDeviceInformation.model
+                }
+                else{
+                    return ""
+                }
+            }
+            eqText3:{
+                if(DeviceManager.deviceList[2]){
+                    return DeviceManager.deviceList[2].pDeviceInformation.connectType === 1
+                            ? "RS232" : "网络连接"
+                }
+                else if(DeviceManager.deviceList[3]){
+                    return DeviceManager.deviceList[3].pDeviceInformation.connectType === 1
+                            ? "RS232" : "网络连接"
+                }
+                else{
+                    return ""
+                }
+            }
+            eqText4:{
+                if(DeviceManager.deviceList[2]){
+                    return DeviceManager.deviceList[2].pDeviceInformation.state
+                }
+                else if(DeviceManager.deviceList[3]){
+                    return DeviceManager.deviceList[3].pDeviceInformation.state
+                }
+                else{
+                    return ""
+                }
+            }
         }
         RealtimeYield{
             id:s8
@@ -272,6 +453,65 @@ Rectangle {
             y:35
             radius: 3
             color: "#0c5596"
+            eqText1:{
+                if(DeviceManager.deviceList[2]){
+                    return DeviceManager.deviceList[2].pDeviceInformation.goodCycles
+                }
+                else if(DeviceManager.deviceList[3]){
+                    return DeviceManager.deviceList[3].pDeviceInformation.goodCycles
+                }
+                else{
+                    return ""
+                }
+            }
+            eqText2:{
+                if(DeviceManager.deviceList[2]){
+                    return DeviceManager.deviceList[2].pDeviceInformation.suspectCycles
+                }
+                else if(DeviceManager.deviceList[3]){
+                    return DeviceManager.deviceList[3].pDeviceInformation.suspectCycles
+                }
+                else{
+                    return ""
+                }
+            }
+            eqText3:{
+                if(DeviceManager.deviceList[2]){
+                    return DeviceManager.deviceList[2].pDeviceInformation.notDefinite
+                }
+                else if(DeviceManager.deviceList[3]){
+                    return DeviceManager.deviceList[3].pDeviceInformation.notDefinite
+                }
+                else{
+                    return ""
+                }
+            }
+            eqText4:{
+                if(DeviceManager.deviceList[2]){
+                    return DeviceManager.deviceList[2].pDeviceInformation.goodCycles
+                    + DeviceManager.deviceList[2].pDeviceInformation.notDefinite
+                    +DeviceManager.deviceList[2].pDeviceInformation.suspectCycles
+                }
+                else if(DeviceManager.deviceList[3]){
+                    return DeviceManager.deviceList[3].pDeviceInformation.goodCycles
+                    + DeviceManager.deviceList[3].pDeviceInformation.notDefinite
+                    +DeviceManager.deviceList[3].pDeviceInformation.suspectCycles
+                }
+                else{
+                    return ""
+                }
+            }
+            eqText5:{
+                if(DeviceManager.deviceList[2]){
+                    return DeviceManager.deviceList[2].pDeviceInformation.goodRate
+                }
+                else if(DeviceManager.deviceList[3]){
+                    return DeviceManager.deviceList[3].pDeviceInformation.goodRate
+                }
+                else{
+                    return ""
+                }
+            }
         }
         Button{
             width: 24
@@ -316,11 +556,52 @@ Rectangle {
             height: 227
             radius: 3
             color: "#0c5596"
-            eqText1:DeviceManager.device(4).pDeviceInformation.name
-            eqText2:DeviceManager.device(4).pDeviceInformation.model
-            eqText3:DeviceManager.device(4).pDeviceInformation.connectType === 1
-                    ? "RS232" : "网络连接"
-            eqText4:DeviceManager.device(4).pDeviceInformation.state
+            eqText1:{
+                if(DeviceManager.deviceList[3]){
+                    return DeviceManager.deviceList[3].pDeviceInformation.name
+                }
+                else if(DeviceManager.deviceList[2]){
+                    return DeviceManager.deviceList[2].pDeviceInformation.name
+                }
+                else{
+                    return ""
+                }
+            }
+            eqText2:{
+                if(DeviceManager.deviceList[3]){
+                    return DeviceManager.deviceList[3].pDeviceInformation.model
+                }
+                else if(DeviceManager.deviceList[2]){
+                    return DeviceManager.deviceList[2].pDeviceInformation.model
+                }
+                else{
+                    return ""
+                }
+            }
+            eqText3:{
+                if(DeviceManager.deviceList[3]){
+                    return DeviceManager.deviceList[3].pDeviceInformation.connectType === 1
+                            ? "RS232" : "网络连接"
+                }
+                else if(DeviceManager.deviceList[2]){
+                    return DeviceManager.deviceList[2].pDeviceInformation.connectType === 1
+                            ? "RS232" : "网络连接"
+                }
+                else{
+                    return ""
+                }
+            }
+            eqText4:{
+                if(DeviceManager.deviceList[3]){
+                    return DeviceManager.deviceList[3].pDeviceInformation.state
+                }
+                else if(DeviceManager.deviceList[2]){
+                    return DeviceManager.deviceList[2].pDeviceInformation.state
+                }
+                else{
+                    return ""
+                }
+            }
         }
         RealtimeYield{
             id:s11
@@ -330,6 +611,65 @@ Rectangle {
             y:35
             radius: 3
             color: "#0c5596"
+            eqText1:{
+                if(DeviceManager.deviceList[3]){
+                    return DeviceManager.deviceList[3].pDeviceInformation.goodCycles
+                }
+                else if(DeviceManager.deviceList[2]){
+                    return DeviceManager.deviceList[2].pDeviceInformation.goodCycles
+                }
+                else{
+                    return ""
+                }
+            }
+            eqText2:{
+                if(DeviceManager.deviceList[3]){
+                    return DeviceManager.deviceList[3].pDeviceInformation.suspectCycles
+                }
+                else if(DeviceManager.deviceList[2]){
+                    return DeviceManager.deviceList[2].pDeviceInformation.suspectCycles
+                }
+                else{
+                    return ""
+                }
+            }
+            eqText3:{
+                if(DeviceManager.deviceList[3]){
+                    return DeviceManager.deviceList[3].pDeviceInformation.notDefinite
+                }
+                else if(DeviceManager.deviceList[2]){
+                    return DeviceManager.deviceList[2].pDeviceInformation.notDefinite
+                }
+                else{
+                    return ""
+                }
+            }
+            eqText4:{
+                if(DeviceManager.deviceList[3]){
+                    return DeviceManager.deviceList[3].pDeviceInformation.goodCycles
+                    + DeviceManager.deviceList[3].pDeviceInformation.notDefinite
+                    +DeviceManager.deviceList[3].pDeviceInformation.suspectCycles
+                }
+                else if(DeviceManager.deviceList[2]){
+                    return DeviceManager.deviceList[2].pDeviceInformation.goodCycles
+                    + DeviceManager.deviceList[2].pDeviceInformation.notDefinite
+                    +DeviceManager.deviceList[2].pDeviceInformation.suspectCycles
+                }
+                else{
+                    return ""
+                }
+            }
+            eqText5:{
+                if(DeviceManager.deviceList[3]){
+                    return DeviceManager.deviceList[3].pDeviceInformation.goodRate
+                }
+                else if(DeviceManager.deviceList[2]){
+                    return DeviceManager.deviceList[2].pDeviceInformation.goodRate
+                }
+                else{
+                    return ""
+                }
+            }
         }
         Button{
             width: 24

@@ -103,6 +103,7 @@ Window {
                 Component.onCompleted: {
                     loadView(1,pro)
                     sigUpdateUI(0)
+                    console.log(Manual.getManualDataByWelderID(1,1))
                 }
             }
             Connections{
@@ -199,11 +200,7 @@ Window {
         height: 271
         anchors.centerIn: parent
     }
-//    RootConfig{
-//        id:swpMode
-//        width: 1280
-//        height: 740
-//    }
+
 
     InputPanel
     {

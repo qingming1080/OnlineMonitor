@@ -8,6 +8,7 @@ Rectangle {
     property string eqText4: ""
     property int sysCurrIndex: 0
     property bool undetermined: false
+    property bool heightOpation: false
     Connections{
         target: window
         function onSigUndetermined(index){
@@ -123,6 +124,7 @@ Rectangle {
             currentConfigId = sysCurrIndex
             sigUndetermined(sysCurrIndex)
             sigUpdateUI(sysCurrIndex-1)
+            altitudMode = heightOpation
         }
     }
     Text {
@@ -156,7 +158,7 @@ Rectangle {
             width: 20
             height: 20
             radius: 10
-            color: bt1.checked ? "#0d988c" : pRgb(232, 232, 232)
+            color: heightOpation ? "#0d988c" : pRgb(232, 232, 232)
             border.color: "#b1d5db"
             border.width: 2
         }
@@ -188,7 +190,7 @@ Rectangle {
             width: 20
             height: 20
             radius: 10
-            color: bt2.checked ? "#0d988c" : pRgb(232, 232, 232)
+            color: !heightOpation ? "#0d988c" : pRgb(232, 232, 232)
             border.color: "#b1d5db"
             border.width: 2
         }

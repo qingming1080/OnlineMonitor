@@ -5,6 +5,7 @@ Rectangle {
     property string eqText2: ""
     property string eqText3: ""
     property string eqText4: ""
+    property string eqText5: ""
     onHeightChanged: {
         if(height < 250 && height > 230){
             yuan.x = 110
@@ -82,5 +83,6 @@ Rectangle {
         id: yuan
         x:150
         y:58
+        value:eqText5
     }
 }

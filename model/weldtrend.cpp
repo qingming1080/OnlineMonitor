@@ -3,6 +3,26 @@
 WeldTrend::WeldTrend()
 {
     init();
+    for(int i = 0; i < 100; ++i)
+    {
+        QStandardItem* rowItem = new QStandardItem(QString::number(i));
+        QStandardItem* xItem   = new QStandardItem(QString::number(i));
+        QStandardItem* yItem   = new QStandardItem(QString::number(i));
+
+        m_pBeforeModel->setItem(i, 0, rowItem);
+        m_pBeforeModel->setItem(i, 1, xItem);
+        m_pBeforeModel->setItem(i, 2, yItem);
+    }
+    for(int i = 100; i > 0; i--)
+    {
+        QStandardItem* rowItem = new QStandardItem(QString::number(100-i));
+        QStandardItem* xItem   = new QStandardItem(QString::number(i));
+        QStandardItem* yItem   = new QStandardItem(QString::number(100-i));
+
+        m_pAfterModel->setItem(i, 0, rowItem);
+        m_pAfterModel->setItem(i, 1, xItem);
+        m_pAfterModel->setItem(i, 2, yItem);
+    }
 }
 
 

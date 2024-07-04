@@ -1,6 +1,8 @@
 import QtQuick 2.0
 import QtQuick.Controls 2.5
 import QtCharts 2.15
+import Device 1.0
+import YieldTrend 1.0
 //良率趋势
 Rectangle {
     property var startTime: Date.fromLocaleString(Qt.locale(), "2001-01-01 01:00:00", "yyyy-MM-dd hh:mm:ss")
@@ -295,6 +297,13 @@ Rectangle {
             axisY:myAxisY
             color: "#1398fa"
             width: 3
+            VXYModelMapper{
+                model: DeviceManager.deviceList[0].pYieldTrend
+                series: lineSeries
+                firstRow: 0
+                xColumn: 1
+                yColumn: 2
+            }
         }
         ScatterSeries{
             id:lineSeries1
@@ -303,22 +312,22 @@ Rectangle {
             markerSize: 10
         }
 
-        Component.onCompleted: {
-            lineSeries.append(Date.fromLocaleString(Qt.locale(), "2001-01-01 01:00:00", "yyyy-MM-dd hh:mm:ss"), 10)
-            lineSeries.append(Date.fromLocaleString(Qt.locale(), "2001-01-01 01:10:00", "yyyy-MM-dd hh:mm:ss"), 10)
-            lineSeries.append(Date.fromLocaleString(Qt.locale(), "2001-01-01 01:20:00", "yyyy-MM-dd hh:mm:ss"), 20)
-            lineSeries.append(Date.fromLocaleString(Qt.locale(), "2001-01-01 01:30:00", "yyyy-MM-dd hh:mm:ss"), 30)
-            lineSeries.append(Date.fromLocaleString(Qt.locale(), "2001-01-01 01:40:00", "yyyy-MM-dd hh:mm:ss"), 40)
-            lineSeries.append(Date.fromLocaleString(Qt.locale(), "2001-01-01 01:50:00", "yyyy-MM-dd hh:mm:ss"), 50)
-            lineSeries.append(Date.fromLocaleString(Qt.locale(), "2001-01-01 01:60:00", "yyyy-MM-dd hh:mm:ss"), 60)
+//        Component.onCompleted: {
+//            lineSeries.append(Date.fromLocaleString(Qt.locale(), "2001-01-01 01:00:00", "yyyy-MM-dd hh:mm:ss"), 10)
+//            lineSeries.append(Date.fromLocaleString(Qt.locale(), "2001-01-01 01:10:00", "yyyy-MM-dd hh:mm:ss"), 10)
+//            lineSeries.append(Date.fromLocaleString(Qt.locale(), "2001-01-01 01:20:00", "yyyy-MM-dd hh:mm:ss"), 20)
+//            lineSeries.append(Date.fromLocaleString(Qt.locale(), "2001-01-01 01:30:00", "yyyy-MM-dd hh:mm:ss"), 30)
+//            lineSeries.append(Date.fromLocaleString(Qt.locale(), "2001-01-01 01:40:00", "yyyy-MM-dd hh:mm:ss"), 40)
+//            lineSeries.append(Date.fromLocaleString(Qt.locale(), "2001-01-01 01:50:00", "yyyy-MM-dd hh:mm:ss"), 50)
+//            lineSeries.append(Date.fromLocaleString(Qt.locale(), "2001-01-01 01:60:00", "yyyy-MM-dd hh:mm:ss"), 60)
 
-            lineSeries1.append(Date.fromLocaleString(Qt.locale(), "2001-01-01 01:00:00", "yyyy-MM-dd hh:mm:ss"), 10)
-            lineSeries1.append(Date.fromLocaleString(Qt.locale(), "2001-01-01 01:10:00", "yyyy-MM-dd hh:mm:ss"), 10)
-            lineSeries1.append(Date.fromLocaleString(Qt.locale(), "2001-01-01 01:20:00", "yyyy-MM-dd hh:mm:ss"), 20)
-            lineSeries1.append(Date.fromLocaleString(Qt.locale(), "2001-01-01 01:30:00", "yyyy-MM-dd hh:mm:ss"), 30)
-            lineSeries1.append(Date.fromLocaleString(Qt.locale(), "2001-01-01 01:40:00", "yyyy-MM-dd hh:mm:ss"), 40)
-            lineSeries1.append(Date.fromLocaleString(Qt.locale(), "2001-01-01 01:50:00", "yyyy-MM-dd hh:mm:ss"), 50)
-            lineSeries1.append(Date.fromLocaleString(Qt.locale(), "2001-01-01 01:60:00", "yyyy-MM-dd hh:mm:ss"), 60)
-        }
+//            lineSeries1.append(Date.fromLocaleString(Qt.locale(), "2001-01-01 01:00:00", "yyyy-MM-dd hh:mm:ss"), 10)
+//            lineSeries1.append(Date.fromLocaleString(Qt.locale(), "2001-01-01 01:10:00", "yyyy-MM-dd hh:mm:ss"), 10)
+//            lineSeries1.append(Date.fromLocaleString(Qt.locale(), "2001-01-01 01:20:00", "yyyy-MM-dd hh:mm:ss"), 20)
+//            lineSeries1.append(Date.fromLocaleString(Qt.locale(), "2001-01-01 01:30:00", "yyyy-MM-dd hh:mm:ss"), 30)
+//            lineSeries1.append(Date.fromLocaleString(Qt.locale(), "2001-01-01 01:40:00", "yyyy-MM-dd hh:mm:ss"), 40)
+//            lineSeries1.append(Date.fromLocaleString(Qt.locale(), "2001-01-01 01:50:00", "yyyy-MM-dd hh:mm:ss"), 50)
+//            lineSeries1.append(Date.fromLocaleString(Qt.locale(), "2001-01-01 01:60:00", "yyyy-MM-dd hh:mm:ss"), 60)
+//        }
     }
 }

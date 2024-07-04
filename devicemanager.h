@@ -11,18 +11,14 @@
 class DeviceManager : public QObject
 {
     Q_OBJECT
-    // 当前设备数量
-    Q_PROPERTY(int deviceNum READ deviceNum NOTIFY deviceNumChanged)
+    // 设备指针列表
+    Q_PROPERTY(QList<Device *> deviceList READ deviceList  NOTIFY deviceListChanged)
+    // 设备数量
+    Q_PROPERTY(int deviceNum READ deviceNum  NOTIFY deviceNumChanged)
 public:
     static DeviceManager* getInstance();
 
-    /// 已暴露属性
-    Q_INVOKABLE int deviceNum() const;
-
-    /// 是否有设备
-    Q_INVOKABLE bool hasDevice(int index) const;
-    /// 通过设备号获取设备
-    Q_INVOKABLE Device *device(int index) const;
+    Q_INVOKABLE QList<Device *> deviceList() const;
 
     ///
     /// \brief addDevice : 新增一台设备
@@ -33,11 +29,15 @@ public:
     ///
     Q_INVOKABLE void removeDevice(int welderID);
 
+
+
+    Q_INVOKABLE int deviceNum() const;
+
 signals:
-
-    void deviceChanged();
-
     void deviceNumChanged();
+
+
+    void deviceListChanged();
 
 private:
     explicit DeviceManager(QObject *parent = nullptr);
@@ -47,9 +47,11 @@ private:
 private:
     static DeviceManager* s_pInstance;
 
-    QMap<int, Device *> m_deviceMap;
+    int m_deviceNum;
 
-    int m_deviceNum{0};
+    QList<Device*> m_deviceList;
+
+
 };
 
 #endif // DEVICEMANAGER_H
