@@ -291,7 +291,7 @@ Rectangle {
                                 anchors.centerIn: parent
                                 elide: styleData.elideMode
                                 text: styleData.value
-                                color: styleData.row % 2 === 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)  // 奇偶行不同背景色
+                                color: styleData.row % 2 === 0 ?pRgb(45, 113, 174) : pRgb(177, 213, 219)  // 奇偶行不同背景色
                                 font.family: fontBold
                                 font.pixelSize: 16
                                 verticalAlignment: Text.AlignVCenter

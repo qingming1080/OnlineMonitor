@@ -287,6 +287,7 @@ release\qrc_qml.cpp: qml.qrc \
 		E:\qt5.15\5.15.2\msvc2019_64\bin\rcc.exe \
 		main.qml \
 		"image\?? 3.png" \
+		image\??1.png \
 		image\??.png \
 		image\??.png \
 		image\??.png \
@@ -1454,6 +1455,8 @@ release\moc_yieldtrend.cpp: model\yieldtrend.h \
 		E:\qt5.15\5.15.2\msvc2019_64\include\QtGui\qpixmap.h \
 		E:\qt5.15\5.15.2\msvc2019_64\include\QtGui\qfont.h \
 		E:\qt5.15\5.15.2\msvc2019_64\include\QtGui\qicon.h \
+		E:\qt5.15\5.15.2\msvc2019_64\include\QtCore\QDateTime \
+		E:\qt5.15\5.15.2\msvc2019_64\include\QtCore\qdatetime.h \
 		release\moc_predefs.h \
 		E:\qt5.15\5.15.2\msvc2019_64\bin\moc.exe
 	E:\qt5.15\5.15.2\msvc2019_64\bin\moc.exe $(DEFINES) --compiler-flavor=msvc --include D:/Test/qml/OnlineMonitor/release/moc_predefs.h -IE:/qt5.15/5.15.2/msvc2019_64/mkspecs/win32-msvc -ID:/Test/qml/OnlineMonitor -IE:/qt5.15/5.15.2/msvc2019_64/include -IE:/qt5.15/5.15.2/msvc2019_64/include/QtCharts -IE:/qt5.15/5.15.2/msvc2019_64/include/QtWidgets -IE:/qt5.15/5.15.2/msvc2019_64/include/QtVirtualKeyboard -IE:/qt5.15/5.15.2/msvc2019_64/include/QtQuick -IE:/qt5.15/5.15.2/msvc2019_64/include/QtGui -IE:/qt5.15/5.15.2/msvc2019_64/include/QtANGLE -IE:/qt5.15/5.15.2/msvc2019_64/include/QtQmlModels -IE:/qt5.15/5.15.2/msvc2019_64/include/QtQml -IE:/qt5.15/5.15.2/msvc2019_64/include/QtNetwork -IE:/qt5.15/5.15.2/msvc2019_64/include/QtSerialPort -IE:/qt5.15/5.15.2/msvc2019_64/include/QtSql -IE:/qt5.15/5.15.2/msvc2019_64/include/QtCore -I"D:\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\ATLMFC\include" -I"D:\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include" -I"C:\Program Files (x86)\Windows Kits\NETFXSDK\4.8\include\um" -I"D:\Windows Kits\10\include\10.0.19041.0\ucrt" -I"D:\Windows Kits\10\include\10.0.19041.0\shared" -I"D:\Windows Kits\10\include\10.0.19041.0\um" -I"D:\Windows Kits\10\include\10.0.19041.0\winrt" -I"D:\Windows Kits\10\include\10.0.19041.0\cppwinrt" model\yieldtrend.h -o release\moc_yieldtrend.cpp
@@ -1991,6 +1994,8 @@ release\main.obj: main.cpp E:\qt5.15\5.15.2\msvc2019_64\include\QtWidgets\QAppli
 		E:\qt5.15\5.15.2\msvc2019_64\include\QtGui\qstandarditemmodel.h \
 		E:\qt5.15\5.15.2\msvc2019_64\include\QtCore\qabstractitemmodel.h \
 		E:\qt5.15\5.15.2\msvc2019_64\include\QtGui\qicon.h \
+		E:\qt5.15\5.15.2\msvc2019_64\include\QtCore\QDateTime \
+		E:\qt5.15\5.15.2\msvc2019_64\include\QtCore\qdatetime.h \
 		devicemanager.h \
 		E:\qt5.15\5.15.2\msvc2019_64\include\QtCore\QObject \
 		E:\qt5.15\5.15.2\msvc2019_64\include\QtCore\QMap \
@@ -2002,8 +2007,9 @@ release\main.obj: main.cpp E:\qt5.15\5.15.2\msvc2019_64\include\QtWidgets\QAppli
 		define.h \
 		E:\qt5.15\5.15.2\msvc2019_64\include\QtCore\QString \
 		E:\qt5.15\5.15.2\msvc2019_64\include\QtCore\QByteArray \
-		E:\qt5.15\5.15.2\msvc2019_64\include\QtCore\QDateTime \
-		E:\qt5.15\5.15.2\msvc2019_64\include\QtCore\qdatetime.h
+		model\message.h \
+		model\weldtrend.h \
+		model\iomodel.h
 
 release\device.obj: model\device.cpp model\device.h \
 		E:\qt5.15\5.15.2\msvc2019_64\include\QtCore\QObject \
@@ -2994,7 +3000,9 @@ release\yieldtrend.obj: model\yieldtrend.cpp model\yieldtrend.h \
 		E:\qt5.15\5.15.2\msvc2019_64\include\QtGui\qpixelformat.h \
 		E:\qt5.15\5.15.2\msvc2019_64\include\QtGui\qpixmap.h \
 		E:\qt5.15\5.15.2\msvc2019_64\include\QtGui\qfont.h \
-		E:\qt5.15\5.15.2\msvc2019_64\include\QtGui\qicon.h
+		E:\qt5.15\5.15.2\msvc2019_64\include\QtGui\qicon.h \
+		E:\qt5.15\5.15.2\msvc2019_64\include\QtCore\QDateTime \
+		E:\qt5.15\5.15.2\msvc2019_64\include\QtCore\qdatetime.h
 
 release\qmlcache.obj: qmlcache.cpp qmlcache.h \
 		E:\qt5.15\5.15.2\msvc2019_64\include\QtCore\QObject \

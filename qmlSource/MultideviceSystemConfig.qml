@@ -1,5 +1,7 @@
 import QtQuick 2.0
 import QtQuick.Controls 2.15
+import Device 1.0
+import DeviceInformation 1.0
 //系统配置（小）
 Rectangle {
     property string eqText1: ""
@@ -165,6 +167,7 @@ Rectangle {
         onPressed: {
             sigAltitudeModel(true)
             sigUpdateUI(sysCurrIndex)
+            DeviceManager.deviceList[sysCurrIndex-1].pDeviceInformation.setHeightOption(1)
         }
     }
     Text {
@@ -197,6 +200,7 @@ Rectangle {
         onPressed: {
             sigAltitudeModel(false)
             sigUpdateUI(sysCurrIndex)
+            DeviceManager.deviceList[sysCurrIndex-1].pDeviceInformation.setHeightOption(0)
         }
     }
     Text {

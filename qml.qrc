@@ -46,5 +46,6 @@
         <file>fonts/SourceHanSansCN-Normal.ttf</file>
         <file>qmlSource/RootConfig.qml</file>
         <file>qmlSource/RootConfigView.qml</file>
+        <file>image/解锁1.png</file>
     </qresource>
 </RCC>

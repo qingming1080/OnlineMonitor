@@ -8,7 +8,7 @@ Rectangle {
     property string eqText3: ""
     property string eqText4: ""
     color: pRgb(43, 112, 173)
-    radius: 3
+    radius: 6
     Text {
         text: qsTr("系统参数配置")
         font.family: fontBold

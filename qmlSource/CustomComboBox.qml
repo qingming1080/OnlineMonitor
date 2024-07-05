@@ -7,6 +7,19 @@ ComboBox{
         border.width: 3
         border.color: "#99ccff"
     }
+    contentItem: Rectangle {
+        anchors.fill: parent
+        color: "transparent"
+        Text {
+            text: comboBox.displayText
+            color: pRgb(43, 112, 173)
+            anchors.centerIn: parent
+            horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignVCenter
+            font.family: fontBold
+            font.pixelSize: 16
+        }
+    }
     indicator: Item {
         width: 24
         height: 24
@@ -19,19 +32,6 @@ ComboBox{
             width: parent.width
             height: parent.height
             anchors.centerIn: parent
-        }
-    }
-    contentItem: Rectangle {
-        anchors.fill: parent
-        color: "transparent"
-        Text {
-            text: comboBox.displayText
-            color: pRgb(43, 112, 173)
-            anchors.centerIn: parent
-            horizontalAlignment: Text.AlignHCenter
-            verticalAlignment: Text.AlignVCenter
-            font.family: fontBold
-            font.pixelSize: 16
         }
     }
     delegate: ItemDelegate {
@@ -70,3 +70,5 @@ ComboBox{
         }
     }
 }
+
+

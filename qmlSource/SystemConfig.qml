@@ -368,6 +368,7 @@ Rectangle {
                             altitudeModel1 = true
                             altitudMode = true
                         }
+                        DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.setHeightOption(1)
                     }
                 }
                 Text {
@@ -401,6 +402,7 @@ Rectangle {
                         btnDefault = false
                         altitudeModel1 = false
                         altitudMode = false
+                        DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.setHeightOption(0)
                     }
                 }
                 Text {

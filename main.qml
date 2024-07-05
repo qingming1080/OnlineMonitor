@@ -29,10 +29,38 @@ Window {
     }
     property string fontNormal: normal.name
     property string fontBold: bold.name
-    property bool altitudeModel1: false
-    property bool altitudeModel2: false
-    property bool altitudeModel3: false
-    property bool altitudeModel4: false
+    property bool altitudeModel1: {
+        if(DeviceManager.deviceList[0]){
+            DeviceManager.deviceList[0].pDeviceInformation.heightOption === 0 ? false : true
+        }
+        else{
+            return false
+        }
+    }
+    property bool altitudeModel2: {
+        if(DeviceManager.deviceList[1]){
+            DeviceManager.deviceList[1].pDeviceInformation.heightOption === 0 ? false : true
+        }
+        else{
+            return false
+        }
+    }
+    property bool altitudeModel3: {
+        if(DeviceManager.deviceList[2]){
+            DeviceManager.deviceList[2].pDeviceInformation.heightOption === 0 ? false : true
+        }
+        else{
+            return false
+        }
+    }
+    property bool altitudeModel4: {
+        if(DeviceManager.deviceList[3]){
+            DeviceManager.deviceList[3].pDeviceInformation.heightOption === 0 ? false : true
+        }
+        else{
+            return false
+        }
+    }
     property bool isAdd: false
     function pRgb(r, g, b){
         var ret = (r << 16 | g << 8 | b)
@@ -194,12 +222,20 @@ Window {
             height: 740
         }
     }
+    Component{
+        id:rootview
+        RootConfigView{
+            width: 1280
+            height: 740
+        }
+    }
     CustomDialog{
         id:popup
         width: 567
         height: 271
         anchors.centerIn: parent
     }
+
 
 
     InputPanel

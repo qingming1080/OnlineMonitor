@@ -124,7 +124,7 @@ Rectangle {
             height: 30
             background: Rectangle{
                 id:b
-                color:"#007dbc"
+                color:pRgb(177, 213, 219)
                 radius: 3
             }
             onClicked: {
@@ -136,6 +136,10 @@ Rectangle {
                 t2.color = "#b1d5db"
                 t3.color = "#b1d5db"
                 t4.color = "#b1d5db"
+                b.color = pRgb(177, 213, 219)
+                bb.color = "#007dbc"
+                bbb.color = "#007dbc"
+                bbbb.color = "#007dbc"
                 buttonSynchronization(equiInforIndex,1)
             }
             contentItem: Text {
@@ -169,6 +173,10 @@ Rectangle {
                 t1.color = "#b1d5db"
                 t3.color = "#b1d5db"
                 t4.color = "#b1d5db"
+                b.color = "#007dbc"
+                bb.color = pRgb(177, 213, 219)
+                bbb.color = "#007dbc"
+                bbbb.color = "#007dbc"
                 buttonSynchronization(equiInforIndex,2)
             }
             contentItem: Text {
@@ -202,6 +210,10 @@ Rectangle {
                 t2.color = "#b1d5db"
                 t1.color = "#b1d5db"
                 t4.color = "#b1d5db"
+                b.color = "#007dbc"
+                bb.color = "#007dbc"
+                bbb.color = pRgb(177, 213, 219)
+                bbbb.color = "#007dbc"
                 buttonSynchronization(equiInforIndex,3)
             }
             contentItem: Text {
@@ -235,6 +247,10 @@ Rectangle {
                 t3.color = "#b1d5db"
                 t2.color = "#b1d5db"
                 t1.color = "#b1d5db"
+                b.color = "#007dbc"
+                bb.color = "#007dbc"
+                bbb.color = "#007dbc"
+                bbbb.color = pRgb(177, 213, 219)
                 buttonSynchronization(equiInforIndex,4)
             }
             contentItem: Text {
