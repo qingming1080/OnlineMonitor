@@ -12,7 +12,7 @@
 #include "model/message.h"
 #include "model/weldtrend.h"
 #include "model/yieldtrend.h"
-#include "model/iomodel.h"
+#include "model/io.h"
 // 自定义消息处理程序
 void myMessageHandler(QtMsgType type, const QMessageLogContext &context, const QString &msg)
 {
@@ -49,6 +49,7 @@ int main(int argc, char *argv[])
     qmlRegisterType<Device>("Device",1,0,"Device");
     qmlRegisterType<YieldTrend>("YieldTrend",1,0,"YieldTrend");
     qmlRegisterType<WeldTrend>("WeldTrend",1,0,"WeldTrend");
+    qmlRegisterType<IO>("IO",1,0,"IO");
 //    qmlRegisterType<IOModel>("IOModel",1,0,"IOModel");
     qmlRegisterType<DeviceInformation>("DeviceInformation",1,0,"DeviceInformation");
 
