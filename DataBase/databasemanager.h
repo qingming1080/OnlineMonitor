@@ -131,6 +131,8 @@ public:
     ///
     QList<_IO_Data> getIOData(int welderID);
 
+    _IO_Data getIOAvailabel(int welderID);
+
     ///
     /// \brief setIOData : 设置io_data表格数据
     /// \param id : io_id

@@ -358,6 +358,39 @@ QList<_IO_Data> DataBaseManager::getIOData(int welderID)
     return list;
 }
 
+_IO_Data DataBaseManager::getIOAvailabel(int welderID)
+{
+    _IO_Data data;
+
+    QSqlQuery query;
+    // %1_表格名称
+    QString execStr = QString("SELECT * FROM %1 WHERE %2 = :welderID").arg(IO_TABLENAME, getIO_ColumnName(_IO_COLUMN::_IO_welder_id));
+
+    query.prepare(execStr);
+    query.bindValue(":welderID", welderID);
+
+    if (!query.exec())
+    {
+        qDebug() << "查询失败: " << query.lastError();
+    }
+
+    while(query.next())
+    {
+        if(query.value(_IO_COLUMN::_IO_signal).toInt() != 2)
+            continue;
+
+        data.id         = query.value(_IO_COLUMN::_IO_id).toInt();
+        data.welder_id  = query.value(_IO_COLUMN::_IO_welder_id).toInt();
+        data.pin        = query.value(_IO_COLUMN::_IO_pin).toInt();
+        data.available  = query.value(_IO_COLUMN::_IO_available).toInt();
+        data.signal     = query.value(_IO_COLUMN::_IO_signal).toInt();
+
+        return data;
+    }
+
+    return data;
+}
+
 bool DataBaseManager::setIOData(int id, _IO_COLUMN column, QVariant data)
 {
     QSqlQuery query;

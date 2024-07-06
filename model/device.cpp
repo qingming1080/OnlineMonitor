@@ -1,6 +1,7 @@
 #include "device.h"
 
 #include "model/deviceinformation.h"
+#include "model/io.h"
 #include "model/iomodel.h"
 #include "model/manual.h"
 #include "model/production.h"
@@ -13,7 +14,7 @@ Device::Device(int welderID, QObject *parent)
     : QObject{parent}, m_welderID(welderID)
 {
     m_pDeviceInformation  = new DeviceInformation(m_welderID);
-    m_pIOModel            = new IOModel(m_welderID);
+    m_pIO                 = new IO(m_welderID);
     m_pManual             = new Manual(m_welderID);
     m_pProduction         = new Production(m_welderID);
     m_pSystem             = new System(m_welderID);
@@ -47,13 +48,12 @@ System *Device::pSystem() const
     return m_pSystem;
 }
 
+IO *Device::pIO() const
+{
+    return m_pIO;
+}
+
 Manual *Device::pManual() const
 {
     return m_pManual;
-}
-
-
-IOModel *Device::pIOModel() const
-{
-    return m_pIOModel;
 }

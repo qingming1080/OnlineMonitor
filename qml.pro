@@ -23,6 +23,7 @@ SOURCES += \
         main.cpp \
         model/device.cpp \
         model/deviceinformation.cpp \
+        model/io.cpp \
         model/iomodel.cpp \
         model/manual.cpp \
         model/message.cpp \
@@ -55,6 +56,7 @@ HEADERS += \
     fileobject.h \
     model/device.h \
     model/deviceinformation.h \
+    model/io.h \
     model/iomodel.h \
     model/manual.h \
     model/message.h \
