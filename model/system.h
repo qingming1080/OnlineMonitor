@@ -1,34 +1,55 @@
 #ifndef SYSTEM_H
 #define SYSTEM_H
 
-#include <QAbstractListModel>
-#include "define.h"
+#include <QObject>
 
-///
-/// \brief The System class : system_conf
-///
-class System : public QAbstractListModel
+class System : public QObject
 {
     Q_OBJECT
+    Q_PROPERTY(int id           READ id             WRITE setId             NOTIFY idChanged)
+    Q_PROPERTY(int singleFact   READ singleFact     WRITE setSingleFact     NOTIFY singleFactChanged)
+    Q_PROPERTY(int generalFact  READ generalFact    WRITE setGeneralFact    NOTIFY generalFactChanged)
+    Q_PROPERTY(int otherFace    READ otherFace      WRITE setOtherFace      NOTIFY otherFaceChanged)
+    Q_PROPERTY(int autoModel    READ autoModel      WRITE setAutoModel      NOTIFY autoModelChanged)
 public:
-   explicit System(int welderID, QObject *parent = nullptr);
+    explicit System(int welderID = 0, QObject *parent = nullptr);
 
-    // QAbstractItemModel interface
-public:
-    Q_INVOKABLE int rowCount(const QModelIndex &parent) const;
-    Q_INVOKABLE QVariant data(const QModelIndex &index, int role) const;
-    Q_INVOKABLE QHash<int, QByteArray> roleNames() const;
+    int id() const;
+    void setId(int newId);
 
-    Q_INVOKABLE QVariant getSystemByWelderID(int welderID, int role) const;
-    Q_INVOKABLE void setSystemData(int id, _SYSTEM_COLUMN column, QVariant data);
+    int singleFact() const;
+    void setSingleFact(int newSingleFact);
 
-private:
+    int generalFact() const;
+    void setGeneralFact(int newGeneralFact);
 
+    int otherFace() const;
+    void setOtherFace(int newOtherFace);
+
+    int autoModel() const;
+    void setAutoModel(int newAutoModel);
+
+signals:
+
+    void idChanged();
+
+    void singleFactChanged();
+
+    void generalFactChanged();
+
+    void otherFaceChanged();
+
+    void autoModelChanged();
 
 private:
     const int m_welderID;
 
-    QList<_System_Data> m_data;
+    int m_id;
+    int m_singleFact;
+    int m_generalFact;
+    int m_otherFace;
+    int m_autoModel;
+
 };
 
 #endif // SYSTEM_H

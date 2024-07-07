@@ -24,16 +24,12 @@ SOURCES += \
         model/device.cpp \
         model/deviceinformation.cpp \
         model/io.cpp \
-        model/iomodel.cpp \
         model/manual.cpp \
         model/message.cpp \
-        model/model.cpp \
         model/networkmodel.cpp \
-        model/production.cpp \
         model/rs232model.cpp \
         model/system.cpp \
-        model/weldtrend.cpp \
-        model/yieldtrend.cpp \
+        model/trend.cpp \
         qmlcache.cpp
 
 RESOURCES += qml.qrc
@@ -57,15 +53,11 @@ HEADERS += \
     model/device.h \
     model/deviceinformation.h \
     model/io.h \
-    model/iomodel.h \
     model/manual.h \
     model/message.h \
-    model/model.h \
     model/networkmodel.h \
-    model/production.h \
     model/rs232model.h \
     model/system.h \
-    model/weldtrend.h \
-    model/yieldtrend.h \
+    model/trend.h \
     qmlcache.h \
     qmlenum.h

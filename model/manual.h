@@ -6,7 +6,7 @@
 
 ///
 /// \brief The Manual class : manual
-///
+/// 暴露添加一行接口，暴露数据库保存接口
 class Manual : public QAbstractListModel
 {
     Q_OBJECT
@@ -18,10 +18,9 @@ public:
     Q_INVOKABLE int rowCount(const QModelIndex &parent) const;
     Q_INVOKABLE QVariant data(const QModelIndex &index, int role) const;
     Q_INVOKABLE QHash<int, QByteArray> roleNames() const;
+    Q_INVOKABLE virtual bool setData(const QModelIndex & index, const QVariant & value, int role = Qt::EditRole);
 
-    Q_INVOKABLE QVariant getManualDataByWelderID(int welderID, int role) const;
-    Q_INVOKABLE void setManualData(int id, _MANUAL_COLUMN column, QVariant data);
-
+    Q_INVOKABLE void save();
 private:
 
 

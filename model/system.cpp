@@ -1,136 +1,72 @@
 #include "system.h"
-#include "DataBase/databasemanager.h"
 
 System::System(int welderID, QObject *parent)
-    : QAbstractListModel{parent}, m_welderID(welderID)
+    : QObject{parent}, m_welderID(welderID)
 {
-    m_data = DataBaseManager::getInstance()->getSystemData(m_welderID);
+
 }
 
-
-int System::rowCount(const QModelIndex &parent) const
+int System::id() const
 {
-    return m_data.size();
+    return m_id;
 }
 
-QVariant System::data(const QModelIndex &index, int role) const
+void System::setId(int newId)
 {
-    if(!index.isValid())
-        return QVariant();
-
-    int row = index.row();
-    _System_Data data = m_data.at(row);
-    switch(role)
-    {
-    case _SYSTEM_COLUMN::_SYSTEM_id:
-        return data.id;
-    case _SYSTEM_COLUMN::_SYSTEM_welder_id:
-        return data.welder_id;
-    case _SYSTEM_COLUMN::_SYSTEM_single_fact_setting:
-        return data.single_fact_setting;
-    case _SYSTEM_COLUMN::_SYSTEM_general_fact_setting:
-        return data.general_fact_setting;
-    case _SYSTEM_COLUMN::_SYSTEM_other_fact_setting:
-        return data.other_fact_setting;
-    case _SYSTEM_COLUMN::_SYSTEM_auto_model_limit:
-        return data.auto_model_limit;
-    default:
-        return QVariant();
-    }
+    if (m_id == newId)
+        return;
+    m_id = newId;
+    emit idChanged();
 }
 
-QHash<int, QByteArray> System::roleNames() const
+int System::singleFact() const
 {
-    QHash<int, QByteArray> roles;
-
-    roles[_SYSTEM_COLUMN::_SYSTEM_id]                     = "id";
-    roles[_SYSTEM_COLUMN::_SYSTEM_welder_id]              = "welder_id";
-    roles[_SYSTEM_COLUMN::_SYSTEM_single_fact_setting]    = "single_fact_setting";
-    roles[_SYSTEM_COLUMN::_SYSTEM_general_fact_setting]   = "general_fact_setting";
-    roles[_SYSTEM_COLUMN::_SYSTEM_other_fact_setting]     = "other_fact_setting";
-    roles[_SYSTEM_COLUMN::_SYSTEM_auto_model_limit]       = "auto_model_limit";
-
-
-    return roles;
+    return m_singleFact;
 }
 
-QVariant System::getSystemByWelderID(int welderID, int role) const
+void System::setSingleFact(int newSingleFact)
 {
-    for(int i = 0; i < m_data.size(); ++i)
-    {
-        if(m_data.at(i).id != welderID)
-            continue;
-
-        switch(role)
-        {
-        case _SYSTEM_COLUMN::_SYSTEM_id:
-            return m_data.at(i).id;
-        case _SYSTEM_COLUMN::_SYSTEM_welder_id:
-            return m_data.at(i).welder_id;
-        case _SYSTEM_COLUMN::_SYSTEM_single_fact_setting:
-            return m_data.at(i).single_fact_setting;
-        case _SYSTEM_COLUMN::_SYSTEM_general_fact_setting:
-            return m_data.at(i).general_fact_setting;
-        case _SYSTEM_COLUMN::_SYSTEM_other_fact_setting:
-            return m_data.at(i).other_fact_setting;
-        case _SYSTEM_COLUMN::_SYSTEM_auto_model_limit:
-            return m_data.at(i).auto_model_limit;
-        default:
-            return QVariant();
-        }
-    }
-
-    return QVariant();
+    if (m_singleFact == newSingleFact)
+        return;
+    m_singleFact = newSingleFact;
+    emit singleFactChanged();
 }
 
-void System::setSystemData(int id, _SYSTEM_COLUMN column, QVariant data)
+int System::generalFact() const
 {
-    for(int i = 0; i < m_data.size(); ++i)
-    {
-        if(m_data.at(i).id != id)
-            continue;
-
-        switch(column)
-        {
-        case _SYSTEM_COLUMN::_SYSTEM_id:
-        {
-            m_data[i].id = data.toInt();
-            DataBaseManager::getInstance()->setSystemData(id, column, data);
-            return;
-        }
-        case _SYSTEM_COLUMN::_SYSTEM_welder_id:
-        {
-            m_data[i].welder_id = data.toInt();
-            DataBaseManager::getInstance()->setSystemData(id, column, data);
-            return;
-        }
-        case _SYSTEM_COLUMN::_SYSTEM_single_fact_setting:
-        {
-            m_data[i].single_fact_setting = data.toInt();
-            DataBaseManager::getInstance()->setSystemData(id, column, data);
-            return;
-        }
-        case _SYSTEM_COLUMN::_SYSTEM_general_fact_setting:
-        {
-            m_data[i].general_fact_setting = data.toInt();
-            DataBaseManager::getInstance()->setSystemData(id, column, data);
-            return;
-        }
-        case _SYSTEM_COLUMN::_SYSTEM_other_fact_setting:
-        {
-            m_data[i].other_fact_setting = data.toInt();
-            DataBaseManager::getInstance()->setSystemData(id, column, data);
-            return;
-        }
-        case _SYSTEM_COLUMN::_SYSTEM_auto_model_limit:
-        {
-            m_data[i].auto_model_limit = data.toInt();
-            DataBaseManager::getInstance()->setSystemData(id, column, data);
-            return;
-        }
-        default:
-            return;
-        }
-    }
+    return m_generalFact;
 }
 
+void System::setGeneralFact(int newGeneralFact)
+{
+    if (m_generalFact == newGeneralFact)
+        return;
+    m_generalFact = newGeneralFact;
+    emit generalFactChanged();
+}
+
+int System::otherFace() const
+{
+    return m_otherFace;
+}
+
+void System::setOtherFace(int newOtherFace)
+{
+    if (m_otherFace == newOtherFace)
+        return;
+    m_otherFace = newOtherFace;
+    emit otherFaceChanged();
+}
+
+int System::autoModel() const
+{
+    return m_autoModel;
+}
+
+void System::setAutoModel(int newAutoModel)
+{
+    if (m_autoModel == newAutoModel)
+        return;
+    m_autoModel = newAutoModel;
+    emit autoModelChanged();
+}

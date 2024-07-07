@@ -484,32 +484,17 @@ QList<_Manual_Data> DataBaseManager::getManualData(int welderID)
     return list;
 }
 
-bool DataBaseManager::setManualData(int id, _MANUAL_COLUMN column, QVariant data)
-{
-    QSqlQuery query;
-    // %1_表格名称 %2_要修改的字段名称 %3_ID字段名称
-    QString execStr = QString("UPDATE %1 SET %2 = :newdata WHERE %3 = :id")
-                          .arg(MANUAL_TABLENAME, getManual_ColumnName(column), getManual_ColumnName(_MANUAL_id));
-
-    // 绑定属性
-    query.prepare(execStr);
-    query.bindValue(":newdata", data);
-    query.bindValue(":id", id);
-
-    return query.exec();
-}
-
-bool DataBaseManager::removeManualRow(int id)
+bool DataBaseManager::removeManualDevice(int deviceID)
 {
     QSqlQuery query;
 
     // %1_表格名称 %2_ID字段名称
-    QString execStr = QString("DELETE FROM %1 WHERE %2=:id")
-                          .arg(MANUAL_TABLENAME, getManual_ColumnName(_MANUAL_id));
+    QString execStr = QString("DELETE FROM %1 WHERE %2=:welder_id")
+                          .arg(MANUAL_TABLENAME, getManual_ColumnName(_MANUAL_welder_id));
 
     // 绑定属性
     query.prepare(execStr);
-    query.bindValue(":id", id);
+    query.bindValue(":welder_id", deviceID);
 
     return query.exec();
 }
@@ -857,6 +842,20 @@ int DataBaseManager::getLevelByPassword(QString password)
         return query.value(3).toInt();
 
     return 0;
+}
+
+bool DataBaseManager::setUserPassword(QString password)
+{
+    QSqlQuery query;
+    // %1_表格名称 %2_要修改的字段名称 %3_ID字段名称
+    QString execStr = QString("UPDATE %1 SET %2 = :newPassword WHERE %3 = %4")
+                          .arg(USER_TABLENAME, "user_password", "level", "2");
+
+    // 绑定属性
+    query.prepare(execStr);
+    query.bindValue(":newPassword", password);
+
+    return query.exec();
 }
 
 DataBaseManager::DataBaseManager(QObject *parent)

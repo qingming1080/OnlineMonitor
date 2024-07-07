@@ -125,6 +125,7 @@ public:
     bool insertRS232Row(_RS232_Data data);
 
 /////////////////////////io_data////////////////////////////////
+/// 只处理待定
     ///
     /// \brief getIOData : 获取io_data表格数据
     /// \return : 数据
@@ -157,15 +158,14 @@ public:
     bool insertIORow(_IO_Data data);
 
 /////////////////////////manual////////////////////////////////
+/// 模型_只写 不清楚其他设备的模型
     ///
     /// \brief getManualData : 获取manual表格数据
     /// \return : 数据
     ///
     QList<_Manual_Data> getManualData(int welderID);
 
-    bool setManualData(int id, _MANUAL_COLUMN column, QVariant data);
-
-    bool removeManualRow(int id);
+    bool removeManualDevice(int deviceID);
 
     bool insertManualRow(_Manual_Data data);
 
@@ -193,6 +193,7 @@ public:
     bool insertModelRow(_Model_Data data);
 
 /////////////////////////production////////////////////////////////
+/// 良率趋势、焊接趋势_1h 历史记录_5s
     ///
     /// \brief getProductionData : 获取production表格数据
     /// \return : 数据
@@ -215,7 +216,8 @@ public:
     ///
     bool insertProductionRow(_Production_Data data);
 
-/////////////////////////production////////////////////////////////
+/////////////////////////system////////////////////////////////
+/// root界面
     ///
     /// \brief getSystemData : 获取system_conf表格数据
     /// \return : 数据
@@ -239,6 +241,13 @@ public:
     /// \return : 用户等级，1最大，0无效
     ///
     int getLevelByPassword(QString password);
+
+    ///
+    /// \brief setUserPassword : 设置user密码
+    /// \param password : 新密码
+    /// \return : 设置结果
+    ///
+    bool setUserPassword(QString password);
 signals:
 
 private:

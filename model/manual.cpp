@@ -76,147 +76,96 @@ QHash<int, QByteArray> Manual::roleNames() const
     return roles;
 }
 
-QVariant Manual::getManualDataByWelderID(int welderID, int role) const
+bool Manual::setData(const QModelIndex &index, const QVariant &value, int role)
 {
-    for(int i = 0; i < m_data.size(); ++i)
+    if(!index.isValid())
+        return false;
+
+    int row = index.row();
+    switch(role)
     {
-        if(m_data.at(i).welder_id != welderID)
-            continue;
-
-        switch(role)
-        {
-        case _MANUAL_COLUMN::_MANUAL_id:
-            return m_data.at(i).id;
-        case _MANUAL_COLUMN::_MANUAL_welder_id:
-            return m_data.at(i).welder_id;
-        case _MANUAL_COLUMN::_MANUAL_create_time:
-            return m_data.at(i).create_time;
-        case _MANUAL_COLUMN::_MANUAL_serial_number:
-            return m_data.at(i).serial_number;
-        case _MANUAL_COLUMN::_MANUAL_cycle_count:
-            return m_data.at(i).cycle_count;
-        case _MANUAL_COLUMN::_MANUAL_energy:
-            return m_data.at(i).energy;
-        case _MANUAL_COLUMN::_MANUAL_amplitude:
-            return m_data.at(i).amplitude;
-        case _MANUAL_COLUMN::_MANUAL_pressure:
-            return m_data.at(i).pressure;
-        case _MANUAL_COLUMN::_MANUAL_time:
-            return m_data.at(i).time;
-        case _MANUAL_COLUMN::_MANUAL_power:
-            return m_data.at(i).power;
-        case _MANUAL_COLUMN::_MANUAL_pre_height:
-            return m_data.at(i).pre_height;
-        case _MANUAL_COLUMN::_MANUAL_post_height:
-            return m_data.at(i).post_height;
-        case _MANUAL_COLUMN::_MANUAL_actual_force:
-            return m_data.at(i).actual_force;
-        case _MANUAL_COLUMN::_MANUAL_actual_degree:
-            return m_data.at(i).actual_degree;
-        default:
-            return QVariant();
-        }
+    case _MANUAL_COLUMN::_MANUAL_id:
+    {
+        m_data[row].id = value.toInt();
+        return true;
     }
-
-    return QVariant();
+    case _MANUAL_COLUMN::_MANUAL_welder_id:
+    {
+        m_data[row].welder_id = value.toInt();
+        return true;
+    }
+    case _MANUAL_COLUMN::_MANUAL_create_time:
+    {
+        m_data[row].create_time = value.toInt();
+        return true;
+    }
+    case _MANUAL_COLUMN::_MANUAL_serial_number:
+    {
+        m_data[row].serial_number = value.toInt();
+        return true;
+    }
+    case _MANUAL_COLUMN::_MANUAL_cycle_count:
+    {
+        m_data[row].cycle_count = value.toInt();
+        return true;
+    }
+    case _MANUAL_COLUMN::_MANUAL_energy:
+    {
+        m_data[row].energy = value.toInt();
+        return true;
+    }
+    case _MANUAL_COLUMN::_MANUAL_amplitude:
+    {
+        m_data[row].amplitude = value.toInt();
+        return true;
+    }
+    case _MANUAL_COLUMN::_MANUAL_pressure:
+    {
+        m_data[row].pressure = value.toInt();
+        return true;
+    }
+    case _MANUAL_COLUMN::_MANUAL_time:
+    {
+        m_data[row].time = value.toInt();
+        return true;
+    }
+    case _MANUAL_COLUMN::_MANUAL_power:
+    {
+        m_data[row].power = value.toInt();
+        return true;
+    }
+    case _MANUAL_COLUMN::_MANUAL_pre_height:
+    {
+        m_data[row].pre_height = value.toInt();
+        return true;
+    }
+    case _MANUAL_COLUMN::_MANUAL_post_height:
+    {
+        m_data[row].post_height = value.toInt();
+        return true;
+    }
+    case _MANUAL_COLUMN::_MANUAL_actual_force:
+    {
+        m_data[row].actual_force = value.toInt();
+        return true;
+    }
+    case _MANUAL_COLUMN::_MANUAL_actual_degree:
+    {
+        m_data[row].actual_degree = value.toInt();
+        return true;
+    }
+    default:
+        return false;
+    }
 }
 
-void Manual::setManualData(int id, _MANUAL_COLUMN column, QVariant data)
+void Manual::save()
 {
+    DataBaseManager::getInstance()->removeManualDevice(m_welderID);
+
     for(int i = 0; i < m_data.size(); ++i)
     {
-        if(m_data.at(i).id != id)
-            continue;
-
-        switch(column)
-        {
-        case _MANUAL_COLUMN::_MANUAL_id:
-        {
-            m_data[i].id = data.toInt();
-            DataBaseManager::getInstance()->setManualData(id, column, data);
-            return;
-        }
-        case _MANUAL_COLUMN::_MANUAL_welder_id:
-        {
-            m_data[i].welder_id = data.toInt();
-            DataBaseManager::getInstance()->setManualData(id, column, data);
-            return;
-        }
-        case _MANUAL_COLUMN::_MANUAL_create_time:
-        {
-            m_data[i].create_time = data.toInt();
-            DataBaseManager::getInstance()->setManualData(id, column, data);
-            return;
-        }
-        case _MANUAL_COLUMN::_MANUAL_serial_number:
-        {
-            m_data[i].serial_number = data.toInt();
-            DataBaseManager::getInstance()->setManualData(id, column, data);
-            return;
-        }
-        case _MANUAL_COLUMN::_MANUAL_cycle_count:
-        {
-            m_data[i].cycle_count = data.toInt();
-            DataBaseManager::getInstance()->setManualData(id, column, data);
-            return;
-        }
-        case _MANUAL_COLUMN::_MANUAL_energy:
-        {
-            m_data[i].energy = data.toInt();
-            DataBaseManager::getInstance()->setManualData(id, column, data);
-            return;
-        }
-        case _MANUAL_COLUMN::_MANUAL_amplitude:
-        {
-            m_data[i].amplitude = data.toInt();
-            DataBaseManager::getInstance()->setManualData(id, column, data);
-            return;
-        }
-        case _MANUAL_COLUMN::_MANUAL_pressure:
-        {
-            m_data[i].pressure = data.toInt();
-            DataBaseManager::getInstance()->setManualData(id, column, data);
-            return;
-        }
-        case _MANUAL_COLUMN::_MANUAL_time:
-        {
-            m_data[i].time = data.toInt();
-            DataBaseManager::getInstance()->setManualData(id, column, data);
-            return;
-        }
-        case _MANUAL_COLUMN::_MANUAL_power:
-        {
-            m_data[i].power = data.toInt();
-            DataBaseManager::getInstance()->setManualData(id, column, data);
-            return;
-        }
-        case _MANUAL_COLUMN::_MANUAL_pre_height:
-        {
-            m_data[i].pre_height = data.toInt();
-            DataBaseManager::getInstance()->setManualData(id, column, data);
-            return;
-        }
-        case _MANUAL_COLUMN::_MANUAL_post_height:
-        {
-            m_data[i].post_height = data.toInt();
-            DataBaseManager::getInstance()->setManualData(id, column, data);
-            return;
-        }
-        case _MANUAL_COLUMN::_MANUAL_actual_force:
-        {
-            m_data[i].actual_force = data.toInt();
-            DataBaseManager::getInstance()->setManualData(id, column, data);
-            return;
-        }
-        case _MANUAL_COLUMN::_MANUAL_actual_degree:
-        {
-            m_data[i].actual_degree = data.toInt();
-            DataBaseManager::getInstance()->setManualData(id, column, data);
-            return;
-        }
-        default:
-            return;
-        }
+        DataBaseManager::getInstance()->insertManualRow(m_data.at(i));
     }
 }
 

@@ -34,6 +34,16 @@ int DeviceManager::deviceNum() const
     return m_deviceNum;
 }
 
+int DeviceManager::getPasswordLevel(QString password)
+{
+    return DataBaseManager::getInstance()->getLevelByPassword(password);
+}
+
+void DeviceManager::setUserPassword(QString newPassword)
+{
+    DataBaseManager::getInstance()->setUserPassword(newPassword);
+}
+
 QList<Device *> DeviceManager::deviceList() const
 {
     return m_deviceList;

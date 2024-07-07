@@ -29,10 +29,16 @@ public:
     ///
     Q_INVOKABLE void removeDevice(int welderID);
 
-
-
     Q_INVOKABLE int deviceNum() const;
 
+    ///
+    /// \brief getPasswordLevel : 获取密码权能等级
+    /// \param password : 密码
+    /// \return : 等级 0_无效 1_ROOT 2_USER
+    ///
+    Q_INVOKABLE int getPasswordLevel(QString password);
+
+    Q_INVOKABLE void setUserPassword(QString newPassword);
 signals:
     void deviceNumChanged();
 
