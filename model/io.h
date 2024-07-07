@@ -6,11 +6,12 @@
 class IO : public QObject
 {
     Q_OBJECT
+    Q_PROPERTY(bool availabel READ availabel WRITE setAvailabel NOTIFY availabelChanged)
 public:
     explicit IO(int welderID = 0, QObject *parent = nullptr);
 
     bool availabel() const;
-    void setAvailabel(bool newAvailabel);
+    Q_INVOKABLE void setAvailabel(bool newAvailabel);
 
 signals:
 
@@ -22,7 +23,7 @@ private:
     int m_ioID;
 
     bool m_availabel;
-    Q_PROPERTY(bool availabel READ availabel WRITE setAvailabel NOTIFY availabelChanged)
+
 };
 
 #endif // IO_H

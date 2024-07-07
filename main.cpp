@@ -9,6 +9,8 @@
 #include "model/deviceinformation.h"
 #include "model/manual.h"
 #include "model/message.h"
+#include "model/io.h"
+
 // 自定义消息处理程序
 void myMessageHandler(QtMsgType type, const QMessageLogContext &context, const QString &msg)
 {
@@ -43,6 +45,7 @@ int main(int argc, char *argv[])
     pQmlContext->setContextProperty("Manual", new Manual());
 
     qmlRegisterType<Device>("Device",1,0,"Device");
+    qmlRegisterType<IO>("IO",1,0,"IO");
 //    qmlRegisterType<IOModel>("IOModel",1,0,"IOModel");
     qmlRegisterType<DeviceInformation>("DeviceInformation",1,0,"DeviceInformation");
 

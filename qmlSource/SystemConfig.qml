@@ -3,6 +3,7 @@ import QtQuick.Controls 1.4
 import QtQuick.Controls 2.5
 import Device 1.0
 import DeviceInformation 1.0
+import IO 1.0
 //import IOModel 1.0
 //系统配置
 Rectangle {
@@ -19,7 +20,14 @@ Rectangle {
     property bool undetermined2: false
     property bool undetermined3: false
     property bool undetermined4: false
-    property bool undeterMined: false
+    property bool undeterMined: {
+        if(DeviceManager.deviceList[currentConfigId-1]){
+            return DeviceManager.deviceList[currentConfigId-1].pIO.availabel
+        }
+        else{
+            return false
+        }
+    }
     property bool altitudMode:false
     property bool oneself: false
     property bool btnDefault: false
@@ -50,20 +58,6 @@ Rectangle {
         target: window
         function onSigSysConfig(){
             Qt.callLater(configCheck)
-        }
-        function onSigUndetermined(index){
-            if(currentConfigId == 1){
-                undeterMined = undetermined1
-            }
-            else if(currentConfigId == 2){
-                undeterMined = undetermined2
-            }
-            else if(currentConfigId == 3){
-                undeterMined = undetermined3
-            }
-            else if(currentConfigId == 4){
-                undeterMined = undetermined4
-            }
         }
         function onSigUpdateUI(index){
             if(index === 0){
@@ -418,7 +412,7 @@ Rectangle {
                     id:ctl
                     x:269
                     y:356
-                    onClicked: {
+                    onPressed: {
                         if(equipmentCount >1){
                             if(currentConfigId == 1){
                                 undetermined1 = !undetermined1
@@ -448,6 +442,7 @@ Rectangle {
                         else if(currentConfigId == 4){
                             undeterMined = undetermined4
                         }
+                        DeviceManager.deviceList[currentConfigId-1].pIO.setAvailabel(!ctl.checked)
                     }
 
                     indicator: Rectangle{

@@ -2,6 +2,7 @@ import QtQuick 2.0
 import QtQuick.Controls 2.15
 import Device 1.0
 import DeviceInformation 1.0
+import IO 1.0
 //系统配置（小）
 Rectangle {
     property string eqText1: ""
@@ -9,25 +10,32 @@ Rectangle {
     property string eqText3: ""
     property string eqText4: ""
     property int sysCurrIndex: 0
-    property bool undetermined: false
-    property bool heightOpation: false
-    Connections{
-        target: window
-        function onSigUndetermined(index){
-            if(sysCurrIndex === 1){
-                undetermined = undetermined1
-            }
-            else if(sysCurrIndex === 2){
-                undetermined = undetermined2
-            }
-            else if(sysCurrIndex === 3){
-                undetermined = undetermined3
-            }
-            else if(sysCurrIndex === 4){
-                undetermined = undetermined4
-            }
+    property bool undetermined: {
+        if(DeviceManager.deviceList[sysCurrIndex-1]){
+            return DeviceManager.deviceList[sysCurrIndex-1].pIO.availabel
+        }
+        else{
+            false
         }
     }
+    property bool heightOpation: false
+//    Connections{
+//        target: window
+//        function onSigUndetermined(index){
+//            if(sysCurrIndex === 1){
+//                undetermined = undetermined1
+//            }
+//            else if(sysCurrIndex === 2){
+//                undetermined = undetermined2
+//            }
+//            else if(sysCurrIndex === 3){
+//                undetermined = undetermined3
+//            }
+//            else if(sysCurrIndex === 4){
+//                undetermined = undetermined4
+//            }
+//        }
+//    }
 
     signal sigAltitudeModel(var tmp)
     radius: 5
@@ -124,7 +132,6 @@ Rectangle {
         onPressed: {
             loadViewsys(1,syscfg)
             currentConfigId = sysCurrIndex
-            sigUndetermined(sysCurrIndex)
             sigUpdateUI(sysCurrIndex-1)
             altitudMode = heightOpation
         }
@@ -216,7 +223,7 @@ Rectangle {
         id:ctl
         x:150
         y:317
-        onClicked: {
+        onPressed: {
             if(sysCurrIndex == 1){
                 undetermined1 = !undetermined1
             }
@@ -229,7 +236,8 @@ Rectangle {
             else if(sysCurrIndex ==4){
                 undetermined4 = !undetermined4
             }
-            sigUndetermined(sysCurrIndex)
+//            sigUndetermined(sysCurrIndex)
+            DeviceManager.deviceList[sysCurrIndex-1].pIO.setAvailabel(!ctl.checked)
         }
 
         indicator: Rectangle{

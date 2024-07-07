@@ -1703,7 +1703,8 @@ debug\main.obj: main.cpp D:\Qt\5.15.2\msvc2015_64\include\QtWidgets\QApplication
 		D:\Qt\5.15.2\msvc2015_64\include\QtCore\QByteArray \
 		D:\Qt\5.15.2\msvc2015_64\include\QtCore\QDateTime \
 		D:\Qt\5.15.2\msvc2015_64\include\QtCore\qdatetime.h \
-		model\message.h
+		model\message.h \
+		model\io.h
 
 debug\device.obj: model\device.cpp model\device.h \
 		D:\Qt\5.15.2\msvc2015_64\include\QtCore\QObject \

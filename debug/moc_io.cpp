@@ -22,8 +22,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_IO_t {
-    QByteArrayData data[4];
-    char stringdata0[31];
+    QByteArrayData data[6];
+    char stringdata0[57];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -35,10 +35,13 @@ static const qt_meta_stringdata_IO_t qt_meta_stringdata_IO = {
 QT_MOC_LITERAL(0, 0, 2), // "IO"
 QT_MOC_LITERAL(1, 3, 16), // "availabelChanged"
 QT_MOC_LITERAL(2, 20, 0), // ""
-QT_MOC_LITERAL(3, 21, 9) // "availabel"
+QT_MOC_LITERAL(3, 21, 12), // "setAvailabel"
+QT_MOC_LITERAL(4, 34, 12), // "newAvailabel"
+QT_MOC_LITERAL(5, 47, 9) // "availabel"
 
     },
-    "IO\0availabelChanged\0\0availabel"
+    "IO\0availabelChanged\0\0setAvailabel\0"
+    "newAvailabel\0availabel"
 };
 #undef QT_MOC_LITERAL
 
@@ -48,21 +51,27 @@ static const uint qt_meta_data_IO[] = {
        8,       // revision
        0,       // classname
        0,    0, // classinfo
-       1,   14, // methods
-       1,   20, // properties
+       2,   14, // methods
+       1,   28, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
        1,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    0,   19,    2, 0x06 /* Public */,
+       1,    0,   24,    2, 0x06 /* Public */,
+
+ // methods: name, argc, parameters, tag, flags
+       3,    1,   25,    2, 0x02 /* Public */,
 
  // signals: parameters
     QMetaType::Void,
 
+ // methods: parameters
+    QMetaType::Void, QMetaType::Bool,    4,
+
  // properties: name, type, flags
-       3, QMetaType::Bool, 0x00495103,
+       5, QMetaType::Bool, 0x00495103,
 
  // properties: notify_signal_id
        0,
@@ -77,6 +86,7 @@ void IO::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_
         Q_UNUSED(_t)
         switch (_id) {
         case 0: _t->availabelChanged(); break;
+        case 1: _t->setAvailabel((*reinterpret_cast< bool(*)>(_a[1]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -109,7 +119,6 @@ void IO::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_
     } else if (_c == QMetaObject::ResetProperty) {
     }
 #endif // QT_NO_PROPERTIES
-    Q_UNUSED(_a);
 }
 
 QT_INIT_METAOBJECT const QMetaObject IO::staticMetaObject = { {
@@ -141,13 +150,13 @@ int IO::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 1)
+        if (_id < 2)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 1;
+        _id -= 2;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 1)
+        if (_id < 2)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 1;
+        _id -= 2;
     }
 #ifndef QT_NO_PROPERTIES
     else if (_c == QMetaObject::ReadProperty || _c == QMetaObject::WriteProperty
