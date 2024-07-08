@@ -52,12 +52,19 @@ QList<Device *> DeviceManager::deviceList() const
 
 void DeviceManager::addDevice()
 {
-    for(int i = 0; i < m_deviceList.size() && i < 4; ++i)
+    for(int i = 0; i < m_deviceList.size() || i < 4; ++i)
+    {
         if(m_deviceList.at(i) == nullptr)
+        {
             m_deviceList[i] = new Device(i+1);
-
-    emit deviceNumChanged();
-    emit deviceListChanged();
+            _Configuration_Data data;
+            data.welder_id = i+1;
+            m_deviceNum++;
+            DataBaseManager::getInstance()->insertConfigurationDevice(data);
+            emit deviceNumChanged();
+            emit deviceListChanged();
+        }
+    }
 }
 
 void DeviceManager::removeDevice(int welderID)
@@ -69,6 +76,7 @@ void DeviceManager::removeDevice(int welderID)
 
     delete m_deviceList.at(welderID-1);
     m_deviceList[welderID-1] = nullptr;
+    m_deviceNum--;
     DataBaseManager::getInstance()->removeConfigurationDevice(welderID);
 
     emit deviceNumChanged();
