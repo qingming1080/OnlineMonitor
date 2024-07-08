@@ -131,7 +131,6 @@ Window {
                 Component.onCompleted: {
                     loadView(1,pro)
                     sigUpdateUI(0)
-                    console.log(Manual.getManualDataByWelderID(1,1))
                 }
             }
             Connections{

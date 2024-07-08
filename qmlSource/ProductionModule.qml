@@ -25,7 +25,6 @@ Rectangle {
     }
 
     Component.onCompleted: {
-
         if(equipmentCount > 1){
             mode = 1
             loadViewpro(2,multipro)
@@ -83,11 +82,11 @@ Rectangle {
                 width: mode == 1 ? 208 : 243
                 height: mode == 1 ? 203 : 258
                 color: mode == 1 ? "#0c5696" : pRgb(43, 112, 173)
-                eqText1:DeviceManager.device(1).pDeviceInformation.name
-                eqText2:DeviceManager.device(1).pDeviceInformation.model
-                eqText3:DeviceManager.device(1).pDeviceInformation.connectType === 1
+                eqText1:DeviceManager.deviceList[0].pDeviceInformation.name
+                eqText2:DeviceManager.deviceList[0].pDeviceInformation.model
+                eqText3:DeviceManager.deviceList[0].pDeviceInformation.connectType === 1
                         ? "RS232" : "网络连接"
-                eqText4:DeviceManager.device(1).pDeviceInformation.state
+                eqText4:DeviceManager.deviceList[0].pDeviceInformation.state
             }
 
             Loader{
@@ -233,6 +232,14 @@ Rectangle {
                         x:mode === 1 ? 269:286
                         y:mode === 1 ? 35:20
                         color: mode === 1 ? "#0c5696" : pRgb(43, 112, 173)
+                        revealing:{
+                            if(DeviceManager.deviceList[0]){
+                                return DeviceManager.deviceList[0].pIO.availabel
+                            }
+                            else{
+                                return true
+                            }
+                        }
                     }
                     YieldTrend{
                         id:s6

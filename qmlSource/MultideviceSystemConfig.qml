@@ -19,23 +19,6 @@ Rectangle {
         }
     }
     property bool heightOpation: false
-//    Connections{
-//        target: window
-//        function onSigUndetermined(index){
-//            if(sysCurrIndex === 1){
-//                undetermined = undetermined1
-//            }
-//            else if(sysCurrIndex === 2){
-//                undetermined = undetermined2
-//            }
-//            else if(sysCurrIndex === 3){
-//                undetermined = undetermined3
-//            }
-//            else if(sysCurrIndex === 4){
-//                undetermined = undetermined4
-//            }
-//        }
-//    }
 
     signal sigAltitudeModel(var tmp)
     radius: 5
@@ -296,7 +279,8 @@ Rectangle {
     }
     Text {
         id: s8
-        text: qsTr("PIN1")
+        text: sysCurrIndex === 1 ? "PIN1" : sysCurrIndex === 2 ? "PIN4" :
+        sysCurrIndex === 3 ? "PIN7" : sysCurrIndex === 4 ? "PIN10" : ""
         color: pRgb(177, 213, 219)
         font.family: fontBold
         font.pixelSize: 16
@@ -305,7 +289,8 @@ Rectangle {
     }
     Text {
         id: s9
-        text: qsTr("PIN2")
+        text: sysCurrIndex === 1 ? "PIN2" : sysCurrIndex === 2 ? "PIN5" :
+        sysCurrIndex === 3 ? "PIN8" : sysCurrIndex === 4 ? "PIN11" : ""
         color: pRgb(177, 213, 219)
         font.family: fontBold
         font.pixelSize: 16
@@ -315,7 +300,8 @@ Rectangle {
     }
     Text {
         id: s10
-        text: qsTr("PIN3")
+        text: sysCurrIndex === 1 ? "PIN3" : sysCurrIndex === 2 ? "PIN6" :
+        sysCurrIndex === 3 ? "PIN9" : sysCurrIndex === 4 ? "PIN12" : ""
         color: pRgb(177, 213, 219)
         font.family: fontBold
         font.pixelSize: 16

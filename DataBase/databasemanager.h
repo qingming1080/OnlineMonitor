@@ -198,7 +198,7 @@ public:
     /// \brief getProductionData : 获取production表格数据
     /// \return : 数据
     ///
-    QList<_Production_Data> getProductionData(int welderID);
+    QList<_Production_Data> getProductionData(int welderID = 0);
 
     ///
     /// \brief removeProductionRow : 删除production表格一行数据

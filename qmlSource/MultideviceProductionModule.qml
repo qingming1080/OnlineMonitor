@@ -161,6 +161,14 @@ Rectangle {
             y:42
             radius: 3
             color: "#0c5596"
+            revealing:{
+                if(DeviceManager.deviceList[0]){
+                    return DeviceManager.deviceList[0].pIO.availabel
+                }
+                else{
+                    return true
+                }
+            }
             eqText1:{
                 if(DeviceManager.deviceList[0]){
                     return DeviceManager.deviceList[0].pDeviceInformation.goodCycles
@@ -300,6 +308,14 @@ Rectangle {
             y:42
             radius: 3
             color: "#0c5596"
+            revealing:{
+                if(DeviceManager.deviceList[1]){
+                    return DeviceManager.deviceList[1].pIO.availabel
+                }
+                else{
+                    return true
+                }
+            }
             eqText1:{
                 if(DeviceManager.deviceList[1]){
                     return DeviceManager.deviceList[1].pDeviceInformation.goodCycles
@@ -453,6 +469,17 @@ Rectangle {
             y:35
             radius: 3
             color: "#0c5596"
+            revealing:{
+                if(DeviceManager.deviceList[2]){
+                    return DeviceManager.deviceList[2].pIO.availabel
+                }
+                else if(DeviceManager.deviceList[3]){
+                    return DeviceManager.deviceList[3].pIO.availabel
+                }
+                else{
+                    return true
+                }
+            }
             eqText1:{
                 if(DeviceManager.deviceList[2]){
                     return DeviceManager.deviceList[2].pDeviceInformation.goodCycles
@@ -611,6 +638,17 @@ Rectangle {
             y:35
             radius: 3
             color: "#0c5596"
+            revealing:{
+                if(DeviceManager.deviceList[3]){
+                    return DeviceManager.deviceList[3].pIO.availabel
+                }
+                else if(DeviceManager.deviceList[2]){
+                    return DeviceManager.deviceList[2].pIO.availabel
+                }
+                else{
+                    return true
+                }
+            }
             eqText1:{
                 if(DeviceManager.deviceList[3]){
                     return DeviceManager.deviceList[3].pDeviceInformation.goodCycles

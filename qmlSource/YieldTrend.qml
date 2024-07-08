@@ -2,7 +2,7 @@ import QtQuick 2.0
 import QtQuick.Controls 2.5
 import QtCharts 2.15
 import Device 1.0
-import YieldTrend 1.0
+import Trend 1.0
 //良率趋势
 Rectangle {
     property var startTime: Date.fromLocaleString(Qt.locale(), "2001-01-01 01:00:00", "yyyy-MM-dd hh:mm:ss")
@@ -314,7 +314,7 @@ Rectangle {
             color: "#1398fa"
             width: 3
             VXYModelMapper{
-                model: DeviceManager.deviceList[0].pYieldTrend
+                model: DeviceManager.deviceList[0].pTrend.pYieldTrend
                 series: lineSeries
                 firstRow: 0
                 xColumn: 1

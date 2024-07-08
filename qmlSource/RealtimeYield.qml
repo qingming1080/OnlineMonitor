@@ -6,6 +6,7 @@ Rectangle {
     property string eqText3: ""
     property string eqText4: ""
     property string eqText5: ""
+    property bool revealing: true
     onHeightChanged: {
         if(height < 250 && height > 230){
             yuan.x = 110
@@ -58,6 +59,7 @@ Rectangle {
         anchors.left: t1.left
         anchors.top: t1.bottom
         anchors.topMargin: 20
+        visible:revealing
     }
     Text {
         id:t3
@@ -65,8 +67,8 @@ Rectangle {
         font.family: fontBold
         font.pixelSize: mode === 1 ? 14:16
         color: pRgb(171, 206, 213)
-        anchors.left: t2.left
-        anchors.top: t2.bottom
+        anchors.left: revealing === false ? t1.left : t2.left
+        anchors.top: revealing === false ? t1.bottom : t2.bottom
         anchors.topMargin: 20
     }
     Text {

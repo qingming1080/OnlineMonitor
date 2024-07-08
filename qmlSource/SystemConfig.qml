@@ -501,7 +501,8 @@ Rectangle {
                 }
                 Text {
                     id: s8
-                    text: qsTr("PIN1")
+                    text: currentConfigId === 1 ? "PIN1" : currentConfigId === 2 ? "PIN4" :
+                    currentConfigId === 3 ? "PIN7" : currentConfigId === 4 ? "PIN10" : ""
                     color: pRgb(177, 213, 219)
                     font.family: fontBold
                     font.pixelSize: 16
@@ -510,7 +511,8 @@ Rectangle {
                 }
                 Text {
                     id: s9
-                    text: qsTr("PIN2")
+                    text: currentConfigId === 1 ? "PIN2" : currentConfigId === 2 ? "PIN5" :
+                    currentConfigId === 3 ? "PIN8" : currentConfigId === 4 ? "PIN11" : ""
                     color: pRgb(177, 213, 219)
                     font.family: fontBold
                     font.pixelSize: 16
@@ -520,7 +522,8 @@ Rectangle {
                 }
                 Text {
                     id: s10
-                    text: qsTr("PIN3")
+                    text: currentConfigId === 1 ? "PIN3" : currentConfigId === 2 ? "PIN6" :
+                    currentConfigId === 3 ? "PIN9" : currentConfigId === 4 ? "PIN12" : ""
                     color: pRgb(177, 213, 219)
                     font.family: fontBold
                     font.pixelSize: 16

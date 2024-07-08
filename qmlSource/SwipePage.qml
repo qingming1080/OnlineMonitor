@@ -196,6 +196,14 @@ Rectangle {
                 x: 269
                 y: 35
                 color:  "#0c5696"
+                revealing:{
+                    if(DeviceManager.deviceList[swipeCurrIndex]){
+                        return DeviceManager.deviceList[swipeCurrIndex].pIO.availabel
+                    }
+                    else{
+                        return true
+                    }
+                }
                 eqText1:{
                     if(DeviceManager.deviceList[swipeCurrIndex]){
                         return DeviceManager.deviceList[swipeCurrIndex].pDeviceInformation.goodCycles

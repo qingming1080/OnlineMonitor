@@ -10,7 +10,8 @@
 #include "model/manual.h"
 #include "model/message.h"
 #include "model/io.h"
-
+#include "model/trend.h"
+#include "model/history.h"
 // 自定义消息处理程序
 void myMessageHandler(QtMsgType type, const QMessageLogContext &context, const QString &msg)
 {
@@ -41,6 +42,7 @@ int main(int argc, char *argv[])
     QQmlApplicationEngine engine;
     QQmlContext* pQmlContext = engine.rootContext();
     pQmlContext->setContextProperty("DeviceManager", DeviceManager::getInstance());
+    pQmlContext->setContextProperty("History", History::getInstance());
     pQmlContext->setContextProperty("Message", Message::getInstance());
     pQmlContext->setContextProperty("Manual", new Manual());
 
@@ -48,6 +50,7 @@ int main(int argc, char *argv[])
     qmlRegisterType<IO>("IO",1,0,"IO");
 //    qmlRegisterType<IOModel>("IOModel",1,0,"IOModel");
     qmlRegisterType<DeviceInformation>("DeviceInformation",1,0,"DeviceInformation");
+    qmlRegisterType<Trend>("Trend",1,0,"Trend");
 
 
     const QUrl url(QStringLiteral("qrc:/main.qml"));

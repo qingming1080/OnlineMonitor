@@ -1,7 +1,7 @@
 import QtQuick 2.0
 import QtCharts 2.15
 import Device 1.0
-import WeldTrend 1.0
+import Trend 1.0
 //焊接趋势
 Rectangle {
     color: pRgb(43, 112, 173)
@@ -131,7 +131,7 @@ Rectangle {
             width: 3
             visible: altitudeMode
             VXYModelMapper{
-                model: DeviceManager.deviceList[0].pWeldTrend.pBeforeModel
+                model: DeviceManager.deviceList[0].pTrend.pBeforeModel
                 series: lineSeries2
                 firstRow: 0
                 xColumn: 1
@@ -147,7 +147,7 @@ Rectangle {
             width: 3
             visible: altitudeMode
             VXYModelMapper{
-                model: DeviceManager.deviceList[0].pWeldTrend.pAfterModel
+                model: DeviceManager.deviceList[0].pTrend.pAfterModel
                 series: lineSeries3
                 firstRow: 0
                 xColumn: 1
@@ -162,7 +162,7 @@ Rectangle {
             color: "#d5b989"
             width: 3
             VXYModelMapper{
-                model: DeviceManager.deviceList[0].pWeldTrend.pPowerModel
+                model: DeviceManager.deviceList[0].pTrend.pPowerModel
                 series: lineSeries
                 firstRow: 0
                 xColumn: 1
@@ -177,7 +177,7 @@ Rectangle {
             color: "#cd9caa"
             width: 3
             VXYModelMapper{
-                model: DeviceManager.deviceList[0].pWeldTrend.pTimeModel
+                model: DeviceManager.deviceList[0].pTrend.pTimeModel
                 series: lineSeries1
                 firstRow: 0
                 xColumn: 1

@@ -659,11 +659,20 @@ QList<_Production_Data> DataBaseManager::getProductionData(int welderID)
     QList<_Production_Data> list;
 
     QSqlQuery query;
-    // %1_表格名称
-    QString execStr = QString("SELECT * FROM %1 WHERE %2 = :welderID").arg(PRODUCTION_TABLENAME, getProduction_ColumnName(_PRODUCTION_COLUMN::_PRODUCTION_welder_id));
+    if(welderID != 0)
+    {
+        // %1_表格名称
+        QString execStr = QString("SELECT * FROM %1 WHERE %2 = :welderID").arg(PRODUCTION_TABLENAME, getProduction_ColumnName(_PRODUCTION_COLUMN::_PRODUCTION_welder_id));
 
-    query.prepare(execStr);
-    query.bindValue(":welderID", welderID);
+        query.prepare(execStr);
+        query.bindValue(":welderID", welderID);
+    }
+    else
+    {
+        // %1_表格名称
+        QString execStr = QString("SELECT * FROM %1").arg(PRODUCTION_TABLENAME);
+        query.prepare(execStr);
+    }
 
     if (!query.exec())
     {

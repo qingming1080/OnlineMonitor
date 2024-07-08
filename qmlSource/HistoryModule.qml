@@ -388,9 +388,10 @@ Rectangle {
         ListView{
             id: taskplanView
             width: 1220
-            height: 550
+            height: 560
             y:35
-            model: 2
+            clip: true
+            model: History
             delegate: Rectangle{
                 id: regionItem
                 height: 36
@@ -408,7 +409,7 @@ Rectangle {
                     anchors.verticalCenter: parent.verticalCenter
                     x:1220/5*1 + 1220/5/2-width/2
                     font.pixelSize: 16
-                    text: "messegStr"
+                    text: create_time
                     font.family: fontBold
                     color: index % 2 === 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
                 }
@@ -416,7 +417,7 @@ Rectangle {
                     anchors.verticalCenter: parent.verticalCenter
                     x:1220/5*2 + 1220/5/2-width/2
                     font.pixelSize: 16
-                    text: "messegStr"
+                    text: energy
                     font.family: fontBold
                     color: index % 2 === 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
                 }
@@ -424,7 +425,7 @@ Rectangle {
                     anchors.verticalCenter: parent.verticalCenter
                     x:1220/5*3 + 1220/5/2-width/2
                     font.pixelSize: 16
-                    text: "messegStr"
+                    text: power
                     font.family: fontBold
                     color: index % 2 === 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
                 }
