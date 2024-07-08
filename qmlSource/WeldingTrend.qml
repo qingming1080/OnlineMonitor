@@ -63,9 +63,9 @@ Rectangle {
         }
         ValueAxis {
             id: myAxisX
-            min: 0
-            max: 10>timer? 10:timer+1
-            tickCount: 11
+            min: DeviceManager.deviceList[0].pTrend.min
+            max: DeviceManager.deviceList[0].pTrend.max
+            tickCount: 5
             labelsColor: "#a3c7d0"
             labelsFont.pixelSize: 16
             labelsFont.bold: true
@@ -113,12 +113,12 @@ Rectangle {
         ValueAxis{
             id:myAxisY3
             min:0
-            max:50
-            tickCount: 9
+            max:0.5
+            tickCount: 12
             labelsColor: "#a3c7d0"
-            labelsFont.pixelSize: 16
+            labelsFont.pixelSize: 12
             labelsFont.bold: true
-            labelFormat: '%d'
+            labelFormat: '%.2f'
             gridVisible:false
             color:"#cd9caa"
         }

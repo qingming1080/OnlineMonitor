@@ -850,7 +850,6 @@ debug\moc_manual.cpp: model\manual.h \
 		E:\qt5.15\5.15.2\msvc2019_64\include\QtCore\qcontiguouscache.h \
 		E:\qt5.15\5.15.2\msvc2019_64\include\QtCore\qsharedpointer.h \
 		E:\qt5.15\5.15.2\msvc2019_64\include\QtCore\qsharedpointer_impl.h \
-		E:\qt5.15\5.15.2\msvc2019_64\include\QtCore\QAbstractTableModel \
 		define.h \
 		E:\qt5.15\5.15.2\msvc2019_64\include\QtCore\QObject \
 		E:\qt5.15\5.15.2\msvc2019_64\include\QtCore\QString \
@@ -1782,7 +1781,6 @@ debug\main.obj: main.cpp E:\qt5.15\5.15.2\msvc2019_64\include\QtWidgets\QApplica
 		model\manual.h \
 		E:\qt5.15\5.15.2\msvc2019_64\include\QtCore\QAbstractListModel \
 		E:\qt5.15\5.15.2\msvc2019_64\include\QtCore\qabstractitemmodel.h \
-		E:\qt5.15\5.15.2\msvc2019_64\include\QtCore\QAbstractTableModel \
 		define.h \
 		E:\qt5.15\5.15.2\msvc2019_64\include\QtCore\QString \
 		E:\qt5.15\5.15.2\msvc2019_64\include\QtCore\QByteArray \
@@ -1868,7 +1866,6 @@ debug\device.obj: model\device.cpp model\device.h \
 		E:\qt5.15\5.15.2\msvc2019_64\include\QtCore\qcontiguouscache.h \
 		E:\qt5.15\5.15.2\msvc2019_64\include\QtCore\qsharedpointer.h \
 		E:\qt5.15\5.15.2\msvc2019_64\include\QtCore\qsharedpointer_impl.h \
-		E:\qt5.15\5.15.2\msvc2019_64\include\QtCore\QAbstractTableModel \
 		define.h \
 		E:\qt5.15\5.15.2\msvc2019_64\include\QtCore\QString \
 		E:\qt5.15\5.15.2\msvc2019_64\include\QtCore\QByteArray \
@@ -2205,7 +2202,6 @@ debug\manual.obj: model\manual.cpp model\manual.h \
 		E:\qt5.15\5.15.2\msvc2019_64\include\QtCore\qcontiguouscache.h \
 		E:\qt5.15\5.15.2\msvc2019_64\include\QtCore\qsharedpointer.h \
 		E:\qt5.15\5.15.2\msvc2019_64\include\QtCore\qsharedpointer_impl.h \
-		E:\qt5.15\5.15.2\msvc2019_64\include\QtCore\QAbstractTableModel \
 		define.h \
 		E:\qt5.15\5.15.2\msvc2019_64\include\QtCore\QObject \
 		E:\qt5.15\5.15.2\msvc2019_64\include\QtCore\QString \

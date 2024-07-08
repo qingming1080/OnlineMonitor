@@ -86,6 +86,9 @@ Rectangle {
                 border.color: bt1.checked ? "#afc3d8" : "#0068a8"
                 border.width: 2
             }
+            onPressed: {
+                History.setWelderID(0)
+            }
         }
         Text {
             id: b1
@@ -114,6 +117,9 @@ Rectangle {
                 color: bt2.checked ? "#0068a7" : "#e8e8e8"
                 border.color: bt2.checked ? "#afc3d8" : "#0068a8"
                 border.width: 2
+            }
+            onPressed: {
+                History.setWelderID(1)
             }
         }
         Text {
@@ -151,6 +157,9 @@ Rectangle {
                 else{
                     enabled = false
                 }
+            }
+            onPressed: {
+                History.setWelderID(2)
             }
         }
         Text {
@@ -190,6 +199,9 @@ Rectangle {
                     enabled = false
                 }
             }
+            onPressed: {
+                History.setWelderID(3)
+            }
         }
         Text {
             id: b4
@@ -227,6 +239,9 @@ Rectangle {
                 else{
                     enabled = false
                 }
+            }
+            onPressed: {
+                History.setWelderID(4)
             }
         }
         Text {

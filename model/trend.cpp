@@ -2,8 +2,8 @@
 #include <QTimer>
 #include "DataBase/databasemanager.h"
 
-Trend::Trend(QObject *parent)
-    : QObject{parent}
+Trend::Trend(int welderID, QObject *parent)
+    : QObject{parent}, m_welderID(welderID)
 {
     init();
 }
@@ -87,6 +87,11 @@ void Trend::setTrendData(QList<_Production_Data> data)
         m_pYieldTrend->setItem(row, 1, yield_X_Item);
         m_pYieldTrend->setItem(row, 2, yield_Y_Item);
     }
+
+    m_min = data.at(0).id;
+    m_max = data.last().id;
+    emit maxChanged();
+    emit minChanged();
 }
 
 void Trend::init()
@@ -107,7 +112,7 @@ void Trend::init()
     m_pYieldTrend->setColumnCount(3);
     m_timer = new QTimer;
     connect(m_timer, &QTimer::timeout, [=](){
-        QList<_Production_Data> data = DataBaseManager::getInstance()->getProductionData();
+        QList<_Production_Data> data = DataBaseManager::getInstance()->getProductionData(m_welderID);
         if(data.size() > 500)
             data = data.mid(data.size()-501, 500);
 
@@ -115,5 +120,16 @@ void Trend::init()
     });
     m_timer->start(1000*60*60);
 
-    setTrendData(DataBaseManager::getInstance()->getProductionData());
+    setTrendData(DataBaseManager::getInstance()->getProductionData(m_welderID));
 }
+
+int Trend::min() const
+{
+    return m_min;
+}
+
+int Trend::max() const
+{
+    return m_max;
+}
+

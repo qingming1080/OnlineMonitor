@@ -37,9 +37,10 @@ QList<int> DataBaseManager::getDeviceNums()
     // %1_表格名称
     QString execStr = QString("SELECT * FROM %1").arg(CONFIGURATION_TABLENAME);
 
+    qDebug() << execStr;
     if (!query.exec(execStr))
     {
-        qDebug() << "查询失败: " << query.lastError();
+        qDebug() << "Configuration查询失败: " << query.lastError();
     }
 
     QList<int> nums;
@@ -662,7 +663,9 @@ QList<_Production_Data> DataBaseManager::getProductionData(int welderID)
     if(welderID != 0)
     {
         // %1_表格名称
-        QString execStr = QString("SELECT * FROM %1 WHERE %2 = :welderID").arg(PRODUCTION_TABLENAME, getProduction_ColumnName(_PRODUCTION_COLUMN::_PRODUCTION_welder_id));
+        QString execStr = QString("SELECT * FROM %1 WHERE %2 = :welderID ORDER BY create_time DESC LIMIT 150")
+                              .arg(PRODUCTION_TABLENAME
+                                   , getProduction_ColumnName(_PRODUCTION_COLUMN::_PRODUCTION_welder_id));
 
         query.prepare(execStr);
         query.bindValue(":welderID", welderID);
@@ -670,13 +673,16 @@ QList<_Production_Data> DataBaseManager::getProductionData(int welderID)
     else
     {
         // %1_表格名称
-        QString execStr = QString("SELECT * FROM %1 ORDER BY created_at DESC LIMIT 500").arg(PRODUCTION_TABLENAME);
+        QString execStr = QString("SELECT * FROM %1 ORDER BY %2 DESC LIMIT 150")
+                              .arg(PRODUCTION_TABLENAME
+                                   , getProduction_ColumnName(_PRODUCTION_COLUMN::_PRODUCTION_create_time));
+        qDebug() << execStr;
         query.prepare(execStr);
     }
 
     if (!query.exec())
     {
-        qDebug() << "查询失败: " << query.lastError();
+        qDebug() << "Production查询失败: " << query.lastError();
     }
 
     while(query.next())
@@ -876,7 +882,7 @@ DataBaseManager::DataBaseManager(QObject *parent)
 void DataBaseManager::init()
 {
     m_database = QSqlDatabase::addDatabase("QSQLITE");
-    m_database.setDatabaseName("./onlinemonitor_new.db");
+    m_database.setDatabaseName("./onlinemonitor.db");
     if (!m_database.open())
     {
         qDebug() << "Database Open Fail ";
