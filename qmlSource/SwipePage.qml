@@ -231,8 +231,8 @@ Rectangle {
                 eqText4:{
                     if(DeviceManager.deviceList[swipeCurrIndex]){
                         return DeviceManager.deviceList[swipeCurrIndex].pDeviceInformation.goodCycles
-                        + DeviceManager.deviceList[swipeCurrIndex].pDeviceInformation.notDefinite
-                        +DeviceManager.deviceList[swipeCurrIndex].pDeviceInformation.suspectCycles
+                                + DeviceManager.deviceList[swipeCurrIndex].pDeviceInformation.notDefinite
+                                +DeviceManager.deviceList[swipeCurrIndex].pDeviceInformation.suspectCycles
                     }
                     else{
                         return ""
@@ -282,47 +282,32 @@ Rectangle {
                 id:rect
                 x: 269
                 y: 36
-                width:  812
-                height:  560
-                color:  "#0c5696"
+                width:812
+                height: 560
+                color: "#0c5696"
                 radius: 3
             }
-
-            TableView {
-                id: tableView
-                width:  808
-                height:  556
-                x: 272
+            Rectangle{
+                width:810
+                height: 558
+                x: 270
                 y: 37
-                horizontalScrollBarPolicy: Qt.ScrollBarAlwaysOff//隐藏水平滚动条
-                verticalScrollBarPolicy: Qt.ScrollBarAlwaysOff//隐藏竖直滚动条
-                frameVisible: false
-                clip: true
-                itemDelegate: Rectangle {
-                    height: 38
-                    color: styleData.row % 2 === 0 ? "#2d71ae" : "#b1d5db"  // 奇偶行不同背景色
-                    Text {
-                        anchors.centerIn: parent
-                        elide: styleData.elideMode
-                        text: styleData.value
-                        color: styleData.row % 2 === 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)  // 奇偶行不同背景色
-                        font.family: fontBold
-                        font.pixelSize: 16
-                        verticalAlignment: Text.AlignVCenter
-                        horizontalAlignment: Text.AlignHCenter
-                    }
+                color: pRgb(43, 112, 173)
+                Text{
+                    id:t1
+                    x:808/7/2+5-width/2
+                    y:11
+                    font.pixelSize: 16
+                    text: "全选"
+                    font.family: fontBold
+                    color: pRgb(153, 204, 255)
                 }
-                rowDelegate: ItemDelegate {
-                    height: 40
-
-                }
-
                 Button{
                     id:bt1
                     width: 30
                     height: 30
-                    x:14
-                    y:5
+                    x:15
+                    y:8
                     background: Item {
                         width: parent.width
                         height: parent.height
@@ -343,147 +328,235 @@ Rectangle {
                         }
                     }
                 }
-
-                headerDelegate: Rectangle {
-                    height: 40
-                    color: pRgb(43, 112, 173)
-                    Text {
-                        anchors.centerIn: parent
-                        text: styleData.value
-                        color: "#b1d5db"
-                        font.family: fontBold
-                        font.pixelSize: 16
-                    }
+                Text{
+                    id:t2
+                    x:808/8 + 808/8/2-width/2
+                    y:11
+                    font.pixelSize: 16
+                    text: "序号"
+                    font.family: fontBold
+                    color: pRgb(171, 206, 213)
                 }
-
-                TableViewColumn {
-                    id:ro
-                    role: "select"
-                    title: "全选"
-                    width: 120
+                Text{
+                    id:t3
+                    x:808/8*2 + 808/8/2-width/2
+                    y:11
+                    font.pixelSize: 16
+                    text: "焊接时间"
+                    font.family: fontBold
+                    color: pRgb(171, 206, 213)
+                }
+                Text{
+                    id:t4
+                    x:808/8*3 + 808/8/2-width/2
+                    y:11
+                    font.pixelSize: 16
+                    text: "功率"
+                    font.family: fontBold
+                    color: pRgb(171, 206, 213)
+                }
+                Text{
+                    id:t5
+                    x:808/8*4 + 808/8/2-width/2
+                    y:11
+                    font.pixelSize: 16
+                    text: "能量"
+                    font.family: fontBold
+                    color: pRgb(171, 206, 213)
+                }
+                Text{
+                    id:t6
+                    x:808/8*5 + 808/8/2-width/2
+                    y:11
+                    font.pixelSize: 16
+                    text: "日期"
+                    font.family: fontBold
+                    color: pRgb(171, 206, 213)
+                }
+                Text{
+                    id:t7
+                    x:808/8*6 + 808/8/2-width/2
+                    y:11
+                    font.pixelSize: 16
+                    text: "拉力"
+                    font.family: fontBold
+                    color: pRgb(171, 206, 213)
+                }
+                Text{
+                    id:t8
+                    x:808/8*7 + 808/8/2-width/2
+                    y:11
+                    font.pixelSize: 16
+                    text: "残留度"
+                    font.family: fontBold
+                    color: pRgb(171, 206, 213)
+                }
+                ListView{
+                    id: taskplanView
+                    width: 1220
+                    height: 560
+                    y:40
+                    clip: true
+                    model: 3
                     delegate: Rectangle{
-                        color: styleData.row % 2 === 0 ? "#2d71ae" : "#b1d5db"
-                        Text {
-                            anchors.centerIn: parent
-                            text: styleData.value
-                            color: "#b1d5db"
-                            font.family: fontBold
-                            font.pixelSize: 16
-                        }
-
+                        id: regionItem
+                        height: 36
+                        width: 810
+                        color: index % 2 === 0 ? "#afc3d8" : "#2d71ae"
                         Button{
                             id:bt
+                            x:808/8/2-width/2
+                            anchors.verticalCenter: parent.verticalCenter
                             width: 30
                             height: 30
-                            anchors.left: parent.left
-                            anchors.leftMargin: 15
-                            anchors.top: parent.top
-                            anchors.topMargin: 5
                             background: Item {
                                 width: parent.width
                                 height: parent.height
                                 Image {
                                     id:im1
                                     anchors.fill: parent
-                                    source: styleData.row % 2 === 0 ? "qrc:/image/锁定.png" : "qrc:/image/锁定1.png"
+                                    source: index % 2 !== 0 ? "qrc:/image/锁定.png" : "qrc:/image/锁定1.png"
                                     fillMode: Image.PreserveAspectFit // 保持图片的宽高比，适应按钮大小
                                 }
                             }
                             onPressed: {
                                 if(im1.source == "qrc:/image/解锁.png"){
-                                    im1.source = styleData.row % 2 === 0 ? "qrc:/image/锁定.png" : "qrc:/image/锁定1.png"
+                                    im1.source = "qrc:/image/锁定.png"
                                 }
-                                else{
+                                else if(im1.source == "qrc:/image/锁定.png"){
                                     im1.source = "qrc:/image/解锁.png"
+                                }
+                                else if(im1.source == "qrc:/image/锁定1.png"){
+                                    im1.source = "qrc:/image/解锁1.png"
+                                }
+                                else if(im1.source == "qrc:/image/解锁1.png"){
+                                    im1.source = "qrc:/image/锁定1.png"
                                 }
                             }
                         }
                         Connections{
                             target: bt1
                             function onPressed(){
-                                im1.source = im.source
+                                if(index % 2 === 0){
+                                    if(im.source == "qrc:/image/解锁.png"){
+                                        im1.source = "qrc:/image/解锁1.png"
+                                    }
+                                    else{
+                                        im1.source = "qrc:/image/锁定1.png"
+                                    }
+                                }
+                                else{
+                                    if(im.source == "qrc:/image/解锁.png"){
+                                        im1.source = "qrc:/image/解锁.png"
+                                    }
+                                    else{
+                                        im1.source = "qrc:/image/锁定.png"
+                                    }
+                                }
                             }
                         }
-                    }
-                }
-
-                TableViewColumn {
-                    role: "num"
-                    title: "序号"
-                    width:  90
-                }
-                TableViewColumn {
-                    role: "weldTime"
-                    title: "焊接时间"
-                    width:  90
-                }
-
-                TableViewColumn {
-                    role: "power"
-                    title: "功率"
-                    width:  90
-                }
-                TableViewColumn {
-                    role: "energy"
-                    title: "能量"
-                    width:  90
-                }
-                TableViewColumn {
-                    role: "date"
-                    title: "日期"
-                    width:  90
-                }
-                TableViewColumn {
-                    role: "date"
-                    title: "拉力"
-                    width: 122
-                    delegate: Rectangle{
-                        color: styleData.row % 2 === 0 ? "#2d71ae" : "#b1d5db"
+                        Text{
+                            x:808/8*1 + 808/8/2-width/2
+                            anchors.verticalCenter: parent.verticalCenter
+                            font.pixelSize: 16
+                            text: "messegStr"
+                            font.family: fontBold
+                            color: index % 2 !== 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
+                        }
+                        Text{
+                            anchors.verticalCenter: parent.verticalCenter
+                            x:808/8*2 + 808/8/2-width/2
+                            font.pixelSize: 16
+                            text: create_time
+                            font.family: fontBold
+                            color: index % 2 !== 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
+                        }
+                        Text{
+                            anchors.verticalCenter: parent.verticalCenter
+                            x:808/8*3 + 808/8/2-width/2
+                            font.pixelSize: 16
+                            text: energy
+                            font.family: fontBold
+                            color: index % 2 !== 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
+                        }
+                        Text{
+                            anchors.verticalCenter: parent.verticalCenter
+                            x:808/8*4 + 808/8/2-width/2
+                            font.pixelSize: 16
+                            text: power
+                            font.family: fontBold
+                            color: index % 2 !== 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
+                        }
+                        Text{
+                            anchors.verticalCenter: parent.verticalCenter
+                            x:808/8*5 + 808/8/2-width/2
+                            font.pixelSize: 16
+                            text: "messegStr"
+                            font.family: fontBold
+                            color: index % 2 !== 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
+                        }
                         TextField{
+                            id: textField
                             width: 100
                             height: 33
-                            anchors.centerIn: parent
+                            anchors.verticalCenter: parent.verticalCenter
+                            x:808/8*6 + 808/8/2-width/2
                             horizontalAlignment: TextInput.AlignHCenter
                             verticalAlignment: TextInput.AlignVCenter
-                            color: styleData.row % 2 === 0 ? pRgb(175, 195, 216) : "#014c8d"
+                            color: index % 2 === 0 ? pRgb(175, 195, 216) : "#014c8d"
                             font.family: fontBold
                             font.pixelSize: 16
                             background: Rectangle{
-                                radius: 2
+                                radius: 3
                                 border.width: 2
-                                border.color: styleData.row % 2 === 0 ? pRgb(175, 195, 216) : pRgb(45, 113, 174)
-                                color: styleData.row % 2 === 0 ? "#2d71ae" : "#b1d5db"
+                                border.color: index % 2 === 0 ? "#2d71ae" : "#afc3d8"
+                                color: index % 2 !== 0 ? "#2d71ae" : "#afc3d8"
+                            }
+                            cursorDelegate: Rectangle {
+                                width: textField.cursorWidth
+                                height: textField.font.pixelSize * 1.1
+                                color: index % 2 === 0 ? "#2d71ae" : "#afc3d8"
+                                visible: textField.activeFocus
+                                anchors.verticalCenter: parent.verticalCenter
+                                Text {
+                                    text: "|"
+                                    color: index % 2 === 0 ? "#2d71ae" : "#afc3d8"
+                                    font.pixelSize: textField.font.pixelSize
+                                    anchors.centerIn: parent
+                                }
                             }
                         }
-                    }
-                }
-                TableViewColumn {
-                    role: "date"
-                    title: "残留度"
-                    width: 122
-                    delegate: Rectangle{
-                        color: styleData.row % 2 === 0 ? "#2d71ae" : "#b1d5db"
                         TextField{
                             width: 100
                             height: 33
-                            anchors.centerIn: parent
+                            anchors.verticalCenter: parent.verticalCenter
+                            x:808/8*7 + 808/8/2-width/2
                             horizontalAlignment: TextInput.AlignHCenter
                             verticalAlignment: TextInput.AlignVCenter
-                            color: styleData.row % 2 === 0 ? pRgb(175, 195, 216) : "#014c8d"
+                            color: index % 2 === 0 ? pRgb(175, 195, 216) : "#014c8d"
                             font.family: fontBold
                             font.pixelSize: 16
                             background: Rectangle{
-                                radius: 2
-                                border.width: 2
-                                border.color: styleData.row % 2 === 0 ? pRgb(175, 195, 216) : pRgb(45, 113, 174)
-                                color: styleData.row % 2 === 0 ? "#2d71ae" : "#b1d5db"
+                                radius: 6
+                                border.width: 3
+                                border.color: index % 2 === 0 ? "#2d71ae" : "#afc3d8"
+                                color: index % 2 !== 0 ? "#2d71ae" : "#afc3d8"
+                            }
+                            cursorDelegate: Rectangle {
+                                width: textField.cursorWidth
+                                height: textField.font.pixelSize * 1.1
+                                color: index % 2 === 0 ? "#2d71ae" : "#afc3d8"
+                                visible: textField.activeFocus
+                                anchors.verticalCenter: parent.verticalCenter
+                                Text {
+                                    text: "|"
+                                    color: index % 2 === 0 ? "#2d71ae" : "#afc3d8"
+                                    font.pixelSize: textField.font.pixelSize
+                                    anchors.centerIn: parent
+                                }
                             }
                         }
                     }
-                }
-                model: ListModel {
-                    ListElement {select:1;num:1;weldTime:"2002-1-2-3"; name: "Item 1"; date: "1" ;energy: "2";power: "2";result: "3";}
-                    ListElement {select:1;num:1;weldTime:2; name: "Item 1"; date: "1" ;energy: "2";power: "2";result: "3";}
                 }
             }
         }
