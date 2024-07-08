@@ -1790,7 +1790,8 @@ release\main.obj: main.cpp E:\qt5.15\5.15.2\msvc2019_64\include\QtWidgets\QAppli
 		model\trend.h \
 		E:\qt5.15\5.15.2\msvc2019_64\include\QtGui\QStandardItemModel \
 		E:\qt5.15\5.15.2\msvc2019_64\include\QtGui\qstandarditemmodel.h \
-		E:\qt5.15\5.15.2\msvc2019_64\include\QtGui\qicon.h
+		E:\qt5.15\5.15.2\msvc2019_64\include\QtGui\qicon.h \
+		model\history.h
 
 release\device.obj: model\device.cpp model\device.h \
 		E:\qt5.15\5.15.2\msvc2019_64\include\QtCore\QObject \
@@ -2589,7 +2590,15 @@ release\trend.obj: model\trend.cpp model\trend.h \
 		E:\qt5.15\5.15.2\msvc2019_64\include\QtCore\QString \
 		E:\qt5.15\5.15.2\msvc2019_64\include\QtCore\QByteArray \
 		E:\qt5.15\5.15.2\msvc2019_64\include\QtCore\QDateTime \
-		E:\qt5.15\5.15.2\msvc2019_64\include\QtCore\qdatetime.h
+		E:\qt5.15\5.15.2\msvc2019_64\include\QtCore\qdatetime.h \
+		E:\qt5.15\5.15.2\msvc2019_64\include\QtCore\QTimer \
+		E:\qt5.15\5.15.2\msvc2019_64\include\QtCore\qtimer.h \
+		E:\qt5.15\5.15.2\msvc2019_64\include\QtCore\qbasictimer.h \
+		DataBase\databasemanager.h \
+		E:\qt5.15\5.15.2\msvc2019_64\include\QtSql\QSqlDatabase \
+		E:\qt5.15\5.15.2\msvc2019_64\include\QtSql\qsqldatabase.h \
+		E:\qt5.15\5.15.2\msvc2019_64\include\QtSql\qtsqlglobal.h \
+		E:\qt5.15\5.15.2\msvc2019_64\include\QtSql\qtsql-config.h
 
 release\qmlcache.obj: qmlcache.cpp qmlcache.h \
 		E:\qt5.15\5.15.2\msvc2019_64\include\QtCore\QObject \

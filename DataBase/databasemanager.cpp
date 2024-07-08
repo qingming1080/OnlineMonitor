@@ -670,7 +670,7 @@ QList<_Production_Data> DataBaseManager::getProductionData(int welderID)
     else
     {
         // %1_表格名称
-        QString execStr = QString("SELECT * FROM %1").arg(PRODUCTION_TABLENAME);
+        QString execStr = QString("SELECT * FROM %1 ORDER BY created_at DESC LIMIT 500").arg(PRODUCTION_TABLENAME);
         query.prepare(execStr);
     }
 

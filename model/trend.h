@@ -36,6 +36,8 @@ private:
     QStandardItemModel* m_pPowerModel;      // 功率
     QStandardItemModel* m_pYieldTrend;      // 良率
 
+    QTimer* m_timer;
+
 };
 
 #endif // TREND_H

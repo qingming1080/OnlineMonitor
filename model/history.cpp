@@ -101,3 +101,15 @@ QHash<int, QByteArray> History::roleNames() const
 
     return roles;
 }
+
+void History::setWelderID(int welderID)
+{
+    emit beginResetModel();
+
+    if(welderID == 0)
+        m_data = DataBaseManager::getInstance()->getProductionData();
+    else
+        m_data = DataBaseManager::getInstance()->getProductionData(welderID);
+
+    emit endResetModel();
+}

@@ -1,4 +1,6 @@
 #include "trend.h"
+#include <QTimer>
+#include "DataBase/databasemanager.h"
 
 Trend::Trend(QObject *parent)
     : QObject{parent}
@@ -103,4 +105,15 @@ void Trend::init()
 
     m_pYieldTrend   = new QStandardItemModel();
     m_pYieldTrend->setColumnCount(3);
+    m_timer = new QTimer;
+    connect(m_timer, &QTimer::timeout, [=](){
+        QList<_Production_Data> data = DataBaseManager::getInstance()->getProductionData();
+        if(data.size() > 500)
+            data = data.mid(data.size()-501, 500);
+
+        setTrendData(data);
+    });
+    m_timer->start(1000*60*60);
+
+    setTrendData(DataBaseManager::getInstance()->getProductionData());
 }
