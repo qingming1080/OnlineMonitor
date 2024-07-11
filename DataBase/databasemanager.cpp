@@ -655,12 +655,24 @@ bool DataBaseManager::insertModelRow(_Model_Data data)
     return query.exec();
 }
 
-QList<_Production_Data> DataBaseManager::getProductionData(int welderID)
+QList<_Production_Data> DataBaseManager::getProductionData(int welderID, int finalResult)
 {
     QList<_Production_Data> list;
 
     QSqlQuery query;
-    if(welderID != 0)
+    if(welderID != 0 && finalResult != 0)
+    {
+        // %1_表格名称
+        QString execStr = QString("SELECT * FROM %1 WHERE %2 = :welderID AND %3 = :finalResult ORDER BY create_time DESC LIMIT 150")
+                              .arg(PRODUCTION_TABLENAME
+                                   , getProduction_ColumnName(_PRODUCTION_COLUMN::_PRODUCTION_welder_id)
+                                   , getProduction_ColumnName(_PRODUCTION_COLUMN::_PRODUCTION_final_result));
+
+        query.prepare(execStr);
+        query.bindValue(":welderID", welderID);
+        query.bindValue(":finalResult", finalResult-1);
+    }
+    else if(welderID != 0)
     {
         // %1_表格名称
         QString execStr = QString("SELECT * FROM %1 WHERE %2 = :welderID ORDER BY create_time DESC LIMIT 150")
@@ -669,6 +681,16 @@ QList<_Production_Data> DataBaseManager::getProductionData(int welderID)
 
         query.prepare(execStr);
         query.bindValue(":welderID", welderID);
+    }
+    else if(finalResult != 0)
+    {
+        // %1_表格名称
+        QString execStr = QString("SELECT * FROM %1 WHERE %2 = :finalResult ORDER BY create_time DESC LIMIT 150")
+                              .arg(PRODUCTION_TABLENAME
+                                   , getProduction_ColumnName(_PRODUCTION_COLUMN::_PRODUCTION_final_result));
+
+        query.prepare(execStr);
+        query.bindValue(":finalResult", finalResult-1);
     }
     else
     {

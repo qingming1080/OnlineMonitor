@@ -197,9 +197,10 @@ public:
     ///
     /// \brief getWeldTrendData : 获取历史记录折线图，取最新五百个
     /// \param welderID : 焊机ID，为零则不区分焊机
+    /// \param finalResult : 生产状态 0_全部 1_合格 2_次品 3_可疑
     /// \return
     ///
-    QList<_Production_Data> getProductionData(int welderID = 0);
+    QList<_Production_Data> getProductionData(int welderID = 0, int finalResult = 0);
 
     ///
     /// \brief getWeldTrendData : 获取焊接趋势折线图，取最新五百个

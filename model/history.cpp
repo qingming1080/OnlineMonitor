@@ -17,6 +17,38 @@ History::History(QObject *parent)
     m_data = DataBaseManager::getInstance()->getProductionData();
 }
 
+int History::finalResult() const
+{
+    return m_finalResult;
+}
+
+void History::setFinalResult(int newFinalResult)
+{
+    if (m_finalResult == newFinalResult)
+        return;
+    m_finalResult = newFinalResult;
+    emit beginResetModel();
+    m_data = DataBaseManager::getInstance()->getProductionData(m_deviceID, m_finalResult);
+    emit endResetModel();
+    emit finalResultChanged();
+}
+
+int History::deviceID() const
+{
+    return m_deviceID;
+}
+
+void History::setDeviceID(int newDeviceID)
+{
+    if (m_deviceID == newDeviceID)
+        return;
+    m_deviceID = newDeviceID;
+    emit beginResetModel();
+    m_data = DataBaseManager::getInstance()->getProductionData(m_deviceID, m_finalResult);
+    emit endResetModel();
+    emit deviceIDChanged();
+}
+
 int History::rowCount(const QModelIndex &parent) const
 {
     return m_data.size();
