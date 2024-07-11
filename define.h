@@ -211,6 +211,7 @@ enum _PRODUCTION_COLUMN
     _PRODUCTION_good_subtotal_cycles    = 17,   // 合格
     _PRODUCTION_suspect_subtotal_cycles = 18,   // 次品
     _PRODUCTION_not_definite_cycles     = 19,   // 可疑
+    _PRODUCTION_final_result            = 20,   // 产品状态 0_合格 1_次品 2_可疑
 };
 
 struct _Production_Data
@@ -225,7 +226,7 @@ struct _Production_Data
     int energy;                            // 能量
     int amplitude;                         // 振幅
     int pressure;                          // 压力
-    QString time;                              // 焊接时间
+    QString time;                          // 焊接时间
     int power;                             // 功率
     int pre_height;                        // 焊前高度
     int post_height;                       // 焊后高度
@@ -235,6 +236,7 @@ struct _Production_Data
     int good_subtotal_cycles;              // 合格
     int suspect_subtotal_cycles;           // 次品
     int not_definite_cycles;               // 可疑
+    int final_result;                      // 产品状态 0_合格 1_次品 2_可疑
 };
 
 enum _SYSTEM_COLUMN
@@ -259,10 +261,28 @@ struct _System_Data
 
 
 
+// 焊接趋势数据结构
+struct _Weld_TrendData
+{
+    // X轴
+    int id_X_Max{0};
+    int id_X_Min{0};
+    // 焊前高度 Y轴
+    int before_Y_Max{0};
+    int before_Y_Min{0};
+    // 焊后高度 Y轴
+    int after_Y_Max{0};
+    int after_Y_Min{0};
+    // 时间 Y轴
+    QString time_Y_Max;
+    QString time_Y_Min;
+    // 功率
+    int power_Y_Max{0};
+    int power_Y_Min{0};
 
-
-
-
+    // 数据
+    QList<_Production_Data> data;
+};
 
 
 #endif // DEFINE_H
