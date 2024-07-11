@@ -71,6 +71,8 @@ QVariant History::data(const QModelIndex &index, int role) const
         return data.suspect_subtotal_cycles;
     case _PRODUCTION_COLUMN::_PRODUCTION_not_definite_cycles:
         return data.not_definite_cycles;
+    case _PRODUCTION_COLUMN::_PRODUCTION_final_result:
+        return data.final_result;
     }
 }
 
@@ -98,6 +100,7 @@ QHash<int, QByteArray> History::roleNames() const
     roles[_PRODUCTION_COLUMN::_PRODUCTION_good_subtotal_cycles]     = "good_subtotal_cycles";
     roles[_PRODUCTION_COLUMN::_PRODUCTION_suspect_subtotal_cycles]  = "suspect_subtotal_cycles";
     roles[_PRODUCTION_COLUMN::_PRODUCTION_not_definite_cycles]      = "not_definite_cycles";
+    roles[_PRODUCTION_COLUMN::_PRODUCTION_final_result]             = "final_result";
 
     return roles;
 }

@@ -3,7 +3,7 @@
 #include "DataBase/databasemanager.h"
 
 Trend::Trend(int welderID, QObject *parent)
-    : QObject{parent}, m_welderID(welderID)
+    : QObject{parent}, m_welderID(welderID), m_yieldType(3)
 {
     init();
 }
@@ -33,38 +33,63 @@ QStandardItemModel *Trend::pYieldTrend() const
     return m_pYieldTrend;
 }
 
-void Trend::setTrendData(QList<_Production_Data> data)
+void Trend::upWeldData()
+{
+    setWeldTrendData(DataBaseManager::getInstance()->getWeldTrendData(m_welderID));
+}
+
+void Trend::upYieldData()
+{
+    QDateTime currentTime = QDateTime::currentDateTime();
+    QString endTime = currentTime.toString("yyyy-MM-dd hh:mm:ss");
+
+    QDateTime oldTime;
+    if(m_yieldType == 0)
+        oldTime = currentTime.addSecs(-3600);
+    else if(m_yieldType == 1)
+        oldTime = currentTime.addDays(-1);
+    else if(m_yieldType == 2)
+        oldTime = currentTime.addDays(-7);
+    else if(m_yieldType == 3)
+        oldTime = currentTime.addDays(-30);
+    QString startTime = oldTime.toString("yyyy-MM-dd hh:mm:ss");
+
+    setYieldTrendData(DataBaseManager::getInstance()->getYieldTrendData(startTime, endTime, m_welderID));
+}
+
+
+
+void Trend::setWeldTrendData(_Weld_TrendData result)
 {
     // 清除当前折线数据
     m_pBeforeModel->clear();
     m_pAfterModel->clear();
     m_pTimeModel->clear();
     m_pPowerModel->clear();
-    m_pYieldTrend->clear();
 
-    for(int row = 0; row < data.size(); ++row)
+    for(int row = 0; row < result.data.size(); ++row)
     {
         // 焊前高度
         QStandardItem* before_Row_Item = new QStandardItem(QString::number(row));
-        QStandardItem* before_X_Item = new QStandardItem(QString::number(data.at(row).serial_number));
-        QStandardItem* before_Y_Item = new QStandardItem(QString::number(data.at(row).pre_height));
+        QStandardItem* before_X_Item = new QStandardItem(QString::number(result.data.at(row).serial_number));
+        QStandardItem* before_Y_Item = new QStandardItem(QString::number(result.data.at(row).pre_height));
         m_pBeforeModel->setItem(row, 0, before_Row_Item);
         m_pBeforeModel->setItem(row, 1, before_X_Item);
         m_pBeforeModel->setItem(row, 2, before_Y_Item);
 
         // 焊后高度
         QStandardItem* after_Row_Item = new QStandardItem(QString::number(row));
-        QStandardItem* after_X_Item = new QStandardItem(QString::number(data.at(row).serial_number));
-        QStandardItem* after_Y_Item = new QStandardItem(QString::number(data.at(row).post_height));
+        QStandardItem* after_X_Item = new QStandardItem(QString::number(result.data.at(row).serial_number));
+        QStandardItem* after_Y_Item = new QStandardItem(QString::number(result.data.at(row).post_height));
         m_pAfterModel->setItem(row, 0, after_Row_Item);
         m_pAfterModel->setItem(row, 1, after_X_Item);
         m_pAfterModel->setItem(row, 2, after_Y_Item);
 
         // 时间
         QStandardItem* time_Row_Item = new QStandardItem(QString::number(row));
-        QStandardItem* time_X_Item = new QStandardItem(QString::number(data.at(row).serial_number));
+        QStandardItem* time_X_Item = new QStandardItem(QString::number(result.data.at(row).serial_number));
         // 去掉数据库的s时间单位
-        QString time = data.at(row).time.left(data.at(row).time.length()-1);
+        QString time = result.data.at(row).time.left(result.data.at(row).time.length()-1);
         QStandardItem* time_Y_Item = new QStandardItem(time);
         m_pTimeModel->setItem(row, 0, time_Row_Item);
         m_pTimeModel->setItem(row, 1, time_X_Item);
@@ -72,12 +97,46 @@ void Trend::setTrendData(QList<_Production_Data> data)
 
         // 功率
         QStandardItem* power_Row_Item = new QStandardItem(QString::number(row));
-        QStandardItem* power_X_Item = new QStandardItem(QString::number(data.at(row).serial_number));
-        QStandardItem* power_Y_Item = new QStandardItem(QString::number(data.at(row).power));
+        QStandardItem* power_X_Item = new QStandardItem(QString::number(result.data.at(row).serial_number));
+        QStandardItem* power_Y_Item = new QStandardItem(QString::number(result.data.at(row).power));
         m_pPowerModel->setItem(row, 0, power_Row_Item);
         m_pPowerModel->setItem(row, 1, power_X_Item);
         m_pPowerModel->setItem(row, 2, power_Y_Item);
+    }
 
+    m_idMaxX = result.id_X_Max;
+    m_idMinX = result.id_X_Min;
+    emit idMaxXChanged();
+    emit idMinXChanged();
+
+    m_beforeMaxY = result.before_Y_Max;
+    m_beforeMinY = result.before_Y_Min;
+    emit beforeMaxYChanged();
+    emit beforeMinYChanged();
+
+    m_afterMaxY = result.after_Y_Max;
+    m_afterMinY = result.after_Y_Min;
+    emit afterMaxYChanged();
+    emit afterMinYChanged();
+
+    m_timeMaxY = result.time_Y_Max.toDouble();
+    m_timeMinY = result.time_Y_Min.toDouble();
+    emit timeMaxYChanged();
+    emit timeMinYChanged();
+
+    m_powerMaxY = result.power_Y_Max;
+    m_powerMinY = result.power_Y_Min;
+    emit powerMaxYChanged();
+    emit powerMinYChanged();
+}
+
+void Trend::setYieldTrendData(QList<_Production_Data> data)
+{
+    // 清除当前折线数据
+    m_pYieldTrend->clear();
+
+    for(int row = 0; row < data.size(); ++row)
+    {
         // 良率折线
         QStandardItem* yieldItem = new QStandardItem(QString::number(row));
         QDateTime creatTime = QDateTime::fromString(data.at(row).create_time, "yyyy-MM-dd hh:mm:ss");
@@ -87,11 +146,6 @@ void Trend::setTrendData(QList<_Production_Data> data)
         m_pYieldTrend->setItem(row, 1, yield_X_Item);
         m_pYieldTrend->setItem(row, 2, yield_Y_Item);
     }
-
-    m_min = data.at(0).id;
-    m_max = data.last().id;
-    emit maxChanged();
-    emit minChanged();
 }
 
 void Trend::init()
@@ -110,26 +164,164 @@ void Trend::init()
 
     m_pYieldTrend   = new QStandardItemModel();
     m_pYieldTrend->setColumnCount(3);
-    m_timer = new QTimer;
-    connect(m_timer, &QTimer::timeout, [=](){
-        QList<_Production_Data> data = DataBaseManager::getInstance()->getProductionData(m_welderID);
-        if(data.size() > 500)
-            data = data.mid(data.size()-501, 500);
 
-        setTrendData(data);
+    // 焊接趋势刷新
+    m_weldTimer = new QTimer;
+    connect(m_weldTimer, &QTimer::timeout, [=](){
+        upWeldData();
     });
-    m_timer->start(1000*60*60);
+    m_weldTimer->start(1000*60*60);
 
-    setTrendData(DataBaseManager::getInstance()->getProductionData(m_welderID));
+    // 良率趋势刷新
+    m_yieldTimer = new QTimer;
+    connect(m_yieldTimer, &QTimer::timeout, [=](){
+        upYieldData();
+    });
+    m_yieldTimer->start(1000*60*5);
+
+    upWeldData();
+    upYieldData();
 }
 
-int Trend::min() const
+int Trend::yieldType() const
 {
-    return m_min;
+    return m_yieldType;
 }
 
-int Trend::max() const
+void Trend::setYieldType(int newYieldType)
 {
-    return m_max;
+    if (m_yieldType == newYieldType)
+        return;
+    m_yieldType = newYieldType;
+    emit yieldTypeChanged();
 }
 
+int Trend::powerMinY() const
+{
+    return m_powerMinY;
+}
+
+void Trend::setPowerMinY(int newPowerMinY)
+{
+    if (m_powerMinY == newPowerMinY)
+        return;
+    m_powerMinY = newPowerMinY;
+    emit powerMinYChanged();
+}
+
+int Trend::powerMaxY() const
+{
+    return m_powerMaxY;
+}
+
+void Trend::setPowerMaxY(int newPowerMaxY)
+{
+    if (m_powerMaxY == newPowerMaxY)
+        return;
+    m_powerMaxY = newPowerMaxY;
+    emit powerMaxYChanged();
+}
+
+double Trend::timeMinY() const
+{
+    return m_timeMinY;
+}
+
+void Trend::setTimeMinY(double newTimeMinY)
+{
+    if (qFuzzyCompare(m_timeMinY, newTimeMinY))
+        return;
+    m_timeMinY = newTimeMinY;
+    emit timeMinYChanged();
+}
+
+double Trend::timeMaxY() const
+{
+    return m_timeMaxY;
+}
+
+void Trend::setTimeMaxY(double newTimeMaxY)
+{
+    if (qFuzzyCompare(m_timeMaxY, newTimeMaxY))
+        return;
+    m_timeMaxY = newTimeMaxY;
+    emit timeMaxYChanged();
+}
+
+int Trend::afterMinY() const
+{
+    return m_afterMinY;
+}
+
+void Trend::setAfterMinY(int newAfterMinY)
+{
+    if (m_afterMinY == newAfterMinY)
+        return;
+    m_afterMinY = newAfterMinY;
+    emit afterMinYChanged();
+}
+
+int Trend::afterMaxY() const
+{
+    return m_afterMaxY;
+}
+
+void Trend::setAfterMaxY(int newAfterMaxY)
+{
+    if (m_afterMaxY == newAfterMaxY)
+        return;
+    m_afterMaxY = newAfterMaxY;
+    emit afterMaxYChanged();
+}
+
+int Trend::beforeMinY() const
+{
+    return m_beforeMinY;
+}
+
+void Trend::setBeforeMinY(int newBeforeMinY)
+{
+    if (m_beforeMinY == newBeforeMinY)
+        return;
+    m_beforeMinY = newBeforeMinY;
+    emit beforeMinYChanged();
+}
+
+int Trend::beforeMaxY() const
+{
+    return m_beforeMaxY;
+}
+
+void Trend::setBeforeMaxY(int newBeforeMaxY)
+{
+    if (m_beforeMaxY == newBeforeMaxY)
+        return;
+    m_beforeMaxY = newBeforeMaxY;
+    emit beforeMaxYChanged();
+}
+
+int Trend::idMaxX() const
+{
+    return m_idMaxX;
+}
+
+void Trend::setIdMaxX(int newIdMaxX)
+{
+    if (m_idMaxX == newIdMaxX)
+        return;
+    m_idMaxX = newIdMaxX;
+    emit idMaxXChanged();
+}
+
+int Trend::idMinX() const
+{
+    return m_idMinX;
+}
+
+void Trend::setIdMinX(int newIdMinX)
+{
+    if (m_idMinX == newIdMinX)
+        return;
+    m_idMinX = newIdMinX;
+    emit idMinXChanged();
+}

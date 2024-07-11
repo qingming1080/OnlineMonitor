@@ -1,5 +1,7 @@
 #include "devicemanager.h"
 #include "DataBase/databasemanager.h"
+#include "model/deviceinformation.h"
+#include "define.h"
 #include <qdebug.h>
 #include "model/deviceinformation.h"
 DeviceManager* DeviceManager::s_pInstance = nullptr;

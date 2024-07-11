@@ -10,8 +10,6 @@ class History : public QAbstractListModel
 public:
     static History* getInstance();
 
-
-
     // QAbstractItemModel interface
 public:
     Q_INVOKABLE int rowCount(const QModelIndex &parent) const;

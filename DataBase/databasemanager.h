@@ -195,10 +195,27 @@ public:
 /////////////////////////production////////////////////////////////
 /// 良率趋势、焊接趋势_1h 历史记录_5s
     ///
-    /// \brief getProductionData : 获取production表格数据
-    /// \return : 数据
+    /// \brief getWeldTrendData : 获取历史记录折线图，取最新五百个
+    /// \param welderID : 焊机ID，为零则不区分焊机
+    /// \return
     ///
     QList<_Production_Data> getProductionData(int welderID = 0);
+
+    ///
+    /// \brief getWeldTrendData : 获取焊接趋势折线图，取最新五百个
+    /// \param welderID : 焊机ID，为零则不区分焊机
+    /// \return
+    ///
+    _Weld_TrendData getWeldTrendData(int welderID = 0);
+
+    ///
+    /// \brief getYieldTrendData : 获取良率趋势折线图,取最新五百个
+    /// \param startTime : 开始时间
+    /// \param endTime : 结束时间
+    /// \param welderID : 焊机ID，为零则不区分焊机
+    /// \return
+    ///
+    QList<_Production_Data> getYieldTrendData(QString startTime, QString endTime, int welderID = 0);
 
     ///
     /// \brief removeProductionRow : 删除production表格一行数据

@@ -709,6 +709,161 @@ QList<_Production_Data> DataBaseManager::getProductionData(int welderID)
         data.good_subtotal_cycles     = query.value(_PRODUCTION_COLUMN::_PRODUCTION_good_subtotal_cycles).toInt();
         data.suspect_subtotal_cycles  = query.value(_PRODUCTION_COLUMN::_PRODUCTION_suspect_subtotal_cycles).toInt();
         data.not_definite_cycles      = query.value(_PRODUCTION_COLUMN::_PRODUCTION_not_definite_cycles).toInt();
+        data.final_result             = query.value(_PRODUCTION_COLUMN::_PRODUCTION_final_result).toInt();
+
+        // 历史记录，最新的最先显示
+        list.push_front(data);
+    }
+
+    return list;
+}
+
+_Weld_TrendData DataBaseManager::getWeldTrendData(int welderID)
+{
+    _Weld_TrendData result;
+
+    QSqlQuery query;
+    if(welderID != 0)
+    {
+        // %1_表格名称
+        QString execStr = QString("SELECT * FROM %1 WHERE %2 = :welderID ORDER BY create_time DESC LIMIT 150")
+                              .arg(PRODUCTION_TABLENAME
+                                   , getProduction_ColumnName(_PRODUCTION_COLUMN::_PRODUCTION_welder_id));
+
+        query.prepare(execStr);
+        query.bindValue(":welderID", welderID);
+    }
+    else
+    {
+        // %1_表格名称
+        QString execStr = QString("SELECT * FROM %1 ORDER BY %2 DESC LIMIT 150")
+                              .arg(PRODUCTION_TABLENAME
+                                   , getProduction_ColumnName(_PRODUCTION_COLUMN::_PRODUCTION_create_time));
+        qDebug() << execStr;
+        query.prepare(execStr);
+    }
+
+    if (!query.exec())
+    {
+        qDebug() << "Production查询失败: " << query.lastError();
+    }
+
+    while(query.next())
+    {
+        _Production_Data data;
+        data.id                       = query.value(_PRODUCTION_COLUMN::_PRODUCTION_id).toInt();
+        data.welder_id                = query.value(_PRODUCTION_COLUMN::_PRODUCTION_welder_id).toInt();
+        data.model_id                 = query.value(_PRODUCTION_COLUMN::_PRODUCTION_model_id).toInt();
+        data.create_time              = query.value(_PRODUCTION_COLUMN::_PRODUCTION_create_time).toString();
+        data.serial_number            = query.value(_PRODUCTION_COLUMN::_PRODUCTION_serial_number).toInt();
+        data.cycle_count              = query.value(_PRODUCTION_COLUMN::_PRODUCTION_cycle_count).toInt();
+        data.batch_count              = query.value(_PRODUCTION_COLUMN::_PRODUCTION_batch_count).toInt();
+        data.energy                   = query.value(_PRODUCTION_COLUMN::_PRODUCTION_energy).toInt();
+        data.amplitude                = query.value(_PRODUCTION_COLUMN::_PRODUCTION_amplitude).toInt();
+        data.pressure                 = query.value(_PRODUCTION_COLUMN::_PRODUCTION_pressure).toInt();
+        data.time                     = query.value(_PRODUCTION_COLUMN::_PRODUCTION_time).toString();
+        data.time = data.time.left(data.time.length()-1);
+        data.power                    = query.value(_PRODUCTION_COLUMN::_PRODUCTION_power).toInt();
+        data.pre_height               = query.value(_PRODUCTION_COLUMN::_PRODUCTION_pre_height).toInt();
+        data.post_height              = query.value(_PRODUCTION_COLUMN::_PRODUCTION_post_height).toInt();
+        data.force                    = query.value(_PRODUCTION_COLUMN::_PRODUCTION_force).toInt();
+        data.residual                 = query.value(_PRODUCTION_COLUMN::_PRODUCTION_residual).toInt();
+        data.good_rate                = query.value(_PRODUCTION_COLUMN::_PRODUCTION_good_rate).toInt();
+        data.good_subtotal_cycles     = query.value(_PRODUCTION_COLUMN::_PRODUCTION_good_subtotal_cycles).toInt();
+        data.suspect_subtotal_cycles  = query.value(_PRODUCTION_COLUMN::_PRODUCTION_suspect_subtotal_cycles).toInt();
+        data.not_definite_cycles      = query.value(_PRODUCTION_COLUMN::_PRODUCTION_not_definite_cycles).toInt();
+        data.final_result             = query.value(_PRODUCTION_COLUMN::_PRODUCTION_final_result).toInt();
+
+        // 确定X轴大小
+        if(data.id < result.id_X_Min)
+            result.id_X_Min = data.id;
+        if(data.id > result.id_X_Max)
+            result.id_X_Max = data.id;
+        // 焊前高度 Y轴
+        if(data.pre_height < result.before_Y_Min)
+            result.before_Y_Min = data.pre_height;
+        if(data.pre_height > result.before_Y_Max)
+            result.before_Y_Max = data.pre_height;
+        // 焊后高度 Y轴
+        if(data.post_height < result.time_Y_Min)
+            result.time_Y_Min = data.post_height;
+        if(data.post_height > result.after_Y_Max)
+            result.after_Y_Max = data.post_height;
+        // 时间 Y轴
+        if(data.time.toDouble() < result.time_Y_Min.toDouble())
+            result.time_Y_Min = data.time;
+        if(data.time.toDouble() > result.time_Y_Max.toDouble())
+            result.time_Y_Max = data.time;
+        // 功率
+        if(data.power < result.power_Y_Min)
+            result.power_Y_Min = data.power;
+        if(data.power > result.power_Y_Max)
+            result.power_Y_Max = data.power;
+
+        result.data.push_back(data);
+    }
+
+    return result;
+}
+
+QList<_Production_Data> DataBaseManager::getYieldTrendData(QString startTime, QString endTime, int welderID)
+{
+    QList<_Production_Data> list;
+
+    QSqlQuery query;
+    if(welderID != 0)
+    {
+        // %1_表格名称
+        QString execStr = QString("SELECT * FROM %1 WHERE %2 = :welderID AND %3 >=:startTime AND %3<=:endTime")
+                              .arg(PRODUCTION_TABLENAME
+                                   , getProduction_ColumnName(_PRODUCTION_COLUMN::_PRODUCTION_welder_id)
+                                   , getProduction_ColumnName(_PRODUCTION_COLUMN::_PRODUCTION_create_time));
+
+        query.prepare(execStr);
+        query.bindValue(":welderID", welderID);
+        query.bindValue(":startTime", startTime);
+        query.bindValue(":endTime", endTime);
+    }
+    else
+    {
+        // %1_表格名称
+        QString execStr = QString("SELECT * FROM %1 WHERE %2 >=:startTime AND %2<=:endTime")
+                              .arg(PRODUCTION_TABLENAME
+                                   , getProduction_ColumnName(_PRODUCTION_COLUMN::_PRODUCTION_create_time));
+        qDebug() << execStr;
+        query.prepare(execStr);
+    }
+
+    if (!query.exec())
+    {
+        qDebug() << "Production查询失败: " << query.lastError();
+    }
+
+    while(query.next())
+    {
+        _Production_Data data;
+        data.id                       = query.value(_PRODUCTION_COLUMN::_PRODUCTION_id).toInt();
+        data.welder_id                = query.value(_PRODUCTION_COLUMN::_PRODUCTION_welder_id).toInt();
+        data.model_id                 = query.value(_PRODUCTION_COLUMN::_PRODUCTION_model_id).toInt();
+        data.create_time              = query.value(_PRODUCTION_COLUMN::_PRODUCTION_create_time).toString();
+        data.serial_number            = query.value(_PRODUCTION_COLUMN::_PRODUCTION_serial_number).toInt();
+        data.cycle_count              = query.value(_PRODUCTION_COLUMN::_PRODUCTION_cycle_count).toInt();
+        data.batch_count              = query.value(_PRODUCTION_COLUMN::_PRODUCTION_batch_count).toInt();
+        data.energy                   = query.value(_PRODUCTION_COLUMN::_PRODUCTION_energy).toInt();
+        data.amplitude                = query.value(_PRODUCTION_COLUMN::_PRODUCTION_amplitude).toInt();
+        data.pressure                 = query.value(_PRODUCTION_COLUMN::_PRODUCTION_pressure).toInt();
+        data.time                     = query.value(_PRODUCTION_COLUMN::_PRODUCTION_time).toString();
+        data.time = data.time.left(data.time.length()-1);
+        data.power                    = query.value(_PRODUCTION_COLUMN::_PRODUCTION_power).toInt();
+        data.pre_height               = query.value(_PRODUCTION_COLUMN::_PRODUCTION_pre_height).toInt();
+        data.post_height              = query.value(_PRODUCTION_COLUMN::_PRODUCTION_post_height).toInt();
+        data.force                    = query.value(_PRODUCTION_COLUMN::_PRODUCTION_force).toInt();
+        data.residual                 = query.value(_PRODUCTION_COLUMN::_PRODUCTION_residual).toInt();
+        data.good_rate                = query.value(_PRODUCTION_COLUMN::_PRODUCTION_good_rate).toInt();
+        data.good_subtotal_cycles     = query.value(_PRODUCTION_COLUMN::_PRODUCTION_good_subtotal_cycles).toInt();
+        data.suspect_subtotal_cycles  = query.value(_PRODUCTION_COLUMN::_PRODUCTION_suspect_subtotal_cycles).toInt();
+        data.not_definite_cycles      = query.value(_PRODUCTION_COLUMN::_PRODUCTION_not_definite_cycles).toInt();
+        data.final_result             = query.value(_PRODUCTION_COLUMN::_PRODUCTION_final_result).toInt();
 
         list.push_back(data);
     }
