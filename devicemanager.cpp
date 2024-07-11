@@ -1,7 +1,7 @@
 #include "devicemanager.h"
 #include "DataBase/databasemanager.h"
 #include <qdebug.h>
-
+#include "model/deviceinformation.h"
 DeviceManager* DeviceManager::s_pInstance = nullptr;
 
 
@@ -52,19 +52,31 @@ QList<Device *> DeviceManager::deviceList() const
 
 void DeviceManager::addDevice()
 {
-    for(int i = 0; i < m_deviceList.size() || i < 4; ++i)
+    if(m_deviceList.size() == 4)
+        return;
+
+    _Configuration_Data data;
+    for(int i = 0; i < 4; ++i)
     {
-        if(m_deviceList.at(i) == nullptr)
+        if(i == m_deviceList.size())
         {
-            m_deviceList[i] = new Device(i+1);
-            _Configuration_Data data;
-            data.welder_id = i+1;
-            m_deviceNum++;
-            DataBaseManager::getInstance()->insertConfigurationDevice(data);
-            emit deviceNumChanged();
-            emit deviceListChanged();
+            m_deviceList.push_back(new Device(i+1));
+            data.welder_id = i + 1;
+            break;
+        }
+        if(m_deviceList.at(i)->pDeviceInformation()->id() != i+1)
+        {
+            m_deviceList.insert(i, new Device(i+1));
+            data.welder_id = i + 1;
+            break;
         }
     }
+
+
+    DataBaseManager::getInstance()->insertConfigurationDevice(data);
+    m_deviceNum++;
+    emit deviceNumChanged();
+    emit deviceListChanged();
 }
 
 void DeviceManager::removeDevice(int welderID)
