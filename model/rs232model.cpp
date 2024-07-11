@@ -79,7 +79,7 @@ QVariant RS232Model::getDataByWelderID(int welderID, int role) const
         }
         case _RS232_COLUMN::_RS232_data_bit:
         {
-            return m_data.at(i).data_bit;
+            return QString("%1%2").arg(m_data.at(i).data_bit).arg("bit");
         }
         case _RS232_COLUMN::_RS232_parity_bit:
         {
@@ -87,7 +87,7 @@ QVariant RS232Model::getDataByWelderID(int welderID, int role) const
         }
         case _RS232_COLUMN::_RS232_stop_bit:
         {
-            return m_data.at(i).stop_bit;
+            return QString("%1%2").arg(m_data.at(i).stop_bit).arg("bit");
         }
         default:
             return QVariant();
@@ -97,49 +97,57 @@ QVariant RS232Model::getDataByWelderID(int welderID, int role) const
     return QVariant();
 }
 
-void RS232Model::setRS232Data(int id, _RS232_COLUMN column, QVariant data)
+void RS232Model::setRS232Data(int id, int column, QVariant data)
 {
     for(int i = 0; i < m_data.size(); ++i)
     {
+        beginResetModel();
         if(m_data.at(i).id != id)
             continue;
 
-        switch(column)
+        _RS232_COLUMN index = (_RS232_COLUMN)column;
+        switch(index)
         {
         case _RS232_COLUMN::_RS232_id:
         {
             m_data[i].id = data.toInt();
-            DataBaseManager::getInstance()->setRS232Data(id, column, data);
+            DataBaseManager::getInstance()->setRS232Data(id,index , data);
+            endResetModel();
             return;
         }
         case _RS232_COLUMN::_RS232_port:
         {
             m_data[i].port = data.toString();
-            DataBaseManager::getInstance()->setRS232Data(id, column, data);
+            DataBaseManager::getInstance()->setRS232Data(id, index, data);
+            endResetModel();
             return;
         }
         case _RS232_COLUMN::_RS232_baud_rate:
         {
             m_data[i].baud_rate = data.toInt();
-            DataBaseManager::getInstance()->setRS232Data(id, column, data);
+            DataBaseManager::getInstance()->setRS232Data(id, index, data);
+            endResetModel();
             return;
         }
         case _RS232_COLUMN::_RS232_data_bit:
         {
             m_data[i].data_bit = data.toInt();
-            DataBaseManager::getInstance()->setRS232Data(id, column, data);
+            DataBaseManager::getInstance()->setRS232Data(id, index, data);
+            endResetModel();
             return;
         }
         case _RS232_COLUMN::_RS232_parity_bit:
         {
             m_data[i].parity_bit = data.toString();
-            DataBaseManager::getInstance()->setRS232Data(id, column, data);
+            DataBaseManager::getInstance()->setRS232Data(id, index, data);
+            endResetModel();
             return;
         }
         case _RS232_COLUMN::_RS232_stop_bit:
         {
             m_data[i].stop_bit = data.toInt();
-            DataBaseManager::getInstance()->setRS232Data(id, column, data);
+            DataBaseManager::getInstance()->setRS232Data(id, index, data);
+            endResetModel();
             return;
         }
         default:

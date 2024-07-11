@@ -33,7 +33,7 @@ Rectangle {
         }
         eqText3:{
             if(DeviceManager.deviceList[swipeCurrIndex]){
-                return DeviceManager.deviceList[swipeCurrIndex].pDeviceInformation.connectType === 1
+                return DeviceManager.deviceList[swipeCurrIndex].pDeviceInformation.connectType === 2
                         ? "RS232" : "网络连接"
             }
             else{

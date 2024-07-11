@@ -84,7 +84,7 @@ Rectangle {
                 color: mode == 1 ? "#0c5696" : pRgb(43, 112, 173)
                 eqText1:DeviceManager.deviceList[0].pDeviceInformation.name
                 eqText2:DeviceManager.deviceList[0].pDeviceInformation.model
-                eqText3:DeviceManager.deviceList[0].pDeviceInformation.connectType === 1
+                eqText3:DeviceManager.deviceList[0].pDeviceInformation.connectType === 2
                         ? "RS232" : "网络连接"
                 eqText4:DeviceManager.deviceList[0].pDeviceInformation.state
             }

@@ -1,7 +1,7 @@
 #include "trend.h"
 #include <QTimer>
 #include "DataBase/databasemanager.h"
-
+#include <QDateTime>
 Trend::Trend(int welderID, QObject *parent)
     : QObject{parent}, m_welderID(welderID), m_yieldType(3)
 {
@@ -148,6 +148,32 @@ void Trend::setYieldTrendData(QList<_Production_Data> data)
     }
 }
 
+QString Trend::endTime() const
+{
+    return m_endTime;
+}
+
+void Trend::setEndTime(const QString &newEndTime)
+{
+    if (m_endTime == newEndTime)
+        return;
+    m_endTime = newEndTime;
+    emit endTimeChanged();
+}
+
+QString Trend::startTime() const
+{
+    return m_startTime;
+}
+
+void Trend::setStartTime(const QString &newStartTime)
+{
+    if (m_startTime == newStartTime)
+        return;
+    m_startTime = newStartTime;
+    emit startTimeChanged();
+}
+
 void Trend::init()
 {
     m_pBeforeModel  = new QStandardItemModel();
@@ -181,6 +207,9 @@ void Trend::init()
 
     upWeldData();
     upYieldData();
+    m_endTime = QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss");
+    QDateTime time = QDateTime::currentDateTime().addSecs(-3600);
+    m_startTime = time.toString("yyyy-MM-dd hh:mm:ss");
 }
 
 int Trend::yieldType() const
@@ -193,7 +222,26 @@ void Trend::setYieldType(int newYieldType)
     if (m_yieldType == newYieldType)
         return;
     m_yieldType = newYieldType;
+    m_endTime = QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss");
+    if(m_yieldType == 0){
+        QDateTime time = QDateTime::currentDateTime().addSecs(-3600);
+        m_startTime = time.toString("yyyy-MM-dd hh:mm:ss");
+    }
+    else if(m_yieldType == 1){
+        QDateTime time = QDateTime::currentDateTime().addDays(-1);
+        m_startTime = time.toString("yyyy-MM-dd hh:mm:ss");
+    }
+    else if(m_yieldType == 2){
+        QDateTime time = QDateTime::currentDateTime().addDays(-7);
+        m_startTime = time.toString("yyyy-MM-dd hh:mm:ss");
+    }
+    else if(m_yieldType == 3){
+        QDateTime time = QDateTime::currentDateTime().addDays(-30);
+        m_startTime = time.toString("yyyy-MM-dd hh:mm:ss");
+    }
     emit yieldTypeChanged();
+    emit startTimeChanged();
+    emit endTimeChanged();
 }
 
 int Trend::powerMinY() const

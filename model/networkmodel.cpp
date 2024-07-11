@@ -117,61 +117,70 @@ QVariant NetworkModel::getDataByWelderID(int welderID, int role) const
     return QVariant();
 }
 
-void NetworkModel::setNetworkData(int id, _NETWORK_COLUMN column, QVariant data)
+void NetworkModel::setNetworkData(int id, int column, QVariant data)
 {
     for(int i = 0; i < m_data.size(); ++i)
     {
+        beginResetModel();
         if(m_data.at(i).id != id)
             continue;
-
-        switch(column)
+        _NETWORK_COLUMN index = (_NETWORK_COLUMN)column;
+        switch(index)
         {
         case _NETWORK_COLUMN::_NETWORK_id:
         {
             m_data[i].id = data.toInt();
-            DataBaseManager::getInstance()->setNetworkData(id, column, data);
+            DataBaseManager::getInstance()->setNetworkData(id, index, data);
+            endResetModel();
             return;
         }
         case _NETWORK_COLUMN::_NETWORK_type:
         {
             m_data[i].type = data.toInt();
-            DataBaseManager::getInstance()->setNetworkData(id, column, data);
+            DataBaseManager::getInstance()->setNetworkData(id, index, data);
+            endResetModel();
             return;
         }
         case _NETWORK_COLUMN::_NETWORK_protocol:
         {
             m_data[i].protocol = data.toInt();
-            DataBaseManager::getInstance()->setNetworkData(id, column, data);
+            DataBaseManager::getInstance()->setNetworkData(id, index, data);
+            endResetModel();
             return;
         }
         case _NETWORK_COLUMN::_NETWORK_local_ip:
         {
             m_data[i].local_ip = data.toString();
-            DataBaseManager::getInstance()->setNetworkData(id, column, data);
+            DataBaseManager::getInstance()->setNetworkData(id, index, data);
+            endResetModel();
             return;
         }
         case _NETWORK_COLUMN::_NETWORK_local_port:
         {
             m_data[i].local_port = data.toInt();
-            DataBaseManager::getInstance()->setNetworkData(id, column, data);
+            DataBaseManager::getInstance()->setNetworkData(id, index, data);
+            endResetModel();
             return;
         }
         case _NETWORK_COLUMN::_NETWORK_remote_ip:
         {
             m_data[i].remote_ip = data.toString();
-            DataBaseManager::getInstance()->setNetworkData(id, column, data);
+            DataBaseManager::getInstance()->setNetworkData(id, index, data);
+            endResetModel();
             return;
         }
         case _NETWORK_COLUMN::_NETWORK_server_port:
         {
             m_data[i].server_port = data.toInt();
-            DataBaseManager::getInstance()->setNetworkData(id, column, data);
+            DataBaseManager::getInstance()->setNetworkData(id, index, data);
+            endResetModel();
             return;
         }
         case _NETWORK_COLUMN::_NETWORK_user:
         {
             m_data[i].user = data.toString();
-            DataBaseManager::getInstance()->setNetworkData(id, column, data);
+            DataBaseManager::getInstance()->setNetworkData(id, index, data);
+            endResetModel();
             return;
         }
         default:

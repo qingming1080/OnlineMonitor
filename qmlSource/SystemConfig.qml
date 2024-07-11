@@ -647,6 +647,9 @@ Rectangle {
                             return ""
                         }
                     }
+                    onDataAlter: {
+                        DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.setModel(com1.currentText)
+                    }
                 }
                 Switch{
                     id:ctl1
@@ -773,6 +776,23 @@ Rectangle {
                             x:233
                             y:55
                             model: ["ETH0", "ETH1", "ETH2", "ETH3"]
+                            displayText: {
+                                if(DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.connectID === 1){
+                                    return "ETH0"
+                                }
+                                else if(DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.connectID === 2){
+                                    return "ETH1"
+                                }
+                                else if(DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.connectID === 3){
+                                    return "ETH2"
+                                }
+                                else if(DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.connectID === 4){
+                                    return "ETH3"
+                                }
+                            }
+                            onDataAlter: {
+                                DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.setConnectID(com2.currentIndex+1)
+                            }
                         }
                         TextField{
                             id:t5
@@ -933,6 +953,17 @@ Rectangle {
                             x:233
                             y:40
                             model: ["COM1", "COM2"]
+                            displayText: {
+                                if(DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.connectID === 1){
+                                    return "COM1"
+                                }
+                                else if(DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.connectID === 2){
+                                    return "COM2"
+                                }
+                            }
+                            onDataAlter: {
+                                DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.setConnectID(com3.currentIndex+1)
+                            }
                         }
                         CustomComboBox{
                             id:com4
@@ -949,6 +980,15 @@ Rectangle {
                                     return RS232Model.getDataByWelderID(2,2)
                                 }
                             }
+                            onDataAlter: {
+                                if(com3.displayText === "COM1"){
+                                    RS232Model.setRS232Data(1,2,currentText)
+                                }
+                                else if(com3.displayText === "COM2"){
+                                    RS232Model.setRS232Data(2,2,currentText)
+                                }
+                                com4.displayText = currentText
+                            }
                         }
                         CustomComboBox{
                             id:com5
@@ -956,7 +996,7 @@ Rectangle {
                             height: 40
                             x:233
                             y:151
-                            model: ["7bits", "8bits"]
+                            model: ["7bit", "8bit"]
                             displayText:{
                                 if(com3.displayText === "COM1"){
                                     return RS232Model.getDataByWelderID(1,3)
@@ -964,6 +1004,25 @@ Rectangle {
                                 else if(com3.displayText === "COM2"){
                                     return RS232Model.getDataByWelderID(2,3)
                                 }
+                            }
+                            onDataAlter: {
+                                if(com3.displayText === "COM1"){
+                                    if(com7.currentIndex === 0){
+                                        RS232Model.setRS232Data(1,3,7)
+                                    }
+                                    else if(com7.currentIndex === 1){
+                                        RS232Model.setRS232Data(1,3,8)
+                                    }
+                                }
+                                else if(com3.displayText === "COM2"){
+                                    if(com7.currentIndex === 0){
+                                        RS232Model.setRS232Data(2,3,7)
+                                    }
+                                    else if(com7.currentIndex === 1){
+                                        RS232Model.setRS232Data(2,3,8)
+                                    }
+                                }
+                                com5.displayText = currentText
                             }
                         }
                         CustomComboBox{
@@ -981,6 +1040,15 @@ Rectangle {
                                     return RS232Model.getDataByWelderID(2,4)
                                 }
                             }
+                            onDataAlter: {
+                                if(com3.displayText === "COM1"){
+                                    RS232Model.setRS232Data(1,4,currentText)
+                                }
+                                else if(com3.displayText === "COM2"){
+                                    RS232Model.setRS232Data(2,4,currentText)
+                                }
+                                com6.displayText = currentText
+                            }
                         }
                         CustomComboBox{
                             id:com7
@@ -988,7 +1056,7 @@ Rectangle {
                             height: 40
                             x:233
                             y:265
-                            model: ["1bit", "1.5bits", "2bits"]
+                            model: ["1bit", "1.5bit", "2bit"]
                             displayText:{
                                 if(com3.displayText === "COM1"){
                                     return RS232Model.getDataByWelderID(1,5)
@@ -996,6 +1064,31 @@ Rectangle {
                                 else if(com3.displayText === "COM2"){
                                     return RS232Model.getDataByWelderID(2,5)
                                 }
+                            }
+                            onDataAlter: {
+                                if(com3.displayText === "COM1"){
+                                    if(com7.currentIndex === 0){
+                                        RS232Model.setRS232Data(1,5,1)
+                                    }
+                                    else if(com7.currentIndex === 1){
+                                        RS232Model.setRS232Data(1,5,1.5)
+                                    }
+                                    else if(com7.currentIndex === 2){
+                                        RS232Model.setRS232Data(1,5,2)
+                                    }
+                                }
+                                else if(com3.displayText === "COM2"){
+                                    if(com7.currentIndex === 0){
+                                        RS232Model.setRS232Data(2,5,1)
+                                    }
+                                    else if(com7.currentIndex === 1){
+                                        RS232Model.setRS232Data(2,5,1.5)
+                                    }
+                                    else if(com7.currentIndex === 2){
+                                        RS232Model.setRS232Data(2,5,2)
+                                    }
+                                }
+                                com7.displayText = currentText
                             }
                         }
                     }
@@ -1051,7 +1144,10 @@ Rectangle {
                         sigUndetermined(1)
                     }
                     if(full.visible){//设置多设备时配置存储
-
+                        DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.setMaxBacth(t1.text)
+                        DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.setSample(t2.text)
+                        DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.setLowerLimit(t3.text)
+                        DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.setName(t4.text)
                     }
                 }
             }

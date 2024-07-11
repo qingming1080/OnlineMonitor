@@ -20,7 +20,7 @@ public:
     Q_INVOKABLE QHash<int, QByteArray> roleNames() const;
 
     Q_INVOKABLE QVariant getDataByWelderID(int welderID, int role) const;
-    Q_INVOKABLE void setRS232Data(int id, _RS232_COLUMN column, QVariant data);
+    Q_INVOKABLE void setRS232Data(int id, int column, QVariant data);
 
 private:
     explicit RS232Model(QObject *parent = nullptr);
