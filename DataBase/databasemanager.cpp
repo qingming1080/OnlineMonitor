@@ -111,8 +111,9 @@ bool DataBaseManager::removeConfigurationDevice(int deviceID)
     // 绑定属性
     query.prepare(execStr);
     query.bindValue(":id", deviceID);
-
-    return query.exec();
+    bool ret = query.exec();
+    qDebug() << query.lastError();
+    return ret;
 }
 
 bool DataBaseManager::insertConfigurationDevice(_Configuration_Data data)
@@ -142,8 +143,8 @@ bool DataBaseManager::insertConfigurationDevice(_Configuration_Data data)
     query.bindValue(":height_option", data.height_option);
     query.bindValue(":connect_type", data.connect_type);
     query.bindValue(":connect_id", data.connect_id);
-
-    return query.exec();
+    bool ret = query.exec();
+    return ret;
 }
 
 QList<_Network_Data> DataBaseManager::getNetworkData()
@@ -1059,7 +1060,7 @@ DataBaseManager::DataBaseManager(QObject *parent)
 void DataBaseManager::init()
 {
     m_database = QSqlDatabase::addDatabase("QSQLITE");
-    m_database.setDatabaseName("C:\\Users\\cxy\\Desktop\\HB平台\\onlinemonitor.db");
+    m_database.setDatabaseName("./onlinemonitor.db");
     if (!m_database.open())
     {
         qDebug() << "Database Open Fail ";

@@ -502,7 +502,7 @@ Rectangle {
                 Text {
                     id: s8
                     text: currentConfigId === 1 ? "PIN1" : currentConfigId === 2 ? "PIN4" :
-                    currentConfigId === 3 ? "PIN7" : currentConfigId === 4 ? "PIN10" : ""
+                                                                                   currentConfigId === 3 ? "PIN7" : currentConfigId === 4 ? "PIN10" : ""
                     color: pRgb(177, 213, 219)
                     font.family: fontBold
                     font.pixelSize: 16
@@ -512,7 +512,7 @@ Rectangle {
                 Text {
                     id: s9
                     text: currentConfigId === 1 ? "PIN2" : currentConfigId === 2 ? "PIN5" :
-                    currentConfigId === 3 ? "PIN8" : currentConfigId === 4 ? "PIN11" : ""
+                                                                                   currentConfigId === 3 ? "PIN8" : currentConfigId === 4 ? "PIN11" : ""
                     color: pRgb(177, 213, 219)
                     font.family: fontBold
                     font.pixelSize: 16
@@ -523,7 +523,7 @@ Rectangle {
                 Text {
                     id: s10
                     text: currentConfigId === 1 ? "PIN3" : currentConfigId === 2 ? "PIN6" :
-                    currentConfigId === 3 ? "PIN9" : currentConfigId === 4 ? "PIN12" : ""
+                                                                                   currentConfigId === 3 ? "PIN9" : currentConfigId === 4 ? "PIN12" : ""
                     color: pRgb(177, 213, 219)
                     font.family: fontBold
                     font.pixelSize: 16
@@ -654,10 +654,10 @@ Rectangle {
                     y:147
                     onClicked: {
                         if(ctl1.checked){
-                            loader.sourceComponent = rect2
+                            DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.setConnectType(2)
                         }
                         else{
-                            loader.sourceComponent = rect1
+                            DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.setConnectType(1)
                         }
                     }
                     indicator: Rectangle{
@@ -683,12 +683,12 @@ Rectangle {
                             //改变小圆点位置
                             NumberAnimation on x{
                                 to:smallRect1.width
-                                running: ctl1.checked? true : false
+                                running: DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.connectType !== 1? true : false
                                 duration: 0
                             }
                             NumberAnimation on x{
                                 to:8
-                                running: ctl1.checked? false : true;
+                                running: DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.connectType !== 1? false : true;
                                 duration: 0
                             }
                         }
@@ -698,7 +698,7 @@ Rectangle {
                             anchors.topMargin: 7
                             anchors.leftMargin: 63
                             text: qsTr("网络")
-                            color: ctl1.checked? pRgb(43, 112, 173) : "#e5e6e7"
+                            color: DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.connectType !== 1 ? pRgb(43, 112, 173) : "#e5e6e7"
                             font.family: fontBold
                             font.pixelSize: 16
                         }
@@ -708,7 +708,7 @@ Rectangle {
                             anchors.topMargin: 7
                             anchors.rightMargin: 63
                             text: qsTr("RS232")
-                            color: ctl1.checked? "#e5e6e7" : pRgb(43, 112, 173)
+                            color: DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.connectType !== 1? "#e5e6e7" : pRgb(43, 112, 173)
                             font.family: fontBold
                             font.pixelSize: 16
                         }
@@ -716,7 +716,7 @@ Rectangle {
                 }
                 Loader{
                     id:loader
-                    sourceComponent: rect1
+                    sourceComponent: DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.connectType === 1 ? rect1 : rect2
                 }
                 Component{
                     id:rect1
@@ -791,6 +791,20 @@ Rectangle {
                                 border.width: 3
                                 border.color: "#99ccff"
                             }
+                            text: {
+                                if(com2.displayText === "ETH0"){
+                                    return NetworkModel.getDataByWelderID(1,6)
+                                }
+                                else if(com2.displayText === "ETH1"){
+                                    return NetworkModel.getDataByWelderID(2,6)
+                                }
+                                else if(com2.displayText === "ETH2"){
+                                    return NetworkModel.getDataByWelderID(3,6)
+                                }
+                                else if(com2.displayText === "ETH3"){
+                                    return NetworkModel.getDataByWelderID(4,6)
+                                }
+                            }
                         }
                         TextField{
                             id:t6
@@ -809,6 +823,20 @@ Rectangle {
                                 border.width: 3
                                 border.color: "#99ccff"
                             }
+                            text:{
+                                if(com2.displayText === "ETH0"){
+                                    return NetworkModel.getDataByWelderID(1,5)
+                                }
+                                else if(com2.displayText === "ETH1"){
+                                    return NetworkModel.getDataByWelderID(2,5)
+                                }
+                                else if(com2.displayText === "ETH2"){
+                                    return NetworkModel.getDataByWelderID(3,5)
+                                }
+                                else if(com2.displayText === "ETH3"){
+                                    return NetworkModel.getDataByWelderID(4,5)
+                                }
+                            }
                         }
                         TextField{
                             id:t7
@@ -826,6 +854,20 @@ Rectangle {
                                 radius: 6
                                 border.width: 3
                                 border.color: "#99ccff"
+                            }
+                            text:{
+                                if(com2.displayText === "ETH0"){
+                                    return NetworkModel.getDataByWelderID(1,3)
+                                }
+                                else if(com2.displayText === "ETH1"){
+                                    return NetworkModel.getDataByWelderID(2,3)
+                                }
+                                else if(com2.displayText === "ETH2"){
+                                    return NetworkModel.getDataByWelderID(3,3)
+                                }
+                                else if(com2.displayText === "ETH3"){
+                                    return NetworkModel.getDataByWelderID(4,3)
+                                }
                             }
                         }
                     }
@@ -899,6 +941,14 @@ Rectangle {
                             x:233
                             y:97
                             model: ["2400", "9600", "19200","115200"]
+                            displayText:{
+                                if(com3.displayText === "COM1"){
+                                    return RS232Model.getDataByWelderID(1,2)
+                                }
+                                else if(com3.displayText === "COM2"){
+                                    return RS232Model.getDataByWelderID(2,2)
+                                }
+                            }
                         }
                         CustomComboBox{
                             id:com5
@@ -907,6 +957,14 @@ Rectangle {
                             x:233
                             y:151
                             model: ["7bits", "8bits"]
+                            displayText:{
+                                if(com3.displayText === "COM1"){
+                                    return RS232Model.getDataByWelderID(1,3)
+                                }
+                                else if(com3.displayText === "COM2"){
+                                    return RS232Model.getDataByWelderID(2,3)
+                                }
+                            }
                         }
                         CustomComboBox{
                             id:com6
@@ -915,6 +973,14 @@ Rectangle {
                             x:233
                             y:206
                             model: ["None", "Odd", "Even"]
+                            displayText: {
+                                if(com3.displayText === "COM1"){
+                                    return RS232Model.getDataByWelderID(1,4)
+                                }
+                                else if(com3.displayText === "COM2"){
+                                    return RS232Model.getDataByWelderID(2,4)
+                                }
+                            }
                         }
                         CustomComboBox{
                             id:com7
@@ -923,6 +989,14 @@ Rectangle {
                             x:233
                             y:265
                             model: ["1bit", "1.5bits", "2bits"]
+                            displayText:{
+                                if(com3.displayText === "COM1"){
+                                    return RS232Model.getDataByWelderID(1,5)
+                                }
+                                else if(com3.displayText === "COM2"){
+                                    return RS232Model.getDataByWelderID(2,5)
+                                }
+                            }
                         }
                     }
                 }

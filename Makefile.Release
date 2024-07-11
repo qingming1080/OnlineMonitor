@@ -1584,7 +1584,9 @@ release\devicemanager.obj: devicemanager.cpp devicemanager.h \
 		E:\qt5.15\5.15.2\msvc2019_64\include\QtCore\QString \
 		E:\qt5.15\5.15.2\msvc2019_64\include\QtCore\QByteArray \
 		E:\qt5.15\5.15.2\msvc2019_64\include\QtCore\QDateTime \
-		E:\qt5.15\5.15.2\msvc2019_64\include\QtCore\qdatetime.h
+		E:\qt5.15\5.15.2\msvc2019_64\include\QtCore\qdatetime.h \
+		model\deviceinformation.h \
+		qmlenum.h
 
 release\fileobject.obj: fileobject.cpp fileobject.h \
 		E:\qt5.15\5.15.2\msvc2019_64\include\QtCore\QObject \
@@ -1791,7 +1793,9 @@ release\main.obj: main.cpp E:\qt5.15\5.15.2\msvc2019_64\include\QtWidgets\QAppli
 		E:\qt5.15\5.15.2\msvc2019_64\include\QtGui\QStandardItemModel \
 		E:\qt5.15\5.15.2\msvc2019_64\include\QtGui\qstandarditemmodel.h \
 		E:\qt5.15\5.15.2\msvc2019_64\include\QtGui\qicon.h \
-		model\history.h
+		model\history.h \
+		model\networkmodel.h \
+		model\rs232model.h
 
 release\device.obj: model\device.cpp model\device.h \
 		E:\qt5.15\5.15.2\msvc2019_64\include\QtCore\QObject \

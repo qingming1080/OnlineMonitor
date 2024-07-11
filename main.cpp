@@ -12,6 +12,8 @@
 #include "model/io.h"
 #include "model/trend.h"
 #include "model/history.h"
+#include "model/networkmodel.h"
+#include "model/rs232model.h"
 // 自定义消息处理程序
 void myMessageHandler(QtMsgType type, const QMessageLogContext &context, const QString &msg)
 {
@@ -44,6 +46,8 @@ int main(int argc, char *argv[])
     pQmlContext->setContextProperty("DeviceManager", DeviceManager::getInstance());
     pQmlContext->setContextProperty("History", History::getInstance());
     pQmlContext->setContextProperty("Message", Message::getInstance());
+    pQmlContext->setContextProperty("NetworkModel", NetworkModel::getInstance());
+    pQmlContext->setContextProperty("RS232Model", RS232Model::getInstance());
     pQmlContext->setContextProperty("Manual", new Manual());
 
     qmlRegisterType<Device>("Device",1,0,"Device");
