@@ -1,6 +1,6 @@
 #include "history.h"
 #include "DataBase/databasemanager.h"
-
+#include <QtMath>
 History* History::s_pHistory = nullptr;
 
 History *History::getInstance()
@@ -15,6 +15,7 @@ History::History(QObject *parent)
     : QAbstractListModel{parent}
 {
     m_data = DataBaseManager::getInstance()->getProductionData();
+//    std::reverse(m_data.begin(), m_data.end());
 }
 
 int History::finalResult() const
@@ -105,7 +106,10 @@ QVariant History::data(const QModelIndex &index, int role) const
         return data.not_definite_cycles;
     case _PRODUCTION_COLUMN::_PRODUCTION_final_result:
         return data.final_result;
+    default:
+        return QVariant();
     }
+
 }
 
 QHash<int, QByteArray> History::roleNames() const

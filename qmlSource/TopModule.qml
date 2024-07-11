@@ -4,34 +4,54 @@ Rectangle {
     color: pRgb(43, 112, 173)
 
     function bt1Check(){
+        bt2.tmp = false
+        bt3.tmp = false
+        bt4.tmp = false
         bt1.cbtnText.color = pRgb(177, 213, 219)
         bt1.btnCheck.visible = true
         bt2.cbtnText.color = pRgb(153, 204, 255)
         bt2.btnCheck.visible = false
         bt3.cbtnText.color = pRgb(153, 204, 255)
         bt3.btnCheck.visible = false
-        bt2.tmp = false
-        bt3.tmp = false
+        bt4.visible = false
     }
     function bt2Check(){
+        bt1.tmp = false
+        bt3.tmp = false
+        bt4.tmp = false
         bt2.cbtnText.color = pRgb(177, 213, 219)
         bt2.btnCheck.visible = true
         bt1.cbtnText.color = pRgb(153, 204, 255)
         bt1.btnCheck.visible = false
         bt3.cbtnText.color = pRgb(153, 204, 255)
         bt3.btnCheck.visible = false
-        bt1.tmp = false
-        bt3.tmp = false
+        bt4.visible = false
     }
     function bt3Check(){
+        bt2.tmp = false
+        bt1.tmp = false
+        bt4.tmp = false
         bt3.cbtnText.color = pRgb(177, 213, 219)
         bt3.btnCheck.visible = true
         bt2.cbtnText.color = pRgb(153, 204, 255)
         bt2.btnCheck.visible = false
         bt1.cbtnText.color = pRgb(153, 204, 255)
         bt1.btnCheck.visible = false
+        bt4.visible = false
+    }
+    function bt4Check(){
         bt2.tmp = false
         bt1.tmp = false
+        bt3.tmp = false
+        bt4.cbtnText.color = pRgb(177, 213, 219)
+        bt4.btnCheck.visible = true
+        bt3.cbtnText.color = pRgb(153, 204, 255)
+        bt3.btnCheck.visible = false
+        bt2.cbtnText.color = pRgb(153, 204, 255)
+        bt2.btnCheck.visible = false
+        bt1.cbtnText.color = pRgb(153, 204, 255)
+        bt1.btnCheck.visible = false
+        bt4.visible = true
     }
     Button{
         x:20
@@ -43,7 +63,7 @@ Rectangle {
             fillMode: Image.PreserveAspectCrop  // 调整图片填充模式
         }
         onClicked: {
-
+            popup.openPop(4)
         }
     }
     Text {
@@ -63,6 +83,16 @@ Rectangle {
         width: 157
         height: 60
         btnText:"生产界面"
+        index:1
+        Connections{
+            target: bt1
+            function onSigBtnSwitch(index){
+                if(index === 1){
+                    bt1Check()
+                    switchUI(1)
+                }
+            }
+        }
     }
     CustomBtn{
         id:bt2
@@ -70,6 +100,16 @@ Rectangle {
         width: 157
         height: 60
         btnText:"历史记录"
+        index:2
+        Connections{
+            target: bt2
+            function onSigBtnSwitch(index){
+                if(index === 2){
+                    bt2Check()
+                    switchUI(2)
+                }
+            }
+        }
     }
     CustomBtn{
         id:bt3
@@ -77,26 +117,35 @@ Rectangle {
         width: 157
         height: 60
         btnText:"系统配置"
-    }
-    Connections{
-        target: bt1
-        function onSigBtnSwitch(){
-            bt1Check()
-            switchUI(1)
+        index:3
+        Connections{
+            target: bt3
+            function onSigBtnSwitch(index){
+                if(index === 3){
+                    popup.openPop(1)
+                }
+            }
         }
     }
-    Connections{
-        target: bt2
-        function onSigBtnSwitch(){
-            bt2Check()
-            switchUI(2)
+    CustomBtn{
+        id:bt4
+        anchors.right: bt1.left
+        width: 157
+        height: 60
+        btnText:"   ROOT"
+        visible: false
+        index:4
+        Connections{
+            target: window
+            function onSigRoot(){
+                bt4Check()
+                switchUI(4)
+            }
         }
     }
-    Connections{
-        target: bt3
-        function onSigBtnSwitch(){
-            bt3Check()
-            switchUI(3)
-        }
-    }
+
+
+
+
+
 }

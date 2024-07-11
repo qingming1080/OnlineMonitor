@@ -476,7 +476,7 @@ Rectangle {
                     anchors.verticalCenter: parent.verticalCenter
                     x:1220/5*4 + 1220/5/2-width/2
                     font.pixelSize: 16
-                    text: "messegStr"
+                    text: History.finalResult === 0?"合格":finalResult === 1?"次品":"可疑"
                     font.family: fontBold
                     color: index % 2 === 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
                 }

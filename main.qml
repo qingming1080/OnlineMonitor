@@ -82,6 +82,9 @@ Window {
     signal sigStatusReset()
     signal sigUpdateUI(var index)
     signal sigUndetermined(var index)
+    signal sigRoot()
+    signal sigNewModel()
+    signal sigOneModel()
     function switchUI(id){
         equipmentCurrentIndex = id
         sigSwitch(id)
@@ -139,12 +142,12 @@ Window {
                     stackView1.pop()
                     if(id === 1){
                         loadView(id,pro)
-                        p1.bt1Check()
+//                        p1.bt1Check()
                         isAdd = false
                     }
                     else if(id === 2){
                         loadView(id,his)
-                        p1.bt2Check()
+//                        p1.bt2Check()
                         isAdd = false
                     }
                     else if(id === 3){
@@ -154,6 +157,10 @@ Window {
                         loadView(id,sys)
                         sigStatusReset()
                         p1.bt3Check()
+                    }
+                    else if(id === 4){
+                        isAdd = false
+                        loadView(id,rootview)
                     }
                 }
             }

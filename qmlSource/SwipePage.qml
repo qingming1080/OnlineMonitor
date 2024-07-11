@@ -8,6 +8,13 @@ Rectangle {
     color: pRgb(153, 204, 255)
     radius: 5
     property int pbtnIndex: 1
+    function newModel(){
+        mt1.text = "创建模型"
+        mt2.text = "清除数据"
+        loader.sourceComponent = mode2
+        loader1.sourceComponent = weld2
+    }
+
     EquipmentInfor{
         id:s1
         x: 52
@@ -118,6 +125,8 @@ Rectangle {
                 x:  50
                 y:  248
                 color:  "#0c5696"
+                altitudeMode:DeviceManager.deviceList[swipeCurrIndex].pDeviceInformation.heightOption
+                             === 1 ? true:false
             }
         }
     }
@@ -142,10 +151,15 @@ Rectangle {
             font.family: fontBold
         }
         onClicked: {
-            mt1.text = "创建模型"
-            mt2.text = "清除数据"
-            loader.sourceComponent = mode2
-            loader1.sourceComponent = weld2
+            if(mt1.text === "新建模型"){
+                popup.openPop(2)
+            }
+            else{
+                mt1.text = "创建模型"
+                mt2.text = "清除数据"
+                loader.sourceComponent = mode2
+                loader1.sourceComponent = weld2
+            }
         }
     }
     Button{
@@ -155,12 +169,26 @@ Rectangle {
         anchors.topMargin:  23
         width:   210
         height:  45
-        enabled: equipmentCount === 4 ? false : true
+        enabled: {
+            if(mt2.text === "新增设备"){
+                return equipmentCount === 4 ? false : true
+            }
+            else{
+                return true
+            }
+        }
         background: Rectangle{
             radius: 6
             border.width: 2
             border.color: pRgb(43, 112, 173)
-            color: equipmentCount === 4 ? pRgb(232, 232, 232) : "#0c5696"
+            color: {
+                if(mt2.text === "新增设备"){
+                    return equipmentCount === 4 ? pRgb(232, 232, 232) : "#0c5696"
+                }
+                else{
+                    return "#0c5696"
+                }
+            }
         }
         contentItem: Text {
             id:mt2
@@ -393,11 +421,11 @@ Rectangle {
                 }
                 ListView{
                     id: taskplanView
-                    width: 1220
-                    height: 560
+                    width:810
+                    height: 510
                     y:40
                     clip: true
-                    model: 3
+                    model: Manual
                     delegate: Rectangle{
                         id: regionItem
                         height: 36
@@ -459,7 +487,7 @@ Rectangle {
                             x:808/8*1 + 808/8/2-width/2
                             anchors.verticalCenter: parent.verticalCenter
                             font.pixelSize: 16
-                            text: "messegStr"
+                            text: serial_number
                             font.family: fontBold
                             color: index % 2 !== 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
                         }
@@ -467,7 +495,7 @@ Rectangle {
                             anchors.verticalCenter: parent.verticalCenter
                             x:808/8*2 + 808/8/2-width/2
                             font.pixelSize: 16
-                            text: create_time
+                            text: time
                             font.family: fontBold
                             color: index % 2 !== 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
                         }
@@ -475,7 +503,7 @@ Rectangle {
                             anchors.verticalCenter: parent.verticalCenter
                             x:808/8*3 + 808/8/2-width/2
                             font.pixelSize: 16
-                            text: energy
+                            text: power
                             font.family: fontBold
                             color: index % 2 !== 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
                         }
@@ -483,7 +511,7 @@ Rectangle {
                             anchors.verticalCenter: parent.verticalCenter
                             x:808/8*4 + 808/8/2-width/2
                             font.pixelSize: 16
-                            text: power
+                            text: energy
                             font.family: fontBold
                             color: index % 2 !== 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
                         }
@@ -491,7 +519,7 @@ Rectangle {
                             anchors.verticalCenter: parent.verticalCenter
                             x:808/8*5 + 808/8/2-width/2
                             font.pixelSize: 16
-                            text: "messegStr"
+                            text: create_time
                             font.family: fontBold
                             color: index % 2 !== 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
                         }
@@ -506,6 +534,7 @@ Rectangle {
                             color: index % 2 === 0 ? pRgb(175, 195, 216) : "#014c8d"
                             font.family: fontBold
                             font.pixelSize: 16
+                            text:actual_force
                             background: Rectangle{
                                 radius: 3
                                 border.width: 2
@@ -536,6 +565,7 @@ Rectangle {
                             color: index % 2 === 0 ? pRgb(175, 195, 216) : "#014c8d"
                             font.family: fontBold
                             font.pixelSize: 16
+                            text:actual_degree
                             background: Rectangle{
                                 radius: 6
                                 border.width: 3

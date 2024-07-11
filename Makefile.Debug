@@ -2059,7 +2059,9 @@ debug\history.obj: model\history.cpp model\history.h \
 		E:\qt5.15\5.15.2\msvc2019_64\include\QtSql\QSqlDatabase \
 		E:\qt5.15\5.15.2\msvc2019_64\include\QtSql\qsqldatabase.h \
 		E:\qt5.15\5.15.2\msvc2019_64\include\QtSql\qtsqlglobal.h \
-		E:\qt5.15\5.15.2\msvc2019_64\include\QtSql\qtsql-config.h
+		E:\qt5.15\5.15.2\msvc2019_64\include\QtSql\qtsql-config.h \
+		E:\qt5.15\5.15.2\msvc2019_64\include\QtCore\QtMath \
+		E:\qt5.15\5.15.2\msvc2019_64\include\QtCore\qmath.h
 
 debug\io.obj: model\io.cpp model\io.h \
 		E:\qt5.15\5.15.2\msvc2019_64\include\QtCore\QObject \

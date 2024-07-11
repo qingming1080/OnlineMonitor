@@ -14,20 +14,20 @@ class System : public QObject
 public:
     explicit System(int welderID = 0, QObject *parent = nullptr);
 
-    int id() const;
-    void setId(int newId);
+    Q_INVOKABLE int id() const;
+    Q_INVOKABLE void setId(int newId);
 
-    int singleFact() const;
-    void setSingleFact(int newSingleFact);
+    Q_INVOKABLE int singleFact() const;
+    Q_INVOKABLE void setSingleFact(int newSingleFact);
 
-    int generalFact() const;
-    void setGeneralFact(int newGeneralFact);
+    Q_INVOKABLE int generalFact() const;
+    Q_INVOKABLE void setGeneralFact(int newGeneralFact);
 
-    int otherFace() const;
-    void setOtherFace(int newOtherFace);
+    Q_INVOKABLE int otherFace() const;
+    Q_INVOKABLE void setOtherFace(int newOtherFace);
 
-    int autoModel() const;
-    void setAutoModel(int newAutoModel);
+    Q_INVOKABLE int autoModel() const;
+    Q_INVOKABLE void setAutoModel(int newAutoModel);
 
 signals:
 

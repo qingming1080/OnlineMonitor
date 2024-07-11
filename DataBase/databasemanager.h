@@ -266,6 +266,7 @@ public:
     /// \return : 设置结果
     ///
     bool setUserPassword(QString password);
+
 signals:
 
 private:

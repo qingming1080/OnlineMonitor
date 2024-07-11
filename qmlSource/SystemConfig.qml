@@ -4,7 +4,6 @@ import QtQuick.Controls 2.5
 import Device 1.0
 import DeviceInformation 1.0
 import IO 1.0
-//import IOModel 1.0
 //系统配置
 Rectangle {
     id: sysUI
@@ -21,14 +20,32 @@ Rectangle {
     property bool undetermined3: false
     property bool undetermined4: false
     property bool undeterMined: {
-        if(DeviceManager.deviceList[currentConfigId-1]){
-            return DeviceManager.deviceList[currentConfigId-1].pIO.availabel
+        if(equipmentCount === 1){
+            if(DeviceManager.deviceList[0]){
+                return DeviceManager.deviceList[0].pIO.availabel
+            }
+            else{
+                return false
+            }
+        }
+        else{
+            if(DeviceManager.deviceList[currentConfigId-1]){
+                return DeviceManager.deviceList[currentConfigId-1].pIO.availabel
+            }
+            else{
+                return false
+            }
+        }
+    }
+    property bool altitudMode:{
+        if(DeviceManager.deviceList[0]){
+            return DeviceManager.deviceList[0].pDeviceInformation.heightOption
+                    === 1 ? true:false
         }
         else{
             return false
         }
     }
-    property bool altitudMode:false
     property bool oneself: false
     property bool btnDefault: false
     property var sysViews: []
@@ -58,24 +75,6 @@ Rectangle {
         target: window
         function onSigSysConfig(){
             Qt.callLater(configCheck)
-        }
-        function onSigUpdateUI(index){
-            if(index === 0){
-                altitudMode = altitudeModel1
-                btnDefault = altitudeModel1
-            }
-            else if(index === 1){
-                altitudMode = altitudeModel2
-                btnDefault = altitudeModel2
-            }
-            else if(index === 2){
-                altitudMode = altitudeModel3
-                btnDefault = altitudeModel3
-            }
-            else if(index === 3){
-                altitudMode = altitudeModel4
-                btnDefault = altitudeModel4
-            }
         }
     }
 
@@ -214,11 +213,21 @@ Rectangle {
                         border.color: "#99ccff"
                     }
                     text:{
-                        if(DeviceManager.deviceList[currentConfigId-1]){
-                            DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.maxBacth
+                        if(equipmentCount === 1){
+                            if(DeviceManager.deviceList[0]){
+                                DeviceManager.deviceList[0].pDeviceInformation.maxBacth
+                            }
+                            else{
+                                return ""
+                            }
                         }
                         else{
-                            return ""
+                            if(DeviceManager.deviceList[currentConfigId-1]){
+                                DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.maxBacth
+                            }
+                            else{
+                                return ""
+                            }
                         }
                     }
                 }
@@ -251,11 +260,21 @@ Rectangle {
                         border.color: "#99ccff"
                     }
                     text:{
-                        if(DeviceManager.deviceList[currentConfigId-1]){
-                            DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.sample
+                        if(equipmentCount === 1){
+                            if(DeviceManager.deviceList[0]){
+                                DeviceManager.deviceList[0].pDeviceInformation.sample
+                            }
+                            else{
+                                return ""
+                            }
                         }
                         else{
-                            return ""
+                            if(DeviceManager.deviceList[currentConfigId-1]){
+                                DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.sample
+                            }
+                            else{
+                                return ""
+                            }
                         }
                     }
                 }
@@ -287,11 +306,21 @@ Rectangle {
                         border.color: "#99ccff"
                     }
                     text:{
-                        if(DeviceManager.deviceList[currentConfigId-1]){
-                            DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.lowerLimit
+                        if(equipmentCount === 1){
+                            if(DeviceManager.deviceList[0]){
+                                DeviceManager.deviceList[0].pDeviceInformation.lowerLimit
+                            }
+                            else{
+                                return ""
+                            }
                         }
                         else{
-                            return ""
+                            if(DeviceManager.deviceList[currentConfigId-1]){
+                                DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.lowerLimit
+                            }
+                            else{
+                                return ""
+                            }
                         }
                     }
                 }
@@ -323,7 +352,7 @@ Rectangle {
                     anchors.top: parent.top
                     anchors.leftMargin: 214
                     anchors.topMargin: 283
-                    checked: btnDefault
+                    checked: altitudMode
                     indicator: Rectangle
                     {
                         width: 30
@@ -335,34 +364,14 @@ Rectangle {
                     }
                     onPressed: {
                         if(equipmentCount > 1){
-                            if(currentConfigId == 1){
-                                altitudeModel1 = true
-                                btnDefault = true
-                                altitudMode = true
-                            }
-                            else if(currentConfigId == 2){
-                                altitudeModel2 = true
-                                btnDefault = true
-                                altitudMode = true
-                            }
-                            else if(currentConfigId == 3){
-                                altitudeModel3 = true
-                                btnDefault = true
-                                altitudMode = true
-                            }
-                            else if(currentConfigId == 4){
-                                altitudeModel4 = true
-                                btnDefault = true
-                                altitudMode = true
-                            }
                             sigUndetermined(currentConfigId)
                         }
-                        else{
-                            btnDefault = true
-                            altitudeModel1 = true
-                            altitudMode = true
+                        if(equipmentCount === 1){
+                            DeviceManager.deviceList[0].pDeviceInformation.setHeightOption(1)
                         }
-                        DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.setHeightOption(1)
+                        else{
+                            DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.setHeightOption(1)
+                        }
                     }
                 }
                 Text {
@@ -382,7 +391,7 @@ Rectangle {
                     anchors.left: bt1.right
                     anchors.top: bt1.top
                     anchors.leftMargin: 90
-                    checked: !btnDefault
+                    checked: !altitudMode
                     indicator: Rectangle
                     {
                         width: 30
@@ -396,7 +405,12 @@ Rectangle {
                         btnDefault = false
                         altitudeModel1 = false
                         altitudMode = false
-                        DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.setHeightOption(0)
+                        if(equipmentCount === 1){
+                            DeviceManager.deviceList[0].pDeviceInformation.setHeightOption(0)
+                        }
+                        else{
+                            DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.setHeightOption(0)
+                        }
                     }
                 }
                 Text {
@@ -413,36 +427,13 @@ Rectangle {
                     x:269
                     y:356
                     onPressed: {
-                        if(equipmentCount >1){
-                            if(currentConfigId == 1){
-                                undetermined1 = !undetermined1
-                            }
-                            else if(currentConfigId == 2){
-                                undetermined2 = !undetermined2
-                            }
-                            else if(currentConfigId == 3){
-                                undetermined3 = !undetermined3
-                            }
-                            else if(currentConfigId == 4){
-                                undetermined4 = !undetermined4
-                            }
+                        if(equipmentCount === 1){
+                            DeviceManager.deviceList[0].pIO.setAvailabel(!ctl.checked)
                         }
                         else{
-                            undetermined1 = !undetermined1
+                            DeviceManager.deviceList[currentConfigId-1].pIO.setAvailabel(!ctl.checked)
                         }
-                        if(currentConfigId == 1){
-                            undeterMined = undetermined1
-                        }
-                        else if(currentConfigId == 2){
-                            undeterMined = undetermined2
-                        }
-                        else if(currentConfigId == 3){
-                            undeterMined = undetermined3
-                        }
-                        else if(currentConfigId == 4){
-                            undeterMined = undetermined4
-                        }
-                        DeviceManager.deviceList[currentConfigId-1].pIO.setAvailabel(!ctl.checked)
+
                     }
 
                     indicator: Rectangle{
@@ -502,7 +493,7 @@ Rectangle {
                 Text {
                     id: s8
                     text: currentConfigId === 1 ? "PIN1" : currentConfigId === 2 ? "PIN4" :
-                                                                                   currentConfigId === 3 ? "PIN7" : currentConfigId === 4 ? "PIN10" : ""
+                                                                                   currentConfigId === 3 ? "PIN7" : currentConfigId === 4 ? "PIN10" : "PIN1"
                     color: pRgb(177, 213, 219)
                     font.family: fontBold
                     font.pixelSize: 16
@@ -512,7 +503,7 @@ Rectangle {
                 Text {
                     id: s9
                     text: currentConfigId === 1 ? "PIN2" : currentConfigId === 2 ? "PIN5" :
-                                                                                   currentConfigId === 3 ? "PIN8" : currentConfigId === 4 ? "PIN11" : ""
+                                                                                   currentConfigId === 3 ? "PIN8" : currentConfigId === 4 ? "PIN11" : "PIN2"
                     color: pRgb(177, 213, 219)
                     font.family: fontBold
                     font.pixelSize: 16
@@ -523,7 +514,7 @@ Rectangle {
                 Text {
                     id: s10
                     text: currentConfigId === 1 ? "PIN3" : currentConfigId === 2 ? "PIN6" :
-                                                                                   currentConfigId === 3 ? "PIN9" : currentConfigId === 4 ? "PIN12" : ""
+                                                                                   currentConfigId === 3 ? "PIN9" : currentConfigId === 4 ? "PIN12" : "PIN3"
                     color: pRgb(177, 213, 219)
                     font.family: fontBold
                     font.pixelSize: 16
@@ -612,11 +603,21 @@ Rectangle {
                         border.color: "#99ccff"
                     }
                     text:{
-                        if(DeviceManager.deviceList[currentConfigId-1]){
-                            DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.name
+                        if(equipmentCount === 1){
+                            if(DeviceManager.deviceList[0]){
+                                return DeviceManager.deviceList[0].pDeviceInformation.name
+                            }
+                            else{
+                                return ""
+                            }
                         }
                         else{
-                            return ""
+                            if(DeviceManager.deviceList[currentConfigId-1]){
+                                return DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.name
+                            }
+                            else{
+                                return ""
+                            }
                         }
                     }
                 }
@@ -640,15 +641,30 @@ Rectangle {
                     anchors.leftMargin: 23
                     model: ["L20-VG", "L20-TS", "20DP", "20MA", "自定义"]
                     displayText:{
-                        if(DeviceManager.deviceList[currentConfigId-1]){
-                            DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.model
+                        if(equipmentCount === 1){
+                            if(DeviceManager.deviceList[0]){
+                                return DeviceManager.deviceList[0].pDeviceInformation.model
+                            }
+                            else{
+                                return ""
+                            }
                         }
                         else{
-                            return ""
+                            if(DeviceManager.deviceList[currentConfigId-1]){
+                                return DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.model
+                            }
+                            else{
+                                return ""
+                            }
                         }
                     }
                     onDataAlter: {
-                        DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.setModel(com1.currentText)
+                        if(equipmentCount === 1){
+                            DeviceManager.deviceList[0].pDeviceInformation.setModel(com1.currentText)
+                        }
+                        else{
+                            DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.setModel(com1.currentText)
+                        }
                     }
                 }
                 Switch{
@@ -656,11 +672,21 @@ Rectangle {
                     x:713
                     y:147
                     onClicked: {
-                        if(ctl1.checked){
-                            DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.setConnectType(2)
+                        if(equipmentCount === 1){
+                            if(ctl1.checked){
+                                DeviceManager.deviceList[0].pDeviceInformation.setConnectType(2)
+                            }
+                            else{
+                                DeviceManager.deviceList[0].pDeviceInformation.setConnectType(1)
+                            }
                         }
                         else{
-                            DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.setConnectType(1)
+                            if(ctl1.checked){
+                                DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.setConnectType(2)
+                            }
+                            else{
+                                DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.setConnectType(1)
+                            }
                         }
                     }
                     indicator: Rectangle{
@@ -686,12 +712,26 @@ Rectangle {
                             //改变小圆点位置
                             NumberAnimation on x{
                                 to:smallRect1.width
-                                running: DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.connectType !== 1? true : false
+                                running: {
+                                    if(equipmentCount === 1){
+                                        return DeviceManager.deviceList[0].pDeviceInformation.connectType !== 1? true : false
+                                    }
+                                    else{
+                                        return DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.connectType !== 1? true : false
+                                    }
+                                }
                                 duration: 0
                             }
                             NumberAnimation on x{
                                 to:8
-                                running: DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.connectType !== 1? false : true;
+                                running: {
+                                    if(equipmentCount === 1){
+                                        return DeviceManager.deviceList[0].pDeviceInformation.connectType !== 1? false : true
+                                    }
+                                    else{
+                                        return DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.connectType !== 1? false : true
+                                    }
+                                }
                                 duration: 0
                             }
                         }
@@ -701,7 +741,14 @@ Rectangle {
                             anchors.topMargin: 7
                             anchors.leftMargin: 63
                             text: qsTr("网络")
-                            color: DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.connectType !== 1 ? pRgb(43, 112, 173) : "#e5e6e7"
+                            color: {
+                                if(equipmentCount === 1){
+                                    return DeviceManager.deviceList[0].pDeviceInformation.connectType !== 1 ? pRgb(43, 112, 173) : "#e5e6e7"
+                                }
+                                else{
+                                    return DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.connectType !== 1 ? pRgb(43, 112, 173) : "#e5e6e7"
+                                }
+                            }
                             font.family: fontBold
                             font.pixelSize: 16
                         }
@@ -711,7 +758,14 @@ Rectangle {
                             anchors.topMargin: 7
                             anchors.rightMargin: 63
                             text: qsTr("RS232")
-                            color: DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.connectType !== 1? "#e5e6e7" : pRgb(43, 112, 173)
+                            color: {
+                                if(equipmentCount === 1){
+                                    return DeviceManager.deviceList[0].pDeviceInformation.connectType !== 1? "#e5e6e7" : pRgb(43, 112, 173)
+                                }
+                                else{
+                                    return DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.connectType !== 1? "#e5e6e7" : pRgb(43, 112, 173)
+                                }
+                            }
                             font.family: fontBold
                             font.pixelSize: 16
                         }
@@ -719,7 +773,14 @@ Rectangle {
                 }
                 Loader{
                     id:loader
-                    sourceComponent: DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.connectType === 1 ? rect1 : rect2
+                    sourceComponent: {
+                        if(equipmentCount === 1){
+                            return DeviceManager.deviceList[0].pDeviceInformation.connectType === 1 ? rect1 : rect2
+                        }
+                        else{
+                            return DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.connectType === 1 ? rect1 : rect2
+                        }
+                    }
                 }
                 Component{
                     id:rect1
@@ -777,21 +838,44 @@ Rectangle {
                             y:55
                             model: ["ETH0", "ETH1", "ETH2", "ETH3"]
                             displayText: {
-                                if(DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.connectID === 1){
-                                    return "ETH0"
+                                if(equipmentCount === 1){
+                                    if(DeviceManager.deviceList[0].pDeviceInformation.connectID === 1){
+                                        return "ETH0"
+                                    }
+                                    else if(DeviceManager.deviceList[0].pDeviceInformation.connectID === 2){
+                                        return "ETH1"
+                                    }
+                                    else if(DeviceManager.deviceList[0].pDeviceInformation.connectID === 3){
+                                        return "ETH2"
+                                    }
+                                    else if(DeviceManager.deviceList[0].pDeviceInformation.connectID === 4){
+                                        return "ETH3"
+                                    }
                                 }
-                                else if(DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.connectID === 2){
-                                    return "ETH1"
-                                }
-                                else if(DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.connectID === 3){
-                                    return "ETH2"
-                                }
-                                else if(DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.connectID === 4){
-                                    return "ETH3"
+                                else{
+                                    if(DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.connectID === 1){
+                                        return "ETH0"
+                                    }
+                                    else if(DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.connectID === 2){
+                                        return "ETH1"
+                                    }
+                                    else if(DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.connectID === 3){
+                                        return "ETH2"
+                                    }
+                                    else if(DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.connectID === 4){
+                                        return "ETH3"
+                                    }
                                 }
                             }
                             onDataAlter: {
-                                DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.setConnectID(com2.currentIndex+1)
+                                if(equipmentCount === 1){
+                                    DeviceManager.deviceList[0].pDeviceInformation.setConnectID(com2.currentIndex+1)
+                                }
+                                else{
+                                    DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.setConnectID(com2.currentIndex+1)
+                                }
+
+
                             }
                         }
                         TextField{
@@ -954,15 +1038,30 @@ Rectangle {
                             y:40
                             model: ["COM1", "COM2"]
                             displayText: {
-                                if(DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.connectID === 1){
-                                    return "COM1"
+                                if(equipmentCount === 1){
+                                    if(DeviceManager.deviceList[0].pDeviceInformation.connectID === 1){
+                                        return "COM1"
+                                    }
+                                    else if(DeviceManager.deviceList[0].pDeviceInformation.connectID === 2){
+                                        return "COM2"
+                                    }
                                 }
-                                else if(DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.connectID === 2){
-                                    return "COM2"
+                                else{
+                                    if(DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.connectID === 1){
+                                        return "COM1"
+                                    }
+                                    else if(DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.connectID === 2){
+                                        return "COM2"
+                                    }
                                 }
                             }
                             onDataAlter: {
-                                DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.setConnectID(com3.currentIndex+1)
+                                if(equipmentCount === 1){
+                                    DeviceManager.deviceList[0].pDeviceInformation.setConnectID(com3.currentIndex+1)
+                                }
+                                else{
+                                    DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.setConnectID(com3.currentIndex+1)
+                                }
                             }
                         }
                         CustomComboBox{
@@ -1148,6 +1247,12 @@ Rectangle {
                         DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.setSample(t2.text)
                         DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.setLowerLimit(t3.text)
                         DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.setName(t4.text)
+                    }
+                    else{
+                        DeviceManager.deviceList[0].pDeviceInformation.setMaxBacth(t1.text)
+                        DeviceManager.deviceList[0].pDeviceInformation.setSample(t2.text)
+                        DeviceManager.deviceList[0].pDeviceInformation.setLowerLimit(t3.text)
+                        DeviceManager.deviceList[0].pDeviceInformation.setName(t4.text)
                     }
                 }
             }

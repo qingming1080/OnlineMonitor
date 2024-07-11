@@ -3,16 +3,16 @@ import QtQuick.Controls 2.5
 Rectangle {
     border.color: "transparent"
     property string btnText: ""
+    property int index: 0
     property bool tmp: false
     property alias cbtnText: btText
     property alias btnCheck: btnStatus
-    signal sigBtnSwitch()
+    signal sigBtnSwitch(var index)
     color: pRgb(43, 112, 173)
     onTmpChanged: {
         if(tmp){
             btText.color = pRgb(177, 213, 219)
             btnStatus.visible = true
-            sigBtnSwitch()
         }
         else{
             btText.color = pRgb(153, 204, 255)
@@ -60,6 +60,7 @@ Rectangle {
         onClicked: {
             if(!tmp){
                 tmp = true
+                sigBtnSwitch(index)
             }
         }
     }
