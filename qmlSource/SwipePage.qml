@@ -8,6 +8,7 @@ Rectangle {
     color: pRgb(153, 204, 255)
     radius: 5
     property int pbtnIndex: 1
+    property int listSize: 0
     function newModel(){
         mt1.text = "创建模型"
         mt2.text = "清除数据"
@@ -154,11 +155,13 @@ Rectangle {
             if(mt1.text === "新建模型"){
                 popup.openPop(2)
             }
-            else{
-                mt1.text = "创建模型"
-                mt2.text = "清除数据"
-                loader.sourceComponent = mode2
-                loader1.sourceComponent = weld2
+            else if(mt1.text === "创建模型"){
+                if(DeviceManager.deviceList[swipeCurrIndex].pDeviceInformation.sample <= listSize){
+                    Manual.save()
+                }
+                else{
+                    popup.openPop(5)
+                }
             }
         }
     }
@@ -205,6 +208,9 @@ Rectangle {
                 switchUI(3)
                 isAdd = true
                 sigSysConfig()
+            }
+            else if(mt2.text == "清除数据"){
+
             }
         }
     }

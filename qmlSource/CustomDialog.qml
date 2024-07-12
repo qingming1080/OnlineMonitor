@@ -22,7 +22,8 @@ Popup {
             open()
         }
         else if(index === 5){
-
+            popload.sourceComponent = dataeficiency
+            open()
         }
     }
     onClosed:{
@@ -267,7 +268,7 @@ Popup {
                     font.family: fontBold
                 }
                 onClicked: {
-
+                    close()
                 }
             }
         }
