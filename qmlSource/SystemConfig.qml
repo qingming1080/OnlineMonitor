@@ -402,9 +402,6 @@ Rectangle {
                         border.width: 2
                     }
                     onPressed: {
-                        btnDefault = false
-                        altitudeModel1 = false
-                        altitudMode = false
                         if(equipmentCount === 1){
                             DeviceManager.deviceList[0].pDeviceInformation.setHeightOption(0)
                         }

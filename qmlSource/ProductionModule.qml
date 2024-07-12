@@ -167,6 +167,12 @@ Rectangle {
                         x: mode == 1 ? 50 : 29
                         y: mode == 1 ? 248 : 289
                         color: mode == 1 ? "#0c5696" : pRgb(43, 112, 173)
+                        altitudeMode:{
+                            if(equipmentCount === 1){
+                                return DeviceManager.deviceList[0].pDeviceInformation.heightOption
+                                === 1 ? true:false
+                            }
+                        }
                     }
                 }
             }
