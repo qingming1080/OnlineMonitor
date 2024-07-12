@@ -125,7 +125,7 @@ Rectangle {
     TextField{
         id:f1
         width: mode === 1 ? 75:98
-        height: altitudeMode ? 25 :30
+        height: altitudeMode ? 28 :30
         anchors.left: t1.right
         anchors.leftMargin: altitudeMode ? 35:10
         anchors.verticalCenter: t1.verticalCenter
@@ -133,10 +133,10 @@ Rectangle {
         verticalAlignment: TextInput.AlignVCenter
         color: pRgb(43, 112, 173)
         font.family: fontBold
-        font.pixelSize: 16
+        font.pixelSize: 14
         background: Rectangle{
             radius: 6
-            border.width: 3
+            border.width: 2
             border.color: "#99ccff"
         }
         text:eqText1
@@ -144,7 +144,7 @@ Rectangle {
     TextField{
         id:f2
         width: mode === 1 ? 75:98
-        height: altitudeMode ? 25 :30
+        height: altitudeMode ? 28 :30
         anchors.left: t2.right
         anchors.leftMargin: altitudeMode ? 35:10
         anchors.verticalCenter: t2.verticalCenter
@@ -153,10 +153,10 @@ Rectangle {
         verticalAlignment: TextInput.AlignVCenter
         color: pRgb(43, 112, 173)
         font.family: fontBold
-        font.pixelSize: 16
+        font.pixelSize: 14
         background: Rectangle{
             radius: 6
-            border.width: 3
+            border.width: 2
             border.color: "#99ccff"
         }
         text:eqText2
@@ -164,7 +164,7 @@ Rectangle {
     TextField{
         id:f3
         width: mode === 1 ? 75:98
-        height: altitudeMode ? 25 :30
+        height: altitudeMode ? 28 :30
         anchors.left: t3.right
         anchors.leftMargin: altitudeMode ? 35:10
         anchors.verticalCenter: t3.verticalCenter
@@ -173,10 +173,10 @@ Rectangle {
         verticalAlignment: TextInput.AlignVCenter
         color: pRgb(43, 112, 173)
         font.family: fontBold
-        font.pixelSize: 16
+        font.pixelSize: 14
         background: Rectangle{
             radius: 6
-            border.width: 3
+            border.width: 2
             border.color: "#99ccff"
         }
         text:eqText3
@@ -184,7 +184,7 @@ Rectangle {
     TextField{
         id:f4
         width: mode === 1 ? 75:98
-        height: altitudeMode ? 25 :30
+        height: altitudeMode ? 28 :30
         anchors.left: t4.right
         anchors.leftMargin: altitudeMode ? 8:10
         anchors.verticalCenter: t4.verticalCenter
@@ -193,10 +193,10 @@ Rectangle {
         verticalAlignment: TextInput.AlignVCenter
         color: pRgb(43, 112, 173)
         font.family: fontBold
-        font.pixelSize: 16
+        font.pixelSize: 14
         background: Rectangle{
             radius: 6
-            border.width: 3
+            border.width: 2
             border.color: "#99ccff"
         }
         text:eqText4
@@ -205,7 +205,7 @@ Rectangle {
     TextField{
         id:f5
         width: mode === 1 ? 75:98
-        height: altitudeMode ? 25 :30
+        height: altitudeMode ? 28 :30
         anchors.left: t5.right
         anchors.leftMargin: altitudeMode ? 8:10
         anchors.verticalCenter: t5.verticalCenter
@@ -214,10 +214,10 @@ Rectangle {
         verticalAlignment: TextInput.AlignVCenter
         color: pRgb(43, 112, 173)
         font.family: fontBold
-        font.pixelSize: 16
+        font.pixelSize: 14
         background: Rectangle{
             radius: 6
-            border.width: 3
+            border.width: 2
             border.color: "#99ccff"
         }
         text:eqText5

@@ -444,7 +444,7 @@ Rectangle {
                     x:1220/5/2-width/2
                     anchors.verticalCenter: parent.verticalCenter
                     font.pixelSize: 16
-                    text: "messegStr"
+                    text: DeviceManager.getHistoryName(welder_id)
                     font.family: fontBold
                     color: index % 2 === 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
                 }

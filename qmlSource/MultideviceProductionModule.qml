@@ -811,6 +811,9 @@ Rectangle {
             verticalAlignment: Text.AlignVCenter
             font.family: fontBold
         }
+        onClicked: {
+            popup.openPop(6)
+        }
     }
     Text {
         id: version

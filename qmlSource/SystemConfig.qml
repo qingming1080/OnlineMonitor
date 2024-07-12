@@ -1711,6 +1711,7 @@ Rectangle {
                     font.family: fontBold
                 }
                 onPressed: {
+                    popup.openPop(7)
                 }
             }
         }

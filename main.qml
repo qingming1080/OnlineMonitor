@@ -85,6 +85,7 @@ Window {
     signal sigRoot()
     signal sigNewModel()
     signal sigOneModel()
+    signal sigPassError()
     function switchUI(id){
         equipmentCurrentIndex = id
         sigSwitch(id)
@@ -142,12 +143,12 @@ Window {
                     stackView1.pop()
                     if(id === 1){
                         loadView(id,pro)
-//                        p1.bt1Check()
+                        p1.bt1Check()
                         isAdd = false
                     }
                     else if(id === 2){
                         loadView(id,his)
-//                        p1.bt2Check()
+                        p1.bt2Check()
                         isAdd = false
                     }
                     else if(id === 3){
@@ -248,8 +249,9 @@ Window {
     {
         id: inputPannelID
         z: 99
+        x: window.width/2-inputPannelID.width/2
         y: window.height      // 默认让其处于窗口最下方,貌似隐藏一样
-        width: window.width
+        width: window.width*2/3
         visible: true       // 一直显示
         states: State
         {

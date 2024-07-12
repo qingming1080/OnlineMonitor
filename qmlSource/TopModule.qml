@@ -3,6 +3,26 @@ import QtQuick.Controls 2.5
 Rectangle {
     color: pRgb(43, 112, 173)
 
+    Connections{
+        target: window
+        function onSigPassError(){
+            if(bt1.tmp === true){
+                bt1Check()
+            }
+            else if(bt2.tmp === true){
+                bt2Check()
+            }
+            else if(bt3.tmp === true && bt4.tmp === true){
+                if(equipmentCurrentIndex === 3){
+                    bt3Check()
+                }
+                else if(equipmentCurrentIndex === 4){
+                    bt4Check()
+                }
+            }
+        }
+    }
+
     function bt1Check(){
         bt2.tmp = false
         bt3.tmp = false

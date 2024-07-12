@@ -11,6 +11,12 @@ Rectangle {
     property int rect1: 1
     property int rect2: 1
     property int swipeIndex: 0
+    property int parameter1: 0
+    property int parameter2: 0
+    property int parameter3: 0
+    property int parameter4: 0
+    property int parameter5: 0
+    property int listSize: 0
     signal sigBtnSynchronization(var index,var time)
     signal sigSwipeCurrIndex(var index)
     onRect1Changed: {
@@ -54,6 +60,7 @@ Rectangle {
             rect2 = time
         }
     }
+
 
     Connections{
         target: window
@@ -170,9 +177,14 @@ Rectangle {
                         altitudeMode:{
                             if(equipmentCount === 1){
                                 return DeviceManager.deviceList[0].pDeviceInformation.heightOption
-                                === 1 ? true:false
+                                        === 1 ? true:false
                             }
                         }
+                        eqText1:parameter1
+                        eqText2:parameter2
+                        eqText3:parameter3
+                        eqText4:parameter4
+                        eqText5:parameter5
                     }
                 }
             }
@@ -200,14 +212,22 @@ Rectangle {
                     if(mt1.text === "新建模型"){
                         popup.openPop(3)
                     }
-                    else{
-                        mt1.text = "创建模型"
-                        mt2.text = "清除数据"
-                        loader.sourceComponent = mode2
-                        loader1.sourceComponent = weld2
+                    else if(mt1.text === "创建模型"){
+                        if(DeviceManager.deviceList[0].pDeviceInformation.sample <= listSize){
+                            loader.sourceComponent = mode1
+                            loader1.sourceComponent = weld1
+                            Manual.save()
+                            mt1.text = "新建模型"
+                            mt2.text = "新增设备"
+                            sigUpdateUI(0)
+                        }
+                        else{
+                            popup.openPop(5)
+                        }
                     }
                 }
             }
+
             Button{
                 id:s5
                 anchors.left: s4.left
@@ -454,11 +474,26 @@ Rectangle {
                             y:40
                             clip: true
                             model: Manual
+                            onCountChanged:{
+                                listSize = taskplanView.count
+                            }
                             delegate: Rectangle{
                                 id: regionItem
                                 height: 36
                                 width: 960
                                 color: index % 2 === 0 ? "#afc3d8" : "#2d71ae"
+                                MouseArea {
+                                    id: mouseArea
+                                    anchors.fill: parent
+                                    onClicked: {
+                                        taskplanView.currentIndex = index
+                                        parameter1 = Manual.data(Manual.index(index,0),5)
+                                        parameter2 = Manual.data(Manual.index(index,0),6)
+                                        parameter3 = Manual.data(Manual.index(index,0),7)
+                                        parameter4 = Manual.data(Manual.index(index,0),10)
+                                        parameter5 = Manual.data(Manual.index(index,0),11)
+                                    }
+                                }
                                 Button{
                                     id:bt
                                     x:960/8/2-width/2

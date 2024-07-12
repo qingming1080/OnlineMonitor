@@ -46,6 +46,16 @@ void DeviceManager::setUserPassword(QString newPassword)
     DataBaseManager::getInstance()->setUserPassword(newPassword);
 }
 
+QString DeviceManager::getHistoryName(int welderID)
+{
+    if(welderID < 1 || welderID > 4)
+        return "";
+    if(m_deviceList.at(welderID-1)){
+        return m_deviceList.at(welderID-1)->pDeviceInformation()->name();
+    }
+    return "";
+}
+
 QList<Device *> DeviceManager::deviceList() const
 {
     return m_deviceList;
@@ -66,11 +76,13 @@ void DeviceManager::addDevice()
             data.welder_id = i + 1;
             break;
         }
-        if(m_deviceList.at(i)->pDeviceInformation()->id() != i+1)
-        {
-            m_deviceList.insert(i, new Device(i+1));
-            data.welder_id = i + 1;
-            break;
+        if(m_deviceList.at(i) != nullptr){
+            if(m_deviceList.at(i)->pDeviceInformation()->id() != i+1)
+            {
+                m_deviceList.insert(i, new Device(i+1));
+                data.welder_id = i + 1;
+                break;
+            }
         }
     }
 
