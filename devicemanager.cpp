@@ -48,11 +48,12 @@ void DeviceManager::setUserPassword(QString newPassword)
 
 QString DeviceManager::getHistoryName(int welderID)
 {
-    if(welderID < 1 || welderID > 4)
-        return "";
-    if(m_deviceList.at(welderID-1)){
-        return m_deviceList.at(welderID-1)->pDeviceInformation()->name();
+    for(int i = 0; i < m_deviceList.size(); ++i)
+    {
+        if(m_deviceList.at(i)->pDeviceInformation()->id() == welderID)
+            return m_deviceList.at(i)->pDeviceInformation()->name();
     }
+
     return "";
 }
 

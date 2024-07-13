@@ -718,13 +718,28 @@ QList<_Production_Data> DataBaseManager::getProductionData(int welderID, int fin
         data.serial_number            = query.value(_PRODUCTION_COLUMN::_PRODUCTION_serial_number).toInt();
         data.cycle_count              = query.value(_PRODUCTION_COLUMN::_PRODUCTION_cycle_count).toInt();
         data.batch_count              = query.value(_PRODUCTION_COLUMN::_PRODUCTION_batch_count).toInt();
-        data.energy                   = query.value(_PRODUCTION_COLUMN::_PRODUCTION_energy).toInt();
+
+        // 能量 ***J -> ***
+        QString energyStr = query.value(_PRODUCTION_COLUMN::_PRODUCTION_energy).toString();
+        data.energy = energyStr.leftRef(energyStr.length()-1).toInt();
+
         data.amplitude                = query.value(_PRODUCTION_COLUMN::_PRODUCTION_amplitude).toInt();
         data.pressure                 = query.value(_PRODUCTION_COLUMN::_PRODUCTION_pressure).toInt();
+
+        // 时间 *.**s - > *.**
         data.time                     = query.value(_PRODUCTION_COLUMN::_PRODUCTION_time).toString();
-        data.power                    = query.value(_PRODUCTION_COLUMN::_PRODUCTION_power).toInt();
-        data.pre_height               = query.value(_PRODUCTION_COLUMN::_PRODUCTION_pre_height).toInt();
-        data.post_height              = query.value(_PRODUCTION_COLUMN::_PRODUCTION_post_height).toInt();
+        data.time = data.time.left(data.time.length()-1);
+
+        // 功率 ***W -> ***
+        QString powerStr = query.value(_PRODUCTION_COLUMN::_PRODUCTION_power).toString();
+        data.power = powerStr.leftRef(powerStr.length()-1).toInt();
+
+        // 高度 *.**mm -> *.**
+        QString pre_heightStr = query.value(_PRODUCTION_COLUMN::_PRODUCTION_pre_height).toString();
+        data.pre_height = pre_heightStr.leftRef(pre_heightStr.length()-2).toDouble();
+        QString post_heightStr = query.value(_PRODUCTION_COLUMN::_PRODUCTION_post_height).toString();
+        data.post_height = post_heightStr.leftRef(post_heightStr.length()-2).toDouble();
+
         data.force                    = query.value(_PRODUCTION_COLUMN::_PRODUCTION_force).toInt();
         data.residual                 = query.value(_PRODUCTION_COLUMN::_PRODUCTION_residual).toInt();
         data.good_rate                = query.value(_PRODUCTION_COLUMN::_PRODUCTION_good_rate).toInt();
@@ -885,14 +900,28 @@ QList<_Production_Data> DataBaseManager::getYieldTrendData(QString startTime, QS
         data.serial_number            = query.value(_PRODUCTION_COLUMN::_PRODUCTION_serial_number).toInt();
         data.cycle_count              = query.value(_PRODUCTION_COLUMN::_PRODUCTION_cycle_count).toInt();
         data.batch_count              = query.value(_PRODUCTION_COLUMN::_PRODUCTION_batch_count).toInt();
-        data.energy                   = query.value(_PRODUCTION_COLUMN::_PRODUCTION_energy).toInt();
+
+        // 能量 ***J -> ***
+        QString energyStr = query.value(_PRODUCTION_COLUMN::_PRODUCTION_energy).toString();
+        data.energy = energyStr.leftRef(energyStr.length()-1).toInt();
+
         data.amplitude                = query.value(_PRODUCTION_COLUMN::_PRODUCTION_amplitude).toInt();
         data.pressure                 = query.value(_PRODUCTION_COLUMN::_PRODUCTION_pressure).toInt();
+
+        // 时间 *.**s - > *.**
         data.time                     = query.value(_PRODUCTION_COLUMN::_PRODUCTION_time).toString();
         data.time = data.time.left(data.time.length()-1);
-        data.power                    = query.value(_PRODUCTION_COLUMN::_PRODUCTION_power).toInt();
-        data.pre_height               = query.value(_PRODUCTION_COLUMN::_PRODUCTION_pre_height).toInt();
-        data.post_height              = query.value(_PRODUCTION_COLUMN::_PRODUCTION_post_height).toInt();
+
+        // 功率 ***W -> ***
+        QString powerStr = query.value(_PRODUCTION_COLUMN::_PRODUCTION_power).toString();
+        data.power = powerStr.leftRef(powerStr.length()-1).toInt();
+
+        // 高度 *.**mm -> *.**
+        QString pre_heightStr = query.value(_PRODUCTION_COLUMN::_PRODUCTION_pre_height).toString();
+        data.pre_height = pre_heightStr.leftRef(pre_heightStr.length()-2).toDouble();
+        QString post_heightStr = query.value(_PRODUCTION_COLUMN::_PRODUCTION_post_height).toString();
+        data.post_height = post_heightStr.leftRef(post_heightStr.length()-2).toDouble();
+
         data.force                    = query.value(_PRODUCTION_COLUMN::_PRODUCTION_force).toInt();
         data.residual                 = query.value(_PRODUCTION_COLUMN::_PRODUCTION_residual).toInt();
         data.good_rate                = query.value(_PRODUCTION_COLUMN::_PRODUCTION_good_rate).toInt();
@@ -1074,7 +1103,9 @@ DataBaseManager::DataBaseManager(QObject *parent)
 void DataBaseManager::init()
 {
     m_database = QSqlDatabase::addDatabase("QSQLITE");
-    m_database.setDatabaseName("./onlinemonitor.db");
+    QString dbPath = QCoreApplication::applicationDirPath() + "/onlinemonitor.db";
+    qDebug() << dbPath;
+    m_database.setDatabaseName(dbPath);
     if (!m_database.open())
     {
         qDebug() << "Database Open Fail ";
