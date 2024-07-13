@@ -20,7 +20,7 @@ public:
     Q_INVOKABLE QHash<int, QByteArray> roleNames() const;
 
     Q_INVOKABLE QVariant getDataByWelderID(int welderID, int role) const;
-    Q_INVOKABLE void setNetworkData(int id, _NETWORK_COLUMN column, QVariant data);
+    Q_INVOKABLE void setNetworkData(int id, int column, QVariant data);
 
 private:
     explicit NetworkModel(QObject *parent = nullptr);

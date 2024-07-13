@@ -2,6 +2,7 @@ import QtQuick 2.0
 import QtQuick.Controls 2.5
 ComboBox{
     id:comboBox
+    signal dataAlter()
     background: Rectangle{
         radius: 6
         border.width: 3
@@ -65,6 +66,7 @@ ComboBox{
                 onClicked: {
                     comboBox.currentIndex = index
                     comboBox.popup.visible = false
+                    dataAlter()
                 }
             }
         }

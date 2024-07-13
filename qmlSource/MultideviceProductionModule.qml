@@ -137,7 +137,7 @@ Rectangle {
             }
             eqText3:{
                 if(DeviceManager.deviceList[0]){
-                    return DeviceManager.deviceList[0].pDeviceInformation.connectType === 1
+                    return DeviceManager.deviceList[0].pDeviceInformation.connectType === 2
                             ? "RS232" : "网络连接"
                 }
                 else{
@@ -284,7 +284,7 @@ Rectangle {
             }
             eqText3:{
                 if(DeviceManager.deviceList[1]){
-                    return DeviceManager.deviceList[1].pDeviceInformation.connectType === 1
+                    return DeviceManager.deviceList[1].pDeviceInformation.connectType === 2
                             ? "RS232" : "网络连接"
                 }
                 else{
@@ -438,11 +438,11 @@ Rectangle {
             }
             eqText3:{
                 if(DeviceManager.deviceList[2]){
-                    return DeviceManager.deviceList[2].pDeviceInformation.connectType === 1
+                    return DeviceManager.deviceList[2].pDeviceInformation.connectType === 2
                             ? "RS232" : "网络连接"
                 }
                 else if(DeviceManager.deviceList[3]){
-                    return DeviceManager.deviceList[3].pDeviceInformation.connectType === 1
+                    return DeviceManager.deviceList[3].pDeviceInformation.connectType === 2
                             ? "RS232" : "网络连接"
                 }
                 else{
@@ -607,11 +607,11 @@ Rectangle {
             }
             eqText3:{
                 if(DeviceManager.deviceList[3]){
-                    return DeviceManager.deviceList[3].pDeviceInformation.connectType === 1
+                    return DeviceManager.deviceList[3].pDeviceInformation.connectType === 2
                             ? "RS232" : "网络连接"
                 }
                 else if(DeviceManager.deviceList[2]){
-                    return DeviceManager.deviceList[2].pDeviceInformation.connectType === 1
+                    return DeviceManager.deviceList[2].pDeviceInformation.connectType === 2
                             ? "RS232" : "网络连接"
                 }
                 else{
@@ -810,6 +810,9 @@ Rectangle {
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
             font.family: fontBold
+        }
+        onClicked: {
+            popup.openPop(6)
         }
     }
     Text {

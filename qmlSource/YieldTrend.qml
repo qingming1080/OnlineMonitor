@@ -5,8 +5,8 @@ import Device 1.0
 import Trend 1.0
 //良率趋势
 Rectangle {
-    property var startTime: Date.fromLocaleString(Qt.locale(), "2001-01-01 01:00:00", "yyyy-MM-dd hh:mm:ss")
-    property var endTime: Date.fromLocaleString(Qt.locale(), "2001-01-01 02:00:00", "yyyy-MM-dd hh:mm:ss")
+    property var startTime: Date.fromLocaleString(Qt.locale(), DeviceManager.deviceList[swipeCurrIndex].pTrend.startTime, "yyyy-MM-dd hh:mm:ss")
+    property var endTime: Date.fromLocaleString(Qt.locale(), DeviceManager.deviceList[swipeCurrIndex].pTrend.endTime, "yyyy-MM-dd hh:mm:ss")
     property int equiInforIndex: 0
     property int btnIndex: 1
     onHeightChanged: {
@@ -141,6 +141,7 @@ Rectangle {
                 bbb.color = "#007dbc"
                 bbbb.color = "#007dbc"
                 buttonSynchronization(equiInforIndex,1)
+                DeviceManager.deviceList[swipeCurrIndex].pTrend.setYieldType(0)
             }
             contentItem: Text {
                 id:t1
@@ -178,6 +179,7 @@ Rectangle {
                 bbb.color = "#007dbc"
                 bbbb.color = "#007dbc"
                 buttonSynchronization(equiInforIndex,2)
+                DeviceManager.deviceList[swipeCurrIndex].pTrend.setYieldType(1)
             }
             contentItem: Text {
                 id:t2
@@ -215,6 +217,7 @@ Rectangle {
                 bbb.color = pRgb(177, 213, 219)
                 bbbb.color = "#007dbc"
                 buttonSynchronization(equiInforIndex,3)
+                DeviceManager.deviceList[swipeCurrIndex].pTrend.setYieldType(2)
             }
             contentItem: Text {
                 id:t3
@@ -252,6 +255,7 @@ Rectangle {
                 bbb.color = "#007dbc"
                 bbbb.color = pRgb(177, 213, 219)
                 buttonSynchronization(equiInforIndex,4)
+                DeviceManager.deviceList[swipeCurrIndex].pTrend.setYieldType(3)
             }
             contentItem: Text {
                 id:t4
@@ -285,14 +289,15 @@ Rectangle {
         legend.visible: false
         DateTimeAxis {
             id: myAxisX
-            format: "hh:mm" // 时间格式
+            format: "MM-dd hh:mm" // 时间格式
             tickCount: 5
             min: startTime
             max: endTime
             labelsColor: "#a3c7d0"
-            labelsFont.pixelSize: 16
+            labelsFont.pixelSize: 12
             labelsFont.bold: true
             gridVisible:false
+
         }
         ValueAxis{
             id:myAxisY
@@ -314,7 +319,7 @@ Rectangle {
             color: "#1398fa"
             width: 3
             VXYModelMapper{
-                model: DeviceManager.deviceList[0].pTrend.pYieldTrend
+                model: DeviceManager.deviceList[swipeCurrIndex].pTrend.pYieldTrend
                 series: lineSeries
                 firstRow: 0
                 xColumn: 1
@@ -327,23 +332,5 @@ Rectangle {
             axisY:myAxisY
             markerSize: 10
         }
-
-//        Component.onCompleted: {
-//            lineSeries.append(Date.fromLocaleString(Qt.locale(), "2001-01-01 01:00:00", "yyyy-MM-dd hh:mm:ss"), 10)
-//            lineSeries.append(Date.fromLocaleString(Qt.locale(), "2001-01-01 01:10:00", "yyyy-MM-dd hh:mm:ss"), 10)
-//            lineSeries.append(Date.fromLocaleString(Qt.locale(), "2001-01-01 01:20:00", "yyyy-MM-dd hh:mm:ss"), 20)
-//            lineSeries.append(Date.fromLocaleString(Qt.locale(), "2001-01-01 01:30:00", "yyyy-MM-dd hh:mm:ss"), 30)
-//            lineSeries.append(Date.fromLocaleString(Qt.locale(), "2001-01-01 01:40:00", "yyyy-MM-dd hh:mm:ss"), 40)
-//            lineSeries.append(Date.fromLocaleString(Qt.locale(), "2001-01-01 01:50:00", "yyyy-MM-dd hh:mm:ss"), 50)
-//            lineSeries.append(Date.fromLocaleString(Qt.locale(), "2001-01-01 01:60:00", "yyyy-MM-dd hh:mm:ss"), 60)
-
-//            lineSeries1.append(Date.fromLocaleString(Qt.locale(), "2001-01-01 01:00:00", "yyyy-MM-dd hh:mm:ss"), 10)
-//            lineSeries1.append(Date.fromLocaleString(Qt.locale(), "2001-01-01 01:10:00", "yyyy-MM-dd hh:mm:ss"), 10)
-//            lineSeries1.append(Date.fromLocaleString(Qt.locale(), "2001-01-01 01:20:00", "yyyy-MM-dd hh:mm:ss"), 20)
-//            lineSeries1.append(Date.fromLocaleString(Qt.locale(), "2001-01-01 01:30:00", "yyyy-MM-dd hh:mm:ss"), 30)
-//            lineSeries1.append(Date.fromLocaleString(Qt.locale(), "2001-01-01 01:40:00", "yyyy-MM-dd hh:mm:ss"), 40)
-//            lineSeries1.append(Date.fromLocaleString(Qt.locale(), "2001-01-01 01:50:00", "yyyy-MM-dd hh:mm:ss"), 50)
-//            lineSeries1.append(Date.fromLocaleString(Qt.locale(), "2001-01-01 01:60:00", "yyyy-MM-dd hh:mm:ss"), 60)
-//        }
     }
 }

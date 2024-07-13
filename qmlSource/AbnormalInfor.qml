@@ -2,9 +2,9 @@ import QtQuick 2.0
 //异常信息
 Rectangle {
     color: pRgb(43, 112, 173)
+    property color listColor: pRgb(153, 204, 255)
     radius: 3
     Text {
-
         text: qsTr("异常信息")
         font.family: fontBold
         font.pixelSize: mode === 1 ? 17:20
@@ -34,7 +34,7 @@ Rectangle {
                     font.pixelSize: 16
                     text: messegStr
                     font.family: fontBold
-                    color: pRgb(153, 204, 255)
+                    color:listColor
                 }
             }
 

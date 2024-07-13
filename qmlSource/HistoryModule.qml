@@ -301,7 +301,7 @@ Rectangle {
             height: 30
             anchors.left: b8.right
             anchors.top: b8.top
-            anchors.leftMargin: 42
+            anchors.leftMargin: 30
             ButtonGroup.group: group2
             indicator: Rectangle
             {
@@ -317,8 +317,36 @@ Rectangle {
             id: b9
             anchors.left: bt9.right
             anchors.top: bt9.top
-            anchors.leftMargin: 14
+            anchors.leftMargin: 6
             text: qsTr("良")
+            color: pRgb(177, 213, 219)
+            font.family: fontBold
+            font.pixelSize: 20
+        }
+        RadioButton{
+            id:bt11
+            width: 30
+            height: 30
+            anchors.left: b9.right
+            anchors.top: b9.top
+            anchors.leftMargin: 15
+            ButtonGroup.group: group2
+            indicator: Rectangle
+            {
+                width: 30
+                height: 30
+                radius: 15
+                color: bt11.checked ? "#0068a7" : "#e8e8e8"
+                border.color: bt11.checked ? "#afc3d8" : "#0068a8"
+                border.width: 2
+            }
+        }
+        Text {
+            id: b11
+            anchors.left: bt11.right
+            anchors.top: bt11.top
+            anchors.leftMargin: 6
+            text: qsTr("可疑")
             color: pRgb(177, 213, 219)
             font.family: fontBold
             font.pixelSize: 20
@@ -327,9 +355,9 @@ Rectangle {
             id:bt10
             width: 30
             height: 30
-            anchors.left: b9.right
-            anchors.top: b9.top
-            anchors.leftMargin: 55
+            anchors.left: b11.right
+            anchors.top: b11.top
+            anchors.leftMargin: 8
             ButtonGroup.group: group2
             indicator: Rectangle
             {
@@ -416,7 +444,7 @@ Rectangle {
                     x:1220/5/2-width/2
                     anchors.verticalCenter: parent.verticalCenter
                     font.pixelSize: 16
-                    text: "messegStr"
+                    text: DeviceManager.getHistoryName(welder_id)
                     font.family: fontBold
                     color: index % 2 === 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
                 }
@@ -448,7 +476,7 @@ Rectangle {
                     anchors.verticalCenter: parent.verticalCenter
                     x:1220/5*4 + 1220/5/2-width/2
                     font.pixelSize: 16
-                    text: "messegStr"
+                    text: History.finalResult === 0?"合格":finalResult === 1?"次品":"可疑"
                     font.family: fontBold
                     color: index % 2 === 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
                 }

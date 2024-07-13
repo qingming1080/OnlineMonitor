@@ -8,6 +8,19 @@ Rectangle {
     color: pRgb(153, 204, 255)
     radius: 5
     property int pbtnIndex: 1
+    property int listSize: 0
+    property int parameter1: 0
+    property int parameter2: 0
+    property int parameter3: 0
+    property int parameter4: 0
+    property int parameter5: 0
+    function newModel(){
+        mt1.text = "创建模型"
+        mt2.text = "清除数据"
+        loader.sourceComponent = mode2
+        loader1.sourceComponent = weld2
+    }
+
     EquipmentInfor{
         id:s1
         x: 52
@@ -33,7 +46,7 @@ Rectangle {
         }
         eqText3:{
             if(DeviceManager.deviceList[swipeCurrIndex]){
-                return DeviceManager.deviceList[swipeCurrIndex].pDeviceInformation.connectType === 1
+                return DeviceManager.deviceList[swipeCurrIndex].pDeviceInformation.connectType === 2
                         ? "RS232" : "网络连接"
             }
             else{
@@ -118,6 +131,13 @@ Rectangle {
                 x:  50
                 y:  248
                 color:  "#0c5696"
+                altitudeMode:DeviceManager.deviceList[swipeCurrIndex].pDeviceInformation.heightOption
+                             === 1 ? true:false
+                eqText1:parameter1
+                eqText2:parameter2
+                eqText3:parameter3
+                eqText4:parameter4
+                eqText5:parameter5
             }
         }
     }
@@ -142,10 +162,22 @@ Rectangle {
             font.family: fontBold
         }
         onClicked: {
-            mt1.text = "创建模型"
-            mt2.text = "清除数据"
-            loader.sourceComponent = mode2
-            loader1.sourceComponent = weld2
+            if(mt1.text === "新建模型"){
+                popup.openPop(2)
+            }
+            else if(mt1.text === "创建模型"){
+                if(DeviceManager.deviceList[swipeCurrIndex].pDeviceInformation.sample <= listSize){
+                    loader.sourceComponent = mode1
+                    loader1.sourceComponent = weld1
+                    Manual.save()
+                    mt1.text = "新建模型"
+                    mt2.text = "新增设备"
+                    sigUpdateUI(0)
+                }
+                else{
+                    popup.openPop(5)
+                }
+            }
         }
     }
     Button{
@@ -155,12 +187,26 @@ Rectangle {
         anchors.topMargin:  23
         width:   210
         height:  45
-        enabled: equipmentCount === 4 ? false : true
+        enabled: {
+            if(mt2.text === "新增设备"){
+                return equipmentCount === 4 ? false : true
+            }
+            else{
+                return true
+            }
+        }
         background: Rectangle{
             radius: 6
             border.width: 2
             border.color: pRgb(43, 112, 173)
-            color: equipmentCount === 4 ? pRgb(232, 232, 232) : "#0c5696"
+            color: {
+                if(mt2.text === "新增设备"){
+                    return equipmentCount === 4 ? pRgb(232, 232, 232) : "#0c5696"
+                }
+                else{
+                    return "#0c5696"
+                }
+            }
         }
         contentItem: Text {
             id:mt2
@@ -177,6 +223,9 @@ Rectangle {
                 switchUI(3)
                 isAdd = true
                 sigSysConfig()
+            }
+            else if(mt2.text == "清除数据"){
+
             }
         }
     }
@@ -393,16 +442,31 @@ Rectangle {
                 }
                 ListView{
                     id: taskplanView
-                    width: 1220
-                    height: 560
+                    width:810
+                    height: 510
                     y:40
                     clip: true
-                    model: 3
+                    model: Manual
+                    onCountChanged:{
+                        listSize = taskplanView.count
+                    }
                     delegate: Rectangle{
                         id: regionItem
                         height: 36
                         width: 810
                         color: index % 2 === 0 ? "#afc3d8" : "#2d71ae"
+                        MouseArea {
+                            id: mouseArea
+                            anchors.fill: parent
+                            onClicked: {
+                                taskplanView.currentIndex = index
+                                parameter1 = Manual.data(Manual.index(index,0),5)
+                                parameter2 = Manual.data(Manual.index(index,0),6)
+                                parameter3 = Manual.data(Manual.index(index,0),7)
+                                parameter4 = Manual.data(Manual.index(index,0),10)
+                                parameter5 = Manual.data(Manual.index(index,0),11)
+                            }
+                        }
                         Button{
                             id:bt
                             x:808/8/2-width/2
@@ -459,7 +523,7 @@ Rectangle {
                             x:808/8*1 + 808/8/2-width/2
                             anchors.verticalCenter: parent.verticalCenter
                             font.pixelSize: 16
-                            text: "messegStr"
+                            text: serial_number
                             font.family: fontBold
                             color: index % 2 !== 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
                         }
@@ -467,7 +531,7 @@ Rectangle {
                             anchors.verticalCenter: parent.verticalCenter
                             x:808/8*2 + 808/8/2-width/2
                             font.pixelSize: 16
-                            text: create_time
+                            text: time
                             font.family: fontBold
                             color: index % 2 !== 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
                         }
@@ -475,7 +539,7 @@ Rectangle {
                             anchors.verticalCenter: parent.verticalCenter
                             x:808/8*3 + 808/8/2-width/2
                             font.pixelSize: 16
-                            text: energy
+                            text: power
                             font.family: fontBold
                             color: index % 2 !== 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
                         }
@@ -483,7 +547,7 @@ Rectangle {
                             anchors.verticalCenter: parent.verticalCenter
                             x:808/8*4 + 808/8/2-width/2
                             font.pixelSize: 16
-                            text: power
+                            text: energy
                             font.family: fontBold
                             color: index % 2 !== 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
                         }
@@ -491,7 +555,7 @@ Rectangle {
                             anchors.verticalCenter: parent.verticalCenter
                             x:808/8*5 + 808/8/2-width/2
                             font.pixelSize: 16
-                            text: "messegStr"
+                            text: create_time
                             font.family: fontBold
                             color: index % 2 !== 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
                         }
@@ -506,6 +570,7 @@ Rectangle {
                             color: index % 2 === 0 ? pRgb(175, 195, 216) : "#014c8d"
                             font.family: fontBold
                             font.pixelSize: 16
+                            text:actual_force
                             background: Rectangle{
                                 radius: 3
                                 border.width: 2
@@ -536,6 +601,7 @@ Rectangle {
                             color: index % 2 === 0 ? pRgb(175, 195, 216) : "#014c8d"
                             font.family: fontBold
                             font.pixelSize: 16
+                            text:actual_degree
                             background: Rectangle{
                                 radius: 6
                                 border.width: 3

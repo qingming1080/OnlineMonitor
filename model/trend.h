@@ -24,6 +24,9 @@ class Trend : public QObject
     Q_PROPERTY(double timeMinY READ timeMinY WRITE setTimeMinY NOTIFY timeMinYChanged)
     Q_PROPERTY(int powerMaxY READ powerMaxY WRITE setPowerMaxY NOTIFY powerMaxYChanged)
     Q_PROPERTY(int powerMinY READ powerMinY WRITE setPowerMinY NOTIFY powerMinYChanged)
+    Q_PROPERTY(int yieldType READ yieldType WRITE setYieldType NOTIFY yieldTypeChanged)
+    Q_PROPERTY(QString startTime READ startTime WRITE setStartTime NOTIFY startTimeChanged FINAL)
+    Q_PROPERTY(QString endTime READ endTime WRITE setEndTime NOTIFY endTimeChanged FINAL)
 
 public:
     explicit Trend(int welderID=0, QObject *parent = nullptr);
@@ -38,38 +41,44 @@ public:
     void upYieldData();
 
 
-    int idMinX() const;
-    void setIdMinX(int newIdMinX);
+    Q_INVOKABLE int idMinX() const;
+    Q_INVOKABLE void setIdMinX(int newIdMinX);
 
-    int idMaxX() const;
-    void setIdMaxX(int newIdMaxX);
+    Q_INVOKABLE int idMaxX() const;
+    Q_INVOKABLE void setIdMaxX(int newIdMaxX);
 
-    int beforeMaxY() const;
-    void setBeforeMaxY(int newBeforeMaxY);
+    Q_INVOKABLE int beforeMaxY() const;
+    Q_INVOKABLE void setBeforeMaxY(int newBeforeMaxY);
 
-    int beforeMinY() const;
-    void setBeforeMinY(int newBeforeMinY);
+    Q_INVOKABLE int beforeMinY() const;
+    Q_INVOKABLE void setBeforeMinY(int newBeforeMinY);
 
-    int afterMaxY() const;
-    void setAfterMaxY(int newAfterMaxY);
+    Q_INVOKABLE int afterMaxY() const;
+    Q_INVOKABLE void setAfterMaxY(int newAfterMaxY);
 
-    int afterMinY() const;
-    void setAfterMinY(int newAfterMinY);
+    Q_INVOKABLE int afterMinY() const;
+    Q_INVOKABLE void setAfterMinY(int newAfterMinY);
 
-    double timeMaxY() const;
-    void setTimeMaxY(double newTimeMaxY);
+    Q_INVOKABLE double timeMaxY() const;
+    Q_INVOKABLE void setTimeMaxY(double newTimeMaxY);
 
-    double timeMinY() const;
-    void setTimeMinY(double newTimeMinY);
+    Q_INVOKABLE double timeMinY() const;
+    Q_INVOKABLE void setTimeMinY(double newTimeMinY);
 
-    int powerMaxY() const;
-    void setPowerMaxY(int newPowerMaxY);
+    Q_INVOKABLE int powerMaxY() const;
+    Q_INVOKABLE void setPowerMaxY(int newPowerMaxY);
 
-    int powerMinY() const;
-    void setPowerMinY(int newPowerMinY);
+    Q_INVOKABLE int powerMinY() const;
+    Q_INVOKABLE void setPowerMinY(int newPowerMinY);
 
-    int yieldType() const;
-    void setYieldType(int newYieldType);
+    Q_INVOKABLE int yieldType() const;
+    Q_INVOKABLE void setYieldType(int newYieldType);
+
+    Q_INVOKABLE QString startTime() const;
+    Q_INVOKABLE void setStartTime(const QString &newStartTime);
+
+    Q_INVOKABLE QString endTime() const;
+    Q_INVOKABLE void setEndTime(const QString &newEndTime);
 
 signals:
 
@@ -94,6 +103,10 @@ signals:
     void powerMinYChanged();
 
     void yieldTypeChanged();
+
+    void startTimeChanged();
+
+    void endTimeChanged();
 
 private:
     void init();
@@ -131,7 +144,10 @@ private:
 
     QTimer* m_weldTimer;
     QTimer* m_yieldTimer;
-    Q_PROPERTY(int yieldType READ yieldType WRITE setYieldType NOTIFY yieldTypeChanged)
+
+    QString m_startTime;
+    QString m_endTime;
+
 };
 
 #endif // TREND_H

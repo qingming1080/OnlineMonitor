@@ -7,6 +7,10 @@ Rectangle {
     property string eqText2: ""
     property string eqText3: ""
     property string eqText4: ""
+    property alias t1Edit: t1
+    property alias t2Edit: t2
+    property alias t3Edit: t3
+    property alias t4Edit: t4
     color: pRgb(43, 112, 173)
     radius: 6
     Text {
@@ -40,7 +44,7 @@ Rectangle {
         y:121
     }
     Text {
-        text: qsTr("单因素系数:") + eqText1
+        text: qsTr("单因素系数:")
         font.family: fontBold
         font.pixelSize: 16
         color: "#abced5"
@@ -63,9 +67,10 @@ Rectangle {
             border.width: 3
             border.color: "#99ccff"
         }
+        text: eqText1
     }
     Text {
-        text: qsTr("通用系数:") + eqText2
+        text: qsTr("通用系数:")
         font.family: fontBold
         font.pixelSize: 16
         color: "#abced5"
@@ -88,9 +93,10 @@ Rectangle {
             border.width: 3
             border.color: "#99ccff"
         }
+        text: eqText2
     }
     Text {
-        text: qsTr("其他系数:") + eqText3
+        text: qsTr("其他系数:")
         font.family: fontBold
         font.pixelSize: 16
         color: "#abced5"
@@ -113,9 +119,10 @@ Rectangle {
             border.width: 3
             border.color: "#99ccff"
         }
+        text: eqText3
     }
     Text {
-        text: qsTr("自动学习上限:") + eqText4
+        text: qsTr("自动学习上限:")
         font.family: fontBold
         font.pixelSize: 16
         color: "#abced5"
@@ -138,5 +145,6 @@ Rectangle {
             border.width: 3
             border.color: "#99ccff"
         }
+        text: eqText4
     }
 }

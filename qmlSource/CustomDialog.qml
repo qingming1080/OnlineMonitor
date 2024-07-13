@@ -8,6 +8,36 @@ Popup {
     modal: true
     padding:0
     closePolicy:Popup.CloseOnEscape
+    property int id: 0
+    signal sigDataClear()
+    function openPop(index){//1输入密码(配置) 2输入密码(新建模型) 3输入密码(新建模型单设备) 4语言 5采样 6系统消息 7修改密码
+        id = index
+        if(index === 1 || index === 2 || index === 3){
+            sigDataClear()
+            popload.sourceComponent = inputpass
+            open()
+        }
+        else if(index === 4){
+            popload.sourceComponent = language
+            open()
+        }
+        else if(index === 5){
+            popload.sourceComponent = dataeficiency
+            open()
+        }
+        else if(index === 6){
+            popload.sourceComponent = sysInfor
+            open()
+        }
+        else if(index === 7){
+            popload.sourceComponent = newpass
+            open()
+        }
+    }
+    onClosed:{
+        id = 0
+    }
+
     background: Rectangle{
         color: "transparent"
         radius: 5
@@ -37,6 +67,7 @@ Popup {
             }
             onClicked: {
                 customPopup.close()
+                sigPassError()
             }
         }
     }
@@ -79,6 +110,56 @@ Popup {
                     radius: 6
                 }
             }
+            Connections{
+                target: customPopup
+                function onSigDataClear(){
+                    t1.text = ""
+                }
+            }
+
+            Button{
+                id:s1
+                x:170
+                y:165
+                width: 230
+                height: 52
+                background: Rectangle{
+                    radius: 6
+                    color: pRgb(43, 112, 173)
+                }
+                contentItem: Text {
+                    id: mt1
+                    text: "确认"
+                    font.pixelSize: mode == 1 ? 17:20
+                    color: pRgb(153, 204, 255)
+                    anchors.centerIn: parent  // 确保文本在按钮内居中对齐
+                    horizontalAlignment: Text.AlignHCenter
+                    verticalAlignment: Text.AlignVCenter
+                    font.family: fontBold
+                }
+                onClicked: {
+                    if(DeviceManager.getPasswordLevel(t1.text) === 1){
+                        close()
+                        sigRoot()
+                    }
+                    else if(DeviceManager.getPasswordLevel(t1.text) === 2){
+                        if(id === 2){
+                            sigNewModel()
+                        }
+                        else if(id === 1){
+                            sigSwitch(3)
+                        }
+                        else if(id === 3){
+                            sigOneModel()
+                        }
+
+                        close()
+                    }
+                    else{
+                        popload.sourceComponent = passerror
+                    }
+                }
+            }
         }
     }
     Component{
@@ -119,7 +200,8 @@ Popup {
                     font.family: fontBold
                 }
                 onClicked: {
-
+                    close()
+                    sigPassError()
                 }
             }
         }
@@ -132,7 +214,7 @@ Popup {
             height: 236
             color: "#b1d5db"
             Text {
-                x:203
+                x:223
                 y:49
                 text: qsTr("请输入新密码")
                 font.pixelSize: 20
@@ -154,6 +236,31 @@ Popup {
                 font.pixelSize: 20
                 background: Rectangle{
                     radius: 6
+                }
+            }
+            Button{
+                id:s4
+                x:170
+                y:165
+                width: 225
+                height: 52
+                background: Rectangle{
+                    radius: 6
+                    color: pRgb(43, 112, 173)
+                }
+                contentItem: Text {
+                    id: mt1
+                    text: "确认"
+                    font.pixelSize: mode == 1 ? 17:20
+                    color: pRgb(153, 204, 255)
+                    anchors.centerIn: parent  // 确保文本在按钮内居中对齐
+                    horizontalAlignment: Text.AlignHCenter
+                    verticalAlignment: Text.AlignVCenter
+                    font.family: fontBold
+                }
+                onClicked: {
+                    DeviceManager.setUserPassword(t1.text)
+                    close()
                 }
             }
         }
@@ -196,7 +303,7 @@ Popup {
                     font.family: fontBold
                 }
                 onClicked: {
-
+                    close()
                 }
             }
         }
@@ -225,6 +332,7 @@ Popup {
                 height: 30
                 x:208
                 y:34
+                checked:true
                 indicator: Rectangle
                 {
                     width: 30
@@ -308,6 +416,26 @@ Popup {
             width: 567
             height: 236
             color: "#b1d5db"
+            ListView{
+                id: taskplanView
+                width: 567
+                height: 200
+                y:20
+                model: Message
+                delegate: Rectangle{
+                    id: regionItem
+                    height: 20
+                    width: 567
+                    color: "transparent"
+                    Text{
+                        font.pixelSize: 16
+                        text: messegStr
+                        font.family: fontBold
+                        color:"#004b8d"
+                        anchors.centerIn: regionItem
+                    }
+                }
+            }
         }
     }
 }

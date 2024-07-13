@@ -63,22 +63,22 @@ Rectangle {
         }
         ValueAxis {
             id: myAxisX
-            min: DeviceManager.deviceList[0].pTrend.min
-            max: DeviceManager.deviceList[0].pTrend.max
+            min: DeviceManager.deviceList[swipeCurrIndex].pTrend.idMinX
+            max: DeviceManager.deviceList[swipeCurrIndex].pTrend.idMaxX
             tickCount: 5
             labelsColor: "#a3c7d0"
-            labelsFont.pixelSize: 16
+            labelsFont.pixelSize: 12
             labelsFont.bold: true
             labelFormat: '%d'
             gridVisible:false
         }
         ValueAxis{
             id:myAxisY
-            min:0
-            max:50
+            min:DeviceManager.deviceList[swipeCurrIndex].pTrend.beforeMinY
+            max:DeviceManager.deviceList[swipeCurrIndex].pTrend.beforeMaxY
             tickCount: 9
             labelsColor: "#a3c7d0"
-            labelsFont.pixelSize: 16
+            labelsFont.pixelSize: 12
             labelsFont.bold: true
             labelFormat: '%d'
             gridVisible:false
@@ -87,11 +87,11 @@ Rectangle {
         }
         ValueAxis{
             id:myAxisY1
-            min:0
-            max:50
+            min:DeviceManager.deviceList[swipeCurrIndex].pTrend.afterMinY
+            max:DeviceManager.deviceList[swipeCurrIndex].pTrend.afterMaxY
             tickCount: 9
             labelsColor: "#a3c7d0"
-            labelsFont.pixelSize: 16
+            labelsFont.pixelSize: 12
             labelsFont.bold: true
             labelFormat: '%d'
             gridVisible:false
@@ -100,11 +100,11 @@ Rectangle {
         }
         ValueAxis{
             id:myAxisY2
-            min:0
-            max:50
+            min:DeviceManager.deviceList[swipeCurrIndex].pTrend.powerMinY
+            max:DeviceManager.deviceList[swipeCurrIndex].pTrend.powerMaxY
             tickCount: 9
             labelsColor: "#a3c7d0"
-            labelsFont.pixelSize: 16
+            labelsFont.pixelSize: 12
             labelsFont.bold: true
             labelFormat: '%d'
             gridVisible:false
@@ -112,8 +112,8 @@ Rectangle {
         }
         ValueAxis{
             id:myAxisY3
-            min:0
-            max:0.5
+            min:DeviceManager.deviceList[swipeCurrIndex].pTrend.timeMinY
+            max:DeviceManager.deviceList[swipeCurrIndex].pTrend.timeMaxY
             tickCount: 12
             labelsColor: "#a3c7d0"
             labelsFont.pixelSize: 12
@@ -131,7 +131,7 @@ Rectangle {
             width: 3
             visible: altitudeMode
             VXYModelMapper{
-                model: DeviceManager.deviceList[0].pTrend.pBeforeModel
+                model: DeviceManager.deviceList[swipeCurrIndex].pTrend.pBeforeModel
                 series: lineSeries2
                 firstRow: 0
                 xColumn: 1
@@ -147,7 +147,7 @@ Rectangle {
             width: 3
             visible: altitudeMode
             VXYModelMapper{
-                model: DeviceManager.deviceList[0].pTrend.pAfterModel
+                model: DeviceManager.deviceList[swipeCurrIndex].pTrend.pAfterModel
                 series: lineSeries3
                 firstRow: 0
                 xColumn: 1
@@ -162,7 +162,7 @@ Rectangle {
             color: "#d5b989"
             width: 3
             VXYModelMapper{
-                model: DeviceManager.deviceList[0].pTrend.pPowerModel
+                model: DeviceManager.deviceList[swipeCurrIndex].pTrend.pPowerModel
                 series: lineSeries
                 firstRow: 0
                 xColumn: 1
@@ -177,24 +177,12 @@ Rectangle {
             color: "#cd9caa"
             width: 3
             VXYModelMapper{
-                model: DeviceManager.deviceList[0].pTrend.pTimeModel
+                model: DeviceManager.deviceList[swipeCurrIndex].pTrend.pTimeModel
                 series: lineSeries1
                 firstRow: 0
                 xColumn: 1
                 yColumn: 2
             }
         }
-//        Timer{
-//            interval: 1000
-//            running: true
-//            repeat: true
-//            onTriggered: {
-//                lineSeries1.append(timer,Math.random()*50)
-//                lineSeries2.append(timer,Math.random()*50)
-//                lineSeries3.append(timer,Math.random()*50)
-//                lineSeries.append(timer,Math.random()*50)
-//                timer = timer+1
-//            }
-//        }
     }
 }

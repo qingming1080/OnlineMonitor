@@ -9,6 +9,10 @@ Rectangle {
         function onEquipmentCountChanged(){
             updateUI()
         }
+        function onSigNewModel(){
+            var lastPage = view.contentChildren[swipeIndex]
+            lastPage.newModel()
+        }
     }
     Connections{
         target: mpro
@@ -71,7 +75,6 @@ Rectangle {
         }
         PageIndicator {
             id: indicator
-
             count: equipmentCount
             currentIndex: view.currentIndex
             spacing: 33
