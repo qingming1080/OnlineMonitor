@@ -780,14 +780,28 @@ _Weld_TrendData DataBaseManager::getWeldTrendData(int welderID)
         data.serial_number            = query.value(_PRODUCTION_COLUMN::_PRODUCTION_serial_number).toInt();
         data.cycle_count              = query.value(_PRODUCTION_COLUMN::_PRODUCTION_cycle_count).toInt();
         data.batch_count              = query.value(_PRODUCTION_COLUMN::_PRODUCTION_batch_count).toInt();
-        data.energy                   = query.value(_PRODUCTION_COLUMN::_PRODUCTION_energy).toInt();
+
+        // 能量 ***J -> ***
+        QString energyStr = query.value(_PRODUCTION_COLUMN::_PRODUCTION_energy).toString();
+        data.energy = energyStr.leftRef(energyStr.length()-1).toInt();
+
         data.amplitude                = query.value(_PRODUCTION_COLUMN::_PRODUCTION_amplitude).toInt();
         data.pressure                 = query.value(_PRODUCTION_COLUMN::_PRODUCTION_pressure).toInt();
+
+        // 时间 *.**s - > *.**
         data.time                     = query.value(_PRODUCTION_COLUMN::_PRODUCTION_time).toString();
         data.time = data.time.left(data.time.length()-1);
-        data.power                    = query.value(_PRODUCTION_COLUMN::_PRODUCTION_power).toInt();
-        data.pre_height               = query.value(_PRODUCTION_COLUMN::_PRODUCTION_pre_height).toInt();
-        data.post_height              = query.value(_PRODUCTION_COLUMN::_PRODUCTION_post_height).toInt();
+
+        // 功率 ***W -> ***
+        QString powerStr = query.value(_PRODUCTION_COLUMN::_PRODUCTION_power).toString();
+        data.power = powerStr.leftRef(powerStr.length()-1).toInt();
+
+        // 高度 *.**mm -> *.**
+        QString pre_heightStr = query.value(_PRODUCTION_COLUMN::_PRODUCTION_pre_height).toString();
+        data.pre_height = pre_heightStr.leftRef(pre_heightStr.length()-2).toDouble();
+        QString post_heightStr = query.value(_PRODUCTION_COLUMN::_PRODUCTION_post_height).toString();
+        data.post_height = post_heightStr.leftRef(post_heightStr.length()-2).toDouble();
+
         data.force                    = query.value(_PRODUCTION_COLUMN::_PRODUCTION_force).toInt();
         data.residual                 = query.value(_PRODUCTION_COLUMN::_PRODUCTION_residual).toInt();
         data.good_rate                = query.value(_PRODUCTION_COLUMN::_PRODUCTION_good_rate).toInt();
@@ -807,7 +821,7 @@ _Weld_TrendData DataBaseManager::getWeldTrendData(int welderID)
         if(data.pre_height > result.before_Y_Max)
             result.before_Y_Max = data.pre_height;
         // 焊后高度 Y轴
-        if(data.post_height < result.time_Y_Min)
+        if(data.post_height < result.after_Y_Min)
             result.time_Y_Min = data.post_height;
         if(data.post_height > result.after_Y_Max)
             result.after_Y_Max = data.post_height;
