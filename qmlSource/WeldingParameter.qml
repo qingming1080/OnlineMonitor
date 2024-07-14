@@ -134,6 +134,7 @@ Rectangle {
         color: pRgb(43, 112, 173)
         font.family: fontBold
         font.pixelSize: 14
+        inputMethodHints: Qt.ImhDigitsOnly
         background: Rectangle{
             radius: 6
             border.width: 2
@@ -154,6 +155,7 @@ Rectangle {
         color: pRgb(43, 112, 173)
         font.family: fontBold
         font.pixelSize: 14
+        inputMethodHints: Qt.ImhDigitsOnly
         background: Rectangle{
             radius: 6
             border.width: 2
@@ -174,6 +176,7 @@ Rectangle {
         color: pRgb(43, 112, 173)
         font.family: fontBold
         font.pixelSize: 14
+        inputMethodHints: Qt.ImhDigitsOnly
         background: Rectangle{
             radius: 6
             border.width: 2
@@ -194,6 +197,7 @@ Rectangle {
         color: pRgb(43, 112, 173)
         font.family: fontBold
         font.pixelSize: 14
+        inputMethodHints: Qt.ImhDigitsOnly
         background: Rectangle{
             radius: 6
             border.width: 2
@@ -215,6 +219,7 @@ Rectangle {
         color: pRgb(43, 112, 173)
         font.family: fontBold
         font.pixelSize: 14
+        inputMethodHints: Qt.ImhDigitsOnly
         background: Rectangle{
             radius: 6
             border.width: 2

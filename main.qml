@@ -243,8 +243,6 @@ Window {
         anchors.centerIn: parent
     }
 
-
-
     InputPanel
     {
         id: inputPannelID
