@@ -123,6 +123,36 @@ Rectangle {
             color:"#cd9caa"
         }
         LineSeries {
+            id:lineSeries
+            name: "功率"
+            axisX: myAxisX
+            axisY:myAxisY2
+            color: "#d5b989"
+            width: 3
+            VXYModelMapper{
+                model: DeviceManager.deviceList[swipeCurrIndex].pTrend.pPowerModel
+                series: lineSeries
+                firstRow: 0
+                xColumn: 1
+                yColumn: 2
+            }
+        }
+        LineSeries {
+            id:lineSeries1
+            name: "时间"
+            axisX: myAxisX
+            axisY:myAxisY3
+            color: "#cd9caa"
+            width: 3
+            VXYModelMapper{
+                model: DeviceManager.deviceList[swipeCurrIndex].pTrend.pTimeModel
+                series: lineSeries1
+                firstRow: 0
+                xColumn: 1
+                yColumn: 2
+            }
+        }
+        LineSeries {
             id:lineSeries2
             name: "焊前高度"
             axisX: myAxisX
@@ -149,36 +179,6 @@ Rectangle {
             VXYModelMapper{
                 model: DeviceManager.deviceList[swipeCurrIndex].pTrend.pAfterModel
                 series: lineSeries3
-                firstRow: 0
-                xColumn: 1
-                yColumn: 2
-            }
-        }
-        LineSeries {
-            id:lineSeries
-            name: "功率"
-            axisX: myAxisX
-            axisY:myAxisY2
-            color: "#d5b989"
-            width: 3
-            VXYModelMapper{
-                model: DeviceManager.deviceList[swipeCurrIndex].pTrend.pPowerModel
-                series: lineSeries
-                firstRow: 0
-                xColumn: 1
-                yColumn: 2
-            }
-        }
-        LineSeries {
-            id:lineSeries1
-            name: "时间"
-            axisX: myAxisX
-            axisY:myAxisY3
-            color: "#cd9caa"
-            width: 3
-            VXYModelMapper{
-                model: DeviceManager.deviceList[swipeCurrIndex].pTrend.pTimeModel
-                series: lineSeries1
                 firstRow: 0
                 xColumn: 1
                 yColumn: 2
