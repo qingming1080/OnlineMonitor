@@ -195,7 +195,7 @@ public:
 /////////////////////////production////////////////////////////////
 /// 良率趋势、焊接趋势_1h 历史记录_5s
     ///
-    /// \brief getWeldTrendData : 获取历史记录折线图，取最新五百个
+    /// \brief getWeldTrendData : 获取历史记录，取最新五百个
     /// \param welderID : 焊机ID，为零则不区分焊机
     /// \param finalResult : 生产状态 0_全部 1_合格 2_次品 3_可疑
     /// \return

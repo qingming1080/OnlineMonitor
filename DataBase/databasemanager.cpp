@@ -785,6 +785,7 @@ _Weld_TrendData DataBaseManager::getWeldTrendData(int welderID)
         qDebug() << "Production查询失败: " << query.lastError();
     }
 
+    bool isFirst = true;
     while(query.next())
     {
         _Production_Data data;
@@ -825,6 +826,23 @@ _Weld_TrendData DataBaseManager::getWeldTrendData(int welderID)
         data.not_definite_cycles      = query.value(_PRODUCTION_COLUMN::_PRODUCTION_not_definite_cycles).toInt();
         data.final_result             = query.value(_PRODUCTION_COLUMN::_PRODUCTION_final_result).toInt();
 
+        // 计入首次大小
+        if(isFirst)
+        {
+            isFirst = false;
+
+            result.id_X_Min = data.id;
+            result.id_X_Max = data.id;
+            result.before_Y_Min = data.pre_height;
+            result.before_Y_Max = data.pre_height;
+            result.after_Y_Min = data.post_height;
+            result.after_Y_Max = data.post_height;
+            result.time_Y_Min = data.time;
+            result.time_Y_Max = data.time;
+            result.power_Y_Min = data.power;
+            result.power_Y_Max = data.power;
+        }
+
         // 确定X轴大小
         if(data.id < result.id_X_Min)
             result.id_X_Min = data.id;
@@ -837,7 +855,7 @@ _Weld_TrendData DataBaseManager::getWeldTrendData(int welderID)
             result.before_Y_Max = data.pre_height;
         // 焊后高度 Y轴
         if(data.post_height < result.after_Y_Min)
-            result.time_Y_Min = data.post_height;
+            result.after_Y_Min = data.post_height;
         if(data.post_height > result.after_Y_Max)
             result.after_Y_Max = data.post_height;
         // 时间 Y轴

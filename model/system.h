@@ -45,10 +45,10 @@ private:
     const int m_welderID;
 
     int m_id;
-    int m_singleFact;
-    int m_generalFact;
-    int m_otherFace;
-    int m_autoModel;
+    int m_singleFact{0};
+    int m_generalFact{0};
+    int m_otherFace{0};
+    int m_autoModel{0};
 
 };
 

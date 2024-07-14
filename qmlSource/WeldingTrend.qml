@@ -112,8 +112,10 @@ Rectangle {
         }
         ValueAxis{
             id:myAxisY3
-            min:DeviceManager.deviceList[swipeCurrIndex].pTrend.timeMinY
-            max:DeviceManager.deviceList[swipeCurrIndex].pTrend.timeMaxY
+//            min:DeviceManager.deviceList[swipeCurrIndex].pTrend.timeMinY
+//            max:DeviceManager.deviceList[swipeCurrIndex].pTrend.timeMaxY
+            min:0
+            max:1
             tickCount: 12
             labelsColor: "#a3c7d0"
             labelsFont.pixelSize: 12

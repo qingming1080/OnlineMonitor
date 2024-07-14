@@ -15,7 +15,7 @@ Device::Device(int welderID, QObject *parent)
     m_pManual             = new Manual(m_welderID);
     m_pSystem             = new System(m_welderID);
 
-    m_pTrend              = new Trend();
+    m_pTrend              = new Trend(m_welderID);
 }
 
 DeviceInformation *Device::pDeviceInformation() const
