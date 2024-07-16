@@ -571,6 +571,7 @@ Rectangle {
                             font.family: fontBold
                             font.pixelSize: 16
                             text:actual_force
+                            inputMethodHints: Qt.ImhDigitsOnly
                             background: Rectangle{
                                 radius: 3
                                 border.width: 2
@@ -602,6 +603,7 @@ Rectangle {
                             font.family: fontBold
                             font.pixelSize: 16
                             text:actual_degree
+                            inputMethodHints: Qt.ImhDigitsOnly
                             background: Rectangle{
                                 radius: 6
                                 border.width: 3

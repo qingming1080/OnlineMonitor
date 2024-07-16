@@ -68,6 +68,7 @@ Rectangle {
             border.color: "#99ccff"
         }
         text: eqText1
+        inputMethodHints: Qt.ImhDigitsOnly
     }
     Text {
         text: qsTr("通用系数:")
@@ -94,6 +95,7 @@ Rectangle {
             border.color: "#99ccff"
         }
         text: eqText2
+        inputMethodHints: Qt.ImhDigitsOnly
     }
     Text {
         text: qsTr("其他系数:")
@@ -120,6 +122,7 @@ Rectangle {
             border.color: "#99ccff"
         }
         text: eqText3
+        inputMethodHints: Qt.ImhDigitsOnly
     }
     Text {
         text: qsTr("自动学习上限:")
@@ -146,5 +149,6 @@ Rectangle {
             border.color: "#99ccff"
         }
         text: eqText4
+        inputMethodHints: Qt.ImhDigitsOnly
     }
 }
