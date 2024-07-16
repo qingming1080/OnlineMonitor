@@ -5,7 +5,7 @@
 #include "qmlenum.h"
 
 ///
-/// \brief The DeviceInformation class : 设备信息_对应表格Configuration
+/// \brief The DeviceInformation class : 设备信息:对应表格Configuration
 ///
 class DeviceInformation : public QObject
 {
@@ -26,7 +26,7 @@ class DeviceInformation : public QObject
     Q_PROPERTY(int heightOption                     READ heightOption  WRITE setHeightOption    NOTIFY heightOptionChanged)
 
     // 连接方式
-    Q_PROPERTY(QmlEnum::_CONNECTTYPE connectType    READ connectType   WRITE setConnectType     NOTIFY connectTypeChanged)
+    Q_PROPERTY(QmlEnum::CONNECTTYPE connectType    READ connectType   WRITE setConnectType     NOTIFY connectTypeChanged)
     // 连接方式ID
     Q_PROPERTY(int connectID                        READ connectID     WRITE setConnectID       NOTIFY connectIDChanged)
 
@@ -41,15 +41,15 @@ class DeviceInformation : public QObject
     Q_PROPERTY(int notDefinite                      READ notDefinite    WRITE setNotDefinite    NOTIFY notDefiniteChanged)
 
     /// 2024/04/07  焊接结果暴露
-    // 焊接结果_功率
+    // 焊接结果:功率
     Q_PROPERTY(int power                            READ power          WRITE setPower          NOTIFY powerChanged)
-    // 焊接结果_时间
+    // 焊接结果:时间
     Q_PROPERTY(int time                             READ time           WRITE setTime           NOTIFY timeChanged)
-    // 焊接结果_能量
+    // 焊接结果:能量
     Q_PROPERTY(int energy                           READ energy         WRITE setEnergy         NOTIFY energyChanged)
-    // 焊接结果_焊前高度
+    // 焊接结果:焊前高度
     Q_PROPERTY(int heightPre                        READ heightPre      WRITE setHeightPre      NOTIFY heightPreChanged)
-    // 焊接结果_焊后高度
+    // 焊接结果:焊后高度
     Q_PROPERTY(int heightPost                       READ heightPost     WRITE setHeightPost     NOTIFY heightPostChanged)
 
     /// 2024/04/07 设备状态 暴露
@@ -64,8 +64,8 @@ public:
     Q_INVOKABLE QString model() const;
     Q_INVOKABLE void setModel(const QString &newModel);
 
-    Q_INVOKABLE QmlEnum::_CONNECTTYPE connectType() const;
-    Q_INVOKABLE void setConnectType(const QmlEnum::_CONNECTTYPE &newconnectType);
+    Q_INVOKABLE QmlEnum::CONNECTTYPE connectType() const;
+    Q_INVOKABLE void setConnectType(const QmlEnum::CONNECTTYPE &newconnectType);
 
     Q_INVOKABLE int id() const;
 //    Q_INVOKABLE void setId(int newId);
@@ -160,7 +160,7 @@ private:
     int m_sample;
     int m_lowerLimit;
     int m_heightOption;
-    QmlEnum::_CONNECTTYPE m_connectType;
+    QmlEnum::CONNECTTYPE m_connectType;
     int m_connectID;
 
     int m_goodRate{95};
@@ -177,4 +177,4 @@ private:
     QString m_state{"未连接"};
 };
 
-#endif // DEVICEINFORMATION_H
+#endif // DEVICEINFORMATION:H

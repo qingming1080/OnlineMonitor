@@ -1,6 +1,7 @@
 #include "history.h"
 #include "DataBase/databasemanager.h"
 #include <QtMath>
+#include <QDebug>
 History* History::s_pHistory = nullptr;
 
 History *History::getInstance()
@@ -27,6 +28,7 @@ void History::setFinalResult(int newFinalResult)
 {
     if (m_finalResult == newFinalResult)
         return;
+
     m_finalResult = newFinalResult;
     emit beginResetModel();
     m_data = DataBaseManager::getInstance()->getProductionData(m_deviceID, m_finalResult);
@@ -43,6 +45,7 @@ void History::setDeviceID(int newDeviceID)
 {
     if (m_deviceID == newDeviceID)
         return;
+
     m_deviceID = newDeviceID;
     emit beginResetModel();
     m_data = DataBaseManager::getInstance()->getProductionData(m_deviceID, m_finalResult);
@@ -64,47 +67,47 @@ QVariant History::data(const QModelIndex &index, int role) const
     _Production_Data data = m_data.at(row);
     switch(role)
     {
-    case QmlEnum::_PRODUCTION_COLUMN::_PRODUCTION_id:
+    case QmlEnum::PRODUCTION_COLUMN::PRODUCTION_id:
         return data.id;
-    case QmlEnum::_PRODUCTION_COLUMN::_PRODUCTION_welder_id:
+    case QmlEnum::PRODUCTION_COLUMN::PRODUCTION_welder_id:
         return data.welder_id;
-    case QmlEnum::_PRODUCTION_COLUMN::_PRODUCTION_model_id:
+    case QmlEnum::PRODUCTION_COLUMN::PRODUCTION_model_id:
         return data.model_id;
-    case QmlEnum::_PRODUCTION_COLUMN::_PRODUCTION_create_time:
+    case QmlEnum::PRODUCTION_COLUMN::PRODUCTION_create_time:
         return data.create_time;
-    case QmlEnum::_PRODUCTION_COLUMN::_PRODUCTION_serial_number:
+    case QmlEnum::PRODUCTION_COLUMN::PRODUCTION_serial_number:
         return data.serial_number;
-    case QmlEnum::_PRODUCTION_COLUMN::_PRODUCTION_cycle_count:
+    case QmlEnum::PRODUCTION_COLUMN::PRODUCTION_cycle_count:
         return data.cycle_count;
-    case QmlEnum::_PRODUCTION_COLUMN::_PRODUCTION_batch_count:
+    case QmlEnum::PRODUCTION_COLUMN::PRODUCTION_batch_count:
         return data.batch_count;
-    case QmlEnum::_PRODUCTION_COLUMN::_PRODUCTION_energy:
+    case QmlEnum::PRODUCTION_COLUMN::PRODUCTION_energy:
         return data.energy;
-    case QmlEnum::_PRODUCTION_COLUMN::_PRODUCTION_amplitude:
+    case QmlEnum::PRODUCTION_COLUMN::PRODUCTION_amplitude:
         return data.amplitude;
-    case QmlEnum::_PRODUCTION_COLUMN::_PRODUCTION_pressure:
+    case QmlEnum::PRODUCTION_COLUMN::PRODUCTION_pressure:
         return data.pressure;
-    case QmlEnum::_PRODUCTION_COLUMN::_PRODUCTION_time:
+    case QmlEnum::PRODUCTION_COLUMN::PRODUCTION_time:
         return data.time;
-    case QmlEnum::_PRODUCTION_COLUMN::_PRODUCTION_power:
+    case QmlEnum::PRODUCTION_COLUMN::PRODUCTION_power:
         return data.power;
-    case QmlEnum::_PRODUCTION_COLUMN::_PRODUCTION_pre_height:
+    case QmlEnum::PRODUCTION_COLUMN::PRODUCTION_pre_height:
         return data.pre_height;
-    case QmlEnum::_PRODUCTION_COLUMN::_PRODUCTION_post_height:
+    case QmlEnum::PRODUCTION_COLUMN::PRODUCTION_post_height:
         return data.post_height;
-    case QmlEnum::_PRODUCTION_COLUMN::_PRODUCTION_force:
+    case QmlEnum::PRODUCTION_COLUMN::PRODUCTION_force:
         return data.force;
-    case QmlEnum::_PRODUCTION_COLUMN::_PRODUCTION_residual:
+    case QmlEnum::PRODUCTION_COLUMN::PRODUCTION_residual:
         return data.residual;
-    case QmlEnum::_PRODUCTION_COLUMN::_PRODUCTION_good_rate:
+    case QmlEnum::PRODUCTION_COLUMN::PRODUCTION_good_rate:
         return data.good_rate;
-    case QmlEnum::_PRODUCTION_COLUMN::_PRODUCTION_good_subtotal_cycles:
+    case QmlEnum::PRODUCTION_COLUMN::PRODUCTION_good_subtotal_cycles:
         return data.good_subtotal_cycles;
-    case QmlEnum::_PRODUCTION_COLUMN::_PRODUCTION_suspect_subtotal_cycles:
+    case QmlEnum::PRODUCTION_COLUMN::PRODUCTION_suspect_subtotal_cycles:
         return data.suspect_subtotal_cycles;
-    case QmlEnum::_PRODUCTION_COLUMN::_PRODUCTION_not_definite_cycles:
+    case QmlEnum::PRODUCTION_COLUMN::PRODUCTION_not_definite_cycles:
         return data.not_definite_cycles;
-    case QmlEnum::_PRODUCTION_COLUMN::_PRODUCTION_final_result:
+    case QmlEnum::PRODUCTION_COLUMN::PRODUCTION_final_result:
         return data.final_result;
     default:
         return QVariant();
@@ -116,27 +119,27 @@ QHash<int, QByteArray> History::roleNames() const
 {
     QHash<int, QByteArray> roles;
 
-    roles[QmlEnum::_PRODUCTION_COLUMN::_PRODUCTION_id]                       = "id";
-    roles[QmlEnum::_PRODUCTION_COLUMN::_PRODUCTION_welder_id]                = "welder_id";
-    roles[QmlEnum::_PRODUCTION_COLUMN::_PRODUCTION_model_id]                 = "model_id";
-    roles[QmlEnum::_PRODUCTION_COLUMN::_PRODUCTION_create_time]              = "create_time";
-    roles[QmlEnum::_PRODUCTION_COLUMN::_PRODUCTION_serial_number]            = "serial_number";
-    roles[QmlEnum::_PRODUCTION_COLUMN::_PRODUCTION_cycle_count]              = "cycle_count";
-    roles[QmlEnum::_PRODUCTION_COLUMN::_PRODUCTION_batch_count]              = "batch_count";
-    roles[QmlEnum::_PRODUCTION_COLUMN::_PRODUCTION_energy]                   = "energy";
-    roles[QmlEnum::_PRODUCTION_COLUMN::_PRODUCTION_amplitude]                = "amplitude";
-    roles[QmlEnum::_PRODUCTION_COLUMN::_PRODUCTION_pressure]                 = "pressure";
-    roles[QmlEnum::_PRODUCTION_COLUMN::_PRODUCTION_time]                     = "time";
-    roles[QmlEnum::_PRODUCTION_COLUMN::_PRODUCTION_power]                    = "power";
-    roles[QmlEnum::_PRODUCTION_COLUMN::_PRODUCTION_pre_height]               = "pre_height";
-    roles[QmlEnum::_PRODUCTION_COLUMN::_PRODUCTION_post_height]              = "post_height";
-    roles[QmlEnum::_PRODUCTION_COLUMN::_PRODUCTION_force]                    = "force";
-    roles[QmlEnum::_PRODUCTION_COLUMN::_PRODUCTION_residual]                 = "residual";
-    roles[QmlEnum::_PRODUCTION_COLUMN::_PRODUCTION_good_rate]                = "good_rate";
-    roles[QmlEnum::_PRODUCTION_COLUMN::_PRODUCTION_good_subtotal_cycles]     = "good_subtotal_cycles";
-    roles[QmlEnum::_PRODUCTION_COLUMN::_PRODUCTION_suspect_subtotal_cycles]  = "suspect_subtotal_cycles";
-    roles[QmlEnum::_PRODUCTION_COLUMN::_PRODUCTION_not_definite_cycles]      = "not_definite_cycles";
-    roles[QmlEnum::_PRODUCTION_COLUMN::_PRODUCTION_final_result]             = "final_result";
+    roles[QmlEnum::PRODUCTION_COLUMN::PRODUCTION_id]                       = "id";
+    roles[QmlEnum::PRODUCTION_COLUMN::PRODUCTION_welder_id]                = "welder_id";
+    roles[QmlEnum::PRODUCTION_COLUMN::PRODUCTION_model_id]                 = "model_id";
+    roles[QmlEnum::PRODUCTION_COLUMN::PRODUCTION_create_time]              = "create_time";
+    roles[QmlEnum::PRODUCTION_COLUMN::PRODUCTION_serial_number]            = "serial_number";
+    roles[QmlEnum::PRODUCTION_COLUMN::PRODUCTION_cycle_count]              = "cycle_count";
+    roles[QmlEnum::PRODUCTION_COLUMN::PRODUCTION_batch_count]              = "batch_count";
+    roles[QmlEnum::PRODUCTION_COLUMN::PRODUCTION_energy]                   = "energy";
+    roles[QmlEnum::PRODUCTION_COLUMN::PRODUCTION_amplitude]                = "amplitude";
+    roles[QmlEnum::PRODUCTION_COLUMN::PRODUCTION_pressure]                 = "pressure";
+    roles[QmlEnum::PRODUCTION_COLUMN::PRODUCTION_time]                     = "time";
+    roles[QmlEnum::PRODUCTION_COLUMN::PRODUCTION_power]                    = "power";
+    roles[QmlEnum::PRODUCTION_COLUMN::PRODUCTION_pre_height]               = "pre_height";
+    roles[QmlEnum::PRODUCTION_COLUMN::PRODUCTION_post_height]              = "post_height";
+    roles[QmlEnum::PRODUCTION_COLUMN::PRODUCTION_force]                    = "force";
+    roles[QmlEnum::PRODUCTION_COLUMN::PRODUCTION_residual]                 = "residual";
+    roles[QmlEnum::PRODUCTION_COLUMN::PRODUCTION_good_rate]                = "good_rate";
+    roles[QmlEnum::PRODUCTION_COLUMN::PRODUCTION_good_subtotal_cycles]     = "good_subtotal_cycles";
+    roles[QmlEnum::PRODUCTION_COLUMN::PRODUCTION_suspect_subtotal_cycles]  = "suspect_subtotal_cycles";
+    roles[QmlEnum::PRODUCTION_COLUMN::PRODUCTION_not_definite_cycles]      = "not_definite_cycles";
+    roles[QmlEnum::PRODUCTION_COLUMN::PRODUCTION_final_result]             = "final_result";
 
     return roles;
 }

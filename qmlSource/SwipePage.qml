@@ -461,11 +461,11 @@ Rectangle {
                             anchors.fill: parent
                             onClicked: {
                                 taskplanView.currentIndex = index
-                                parameter1 = Manual.data(Manual.index(index,0),QmlEnum._MANUAL_energy)
-                                parameter2 = Manual.data(Manual.index(index,0),QmlEnum._MANUAL_amplitude)
-                                parameter3 = Manual.data(Manual.index(index,0),QmlEnum._MANUAL_pressure)
-                                parameter4 = Manual.data(Manual.index(index,0),QmlEnum._MANUAL_pre_height)
-                                parameter5 = Manual.data(Manual.index(index,0),QmlEnum._MANUAL_post_height)
+                                parameter1 = Manual.data(Manual.index(index,0),QmlEnum.MANUAL_energy)
+                                parameter2 = Manual.data(Manual.index(index,0),QmlEnum.MANUAL_amplitude)
+                                parameter3 = Manual.data(Manual.index(index,0),QmlEnum.MANUAL_pressure)
+                                parameter4 = Manual.data(Manual.index(index,0),QmlEnum.MANUAL_pre_height)
+                                parameter5 = Manual.data(Manual.index(index,0),QmlEnum.MANUAL_post_height)
                             }
                         }
                         Button{

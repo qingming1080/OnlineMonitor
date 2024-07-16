@@ -87,7 +87,7 @@ Rectangle {
                 border.width: 2
             }
             onPressed: {
-                History.setWelderID(0)
+                History.setDeviceID(0)
             }
         }
         Text {
@@ -119,7 +119,7 @@ Rectangle {
                 border.width: 2
             }
             onPressed: {
-                History.setWelderID(1)
+                History.setDeviceID(1)
             }
         }
         Text {
@@ -159,7 +159,7 @@ Rectangle {
                 }
             }
             onPressed: {
-                History.setWelderID(2)
+                History.setDeviceID(2)
             }
         }
         Text {
@@ -200,7 +200,7 @@ Rectangle {
                 }
             }
             onPressed: {
-                History.setWelderID(3)
+                History.setDeviceID(3)
             }
         }
         Text {
@@ -241,7 +241,7 @@ Rectangle {
                 }
             }
             onPressed: {
-                History.setWelderID(4)
+                History.setDeviceID(4)
             }
         }
         Text {
@@ -284,6 +284,9 @@ Rectangle {
                 border.color: bt8.checked ? "#afc3d8" : "#0068a8"
                 border.width: 2
             }
+            onPressed: {
+                History.setFinalResult(0)
+            }
         }
         Text {
             id: b8
@@ -311,6 +314,9 @@ Rectangle {
                 color: bt9.checked ? "#0068a7" : "#e8e8e8"
                 border.color: bt9.checked ? "#afc3d8" : "#0068a8"
                 border.width: 2
+            }
+            onPressed: {
+                History.setFinalResult(1)
             }
         }
         Text {
@@ -340,6 +346,9 @@ Rectangle {
                 border.color: bt11.checked ? "#afc3d8" : "#0068a8"
                 border.width: 2
             }
+            onPressed: {
+                History.setFinalResult(3)
+            }
         }
         Text {
             id: b11
@@ -367,6 +376,9 @@ Rectangle {
                 color: bt10.checked ? "#0068a7" : "#e8e8e8"
                 border.color: bt10.checked ? "#afc3d8" : "#0068a8"
                 border.width: 2
+            }
+            onPressed: {
+                History.setFinalResult(2)
             }
         }
         Text {
@@ -476,7 +488,7 @@ Rectangle {
                     anchors.verticalCenter: parent.verticalCenter
                     x:1220/5*4 + 1220/5/2-width/2
                     font.pixelSize: 16
-                    text: History.finalResult === 0?"合格":finalResult === 1?"次品":"可疑"
+                    text: final_result===0?"良品":final_result===1?"次品":"可疑"
                     font.family: fontBold
                     color: index % 2 === 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
                 }

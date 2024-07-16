@@ -20,11 +20,11 @@ public:
 
     Q_INVOKABLE void setWelderID(int welderID = 0);
 
-    int deviceID() const;
-    void setDeviceID(int newDeviceID);
+    Q_INVOKABLE int deviceID() const;
+    Q_INVOKABLE void setDeviceID(int newDeviceID);
 
-    int finalResult() const;
-    void setFinalResult(int newFinalResult);
+    Q_INVOKABLE int finalResult() const;
+    Q_INVOKABLE void setFinalResult(int newFinalResult);
 
 signals:
     void deviceIDChanged();

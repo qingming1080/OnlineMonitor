@@ -899,16 +899,16 @@ Rectangle {
                             }
                             text: {
                                 if(com2.displayText === "ETH0"){
-                                    return NetworkModel.getDataByWelderID(1,QmlEnum._NETWORK_server_port)
+                                    return NetworkModel.getDataByWelderID(1,QmlEnum.NETWORK_server_port)
                                 }
                                 else if(com2.displayText === "ETH1"){
-                                    return NetworkModel.getDataByWelderID(2,QmlEnum._NETWORK_server_port)
+                                    return NetworkModel.getDataByWelderID(2,QmlEnum.NETWORK_server_port)
                                 }
                                 else if(com2.displayText === "ETH2"){
-                                    return NetworkModel.getDataByWelderID(3,QmlEnum._NETWORK_server_port)
+                                    return NetworkModel.getDataByWelderID(3,QmlEnum.NETWORK_server_port)
                                 }
                                 else if(com2.displayText === "ETH3"){
-                                    return NetworkModel.getDataByWelderID(4,QmlEnum._NETWORK_server_port)
+                                    return NetworkModel.getDataByWelderID(4,QmlEnum.NETWORK_server_port)
                                 }
                             }
                         }
@@ -932,16 +932,16 @@ Rectangle {
                             }
                             text:{
                                 if(com2.displayText === "ETH0"){
-                                    return NetworkModel.getDataByWelderID(1,QmlEnum._NETWORK_remote_ip)
+                                    return NetworkModel.getDataByWelderID(1,QmlEnum.NETWORK_remote_ip)
                                 }
                                 else if(com2.displayText === "ETH1"){
-                                    return NetworkModel.getDataByWelderID(2,QmlEnum._NETWORK_remote_ip)
+                                    return NetworkModel.getDataByWelderID(2,QmlEnum.NETWORK_remote_ip)
                                 }
                                 else if(com2.displayText === "ETH2"){
-                                    return NetworkModel.getDataByWelderID(3,QmlEnum._NETWORK_remote_ip)
+                                    return NetworkModel.getDataByWelderID(3,QmlEnum.NETWORK_remote_ip)
                                 }
                                 else if(com2.displayText === "ETH3"){
-                                    return NetworkModel.getDataByWelderID(4,QmlEnum._NETWORK_remote_ip)
+                                    return NetworkModel.getDataByWelderID(4,QmlEnum.NETWORK_remote_ip)
                                 }
                             }
                         }
@@ -965,16 +965,16 @@ Rectangle {
                             }
                             text:{
                                 if(com2.displayText === "ETH0"){
-                                    return NetworkModel.getDataByWelderID(1,QmlEnum._NETWORK_local_ip)
+                                    return NetworkModel.getDataByWelderID(1,QmlEnum.NETWORK_local_ip)
                                 }
                                 else if(com2.displayText === "ETH1"){
-                                    return NetworkModel.getDataByWelderID(2,QmlEnum._NETWORK_local_ip)
+                                    return NetworkModel.getDataByWelderID(2,QmlEnum.NETWORK_local_ip)
                                 }
                                 else if(com2.displayText === "ETH2"){
-                                    return NetworkModel.getDataByWelderID(3,QmlEnum._NETWORK_local_ip)
+                                    return NetworkModel.getDataByWelderID(3,QmlEnum.NETWORK_local_ip)
                                 }
                                 else if(com2.displayText === "ETH3"){
-                                    return NetworkModel.getDataByWelderID(4,QmlEnum._NETWORK_local_ip)
+                                    return NetworkModel.getDataByWelderID(4,QmlEnum.NETWORK_local_ip)
                                 }
                             }
                         }
@@ -1077,18 +1077,18 @@ Rectangle {
                             model: ["2400", "9600", "19200","115200"]
                             displayText:{
                                 if(com3.displayText === "COM1"){
-                                    return RS232Model.getDataByWelderID(1,QmlEnum._RS232_baud_rate)
+                                    return RS232Model.getDataByWelderID(1,QmlEnum.RS232_baud_rate)
                                 }
                                 else if(com3.displayText === "COM2"){
-                                    return RS232Model.getDataByWelderID(2,QmlEnum._RS232_baud_rate)
+                                    return RS232Model.getDataByWelderID(2,QmlEnum.RS232_baud_rate)
                                 }
                             }
                             onDataAlter: {
                                 if(com3.displayText === "COM1"){
-                                    RS232Model.setRS232Data(1,QmlEnum._RS232_baud_rate,currentText)
+                                    RS232Model.setRS232Data(1,QmlEnum.RS232_baud_rate,currentText)
                                 }
                                 else if(com3.displayText === "COM2"){
-                                    RS232Model.setRS232Data(2,QmlEnum._RS232_baud_rate,currentText)
+                                    RS232Model.setRS232Data(2,QmlEnum.RS232_baud_rate,currentText)
                                 }
                                 com4.displayText = currentText
                             }
@@ -1102,27 +1102,27 @@ Rectangle {
                             model: ["7bit", "8bit"]
                             displayText:{
                                 if(com3.displayText === "COM1"){
-                                    return RS232Model.getDataByWelderID(1,QmlEnum._RS232_data_bit)
+                                    return RS232Model.getDataByWelderID(1,QmlEnum.RS232_data_bit)
                                 }
                                 else if(com3.displayText === "COM2"){
-                                    return RS232Model.getDataByWelderID(2,QmlEnum._RS232_data_bit)
+                                    return RS232Model.getDataByWelderID(2,QmlEnum.RS232_data_bit)
                                 }
                             }
                             onDataAlter: {
                                 if(com3.displayText === "COM1"){
                                     if(com7.currentIndex === 0){
-                                        RS232Model.setRS232Data(1,QmlEnum._RS232_data_bit,7)
+                                        RS232Model.setRS232Data(1,QmlEnum.RS232_data_bit,7)
                                     }
                                     else if(com7.currentIndex === 1){
-                                        RS232Model.setRS232Data(1,QmlEnum._RS232_data_bit,8)
+                                        RS232Model.setRS232Data(1,QmlEnum.RS232_data_bit,8)
                                     }
                                 }
                                 else if(com3.displayText === "COM2"){
                                     if(com7.currentIndex === 0){
-                                        RS232Model.setRS232Data(2,QmlEnum._RS232_data_bit,7)
+                                        RS232Model.setRS232Data(2,QmlEnum.RS232_data_bit,7)
                                     }
                                     else if(com7.currentIndex === 1){
-                                        RS232Model.setRS232Data(2,QmlEnum._RS232_data_bit,8)
+                                        RS232Model.setRS232Data(2,QmlEnum.RS232_data_bit,8)
                                     }
                                 }
                                 com5.displayText = currentText
@@ -1137,18 +1137,18 @@ Rectangle {
                             model: ["None", "Odd", "Even"]
                             displayText: {
                                 if(com3.displayText === "COM1"){
-                                    return RS232Model.getDataByWelderID(1,QmlEnum._RS232_parity_bit)
+                                    return RS232Model.getDataByWelderID(1,QmlEnum.RS232_parity_bit)
                                 }
                                 else if(com3.displayText === "COM2"){
-                                    return RS232Model.getDataByWelderID(2,QmlEnum._RS232_parity_bit)
+                                    return RS232Model.getDataByWelderID(2,QmlEnum.RS232_parity_bit)
                                 }
                             }
                             onDataAlter: {
                                 if(com3.displayText === "COM1"){
-                                    RS232Model.setRS232Data(1,QmlEnum._RS232_parity_bit,currentText)
+                                    RS232Model.setRS232Data(1,QmlEnum.RS232_parity_bit,currentText)
                                 }
                                 else if(com3.displayText === "COM2"){
-                                    RS232Model.setRS232Data(2,QmlEnum._RS232_parity_bit,currentText)
+                                    RS232Model.setRS232Data(2,QmlEnum.RS232_parity_bit,currentText)
                                 }
                                 com6.displayText = currentText
                             }
@@ -1162,33 +1162,33 @@ Rectangle {
                             model: ["1bit", "1.5bit", "2bit"]
                             displayText:{
                                 if(com3.displayText === "COM1"){
-                                    return RS232Model.getDataByWelderID(1,QmlEnum._RS232_stop_bit)
+                                    return RS232Model.getDataByWelderID(1,QmlEnum.RS232_stop_bit)
                                 }
                                 else if(com3.displayText === "COM2"){
-                                    return RS232Model.getDataByWelderID(2,QmlEnum._RS232_stop_bit)
+                                    return RS232Model.getDataByWelderID(2,QmlEnum.RS232_stop_bit)
                                 }
                             }
                             onDataAlter: {
                                 if(com3.displayText === "COM1"){
                                     if(com7.currentIndex === 0){
-                                        RS232Model.setRS232Data(1,QmlEnum._RS232_stop_bit,1)
+                                        RS232Model.setRS232Data(1,QmlEnum.RS232_stop_bit,1)
                                     }
                                     else if(com7.currentIndex === 1){
-                                        RS232Model.setRS232Data(1,QmlEnum._RS232_stop_bit,1.5)
+                                        RS232Model.setRS232Data(1,QmlEnum.RS232_stop_bit,1.5)
                                     }
                                     else if(com7.currentIndex === 2){
-                                        RS232Model.setRS232Data(1,QmlEnum._RS232_stop_bit,2)
+                                        RS232Model.setRS232Data(1,QmlEnum.RS232_stop_bit,2)
                                     }
                                 }
                                 else if(com3.displayText === "COM2"){
                                     if(com7.currentIndex === 0){
-                                        RS232Model.setRS232Data(2,QmlEnum._RS232_stop_bit,1)
+                                        RS232Model.setRS232Data(2,QmlEnum.RS232_stop_bit,1)
                                     }
                                     else if(com7.currentIndex === 1){
-                                        RS232Model.setRS232Data(2,QmlEnum._RS232_stop_bit,1.5)
+                                        RS232Model.setRS232Data(2,QmlEnum.RS232_stop_bit,1.5)
                                     }
                                     else if(com7.currentIndex === 2){
-                                        RS232Model.setRS232Data(2,QmlEnum._RS232_stop_bit,2)
+                                        RS232Model.setRS232Data(2,QmlEnum.RS232_stop_bit,2)
                                     }
                                 }
                                 com7.displayText = currentText
