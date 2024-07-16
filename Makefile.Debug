@@ -390,6 +390,7 @@ debug\moc_databasemanager.cpp: DataBase\databasemanager.h \
 		E:\qt5.15\5.15.2\msvc2019_64\include\QtSql\qsqldatabase.h \
 		E:\qt5.15\5.15.2\msvc2019_64\include\QtSql\qtsqlglobal.h \
 		E:\qt5.15\5.15.2\msvc2019_64\include\QtSql\qtsql-config.h \
+		qmlenum.h \
 		define.h \
 		E:\qt5.15\5.15.2\msvc2019_64\include\QtCore\QString \
 		E:\qt5.15\5.15.2\msvc2019_64\include\QtCore\QByteArray \
@@ -1436,6 +1437,7 @@ debug\databasemanager.obj: DataBase\databasemanager.cpp DataBase\databasemanager
 		E:\qt5.15\5.15.2\msvc2019_64\include\QtSql\qsqldatabase.h \
 		E:\qt5.15\5.15.2\msvc2019_64\include\QtSql\qtsqlglobal.h \
 		E:\qt5.15\5.15.2\msvc2019_64\include\QtSql\qtsql-config.h \
+		qmlenum.h \
 		define.h \
 		E:\qt5.15\5.15.2\msvc2019_64\include\QtCore\QString \
 		E:\qt5.15\5.15.2\msvc2019_64\include\QtCore\QByteArray \
@@ -1581,13 +1583,13 @@ debug\devicemanager.obj: devicemanager.cpp devicemanager.h \
 		E:\qt5.15\5.15.2\msvc2019_64\include\QtSql\qsqldatabase.h \
 		E:\qt5.15\5.15.2\msvc2019_64\include\QtSql\qtsqlglobal.h \
 		E:\qt5.15\5.15.2\msvc2019_64\include\QtSql\qtsql-config.h \
+		qmlenum.h \
 		define.h \
 		E:\qt5.15\5.15.2\msvc2019_64\include\QtCore\QString \
 		E:\qt5.15\5.15.2\msvc2019_64\include\QtCore\QByteArray \
 		E:\qt5.15\5.15.2\msvc2019_64\include\QtCore\QDateTime \
 		E:\qt5.15\5.15.2\msvc2019_64\include\QtCore\qdatetime.h \
-		model\deviceinformation.h \
-		qmlenum.h
+		model\deviceinformation.h
 
 debug\fileobject.obj: fileobject.cpp fileobject.h \
 		E:\qt5.15\5.15.2\msvc2019_64\include\QtCore\QObject \
@@ -2066,6 +2068,7 @@ debug\history.obj: model\history.cpp model\history.h \
 		E:\qt5.15\5.15.2\msvc2019_64\include\QtSql\qsqldatabase.h \
 		E:\qt5.15\5.15.2\msvc2019_64\include\QtSql\qtsqlglobal.h \
 		E:\qt5.15\5.15.2\msvc2019_64\include\QtSql\qtsql-config.h \
+		qmlenum.h \
 		E:\qt5.15\5.15.2\msvc2019_64\include\QtCore\QtMath \
 		E:\qt5.15\5.15.2\msvc2019_64\include\QtCore\qmath.h
 
@@ -2128,6 +2131,7 @@ debug\io.obj: model\io.cpp model\io.h \
 		E:\qt5.15\5.15.2\msvc2019_64\include\QtSql\qsqldatabase.h \
 		E:\qt5.15\5.15.2\msvc2019_64\include\QtSql\qtsqlglobal.h \
 		E:\qt5.15\5.15.2\msvc2019_64\include\QtSql\qtsql-config.h \
+		qmlenum.h \
 		define.h \
 		E:\qt5.15\5.15.2\msvc2019_64\include\QtCore\QString \
 		E:\qt5.15\5.15.2\msvc2019_64\include\QtCore\QByteArray \
@@ -2224,7 +2228,8 @@ debug\manual.obj: model\manual.cpp model\manual.h \
 		E:\qt5.15\5.15.2\msvc2019_64\include\QtSql\QSqlDatabase \
 		E:\qt5.15\5.15.2\msvc2019_64\include\QtSql\qsqldatabase.h \
 		E:\qt5.15\5.15.2\msvc2019_64\include\QtSql\qtsqlglobal.h \
-		E:\qt5.15\5.15.2\msvc2019_64\include\QtSql\qtsql-config.h
+		E:\qt5.15\5.15.2\msvc2019_64\include\QtSql\qtsql-config.h \
+		qmlenum.h
 
 debug\message.obj: model\message.cpp model\message.h \
 		E:\qt5.15\5.15.2\msvc2019_64\include\QtCore\QAbstractListModel \
@@ -2371,7 +2376,8 @@ debug\networkmodel.obj: model\networkmodel.cpp model\networkmodel.h \
 		E:\qt5.15\5.15.2\msvc2019_64\include\QtSql\QSqlDatabase \
 		E:\qt5.15\5.15.2\msvc2019_64\include\QtSql\qsqldatabase.h \
 		E:\qt5.15\5.15.2\msvc2019_64\include\QtSql\qtsqlglobal.h \
-		E:\qt5.15\5.15.2\msvc2019_64\include\QtSql\qtsql-config.h
+		E:\qt5.15\5.15.2\msvc2019_64\include\QtSql\qtsql-config.h \
+		qmlenum.h
 
 debug\rs232model.obj: model\rs232model.cpp model\rs232model.h \
 		E:\qt5.15\5.15.2\msvc2019_64\include\QtCore\QAbstractListModel \
@@ -2450,7 +2456,8 @@ debug\rs232model.obj: model\rs232model.cpp model\rs232model.h \
 		E:\qt5.15\5.15.2\msvc2019_64\include\QtSql\QSqlDatabase \
 		E:\qt5.15\5.15.2\msvc2019_64\include\QtSql\qsqldatabase.h \
 		E:\qt5.15\5.15.2\msvc2019_64\include\QtSql\qtsqlglobal.h \
-		E:\qt5.15\5.15.2\msvc2019_64\include\QtSql\qtsql-config.h
+		E:\qt5.15\5.15.2\msvc2019_64\include\QtSql\qtsql-config.h \
+		qmlenum.h
 
 debug\system.obj: model\system.cpp model\system.h \
 		E:\qt5.15\5.15.2\msvc2019_64\include\QtCore\QObject \
@@ -2505,7 +2512,20 @@ debug\system.obj: model\system.cpp model\system.h \
 		E:\qt5.15\5.15.2\msvc2019_64\include\QtCore\qmetatype.h \
 		E:\qt5.15\5.15.2\msvc2019_64\include\QtCore\qvarlengtharray.h \
 		E:\qt5.15\5.15.2\msvc2019_64\include\QtCore\qcontainerfwd.h \
-		E:\qt5.15\5.15.2\msvc2019_64\include\QtCore\qobject_impl.h
+		E:\qt5.15\5.15.2\msvc2019_64\include\QtCore\qobject_impl.h \
+		DataBase\databasemanager.h \
+		E:\qt5.15\5.15.2\msvc2019_64\include\QtSql\QSqlDatabase \
+		E:\qt5.15\5.15.2\msvc2019_64\include\QtSql\qsqldatabase.h \
+		E:\qt5.15\5.15.2\msvc2019_64\include\QtSql\qtsqlglobal.h \
+		E:\qt5.15\5.15.2\msvc2019_64\include\QtSql\qtsql-config.h \
+		qmlenum.h \
+		define.h \
+		E:\qt5.15\5.15.2\msvc2019_64\include\QtCore\QString \
+		E:\qt5.15\5.15.2\msvc2019_64\include\QtCore\QByteArray \
+		E:\qt5.15\5.15.2\msvc2019_64\include\QtCore\QDateTime \
+		E:\qt5.15\5.15.2\msvc2019_64\include\QtCore\qdatetime.h \
+		E:\qt5.15\5.15.2\msvc2019_64\include\QtCore\qshareddata.h \
+		E:\qt5.15\5.15.2\msvc2019_64\include\QtCore\qhash.h
 
 debug\trend.obj: model\trend.cpp model\trend.h \
 		E:\qt5.15\5.15.2\msvc2019_64\include\QtCore\QObject \
@@ -2611,7 +2631,8 @@ debug\trend.obj: model\trend.cpp model\trend.h \
 		E:\qt5.15\5.15.2\msvc2019_64\include\QtSql\QSqlDatabase \
 		E:\qt5.15\5.15.2\msvc2019_64\include\QtSql\qsqldatabase.h \
 		E:\qt5.15\5.15.2\msvc2019_64\include\QtSql\qtsqlglobal.h \
-		E:\qt5.15\5.15.2\msvc2019_64\include\QtSql\qtsql-config.h
+		E:\qt5.15\5.15.2\msvc2019_64\include\QtSql\qtsql-config.h \
+		qmlenum.h
 
 debug\qmlcache.obj: qmlcache.cpp qmlcache.h \
 		E:\qt5.15\5.15.2\msvc2019_64\include\QtCore\QObject \

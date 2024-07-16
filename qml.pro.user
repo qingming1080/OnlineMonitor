@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<<<<<<< HEAD
-<!-- Written by QtCreator 10.0.2, 2024-07-14T13:34:22. -->
-=======
-<!-- Written by QtCreator 11.0.2, 2024-07-14T20:28:13. -->
->>>>>>> e533e1b62a10b6576317ac0f7ea9a1bacf801b57
+<!-- Written by QtCreator 11.0.2, 2024-07-16T12:47:42. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
@@ -264,7 +260,7 @@
     <value type="bool" key="RunConfiguration.UseCppDebuggerAuto">true</value>
     <value type="bool" key="RunConfiguration.UseLibrarySearchPath">true</value>
     <value type="bool" key="RunConfiguration.UseQmlDebuggerAuto">true</value>
-    <value type="QString" key="RunConfiguration.WorkingDirectory.default">D:/Test/qml/OnlineMonitor</value>
+    <value type="QString" key="RunConfiguration.WorkingDirectory.default">D:/Test/qml/build-qml-Desktop_Qt_5_15_2_MSVC2019_64bit-Debug</value>
    </valuemap>
    <value type="qlonglong" key="ProjectExplorer.Target.RunConfigurationCount">1</value>
   </valuemap>

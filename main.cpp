@@ -63,6 +63,7 @@ int main(int argc, char *argv[])
 //    qmlRegisterType<IOModel>("IOModel",1,0,"IOModel");
     qmlRegisterType<DeviceInformation>("DeviceInformation",1,0,"DeviceInformation");
     qmlRegisterType<Trend>("Trend",1,0,"Trend");
+    qmlRegisterType<QmlEnum>("QmlEnum",1,0,"QmlEnum");
 
 
     const QUrl url(QStringLiteral("qrc:/main.qml"));

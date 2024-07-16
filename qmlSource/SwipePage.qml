@@ -4,6 +4,7 @@ import QtQuick.Controls 2.15
 import QtQml.Models 2.15
 import Device 1.0
 import DeviceInformation 1.0
+import QmlEnum 1.0
 Rectangle {
     color: pRgb(153, 204, 255)
     radius: 5
@@ -460,11 +461,11 @@ Rectangle {
                             anchors.fill: parent
                             onClicked: {
                                 taskplanView.currentIndex = index
-                                parameter1 = Manual.data(Manual.index(index,0),5)
-                                parameter2 = Manual.data(Manual.index(index,0),6)
-                                parameter3 = Manual.data(Manual.index(index,0),7)
-                                parameter4 = Manual.data(Manual.index(index,0),10)
-                                parameter5 = Manual.data(Manual.index(index,0),11)
+                                parameter1 = Manual.data(Manual.index(index,0),QmlEnum._MANUAL_energy)
+                                parameter2 = Manual.data(Manual.index(index,0),QmlEnum._MANUAL_amplitude)
+                                parameter3 = Manual.data(Manual.index(index,0),QmlEnum._MANUAL_pressure)
+                                parameter4 = Manual.data(Manual.index(index,0),QmlEnum._MANUAL_pre_height)
+                                parameter5 = Manual.data(Manual.index(index,0),QmlEnum._MANUAL_post_height)
                             }
                         }
                         Button{
