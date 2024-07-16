@@ -22,5 +22,5 @@ void IO::setAvailabel(bool newAvailabel)
     m_availabel = newAvailabel;
     emit availabelChanged();
 
-    DataBaseManager::getInstance()->setIOData(m_ioID, _IO_COLUMN::_IO_available, newAvailabel?1:0);
+    DataBaseManager::getInstance()->setIOData(m_ioID, QmlEnum::_IO_COLUMN::_IO_available, newAvailabel?1:0);
 }

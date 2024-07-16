@@ -40,21 +40,14 @@ void Trend::upWeldData()
 
 void Trend::upYieldData()
 {
-    QDateTime currentTime = QDateTime::currentDateTime();
-    QString endTime = currentTime.toString("yyyy-MM-dd hh:mm:ss");
-
-    QDateTime oldTime;
     if(m_yieldType == 0)
-        oldTime = currentTime.addSecs(-3600);
+        setYieldTrendData(DataBaseManager::getInstance()->getYieldTrendData(0-60*60, m_welderID));  // 一个小时 60s*60m
     else if(m_yieldType == 1)
-        oldTime = currentTime.addDays(-1);
+        setYieldTrendData(DataBaseManager::getInstance()->getYieldTrendData(0-60*60*24, m_welderID));   // 一天  60s*60m*24h
     else if(m_yieldType == 2)
-        oldTime = currentTime.addDays(-7);
+        setYieldTrendData(DataBaseManager::getInstance()->getYieldTrendData(0-60*60*24*7, m_welderID)); // 七天
     else if(m_yieldType == 3)
-        oldTime = currentTime.addDays(-30);
-    QString startTime = oldTime.toString("yyyy-MM-dd hh:mm:ss");
-
-    setYieldTrendData(DataBaseManager::getInstance()->getYieldTrendData(startTime, endTime, m_welderID));
+        setYieldTrendData(DataBaseManager::getInstance()->getYieldTrendData(0-60*60*24*30, m_welderID)); // 三十天
 }
 
 
@@ -130,22 +123,27 @@ void Trend::setWeldTrendData(_Weld_TrendData result)
     emit powerMinYChanged();
 }
 
-void Trend::setYieldTrendData(QList<_Production_Data> data)
+void Trend::setYieldTrendData(_Yield_TrendData data)
 {
     // 清除当前折线数据
     m_pYieldTrend->clear();
 
-    for(int row = 0; row < data.size(); ++row)
+    for(int row = 0; row < data.data.size(); ++row)
     {
         // 良率折线
         QStandardItem* yieldItem = new QStandardItem(QString::number(row));
-        QDateTime creatTime = QDateTime::fromString(data.at(row).create_time, "yyyy-MM-dd hh:mm:ss");
+        QDateTime creatTime = QDateTime::fromString(data.data.at(row).create_time, "yyyy-MM-dd hh:mm:ss");
         QStandardItem* yield_X_Item   = new QStandardItem(QString::number(creatTime.toMSecsSinceEpoch()));
-        QStandardItem* yield_Y_Item   = new QStandardItem(QString::number(data.at(row).good_rate));
+        QStandardItem* yield_Y_Item   = new QStandardItem(QString::number(data.data.at(row).good_rate));
         m_pYieldTrend->setItem(row, 0, yieldItem);
         m_pYieldTrend->setItem(row, 1, yield_X_Item);
         m_pYieldTrend->setItem(row, 2, yield_Y_Item);
     }
+
+    m_startTime = data.startTime;
+    m_endTime   = data.endTime;
+    emit startTimeChanged();
+    emit endTimeChanged();
 }
 
 QString Trend::endTime() const
@@ -207,9 +205,6 @@ void Trend::init()
 
     upWeldData();
     upYieldData();
-    m_endTime = QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss");
-    QDateTime time = QDateTime::currentDateTime().addSecs(-3600);
-    m_startTime = time.toString("yyyy-MM-dd hh:mm:ss");
 }
 
 int Trend::yieldType() const

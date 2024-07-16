@@ -45,7 +45,7 @@ QList<int> DataBaseManager::getDeviceNums()
 
     QList<int> nums;
     while(query.next()){
-        nums.push_back(query.value(_CONFIGURATION_COLUMN::_CONFIGURATION_welder_id).toInt());
+        nums.push_back(query.value(QmlEnum::_CONFIGURATION_welder_id).toInt());
     }
 
     return nums;
@@ -55,7 +55,7 @@ _Configuration_Data DataBaseManager::getConfigurationData(int welderID)
 {
     QSqlQuery query;
     // %1_表格名称
-    QString execStr = QString("SELECT * FROM %1 WHERE %2 = :welderID").arg(CONFIGURATION_TABLENAME, getConfiguration_ColumnName(_CONFIGURATION_welder_id));
+    QString execStr = QString("SELECT * FROM %1 WHERE %2 = :welderID").arg(CONFIGURATION_TABLENAME, getConfiguration_ColumnName(QmlEnum::_CONFIGURATION_welder_id));
 
     query.prepare(execStr);
     query.bindValue(":welderID", welderID);
@@ -68,15 +68,15 @@ _Configuration_Data DataBaseManager::getConfigurationData(int welderID)
     if(query.next())
     {
         _Configuration_Data data;
-        data.welder_id        = query.value(_CONFIGURATION_COLUMN::_CONFIGURATION_welder_id).toInt();
-        data.welder_name      = query.value(_CONFIGURATION_COLUMN::_CONFIGURATION_welder_name).toString();
-        data.welder_type      = query.value(_CONFIGURATION_COLUMN::_CONFIGURATION_welder_type).toString();
-        data.production_bacth = query.value(_CONFIGURATION_COLUMN::_CONFIGURATION_production_bacth).toInt();
-        data.model_sample     = query.value(_CONFIGURATION_COLUMN::_CONFIGURATION_model_sample).toInt();
-        data.lower_limit      = query.value(_CONFIGURATION_COLUMN::_CONFIGURATION_lower_limit).toInt();
-        data.height_option    = query.value(_CONFIGURATION_COLUMN::_CONFIGURATION_height_option).toInt();
-        data.connect_type     = query.value(_CONFIGURATION_COLUMN::_CONFIGURATION_connect_type).toInt();
-        data.connect_id       = query.value(_CONFIGURATION_COLUMN::_CONFIGURATION_connect_id).toInt();
+        data.welder_id        = query.value(QmlEnum::_CONFIGURATION_welder_id).toInt();
+        data.welder_name      = query.value(QmlEnum::_CONFIGURATION_welder_name).toString();
+        data.welder_type      = query.value(QmlEnum::_CONFIGURATION_welder_type).toString();
+        data.production_bacth = query.value(QmlEnum::_CONFIGURATION_production_bacth).toInt();
+        data.model_sample     = query.value(QmlEnum::_CONFIGURATION_model_sample).toInt();
+        data.lower_limit      = query.value(QmlEnum::_CONFIGURATION_lower_limit).toInt();
+        data.height_option    = query.value(QmlEnum::_CONFIGURATION_height_option).toInt();
+        data.connect_type     = query.value(QmlEnum::_CONFIGURATION_connect_type).toInt();
+        data.connect_id       = query.value(QmlEnum::_CONFIGURATION_connect_id).toInt();
 
         return data;
     }
@@ -85,12 +85,12 @@ _Configuration_Data DataBaseManager::getConfigurationData(int welderID)
     return data;
 }
 
-bool DataBaseManager::setConfigurationData(int deviceID, _CONFIGURATION_COLUMN column, QVariant data)
+bool DataBaseManager::setConfigurationData(int deviceID, QmlEnum::_CONFIGURATION_COLUMN column, QVariant data)
 {
     QSqlQuery query;
     // %1_表格名称 %2_要修改的字段名称 %3_ID字段名称
     QString execStr = QString("UPDATE %1 SET %2 = :newdata WHERE %3 = :id")
-                          .arg(CONFIGURATION_TABLENAME, getConfiguration_ColumnName(column), getConfiguration_ColumnName(_CONFIGURATION_welder_id));
+                          .arg(CONFIGURATION_TABLENAME, getConfiguration_ColumnName(column), getConfiguration_ColumnName(QmlEnum::_CONFIGURATION_welder_id));
 
     // 绑定属性
     query.prepare(execStr);
@@ -106,7 +106,7 @@ bool DataBaseManager::removeConfigurationDevice(int deviceID)
 
     // %1_表格名称 %2_ID字段名称
     QString execStr = QString("DELETE FROM %1 WHERE %2=:id")
-                          .arg(CONFIGURATION_TABLENAME, getConfiguration_ColumnName(_CONFIGURATION_welder_id));
+                          .arg(CONFIGURATION_TABLENAME, getConfiguration_ColumnName(QmlEnum::_CONFIGURATION_welder_id));
 
     // 绑定属性
     query.prepare(execStr);
@@ -162,14 +162,14 @@ QList<_Network_Data> DataBaseManager::getNetworkData()
     while(query.next())
     {
         _Network_Data data;
-        data.id             = query.value(_NETWORK_COLUMN::_NETWORK_id).toInt();
-        data.type           = query.value(_NETWORK_COLUMN::_NETWORK_type).toInt();
-        data.protocol       = query.value(_NETWORK_COLUMN::_NETWORK_protocol).toInt();
-        data.local_ip       = query.value(_NETWORK_COLUMN::_NETWORK_local_ip).toString();
-        data.local_port     = query.value(_NETWORK_COLUMN::_NETWORK_local_port).toInt();
-        data.remote_ip      = query.value(_NETWORK_COLUMN::_NETWORK_remote_ip).toString();
-        data.server_port    = query.value(_NETWORK_COLUMN::_NETWORK_server_port).toInt();
-        data.user           = query.value(_NETWORK_COLUMN::_NETWORK_user).toString();
+        data.id             = query.value(QmlEnum::_NETWORK_id).toInt();
+        data.type           = query.value(QmlEnum::_NETWORK_type).toInt();
+        data.protocol       = query.value(QmlEnum::_NETWORK_protocol).toInt();
+        data.local_ip       = query.value(QmlEnum::_NETWORK_local_ip).toString();
+        data.local_port     = query.value(QmlEnum::_NETWORK_local_port).toInt();
+        data.remote_ip      = query.value(QmlEnum::_NETWORK_remote_ip).toString();
+        data.server_port    = query.value(QmlEnum::_NETWORK_server_port).toInt();
+        data.user           = query.value(QmlEnum::_NETWORK_user).toString();
 
         list.push_back(data);
     }
@@ -177,7 +177,7 @@ QList<_Network_Data> DataBaseManager::getNetworkData()
     return list;
 }
 
-bool DataBaseManager::setNetworkData(int networkID, _NETWORK_COLUMN column, QVariant data)
+bool DataBaseManager::setNetworkData(int networkID, QmlEnum::_NETWORK_COLUMN column, QVariant data)
 {
     if(networkID == 1)
         return false;
@@ -185,7 +185,7 @@ bool DataBaseManager::setNetworkData(int networkID, _NETWORK_COLUMN column, QVar
     QSqlQuery query;
     // %1_表格名称 %2_要修改的字段名称 %3_ID字段名称
     QString execStr = QString("UPDATE %1 SET %2 = :newdata WHERE %3 = :id")
-                          .arg(NETWORK_TABLENAME, getNetwork_ColumnName(column), getNetwork_ColumnName(_NETWORK_id));
+                          .arg(NETWORK_TABLENAME, getNetwork_ColumnName(column), getNetwork_ColumnName(QmlEnum::_NETWORK_id));
 
     // 绑定属性
     query.prepare(execStr);
@@ -203,7 +203,7 @@ bool DataBaseManager::removeNetworkRow(int networkID)
     QSqlQuery query;
     // %1_表格名称 %2_ID字段名称
     QString execStr = QString("DELETE FROM %1 WHERE %2=:id")
-                          .arg(NETWORK_TABLENAME,getNetwork_ColumnName(_NETWORK_id));
+                          .arg(NETWORK_TABLENAME,getNetwork_ColumnName(QmlEnum::_NETWORK_id));
 
     // 绑定属性
     query.prepare(execStr);
@@ -259,12 +259,12 @@ QList<_RS232_Data> DataBaseManager::getRS232Data()
     while(query.next())
     {
         _RS232_Data data;
-        data.id             = query.value(_RS232_COLUMN::_RS232_id).toInt();
-        data.port           = query.value(_RS232_COLUMN::_RS232_port).toString();
-        data.baud_rate      = query.value(_RS232_COLUMN::_RS232_baud_rate).toInt();
-        data.data_bit       = query.value(_RS232_COLUMN::_RS232_data_bit).toInt();
-        data.parity_bit     = query.value(_RS232_COLUMN::_RS232_parity_bit).toString();
-        data.stop_bit       = query.value(_RS232_COLUMN::_RS232_stop_bit).toInt();
+        data.id             = query.value(QmlEnum::_RS232_id).toInt();
+        data.port           = query.value(QmlEnum::_RS232_port).toString();
+        data.baud_rate      = query.value(QmlEnum::_RS232_baud_rate).toInt();
+        data.data_bit       = query.value(QmlEnum::_RS232_data_bit).toInt();
+        data.parity_bit     = query.value(QmlEnum::_RS232_parity_bit).toString();
+        data.stop_bit       = query.value(QmlEnum::_RS232_stop_bit).toInt();
 
         list.push_back(data);
     }
@@ -272,12 +272,12 @@ QList<_RS232_Data> DataBaseManager::getRS232Data()
     return list;
 }
 
-bool DataBaseManager::setRS232Data(int id, _RS232_COLUMN column, QVariant data)
+bool DataBaseManager::setRS232Data(int id, QmlEnum::_RS232_COLUMN column, QVariant data)
 {
     QSqlQuery query;
     // %1_表格名称 %2_要修改的字段名称 %3_ID字段名称
     QString execStr = QString("UPDATE %1 SET %2 = :newdata WHERE %3 = :id")
-                          .arg(RS232_TABLENAME, getRS232_ColumnName(column), getRS232_ColumnName(_RS232_id));
+                          .arg(RS232_TABLENAME, getRS232_ColumnName(column), getRS232_ColumnName(QmlEnum::_RS232_id));
 
     // 绑定属性
     query.prepare(execStr);
@@ -292,7 +292,7 @@ bool DataBaseManager::removeRS232Row(int id)
     QSqlQuery query;
     // %1_表格名称 %2_ID字段名称
     QString execStr = QString("DELETE FROM %1 WHERE %2=:id")
-                          .arg(RS232_TABLENAME, getRS232_ColumnName(_RS232_id));
+                          .arg(RS232_TABLENAME, getRS232_ColumnName(QmlEnum::_RS232_id));
 
     // 绑定属性
     query.prepare(execStr);
@@ -335,7 +335,7 @@ QList<_IO_Data> DataBaseManager::getIOData(int welderID)
 
     QSqlQuery query;
     // %1_表格名称
-    QString execStr = QString("SELECT * FROM %1 WHERE %2 = :welderID").arg(IO_TABLENAME, getIO_ColumnName(_IO_COLUMN::_IO_welder_id));
+    QString execStr = QString("SELECT * FROM %1 WHERE %2 = :welderID").arg(IO_TABLENAME, getIO_ColumnName(QmlEnum::_IO_welder_id));
 
     query.prepare(execStr);
     query.bindValue(":welderID", welderID);
@@ -348,11 +348,11 @@ QList<_IO_Data> DataBaseManager::getIOData(int welderID)
     while(query.next())
     {
         _IO_Data data;
-        data.id         = query.value(_IO_COLUMN::_IO_id).toInt();
-        data.welder_id  = query.value(_IO_COLUMN::_IO_welder_id).toInt();
-        data.pin        = query.value(_IO_COLUMN::_IO_pin).toInt();
-        data.available  = query.value(_IO_COLUMN::_IO_available).toInt();
-        data.signal     = query.value(_IO_COLUMN::_IO_signal).toInt();
+        data.id         = query.value(QmlEnum::_IO_id).toInt();
+        data.welder_id  = query.value(QmlEnum::_IO_welder_id).toInt();
+        data.pin        = query.value(QmlEnum::_IO_pin).toInt();
+        data.available  = query.value(QmlEnum::_IO_available).toInt();
+        data.signal     = query.value(QmlEnum::_IO_signal).toInt();
 
         list.push_back(data);
     }
@@ -366,7 +366,7 @@ _IO_Data DataBaseManager::getIOAvailabel(int welderID)
 
     QSqlQuery query;
     // %1_表格名称
-    QString execStr = QString("SELECT * FROM %1 WHERE %2 = :welderID").arg(IO_TABLENAME, getIO_ColumnName(_IO_COLUMN::_IO_welder_id));
+    QString execStr = QString("SELECT * FROM %1 WHERE %2 = :welderID").arg(IO_TABLENAME, getIO_ColumnName(QmlEnum::_IO_welder_id));
 
     query.prepare(execStr);
     query.bindValue(":welderID", welderID);
@@ -378,14 +378,14 @@ _IO_Data DataBaseManager::getIOAvailabel(int welderID)
 
     while(query.next())
     {
-        if(query.value(_IO_COLUMN::_IO_signal).toInt() != 2)
+        if(query.value(QmlEnum::_IO_signal).toInt() != 2)
             continue;
 
-        data.id         = query.value(_IO_COLUMN::_IO_id).toInt();
-        data.welder_id  = query.value(_IO_COLUMN::_IO_welder_id).toInt();
-        data.pin        = query.value(_IO_COLUMN::_IO_pin).toInt();
-        data.available  = query.value(_IO_COLUMN::_IO_available).toInt();
-        data.signal     = query.value(_IO_COLUMN::_IO_signal).toInt();
+        data.id         = query.value(QmlEnum::_IO_id).toInt();
+        data.welder_id  = query.value(QmlEnum::_IO_welder_id).toInt();
+        data.pin        = query.value(QmlEnum::_IO_pin).toInt();
+        data.available  = query.value(QmlEnum::_IO_available).toInt();
+        data.signal     = query.value(QmlEnum::_IO_signal).toInt();
 
         return data;
     }
@@ -393,12 +393,12 @@ _IO_Data DataBaseManager::getIOAvailabel(int welderID)
     return data;
 }
 
-bool DataBaseManager::setIOData(int id, _IO_COLUMN column, QVariant data)
+bool DataBaseManager::setIOData(int id, QmlEnum::_IO_COLUMN column, QVariant data)
 {
     QSqlQuery query;
     // %1_表格名称 %2_要修改的字段名称 %3_ID字段名称
     QString execStr = QString("UPDATE %1 SET %2 = :newdata WHERE %3 = :id")
-                          .arg(IO_TABLENAME, getIO_ColumnName(column), getIO_ColumnName(_IO_id));
+                          .arg(IO_TABLENAME, getIO_ColumnName(column), getIO_ColumnName(QmlEnum::_IO_id));
 
     // 绑定属性
     query.prepare(execStr);
@@ -414,7 +414,7 @@ bool DataBaseManager::removeIOData(int id)
 
     // %1_表格名称 %2_ID字段名称
     QString execStr = QString("DELETE FROM %1 WHERE %2=:id")
-                          .arg(IO_TABLENAME, getIO_ColumnName(_IO_id));
+                          .arg(IO_TABLENAME, getIO_ColumnName(QmlEnum::_IO_id));
 
     // 绑定属性
     query.prepare(execStr);
@@ -452,7 +452,7 @@ QList<_Manual_Data> DataBaseManager::getManualData(int welderID)
 
     QSqlQuery query;
     // %1_表格名称
-    QString execStr = QString("SELECT * FROM %1 WHERE %2 = :welderID").arg(MANUAL_TABLENAME, getManual_ColumnName(_MANUAL_COLUMN::_MANUAL_welder_id));
+    QString execStr = QString("SELECT * FROM %1 WHERE %2 = :welderID").arg(MANUAL_TABLENAME, getManual_ColumnName(QmlEnum::_MANUAL_welder_id));
 
     query.prepare(execStr);
     query.bindValue(":welderID", welderID);
@@ -465,20 +465,20 @@ QList<_Manual_Data> DataBaseManager::getManualData(int welderID)
     while(query.next())
     {
         _Manual_Data data;
-        data.id              = query.value(_MANUAL_COLUMN::_MANUAL_id).toInt();
-        data.welder_id       = query.value(_MANUAL_COLUMN::_MANUAL_welder_id).toInt();
-        data.create_time     = query.value(_MANUAL_COLUMN::_MANUAL_create_time).toString();
-        data.serial_number   = query.value(_MANUAL_COLUMN::_MANUAL_serial_number).toInt();
-        data.cycle_count     = query.value(_MANUAL_COLUMN::_MANUAL_cycle_count).toInt();
-        data.energy          = query.value(_MANUAL_COLUMN::_MANUAL_energy).toInt();
-        data.amplitude       = query.value(_MANUAL_COLUMN::_MANUAL_amplitude).toInt();
-        data.pressure        = query.value(_MANUAL_COLUMN::_MANUAL_pressure).toInt();
-        data.time            = query.value(_MANUAL_COLUMN::_MANUAL_time).toString();
-        data.power           = query.value(_MANUAL_COLUMN::_MANUAL_power).toInt();
-        data.pre_height      = query.value(_MANUAL_COLUMN::_MANUAL_pre_height).toInt();
-        data.post_height     = query.value(_MANUAL_COLUMN::_MANUAL_post_height).toInt();
-        data.actual_force    = query.value(_MANUAL_COLUMN::_MANUAL_actual_force).toInt();
-        data.actual_degree   = query.value(_MANUAL_COLUMN::_MANUAL_actual_degree).toInt();
+        data.id              = query.value(QmlEnum::_MANUAL_id).toInt();
+        data.welder_id       = query.value(QmlEnum::_MANUAL_welder_id).toInt();
+        data.create_time     = query.value(QmlEnum::_MANUAL_create_time).toString();
+        data.serial_number   = query.value(QmlEnum::_MANUAL_serial_number).toInt();
+        data.cycle_count     = query.value(QmlEnum::_MANUAL_cycle_count).toInt();
+        data.energy          = query.value(QmlEnum::_MANUAL_energy).toInt();
+        data.amplitude       = query.value(QmlEnum::_MANUAL_amplitude).toInt();
+        data.pressure        = query.value(QmlEnum::_MANUAL_pressure).toInt();
+        data.time            = query.value(QmlEnum::_MANUAL_time).toString();
+        data.power           = query.value(QmlEnum::_MANUAL_power).toInt();
+        data.pre_height      = query.value(QmlEnum::_MANUAL_pre_height).toInt();
+        data.post_height     = query.value(QmlEnum::_MANUAL_post_height).toInt();
+        data.actual_force    = query.value(QmlEnum::_MANUAL_actual_force).toInt();
+        data.actual_degree   = query.value(QmlEnum::_MANUAL_actual_degree).toInt();
 
         list.push_back(data);
     }
@@ -492,7 +492,7 @@ bool DataBaseManager::removeManualDevice(int deviceID)
 
     // %1_表格名称 %2_ID字段名称
     QString execStr = QString("DELETE FROM %1 WHERE %2=:welder_id")
-                          .arg(MANUAL_TABLENAME, getManual_ColumnName(_MANUAL_welder_id));
+                          .arg(MANUAL_TABLENAME, getManual_ColumnName(QmlEnum::_MANUAL_welder_id));
 
     // 绑定属性
     query.prepare(execStr);
@@ -556,25 +556,25 @@ QList<_Model_Data> DataBaseManager::getModelData()
     while(query.next())
     {
         _Model_Data data;
-        data.id                    = query.value(_MODEL_COLUMN::_MODEL_id).toInt();
-        data.welder_id             = query.value(_MODEL_COLUMN::_MODEL_welder_id).toInt();
-        data.create_time           = query.value(_MODEL_COLUMN::_MODEL_create_time).toString();
-        data.energy                = query.value(_MODEL_COLUMN::_MODEL_energy).toInt();
-        data.amplitude             = query.value(_MODEL_COLUMN::_MODEL_amplitude).toInt();
-        data.pressure              = query.value(_MODEL_COLUMN::_MODEL_pressure).toInt();
-        data.time_alpha            = query.value(_MODEL_COLUMN::_MODEL_time_alpha).toString();
-        data.time_beta             = query.value(_MODEL_COLUMN::_MODEL_time_beta).toString();
-        data.power_alpha           = query.value(_MODEL_COLUMN::_MODEL_power_alpha).toInt();
-        data.power_beta            = query.value(_MODEL_COLUMN::_MODEL_power_beta).toInt();
-        data.pre_height_alpha      = query.value(_MODEL_COLUMN::_MODEL_pre_height_alpha).toInt();
-        data.pre_height_beta       = query.value(_MODEL_COLUMN::_MODEL_pre_height_beta).toInt();
-        data.post_height_alpha     = query.value(_MODEL_COLUMN::_MODEL_post_height_alpha).toInt();
-        data.post_height_beta      = query.value(_MODEL_COLUMN::_MODEL_post_height_beta).toInt();
-        data.force_alpha           = query.value(_MODEL_COLUMN::_MODEL_force_alpha).toInt();
-        data.force_beta            = query.value(_MODEL_COLUMN::_MODEL_force_beta).toInt();
-        data.residual_alpha        = query.value(_MODEL_COLUMN::_MODEL_residual_alpha).toInt();
-        data.residual_beta         = query.value(_MODEL_COLUMN::_MODEL_residual_beta).toInt();
-        data.current_sample_count  = query.value(_MODEL_COLUMN::_MODEL_current_sample_count).toInt();
+        data.id                    = query.value(QmlEnum::_MODEL_id).toInt();
+        data.welder_id             = query.value(QmlEnum::_MODEL_welder_id).toInt();
+        data.create_time           = query.value(QmlEnum::_MODEL_create_time).toString();
+        data.energy                = query.value(QmlEnum::_MODEL_energy).toInt();
+        data.amplitude             = query.value(QmlEnum::_MODEL_amplitude).toInt();
+        data.pressure              = query.value(QmlEnum::_MODEL_pressure).toInt();
+        data.time_alpha            = query.value(QmlEnum::_MODEL_time_alpha).toString();
+        data.time_beta             = query.value(QmlEnum::_MODEL_time_beta).toString();
+        data.power_alpha           = query.value(QmlEnum::_MODEL_power_alpha).toInt();
+        data.power_beta            = query.value(QmlEnum::_MODEL_power_beta).toInt();
+        data.pre_height_alpha      = query.value(QmlEnum::_MODEL_pre_height_alpha).toInt();
+        data.pre_height_beta       = query.value(QmlEnum::_MODEL_pre_height_beta).toInt();
+        data.post_height_alpha     = query.value(QmlEnum::_MODEL_post_height_alpha).toInt();
+        data.post_height_beta      = query.value(QmlEnum::_MODEL_post_height_beta).toInt();
+        data.force_alpha           = query.value(QmlEnum::_MODEL_force_alpha).toInt();
+        data.force_beta            = query.value(QmlEnum::_MODEL_force_beta).toInt();
+        data.residual_alpha        = query.value(QmlEnum::_MODEL_residual_alpha).toInt();
+        data.residual_beta         = query.value(QmlEnum::_MODEL_residual_beta).toInt();
+        data.current_sample_count  = query.value(QmlEnum::_MODEL_current_sample_count).toInt();
 
         list.push_back(data);
     }
@@ -588,7 +588,7 @@ bool DataBaseManager::removeModelRow(int id)
 
     // %1_表格名称 %2_ID字段名称
     QString execStr = QString("DELETE FROM %1 WHERE %2=:id")
-                          .arg(MODEL_TABLENAME, getModel_ColumnName(_MODEL_id));
+                          .arg(MODEL_TABLENAME, getModel_ColumnName(QmlEnum::_MODEL_id));
 
     // 绑定属性
     query.prepare(execStr);
@@ -666,8 +666,8 @@ QList<_Production_Data> DataBaseManager::getProductionData(int welderID, int fin
         // %1_表格名称
         QString execStr = QString("SELECT * FROM %1 WHERE %2 = :welderID AND %3 = :finalResult ORDER BY create_time DESC LIMIT 150")
                               .arg(PRODUCTION_TABLENAME
-                                   , getProduction_ColumnName(_PRODUCTION_COLUMN::_PRODUCTION_welder_id)
-                                   , getProduction_ColumnName(_PRODUCTION_COLUMN::_PRODUCTION_final_result));
+                                   , getProduction_ColumnName(QmlEnum::_PRODUCTION_welder_id)
+                                   , getProduction_ColumnName(QmlEnum::_PRODUCTION_final_result));
 
         query.prepare(execStr);
         query.bindValue(":welderID", welderID);
@@ -678,7 +678,7 @@ QList<_Production_Data> DataBaseManager::getProductionData(int welderID, int fin
         // %1_表格名称
         QString execStr = QString("SELECT * FROM %1 WHERE %2 = :welderID ORDER BY create_time DESC LIMIT 150")
                               .arg(PRODUCTION_TABLENAME
-                                   , getProduction_ColumnName(_PRODUCTION_COLUMN::_PRODUCTION_welder_id));
+                                   , getProduction_ColumnName(QmlEnum::_PRODUCTION_welder_id));
 
         query.prepare(execStr);
         query.bindValue(":welderID", welderID);
@@ -688,7 +688,7 @@ QList<_Production_Data> DataBaseManager::getProductionData(int welderID, int fin
         // %1_表格名称
         QString execStr = QString("SELECT * FROM %1 WHERE %2 = :finalResult ORDER BY create_time DESC LIMIT 150")
                               .arg(PRODUCTION_TABLENAME
-                                   , getProduction_ColumnName(_PRODUCTION_COLUMN::_PRODUCTION_final_result));
+                                   , getProduction_ColumnName(QmlEnum::_PRODUCTION_final_result));
 
         query.prepare(execStr);
         query.bindValue(":finalResult", finalResult-1);
@@ -698,7 +698,7 @@ QList<_Production_Data> DataBaseManager::getProductionData(int welderID, int fin
         // %1_表格名称
         QString execStr = QString("SELECT * FROM %1 ORDER BY %2 DESC LIMIT 150")
                               .arg(PRODUCTION_TABLENAME
-                                   , getProduction_ColumnName(_PRODUCTION_COLUMN::_PRODUCTION_create_time));
+                                   , getProduction_ColumnName(QmlEnum::_PRODUCTION_create_time));
         qDebug() << execStr;
         query.prepare(execStr);
     }
@@ -711,42 +711,42 @@ QList<_Production_Data> DataBaseManager::getProductionData(int welderID, int fin
     while(query.next())
     {
         _Production_Data data;
-        data.id                       = query.value(_PRODUCTION_COLUMN::_PRODUCTION_id).toInt();
-        data.welder_id                = query.value(_PRODUCTION_COLUMN::_PRODUCTION_welder_id).toInt();
-        data.model_id                 = query.value(_PRODUCTION_COLUMN::_PRODUCTION_model_id).toInt();
-        data.create_time              = query.value(_PRODUCTION_COLUMN::_PRODUCTION_create_time).toString();
-        data.serial_number            = query.value(_PRODUCTION_COLUMN::_PRODUCTION_serial_number).toInt();
-        data.cycle_count              = query.value(_PRODUCTION_COLUMN::_PRODUCTION_cycle_count).toInt();
-        data.batch_count              = query.value(_PRODUCTION_COLUMN::_PRODUCTION_batch_count).toInt();
+        data.id                       = query.value(QmlEnum::_PRODUCTION_id).toInt();
+        data.welder_id                = query.value(QmlEnum::_PRODUCTION_welder_id).toInt();
+        data.model_id                 = query.value(QmlEnum::_PRODUCTION_model_id).toInt();
+        data.create_time              = query.value(QmlEnum::_PRODUCTION_create_time).toString();
+        data.serial_number            = query.value(QmlEnum::_PRODUCTION_serial_number).toInt();
+        data.cycle_count              = query.value(QmlEnum::_PRODUCTION_cycle_count).toInt();
+        data.batch_count              = query.value(QmlEnum::_PRODUCTION_batch_count).toInt();
 
         // 能量 ***J -> ***
-        QString energyStr = query.value(_PRODUCTION_COLUMN::_PRODUCTION_energy).toString();
+        QString energyStr = query.value(QmlEnum::_PRODUCTION_energy).toString();
         data.energy = energyStr.leftRef(energyStr.length()-1).toInt();
 
-        data.amplitude                = query.value(_PRODUCTION_COLUMN::_PRODUCTION_amplitude).toInt();
-        data.pressure                 = query.value(_PRODUCTION_COLUMN::_PRODUCTION_pressure).toInt();
+        data.amplitude                = query.value(QmlEnum::_PRODUCTION_amplitude).toInt();
+        data.pressure                 = query.value(QmlEnum::_PRODUCTION_pressure).toInt();
 
         // 时间 *.**s - > *.**
-        data.time                     = query.value(_PRODUCTION_COLUMN::_PRODUCTION_time).toString();
+        data.time                     = query.value(QmlEnum::_PRODUCTION_time).toString();
         data.time = data.time.left(data.time.length()-1);
 
         // 功率 ***W -> ***
-        QString powerStr = query.value(_PRODUCTION_COLUMN::_PRODUCTION_power).toString();
+        QString powerStr = query.value(QmlEnum::_PRODUCTION_power).toString();
         data.power = powerStr.leftRef(powerStr.length()-1).toInt();
 
         // 高度 *.**mm -> *.**
-        QString pre_heightStr = query.value(_PRODUCTION_COLUMN::_PRODUCTION_pre_height).toString();
+        QString pre_heightStr = query.value(QmlEnum::_PRODUCTION_pre_height).toString();
         data.pre_height = pre_heightStr.leftRef(pre_heightStr.length()-2).toDouble();
-        QString post_heightStr = query.value(_PRODUCTION_COLUMN::_PRODUCTION_post_height).toString();
+        QString post_heightStr = query.value(QmlEnum::_PRODUCTION_post_height).toString();
         data.post_height = post_heightStr.leftRef(post_heightStr.length()-2).toDouble();
 
-        data.force                    = query.value(_PRODUCTION_COLUMN::_PRODUCTION_force).toInt();
-        data.residual                 = query.value(_PRODUCTION_COLUMN::_PRODUCTION_residual).toInt();
-        data.good_rate                = query.value(_PRODUCTION_COLUMN::_PRODUCTION_good_rate).toInt();
-        data.good_subtotal_cycles     = query.value(_PRODUCTION_COLUMN::_PRODUCTION_good_subtotal_cycles).toInt();
-        data.suspect_subtotal_cycles  = query.value(_PRODUCTION_COLUMN::_PRODUCTION_suspect_subtotal_cycles).toInt();
-        data.not_definite_cycles      = query.value(_PRODUCTION_COLUMN::_PRODUCTION_not_definite_cycles).toInt();
-        data.final_result             = query.value(_PRODUCTION_COLUMN::_PRODUCTION_final_result).toInt();
+        data.force                    = query.value(QmlEnum::_PRODUCTION_force).toInt();
+        data.residual                 = query.value(QmlEnum::_PRODUCTION_residual).toInt();
+        data.good_rate                = query.value(QmlEnum::_PRODUCTION_good_rate).toInt();
+        data.good_subtotal_cycles     = query.value(QmlEnum::_PRODUCTION_good_subtotal_cycles).toInt();
+        data.suspect_subtotal_cycles  = query.value(QmlEnum::_PRODUCTION_suspect_subtotal_cycles).toInt();
+        data.not_definite_cycles      = query.value(QmlEnum::_PRODUCTION_not_definite_cycles).toInt();
+        data.final_result             = query.value(QmlEnum::_PRODUCTION_final_result).toInt();
 
         // 历史记录，最新的最先显示
         list.push_front(data);
@@ -763,9 +763,10 @@ _Weld_TrendData DataBaseManager::getWeldTrendData(int welderID)
     if(welderID != 0)
     {
         // %1_表格名称
-        QString execStr = QString("SELECT * FROM %1 WHERE %2 = :welderID ORDER BY create_time DESC LIMIT 150")
+        QString execStr = QString("SELECT * FROM %1 WHERE %2 = :welderID ORDER BY %3 DESC LIMIT 150")
                               .arg(PRODUCTION_TABLENAME
-                                   , getProduction_ColumnName(_PRODUCTION_COLUMN::_PRODUCTION_welder_id));
+                                   , getProduction_ColumnName(QmlEnum::_PRODUCTION_welder_id)
+                                   , getProduction_ColumnName(QmlEnum::_PRODUCTION_create_time));
 
         query.prepare(execStr);
         query.bindValue(":welderID", welderID);
@@ -775,7 +776,7 @@ _Weld_TrendData DataBaseManager::getWeldTrendData(int welderID)
         // %1_表格名称
         QString execStr = QString("SELECT * FROM %1 ORDER BY %2 DESC LIMIT 150")
                               .arg(PRODUCTION_TABLENAME
-                                   , getProduction_ColumnName(_PRODUCTION_COLUMN::_PRODUCTION_create_time));
+                                   , getProduction_ColumnName(QmlEnum::_PRODUCTION_create_time));
         qDebug() << execStr;
         query.prepare(execStr);
     }
@@ -789,42 +790,42 @@ _Weld_TrendData DataBaseManager::getWeldTrendData(int welderID)
     while(query.next())
     {
         _Production_Data data;
-        data.id                       = query.value(_PRODUCTION_COLUMN::_PRODUCTION_id).toInt();
-        data.welder_id                = query.value(_PRODUCTION_COLUMN::_PRODUCTION_welder_id).toInt();
-        data.model_id                 = query.value(_PRODUCTION_COLUMN::_PRODUCTION_model_id).toInt();
-        data.create_time              = query.value(_PRODUCTION_COLUMN::_PRODUCTION_create_time).toString();
-        data.serial_number            = query.value(_PRODUCTION_COLUMN::_PRODUCTION_serial_number).toInt();
-        data.cycle_count              = query.value(_PRODUCTION_COLUMN::_PRODUCTION_cycle_count).toInt();
-        data.batch_count              = query.value(_PRODUCTION_COLUMN::_PRODUCTION_batch_count).toInt();
+        data.id                       = query.value(QmlEnum::_PRODUCTION_id).toInt();
+        data.welder_id                = query.value(QmlEnum::_PRODUCTION_welder_id).toInt();
+        data.model_id                 = query.value(QmlEnum::_PRODUCTION_model_id).toInt();
+        data.create_time              = query.value(QmlEnum::_PRODUCTION_create_time).toString();
+        data.serial_number            = query.value(QmlEnum::_PRODUCTION_serial_number).toInt();
+        data.cycle_count              = query.value(QmlEnum::_PRODUCTION_cycle_count).toInt();
+        data.batch_count              = query.value(QmlEnum::_PRODUCTION_batch_count).toInt();
 
         // 能量 ***J -> ***
-        QString energyStr = query.value(_PRODUCTION_COLUMN::_PRODUCTION_energy).toString();
+        QString energyStr = query.value(QmlEnum::_PRODUCTION_energy).toString();
         data.energy = energyStr.leftRef(energyStr.length()-1).toInt();
 
-        data.amplitude                = query.value(_PRODUCTION_COLUMN::_PRODUCTION_amplitude).toInt();
-        data.pressure                 = query.value(_PRODUCTION_COLUMN::_PRODUCTION_pressure).toInt();
+        data.amplitude                = query.value(QmlEnum::_PRODUCTION_amplitude).toInt();
+        data.pressure                 = query.value(QmlEnum::_PRODUCTION_pressure).toInt();
 
         // 时间 *.**s - > *.**
-        data.time                     = query.value(_PRODUCTION_COLUMN::_PRODUCTION_time).toString();
+        data.time                     = query.value(QmlEnum::_PRODUCTION_time).toString();
         data.time = data.time.left(data.time.length()-1);
 
         // 功率 ***W -> ***
-        QString powerStr = query.value(_PRODUCTION_COLUMN::_PRODUCTION_power).toString();
+        QString powerStr = query.value(QmlEnum::_PRODUCTION_power).toString();
         data.power = powerStr.leftRef(powerStr.length()-1).toInt();
 
         // 高度 *.**mm -> *.**
-        QString pre_heightStr = query.value(_PRODUCTION_COLUMN::_PRODUCTION_pre_height).toString();
+        QString pre_heightStr = query.value(QmlEnum::_PRODUCTION_pre_height).toString();
         data.pre_height = pre_heightStr.leftRef(pre_heightStr.length()-2).toDouble();
-        QString post_heightStr = query.value(_PRODUCTION_COLUMN::_PRODUCTION_post_height).toString();
+        QString post_heightStr = query.value(QmlEnum::_PRODUCTION_post_height).toString();
         data.post_height = post_heightStr.leftRef(post_heightStr.length()-2).toDouble();
 
-        data.force                    = query.value(_PRODUCTION_COLUMN::_PRODUCTION_force).toInt();
-        data.residual                 = query.value(_PRODUCTION_COLUMN::_PRODUCTION_residual).toInt();
-        data.good_rate                = query.value(_PRODUCTION_COLUMN::_PRODUCTION_good_rate).toInt();
-        data.good_subtotal_cycles     = query.value(_PRODUCTION_COLUMN::_PRODUCTION_good_subtotal_cycles).toInt();
-        data.suspect_subtotal_cycles  = query.value(_PRODUCTION_COLUMN::_PRODUCTION_suspect_subtotal_cycles).toInt();
-        data.not_definite_cycles      = query.value(_PRODUCTION_COLUMN::_PRODUCTION_not_definite_cycles).toInt();
-        data.final_result             = query.value(_PRODUCTION_COLUMN::_PRODUCTION_final_result).toInt();
+        data.force                    = query.value(QmlEnum::_PRODUCTION_force).toInt();
+        data.residual                 = query.value(QmlEnum::_PRODUCTION_residual).toInt();
+        data.good_rate                = query.value(QmlEnum::_PRODUCTION_good_rate).toInt();
+        data.good_subtotal_cycles     = query.value(QmlEnum::_PRODUCTION_good_subtotal_cycles).toInt();
+        data.suspect_subtotal_cycles  = query.value(QmlEnum::_PRODUCTION_suspect_subtotal_cycles).toInt();
+        data.not_definite_cycles      = query.value(QmlEnum::_PRODUCTION_not_definite_cycles).toInt();
+        data.final_result             = query.value(QmlEnum::_PRODUCTION_final_result).toInt();
 
         // 计入首次大小
         if(isFirst)
@@ -875,18 +876,43 @@ _Weld_TrendData DataBaseManager::getWeldTrendData(int welderID)
     return result;
 }
 
-QList<_Production_Data> DataBaseManager::getYieldTrendData(QString startTime, QString endTime, int welderID)
+_Yield_TrendData DataBaseManager::getYieldTrendData(int interVal, int welderID)
 {
-    QList<_Production_Data> list;
+    _Yield_TrendData result;
+
+    // 获取最新设备生产记录时间
+    QDateTime endTime;
+    QDateTime startTime;
+    {
+        QSqlQuery query;
+        QString execStr = QString("SELECT * FROM %1 WHERE %2 = :welderID ORDER BY %3 DESC LIMIT 1")
+                              .arg(PRODUCTION_TABLENAME
+                                   , getProduction_ColumnName(QmlEnum::_PRODUCTION_welder_id)
+                                   , getProduction_ColumnName(QmlEnum::_PRODUCTION_create_time));
+        query.prepare(execStr);
+        query.bindValue(":welderID", welderID);
+        if(query.exec() && query.next())
+        {
+            endTime = query.value(QmlEnum::_PRODUCTION_create_time).toDateTime();
+            startTime = endTime.addSecs(interVal);
+            result.startTime = startTime.toString("yyyy-MM-dd hh:dd:ss");
+            result.endTime   = endTime.toString("yyyy-MM-dd hh:dd:ss");
+            qDebug() << "获取一下时间段的生产良率" << startTime <<  endTime << interVal;
+        }
+        else
+        {
+            qDebug() << "DataBaseManager::getYieldTrendData() 获取最新生产时间失败" << query.lastError();
+        }
+    }
 
     QSqlQuery query;
     if(welderID != 0)
     {
         // %1_表格名称
-        QString execStr = QString("SELECT * FROM %1 WHERE %2 = :welderID AND %3 >=:startTime AND %3<=:endTime")
+        QString execStr = QString("SELECT * FROM %1 WHERE %2 = :welderID AND %3 >=:startTime AND %3<=:endTime ORDER BY %3 DESC LIMIT 500")
                               .arg(PRODUCTION_TABLENAME
-                                   , getProduction_ColumnName(_PRODUCTION_COLUMN::_PRODUCTION_welder_id)
-                                   , getProduction_ColumnName(_PRODUCTION_COLUMN::_PRODUCTION_create_time));
+                                   , getProduction_ColumnName(QmlEnum::_PRODUCTION_welder_id)
+                                   , getProduction_ColumnName(QmlEnum::_PRODUCTION_create_time));
 
         query.prepare(execStr);
         query.bindValue(":welderID", welderID);
@@ -898,7 +924,7 @@ QList<_Production_Data> DataBaseManager::getYieldTrendData(QString startTime, QS
         // %1_表格名称
         QString execStr = QString("SELECT * FROM %1 WHERE %2 >=:startTime AND %2<=:endTime")
                               .arg(PRODUCTION_TABLENAME
-                                   , getProduction_ColumnName(_PRODUCTION_COLUMN::_PRODUCTION_create_time));
+                                   , getProduction_ColumnName(QmlEnum::_PRODUCTION_create_time));
         qDebug() << execStr;
         query.prepare(execStr);
     }
@@ -911,47 +937,47 @@ QList<_Production_Data> DataBaseManager::getYieldTrendData(QString startTime, QS
     while(query.next())
     {
         _Production_Data data;
-        data.id                       = query.value(_PRODUCTION_COLUMN::_PRODUCTION_id).toInt();
-        data.welder_id                = query.value(_PRODUCTION_COLUMN::_PRODUCTION_welder_id).toInt();
-        data.model_id                 = query.value(_PRODUCTION_COLUMN::_PRODUCTION_model_id).toInt();
-        data.create_time              = query.value(_PRODUCTION_COLUMN::_PRODUCTION_create_time).toString();
-        data.serial_number            = query.value(_PRODUCTION_COLUMN::_PRODUCTION_serial_number).toInt();
-        data.cycle_count              = query.value(_PRODUCTION_COLUMN::_PRODUCTION_cycle_count).toInt();
-        data.batch_count              = query.value(_PRODUCTION_COLUMN::_PRODUCTION_batch_count).toInt();
+        data.id                       = query.value(QmlEnum::_PRODUCTION_id).toInt();
+        data.welder_id                = query.value(QmlEnum::_PRODUCTION_welder_id).toInt();
+        data.model_id                 = query.value(QmlEnum::_PRODUCTION_model_id).toInt();
+        data.create_time              = query.value(QmlEnum::_PRODUCTION_create_time).toString();
+        data.serial_number            = query.value(QmlEnum::_PRODUCTION_serial_number).toInt();
+        data.cycle_count              = query.value(QmlEnum::_PRODUCTION_cycle_count).toInt();
+        data.batch_count              = query.value(QmlEnum::_PRODUCTION_batch_count).toInt();
 
         // 能量 ***J -> ***
-        QString energyStr = query.value(_PRODUCTION_COLUMN::_PRODUCTION_energy).toString();
+        QString energyStr = query.value(QmlEnum::_PRODUCTION_energy).toString();
         data.energy = energyStr.leftRef(energyStr.length()-1).toInt();
 
-        data.amplitude                = query.value(_PRODUCTION_COLUMN::_PRODUCTION_amplitude).toInt();
-        data.pressure                 = query.value(_PRODUCTION_COLUMN::_PRODUCTION_pressure).toInt();
+        data.amplitude                = query.value(QmlEnum::_PRODUCTION_amplitude).toInt();
+        data.pressure                 = query.value(QmlEnum::_PRODUCTION_pressure).toInt();
 
         // 时间 *.**s - > *.**
-        data.time                     = query.value(_PRODUCTION_COLUMN::_PRODUCTION_time).toString();
+        data.time                     = query.value(QmlEnum::_PRODUCTION_time).toString();
         data.time = data.time.left(data.time.length()-1);
 
         // 功率 ***W -> ***
-        QString powerStr = query.value(_PRODUCTION_COLUMN::_PRODUCTION_power).toString();
+        QString powerStr = query.value(QmlEnum::_PRODUCTION_power).toString();
         data.power = powerStr.leftRef(powerStr.length()-1).toInt();
 
         // 高度 *.**mm -> *.**
-        QString pre_heightStr = query.value(_PRODUCTION_COLUMN::_PRODUCTION_pre_height).toString();
+        QString pre_heightStr = query.value(QmlEnum::_PRODUCTION_pre_height).toString();
         data.pre_height = pre_heightStr.leftRef(pre_heightStr.length()-2).toDouble();
-        QString post_heightStr = query.value(_PRODUCTION_COLUMN::_PRODUCTION_post_height).toString();
+        QString post_heightStr = query.value(QmlEnum::_PRODUCTION_post_height).toString();
         data.post_height = post_heightStr.leftRef(post_heightStr.length()-2).toDouble();
 
-        data.force                    = query.value(_PRODUCTION_COLUMN::_PRODUCTION_force).toInt();
-        data.residual                 = query.value(_PRODUCTION_COLUMN::_PRODUCTION_residual).toInt();
-        data.good_rate                = query.value(_PRODUCTION_COLUMN::_PRODUCTION_good_rate).toInt();
-        data.good_subtotal_cycles     = query.value(_PRODUCTION_COLUMN::_PRODUCTION_good_subtotal_cycles).toInt();
-        data.suspect_subtotal_cycles  = query.value(_PRODUCTION_COLUMN::_PRODUCTION_suspect_subtotal_cycles).toInt();
-        data.not_definite_cycles      = query.value(_PRODUCTION_COLUMN::_PRODUCTION_not_definite_cycles).toInt();
-        data.final_result             = query.value(_PRODUCTION_COLUMN::_PRODUCTION_final_result).toInt();
+        data.force                    = query.value(QmlEnum::_PRODUCTION_force).toInt();
+        data.residual                 = query.value(QmlEnum::_PRODUCTION_residual).toInt();
+        data.good_rate                = query.value(QmlEnum::_PRODUCTION_good_rate).toInt();
+        data.good_subtotal_cycles     = query.value(QmlEnum::_PRODUCTION_good_subtotal_cycles).toInt();
+        data.suspect_subtotal_cycles  = query.value(QmlEnum::_PRODUCTION_suspect_subtotal_cycles).toInt();
+        data.not_definite_cycles      = query.value(QmlEnum::_PRODUCTION_not_definite_cycles).toInt();
+        data.final_result             = query.value(QmlEnum::_PRODUCTION_final_result).toInt();
 
-        list.push_back(data);
+        result.data.push_back(data);
     }
 
-    return list;
+    return result;
 }
 
 bool DataBaseManager::removeProductionRow(int id)
@@ -960,7 +986,7 @@ bool DataBaseManager::removeProductionRow(int id)
 
     // %1_表格名称 %2_ID字段名称
     QString execStr = QString("DELETE FROM %1 WHERE %2=:id")
-                          .arg(PRODUCTION_TABLENAME, getProduction_ColumnName(_PRODUCTION_id));
+                          .arg(PRODUCTION_TABLENAME, getProduction_ColumnName(QmlEnum::_PRODUCTION_id));
 
     // 绑定属性
     query.prepare(execStr);
@@ -1038,7 +1064,7 @@ QList<_System_Data> DataBaseManager::getSystemData(int welderID)
 
     QSqlQuery query;
     // %1_表格名称
-    QString execStr = QString("SELECT * FROM %1 WHERE %2 = :welderID").arg(SYSTEM_TABLENAME, getSystem_ColumnName(_SYSTEM_COLUMN::_SYSTEM_welder_id));
+    QString execStr = QString("SELECT * FROM %1 WHERE %2 = :welderID").arg(SYSTEM_TABLENAME, getSystem_ColumnName(QmlEnum::_SYSTEM_welder_id));
 
     query.prepare(execStr);
     query.bindValue(":welderID", welderID);
@@ -1051,12 +1077,12 @@ QList<_System_Data> DataBaseManager::getSystemData(int welderID)
     while(query.next())
     {
         _System_Data data;
-        data.id                   = query.value(_SYSTEM_COLUMN::_SYSTEM_id).toInt();
-        data.welder_id            = query.value(_SYSTEM_COLUMN::_SYSTEM_welder_id).toInt();
-        data.single_fact_setting  = query.value(_SYSTEM_COLUMN::_SYSTEM_single_fact_setting).toInt();
-        data.general_fact_setting = query.value(_SYSTEM_COLUMN::_SYSTEM_general_fact_setting).toInt();
-        data.other_fact_setting   = query.value(_SYSTEM_COLUMN::_SYSTEM_other_fact_setting).toInt();
-        data.auto_model_limit     = query.value(_SYSTEM_COLUMN::_SYSTEM_auto_model_limit).toInt();
+        data.id                   = query.value(QmlEnum::_SYSTEM_COLUMN::_SYSTEM_id).toInt();
+        data.welder_id            = query.value(QmlEnum::_SYSTEM_COLUMN::_SYSTEM_welder_id).toInt();
+        data.single_fact_setting  = query.value(QmlEnum::_SYSTEM_COLUMN::_SYSTEM_single_fact_setting).toInt();
+        data.general_fact_setting = query.value(QmlEnum::_SYSTEM_COLUMN::_SYSTEM_general_fact_setting).toInt();
+        data.other_fact_setting   = query.value(QmlEnum::_SYSTEM_COLUMN::_SYSTEM_other_fact_setting).toInt();
+        data.auto_model_limit     = query.value(QmlEnum::_SYSTEM_COLUMN::_SYSTEM_auto_model_limit).toInt();
 
         list.push_back(data);
     }
@@ -1064,12 +1090,12 @@ QList<_System_Data> DataBaseManager::getSystemData(int welderID)
     return list;
 }
 
-bool DataBaseManager::setSystemData(int id, _SYSTEM_COLUMN column, QVariant data)
+bool DataBaseManager::setSystemData(int id, QmlEnum::_SYSTEM_COLUMN column, QVariant data)
 {
     QSqlQuery query;
     // %1_表格名称 %2_要修改的字段名称 %3_ID字段名称
     QString execStr = QString("UPDATE %1 SET %2 = :newdata WHERE %3 = :id")
-                          .arg(SYSTEM_TABLENAME, getSystem_ColumnName(column), getSystem_ColumnName(_SYSTEM_id));
+                          .arg(SYSTEM_TABLENAME, getSystem_ColumnName(column), getSystem_ColumnName(QmlEnum::_SYSTEM_id));
 
     // 绑定属性
     query.prepare(execStr);
@@ -1086,7 +1112,7 @@ int DataBaseManager::getLevelByPassword(QString password)
     // %1_表格名称 %2_ID字段名称
     QString execStr = QString("SELECT * FROM %1 WHERE user_password='%2'")
                           .arg(USER_TABLENAME, password);
-    qDebug() << execStr;
+    qDebug() << "数据库路径:" << execStr;
     if(!query.exec(execStr))
     {
         qDebug() << query.lastError();
@@ -1136,248 +1162,248 @@ void DataBaseManager::init()
     }
 }
 
-QString DataBaseManager::getConfiguration_ColumnName(_CONFIGURATION_COLUMN column)
+QString DataBaseManager::getConfiguration_ColumnName(QmlEnum::_CONFIGURATION_COLUMN column)
 {
     switch(column)
     {
-    case _CONFIGURATION_welder_id:
+    case QmlEnum::_CONFIGURATION_welder_id:
         return "welder_id";
-    case _CONFIGURATION_welder_name:
+    case QmlEnum::_CONFIGURATION_welder_name:
         return "welder_name";
-    case _CONFIGURATION_welder_type:
+    case QmlEnum::_CONFIGURATION_welder_type:
         return "welder_type";
-    case _CONFIGURATION_production_bacth:
+    case QmlEnum::_CONFIGURATION_production_bacth:
         return "production_bacth";
-    case _CONFIGURATION_model_sample:
+    case QmlEnum::_CONFIGURATION_model_sample:
         return "model_sample";
-    case _CONFIGURATION_lower_limit:
+    case QmlEnum::_CONFIGURATION_lower_limit:
         return "lower_limit";
-    case _CONFIGURATION_height_option:
+    case QmlEnum::_CONFIGURATION_height_option:
         return "height_option";
-    case _CONFIGURATION_connect_type:
+    case QmlEnum::_CONFIGURATION_connect_type:
         return "connect_type";
-    case _CONFIGURATION_connect_id:
+    case QmlEnum::_CONFIGURATION_connect_id:
         return "connect_id";
     }
 
     return "";
 }
 
-QString DataBaseManager::getNetwork_ColumnName(_NETWORK_COLUMN column)
+QString DataBaseManager::getNetwork_ColumnName(QmlEnum::_NETWORK_COLUMN column)
 {
     switch(column)
     {
-    case _NETWORK_id:
+    case QmlEnum::_NETWORK_id:
         return "id";
-    case _NETWORK_type:
+    case QmlEnum::_NETWORK_type:
         return "type";
-    case _NETWORK_protocol:
+    case QmlEnum::_NETWORK_protocol:
         return "protocol";
-    case _NETWORK_local_ip:
+    case QmlEnum::_NETWORK_local_ip:
         return "local_ip";
-    case _NETWORK_local_port:
+    case QmlEnum::_NETWORK_local_port:
         return "local_port";
-    case _NETWORK_remote_ip:
+    case QmlEnum::_NETWORK_remote_ip:
         return "remote_ip";
-    case _NETWORK_server_port:
+    case QmlEnum::_NETWORK_server_port:
         return "server_port";
-    case _NETWORK_user:
+    case QmlEnum::_NETWORK_user:
         return "user";
     }
 
     return "";
 }
 
-QString DataBaseManager::getRS232_ColumnName(_RS232_COLUMN column)
+QString DataBaseManager::getRS232_ColumnName(QmlEnum::_RS232_COLUMN column)
 {
     switch(column)
     {
-    case _RS232_id:
+    case QmlEnum::_RS232_id:
         return "id";
-
-
-    case _RS232_port:
+    case QmlEnum::_RS232_port:
         return "port";
-    case _RS232_baud_rate:
+    case QmlEnum::_RS232_baud_rate:
         return "baud_rate";
-    case _RS232_data_bit:
+    case QmlEnum::_RS232_data_bit:
         return "data_bit";
-    case _RS232_parity_bit:
+    case QmlEnum::_RS232_parity_bit:
         return "parity_bit";
-    case _RS232_stop_bit:
+    case QmlEnum::_RS232_stop_bit:
         return "stop_bit";
     }
 
     return "";
 }
 
-QString DataBaseManager::getIO_ColumnName(_IO_COLUMN column)
+QString DataBaseManager::getIO_ColumnName(QmlEnum::_IO_COLUMN column)
 {
     switch(column)
     {
-    case _IO_id:
+    case QmlEnum::_IO_id:
         return "id";
-    case _IO_welder_id:
+    case QmlEnum::_IO_welder_id:
         return "welder_id";
-    case _IO_pin:
+    case QmlEnum::_IO_pin:
         return "pin";
-    case _IO_available:
+    case QmlEnum::_IO_available:
         return "available";
-    case _IO_signal:
+    case QmlEnum::_IO_signal:
         return "signal";
     }
 
     return "";
 }
 
-QString DataBaseManager::getManual_ColumnName(_MANUAL_COLUMN column)
+QString DataBaseManager::getManual_ColumnName(QmlEnum::_MANUAL_COLUMN column)
 {
     switch(column)
     {
-    case _MANUAL_id:
+    case QmlEnum::_MANUAL_id:
         return "id";
-    case _MANUAL_welder_id:
+    case QmlEnum::_MANUAL_welder_id:
         return "welder_id";
-    case _MANUAL_create_time:
+    case QmlEnum::_MANUAL_create_time:
         return "create_time";
-    case _MANUAL_serial_number:
+    case QmlEnum::_MANUAL_serial_number:
         return "serial_number";
-    case _MANUAL_cycle_count:
+    case QmlEnum::_MANUAL_cycle_count:
         return "cycle_count";
-    case _MANUAL_energy:
+    case QmlEnum::_MANUAL_energy:
         return "energy";
-    case _MANUAL_amplitude:
+    case QmlEnum::_MANUAL_amplitude:
         return "amplitude";
-    case _MANUAL_pressure:
+    case QmlEnum::_MANUAL_pressure:
         return "pressure";
-    case _MANUAL_time:
+    case QmlEnum::_MANUAL_time:
         return "time";
-    case _MANUAL_power:
+    case QmlEnum::_MANUAL_power:
         return "power";
-    case _MANUAL_pre_height:
+    case QmlEnum::_MANUAL_pre_height:
         return "pre_height";
-    case _MANUAL_post_height:
+    case QmlEnum::_MANUAL_post_height:
         return "post_height";
-    case _MANUAL_actual_force:
+    case QmlEnum::_MANUAL_actual_force:
         return "actual_force";
-    case _MANUAL_actual_degree:
+    case QmlEnum::_MANUAL_actual_degree:
         return "actual_degree";
     }
 
     return "";
 }
 
-QString DataBaseManager::getModel_ColumnName(_MODEL_COLUMN column)
+QString DataBaseManager::getModel_ColumnName(QmlEnum::_MODEL_COLUMN column)
 {
     switch(column)
     {
-    case _MODEL_id:
+    case QmlEnum::_MODEL_id:
         return "id";
-    case _MODEL_welder_id:
+    case QmlEnum::_MODEL_welder_id:
         return "welder_id";
-    case _MODEL_create_time:
+    case QmlEnum::_MODEL_create_time:
         return "create_time";
-    case _MODEL_energy:
+    case QmlEnum::_MODEL_energy:
         return "energy";
-    case _MODEL_amplitude:
+    case QmlEnum::_MODEL_amplitude:
         return "amplitude";
-    case _MODEL_pressure:
+    case QmlEnum::_MODEL_pressure:
         return "pressure";
-    case _MODEL_time_alpha:
+    case QmlEnum::_MODEL_time_alpha:
         return "time_alpha";
-    case _MODEL_time_beta:
+    case QmlEnum::_MODEL_time_beta:
         return "time_beta";
-    case _MODEL_power_alpha:
+    case QmlEnum::_MODEL_power_alpha:
         return "power_alpha";
-    case _MODEL_power_beta:
+    case QmlEnum::_MODEL_power_beta:
         return "power_beta";
-    case _MODEL_pre_height_alpha:
+    case QmlEnum::_MODEL_pre_height_alpha:
         return "pre_height_alpha";
-    case _MODEL_pre_height_beta:
+    case QmlEnum::_MODEL_pre_height_beta:
         return "pre_height_beta";
-    case _MODEL_post_height_alpha:
+    case QmlEnum::_MODEL_post_height_alpha:
         return "post_height_alpha";
-    case _MODEL_post_height_beta:
+    case QmlEnum::_MODEL_post_height_beta:
         return "post_height_beta";
-    case _MODEL_force_alpha:
+    case QmlEnum::_MODEL_force_alpha:
         return "force_alpha";
-    case _MODEL_force_beta:
+    case QmlEnum::_MODEL_force_beta:
         return "force_beta";
-    case _MODEL_residual_alpha:
+    case QmlEnum::_MODEL_residual_alpha:
         return "residual_alpha";
-    case _MODEL_residual_beta:
+    case QmlEnum::_MODEL_residual_beta:
         return "residual_beta";
-    case _MODEL_current_sample_count:
+    case QmlEnum::_MODEL_current_sample_count:
         return "current_sample_count";
     }
 
     return "";
 }
 
-QString DataBaseManager::getProduction_ColumnName(_PRODUCTION_COLUMN column)
+QString DataBaseManager::getProduction_ColumnName(QmlEnum::_PRODUCTION_COLUMN column)
 {
     switch(column)
     {
-    case _PRODUCTION_id:
+    case QmlEnum::_PRODUCTION_id:
         return "id";
-    case _PRODUCTION_welder_id:
+    case QmlEnum::_PRODUCTION_welder_id:
         return "welder_id";
-    case _PRODUCTION_model_id:
+    case QmlEnum::_PRODUCTION_model_id:
         return "model_id";
-    case _PRODUCTION_create_time:
+    case QmlEnum::_PRODUCTION_create_time:
         return "create_time";
-    case _PRODUCTION_serial_number:
+    case QmlEnum::_PRODUCTION_serial_number:
         return "serial_number";
-    case _PRODUCTION_cycle_count:
+    case QmlEnum::_PRODUCTION_cycle_count:
         return "cycle_count";
-    case _PRODUCTION_batch_count:
+    case QmlEnum::_PRODUCTION_batch_count:
         return "batch_count";
-    case _PRODUCTION_energy:
+    case QmlEnum::_PRODUCTION_energy:
         return "energy";
-    case _PRODUCTION_amplitude:
+    case QmlEnum::_PRODUCTION_amplitude:
         return "amplitude";
-    case _PRODUCTION_pressure:
+    case QmlEnum::_PRODUCTION_pressure:
         return "pressure";
-    case _PRODUCTION_time:
+    case QmlEnum::_PRODUCTION_time:
         return "time";
-    case _PRODUCTION_power:
+    case QmlEnum::_PRODUCTION_power:
         return "power";
-    case _PRODUCTION_pre_height:
+    case QmlEnum::_PRODUCTION_pre_height:
         return "pre_height";
-    case _PRODUCTION_post_height:
+    case QmlEnum::_PRODUCTION_post_height:
         return "post_height";
-    case _PRODUCTION_force:
+    case QmlEnum::_PRODUCTION_force:
         return "force";
-    case _PRODUCTION_residual:
+    case QmlEnum::_PRODUCTION_residual:
         return "residual";
-    case _PRODUCTION_good_rate:
+    case QmlEnum::_PRODUCTION_good_rate:
         return "good_rate";
-    case _PRODUCTION_good_subtotal_cycles:
+    case QmlEnum::_PRODUCTION_good_subtotal_cycles:
         return "good_subtotal_cycles";
-    case _PRODUCTION_suspect_subtotal_cycles:
+    case QmlEnum::_PRODUCTION_suspect_subtotal_cycles:
         return "suspect_subtotal_cycles";
-    case _PRODUCTION_not_definite_cycles:
+    case QmlEnum::_PRODUCTION_not_definite_cycles:
         return "not_definite_cycles";
+    case QmlEnum::_PRODUCTION_final_result:
+        return "final_result";
     }
 
     return "";
 }
 
-QString DataBaseManager::getSystem_ColumnName(_SYSTEM_COLUMN column)
+QString DataBaseManager::getSystem_ColumnName(QmlEnum::_SYSTEM_COLUMN column)
 {
     switch(column)
     {
-    case _SYSTEM_id:
+    case QmlEnum::_SYSTEM_id:
         return "id";
-    case _SYSTEM_welder_id:
+    case QmlEnum::_SYSTEM_welder_id:
         return "welder_id";
-    case _SYSTEM_single_fact_setting:
+    case QmlEnum::_SYSTEM_single_fact_setting:
         return "single_fact_setting";
-    case _SYSTEM_general_fact_setting:
+    case QmlEnum::_SYSTEM_general_fact_setting:
         return "general_fact_setting";
-    case _SYSTEM_other_fact_setting:
+    case QmlEnum::_SYSTEM_other_fact_setting:
         return "other_fact_setting";
-    case _SYSTEM_auto_model_limit:
+    case QmlEnum::_SYSTEM_auto_model_limit:
         return "auto_model_limit";
     }
 

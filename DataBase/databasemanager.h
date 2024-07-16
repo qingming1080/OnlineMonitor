@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QSqlDatabase>
+#include "qmlenum.h"
 #include "define.h"
 
 #define CONFIGURATION_TABLENAME     QString("configuration")
@@ -47,7 +48,7 @@ public:
     /// \param data : 新数据
     /// \return : 设置结果
     ///
-    bool setConfigurationData(int deviceID, _CONFIGURATION_COLUMN column, QVariant data);
+    bool setConfigurationData(int deviceID, QmlEnum::_CONFIGURATION_COLUMN column, QVariant data);
 
     ///
     /// \brief removeConfigurationDevice : 删除Configuration表格一行数据
@@ -78,7 +79,7 @@ public:
     /// \param data : 新数据
     /// \return : 设置结果
     ///
-    bool setNetworkData(int networkID, _NETWORK_COLUMN column, QVariant data);
+    bool setNetworkData(int networkID, QmlEnum::_NETWORK_COLUMN column, QVariant data);
 
     ///
     /// \brief removeNetworkRow : 删除connection_network表格一行数据(注:1网口不允许界面配置!!!)
@@ -108,7 +109,7 @@ public:
     /// \param data : 新数据
     /// \return : 设置结果
     ///
-    bool setRS232Data(int id, _RS232_COLUMN column, QVariant data);
+    bool setRS232Data(int id, QmlEnum::_RS232_COLUMN column, QVariant data);
 
     ///
     /// \brief removeRS232Row : 删除RS232表格一行数据
@@ -141,7 +142,7 @@ public:
     /// \param data : 新数据
     /// \return : 设置结果
     ///
-    bool setIOData(int id, _IO_COLUMN column, QVariant data);
+    bool setIOData(int id, QmlEnum::_IO_COLUMN column, QVariant data);
 
     ///
     /// \brief removeIOData : 删除io_data表格一行数据
@@ -211,12 +212,11 @@ public:
 
     ///
     /// \brief getYieldTrendData : 获取良率趋势折线图,取最新五百个
-    /// \param startTime : 开始时间
-    /// \param endTime : 结束时间
+    /// \param interVal : 时间间隔 前推多少秒
     /// \param welderID : 焊机ID，为零则不区分焊机
     /// \return
     ///
-    QList<_Production_Data> getYieldTrendData(QString startTime, QString endTime, int welderID = 0);
+    _Yield_TrendData getYieldTrendData(int interVal, int welderID = 0);
 
     ///
     /// \brief removeProductionRow : 删除production表格一行数据
@@ -249,7 +249,7 @@ public:
     /// \param data : 新数据
     /// \return : 设置结果
     ///
-    bool setSystemData(int id, _SYSTEM_COLUMN column, QVariant data);
+    bool setSystemData(int id, QmlEnum::_SYSTEM_COLUMN column, QVariant data);
 
 /////////////////////////user////////////////////////////////
 
@@ -279,56 +279,56 @@ private:
     /// \param column : 列号
     /// \return : 列名
     ///
-    QString getConfiguration_ColumnName(_CONFIGURATION_COLUMN column);
+    QString getConfiguration_ColumnName(QmlEnum::_CONFIGURATION_COLUMN column);
 
     ///
     /// \brief getNetwork_ColumnName : 通过connection_network列号获取列名
     /// \param column : 列号
     /// \return : 列名
     ///
-    QString getNetwork_ColumnName(_NETWORK_COLUMN column);
+    QString getNetwork_ColumnName(QmlEnum::_NETWORK_COLUMN column);
 
     ///
     /// \brief getRS232_ColumnName : 通过connection_rs232列号获取列名
     /// \param column : 列号
     /// \return : 列名
     ///
-    QString getRS232_ColumnName(_RS232_COLUMN column);
+    QString getRS232_ColumnName(QmlEnum::_RS232_COLUMN column);
 
     ///
     /// \brief getIO_ColumnName : 通过io_data列号获取列名
     /// \param column : 列号
     /// \return : 列名
     ///
-    QString getIO_ColumnName(_IO_COLUMN column);
+    QString getIO_ColumnName(QmlEnum::_IO_COLUMN column);
 
     ///
     /// \brief getManuaal_ColumnName : 通过manual列号获取列名
     /// \param column : 列号
     /// \return : 列名
     ///
-    QString getManual_ColumnName(_MANUAL_COLUMN column);
+    QString getManual_ColumnName(QmlEnum::_MANUAL_COLUMN column);
 
     ///
     /// \brief getModel_ColumnName : 通过model列号获取列名
     /// \param column : 列号
     /// \return : 列名
     ///
-    QString getModel_ColumnName(_MODEL_COLUMN column);
+    QString getModel_ColumnName(QmlEnum::_MODEL_COLUMN column);
 
     ///
     /// \brief getProduction_ColumnName : 通过production列号获取列名
     /// \param column : 列号
     /// \return : 列名
     ///
-    QString getProduction_ColumnName(_PRODUCTION_COLUMN column);
+    QString getProduction_ColumnName(QmlEnum::_PRODUCTION_COLUMN column);
 
     ///
     /// \brief getSystem_ColumnName : 通过system_conf列号获取列名
     /// \param column : 列号
     /// \return : 列名
     ///
-    QString getSystem_ColumnName(_SYSTEM_COLUMN column);
+    QString getSystem_ColumnName(QmlEnum::_SYSTEM_COLUMN column);
 
 private:
     static DataBaseManager* s_pDataBaseManager;

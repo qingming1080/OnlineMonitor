@@ -1,8 +1,19 @@
 #include "system.h"
+#include "DataBase/databasemanager.h"
 
 System::System(int welderID, QObject *parent)
     : QObject{parent}, m_welderID(welderID)
 {
+    QList<_System_Data> result = DataBaseManager::getInstance()->getSystemData(m_welderID);
+    if(result.size() != 0)
+    {
+        _System_Data data = result.at(0);
+        m_id = data.id;
+        m_singleFact = data.single_fact_setting;
+        m_generalFact = data.general_fact_setting;
+        m_otherFace = data.other_fact_setting;
+        m_autoModel = data.auto_model_limit;
+    }
 
 }
 

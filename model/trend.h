@@ -38,6 +38,8 @@ public:
     Q_INVOKABLE QStandardItemModel *pYieldTrend() const;
 
     void upWeldData();
+
+    /// 0714 良率趋势五百个点
     void upYieldData();
 
 
@@ -113,7 +115,7 @@ private:
 
     void setWeldTrendData(_Weld_TrendData data);
 
-    void setYieldTrendData(QList<_Production_Data> data);
+    void setYieldTrendData(_Yield_TrendData data);
 
 private:
     const int m_welderID;
@@ -138,16 +140,15 @@ private:
     // 焊接功率 Y轴范围
     int m_powerMaxY;
     int m_powerMinY;
-
-    // 良率趋势时间类型 0_小时 1_1天 2_7天 3_30天
-    int m_yieldType;
-
-    QTimer* m_weldTimer;
-    QTimer* m_yieldTimer;
-
+    // 良率趋势 X轴范围
     QString m_startTime;
     QString m_endTime;
 
+    // 良率趋势时间类型 0_小时 1_1天 2_7天 3_30天
+    int m_yieldType{0};
+
+    QTimer* m_weldTimer;
+    QTimer* m_yieldTimer;
 };
 
 #endif // TREND_H

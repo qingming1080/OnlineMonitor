@@ -37,7 +37,7 @@ void DeviceInformation::setName(const QString &newName)
     m_name = newName;
     emit nameChanged();
 
-    DataBaseManager::getInstance()->setConfigurationData(m_id, _CONFIGURATION_welder_name, m_name);
+    DataBaseManager::getInstance()->setConfigurationData(m_id, QmlEnum::_CONFIGURATION_welder_name, m_name);
 }
 
 QString DeviceInformation::model() const
@@ -52,7 +52,7 @@ void DeviceInformation::setModel(const QString &newModel)
     m_model = newModel;
     emit modelChanged();
 
-    DataBaseManager::getInstance()->setConfigurationData(m_id, _CONFIGURATION_welder_type, m_model);
+    DataBaseManager::getInstance()->setConfigurationData(m_id, QmlEnum::_CONFIGURATION_welder_type, m_model);
 }
 
 QmlEnum::_CONNECTTYPE DeviceInformation::connectType() const
@@ -67,7 +67,7 @@ void DeviceInformation::setConnectType(const QmlEnum::_CONNECTTYPE &newconnectTy
     m_connectType = newconnectType;
     emit connectTypeChanged();
 
-    DataBaseManager::getInstance()->setConfigurationData(m_id, _CONFIGURATION_connect_type, m_connectType);
+    DataBaseManager::getInstance()->setConfigurationData(m_id, QmlEnum::_CONFIGURATION_connect_type, m_connectType);
 }
 
 int DeviceInformation::id() const
@@ -95,7 +95,7 @@ void DeviceInformation::setMaxBacth(int newMaxBacth)
     m_maxBacth = newMaxBacth;
     emit maxBacthChanged();
 
-    DataBaseManager::getInstance()->setConfigurationData(m_id, _CONFIGURATION_production_bacth, m_maxBacth);
+    DataBaseManager::getInstance()->setConfigurationData(m_id, QmlEnum::_CONFIGURATION_production_bacth, m_maxBacth);
 }
 
 int DeviceInformation::sample() const
@@ -110,7 +110,7 @@ void DeviceInformation::setSample(int newSample)
     m_sample = newSample;
     emit sampleChanged();
 
-    DataBaseManager::getInstance()->setConfigurationData(m_id, _CONFIGURATION_model_sample, m_sample);
+    DataBaseManager::getInstance()->setConfigurationData(m_id, QmlEnum::_CONFIGURATION_model_sample, m_sample);
 }
 
 int DeviceInformation::heightOption() const
@@ -125,7 +125,7 @@ void DeviceInformation::setHeightOption(int newHeightOption)
     m_heightOption = newHeightOption;
     emit heightOptionChanged();
 
-    DataBaseManager::getInstance()->setConfigurationData(m_id, _CONFIGURATION_height_option, m_heightOption);
+    DataBaseManager::getInstance()->setConfigurationData(m_id, QmlEnum::_CONFIGURATION_height_option, m_heightOption);
 }
 
 int DeviceInformation::lowerLimit() const
@@ -140,7 +140,7 @@ void DeviceInformation::setLowerLimit(int newLowerLimit)
     m_lowerLimit = newLowerLimit;
     emit lowerLimitChanged();
 
-    DataBaseManager::getInstance()->setConfigurationData(m_id, _CONFIGURATION_lower_limit, m_lowerLimit);
+    DataBaseManager::getInstance()->setConfigurationData(m_id, QmlEnum::_CONFIGURATION_lower_limit, m_lowerLimit);
 }
 
 int DeviceInformation::connectID() const
@@ -155,7 +155,7 @@ void DeviceInformation::setConnectID(int newConnectID)
     m_connectID = newConnectID;
     emit connectIDChanged();
 
-    DataBaseManager::getInstance()->setConfigurationData(m_id, _CONFIGURATION_connect_id, m_connectID);
+    DataBaseManager::getInstance()->setConfigurationData(m_id, QmlEnum::_CONFIGURATION_connect_id, m_connectID);
 }
 
 QString DeviceInformation::state() const
