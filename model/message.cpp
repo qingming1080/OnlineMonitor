@@ -1,5 +1,6 @@
 #include "message.h"
-
+#include "devicemanager.h"
+#include <QDateTime>
 
 Message* Message::s_pMessage = nullptr;
 
@@ -33,16 +34,20 @@ QHash<int, QByteArray> Message::roleNames() const
     return roles;
 }
 
-void Message::addMessage(QString message)
+void Message::addMessage(int welderID, QmlEnum::PRODUCTSTATE state)
 {
+    if(state != QmlEnum::PRODUCTSTATE_Difference && state != QmlEnum::PRODUCTSTATE_Suspicious)
+        return;
+
     beginInsertRows(QModelIndex(), rowCount(), rowCount());
-    m_data.push_back(message);
+    QString str = QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss ")
+                  + DeviceManager::getInstance()->getHistoryName(welderID)
+                  + ((state==QmlEnum::PRODUCTSTATE_Difference)?"次品":"可疑");
     endInsertRows();
 }
 
 Message::Message(QObject *parent)
     : QAbstractListModel{parent}
 {
-    addMessage("1111111");
-    addMessage("222222");
+
 }

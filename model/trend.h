@@ -37,9 +37,7 @@ public:
     Q_INVOKABLE QStandardItemModel *pPowerModel() const;
     Q_INVOKABLE QStandardItemModel *pYieldTrend() const;
 
-    void upWeldData();
-
-    /// 0714 良率趋势五百个点
+    // 更新良率趋势
     void upYieldData();
 
 
