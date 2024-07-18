@@ -69,6 +69,11 @@ Rectangle {
         }
         text: eqText1
         inputMethodHints: Qt.ImhDigitsOnly
+        onActiveFocusChanged: {
+            if(active){
+                keyboardYype = inputMethodHints
+            }
+        }
     }
     Text {
         text: qsTr("通用系数:")
@@ -96,6 +101,11 @@ Rectangle {
         }
         text: eqText2
         inputMethodHints: Qt.ImhDigitsOnly
+        onActiveFocusChanged: {
+            if(active){
+                keyboardYype = inputMethodHints
+            }
+        }
     }
     Text {
         text: qsTr("其他系数:")
@@ -123,6 +133,11 @@ Rectangle {
         }
         text: eqText3
         inputMethodHints: Qt.ImhDigitsOnly
+        onActiveFocusChanged: {
+            if(active){
+                keyboardYype = inputMethodHints
+            }
+        }
     }
     Text {
         text: qsTr("自动学习上限:")
@@ -150,5 +165,10 @@ Rectangle {
         }
         text: eqText4
         inputMethodHints: Qt.ImhDigitsOnly
+        onActiveFocusChanged: {
+            if(active){
+                keyboardYype = inputMethodHints
+            }
+        }
     }
 }

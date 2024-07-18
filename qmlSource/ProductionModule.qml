@@ -619,6 +619,11 @@ Rectangle {
                                             anchors.centerIn: parent
                                         }
                                     }
+                                    onActiveFocusChanged: {
+                                        if(active){
+                                            keyboardYype = inputMethodHints
+                                        }
+                                    }
                                 }
                                 TextField{
                                     width: 100
@@ -649,6 +654,11 @@ Rectangle {
                                             color: index % 2 === 0 ? "#2d71ae" : "#afc3d8"
                                             font.pixelSize: textField.font.pixelSize
                                             anchors.centerIn: parent
+                                        }
+                                    }
+                                    onActiveFocusChanged: {
+                                        if(active){
+                                            keyboardYype = inputMethodHints
                                         }
                                     }
                                 }

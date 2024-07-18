@@ -5,10 +5,12 @@ import QtQuick.Layouts 1.12
 import QtQuick.VirtualKeyboard 2.2
 import QtQuick.Controls 2.5
 import QtQuick.VirtualKeyboard.Settings 2.2
+import QtQuick.VirtualKeyboard 2.15
+import QtQuick.VirtualKeyboard.Styles 2.15
 import "./qmlSource"
 import Device 1.0
 import DeviceInformation 1.0
-
+import QtQml 2.15
 Window {
     id: window
     visible: true
@@ -19,6 +21,17 @@ Window {
     property int equipmentCount: DeviceManager.deviceNum
     property int equipmentCurrentIndex: 0
     property int swipeCurrIndex: 0
+    property var keyboardYype: 0
+
+    onKeyboardYypeChanged: {
+        if(keyboardYype === Qt.ImhDigitsOnly){
+            bin.value = 1200
+        }
+        else{
+            bin.value = 2560
+        }
+    }
+
     FontLoader {
         id: normal
         source: "qrc:/fonts/SourceHanSansCN-Normal.ttf"
@@ -242,14 +255,18 @@ Window {
         height: 271
         anchors.centerIn: parent
     }
-
+    Binding {
+        id:bin
+        target: inputPannelID.keyboard.style
+        property: 'keyboardDesignWidth'
+    }
     InputPanel
     {
         id: inputPannelID
         z: 99
         x: window.width/2-inputPannelID.width/2
         y: window.height      // 默认让其处于窗口最下方,貌似隐藏一样
-        width: window.width*2/3
+        width: keyboardYype === Qt.ImhDigitsOnly ? 400 : window.width*2/3
         visible: true       // 一直显示
         states: State
         {
@@ -261,6 +278,7 @@ Window {
                 y: window.height-inputPannelID.height
             }
         }
+
         transitions: Transition
         {
             from: ""
@@ -278,9 +296,11 @@ Window {
         }
         Component.onCompleted:
         {
-            //            VirtualKeyboardSettings.styleName = "retro"                         // 复古样式
             VirtualKeyboardSettings.wordCandidateList.alwaysVisible = true
             VirtualKeyboardSettings.activeLocales = ["en_US","zh_CN"/*,"ja_JP"*/]   // 英语、中文、日语 (若不设置,则语言就有很多种)
         }
     }
 }
+
+
+

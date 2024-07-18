@@ -57,10 +57,8 @@ int main(int argc, char *argv[])
     pQmlContext->setContextProperty("System3", new System(3));
     pQmlContext->setContextProperty("System4", new System(4));
 
-
     qmlRegisterType<Device>("Device",1,0,"Device");
     qmlRegisterType<IO>("IO",1,0,"IO");
-//    qmlRegisterType<IOModel>("IOModel",1,0,"IOModel");
     qmlRegisterType<DeviceInformation>("DeviceInformation",1,0,"DeviceInformation");
     qmlRegisterType<Trend>("Trend",1,0,"Trend");
     qmlRegisterType<QmlEnum>("QmlEnum",1,0,"QmlEnum");
