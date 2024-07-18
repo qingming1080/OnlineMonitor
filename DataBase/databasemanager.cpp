@@ -757,126 +757,126 @@ QList<_Production_Data> DataBaseManager::getProductionData(int welderID, int fin
     return list;
 }
 
-_Weld_TrendData DataBaseManager::getWeldTrendData(int welderID)
-{
-    _Weld_TrendData result;
+//_Weld_TrendData DataBaseManager::getWeldTrendData(int welderID)
+//{
+//    _Weld_TrendData result;
 
-    QSqlQuery query;
-    if(welderID != 0)
-    {
-        // %1_表格名称
-        QString execStr = QString("SELECT * FROM %1 WHERE %2 = :welderID ORDER BY %3 DESC LIMIT 150")
-                              .arg(PRODUCTION_TABLENAME
-                                   , getProduction_ColumnName(QmlEnum::PRODUCTION_welder_id)
-                                   , getProduction_ColumnName(QmlEnum::PRODUCTION_create_time));
+//    QSqlQuery query;
+//    if(welderID != 0)
+//    {
+//        // %1_表格名称
+//        QString execStr = QString("SELECT * FROM %1 WHERE %2 = :welderID ORDER BY %3 DESC LIMIT 150")
+//                              .arg(PRODUCTION_TABLENAME
+//                                   , getProduction_ColumnName(QmlEnum::PRODUCTION_welder_id)
+//                                   , getProduction_ColumnName(QmlEnum::PRODUCTION_create_time));
 
-        query.prepare(execStr);
-        query.bindValue(":welderID", welderID);
-    }
-    else
-    {
-        // %1_表格名称
-        QString execStr = QString("SELECT * FROM %1 ORDER BY %2 DESC LIMIT 150")
-                              .arg(PRODUCTION_TABLENAME
-                                   , getProduction_ColumnName(QmlEnum::PRODUCTION_create_time));
-        qDebug() << execStr;
-        query.prepare(execStr);
-    }
+//        query.prepare(execStr);
+//        query.bindValue(":welderID", welderID);
+//    }
+//    else
+//    {
+//        // %1_表格名称
+//        QString execStr = QString("SELECT * FROM %1 ORDER BY %2 DESC LIMIT 150")
+//                              .arg(PRODUCTION_TABLENAME
+//                                   , getProduction_ColumnName(QmlEnum::PRODUCTION_create_time));
+//        qDebug() << execStr;
+//        query.prepare(execStr);
+//    }
 
-    if (!query.exec())
-    {
-        qDebug() << "Production查询失败: " << query.lastError();
-    }
+//    if (!query.exec())
+//    {
+//        qDebug() << "Production查询失败: " << query.lastError();
+//    }
 
-    bool isFirst = true;
-    while(query.next())
-    {
-        _Production_Data data;
-        data.id                       = query.value(QmlEnum::PRODUCTION_id).toInt();
-        data.welder_id                = query.value(QmlEnum::PRODUCTION_welder_id).toInt();
-        data.model_id                 = query.value(QmlEnum::PRODUCTION_model_id).toInt();
-        data.create_time              = query.value(QmlEnum::PRODUCTION_create_time).toString();
-        data.serial_number            = query.value(QmlEnum::PRODUCTION_serial_number).toInt();
-        data.cycle_count              = query.value(QmlEnum::PRODUCTION_cycle_count).toInt();
-        data.batch_count              = query.value(QmlEnum::PRODUCTION_batch_count).toInt();
+//    bool isFirst = true;
+//    while(query.next())
+//    {
+//        _Production_Data data;
+//        data.id                       = query.value(QmlEnum::PRODUCTION_id).toInt();
+//        data.welder_id                = query.value(QmlEnum::PRODUCTION_welder_id).toInt();
+//        data.model_id                 = query.value(QmlEnum::PRODUCTION_model_id).toInt();
+//        data.create_time              = query.value(QmlEnum::PRODUCTION_create_time).toString();
+//        data.serial_number            = query.value(QmlEnum::PRODUCTION_serial_number).toInt();
+//        data.cycle_count              = query.value(QmlEnum::PRODUCTION_cycle_count).toInt();
+//        data.batch_count              = query.value(QmlEnum::PRODUCTION_batch_count).toInt();
 
-        // 能量 ***J -> ***
-        QString energyStr = query.value(QmlEnum::PRODUCTION_energy).toString();
-        data.energy = energyStr.leftRef(energyStr.length()-1).toInt();
+//        // 能量 ***J -> ***
+//        QString energyStr = query.value(QmlEnum::PRODUCTION_energy).toString();
+//        data.energy = energyStr.leftRef(energyStr.length()-1).toInt();
 
-        data.amplitude                = query.value(QmlEnum::PRODUCTION_amplitude).toInt();
-        data.pressure                 = query.value(QmlEnum::PRODUCTION_pressure).toInt();
+//        data.amplitude                = query.value(QmlEnum::PRODUCTION_amplitude).toInt();
+//        data.pressure                 = query.value(QmlEnum::PRODUCTION_pressure).toInt();
 
-        // 时间 *.**s - > *.**
-        data.time                     = query.value(QmlEnum::PRODUCTION_time).toString();
-        data.time = data.time.left(data.time.length()-1);
+//        // 时间 *.**s - > *.**
+//        data.time                     = query.value(QmlEnum::PRODUCTION_time).toString();
+//        data.time = data.time.left(data.time.length()-1);
 
-        // 功率 ***W -> ***
-        QString powerStr = query.value(QmlEnum::PRODUCTION_power).toString();
-        data.power = powerStr.leftRef(powerStr.length()-1).toInt();
+//        // 功率 ***W -> ***
+//        QString powerStr = query.value(QmlEnum::PRODUCTION_power).toString();
+//        data.power = powerStr.leftRef(powerStr.length()-1).toInt();
 
-        // 高度 *.**mm -> *.**
-        QString pre_heightStr = query.value(QmlEnum::PRODUCTION_pre_height).toString();
-        data.pre_height = pre_heightStr.leftRef(pre_heightStr.length()-2).toDouble();
-        QString post_heightStr = query.value(QmlEnum::PRODUCTION_post_height).toString();
-        data.post_height = post_heightStr.leftRef(post_heightStr.length()-2).toDouble();
+//        // 高度 *.**mm -> *.**
+//        QString pre_heightStr = query.value(QmlEnum::PRODUCTION_pre_height).toString();
+//        data.pre_height = pre_heightStr.leftRef(pre_heightStr.length()-2).toDouble();
+//        QString post_heightStr = query.value(QmlEnum::PRODUCTION_post_height).toString();
+//        data.post_height = post_heightStr.leftRef(post_heightStr.length()-2).toDouble();
 
-        data.force                    = query.value(QmlEnum::PRODUCTION_force).toInt();
-        data.residual                 = query.value(QmlEnum::PRODUCTION_residual).toInt();
-        data.good_rate                = query.value(QmlEnum::PRODUCTION_good_rate).toInt();
-        data.good_subtotal_cycles     = query.value(QmlEnum::PRODUCTION_good_subtotal_cycles).toInt();
-        data.suspect_subtotal_cycles  = query.value(QmlEnum::PRODUCTION_suspect_subtotal_cycles).toInt();
-        data.not_definite_cycles      = query.value(QmlEnum::PRODUCTION_not_definite_cycles).toInt();
-        data.final_result             = query.value(QmlEnum::PRODUCTION_final_result).toInt();
+//        data.force                    = query.value(QmlEnum::PRODUCTION_force).toInt();
+//        data.residual                 = query.value(QmlEnum::PRODUCTION_residual).toInt();
+//        data.good_rate                = query.value(QmlEnum::PRODUCTION_good_rate).toInt();
+//        data.good_subtotal_cycles     = query.value(QmlEnum::PRODUCTION_good_subtotal_cycles).toInt();
+//        data.suspect_subtotal_cycles  = query.value(QmlEnum::PRODUCTION_suspect_subtotal_cycles).toInt();
+//        data.not_definite_cycles      = query.value(QmlEnum::PRODUCTION_not_definite_cycles).toInt();
+//        data.final_result             = query.value(QmlEnum::PRODUCTION_final_result).toInt();
 
-        // 计入首次大小
-        if(isFirst)
-        {
-            isFirst = false;
+//        // 计入首次大小
+//        if(isFirst)
+//        {
+//            isFirst = false;
 
-            result.id_X_Min = data.id;
-            result.id_X_Max = data.id;
-            result.before_Y_Min = data.pre_height;
-            result.before_Y_Max = data.pre_height;
-            result.after_Y_Min = data.post_height;
-            result.after_Y_Max = data.post_height;
-            result.time_Y_Min = data.time;
-            result.time_Y_Max = data.time;
-            result.power_Y_Min = data.power;
-            result.power_Y_Max = data.power;
-        }
+//            result.id_X_Min = data.id;
+//            result.id_X_Max = data.id;
+//            result.before_Y_Min = data.pre_height;
+//            result.before_Y_Max = data.pre_height;
+//            result.after_Y_Min = data.post_height;
+//            result.after_Y_Max = data.post_height;
+//            result.time_Y_Min = data.time;
+//            result.time_Y_Max = data.time;
+//            result.power_Y_Min = data.power;
+//            result.power_Y_Max = data.power;
+//        }
 
-        // 确定X轴大小
-        if(data.id < result.id_X_Min)
-            result.id_X_Min = data.id;
-        if(data.id > result.id_X_Max)
-            result.id_X_Max = data.id;
-        // 焊前高度 Y轴
-        if(data.pre_height < result.before_Y_Min)
-            result.before_Y_Min = data.pre_height;
-        if(data.pre_height > result.before_Y_Max)
-            result.before_Y_Max = data.pre_height;
-        // 焊后高度 Y轴
-        if(data.post_height < result.after_Y_Min)
-            result.after_Y_Min = data.post_height;
-        if(data.post_height > result.after_Y_Max)
-            result.after_Y_Max = data.post_height;
-        // 时间 Y轴
-        if(data.time.toDouble() < result.time_Y_Min.toDouble())
-            result.time_Y_Min = data.time;
-        if(data.time.toDouble() > result.time_Y_Max.toDouble())
-            result.time_Y_Max = data.time;
-        // 功率
-        if(data.power < result.power_Y_Min)
-            result.power_Y_Min = data.power;
-        if(data.power > result.power_Y_Max)
-            result.power_Y_Max = data.power;
+//        // 确定X轴大小
+//        if(data.id < result.id_X_Min)
+//            result.id_X_Min = data.id;
+//        if(data.id > result.id_X_Max)
+//            result.id_X_Max = data.id;
+//        // 焊前高度 Y轴
+//        if(data.pre_height < result.before_Y_Min)
+//            result.before_Y_Min = data.pre_height;
+//        if(data.pre_height > result.before_Y_Max)
+//            result.before_Y_Max = data.pre_height;
+//        // 焊后高度 Y轴
+//        if(data.post_height < result.after_Y_Min)
+//            result.after_Y_Min = data.post_height;
+//        if(data.post_height > result.after_Y_Max)
+//            result.after_Y_Max = data.post_height;
+//        // 时间 Y轴
+//        if(data.time.toDouble() < result.time_Y_Min.toDouble())
+//            result.time_Y_Min = data.time;
+//        if(data.time.toDouble() > result.time_Y_Max.toDouble())
+//            result.time_Y_Max = data.time;
+//        // 功率
+//        if(data.power < result.power_Y_Min)
+//            result.power_Y_Min = data.power;
+//        if(data.power > result.power_Y_Max)
+//            result.power_Y_Max = data.power;
 
-        result.data.push_back(data);
-    }
+//        result.data.push_back(data);
+//    }
 
-    return result;
-}
+//    return result;
+//}
 
 _Yield_TrendData DataBaseManager::getYieldTrendData(int interVal, int welderID)
 {
@@ -904,110 +904,48 @@ _Yield_TrendData DataBaseManager::getYieldTrendData(int interVal, int welderID)
         else
         {
             qDebug() << "DataBaseManager::getYieldTrendData() 获取最新生产时间失败" << query.lastError();
+            return result;
         }
     }
 
-    QSqlQuery query;
-    if(welderID != 0)
+    QDateTime currentTime = startTime;
+    int timeInterVal = -interVal / 60;
+    // 分段计算每个时间段的良率
+    for(int i = 0; i < 60; ++i)
     {
-        // %1_表格名称
-        QString execStr = QString("SELECT * FROM %1 WHERE %2 = :welderID AND %3 >=:startTime AND %3<=:endTime ORDER BY %3 DESC LIMIT 500")
-                              .arg(PRODUCTION_TABLENAME
-                                   , getProduction_ColumnName(QmlEnum::PRODUCTION_welder_id)
-                                   , getProduction_ColumnName(QmlEnum::PRODUCTION_create_time));
-
-        query.prepare(execStr);
-        query.bindValue(":welderID", welderID);
-        query.bindValue(":startTime", startTime);
-        query.bindValue(":endTime", endTime);
-    }
-    else
-    {
-        // %1_表格名称
-        QString execStr = QString("SELECT * FROM %1 WHERE %2 >=:startTime AND %2<=:endTime")
-                              .arg(PRODUCTION_TABLENAME
-                                   , getProduction_ColumnName(QmlEnum::PRODUCTION_create_time));
-        qDebug() << execStr;
-        query.prepare(execStr);
-    }
-
-    if (!query.exec())
-    {
-        qDebug() << "Production查询失败: " << query.lastError();
-    }
-
-    while(query.next())
-    {
-        _Production_Data data;
-        data.id                       = query.value(QmlEnum::PRODUCTION_id).toInt();
-        data.welder_id                = query.value(QmlEnum::PRODUCTION_welder_id).toInt();
-        data.model_id                 = query.value(QmlEnum::PRODUCTION_model_id).toInt();
-        data.create_time              = query.value(QmlEnum::PRODUCTION_create_time).toString();
-        data.serial_number            = query.value(QmlEnum::PRODUCTION_serial_number).toInt();
-        data.cycle_count              = query.value(QmlEnum::PRODUCTION_cycle_count).toInt();
-        data.batch_count              = query.value(QmlEnum::PRODUCTION_batch_count).toInt();
-
-        // 能量 ***J -> ***
-        QString energyStr = query.value(QmlEnum::PRODUCTION_energy).toString();
-        data.energy = energyStr.leftRef(energyStr.length()-1).toInt();
-
-        data.amplitude                = query.value(QmlEnum::PRODUCTION_amplitude).toInt();
-        data.pressure                 = query.value(QmlEnum::PRODUCTION_pressure).toInt();
-
-        // 时间 *.**s - > *.**
-        data.time                     = query.value(QmlEnum::PRODUCTION_time).toString();
-        data.time = data.time.left(data.time.length()-1);
-
-        // 功率 ***W -> ***
-        QString powerStr = query.value(QmlEnum::PRODUCTION_power).toString();
-        data.power = powerStr.leftRef(powerStr.length()-1).toInt();
-
-        // 高度 *.**mm -> *.**
-        QString pre_heightStr = query.value(QmlEnum::PRODUCTION_pre_height).toString();
-        data.pre_height = pre_heightStr.leftRef(pre_heightStr.length()-2).toDouble();
-        QString post_heightStr = query.value(QmlEnum::PRODUCTION_post_height).toString();
-        data.post_height = post_heightStr.leftRef(post_heightStr.length()-2).toDouble();
-
-        data.force                    = query.value(QmlEnum::PRODUCTION_force).toInt();
-        data.residual                 = query.value(QmlEnum::PRODUCTION_residual).toInt();
-        data.good_rate                = query.value(QmlEnum::PRODUCTION_good_rate).toInt();
-        data.good_subtotal_cycles     = query.value(QmlEnum::PRODUCTION_good_subtotal_cycles).toInt();
-        data.suspect_subtotal_cycles  = query.value(QmlEnum::PRODUCTION_suspect_subtotal_cycles).toInt();
-        data.not_definite_cycles      = query.value(QmlEnum::PRODUCTION_not_definite_cycles).toInt();
-        data.final_result             = query.value(QmlEnum::PRODUCTION_final_result).toInt();
-
-        result.data.push_back(data);
-    }
-
-    return result;
-}
-
-QList<QString> DataBaseManager::getMessage(QDateTime time)
-{
-    QList<QString> result;
-
-    QSqlQuery query;
-    // %1_表格名称
-    QString execStr = QString("SELECT * FROM %1 WHERE %2 > :time AND %3 = 1")
-                          .arg(PRODUCTION_TABLENAME
-                               , getProduction_ColumnName(QmlEnum::PRODUCTION_create_time)
-                               , getProduction_ColumnName(QmlEnum::PRODUCTION_final_result));
-
-    query.prepare(execStr);
-    query.bindValue(":time", time.toString("yyyy-MM-dd hh:dd:ss"));
-
-    if (!query.exec())
-    {
-        qDebug() << "Production查询失败: " << query.lastError();
-    }
-    while(query.next())
-    {
-        _Production_Data data;
-        QString str;
-        // 日期时间
-        str += query.value(QmlEnum::PRODUCTION_create_time).toString() + " ";
-        // 设备ID
-        str += query.value(QmlEnum::PRODUCTION_welder_id).toString() + "号设备 检测到不良品。";
+        QDateTime tmpTime = currentTime.addSecs(timeInterVal);
+        QSqlQuery query;
+        QString execStr = QString("SELECT * FROM %1 WHERE %2 BETWEEN '%3' AND '%4' AND %5 = '%6'")
+                                       .arg(PRODUCTION_TABLENAME
+                                                              , getProduction_ColumnName(QmlEnum::PRODUCTION_create_time)
+                                                              , currentTime.toString("yyyy-MM-dd hh:mm:ss")
+                                                              , tmpTime.toString("yyyy-MM-dd hh:mm:ss")
+                                                              , getProduction_ColumnName(QmlEnum::PRODUCTION_welder_id)
+                                                              , QString::number(welderID));
+        // 当前分段的结束时间点
+        QString time = tmpTime.toString("yyyy-MM-dd hh:mm:ss");
+        if (!query.exec(execStr))
+        {
+            qDebug() << "Production查询失败: " << query.lastError() << query.lastQuery();
+        }
+        else
+        {
+            qDebug() << "I WANT " << query.lastQuery();
+        }
+        int produtcNum = 0;
+        int goodNum = 0;
+        while(query.next())
+        {
+            produtcNum++;
+            if(query.value(QmlEnum::PRODUCTION_final_result).toInt() == 0)
+                goodNum++;
+        }
+        qDebug() << goodNum << produtcNum;
+        QPair<int, QString> pair;
+        pair.first = produtcNum==0?0:(double(goodNum)/produtcNum) * 100;
+        pair.second = time;
+        result.points.push_back(pair);
+        currentTime = tmpTime;
     }
 
     return result;

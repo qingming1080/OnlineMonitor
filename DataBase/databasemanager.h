@@ -194,7 +194,6 @@ public:
     bool insertModelRow(_Model_Data data);
 
 /////////////////////////production////////////////////////////////
-/// 良率趋势、焊接趋势_1h 历史记录_5s
     ///
     /// \brief getWeldTrendData : 获取历史记录，取最新五百个
     /// \param welderID : 焊机ID，为零则不区分焊机
@@ -208,7 +207,7 @@ public:
     /// \param welderID : 焊机ID，为零则不区分焊机
     /// \return
     ///
-    _Weld_TrendData getWeldTrendData(int welderID = 0);
+//    _Weld_TrendData getWeldTrendData(int welderID = 0);
 
     ///
     /// \brief getYieldTrendData : 获取良率趋势折线图,取最新五百个
@@ -217,8 +216,6 @@ public:
     /// \return
     ///
     _Yield_TrendData getYieldTrendData(int interVal, int welderID = 0);
-
-    QList<QString> getMessage(QDateTime time);
 
     ///
     /// \brief removeProductionRow : 删除production表格一行数据

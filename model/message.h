@@ -2,8 +2,7 @@
 #define MESSAGE_H
 
 #include <QAbstractListModel>
-#include <QTimer>
-#include <QDateTime>
+#include "qmlenum.h"
 
 class Message : public QAbstractListModel
 {
@@ -15,15 +14,17 @@ public:
     Q_INVOKABLE QVariant data(const QModelIndex &index, int role) const;
     Q_INVOKABLE QHash<int, QByteArray> roleNames() const;
 
+    ///
+    /// \brief addMessage : 添加报警信息
+    /// \param welderID : 设备号
+    /// \param state : 产品状态
+    ///
+    Q_INVOKABLE void addMessage(int welderID, QmlEnum::PRODUCTSTATE state);
 private:
     explicit Message(QObject *parent = nullptr);
 
-    void onUpdate();
-
 private:
     static Message* s_pMessage;
-
-    QTimer* m_timer;
 
     QList<QString> m_data;
 };

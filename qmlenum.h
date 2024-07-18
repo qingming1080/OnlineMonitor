@@ -142,6 +142,7 @@ public:
     {
         PRODUCTSTATE_Excelleng = 0,    // 良品
         PRODUCTSTATE_Difference,       // 次品
+        PRODUCTSTATE_Suspicious,       // 未知
     };
     Q_ENUM(PRODUCTSTATE)
 

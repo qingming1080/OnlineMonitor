@@ -1,5 +1,6 @@
 #include "message.h"
-#include "DataBase/databasemanager.h"
+#include "devicemanager.h"
+#include <QDateTime>
 
 Message* Message::s_pMessage = nullptr;
 
@@ -33,17 +34,20 @@ QHash<int, QByteArray> Message::roleNames() const
     return roles;
 }
 
+void Message::addMessage(int welderID, QmlEnum::PRODUCTSTATE state)
+{
+    if(state != QmlEnum::PRODUCTSTATE_Difference && state != QmlEnum::PRODUCTSTATE_Suspicious)
+        return;
+
+    beginInsertRows(QModelIndex(), rowCount(), rowCount());
+    QString str = QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss ")
+                  + DeviceManager::getInstance()->getHistoryName(welderID)
+                  + ((state==QmlEnum::PRODUCTSTATE_Difference)?"次品":"可疑");
+    endInsertRows();
+}
+
 Message::Message(QObject *parent)
     : QAbstractListModel{parent}
 {
-    m_timer = new QTimer();
-    connect(m_timer, &QTimer::timeout, this, &Message::onUpdate);
-    m_timer->start(1000);
-}
 
-void Message::onUpdate()
-{
-    beginResetModel();
-    m_data.append(DataBaseManager::getInstance()->getMessage(QDateTime::currentDateTime().addMonths(-1)));
-    endResetModel();
 }

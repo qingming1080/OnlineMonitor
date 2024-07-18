@@ -178,11 +178,11 @@ struct _Weld_TrendData
 // 良率趋势数据结构
 struct _Yield_TrendData
 {
+    // 开始时间
     QString startTime;
+    // 结束时间
     QString endTime;
-
-    // 数据
-    QList<_Production_Data> data;
+    QList<QPair<int, QString>> points;
 };
 
 

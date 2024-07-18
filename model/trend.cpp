@@ -3,7 +3,7 @@
 #include "DataBase/databasemanager.h"
 #include <QDateTime>
 Trend::Trend(int welderID, QObject *parent)
-    : QObject{parent}, m_welderID(welderID), m_yieldType(3)
+    : QObject{parent}, m_welderID(welderID)
 {
     init();
 }
@@ -33,11 +33,6 @@ QStandardItemModel *Trend::pYieldTrend() const
     return m_pYieldTrend;
 }
 
-void Trend::upWeldData()
-{
-    setWeldTrendData(DataBaseManager::getInstance()->getWeldTrendData(m_welderID));
-}
-
 void Trend::upYieldData()
 {
     if(m_yieldType == 0)
@@ -63,8 +58,11 @@ void Trend::setWeldTrendData(_Weld_TrendData result)
     for(int row = 0; row < result.data.size(); ++row)
     {
         // 焊前高度
+        // 点下标
         QStandardItem* before_Row_Item = new QStandardItem(QString::number(row));
+        // X坐标
         QStandardItem* before_X_Item = new QStandardItem(QString::number(result.data.at(row).serial_number));
+        // Y坐标
         QStandardItem* before_Y_Item = new QStandardItem(QString::number(result.data.at(row).pre_height));
         m_pBeforeModel->setItem(row, 0, before_Row_Item);
         m_pBeforeModel->setItem(row, 1, before_X_Item);
@@ -128,13 +126,13 @@ void Trend::setYieldTrendData(_Yield_TrendData data)
     // 清除当前折线数据
     m_pYieldTrend->clear();
 
-    for(int row = 0; row < data.data.size(); ++row)
+    for(int row = 0; row < data.points.size(); ++row)
     {
         // 良率折线
-        QStandardItem* yieldItem = new QStandardItem(QString::number(row));
-        QDateTime creatTime = QDateTime::fromString(data.data.at(row).create_time, "yyyy-MM-dd hh:mm:ss");
-        QStandardItem* yield_X_Item   = new QStandardItem(QString::number(creatTime.toMSecsSinceEpoch()));
-        QStandardItem* yield_Y_Item   = new QStandardItem(QString::number(data.data.at(row).good_rate));
+        QStandardItem* yieldItem      = new QStandardItem(QString::number(row));
+        QDateTime time = QDateTime::fromString(data.points.at(row).second, "yyyy-MM-dd hh:mm:ss");
+        QStandardItem* yield_X_Item   = new QStandardItem(QString::number(time.toMSecsSinceEpoch()));
+        QStandardItem* yield_Y_Item   = new QStandardItem(QString::number(data.points.at(row).first));
         m_pYieldTrend->setItem(row, 0, yieldItem);
         m_pYieldTrend->setItem(row, 1, yield_X_Item);
         m_pYieldTrend->setItem(row, 2, yield_Y_Item);
@@ -189,12 +187,6 @@ void Trend::init()
     m_pYieldTrend   = new QStandardItemModel();
     m_pYieldTrend->setColumnCount(3);
 
-    // 焊接趋势刷新
-    m_weldTimer = new QTimer;
-    connect(m_weldTimer, &QTimer::timeout, [=](){
-        upWeldData();
-    });
-    m_weldTimer->start(1000*60*60);
 
     // 良率趋势刷新
     m_yieldTimer = new QTimer;
@@ -203,7 +195,6 @@ void Trend::init()
     });
     m_yieldTimer->start(1000*60*5);
 
-    upWeldData();
     upYieldData();
 }
 
@@ -237,6 +228,7 @@ void Trend::setYieldType(int newYieldType)
     emit yieldTypeChanged();
     emit startTimeChanged();
     emit endTimeChanged();
+    upYieldData();
 }
 
 int Trend::powerMinY() const
