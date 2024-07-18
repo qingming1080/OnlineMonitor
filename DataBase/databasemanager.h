@@ -218,6 +218,8 @@ public:
     ///
     _Yield_TrendData getYieldTrendData(int interVal, int welderID = 0);
 
+    QList<QString> getMessage(QDateTime time);
+
     ///
     /// \brief removeProductionRow : 删除production表格一行数据
     /// \param id : 生产id

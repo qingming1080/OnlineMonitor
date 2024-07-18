@@ -1,5 +1,5 @@
 #include "message.h"
-
+#include "DataBase/databasemanager.h"
 
 Message* Message::s_pMessage = nullptr;
 
@@ -33,16 +33,17 @@ QHash<int, QByteArray> Message::roleNames() const
     return roles;
 }
 
-void Message::addMessage(QString message)
-{
-    beginInsertRows(QModelIndex(), rowCount(), rowCount());
-    m_data.push_back(message);
-    endInsertRows();
-}
-
 Message::Message(QObject *parent)
     : QAbstractListModel{parent}
 {
-    addMessage("1111111");
-    addMessage("222222");
+    m_timer = new QTimer();
+    connect(m_timer, &QTimer::timeout, this, &Message::onUpdate);
+    m_timer->start(1000);
+}
+
+void Message::onUpdate()
+{
+    beginResetModel();
+    m_data.append(DataBaseManager::getInstance()->getMessage(QDateTime::currentDateTime().addMonths(-1)));
+    endResetModel();
 }

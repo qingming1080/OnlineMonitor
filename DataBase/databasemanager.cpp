@@ -982,6 +982,37 @@ _Yield_TrendData DataBaseManager::getYieldTrendData(int interVal, int welderID)
     return result;
 }
 
+QList<QString> DataBaseManager::getMessage(QDateTime time)
+{
+    QList<QString> result;
+
+    QSqlQuery query;
+    // %1_表格名称
+    QString execStr = QString("SELECT * FROM %1 WHERE %2 > :time AND %3 = 1")
+                          .arg(PRODUCTION_TABLENAME
+                               , getProduction_ColumnName(QmlEnum::PRODUCTION_create_time)
+                               , getProduction_ColumnName(QmlEnum::PRODUCTION_final_result));
+
+    query.prepare(execStr);
+    query.bindValue(":time", time.toString("yyyy-MM-dd hh:dd:ss"));
+
+    if (!query.exec())
+    {
+        qDebug() << "Production查询失败: " << query.lastError();
+    }
+    while(query.next())
+    {
+        _Production_Data data;
+        QString str;
+        // 日期时间
+        str += query.value(QmlEnum::PRODUCTION_create_time).toString() + " ";
+        // 设备ID
+        str += query.value(QmlEnum::PRODUCTION_welder_id).toString() + "号设备 检测到不良品。";
+    }
+
+    return result;
+}
+
 bool DataBaseManager::removeProductionRow(int id)
 {
     QSqlQuery query;

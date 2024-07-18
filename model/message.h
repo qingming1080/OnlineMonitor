@@ -2,6 +2,8 @@
 #define MESSAGE_H
 
 #include <QAbstractListModel>
+#include <QTimer>
+#include <QDateTime>
 
 class Message : public QAbstractListModel
 {
@@ -13,13 +15,15 @@ public:
     Q_INVOKABLE QVariant data(const QModelIndex &index, int role) const;
     Q_INVOKABLE QHash<int, QByteArray> roleNames() const;
 
-    void addMessage(QString message);
-
 private:
     explicit Message(QObject *parent = nullptr);
 
+    void onUpdate();
+
 private:
     static Message* s_pMessage;
+
+    QTimer* m_timer;
 
     QList<QString> m_data;
 };
