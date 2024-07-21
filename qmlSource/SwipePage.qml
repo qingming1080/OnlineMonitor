@@ -17,7 +17,7 @@ Rectangle {
     property int parameter5: 0
     function newModel(){
         mt1.text = "创建模型"
-        mt2.text = "清除数据"
+//        mt2.text = "清除数据"
         loader.sourceComponent = mode2
         loader1.sourceComponent = weld2
     }
@@ -27,7 +27,7 @@ Rectangle {
         x: 52
         y:35
         width:  208
-        height: 203
+        height: mt1.text === "新建模型" ? 235 :203
         color: "#0c5696"
         eqText1:{
             if(DeviceManager.deviceList[swipeCurrIndex]){
@@ -74,9 +74,9 @@ Rectangle {
             WeldingResult{
                 id:s3
                 width:  212
-                height:  215
+                height:  246
                 x:50
-                y:248
+                y:284
                 color: "#0c5696"
                 eqText1:{
                     if(DeviceManager.deviceList[swipeCurrIndex]){
@@ -145,7 +145,7 @@ Rectangle {
     Button{
         id:s4
         x: 50
-        y: 482
+        y: mt1.text === "新建模型" ? 552 :482
         width:   210
         height:  45
         background: Rectangle{
@@ -172,7 +172,6 @@ Rectangle {
                     loader1.sourceComponent = weld1
                     Manual.save()
                     mt1.text = "新建模型"
-                    mt2.text = "新增设备"
                     sigUpdateUI(0)
                 }
                 else{
@@ -188,31 +187,17 @@ Rectangle {
         anchors.topMargin:  23
         width:   210
         height:  45
-        enabled: {
-            if(mt2.text === "新增设备"){
-                return equipmentCount === 4 ? false : true
-            }
-            else{
-                return true
-            }
-        }
+        visible: mt1.text === "创建模型" ? true:false
         background: Rectangle{
             radius: 6
             border.width: 2
             border.color: pRgb(43, 112, 173)
-            color: {
-                if(mt2.text === "新增设备"){
-                    return equipmentCount === 4 ? pRgb(232, 232, 232) : "#0c5696"
-                }
-                else{
-                    return "#0c5696"
-                }
-            }
+            color: "#0c5696"
         }
         contentItem: Text {
             id:mt2
             anchors.centerIn: parent
-            text: "新增设备"
+            text: "清除数据"
             font.pixelSize: 17
             color: pRgb(153, 204, 255)
             horizontalAlignment: Text.AlignHCenter
@@ -220,12 +205,7 @@ Rectangle {
             font.family: fontBold
         }
         onPressed: {
-            if(mt2.text == "新增设备"){
-                switchUI(3)
-                isAdd = true
-                sigSysConfig()
-            }
-            else if(mt2.text == "清除数据"){
+            if(mt2.text == "清除数据"){
 
             }
         }
@@ -592,6 +572,11 @@ Rectangle {
                                     anchors.centerIn: parent
                                 }
                             }
+                            onActiveFocusChanged: {
+                                if(active){
+                                    keyboardYype = inputMethodHints
+                                }
+                            }
                         }
                         TextField{
                             width: 100
@@ -622,6 +607,11 @@ Rectangle {
                                     color: index % 2 === 0 ? "#2d71ae" : "#afc3d8"
                                     font.pixelSize: textField.font.pixelSize
                                     anchors.centerIn: parent
+                                }
+                            }
+                            onActiveFocusChanged: {
+                                if(active){
+                                    keyboardYype = inputMethodHints
                                 }
                             }
                         }

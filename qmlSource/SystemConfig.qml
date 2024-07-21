@@ -209,6 +209,7 @@ Rectangle {
                     font.family: fontBold
                     font.pixelSize: 16
                     inputMethodHints: Qt.ImhDigitsOnly
+
                     background: Rectangle{
                         radius: 6
                         border.width: 3
@@ -230,6 +231,11 @@ Rectangle {
                             else{
                                 return ""
                             }
+                        }
+                    }
+                    onActiveFocusChanged: {
+                        if(active){
+                            keyboardYype = inputMethodHints
                         }
                     }
                 }
@@ -261,6 +267,11 @@ Rectangle {
                         radius: 6
                         border.width: 3
                         border.color: "#99ccff"
+                    }
+                    onActiveFocusChanged: {
+                        if(active){
+                            keyboardYype = inputMethodHints
+                        }
                     }
                     text:{
                         if(equipmentCount === 1){
@@ -308,6 +319,11 @@ Rectangle {
                         radius: 6
                         border.width: 3
                         border.color: "#99ccff"
+                    }
+                    onActiveFocusChanged: {
+                        if(active){
+                            keyboardYype = inputMethodHints
+                        }
                     }
                     text:{
                         if(equipmentCount === 1){
@@ -603,6 +619,11 @@ Rectangle {
                         border.width: 3
                         border.color: "#99ccff"
                     }
+                    onActiveFocusChanged: {
+                        if(active){
+                            keyboardYype = inputMethodHints
+                        }
+                    }
                     text:{
                         if(equipmentCount === 1){
                             if(DeviceManager.deviceList[0]){
@@ -897,6 +918,11 @@ Rectangle {
                                 border.width: 3
                                 border.color: "#99ccff"
                             }
+                            onActiveFocusChanged: {
+                                if(active){
+                                    keyboardYype = inputMethodHints
+                                }
+                            }
                             text: {
                                 if(com2.displayText === "ETH0"){
                                     return NetworkModel.getDataByWelderID(1,QmlEnum.NETWORK_server_port)
@@ -930,6 +956,11 @@ Rectangle {
                                 border.width: 3
                                 border.color: "#99ccff"
                             }
+                            onActiveFocusChanged: {
+                                if(active){
+                                    keyboardYype = inputMethodHints
+                                }
+                            }
                             text:{
                                 if(com2.displayText === "ETH0"){
                                     return NetworkModel.getDataByWelderID(1,QmlEnum.NETWORK_remote_ip)
@@ -962,6 +993,11 @@ Rectangle {
                                 radius: 6
                                 border.width: 3
                                 border.color: "#99ccff"
+                            }
+                            onActiveFocusChanged: {
+                                if(active){
+                                    keyboardYype = inputMethodHints
+                                }
                             }
                             text:{
                                 if(com2.displayText === "ETH0"){

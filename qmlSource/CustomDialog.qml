@@ -109,6 +109,11 @@ Popup {
                 background: Rectangle{
                     radius: 6
                 }
+                onActiveFocusChanged: {
+                    if(active){
+                        keyboardYype = inputMethodHints
+                    }
+                }
             }
             Connections{
                 target: customPopup
@@ -236,6 +241,11 @@ Popup {
                 font.pixelSize: 20
                 background: Rectangle{
                     radius: 6
+                }
+                onActiveFocusChanged: {
+                    if(active){
+                        keyboardYype = inputMethodHints
+                    }
                 }
             }
             Button{

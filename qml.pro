@@ -30,8 +30,7 @@ SOURCES += \
         model/networkmodel.cpp \
         model/rs232model.cpp \
         model/system.cpp \
-        model/trend.cpp \
-        qmlcache.cpp
+        model/trend.cpp
 
 RESOURCES += qml.qrc
 
@@ -61,5 +60,4 @@ HEADERS += \
     model/rs232model.h \
     model/system.h \
     model/trend.h \
-    qmlcache.h \
     qmlenum.h

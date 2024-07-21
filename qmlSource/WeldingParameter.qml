@@ -141,6 +141,11 @@ Rectangle {
             border.color: "#99ccff"
         }
         text:eqText1
+        onActiveFocusChanged: {
+            if(active){
+                keyboardYype = inputMethodHints
+            }
+        }
     }
     TextField{
         id:f2
@@ -162,6 +167,11 @@ Rectangle {
             border.color: "#99ccff"
         }
         text:eqText2
+        onActiveFocusChanged: {
+            if(active){
+                keyboardYype = inputMethodHints
+            }
+        }
     }
     TextField{
         id:f3
@@ -183,6 +193,11 @@ Rectangle {
             border.color: "#99ccff"
         }
         text:eqText3
+        onActiveFocusChanged: {
+            if(active){
+                keyboardYype = inputMethodHints
+            }
+        }
     }
     TextField{
         id:f4
@@ -205,6 +220,11 @@ Rectangle {
         }
         text:eqText4
         visible: altitudeMode
+        onActiveFocusChanged: {
+            if(active){
+                keyboardYype = inputMethodHints
+            }
+        }
     }
     TextField{
         id:f5
@@ -227,5 +247,10 @@ Rectangle {
         }
         text:eqText5
         visible: altitudeMode
+        onActiveFocusChanged: {
+            if(active){
+                keyboardYype = inputMethodHints
+            }
+        }
     }
 }
