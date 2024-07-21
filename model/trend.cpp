@@ -193,7 +193,7 @@ void Trend::init()
     connect(m_yieldTimer, &QTimer::timeout, [=](){
         upYieldData();
     });
-    m_yieldTimer->start(1000*60*5);
+    m_yieldTimer->start(1000*60*1);
 
     upYieldData();
 }

@@ -1,6 +1,5 @@
 <RCC>
     <qresource prefix="/">
-        <file>main.qml</file>
         <file>image/load.png</file>
         <file>image/expand-全屏化.png</file>
         <file>image/J.png</file>
@@ -47,5 +46,6 @@
         <file>qmlSource/RootConfig.qml</file>
         <file>qmlSource/RootConfigView.qml</file>
         <file>image/解锁1.png</file>
+        <file>qmlSource/main.qml</file>
     </qresource>
 </RCC>
