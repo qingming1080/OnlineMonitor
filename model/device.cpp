@@ -4,8 +4,9 @@
 #include "model/io.h"
 #include "model/manual.h"
 #include "model/system.h"
-
 #include "model/trend.h"
+
+#include <QDebug>
 
 Device::Device(int welderID, QObject *parent)
     : QObject{parent}, m_welderID(welderID)

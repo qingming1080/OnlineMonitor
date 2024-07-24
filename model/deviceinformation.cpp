@@ -2,6 +2,8 @@
 #include "DataBase/databasemanager.h"
 #include <QVariant>
 
+#include <QDebug>
+
 DeviceInformation::DeviceInformation(int welderID, QObject *parent)
     : QObject{parent}, m_id(welderID)
 {

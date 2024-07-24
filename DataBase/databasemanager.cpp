@@ -1,11 +1,11 @@
 #include "databasemanager.h"
 #include <QDebug>
-
 #include <QSqlQuery>
 #include <QSqlError>
 #include <QSqlRecord>
 #include <QSqlDriver>
 #include <QApplication>
+
 DataBaseManager* DataBaseManager::s_pDataBaseManager = nullptr;
 
 DataBaseManager *DataBaseManager::getInstance()
@@ -112,7 +112,6 @@ bool DataBaseManager::removeConfigurationDevice(int deviceID)
     query.prepare(execStr);
     query.bindValue(":id", deviceID);
     bool ret = query.exec();
-    qDebug() << query.lastError();
     return ret;
 }
 
@@ -660,8 +659,6 @@ QList<_Production_Data> DataBaseManager::getProductionData(int welderID, int fin
 {
     QList<_Production_Data> list;
 
-    qDebug() << welderID << finalResult;
-
     QSqlQuery query;
     if(welderID != 0 && finalResult != 0)
     {
@@ -701,7 +698,6 @@ QList<_Production_Data> DataBaseManager::getProductionData(int welderID, int fin
         QString execStr = QString("SELECT * FROM %1 ORDER BY %2 DESC LIMIT 150")
                               .arg(PRODUCTION_TABLENAME
                                    , getProduction_ColumnName(QmlEnum::PRODUCTION_create_time));
-        qDebug() << execStr;
         query.prepare(execStr);
     }
 
@@ -899,7 +895,6 @@ _Yield_TrendData DataBaseManager::getYieldTrendData(int interVal, int welderID)
             startTime = endTime.addSecs(interVal);
             result.startTime = startTime.toString("yyyy-MM-dd hh:dd:ss");
             result.endTime   = endTime.toString("yyyy-MM-dd hh:dd:ss");
-            qDebug() << "获取一下时间段的生产良率" << startTime <<  endTime << interVal;
         }
         else
         {
@@ -908,8 +903,10 @@ _Yield_TrendData DataBaseManager::getYieldTrendData(int interVal, int welderID)
         }
     }
 
+#ifdef false
     QDateTime currentTime = startTime;
     int timeInterVal = -interVal / 60;
+
     // 分段计算每个时间段的良率
     for(int i = 0; i < 60; ++i)
     {
@@ -928,10 +925,6 @@ _Yield_TrendData DataBaseManager::getYieldTrendData(int interVal, int welderID)
         {
             qDebug() << "Production查询失败: " << query.lastError() << query.lastQuery();
         }
-        else
-        {
-            qDebug() << "I WANT " << query.lastQuery();
-        }
         int produtcNum = 0;
         int goodNum = 0;
         while(query.next())
@@ -940,12 +933,53 @@ _Yield_TrendData DataBaseManager::getYieldTrendData(int interVal, int welderID)
             if(query.value(QmlEnum::PRODUCTION_final_result).toInt() == 0)
                 goodNum++;
         }
-        qDebug() << goodNum << produtcNum;
         QPair<int, QString> pair;
         pair.first = produtcNum==0?0:(double(goodNum)/produtcNum) * 100;
         pair.second = time;
         result.points.push_back(pair);
         currentTime = tmpTime;
+    }
+#endif
+    // 缓存数据
+    QList<_Production_Data> list = getAllTrendData(welderID, interVal, startTime, endTime);
+    int timeInterVal = -interVal / 60;
+    QList<int> production_num_list;     // 60个时间段每个时间段的生产总数列表
+    QList<int> good_num_list;           // 60个时间段每个时间段的良品总数列表
+    for(int i = 0; i < 60; ++i)
+    {
+        QPair<int, QString> pair;
+        pair.second = startTime.addSecs(timeInterVal * (i+1)).toString("yyyy-MM-dd hh:mm:ss");
+        result.points.push_back(pair);
+        production_num_list.push_back(0);
+        good_num_list.push_back(0);
+    }
+
+    // 开始计算每个时间段的生产总数与良品总数
+    for(int i = 0; i < list.size(); ++i)
+    {
+        QDateTime creatTime = QDateTime::fromString(list.at(i).create_time, "yyyy-MM-dd hh:mm:ss");
+        int finalResult = list.at(i).final_result;
+
+        int timeslot_index = startTime.secsTo(creatTime)/60;
+        if(timeslot_index >= 0 && timeslot_index < 60)
+        {
+            production_num_list[timeslot_index]++;
+            if(finalResult == 0)
+            {
+                good_num_list[timeslot_index]++;
+            }
+        }
+    }
+
+    // 开始计算每个时间段的良率
+    for(int i = 0; i < 60; ++i)
+    {
+        int production_num = production_num_list.at(i);
+        int good_num = good_num_list.at(i);
+        if(production_num == 0)
+            result.points[i].first = 0;
+        else
+            result.points[i].first = double(good_num)/production_num * 100;
     }
 
     return result;
@@ -1130,6 +1164,7 @@ void DataBaseManager::init()
     {
         qDebug() << "Database Open Success";
         b_hasFeature = m_database.driver()->hasFeature(QSqlDriver::QuerySize);
+        qDebug() << "数据库是否允许获取行数" << b_hasFeature;
     }
 }
 
@@ -1379,4 +1414,36 @@ QString DataBaseManager::getSystem_ColumnName(QmlEnum::SYSTEM_COLUMN column)
     }
 
     return "";
+}
+
+QList<_Production_Data> DataBaseManager::getAllTrendData(int welderID, int interVal, QDateTime startTime, QDateTime endTime)
+{
+    QList<_Production_Data> list;
+
+    QSqlQuery query;
+    QString execStr = QString("SELECT * FROM %1 WHERE %2 BETWEEN '%3' AND '%4' AND %5 = '%6'")
+                          .arg(PRODUCTION_TABLENAME
+                               , getProduction_ColumnName(QmlEnum::PRODUCTION_create_time)
+                               , startTime.toString("yyyy-MM-dd hh:mm:ss")
+                               , endTime.toString("yyyy-MM-dd hh:mm:ss")
+                               , getProduction_ColumnName(QmlEnum::PRODUCTION_welder_id)
+                               , QString::number(welderID));
+
+    if(!query.exec(execStr))
+    {
+        qDebug() << "Trend获取失败 " << welderID << query.lastError();
+    }
+
+    while(query.next())
+    {
+        _Production_Data data;
+        // 生产时间
+        data.create_time  = query.value(QmlEnum::PRODUCTION_create_time).toString();
+        // 产品状态
+        data.final_result = query.value(QmlEnum::PRODUCTION_final_result).toInt();
+
+        list.push_back(data);
+    }
+
+    return list;
 }

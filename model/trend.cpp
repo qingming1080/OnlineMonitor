@@ -2,6 +2,10 @@
 #include <QTimer>
 #include "DataBase/databasemanager.h"
 #include <QDateTime>
+
+#include <QDebug>
+#include <QElapsedTimer>
+
 Trend::Trend(int welderID, QObject *parent)
     : QObject{parent}, m_welderID(welderID)
 {
@@ -172,6 +176,9 @@ void Trend::setStartTime(const QString &newStartTime)
 
 void Trend::init()
 {
+    QElapsedTimer tm;
+    tm.start();
+
     m_pBeforeModel  = new QStandardItemModel();
     m_pBeforeModel->setColumnCount(3);
 

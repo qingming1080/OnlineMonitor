@@ -1,6 +1,8 @@
 #include "system.h"
 #include "DataBase/databasemanager.h"
 
+#include <QDebug>
+
 System::System(int welderID, QObject *parent)
     : QObject{parent}, m_welderID(welderID)
 {
@@ -14,7 +16,6 @@ System::System(int welderID, QObject *parent)
         m_otherFace = data.other_fact_setting;
         m_autoModel = data.auto_model_limit;
     }
-
 }
 
 int System::id() const
