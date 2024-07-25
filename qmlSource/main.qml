@@ -5,9 +5,7 @@ import QtQuick.Layouts 1.12
 import QtQuick.VirtualKeyboard 2.2
 import QtQuick.Controls 2.5
 import QtQuick.VirtualKeyboard.Settings 2.2
-import QtQuick.VirtualKeyboard 2.15
-import QtQuick.VirtualKeyboard.Styles 2.15
-import "./qmlSource"
+import "."
 import Device 1.0
 import DeviceInformation 1.0
 import QtQml 2.15

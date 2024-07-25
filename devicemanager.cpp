@@ -4,6 +4,8 @@
 #include "define.h"
 #include <qdebug.h>
 #include "model/deviceinformation.h"
+
+
 DeviceManager* DeviceManager::s_pInstance = nullptr;
 
 
@@ -98,15 +100,21 @@ void DeviceManager::removeDevice(int welderID)
 {
     if(welderID < 1 || welderID > 4)
         return;
-    if(m_deviceList.at(welderID-1)==nullptr)
-        return;
 
-    delete m_deviceList.at(welderID-1);
-    m_deviceList[welderID-1] = nullptr;
-    m_deviceNum--;
-    DataBaseManager::getInstance()->removeConfigurationDevice(welderID);
+    for(int i = 0; i < m_deviceList.size(); ++i)
+    {
+        Device* pDevice = m_deviceList.at(i);
+        if(pDevice->pDeviceInformation()->id() == welderID)
+        {
 
-    emit deviceNumChanged();
-    emit deviceListChanged();
+            m_deviceList.removeOne(pDevice);
+            delete pDevice;
+            m_deviceNum--;
+            DataBaseManager::getInstance()->removeConfigurationDevice(welderID);
+            emit deviceNumChanged();
+            emit deviceListChanged();
+            return;
+        }
+    }
 }
 

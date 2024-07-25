@@ -329,6 +329,8 @@ private:
     ///
     QString getSystem_ColumnName(QmlEnum::SYSTEM_COLUMN column);
 
+    QList<_Production_Data> getAllTrendData(int welderID, int interVal, QDateTime startTime, QDateTime endTime);
+
 private:
     static DataBaseManager* s_pDataBaseManager;
 

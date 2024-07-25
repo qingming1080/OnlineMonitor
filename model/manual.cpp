@@ -1,6 +1,8 @@
 #include "manual.h"
 #include "DataBase/databasemanager.h"
 
+#include <QDebug>
+
 Manual::Manual(int welderID, QObject *parent)
     : QAbstractListModel{parent}, m_welderID(welderID)
 {
