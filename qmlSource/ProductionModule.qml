@@ -252,9 +252,7 @@ Rectangle {
                 }
                 onPressed: {
                     if(mt2.text == "新增设备"){
-                        switchUI(3)
-                        isAdd = true
-                        sigSysConfig()
+                        popup.openPop(8)
                     }
                 }
             }

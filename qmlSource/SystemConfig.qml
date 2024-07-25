@@ -1599,8 +1599,7 @@ Rectangle {
                 }
                 onPressed: {
                     oneself = true
-                    isAdd = true
-                    sigSysConfig()
+                    popup.openPop(8)
                 }
             }
             Button{
