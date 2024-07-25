@@ -694,6 +694,9 @@ Rectangle {
                     x:713
                     y:147
                     onClicked: {
+                        if(isAdd){
+
+                        }
                         if(equipmentCount === 1){
                             if(ctl1.checked){
                                 DeviceManager.deviceList[0].pDeviceInformation.setConnectType(2)
@@ -735,7 +738,10 @@ Rectangle {
                             NumberAnimation on x{
                                 to:smallRect1.width
                                 running: {
-                                    if(equipmentCount === 1){
+                                    if(isAdd){
+                                        return ctl1.checked
+                                    }
+                                    else if(equipmentCount === 1){
                                         return DeviceManager.deviceList[0].pDeviceInformation.connectType !== 1? true : false
                                     }
                                     else{
@@ -747,7 +753,10 @@ Rectangle {
                             NumberAnimation on x{
                                 to:8
                                 running: {
-                                    if(equipmentCount === 1){
+                                    if(isAdd){
+                                        return !ctl1.checked
+                                    }
+                                    else if(equipmentCount === 1){
                                         return DeviceManager.deviceList[0].pDeviceInformation.connectType !== 1? false : true
                                     }
                                     else{
@@ -796,7 +805,10 @@ Rectangle {
                 Loader{
                     id:loader
                     sourceComponent: {
-                        if(equipmentCount === 1){
+                        if(isAdd){
+                            return ctl1.checked ? rect1 : rect2
+                        }
+                        else if(equipmentCount === 1){
                             return DeviceManager.deviceList[0].pDeviceInformation.connectType === 1 ? rect1 : rect2
                         }
                         else{
@@ -860,7 +872,10 @@ Rectangle {
                             y:55
                             model: ["ETH0", "ETH1", "ETH2", "ETH3"]
                             displayText: {
-                                if(equipmentCount === 1){
+                                if(isAdd){
+                                    return "ETH0"
+                                }
+                                else if(equipmentCount === 1){
                                     if(DeviceManager.deviceList[0].pDeviceInformation.connectID === 1){
                                         return "ETH0"
                                     }
@@ -1078,7 +1093,10 @@ Rectangle {
                             y:40
                             model: ["COM1", "COM2"]
                             displayText: {
-                                if(equipmentCount === 1){
+                                if(isAdd){
+                                    return "ETH0"
+                                }
+                                else if(equipmentCount === 1){
                                     if(DeviceManager.deviceList[0].pDeviceInformation.connectID === 1){
                                         return "COM1"
                                     }
