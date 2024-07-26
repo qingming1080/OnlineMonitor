@@ -617,13 +617,16 @@ Rectangle {
                                             anchors.centerIn: parent
                                         }
                                     }
-                                    onActiveFocusChanged: {
-                                        if(active){
-                                            keyboardYype = inputMethodHints
+                                    MouseArea {
+                                        anchors.fill: parent
+                                        onClicked: {
+                                            textField.focus = true
+                                            keyboardYype = 0
                                         }
                                     }
                                 }
                                 TextField{
+                                    id: textField1
                                     width: 100
                                     height: 33
                                     anchors.verticalCenter: parent.verticalCenter
@@ -654,9 +657,11 @@ Rectangle {
                                             anchors.centerIn: parent
                                         }
                                     }
-                                    onActiveFocusChanged: {
-                                        if(active){
-                                            keyboardYype = inputMethodHints
+                                    MouseArea {
+                                        anchors.fill: parent
+                                        onClicked: {
+                                            textField1.focus = true
+                                            keyboardYype = 0
                                         }
                                     }
                                 }

@@ -233,9 +233,11 @@ Rectangle {
                             }
                         }
                     }
-                    onActiveFocusChanged: {
-                        if(active){
-                            keyboardYype = inputMethodHints
+                    MouseArea {
+                        anchors.fill: parent
+                        onClicked: {
+                            t1.focus = true
+                            keyboardYype = 0
                         }
                     }
                 }
@@ -268,9 +270,11 @@ Rectangle {
                         border.width: 3
                         border.color: "#99ccff"
                     }
-                    onActiveFocusChanged: {
-                        if(active){
-                            keyboardYype = inputMethodHints
+                    MouseArea {
+                        anchors.fill: parent
+                        onClicked: {
+                            t2.focus = true
+                            keyboardYype = 0
                         }
                     }
                     text:{
@@ -320,9 +324,11 @@ Rectangle {
                         border.width: 3
                         border.color: "#99ccff"
                     }
-                    onActiveFocusChanged: {
-                        if(active){
-                            keyboardYype = inputMethodHints
+                    MouseArea {
+                        anchors.fill: parent
+                        onClicked: {
+                            t3.focus = true
+                            keyboardYype = 0
                         }
                     }
                     text:{
@@ -619,9 +625,11 @@ Rectangle {
                         border.width: 3
                         border.color: "#99ccff"
                     }
-                    onActiveFocusChanged: {
-                        if(active){
-                            keyboardYype = inputMethodHints
+                    MouseArea {
+                        anchors.fill: parent
+                        onClicked: {
+                            t4.focus = true
+                            keyboardYype = 1
                         }
                     }
                     text:{
@@ -933,9 +941,11 @@ Rectangle {
                                 border.width: 3
                                 border.color: "#99ccff"
                             }
-                            onActiveFocusChanged: {
-                                if(active){
-                                    keyboardYype = inputMethodHints
+                            MouseArea {
+                                anchors.fill: parent
+                                onClicked: {
+                                    t5.focus = true
+                                    keyboardYype = 0
                                 }
                             }
                             text: {
@@ -971,9 +981,11 @@ Rectangle {
                                 border.width: 3
                                 border.color: "#99ccff"
                             }
-                            onActiveFocusChanged: {
-                                if(active){
-                                    keyboardYype = inputMethodHints
+                            MouseArea {
+                                anchors.fill: parent
+                                onClicked: {
+                                    t6.focus = true
+                                    keyboardYype = 0
                                 }
                             }
                             text:{
@@ -1009,9 +1021,11 @@ Rectangle {
                                 border.width: 3
                                 border.color: "#99ccff"
                             }
-                            onActiveFocusChanged: {
-                                if(active){
-                                    keyboardYype = inputMethodHints
+                            MouseArea {
+                                anchors.fill: parent
+                                onClicked: {
+                                    t7.focus = true
+                                    keyboardYype = 0
                                 }
                             }
                             text:{

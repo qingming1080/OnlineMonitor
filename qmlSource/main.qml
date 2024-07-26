@@ -22,7 +22,7 @@ Window {
     property var keyboardYype: 0
 
     onKeyboardYypeChanged: {
-        if(keyboardYype === Qt.ImhDigitsOnly){
+        if(keyboardYype === 0){
             bin.value = 1200
         }
         else{
@@ -264,7 +264,7 @@ Window {
         z: 99
         x: window.width/2-inputPannelID.width/2
         y: window.height      // 默认让其处于窗口最下方,貌似隐藏一样
-        width: keyboardYype === Qt.ImhDigitsOnly ? 400 : window.width*2/3
+        width: keyboardYype === 0 ? 400 : window.width*2/3
         visible: true       // 一直显示
         states: State
         {

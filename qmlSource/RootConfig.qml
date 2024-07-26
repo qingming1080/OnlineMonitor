@@ -69,9 +69,11 @@ Rectangle {
         }
         text: eqText1
         inputMethodHints: Qt.ImhDigitsOnly
-        onActiveFocusChanged: {
-            if(active){
-                keyboardYype = inputMethodHints
+        MouseArea {
+            anchors.fill: parent
+            onClicked: {
+                t1.focus = true
+                keyboardYype = 0
             }
         }
     }
@@ -101,9 +103,11 @@ Rectangle {
         }
         text: eqText2
         inputMethodHints: Qt.ImhDigitsOnly
-        onActiveFocusChanged: {
-            if(active){
-                keyboardYype = inputMethodHints
+        MouseArea {
+            anchors.fill: parent
+            onClicked: {
+                t2.focus = true
+                keyboardYype = 0
             }
         }
     }
@@ -133,9 +137,11 @@ Rectangle {
         }
         text: eqText3
         inputMethodHints: Qt.ImhDigitsOnly
-        onActiveFocusChanged: {
-            if(active){
-                keyboardYype = inputMethodHints
+        MouseArea {
+            anchors.fill: parent
+            onClicked: {
+                t3.focus = true
+                keyboardYype = 0
             }
         }
     }
@@ -165,9 +171,11 @@ Rectangle {
         }
         text: eqText4
         inputMethodHints: Qt.ImhDigitsOnly
-        onActiveFocusChanged: {
-            if(active){
-                keyboardYype = inputMethodHints
+        MouseArea {
+            anchors.fill: parent
+            onClicked: {
+                t4.focus = true
+                keyboardYype = 0
             }
         }
     }

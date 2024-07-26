@@ -141,9 +141,11 @@ Rectangle {
             border.color: "#99ccff"
         }
         text:eqText1
-        onActiveFocusChanged: {
-            if(active){
-                keyboardYype = inputMethodHints
+        MouseArea {
+            anchors.fill: parent
+            onClicked: {
+                f1.focus = true
+                keyboardYype = 0
             }
         }
     }
@@ -167,9 +169,11 @@ Rectangle {
             border.color: "#99ccff"
         }
         text:eqText2
-        onActiveFocusChanged: {
-            if(active){
-                keyboardYype = inputMethodHints
+        MouseArea {
+            anchors.fill: parent
+            onClicked: {
+                f2.focus = true
+                keyboardYype = 0
             }
         }
     }
@@ -193,9 +197,11 @@ Rectangle {
             border.color: "#99ccff"
         }
         text:eqText3
-        onActiveFocusChanged: {
-            if(active){
-                keyboardYype = inputMethodHints
+        MouseArea {
+            anchors.fill: parent
+            onClicked: {
+                f3.focus = true
+                keyboardYype = 0
             }
         }
     }
@@ -220,9 +226,11 @@ Rectangle {
         }
         text:eqText4
         visible: altitudeMode
-        onActiveFocusChanged: {
-            if(active){
-                keyboardYype = inputMethodHints
+        MouseArea {
+            anchors.fill: parent
+            onClicked: {
+                f4.focus = true
+                keyboardYype = 0
             }
         }
     }
@@ -247,9 +255,11 @@ Rectangle {
         }
         text:eqText5
         visible: altitudeMode
-        onActiveFocusChanged: {
-            if(active){
-                keyboardYype = inputMethodHints
+        MouseArea {
+            anchors.fill: parent
+            onClicked: {
+                f5.focus = true
+                keyboardYype = 0
             }
         }
     }

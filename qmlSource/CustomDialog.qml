@@ -109,9 +109,9 @@ Popup {
                 background: Rectangle{
                     radius: 6
                 }
-                onActiveFocusChanged: {
-                    if(active){
-                        keyboardYype = inputMethodHints
+                onFocusChanged: {
+                    if(focus){
+                        keyboardYype = 1
                     }
                 }
             }
@@ -247,9 +247,9 @@ Popup {
                 background: Rectangle{
                     radius: 6
                 }
-                onActiveFocusChanged: {
-                    if(active){
-                        keyboardYype = inputMethodHints
+                onFocusChanged: {
+                    if(focus){
+                        keyboardYype = 1
                     }
                 }
             }
