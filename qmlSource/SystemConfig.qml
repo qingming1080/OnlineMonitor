@@ -781,7 +781,10 @@ Rectangle {
                             anchors.leftMargin: 63
                             text: qsTr("网络")
                             color: {
-                                if(equipmentCount === 1){
+                                if(isAdd){
+                                    return ctl1.checked ? pRgb(43, 112, 173) : "#e5e6e7"
+                                }
+                                else if(equipmentCount === 1){
                                     return DeviceManager.deviceList[0].pDeviceInformation.connectType !== 1 ? pRgb(43, 112, 173) : "#e5e6e7"
                                 }
                                 else{
@@ -798,7 +801,10 @@ Rectangle {
                             anchors.rightMargin: 63
                             text: qsTr("RS232")
                             color: {
-                                if(equipmentCount === 1){
+                                if(isAdd){
+                                    return !ctl1.checked ? pRgb(43, 112, 173) : "#e5e6e7"
+                                }
+                                else if(equipmentCount === 1){
                                     return DeviceManager.deviceList[0].pDeviceInformation.connectType !== 1? "#e5e6e7" : pRgb(43, 112, 173)
                                 }
                                 else{

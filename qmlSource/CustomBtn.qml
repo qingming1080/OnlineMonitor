@@ -59,7 +59,9 @@ Rectangle {
         anchors.fill: parent
         onClicked: {
             if(!tmp){
-                tmp = true
+                if(index !== 3){
+                    tmp = true
+                }
                 sigBtnSwitch(index)
             }
         }
