@@ -1,4 +1,4 @@
-QT += widgets quick virtualkeyboard charts serialport sql qml
+QT += widgets quick virtualkeyboard charts serialport sql qml xml
 
 CONFIG += c++11
 msvc {
@@ -20,6 +20,7 @@ SOURCES += \
         DataBase/databasemanager.cpp \
         devicemanager.cpp \
         fileobject.cpp \
+        log/localrecord.cpp \
         main.cpp \
         model/device.cpp \
         model/deviceinformation.cpp \
@@ -50,6 +51,7 @@ HEADERS += \
     define.h \
     devicemanager.h \
     fileobject.h \
+    log/localrecord.h \
     model/device.h \
     model/deviceinformation.h \
     model/history.h \

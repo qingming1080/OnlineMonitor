@@ -2,10 +2,15 @@
 #include "DataBase/databasemanager.h"
 
 #include <QDebug>
+#include <QElapsedTimer>
+#include "log/localrecord.h"
 
 System::System(int welderID, QObject *parent)
     : QObject{parent}, m_welderID(welderID)
 {
+    QElapsedTimer timer;
+    timer.start();
+
     QList<_System_Data> result = DataBaseManager::getInstance()->getSystemData(m_welderID);
     if(result.size() != 0)
     {
@@ -16,6 +21,9 @@ System::System(int welderID, QObject *parent)
         m_otherFace = data.other_fact_setting;
         m_autoModel = data.auto_model_limit;
     }
+
+    QString text = QString("%1号设备_System_初始化耗时:%2ms").arg(welderID).arg(timer.elapsed());
+    LocalRecord::getInstance()->addRecord(QDateTime::currentDateTime(), text);
 }
 
 int System::id() const

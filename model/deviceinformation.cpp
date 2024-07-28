@@ -3,10 +3,15 @@
 #include <QVariant>
 
 #include <QDebug>
+#include <QElapsedTimer>
+#include "log/localrecord.h"
 
 DeviceInformation::DeviceInformation(int welderID, QObject *parent)
     : QObject{parent}, m_id(welderID)
 {
+    QElapsedTimer timer;
+    timer.start();
+
     _Configuration_Data data = DataBaseManager::getInstance()->getConfigurationData(welderID);
 
     m_name  = data.welder_name;
@@ -25,6 +30,9 @@ DeviceInformation::DeviceInformation(int welderID, QObject *parent)
         m_power = 16;
         m_goodRate = 30;
     }
+
+    QString text = QString("%1号设备_DeviceInformation_初始化耗时:%2ms").arg(welderID).arg(timer.elapsed());
+    LocalRecord::getInstance()->addRecord(QDateTime::currentDateTime(), text);
 }
 
 QString DeviceInformation::name() const

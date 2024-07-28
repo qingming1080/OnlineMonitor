@@ -128,7 +128,8 @@ bool DataBaseManager::insertConfigurationDevice(_Configuration_Data data)
                               ", :lower_limit"
                               ", :height_option"
                               ", :connect_type"
-                              ", :connect_id)")
+                              ", :connect_id"
+                              ", 0)")
                           .arg(CONFIGURATION_TABLENAME);
 
     // 绑定属性

@@ -16,6 +16,8 @@
 #include "model/rs232model.h"
 #include "DataBase/databasemanager.h"
 #include "model/system.h"
+#include "log/localrecord.h"
+
 // 自定义消息处理程序
 void myMessageHandler(QtMsgType type, const QMessageLogContext &context, const QString &msg)
 {
@@ -41,6 +43,8 @@ int main(int argc, char *argv[])
     // 安装自定义消息处理程序
     qInstallMessageHandler(myMessageHandler);
     QApplication app(argc, argv);
+
+    LocalRecord::getInstance()->start();
     DeviceManager::getInstance();
 
     QQmlApplicationEngine engine;
