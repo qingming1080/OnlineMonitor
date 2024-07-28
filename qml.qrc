@@ -25,27 +25,27 @@
         <file>qmlSource/WeldingResult.qml</file>
         <file>qmlSource/WeldingTrend.qml</file>
         <file>qmlSource/YieldTrend.qml</file>
-        <file>image/expand-全屏化.png</file>
         <file>image/J.png</file>
         <file>image/load.png</file>
         <file>image/title.png</file>
-        <file>image/报警.png</file>
-        <file>image/待定.png</file>
-        <file>image/多边形.png</file>
-        <file>image/复位.png</file>
-        <file>image/高度.png</file>
-        <file>image/关闭.png</file>
-        <file>image/解锁.png</file>
-        <file>image/解锁1.png</file>
-        <file>image/日程-参与者-待定.png</file>
-        <file>image/实例.png</file>
-        <file>image/矢量 3.png</file>
-        <file>image/缩小.png</file>
-        <file>image/锁定.png</file>
-        <file>image/锁定1.png</file>
-        <file>image/舞动振幅.png</file>
-        <file>image/压力.png</file>
-        <file>image/振动.png</file>
-        <file>image/组件.png</file>
+        <file>image/alarm.png</file>
+        <file>image/undetermined.png</file>
+        <file>image/polygon.png</file>
+        <file>image/restoration.png</file>
+        <file>image/height.png</file>
+        <file>image/close.png</file>
+        <file>image/unlock.png</file>
+        <file>image/unlock1.png</file>
+        <file>image/full.png</file>
+        <file>image/undetermined1.png</file>
+        <file>image/instantiation.png</file>
+        <file>image/vector.png</file>
+        <file>image/reduce.png</file>
+        <file>image/lock.png</file>
+        <file>image/lock1.png</file>
+        <file>image/amplitude.png</file>
+        <file>image/pressure.png</file>
+        <file>image/shake.png</file>
+        <file>image/module.png</file>
     </qresource>
 </RCC>

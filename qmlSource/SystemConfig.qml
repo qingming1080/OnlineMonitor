@@ -547,13 +547,13 @@ Rectangle {
                 }
                 Image {
                     id: im1
-                    source: "qrc:/image/报警.png"
+                    source: "qrc:/image/alarm.png"
                     x:197
                     y:440
                 }
                 Image {
                     id: im2
-                    source: "qrc:/image/复位.png"
+                    source: "qrc:/image/restoration.png"
                     anchors.left: im1.left
                     anchors.top: im1.bottom
                     anchors.topMargin: 13
@@ -563,7 +563,7 @@ Rectangle {
                     id: im3
                     width: 30
                     height: 30
-                    source: !undeterMined ? "qrc:/image/日程-参与者-待定.png" : "qrc:/image/待定.png"
+                    source: !undeterMined ? "qrc:/image/undetermined1.png" : "qrc:/image/undetermined.png"
                     anchors.left: im2.left
                     anchors.top: im2.bottom
                     anchors.topMargin: 13
@@ -1281,7 +1281,7 @@ Rectangle {
                         color: "transparent"
                         Image {
                             anchors.fill: parent
-                            source: "qrc:/image/缩小.png"
+                            source: "qrc:/image/reduce.png"
                         }
                     }
                     onPressed: {

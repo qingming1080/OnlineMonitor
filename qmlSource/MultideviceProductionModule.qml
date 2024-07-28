@@ -232,7 +232,7 @@ Rectangle {
                 color: "transparent"
                 Image {
                     anchors.fill: parent
-                    source: "qrc:/image/expand-全屏化.png"
+                    source: "qrc:/image/full.png"
                 }
             }
             onPressed: {
@@ -379,7 +379,7 @@ Rectangle {
                 color: "transparent"
                 Image {
                     anchors.fill: parent
-                    source: "qrc:/image/expand-全屏化.png"
+                    source: "qrc:/image/full.png"
                 }
             }
             onPressed: {
@@ -549,7 +549,7 @@ Rectangle {
                 color: "transparent"
                 Image {
                     anchors.fill: parent
-                    source: "qrc:/image/expand-全屏化.png"
+                    source: "qrc:/image/full.png"
                 }
             }
             onPressed: {
@@ -718,7 +718,7 @@ Rectangle {
                 color: "transparent"
                 Image {
                     anchors.fill: parent
-                    source: "qrc:/image/expand-全屏化.png"
+                    source: "qrc:/image/full.png"
                 }
             }
             onPressed: {

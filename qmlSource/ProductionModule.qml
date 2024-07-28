@@ -389,17 +389,17 @@ Rectangle {
                                 Image {
                                     id:im
                                     anchors.fill: parent
-                                    source: "qrc:/image/解锁.png"
+                                    source: "qrc:/image/unlock.png"
                                     fillMode: Image.PreserveAspectFit // 保持图片的宽高比，适应按钮大小
                                 }
                             }
                             onPressed: {
                                 tableFlag = true
-                                if(im.source == "qrc:/image/解锁.png"){
-                                    im.source = "qrc:/image/锁定.png"
+                                if(im.source == "qrc:/image/unlock.png"){
+                                    im.source = "qrc:/image/lock.png"
                                 }
                                 else{
-                                    im.source = "qrc:/image/解锁.png"
+                                    im.source = "qrc:/image/unlock.png"
                                 }
                             }
                         }
@@ -505,22 +505,22 @@ Rectangle {
                                         Image {
                                             id:im1
                                             anchors.fill: parent
-                                            source: index % 2 !== 0 ? "qrc:/image/锁定.png" : "qrc:/image/锁定1.png"
+                                            source: index % 2 !== 0 ? "qrc:/image/lock.png" : "qrc:/image/lock1.png"
                                             fillMode: Image.PreserveAspectFit // 保持图片的宽高比，适应按钮大小
                                         }
                                     }
                                     onPressed: {
-                                        if(im1.source == "qrc:/image/解锁.png"){
-                                            im1.source = "qrc:/image/锁定.png"
+                                        if(im1.source == "qrc:/image/unlock.png"){
+                                            im1.source = "qrc:/image/lock.png"
                                         }
-                                        else if(im1.source == "qrc:/image/锁定.png"){
-                                            im1.source = "qrc:/image/解锁.png"
+                                        else if(im1.source == "qrc:/image/lock.png"){
+                                            im1.source = "qrc:/image/unlock.png"
                                         }
-                                        else if(im1.source == "qrc:/image/锁定1.png"){
-                                            im1.source = "qrc:/image/解锁1.png"
+                                        else if(im1.source == "qrc:/image/lock1.png"){
+                                            im1.source = "qrc:/image/unlock1.png"
                                         }
-                                        else if(im1.source == "qrc:/image/解锁1.png"){
-                                            im1.source = "qrc:/image/锁定1.png"
+                                        else if(im1.source == "qrc:/image/unlock1.png"){
+                                            im1.source = "qrc:/image/lock1.png"
                                         }
                                     }
                                 }
@@ -528,19 +528,19 @@ Rectangle {
                                     target: bt1
                                     function onPressed(){
                                         if(index % 2 === 0){
-                                            if(im.source == "qrc:/image/解锁.png"){
-                                                im1.source = "qrc:/image/解锁1.png"
+                                            if(im.source == "qrc:/image/unlock.png"){
+                                                im1.source = "qrc:/image/unlock1.png"
                                             }
                                             else{
-                                                im1.source = "qrc:/image/锁定1.png"
+                                                im1.source = "qrc:/image/lock1.png"
                                             }
                                         }
                                         else{
-                                            if(im.source == "qrc:/image/解锁.png"){
-                                                im1.source = "qrc:/image/解锁.png"
+                                            if(im.source == "qrc:/image/unlock.png"){
+                                                im1.source = "qrc:/image/unlock.png"
                                             }
                                             else{
-                                                im1.source = "qrc:/image/锁定.png"
+                                                im1.source = "qrc:/image/lock.png"
                                             }
                                         }
                                     }

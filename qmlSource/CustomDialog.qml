@@ -62,7 +62,7 @@ Popup {
             background: Rectangle{
                 color: "transparent"
                 Image {
-                    source: "qrc:/image/关闭.png"
+                    source: "qrc:/image/close.png"
                 }
             }
             onClicked: {
