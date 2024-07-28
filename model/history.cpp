@@ -1,7 +1,11 @@
 #include "history.h"
 #include "DataBase/databasemanager.h"
 #include <QtMath>
+
 #include <QDebug>
+#include <QElapsedTimer>
+#include "log/localrecord.h"
+
 History* History::s_pHistory = nullptr;
 
 History *History::getInstance()
@@ -15,8 +19,14 @@ History *History::getInstance()
 History::History(QObject *parent)
     : QAbstractListModel{parent}
 {
+    QElapsedTimer timer;
+    timer.start();
+
     m_data = DataBaseManager::getInstance()->getProductionData();
 //    std::reverse(m_data.begin(), m_data.end());
+
+    QString text = QString("History_初始化共耗时:%1ms").arg(timer.elapsed());
+                   LocalRecord::getInstance()->addRecord(QDateTime::currentDateTime(), text);
 }
 
 int History::finalResult() const

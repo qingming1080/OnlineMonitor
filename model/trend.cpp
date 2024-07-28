@@ -5,11 +5,18 @@
 
 #include <QDebug>
 #include <QElapsedTimer>
+#include "log/localrecord.h"
 
 Trend::Trend(int welderID, QObject *parent)
     : QObject{parent}, m_welderID(welderID)
 {
+    QElapsedTimer timer;
+    timer.start();
+
     init();
+
+    QString text = QString("%1号设备_Trend_初始化耗时:%2ms").arg(welderID).arg(timer.elapsed());
+    LocalRecord::getInstance()->addRecord(QDateTime::currentDateTime(), text);
 }
 
 QStandardItemModel *Trend::pBeforeModel() const
@@ -39,6 +46,9 @@ QStandardItemModel *Trend::pYieldTrend() const
 
 void Trend::upYieldData()
 {
+    QElapsedTimer timer;
+    timer.start();
+
     if(m_yieldType == 0)
         setYieldTrendData(DataBaseManager::getInstance()->getYieldTrendData(0-60*60, m_welderID));  // 一个小时 60s*60m
     else if(m_yieldType == 1)
@@ -47,6 +57,9 @@ void Trend::upYieldData()
         setYieldTrendData(DataBaseManager::getInstance()->getYieldTrendData(0-60*60*24*7, m_welderID)); // 七天
     else if(m_yieldType == 3)
         setYieldTrendData(DataBaseManager::getInstance()->getYieldTrendData(0-60*60*24*30, m_welderID)); // 三十天
+
+    QString text = QString("%1号设备_Trend_良率趋势图刷新耗时:%2ms").arg(m_welderID).arg(timer.elapsed());
+    LocalRecord::getInstance()->addRecord(QDateTime::currentDateTime(), text);
 }
 
 

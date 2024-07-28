@@ -1,6 +1,9 @@
 #include "networkmodel.h"
 #include "DataBase/databasemanager.h"
 
+#include <QElapsedTimer>
+#include "log/localrecord.h"
+
 NetworkModel* NetworkModel::s_pNetworkModel = nullptr;
 
 NetworkModel *NetworkModel::getInstance()
@@ -14,7 +17,13 @@ NetworkModel *NetworkModel::getInstance()
 NetworkModel::NetworkModel(QObject *parent)
     : QAbstractListModel{parent}
 {
+    QElapsedTimer timer;
+    timer.start();
+
     m_data = DataBaseManager::getInstance()->getNetworkData();
+
+    QString text = QString("NetWork_初始化共耗时:%1ms").arg(timer.elapsed());
+    LocalRecord::getInstance()->addRecord(QDateTime::currentDateTime(), text);
 }
 
 int NetworkModel::rowCount(const QModelIndex &parent) const

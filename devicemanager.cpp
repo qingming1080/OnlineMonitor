@@ -5,6 +5,8 @@
 #include <qdebug.h>
 #include "model/deviceinformation.h"
 
+#include <QElapsedTimer>
+#include "log/localrecord.h"
 
 DeviceManager* DeviceManager::s_pInstance = nullptr;
 
@@ -20,7 +22,12 @@ DeviceManager *DeviceManager::getInstance()
 DeviceManager::DeviceManager(QObject *parent)
     : QObject{parent}
 {
+    QElapsedTimer timer;
+    timer.start();
+
     init();
+
+    LocalRecord::getInstance()->addRecord(QDateTime::currentDateTime(), QString("DeviceManager初始化耗时:%1ms").arg(timer.elapsed()));
 }
 
 void DeviceManager::init()
