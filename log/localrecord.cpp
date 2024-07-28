@@ -86,7 +86,7 @@ void LocalRecord::writeDataToLocalRecord(Log_Data data)
     QString msec    = data.time.toString("zzz");
 
     QFile file(log_file_path);
-    qDebug() << "I WANT OPEN LOG" << file.open(QIODevice::ReadWrite);
+    file.open(QIODevice::ReadWrite);
     QDomDocument doc;
     doc.setContent(&file);
     QDomElement root = doc.documentElement();
