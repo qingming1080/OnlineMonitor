@@ -1612,6 +1612,114 @@ Rectangle {
                     s3.color = pRgb(43, 112, 173)
                     s4.color = pRgb(43, 112, 173)
                 }
+                function onSigDelDevice(){
+                    DeviceManager.removeDevice(currIndex)
+//                    var a = altitudeModel1
+//                    var b = altitudeModel2
+//                    var c = altitudeModel3
+//                    var d = altitudeModel4
+//                    var p1 = undetermined1
+//                    var p2 = undetermined2
+//                    var p3 = undetermined3
+//                    var p4 = undetermined4
+//                    altitudeModel1 = false
+//                    altitudeModel2 = false
+//                    altitudeModel3 = false
+//                    altitudeModel4 = false
+//                    undetermined1 = false
+//                    undetermined2 = false
+//                    undetermined3 = false
+//                    undetermined4 = false
+                    if(currIndex == 1){
+                        s1.color = pRgb(43, 112, 173)
+//                        if(equipmentCount == 3){
+//                            altitudeModel1 = b
+//                            altitudeModel2 = c
+//                            altitudeModel3 = d
+//                            undetermined1 = p2
+//                            undetermined2 = p3
+//                            undetermined3 = p4
+//                        }
+//                        else if(equipmentCount == 2){
+//                            altitudeModel1 = b
+//                            altitudeModel2 = c
+//                            undetermined1 = p2
+//                            undetermined2 = p3
+//                        }
+//                        else if(equipmentCount == 1){
+//                            altitudeModel1 = b
+//                            btnDefault = b
+//                            undetermined1 = p2
+//                        }
+                    }
+                    else if(currIndex == 2){
+                        s2.color = pRgb(43, 112, 173)
+//                        if(equipmentCount == 3){
+//                            altitudeModel1 = a
+//                            altitudeModel2 = c
+//                            altitudeModel3 = d
+//                            undetermined1 = p1
+//                            undetermined2 = p3
+//                            undetermined3 = p4
+//                        }
+//                        else if(equipmentCount == 2){
+//                            altitudeModel1 = a
+//                            altitudeModel2 = c
+//                            undetermined1 = p1
+//                            undetermined2 = p3
+//                        }
+//                        else if(equipmentCount == 1){
+//                            altitudeModel1 = a
+//                            btnDefault = a
+//                            undetermined1 = p1
+//                        }
+                    }
+                    else if(currIndex == 3){
+                        s3.color = pRgb(43, 112, 173)
+//                        if(equipmentCount == 3){
+//                            altitudeModel1 = a
+//                            altitudeModel2 = b
+//                            altitudeModel3 = d
+//                            undetermined1 = p1
+//                            undetermined2 = p2
+//                            undetermined3 = p4
+//                        }
+//                        else if(equipmentCount == 2){
+//                            altitudeModel1 = a
+//                            altitudeModel2 = b
+//                            undetermined1 = p1
+//                            undetermined2 = p2
+//                        }
+//                        else if(equipmentCount == 1){
+//                            altitudeModel1 = a
+//                            btnDefault = a
+//                            undetermined1 = p1
+//                        }
+                    }
+                    else if(currIndex == 4){
+                        s4.color = pRgb(43, 112, 173)
+//                        if(equipmentCount == 3){
+//                            altitudeModel1 = a
+//                            altitudeModel2 = b
+//                            altitudeModel3 = c
+//                            undetermined1 = p1
+//                            undetermined2 = p2
+//                            undetermined3 = p3
+//                        }
+//                        else if(equipmentCount == 2){
+//                            altitudeModel1 = a
+//                            altitudeModel2 = b
+//                            undetermined1 = p1
+//                            undetermined2 = p2
+//                        }
+//                        else if(equipmentCount == 1){
+//                            altitudeModel1 = a
+//                            btnDefault = a
+//                            undetermined1 = p1
+//                        }
+                    }
+                    currIndex = 0
+                }
             }
             Button{
                 id:btn1
@@ -1663,112 +1771,7 @@ Rectangle {
                     font.family: fontBold
                 }
                 onPressed: {
-                    DeviceManager.removeDevice(currIndex)
-                    var a = altitudeModel1
-                    var b = altitudeModel2
-                    var c = altitudeModel3
-                    var d = altitudeModel4
-                    var p1 = undetermined1
-                    var p2 = undetermined2
-                    var p3 = undetermined3
-                    var p4 = undetermined4
-                    altitudeModel1 = false
-                    altitudeModel2 = false
-                    altitudeModel3 = false
-                    altitudeModel4 = false
-                    undetermined1 = false
-                    undetermined2 = false
-                    undetermined3 = false
-                    undetermined4 = false
-                    if(currIndex == 1){
-                        s1.color = pRgb(43, 112, 173)
-                        if(equipmentCount == 3){
-                            altitudeModel1 = b
-                            altitudeModel2 = c
-                            altitudeModel3 = d
-                            undetermined1 = p2
-                            undetermined2 = p3
-                            undetermined3 = p4
-                        }
-                        else if(equipmentCount == 2){
-                            altitudeModel1 = b
-                            altitudeModel2 = c
-                            undetermined1 = p2
-                            undetermined2 = p3
-                        }
-                        else if(equipmentCount == 1){
-                            altitudeModel1 = b
-                            btnDefault = b
-                            undetermined1 = p2
-                        }
-                    }
-                    else if(currIndex == 2){
-                        s2.color = pRgb(43, 112, 173)
-                        if(equipmentCount == 3){
-                            altitudeModel1 = a
-                            altitudeModel2 = c
-                            altitudeModel3 = d
-                            undetermined1 = p1
-                            undetermined2 = p3
-                            undetermined3 = p4
-                        }
-                        else if(equipmentCount == 2){
-                            altitudeModel1 = a
-                            altitudeModel2 = c
-                            undetermined1 = p1
-                            undetermined2 = p3
-                        }
-                        else if(equipmentCount == 1){
-                            altitudeModel1 = a
-                            btnDefault = a
-                            undetermined1 = p1
-                        }
-                    }
-                    else if(currIndex == 3){
-                        s3.color = pRgb(43, 112, 173)
-                        if(equipmentCount == 3){
-                            altitudeModel1 = a
-                            altitudeModel2 = b
-                            altitudeModel3 = d
-                            undetermined1 = p1
-                            undetermined2 = p2
-                            undetermined3 = p4
-                        }
-                        else if(equipmentCount == 2){
-                            altitudeModel1 = a
-                            altitudeModel2 = b
-                            undetermined1 = p1
-                            undetermined2 = p2
-                        }
-                        else if(equipmentCount == 1){
-                            altitudeModel1 = a
-                            btnDefault = a
-                            undetermined1 = p1
-                        }
-                    }
-                    else if(currIndex == 4){
-                        s4.color = pRgb(43, 112, 173)
-                        if(equipmentCount == 3){
-                            altitudeModel1 = a
-                            altitudeModel2 = b
-                            altitudeModel3 = c
-                            undetermined1 = p1
-                            undetermined2 = p2
-                            undetermined3 = p3
-                        }
-                        else if(equipmentCount == 2){
-                            altitudeModel1 = a
-                            altitudeModel2 = b
-                            undetermined1 = p1
-                            undetermined2 = p2
-                        }
-                        else if(equipmentCount == 1){
-                            altitudeModel1 = a
-                            btnDefault = a
-                            undetermined1 = p1
-                        }
-                    }
-                    currIndex = 0
+                    popup.openPop(9)
                 }
             }
             Button{

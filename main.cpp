@@ -56,15 +56,12 @@ int main(int argc, char *argv[])
     pQmlContext->setContextProperty("RS232Model", RS232Model::getInstance());
     pQmlContext->setContextProperty("DataBaseManager", DataBaseManager::getInstance());
     pQmlContext->setContextProperty("Manual", new Manual(1));
-    pQmlContext->setContextProperty("System1", new System(1));
-    pQmlContext->setContextProperty("System2", new System(2));
-    pQmlContext->setContextProperty("System3", new System(3));
-    pQmlContext->setContextProperty("System4", new System(4));
 
     qmlRegisterType<Device>("Device",1,0,"Device");
     qmlRegisterType<IO>("IO",1,0,"IO");
     qmlRegisterType<DeviceInformation>("DeviceInformation",1,0,"DeviceInformation");
     qmlRegisterType<Trend>("Trend",1,0,"Trend");
+    qmlRegisterType<System>("System",1,0,"System");
     qmlRegisterType<QmlEnum>("QmlEnum",1,0,"QmlEnum");
 
 

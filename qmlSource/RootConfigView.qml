@@ -1,5 +1,7 @@
 import QtQuick 2.0
 import QtQuick.Controls 2.15
+import Device 1.0
+import System 1.0
 Rectangle {
     radius: 5
     color: pRgb(153, 204, 255)
@@ -25,10 +27,38 @@ Rectangle {
                 return ""
             }
         }
-        eqText1: System1.singleFact
-        eqText2: System1.generalFact
-        eqText3: System1.otherFace
-        eqText4: System1.autoModel
+        eqText1: {
+            if(DeviceManager.deviceList[0]){
+                return DeviceManager.deviceList[0].pSystem.singleFact
+            }
+            else{
+                return ""
+            }
+        }
+        eqText2: {
+            if(DeviceManager.deviceList[0]){
+                return DeviceManager.deviceList[0].pSystem.generalFact
+            }
+            else{
+                return ""
+            }
+        }
+        eqText3: {
+            if(DeviceManager.deviceList[0]){
+                return DeviceManager.deviceList[0].pSystem.otherFace
+            }
+            else{
+                return ""
+            }
+        }
+        eqText4: {
+            if(DeviceManager.deviceList[0]){
+                return DeviceManager.deviceList[0].pSystem.autoModel
+            }
+            else{
+                return ""
+            }
+        }
 
     }
     RootConfig{
@@ -53,10 +83,38 @@ Rectangle {
                 return ""
             }
         }
-        eqText1: System2.singleFact
-        eqText2: System2.generalFact
-        eqText3: System2.otherFace
-        eqText4: System2.autoModel
+        eqText1: {
+            if(DeviceManager.deviceList[1]){
+                return DeviceManager.deviceList[1].pSystem.singleFact
+            }
+            else{
+                return ""
+            }
+        }
+        eqText2: {
+            if(DeviceManager.deviceList[1]){
+                return DeviceManager.deviceList[1].pSystem.generalFact
+            }
+            else{
+                return ""
+            }
+        }
+        eqText3: {
+            if(DeviceManager.deviceList[1]){
+                return DeviceManager.deviceList[1].pSystem.otherFace
+            }
+            else{
+                return ""
+            }
+        }
+        eqText4: {
+            if(DeviceManager.deviceList[1]){
+                return DeviceManager.deviceList[1].pSystem.autoModel
+            }
+            else{
+                return ""
+            }
+        }
         visible: equipmentCount>=2 ? true : false
     }
     RootConfig{
@@ -81,10 +139,38 @@ Rectangle {
                 return ""
             }
         }
-        eqText1: System3.singleFact
-        eqText2: System3.generalFact
-        eqText3: System3.otherFace
-        eqText4: System3.autoModel
+        eqText1: {
+            if(DeviceManager.deviceList[2]){
+                return DeviceManager.deviceList[2].pSystem.singleFact
+            }
+            else{
+                return ""
+            }
+        }
+        eqText2: {
+            if(DeviceManager.deviceList[2]){
+                return DeviceManager.deviceList[2].pSystem.generalFact
+            }
+            else{
+                return ""
+            }
+        }
+        eqText3: {
+            if(DeviceManager.deviceList[2]){
+                return DeviceManager.deviceList[2].pSystem.otherFace
+            }
+            else{
+                return ""
+            }
+        }
+        eqText4: {
+            if(DeviceManager.deviceList[2]){
+                return DeviceManager.deviceList[2].pSystem.autoModel
+            }
+            else{
+                return ""
+            }
+        }
         visible: equipmentCount>=3 ? true : false
     }
     RootConfig{
@@ -109,10 +195,38 @@ Rectangle {
                 return ""
             }
         }
-        eqText1: System4.singleFact
-        eqText2: System4.generalFact
-        eqText3: System4.otherFace
-        eqText4: System4.autoModel
+        eqText1: {
+            if(DeviceManager.deviceList[3]){
+                return DeviceManager.deviceList[3].pSystem.singleFact
+            }
+            else{
+                return ""
+            }
+        }
+        eqText2: {
+            if(DeviceManager.deviceList[3]){
+                return DeviceManager.deviceList[3].pSystem.generalFact
+            }
+            else{
+                return ""
+            }
+        }
+        eqText3: {
+            if(DeviceManager.deviceList[3]){
+                return DeviceManager.deviceList[3].pSystem.otherFace
+            }
+            else{
+                return ""
+            }
+        }
+        eqText4: {
+            if(DeviceManager.deviceList[3]){
+                return DeviceManager.deviceList[3].pSystem.autoModel
+            }
+            else{
+                return ""
+            }
+        }
         visible: equipmentCount>=4 ? true : false
     }
     Button{
@@ -162,22 +276,30 @@ Rectangle {
             font.family: fontBold
         }
         onPressed: {
-            System1.setSingleFact(s1.t1Edit.text)
-            System1.setGeneralFact(s1.t2Edit.text)
-            System1.setOtherFace(s1.t3Edit.text)
-            System1.setAutoModel(s1.t4Edit.text)
-            System2.setSingleFact(s2.t1Edit.text)
-            System2.setGeneralFact(s2.t2Edit.text)
-            System2.setOtherFace(s2.t3Edit.text)
-            System2.setAutoModel(s2.t4Edit.text)
-            System3.setSingleFact(s3.t1Edit.text)
-            System3.setGeneralFact(s3.t2Edit.text)
-            System3.setOtherFace(s3.t3Edit.text)
-            System3.setAutoModel(s3.t4Edit.text)
-            System4.setSingleFact(s4.t1Edit.text)
-            System4.setGeneralFact(s4.t2Edit.text)
-            System4.setOtherFace(s4.t3Edit.text)
-            System4.setAutoModel(s4.t4Edit.text)
+            if(DeviceManager.deviceList[0]){
+                DeviceManager.deviceList[0].pSystem.setSingleFact(s1.t1Edit.text)
+                DeviceManager.deviceList[0].pSystem.setGeneralFact(s1.t2Edit.text)
+                DeviceManager.deviceList[0].pSystem.setOtherFace(s1.t3Edit.text)
+                DeviceManager.deviceList[0].pSystem.setAutoModel(s1.t4Edit.text)
+            }
+            if(DeviceManager.deviceList[1]){
+                DeviceManager.deviceList[1].pSystem.setSingleFact(s2.t1Edit.text)
+                DeviceManager.deviceList[1].pSystem.setGeneralFact(s2.t2Edit.text)
+                DeviceManager.deviceList[1].pSystem.setOtherFace(s2.t3Edit.text)
+                DeviceManager.deviceList[1].pSystem.setAutoModel(s2.t4Edit.text)
+            }
+            if(DeviceManager.deviceList[2]){
+                DeviceManager.deviceList[2].pSystem.setSingleFact(s3.t1Edit.text)
+                DeviceManager.deviceList[2].pSystem.setGeneralFact(s3.t2Edit.text)
+                DeviceManager.deviceList[2].pSystem.setOtherFace(s3.t3Edit.text)
+                DeviceManager.deviceList[2].pSystem.setAutoModel(s3.t4Edit.text)
+            }
+            if(DeviceManager.deviceList[3]){
+                DeviceManager.deviceList[3].pSystem.setSingleFact(s4.t1Edit.text)
+                DeviceManager.deviceList[3].pSystem.setGeneralFact(s4.t2Edit.text)
+                DeviceManager.deviceList[3].pSystem.setOtherFace(s4.t3Edit.text)
+                DeviceManager.deviceList[3].pSystem.setAutoModel(s4.t4Edit.text)
+            }
         }
     }
     Button{

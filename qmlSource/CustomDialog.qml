@@ -10,9 +10,9 @@ Popup {
     closePolicy:Popup.CloseOnEscape
     property int id: 0
     signal sigDataClear()
-    function openPop(index){//1输入密码(配置) 2输入密码(新建模型) 3输入密码(新建模型单设备) 4语言 5采样 6系统消息 7修改密码 8新增设备
+    function openPop(index){//1输入密码(配置) 2输入密码(新建模型) 3输入密码(新建模型单设备) 4语言 5采样 6系统消息 7修改密码 8新增设备 9删除设备
         id = index
-        if(index === 1 || index === 2 || index === 3 || index === 8){
+        if(index === 1 || index === 2 || index === 3 || index === 8 || index === 9){
             sigDataClear()
             popload.sourceComponent = inputpass
             open()
@@ -162,7 +162,9 @@ Popup {
                             isAdd = true
                             sigSysConfig()
                         }
-
+                        else if(id === 9){
+                            sigDelDevice()
+                        }
                         close()
                     }
                     else{

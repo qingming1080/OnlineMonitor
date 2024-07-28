@@ -97,6 +97,7 @@ Window {
     signal sigNewModel()
     signal sigOneModel()
     signal sigPassError()
+    signal sigDelDevice()
     function switchUI(id){
         equipmentCurrentIndex = id
         sigSwitch(id)
