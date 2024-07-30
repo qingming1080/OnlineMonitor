@@ -3,7 +3,7 @@
 #include <QFile>
 #include <QCoreApplication>
 #include <QApplication>
-
+#include <QThread>
 #include <QDebug>
 
 LocalRecord* LocalRecord::s_pLocalRecord = nullptr;
@@ -40,7 +40,8 @@ void LocalRecord::initData()
         touchRecordFile(log_file_path);
     }
 
-    moveToThread(this);
+    QThread* thread = new QThread();
+    this->moveToThread(thread);
 }
 
 LocalRecord *LocalRecord::getInstance()

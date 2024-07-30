@@ -179,6 +179,8 @@ Window {
 
             // 动态加载和缓存视图
             function loadView(viewName, component) {
+//                var startTime = new Date();
+
                 if (cachedViews[viewName]) {
                     // 如果视图已缓存，直接显示
                     stackView1.push(cachedViews[viewName]);
@@ -188,6 +190,10 @@ Window {
                     cachedViews[viewName] = newItem;
                     stackView1.push(newItem);
                 }
+
+//                var endTime = new Date();
+//                var loadTime = endTime - startTime;
+//                console.log("I WANT main.qml 加载时间:", loadTime, "毫秒");
             }
         }
     }
