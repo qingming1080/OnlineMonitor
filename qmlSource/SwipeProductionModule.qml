@@ -102,7 +102,7 @@ Rectangle {
             color: "transparent"
             Image {
                 anchors.fill: parent
-                source: "qrc:/image/缩小.png"
+                source: "qrc:/image/reduce.png"
             }
         }
         onPressed: {

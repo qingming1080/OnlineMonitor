@@ -29,7 +29,7 @@ ComboBox{
         anchors.topMargin: 8
         anchors.rightMargin: 10
         Image {
-            source: "qrc:/image/多边形.png"  // 自定义图标的路径
+            source: "qrc:/image/polygon.png"  // 自定义图标的路径
             width: parent.width
             height: parent.height
             anchors.centerIn: parent

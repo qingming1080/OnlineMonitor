@@ -109,7 +109,7 @@ Rectangle {
             color: "transparent"
             Image {
                 anchors.fill: parent
-                source: "qrc:/image/expand-全屏化.png"
+                source: "qrc:/image/full.png"
             }
         }
         onPressed: {
@@ -311,7 +311,7 @@ Rectangle {
     }
     Image {
         id: im1
-        source: "qrc:/image/报警.png"
+        source: "qrc:/image/alarm.png"
         x:93
         y:379
         width: 22
@@ -319,7 +319,7 @@ Rectangle {
     }
     Image {
         id: im2
-        source: "qrc:/image/复位.png"
+        source: "qrc:/image/restoration.png"
         anchors.left: im1.left
         anchors.top: im1.bottom
         anchors.topMargin: 18
@@ -328,7 +328,7 @@ Rectangle {
     }
     Image {
         id: im3
-        source: undetermined ? "qrc:/image/待定.png" : "qrc:/image/日程-参与者-待定.png"
+        source: undetermined ? "qrc:/image/undetermined.png" : "qrc:/image/undetermined1.png"
         anchors.left: im2.left
         anchors.top: im2.bottom
         anchors.topMargin: 18
