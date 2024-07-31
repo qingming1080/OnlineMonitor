@@ -5,6 +5,7 @@
 #include <QThread>
 #include <QDomDocument>
 #include <QDateTime>
+#include <QMutex>
 
 struct Log_Data{
     QDateTime time;
@@ -40,6 +41,8 @@ private:
 
 private:
     static LocalRecord* s_pLocalRecord;
+
+    QMutex* m_pMutex;
 
     // 缓存还没写入本地记录的数据
     QList<Log_Data> m_cacheList;

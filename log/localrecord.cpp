@@ -12,6 +12,8 @@ QString log_file_path = "";
 
 LocalRecord::LocalRecord(QObject *parent) : QThread(parent)
 {
+    m_pMutex = new QMutex();
+
     initData();
 
     connect(SignalManager::getInstance(), &SignalManager::signalAddRecord, this, &LocalRecord::addRecord, Qt::DirectConnection);
@@ -63,18 +65,26 @@ LocalRecord *LocalRecord::getInstance()
 
 void LocalRecord::addRecord(const QDateTime &time, const QString &text)
 {
+    m_pMutex->lock();
+
     Log_Data setting {time, text};
     m_cacheList.push_back(setting);
+
+    m_pMutex->unlock();
 }
 
 void LocalRecord::run()
 {
     while(1){
+        m_pMutex->lock();
+
         if(!m_cacheList.isEmpty()){
             writeDataToLocalRecord(m_cacheList.at(0));
             m_cacheList.removeAt(0);
         }
-        QApplication::processEvents();
+
+        m_pMutex->unlock();
+        msleep(5);
     }
 }
 
