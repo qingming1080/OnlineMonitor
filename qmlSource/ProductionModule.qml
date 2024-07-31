@@ -42,6 +42,8 @@ Rectangle {
         }
     }
     function loadViewpro(viewName, component) {
+//        var startTime = new Date();
+
         prostack.pop()
         if (proViews[viewName]) {
             // 如果视图已缓存，直接显示
@@ -52,6 +54,10 @@ Rectangle {
             proViews[viewName] = newItem;
             prostack.push(newItem);
         }
+
+//        var endTime = new Date();
+//        var loadTime = endTime - startTime;
+//        console.log("I WANT ProductionModule.qml 加载时间:", loadTime, "毫秒");
     }
     function buttonSynchronization(index,time){
         if(index === 1){

@@ -6,6 +6,7 @@
 #include "model/system.h"
 #include "model/trend.h"
 
+#include "signalmanager.h"
 #include <QDebug>
 #include <QElapsedTimer>
 #include "log/localrecord.h"
@@ -23,7 +24,7 @@ Device::Device(int welderID, QObject *parent)
     m_pTrend              = new Trend(m_welderID);
 
     QString text = QString("%1号设备_Device_初始化共耗时:%2ms").arg(welderID).arg(timer.elapsed());
-    LocalRecord::getInstance()->addRecord(QDateTime::currentDateTime(), text);
+    emit SignalManager::getInstance()->signalAddRecord(QDateTime::currentDateTime(), text);
 }
 
 DeviceInformation *Device::pDeviceInformation() const

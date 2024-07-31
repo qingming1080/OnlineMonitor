@@ -5,6 +5,7 @@
 #include <qdebug.h>
 #include "model/deviceinformation.h"
 
+#include "signalmanager.h"
 #include <QElapsedTimer>
 #include "log/localrecord.h"
 
@@ -27,7 +28,7 @@ DeviceManager::DeviceManager(QObject *parent)
 
     init();
 
-    LocalRecord::getInstance()->addRecord(QDateTime::currentDateTime(), QString("DeviceManager初始化耗时:%1ms").arg(timer.elapsed()));
+    emit SignalManager::getInstance()->signalAddRecord(QDateTime::currentDateTime(), QString("DeviceManager初始化耗时:%1ms").arg(timer.elapsed()));
 }
 
 void DeviceManager::init()

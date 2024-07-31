@@ -31,7 +31,8 @@ SOURCES += \
         model/networkmodel.cpp \
         model/rs232model.cpp \
         model/system.cpp \
-        model/trend.cpp
+        model/trend.cpp \
+        signalmanager.cpp
 
 RESOURCES += qml.qrc
 
@@ -62,4 +63,5 @@ HEADERS += \
     model/rs232model.h \
     model/system.h \
     model/trend.h \
-    qmlenum.h
+    qmlenum.h \
+    signalmanager.h

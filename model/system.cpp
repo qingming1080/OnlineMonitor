@@ -1,6 +1,7 @@
 #include "system.h"
 #include "DataBase/databasemanager.h"
 
+#include "signalmanager.h"
 #include <QDebug>
 #include <QElapsedTimer>
 #include "log/localrecord.h"
@@ -23,7 +24,7 @@ System::System(int welderID, QObject *parent)
     }
 
     QString text = QString("%1号设备_System_初始化耗时:%2ms").arg(welderID).arg(timer.elapsed());
-    LocalRecord::getInstance()->addRecord(QDateTime::currentDateTime(), text);
+    emit SignalManager::getInstance()->signalAddRecord(QDateTime::currentDateTime(), text);
 }
 
 int System::id() const

@@ -3,15 +3,20 @@
 #include <QFile>
 #include <QCoreApplication>
 #include <QApplication>
-
+#include <QThread>
 #include <QDebug>
+#include "signalmanager.h"
 
 LocalRecord* LocalRecord::s_pLocalRecord = nullptr;
 QString log_file_path = "";
 
 LocalRecord::LocalRecord(QObject *parent) : QThread(parent)
 {
+    m_pMutex = new QMutex();
+
     initData();
+
+    connect(SignalManager::getInstance(), &SignalManager::signalAddRecord, this, &LocalRecord::addRecord, Qt::DirectConnection);
 }
 
 void LocalRecord::initData()
@@ -40,7 +45,8 @@ void LocalRecord::initData()
         touchRecordFile(log_file_path);
     }
 
-    moveToThread(this);
+    QThread* thread = new QThread();
+    this->moveToThread(thread);
 }
 
 LocalRecord *LocalRecord::getInstance()
@@ -51,26 +57,34 @@ LocalRecord *LocalRecord::getInstance()
     return s_pLocalRecord;
 }
 
-void LocalRecord::addRecord(const QVariant& data)
-{
-    Log_Data setting = data.value<Log_Data>();
-    m_cacheList.push_back(setting);
-}
+//void LocalRecord::addRecord(const QVariant& data)
+//{
+//    Log_Data setting = data.value<Log_Data>();
+//    m_cacheList.push_back(setting);
+//}
 
 void LocalRecord::addRecord(const QDateTime &time, const QString &text)
 {
+    m_pMutex->lock();
+
     Log_Data setting {time, text};
     m_cacheList.push_back(setting);
+
+    m_pMutex->unlock();
 }
 
 void LocalRecord::run()
 {
     while(1){
+        m_pMutex->lock();
+
         if(!m_cacheList.isEmpty()){
             writeDataToLocalRecord(m_cacheList.at(0));
             m_cacheList.removeAt(0);
         }
-        QApplication::processEvents();
+
+        m_pMutex->unlock();
+        msleep(5);
     }
 }
 

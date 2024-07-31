@@ -1,6 +1,7 @@
 #include "rs232model.h"
 #include "DataBase/databasemanager.h"
 
+#include "signalmanager.h"
 #include <QElapsedTimer>
 #include "log/localrecord.h"
 
@@ -168,5 +169,5 @@ RS232Model::RS232Model(QObject *parent)
     m_data = DataBaseManager::getInstance()->getRS232Data();
 
     QString text = QString("RS232_初始化耗时:%1ms").arg(timer.elapsed());
-                   LocalRecord::getInstance()->addRecord(QDateTime::currentDateTime(), text);
+    emit SignalManager::getInstance()->signalAddRecord(QDateTime::currentDateTime(), text);
 }

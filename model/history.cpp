@@ -2,6 +2,7 @@
 #include "DataBase/databasemanager.h"
 #include <QtMath>
 
+#include "signalmanager.h"
 #include <QDebug>
 #include <QElapsedTimer>
 #include "log/localrecord.h"
@@ -25,8 +26,8 @@ History::History(QObject *parent)
     m_data = DataBaseManager::getInstance()->getProductionData();
 //    std::reverse(m_data.begin(), m_data.end());
 
-    QString text = QString("History_初始化共耗时:%1ms").arg(timer.elapsed());
-                   LocalRecord::getInstance()->addRecord(QDateTime::currentDateTime(), text);
+    QString text = QString("History_初始化共耗时:%1ms 加载%2条数据").arg(timer.elapsed()).arg(m_data.size());
+    emit SignalManager::getInstance()->signalAddRecord(QDateTime::currentDateTime(), text);
 }
 
 int History::finalResult() const
@@ -36,6 +37,9 @@ int History::finalResult() const
 
 void History::setFinalResult(int newFinalResult)
 {
+    QElapsedTimer timer;
+    timer.start();
+
     if (m_finalResult == newFinalResult)
         return;
 
@@ -44,6 +48,9 @@ void History::setFinalResult(int newFinalResult)
     m_data = DataBaseManager::getInstance()->getProductionData(m_deviceID, m_finalResult);
     emit endResetModel();
     emit finalResultChanged();
+
+    QString text = QString("History_修改筛选结果耗时:%1ms").arg(timer.elapsed());
+    emit SignalManager::getInstance()->signalAddRecord(QDateTime::currentDateTime(), text);
 }
 
 int History::deviceID() const
@@ -53,6 +60,9 @@ int History::deviceID() const
 
 void History::setDeviceID(int newDeviceID)
 {
+    QElapsedTimer timer;
+    timer.start();
+
     if (m_deviceID == newDeviceID)
         return;
 
@@ -61,6 +71,9 @@ void History::setDeviceID(int newDeviceID)
     m_data = DataBaseManager::getInstance()->getProductionData(m_deviceID, m_finalResult);
     emit endResetModel();
     emit deviceIDChanged();
+
+    QString text = QString("History_修改筛选设备耗时:%1ms").arg(timer.elapsed());
+    emit SignalManager::getInstance()->signalAddRecord(QDateTime::currentDateTime(), text);
 }
 
 int History::rowCount(const QModelIndex &parent) const

@@ -3,6 +3,7 @@
 #include "DataBase/databasemanager.h"
 #include <QDateTime>
 
+#include "signalmanager.h"
 #include <QDebug>
 #include <QElapsedTimer>
 #include "log/localrecord.h"
@@ -16,7 +17,7 @@ Trend::Trend(int welderID, QObject *parent)
     init();
 
     QString text = QString("%1号设备_Trend_初始化耗时:%2ms").arg(welderID).arg(timer.elapsed());
-    LocalRecord::getInstance()->addRecord(QDateTime::currentDateTime(), text);
+    emit SignalManager::getInstance()->signalAddRecord(QDateTime::currentDateTime(), text);
 }
 
 QStandardItemModel *Trend::pBeforeModel() const
@@ -59,7 +60,7 @@ void Trend::upYieldData()
         setYieldTrendData(DataBaseManager::getInstance()->getYieldTrendData(0-60*60*24*30, m_welderID)); // 三十天
 
     QString text = QString("%1号设备_Trend_良率趋势图刷新耗时:%2ms").arg(m_welderID).arg(timer.elapsed());
-    LocalRecord::getInstance()->addRecord(QDateTime::currentDateTime(), text);
+    emit SignalManager::getInstance()->signalAddRecord(QDateTime::currentDateTime(), text);
 }
 
 
