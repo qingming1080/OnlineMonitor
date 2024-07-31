@@ -1,6 +1,7 @@
 #include "networkmodel.h"
 #include "DataBase/databasemanager.h"
 
+#include "signalmanager.h"
 #include <QElapsedTimer>
 #include "log/localrecord.h"
 
@@ -23,7 +24,7 @@ NetworkModel::NetworkModel(QObject *parent)
     m_data = DataBaseManager::getInstance()->getNetworkData();
 
     QString text = QString("NetWork_初始化共耗时:%1ms").arg(timer.elapsed());
-    LocalRecord::getInstance()->addRecord(QDateTime::currentDateTime(), text);
+    emit SignalManager::getInstance()->signalAddRecord(QDateTime::currentDateTime(), text);
 }
 
 int NetworkModel::rowCount(const QModelIndex &parent) const

@@ -2,6 +2,7 @@
 #include "DataBase/databasemanager.h"
 #include <QtMath>
 
+#include "signalmanager.h"
 #include <QDebug>
 #include <QElapsedTimer>
 #include "log/localrecord.h"
@@ -26,7 +27,7 @@ History::History(QObject *parent)
 //    std::reverse(m_data.begin(), m_data.end());
 
     QString text = QString("History_初始化共耗时:%1ms 加载%2条数据").arg(timer.elapsed()).arg(m_data.size());
-    LocalRecord::getInstance()->addRecord(QDateTime::currentDateTime(), text);
+    emit SignalManager::getInstance()->signalAddRecord(QDateTime::currentDateTime(), text);
 }
 
 int History::finalResult() const
@@ -49,7 +50,7 @@ void History::setFinalResult(int newFinalResult)
     emit finalResultChanged();
 
     QString text = QString("History_修改筛选结果耗时:%1ms").arg(timer.elapsed());
-    LocalRecord::getInstance()->addRecord(QDateTime::currentDateTime(), text);
+    emit SignalManager::getInstance()->signalAddRecord(QDateTime::currentDateTime(), text);
 }
 
 int History::deviceID() const
@@ -72,7 +73,7 @@ void History::setDeviceID(int newDeviceID)
     emit deviceIDChanged();
 
     QString text = QString("History_修改筛选设备耗时:%1ms").arg(timer.elapsed());
-    LocalRecord::getInstance()->addRecord(QDateTime::currentDateTime(), text);
+    emit SignalManager::getInstance()->signalAddRecord(QDateTime::currentDateTime(), text);
 }
 
 int History::rowCount(const QModelIndex &parent) const

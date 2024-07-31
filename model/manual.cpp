@@ -1,6 +1,7 @@
 #include "manual.h"
 #include "DataBase/databasemanager.h"
 
+#include "signalmanager.h"
 #include <QDebug>
 #include <QElapsedTimer>
 #include "log/localrecord.h"
@@ -14,7 +15,7 @@ Manual::Manual(int welderID, QObject *parent)
     m_data = DataBaseManager::getInstance()->getManualData(m_welderID);
 
     QString text = QString("%1号设备_Manual_初始化耗时:%2ms").arg(welderID).arg(timer.elapsed());
-                   LocalRecord::getInstance()->addRecord(QDateTime::currentDateTime(), text);
+    emit SignalManager::getInstance()->signalAddRecord(QDateTime::currentDateTime(), text);
 }
 
 int Manual::rowCount(const QModelIndex &parent) const

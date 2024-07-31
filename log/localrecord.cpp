@@ -5,6 +5,7 @@
 #include <QApplication>
 #include <QThread>
 #include <QDebug>
+#include "signalmanager.h"
 
 LocalRecord* LocalRecord::s_pLocalRecord = nullptr;
 QString log_file_path = "";
@@ -12,6 +13,8 @@ QString log_file_path = "";
 LocalRecord::LocalRecord(QObject *parent) : QThread(parent)
 {
     initData();
+
+    connect(SignalManager::getInstance(), &SignalManager::signalAddRecord, this, &LocalRecord::addRecord, Qt::DirectConnection);
 }
 
 void LocalRecord::initData()
@@ -52,11 +55,11 @@ LocalRecord *LocalRecord::getInstance()
     return s_pLocalRecord;
 }
 
-void LocalRecord::addRecord(const QVariant& data)
-{
-    Log_Data setting = data.value<Log_Data>();
-    m_cacheList.push_back(setting);
-}
+//void LocalRecord::addRecord(const QVariant& data)
+//{
+//    Log_Data setting = data.value<Log_Data>();
+//    m_cacheList.push_back(setting);
+//}
 
 void LocalRecord::addRecord(const QDateTime &time, const QString &text)
 {

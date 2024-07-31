@@ -22,9 +22,10 @@ public:
 
 signals:
 
+
 public slots:
     /// 添加数据记录
-    void addRecord(const QVariant& data);
+//    void addRecord(const QVariant& data);
     void addRecord(const QDateTime& time, const QString& text);
 
 private:

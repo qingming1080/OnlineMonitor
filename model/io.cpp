@@ -2,6 +2,7 @@
 #include "DataBase/databasemanager.h"
 #include <QVariant>
 
+#include "signalmanager.h"
 #include <QDebug>
 #include <QElapsedTimer>
 #include "log/localrecord.h"
@@ -17,7 +18,7 @@ IO::IO(int welderID, QObject *parent)
     m_ioID = data.id;
 
     QString text = QString("%1号设备_IO_初始化耗时:%2ms").arg(welderID).arg(timer.elapsed());
-    LocalRecord::getInstance()->addRecord(QDateTime::currentDateTime(), text);
+    emit SignalManager::getInstance()->signalAddRecord(QDateTime::currentDateTime(), text);
 }
 
 bool IO::availabel() const
