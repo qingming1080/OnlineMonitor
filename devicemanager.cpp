@@ -66,6 +66,7 @@ QString DeviceManager::getHistoryName(int welderID)
     return "";
 }
 
+
 QList<Device *> DeviceManager::deviceList() const
 {
     return m_deviceList;
