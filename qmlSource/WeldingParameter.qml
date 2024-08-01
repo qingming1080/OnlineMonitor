@@ -8,7 +8,8 @@ Rectangle {
     property string eqText3: ""
     property string eqText4: ""
     property string eqText5: ""
-    property bool altitudeMode:false
+    property bool altitudeMode:DeviceManager.deviceList[swipeCurrIndex].pDeviceInformation.heightOption
+                               === 1 ? true:false
     radius: 3
     Rectangle{
         y:42

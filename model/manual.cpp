@@ -180,4 +180,11 @@ void Manual::save()
     }
 }
 
+void Manual::clearData()
+{
+    beginResetModel();
+    m_data.clear();
+    endResetModel();
+}
+
 

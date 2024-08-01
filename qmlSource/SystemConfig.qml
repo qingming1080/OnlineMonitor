@@ -39,11 +39,11 @@ Rectangle {
         }
     }
     property bool altitudMode:{
-        if(DeviceManager.deviceList[0]){
-            return DeviceManager.deviceList[0].pDeviceInformation.heightOption
+        if(DeviceManager.deviceList[currentConfigId-1]){
+            return DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.heightOption
                     === 1 ? true:false
         }
-        else{
+        else {
             return false
         }
     }
@@ -84,19 +84,23 @@ Rectangle {
             loadViewsys(1,syscfg)
         }
         else{
-            if(itemCount == 1){
-                loadViewsys(1,syscfg)
-            }
-            else{
-                loadViewsys(2,musys)
-                currIndex = 0
-            }
+            loadViewsys(2,musys)
+            currIndex = 0
         }
     }
 
     onItemCountChanged: {
-        if(itemCount == 1){
-            loadViewsys(1,syscfg)
+        if(itemCount == 0){
+            musysTmp1 = false
+            musysTmp2 = false
+            musysTmp3 = false
+            musysTmp4 = false
+        }
+        else if(itemCount == 1){
+            musysTmp1 = true
+            musysTmp2 = false
+            musysTmp3 = false
+            musysTmp4 = false
         }
         else if(itemCount == 2){
             musysTmp1 = true
@@ -167,7 +171,7 @@ Rectangle {
             Rectangle{
                 x:30
                 y:25
-                width: 1221
+                width: 463
                 height: 613
                 color: pRgb(43, 112, 173)
                 radius: 3
@@ -350,15 +354,183 @@ Rectangle {
                         }
                     }
                 }
+
+                Text {
+                    id: s7
+                    text: qsTr("端口")
+                    color: pRgb(177, 213, 219)
+                    font.family: fontBold
+                    font.pixelSize: 16
+                    anchors.left: s3.left
+                    anchors.top: s3.bottom
+                    anchors.topMargin: 46
+                }
+                TextField{
+                    id:t7
+                    width: 243
+                    height: 40
+                    anchors.top: t3.bottom
+                    anchors.topMargin: 30
+                    anchors.left: t3.left
+                    horizontalAlignment: TextInput.AlignHCenter
+                    verticalAlignment: TextInput.AlignVCenter
+                    color: pRgb(43, 112, 173)
+                    font.family: fontBold
+                    font.pixelSize: 16
+                    inputMethodHints: Qt.ImhDigitsOnly
+                    background: Rectangle{
+                        radius: 6
+                        border.width: 3
+                        border.color: "#99ccff"
+                    }
+                    MouseArea {
+                        anchors.fill: parent
+                        onClicked: {
+                            t7.focus = true
+                            keyboardYype = 0
+                        }
+                    }
+                    text:{
+                        if(equipmentCount === 1){
+                            if(DeviceManager.deviceList[0]){
+                                DeviceManager.deviceList[0].pDeviceInformation.lowerLimit
+                            }
+                            else{
+                                return ""
+                            }
+                        }
+                        else{
+                            if(DeviceManager.deviceList[currentConfigId-1]){
+                                DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.lowerLimit
+                            }
+                            else{
+                                return ""
+                            }
+                        }
+                    }
+                }
+
+                Text {
+                    id: s8
+                    text: qsTr("远程端IP")
+                    color: pRgb(177, 213, 219)
+                    font.family: fontBold
+                    font.pixelSize: 16
+                    anchors.left: s7.left
+                    anchors.top: s7.bottom
+                    anchors.topMargin: 46
+                }
+                TextField{
+                    id:t8
+                    width: 243
+                    height: 40
+                    anchors.top: t7.bottom
+                    anchors.topMargin: 30
+                    anchors.left: t7.left
+                    horizontalAlignment: TextInput.AlignHCenter
+                    verticalAlignment: TextInput.AlignVCenter
+                    color: pRgb(43, 112, 173)
+                    font.family: fontBold
+                    font.pixelSize: 16
+                    inputMethodHints: Qt.ImhDigitsOnly
+                    background: Rectangle{
+                        radius: 6
+                        border.width: 3
+                        border.color: "#99ccff"
+                    }
+                    MouseArea {
+                        anchors.fill: parent
+                        onClicked: {
+                            t8.focus = true
+                            keyboardYype = 0
+                        }
+                    }
+                    text:{
+                        if(equipmentCount === 1){
+                            if(DeviceManager.deviceList[0]){
+                                DeviceManager.deviceList[0].pDeviceInformation.lowerLimit
+                            }
+                            else{
+                                return ""
+                            }
+                        }
+                        else{
+                            if(DeviceManager.deviceList[currentConfigId-1]){
+                                DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.lowerLimit
+                            }
+                            else{
+                                return ""
+                            }
+                        }
+                    }
+                }
+
+
+                Text {
+                    id: s9
+                    text: qsTr("客户端IP")
+                    color: pRgb(177, 213, 219)
+                    font.family: fontBold
+                    font.pixelSize: 16
+                    anchors.left: s8.left
+                    anchors.top: s8.bottom
+                    anchors.topMargin: 46
+                }
+                TextField{
+                    id:t9
+                    width: 243
+                    height: 40
+                    anchors.top: t8.bottom
+                    anchors.topMargin: 30
+                    anchors.left: t8.left
+                    horizontalAlignment: TextInput.AlignHCenter
+                    verticalAlignment: TextInput.AlignVCenter
+                    color: pRgb(43, 112, 173)
+                    font.family: fontBold
+                    font.pixelSize: 16
+                    inputMethodHints: Qt.ImhDigitsOnly
+                    background: Rectangle{
+                        radius: 6
+                        border.width: 3
+                        border.color: "#99ccff"
+                    }
+                    MouseArea {
+                        anchors.fill: parent
+                        onClicked: {
+                            t9.focus = true
+                            keyboardYype = 0
+                        }
+                    }
+                    text:{
+                        if(equipmentCount === 1){
+                            if(DeviceManager.deviceList[0]){
+                                DeviceManager.deviceList[0].pDeviceInformation.lowerLimit
+                            }
+                            else{
+                                return ""
+                            }
+                        }
+                        else{
+                            if(DeviceManager.deviceList[currentConfigId-1]){
+                                DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.lowerLimit
+                            }
+                            else{
+                                return ""
+                            }
+                        }
+                    }
+                }
+
+
                 Text {
                     id: s4
                     text: qsTr("高度模式")
                     color: pRgb(177, 213, 219)
                     font.family: fontBold
                     font.pixelSize: 16
-                    anchors.left: s3.left
-                    anchors.top: s3.bottom
-                    anchors.topMargin: 51
+                    anchors.left: s9.left
+                    anchors.top: s9.bottom
+                    anchors.topMargin: 80
                 }
                 Text {
                     id: s5
@@ -377,7 +549,7 @@ Rectangle {
                     anchors.left: parent.left
                     anchors.top: parent.top
                     anchors.leftMargin: 214
-                    anchors.topMargin: 283
+                    anchors.topMargin: 520
                     checked: altitudMode
                     indicator: Rectangle
                     {
@@ -436,171 +608,180 @@ Rectangle {
                         }
                     }
                 }
-                Text {
-                    id: s7
-                    text: qsTr("是否开启待定")
-                    color: "#99ccff"
-                    font.family: fontBold
-                    font.pixelSize: 20
-                    x:110
-                    y:362
-                }
-                Switch{
-                    id:ctl
-                    x:269
-                    y:356
-                    onPressed: {
-                        if(equipmentCount === 1){
-                            DeviceManager.deviceList[0].pIO.setAvailabel(!ctl.checked)
-                        }
-                        else{
-                            DeviceManager.deviceList[currentConfigId-1].pIO.setAvailabel(!ctl.checked)
-                        }
+            }
+            Rectangle{
+                x:515
+                y:25
+                width: 753
+                height: 613
+                color: pRgb(43, 112, 173)
+                radius: 3
+                //                Text {
+                //                    id: s7
+                //                    text: qsTr("是否开启待定")
+                //                    color: "#99ccff"
+                //                    font.family: fontBold
+                //                    font.pixelSize: 20
+                //                    x:110
+                //                    y:362
+                //                }
+                //                Switch{
+                //                    id:ctl
+                //                    x:269
+                //                    y:356
+                //                    onPressed: {
+                //                        if(equipmentCount === 1){
+                //                            DeviceManager.deviceList[0].pIO.setAvailabel(!ctl.checked)
+                //                        }
+                //                        else{
+                //                            DeviceManager.deviceList[currentConfigId-1].pIO.setAvailabel(!ctl.checked)
+                //                        }
 
-                    }
+                //                    }
 
-                    indicator: Rectangle{
-                        id:indicator
-                        implicitWidth: 150
-                        implicitHeight:35
-                        x:ctl.leftPadding
-                        y:parent.height / 2 - height / 2
-                        border.width: 3
-                        radius: 20
-                        color: pRgb(232, 232, 232)
-                        border.color: "#99ccff"
-                        //小圆点
-                        Rectangle{
-                            id:smallRect
-                            width: 72
-                            height: 28
-                            radius: 20
-                            border.width: 3
-                            color: "#2b70ad"
-                            border.color: "#99ccff"
-                            anchors.verticalCenter: parent.verticalCenter
-                            //改变小圆点位置
-                            NumberAnimation on x{
-                                to:smallRect.width
-                                running: undeterMined? true : false
-                                duration: 0
-                            }
-                            NumberAnimation on x{
-                                to:6
-                                running: undeterMined? false : true;
-                                duration: 0
-                            }
-                        }
-                        Text {
-                            anchors.left: parent.left
-                            anchors.top: parent.top
-                            anchors.topMargin: 5
-                            anchors.leftMargin: 25
-                            text: qsTr("关闭")
-                            color: undeterMined? pRgb(43, 112, 173) : "#e5e6e7"
-                            font.family: fontBold
-                            font.pixelSize: 16
-                        }
-                        Text {
-                            anchors.right: parent.right
-                            anchors.top: parent.top
-                            anchors.topMargin: 5
-                            anchors.rightMargin: 25
-                            text: qsTr("启动")
-                            color: undeterMined? "#e5e6e7" : pRgb(43, 112, 173)
-                            font.family: fontBold
-                            font.pixelSize: 16
-                        }
-                    }
-                }
-                Text {
-                    id: s8
-                    text: currentConfigId === 1 ? "PIN1" : currentConfigId === 2 ? "PIN4" :
-                                                                                   currentConfigId === 3 ? "PIN7" : currentConfigId === 4 ? "PIN10" : "PIN1"
-                    color: pRgb(177, 213, 219)
-                    font.family: fontBold
-                    font.pixelSize: 16
-                    x:103
-                    y:440
-                }
-                Text {
-                    id: s9
-                    text: currentConfigId === 1 ? "PIN2" : currentConfigId === 2 ? "PIN5" :
-                                                                                   currentConfigId === 3 ? "PIN8" : currentConfigId === 4 ? "PIN11" : "PIN2"
-                    color: pRgb(177, 213, 219)
-                    font.family: fontBold
-                    font.pixelSize: 16
-                    anchors.left: s8.left
-                    anchors.top: s8.bottom
-                    anchors.topMargin: 20
-                }
-                Text {
-                    id: s10
-                    text: currentConfigId === 1 ? "PIN3" : currentConfigId === 2 ? "PIN6" :
-                                                                                   currentConfigId === 3 ? "PIN9" : currentConfigId === 4 ? "PIN12" : "PIN3"
-                    color: pRgb(177, 213, 219)
-                    font.family: fontBold
-                    font.pixelSize: 16
-                    anchors.left: s9.left
-                    anchors.top: s9.bottom
-                    anchors.topMargin: 20
-                }
-                Image {
-                    id: im1
-                    source: "qrc:/image/alarm.png"
-                    x:197
-                    y:440
-                }
-                Image {
-                    id: im2
-                    source: "qrc:/image/restoration.png"
-                    anchors.left: im1.left
-                    anchors.top: im1.bottom
-                    anchors.topMargin: 13
-                    anchors.leftMargin: -2
-                }
-                Image {
-                    id: im3
-                    width: 30
-                    height: 30
-                    source: !undeterMined ? "qrc:/image/undetermined1.png" : "qrc:/image/undetermined.png"
-                    anchors.left: im2.left
-                    anchors.top: im2.bottom
-                    anchors.topMargin: 13
-                }
-                Text {
-                    id: s11
-                    text: qsTr("报警")
-                    color: pRgb(177, 213, 219)
-                    font.family: fontBold
-                    font.pixelSize: 16
-                    anchors.top: s8.top
-                    anchors.left: s8.right
-                    anchors.leftMargin: 139
-                }
-                Text {
-                    id: s12
-                    text: qsTr("复位")
-                    color: pRgb(177, 213, 219)
-                    font.family: fontBold
-                    font.pixelSize: 16
-                    anchors.top: s9.top
-                    anchors.left: s9.right
-                    anchors.leftMargin: 139
-                }
-                Text {
-                    id: s13
-                    text: qsTr("待定")
-                    color: pRgb(177, 213, 219)
-                    font.family: fontBold
-                    font.pixelSize: 16
-                    anchors.top: s10.top
-                    anchors.left: s10.right
-                    anchors.leftMargin: 139
-                }
+                //                    indicator: Rectangle{
+                //                        id:indicator
+                //                        implicitWidth: 150
+                //                        implicitHeight:35
+                //                        x:ctl.leftPadding
+                //                        y:parent.height / 2 - height / 2
+                //                        border.width: 3
+                //                        radius: 20
+                //                        color: pRgb(232, 232, 232)
+                //                        border.color: "#99ccff"
+                //                        //小圆点
+                //                        Rectangle{
+                //                            id:smallRect
+                //                            width: 72
+                //                            height: 28
+                //                            radius: 20
+                //                            border.width: 3
+                //                            color: "#2b70ad"
+                //                            border.color: "#99ccff"
+                //                            anchors.verticalCenter: parent.verticalCenter
+                //                            //改变小圆点位置
+                //                            NumberAnimation on x{
+                //                                to:smallRect.width
+                //                                running: undeterMined? true : false
+                //                                duration: 0
+                //                            }
+                //                            NumberAnimation on x{
+                //                                to:6
+                //                                running: undeterMined? false : true;
+                //                                duration: 0
+                //                            }
+                //                        }
+                //                        Text {
+                //                            anchors.left: parent.left
+                //                            anchors.top: parent.top
+                //                            anchors.topMargin: 5
+                //                            anchors.leftMargin: 25
+                //                            text: qsTr("关闭")
+                //                            color: undeterMined? pRgb(43, 112, 173) : "#e5e6e7"
+                //                            font.family: fontBold
+                //                            font.pixelSize: 16
+                //                        }
+                //                        Text {
+                //                            anchors.right: parent.right
+                //                            anchors.top: parent.top
+                //                            anchors.topMargin: 5
+                //                            anchors.rightMargin: 25
+                //                            text: qsTr("启动")
+                //                            color: undeterMined? "#e5e6e7" : pRgb(43, 112, 173)
+                //                            font.family: fontBold
+                //                            font.pixelSize: 16
+                //                        }
+                //                    }
+                //                }
+                //                Text {
+                //                    id: s8
+                //                    text: currentConfigId === 1 ? "PIN1" : currentConfigId === 2 ? "PIN4" :
+                //                                                                                   currentConfigId === 3 ? "PIN7" : currentConfigId === 4 ? "PIN10" : "PIN1"
+                //                    color: pRgb(177, 213, 219)
+                //                    font.family: fontBold
+                //                    font.pixelSize: 16
+                //                    x:103
+                //                    y:440
+                //                }
+                //                Text {
+                //                    id: s9
+                //                    text: currentConfigId === 1 ? "PIN2" : currentConfigId === 2 ? "PIN5" :
+                //                                                                                   currentConfigId === 3 ? "PIN8" : currentConfigId === 4 ? "PIN11" : "PIN2"
+                //                    color: pRgb(177, 213, 219)
+                //                    font.family: fontBold
+                //                    font.pixelSize: 16
+                //                    anchors.left: s8.left
+                //                    anchors.top: s8.bottom
+                //                    anchors.topMargin: 20
+                //                }
+                //                Text {
+                //                    id: s10
+                //                    text: currentConfigId === 1 ? "PIN3" : currentConfigId === 2 ? "PIN6" :
+                //                                                                                   currentConfigId === 3 ? "PIN9" : currentConfigId === 4 ? "PIN12" : "PIN3"
+                //                    color: pRgb(177, 213, 219)
+                //                    font.family: fontBold
+                //                    font.pixelSize: 16
+                //                    anchors.left: s9.left
+                //                    anchors.top: s9.bottom
+                //                    anchors.topMargin: 20
+                //                }
+                //                Image {
+                //                    id: im1
+                //                    source: "qrc:/image/alarm.png"
+                //                    x:197
+                //                    y:440
+                //                }
+                //                Image {
+                //                    id: im2
+                //                    source: "qrc:/image/restoration.png"
+                //                    anchors.left: im1.left
+                //                    anchors.top: im1.bottom
+                //                    anchors.topMargin: 13
+                //                    anchors.leftMargin: -2
+                //                }
+                //                Image {
+                //                    id: im3
+                //                    width: 30
+                //                    height: 30
+                //                    source: !undeterMined ? "qrc:/image/undetermined1.png" : "qrc:/image/undetermined.png"
+                //                    anchors.left: im2.left
+                //                    anchors.top: im2.bottom
+                //                    anchors.topMargin: 13
+                //                }
+                //                Text {
+                //                    id: s11
+                //                    text: qsTr("报警")
+                //                    color: pRgb(177, 213, 219)
+                //                    font.family: fontBold
+                //                    font.pixelSize: 16
+                //                    anchors.top: s8.top
+                //                    anchors.left: s8.right
+                //                    anchors.leftMargin: 139
+                //                }
+                //                Text {
+                //                    id: s12
+                //                    text: qsTr("复位")
+                //                    color: pRgb(177, 213, 219)
+                //                    font.family: fontBold
+                //                    font.pixelSize: 16
+                //                    anchors.top: s9.top
+                //                    anchors.left: s9.right
+                //                    anchors.leftMargin: 139
+                //                }
+                //                Text {
+                //                    id: s13
+                //                    text: qsTr("待定")
+                //                    color: pRgb(177, 213, 219)
+                //                    font.family: fontBold
+                //                    font.pixelSize: 16
+                //                    anchors.top: s10.top
+                //                    anchors.left: s10.right
+                //                    anchors.leftMargin: 139
+                //                }
+
                 Text {
                     id: s14
-                    x:508
+                    x:23
                     y:74
                     text: qsTr("设备名称")
                     color: pRgb(177, 213, 219)
@@ -699,7 +880,7 @@ Rectangle {
                 }
                 Switch{
                     id:ctl1
-                    x:713
+                    x:228
                     y:147
                     onClicked: {
                         if(isAdd){
@@ -707,7 +888,7 @@ Rectangle {
                         }
                         if(equipmentCount === 1){
                             if(ctl1.checked){
-                                DeviceManager.deviceList[0].pDeviceInformation.setConnectType(2)
+                                DeviceManager.deviceList[0].pDeviceInformation.setConnectType(0)
                             }
                             else{
                                 DeviceManager.deviceList[0].pDeviceInformation.setConnectType(1)
@@ -715,7 +896,7 @@ Rectangle {
                         }
                         else{
                             if(ctl1.checked){
-                                DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.setConnectType(2)
+                                DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.setConnectType(0)
                             }
                             else{
                                 DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.setConnectType(1)
@@ -750,10 +931,10 @@ Rectangle {
                                         return ctl1.checked
                                     }
                                     else if(equipmentCount === 1){
-                                        return DeviceManager.deviceList[0].pDeviceInformation.connectType !== 1? true : false
+                                        return DeviceManager.deviceList[0].pDeviceInformation.connectType !== 0? true : false
                                     }
                                     else{
-                                        return DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.connectType !== 1? true : false
+                                        return DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.connectType !== 0? true : false
                                     }
                                 }
                                 duration: 0
@@ -765,10 +946,10 @@ Rectangle {
                                         return !ctl1.checked
                                     }
                                     else if(equipmentCount === 1){
-                                        return DeviceManager.deviceList[0].pDeviceInformation.connectType !== 1? false : true
+                                        return DeviceManager.deviceList[0].pDeviceInformation.connectType !== 0? false : true
                                     }
                                     else{
-                                        return DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.connectType !== 1? false : true
+                                        return DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.connectType !== 0? false : true
                                     }
                                 }
                                 duration: 0
@@ -785,10 +966,10 @@ Rectangle {
                                     return ctl1.checked ? pRgb(43, 112, 173) : "#e5e6e7"
                                 }
                                 else if(equipmentCount === 1){
-                                    return DeviceManager.deviceList[0].pDeviceInformation.connectType !== 1 ? pRgb(43, 112, 173) : "#e5e6e7"
+                                    return DeviceManager.deviceList[0].pDeviceInformation.connectType !== 0 ? pRgb(43, 112, 173) : "#e5e6e7"
                                 }
                                 else{
-                                    return DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.connectType !== 1 ? pRgb(43, 112, 173) : "#e5e6e7"
+                                    return DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.connectType !== 0 ? pRgb(43, 112, 173) : "#e5e6e7"
                                 }
                             }
                             font.family: fontBold
@@ -805,10 +986,10 @@ Rectangle {
                                     return !ctl1.checked ? pRgb(43, 112, 173) : "#e5e6e7"
                                 }
                                 else if(equipmentCount === 1){
-                                    return DeviceManager.deviceList[0].pDeviceInformation.connectType !== 1? "#e5e6e7" : pRgb(43, 112, 173)
+                                    return DeviceManager.deviceList[0].pDeviceInformation.connectType !== 0? "#e5e6e7" : pRgb(43, 112, 173)
                                 }
                                 else{
-                                    return DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.connectType !== 1? "#e5e6e7" : pRgb(43, 112, 173)
+                                    return DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.connectType !== 0? "#e5e6e7" : pRgb(43, 112, 173)
                                 }
                             }
                             font.family: fontBold
@@ -823,17 +1004,17 @@ Rectangle {
                             return ctl1.checked ? rect1 : rect2
                         }
                         else if(equipmentCount === 1){
-                            return DeviceManager.deviceList[0].pDeviceInformation.connectType === 1 ? rect1 : rect2
+                            return DeviceManager.deviceList[0].pDeviceInformation.connectType === 0 ? rect1 : rect2
                         }
                         else{
-                            return DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.connectType === 1 ? rect1 : rect2
+                            return DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.connectType === 0 ? rect1 : rect2
                         }
                     }
                 }
                 Component{
                     id:rect1
                     Rectangle{
-                        x:595
+                        x:110
                         y:226
                         width: 600
                         height: 343
@@ -925,8 +1106,6 @@ Rectangle {
                                 else{
                                     DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.setConnectID(com2.currentIndex+1)
                                 }
-
-
                             }
                         }
                         TextField{
@@ -1054,7 +1233,7 @@ Rectangle {
                 Component{
                     id:rect2
                     Rectangle{
-                        x:595
+                        x:110
                         y:226
                         width: 600
                         height: 343
@@ -1290,9 +1469,33 @@ Rectangle {
                 }
             }
             Button{
+               id:bt4
+               x:131
+               y:662
+               width: 243
+               height: 52
+               background: Rectangle{
+                   radius: 6
+                   color: pRgb(43, 112, 173)
+               }
+               contentItem: Text {
+                   text: "系统保存"
+                   font.pixelSize: 20
+                   color: pRgb(153, 204, 255)
+                   anchors.centerIn: parent  // 确保文本在按钮内居中对齐
+                   horizontalAlignment: Text.AlignHCenter
+                   verticalAlignment: Text.AlignVCenter
+                   font.family: fontBold
+               }
+               onPressed: {
+                   popup.openPop(10)
+               }
+            }
+
+            Button{
                 id:bt3
-                x:516
-                y:677
+                x:766
+                y:662
                 width: 243
                 height: 52
                 background: Rectangle{
@@ -1300,7 +1503,7 @@ Rectangle {
                     color: pRgb(43, 112, 173)
                 }
                 contentItem: Text {
-                    text: "保存"
+                    text: "设备保存"
                     font.pixelSize: 20
                     color: pRgb(153, 204, 255)
                     anchors.centerIn: parent  // 确保文本在按钮内居中对齐
@@ -1313,12 +1516,11 @@ Rectangle {
                         if(!oneself){
                             switchUI(1)
                         }
-                        else{
-                            loadViewsys(2,musys)
-                        }
                         DeviceManager.addDevice()
                         oneself = false
                         sigUndetermined(1)
+                        loadViewsys(2,musys)
+                        return
                     }
                     if(full.visible){//设置多设备时配置存储
                         DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.setMaxBacth(t1.text)
@@ -1332,6 +1534,7 @@ Rectangle {
                         DeviceManager.deviceList[0].pDeviceInformation.setLowerLimit(t3.text)
                         DeviceManager.deviceList[0].pDeviceInformation.setName(t4.text)
                     }
+                    loadViewsys(2,musys)
                 }
             }
         }
@@ -1373,7 +1576,7 @@ Rectangle {
                 }
                 eqText3:{
                     if(DeviceManager.deviceList[0]){
-                        DeviceManager.deviceList[0].pDeviceInformation.connectType === 1  ? "网络连接" : "RS232"
+                        DeviceManager.deviceList[0].pDeviceInformation.connectType === 0  ? "网络连接" : "RS232"
                     }
                     else{
                         return ""
@@ -1427,7 +1630,7 @@ Rectangle {
                 }
                 eqText3:{
                     if(DeviceManager.deviceList[1]){
-                        DeviceManager.deviceList[1].pDeviceInformation.connectType === 1  ? "网络连接" : "RS232"
+                        DeviceManager.deviceList[1].pDeviceInformation.connectType === 0 ? "网络连接" : "RS232"
                     }
                     else{
                         return ""
@@ -1491,10 +1694,10 @@ Rectangle {
                 }
                 eqText3:{
                     if(DeviceManager.deviceList[2]){
-                        DeviceManager.deviceList[2].pDeviceInformation.connectType === 1  ? "网络连接" : "RS232"
+                        DeviceManager.deviceList[2].pDeviceInformation.connectType === 0  ? "网络连接" : "RS232"
                     }
                     else if(DeviceManager.deviceList[3]){
-                        DeviceManager.deviceList[3].pDeviceInformation.connectType === 1  ? "网络连接" : "RS232"
+                        DeviceManager.deviceList[3].pDeviceInformation.connectType === 0  ? "网络连接" : "RS232"
                     }
                     else{
                         return ""
@@ -1561,10 +1764,10 @@ Rectangle {
                 }
                 eqText3:{
                     if(DeviceManager.deviceList[3]){
-                        DeviceManager.deviceList[3].pDeviceInformation.connectType === 1  ? "网络连接" : "RS232"
+                        DeviceManager.deviceList[3].pDeviceInformation.connectType === 0  ? "网络连接" : "RS232"
                     }
                     else if(DeviceManager.deviceList[2]){
-                        DeviceManager.deviceList[2].pDeviceInformation.connectType === 1  ? "网络连接" : "RS232"
+                        DeviceManager.deviceList[2].pDeviceInformation.connectType === 0  ? "网络连接" : "RS232"
                     }
                     else{
                         return ""
@@ -1618,109 +1821,109 @@ Rectangle {
                 }
                 function onSigDelDevice(){
                     DeviceManager.removeDevice(currIndex)
-//                    var a = altitudeModel1
-//                    var b = altitudeModel2
-//                    var c = altitudeModel3
-//                    var d = altitudeModel4
-//                    var p1 = undetermined1
-//                    var p2 = undetermined2
-//                    var p3 = undetermined3
-//                    var p4 = undetermined4
-//                    altitudeModel1 = false
-//                    altitudeModel2 = false
-//                    altitudeModel3 = false
-//                    altitudeModel4 = false
-//                    undetermined1 = false
-//                    undetermined2 = false
-//                    undetermined3 = false
-//                    undetermined4 = false
+                    //                    var a = altitudeModel1
+                    //                    var b = altitudeModel2
+                    //                    var c = altitudeModel3
+                    //                    var d = altitudeModel4
+                    //                    var p1 = undetermined1
+                    //                    var p2 = undetermined2
+                    //                    var p3 = undetermined3
+                    //                    var p4 = undetermined4
+                    //                    altitudeModel1 = false
+                    //                    altitudeModel2 = false
+                    //                    altitudeModel3 = false
+                    //                    altitudeModel4 = false
+                    //                    undetermined1 = false
+                    //                    undetermined2 = false
+                    //                    undetermined3 = false
+                    //                    undetermined4 = false
                     if(currIndex == 1){
                         s1.color = pRgb(43, 112, 173)
-//                        if(equipmentCount == 3){
-//                            altitudeModel1 = b
-//                            altitudeModel2 = c
-//                            altitudeModel3 = d
-//                            undetermined1 = p2
-//                            undetermined2 = p3
-//                            undetermined3 = p4
-//                        }
-//                        else if(equipmentCount == 2){
-//                            altitudeModel1 = b
-//                            altitudeModel2 = c
-//                            undetermined1 = p2
-//                            undetermined2 = p3
-//                        }
-//                        else if(equipmentCount == 1){
-//                            altitudeModel1 = b
-//                            btnDefault = b
-//                            undetermined1 = p2
-//                        }
+                        //                        if(equipmentCount == 3){
+                        //                            altitudeModel1 = b
+                        //                            altitudeModel2 = c
+                        //                            altitudeModel3 = d
+                        //                            undetermined1 = p2
+                        //                            undetermined2 = p3
+                        //                            undetermined3 = p4
+                        //                        }
+                        //                        else if(equipmentCount == 2){
+                        //                            altitudeModel1 = b
+                        //                            altitudeModel2 = c
+                        //                            undetermined1 = p2
+                        //                            undetermined2 = p3
+                        //                        }
+                        //                        else if(equipmentCount == 1){
+                        //                            altitudeModel1 = b
+                        //                            btnDefault = b
+                        //                            undetermined1 = p2
+                        //                        }
                     }
                     else if(currIndex == 2){
                         s2.color = pRgb(43, 112, 173)
-//                        if(equipmentCount == 3){
-//                            altitudeModel1 = a
-//                            altitudeModel2 = c
-//                            altitudeModel3 = d
-//                            undetermined1 = p1
-//                            undetermined2 = p3
-//                            undetermined3 = p4
-//                        }
-//                        else if(equipmentCount == 2){
-//                            altitudeModel1 = a
-//                            altitudeModel2 = c
-//                            undetermined1 = p1
-//                            undetermined2 = p3
-//                        }
-//                        else if(equipmentCount == 1){
-//                            altitudeModel1 = a
-//                            btnDefault = a
-//                            undetermined1 = p1
-//                        }
+                        //                        if(equipmentCount == 3){
+                        //                            altitudeModel1 = a
+                        //                            altitudeModel2 = c
+                        //                            altitudeModel3 = d
+                        //                            undetermined1 = p1
+                        //                            undetermined2 = p3
+                        //                            undetermined3 = p4
+                        //                        }
+                        //                        else if(equipmentCount == 2){
+                        //                            altitudeModel1 = a
+                        //                            altitudeModel2 = c
+                        //                            undetermined1 = p1
+                        //                            undetermined2 = p3
+                        //                        }
+                        //                        else if(equipmentCount == 1){
+                        //                            altitudeModel1 = a
+                        //                            btnDefault = a
+                        //                            undetermined1 = p1
+                        //                        }
                     }
                     else if(currIndex == 3){
                         s3.color = pRgb(43, 112, 173)
-//                        if(equipmentCount == 3){
-//                            altitudeModel1 = a
-//                            altitudeModel2 = b
-//                            altitudeModel3 = d
-//                            undetermined1 = p1
-//                            undetermined2 = p2
-//                            undetermined3 = p4
-//                        }
-//                        else if(equipmentCount == 2){
-//                            altitudeModel1 = a
-//                            altitudeModel2 = b
-//                            undetermined1 = p1
-//                            undetermined2 = p2
-//                        }
-//                        else if(equipmentCount == 1){
-//                            altitudeModel1 = a
-//                            btnDefault = a
-//                            undetermined1 = p1
-//                        }
+                        //                        if(equipmentCount == 3){
+                        //                            altitudeModel1 = a
+                        //                            altitudeModel2 = b
+                        //                            altitudeModel3 = d
+                        //                            undetermined1 = p1
+                        //                            undetermined2 = p2
+                        //                            undetermined3 = p4
+                        //                        }
+                        //                        else if(equipmentCount == 2){
+                        //                            altitudeModel1 = a
+                        //                            altitudeModel2 = b
+                        //                            undetermined1 = p1
+                        //                            undetermined2 = p2
+                        //                        }
+                        //                        else if(equipmentCount == 1){
+                        //                            altitudeModel1 = a
+                        //                            btnDefault = a
+                        //                            undetermined1 = p1
+                        //                        }
                     }
                     else if(currIndex == 4){
                         s4.color = pRgb(43, 112, 173)
-//                        if(equipmentCount == 3){
-//                            altitudeModel1 = a
-//                            altitudeModel2 = b
-//                            altitudeModel3 = c
-//                            undetermined1 = p1
-//                            undetermined2 = p2
-//                            undetermined3 = p3
-//                        }
-//                        else if(equipmentCount == 2){
-//                            altitudeModel1 = a
-//                            altitudeModel2 = b
-//                            undetermined1 = p1
-//                            undetermined2 = p2
-//                        }
-//                        else if(equipmentCount == 1){
-//                            altitudeModel1 = a
-//                            btnDefault = a
-//                            undetermined1 = p1
-//                        }
+                        //                        if(equipmentCount == 3){
+                        //                            altitudeModel1 = a
+                        //                            altitudeModel2 = b
+                        //                            altitudeModel3 = c
+                        //                            undetermined1 = p1
+                        //                            undetermined2 = p2
+                        //                            undetermined3 = p3
+                        //                        }
+                        //                        else if(equipmentCount == 2){
+                        //                            altitudeModel1 = a
+                        //                            altitudeModel2 = b
+                        //                            undetermined1 = p1
+                        //                            undetermined2 = p2
+                        //                        }
+                        //                        else if(equipmentCount == 1){
+                        //                            altitudeModel1 = a
+                        //                            btnDefault = a
+                        //                            undetermined1 = p1
+                        //                        }
                     }
                     currIndex = 0
                 }

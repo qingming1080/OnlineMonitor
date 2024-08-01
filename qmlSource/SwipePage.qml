@@ -47,7 +47,7 @@ Rectangle {
         }
         eqText3:{
             if(DeviceManager.deviceList[swipeCurrIndex]){
-                return DeviceManager.deviceList[swipeCurrIndex].pDeviceInformation.connectType === 2
+                return DeviceManager.deviceList[swipeCurrIndex].pDeviceInformation.connectType === 1
                         ? "RS232" : "网络连接"
             }
             else{
@@ -132,8 +132,6 @@ Rectangle {
                 x:  50
                 y:  248
                 color:  "#0c5696"
-                altitudeMode:DeviceManager.deviceList[swipeCurrIndex].pDeviceInformation.heightOption
-                             === 1 ? true:false
                 eqText1:parameter1
                 eqText2:parameter2
                 eqText3:parameter3
@@ -173,6 +171,7 @@ Rectangle {
                     Manual.save()
                     mt1.text = "新建模型"
                     sigUpdateUI(0)
+                    sigRecover()
                 }
                 else{
                     popup.openPop(5)
@@ -206,7 +205,7 @@ Rectangle {
         }
         onPressed: {
             if(mt2.text == "清除数据"){
-
+                Manual.clearData()
             }
         }
     }

@@ -10,8 +10,12 @@ Rectangle {
             updateUI()
         }
         function onSigNewModel(){
-            var lastPage = view.contentChildren[swipeIndex]
+            var lastPage = view.contentChildren[view.currentIndex]
             lastPage.newModel()
+            view.interactive = false
+        }
+        function onSigRecover(){
+            view.interactive = true
         }
     }
     Connections{

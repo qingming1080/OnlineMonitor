@@ -137,7 +137,7 @@ Rectangle {
             }
             eqText3:{
                 if(DeviceManager.deviceList[0]){
-                    return DeviceManager.deviceList[0].pDeviceInformation.connectType === 2
+                    return DeviceManager.deviceList[0].pDeviceInformation.connectType === 1
                             ? "RS232" : "网络连接"
                 }
                 else{
@@ -224,9 +224,9 @@ Rectangle {
             btnIndex:rect1
         }
         Button{
-            width: 24
-            height: 24
-            x:570
+            width: 30
+            height: 30
+            x:566
             y:6
             background: Rectangle{
                 color: "transparent"
@@ -284,7 +284,7 @@ Rectangle {
             }
             eqText3:{
                 if(DeviceManager.deviceList[1]){
-                    return DeviceManager.deviceList[1].pDeviceInformation.connectType === 2
+                    return DeviceManager.deviceList[1].pDeviceInformation.connectType === 1
                             ? "RS232" : "网络连接"
                 }
                 else{
@@ -371,9 +371,9 @@ Rectangle {
             btnIndex:rect2
         }
         Button{
-            width: 24
-            height: 24
-            x:570
+            width: 30
+            height: 30
+            x:566
             y:6
             background: Rectangle{
                 color: "transparent"
@@ -438,11 +438,11 @@ Rectangle {
             }
             eqText3:{
                 if(DeviceManager.deviceList[2]){
-                    return DeviceManager.deviceList[2].pDeviceInformation.connectType === 2
+                    return DeviceManager.deviceList[2].pDeviceInformation.connectType === 1
                             ? "RS232" : "网络连接"
                 }
                 else if(DeviceManager.deviceList[3]){
-                    return DeviceManager.deviceList[3].pDeviceInformation.connectType === 2
+                    return DeviceManager.deviceList[3].pDeviceInformation.connectType === 1
                             ? "RS232" : "网络连接"
                 }
                 else{
@@ -541,9 +541,9 @@ Rectangle {
             }
         }
         Button{
-            width: 24
-            height: 24
-            x:570
+            width: 30
+            height: 30
+            x:566
             y:6
             background: Rectangle{
                 color: "transparent"
@@ -607,11 +607,11 @@ Rectangle {
             }
             eqText3:{
                 if(DeviceManager.deviceList[3]){
-                    return DeviceManager.deviceList[3].pDeviceInformation.connectType === 2
+                    return DeviceManager.deviceList[3].pDeviceInformation.connectType === 1
                             ? "RS232" : "网络连接"
                 }
                 else if(DeviceManager.deviceList[2]){
-                    return DeviceManager.deviceList[2].pDeviceInformation.connectType === 2
+                    return DeviceManager.deviceList[2].pDeviceInformation.connectType === 1
                             ? "RS232" : "网络连接"
                 }
                 else{
@@ -710,9 +710,9 @@ Rectangle {
             }
         }
         Button{
-            width: 24
-            height: 24
-            x:570
+            width: 30
+            height: 30
+            x:566
             y:6
             background: Rectangle{
                 color: "transparent"

@@ -98,6 +98,7 @@ Window {
     signal sigOneModel()
     signal sigPassError()
     signal sigDelDevice()
+    signal sigRecover()
     function switchUI(id){
         equipmentCurrentIndex = id
         sigSwitch(id)

@@ -33,6 +33,10 @@ Popup {
             popload.sourceComponent = newpass
             open()
         }
+        else if(index === 10){
+            popload.sourceComponent = sysConfig
+            open()
+        }
     }
     onClosed:{
         id = 0
@@ -451,6 +455,49 @@ Popup {
                         color:"#004b8d"
                         anchors.centerIn: regionItem
                     }
+                }
+            }
+        }
+    }
+    Component{
+        id:sysConfig
+        Rectangle{
+            y:34
+            width: 567
+            height: 236
+            color: "#b1d5db"
+            Text {
+                x:223
+                y:49
+                text: qsTr("系统配置成功!")
+                font.pixelSize: 20
+                color: "#004b8d"
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
+                font.family: fontBold
+            }
+            Button{
+                id:s4
+                x:170
+                y:165
+                width: 243
+                height: 52
+                background: Rectangle{
+                    radius: 6
+                    color: pRgb(43, 112, 173)
+                }
+                contentItem: Text {
+                    id: mt1
+                    text: "确认"
+                    font.pixelSize: mode == 1 ? 17:20
+                    color: pRgb(153, 204, 255)
+                    anchors.centerIn: parent  // 确保文本在按钮内居中对齐
+                    horizontalAlignment: Text.AlignHCenter
+                    verticalAlignment: Text.AlignVCenter
+                    font.family: fontBold
+                }
+                onClicked: {
+                    close()
                 }
             }
         }

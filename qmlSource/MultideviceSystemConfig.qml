@@ -12,8 +12,8 @@ Rectangle {
     property int sysCurrIndex: 0
     property int sysCurrIndex1: 0
     property bool undetermined: {
-        if(DeviceManager.deviceList[sysCurrIndex-1]){
-            return DeviceManager.deviceList[sysCurrIndex-1].pIO.availabel
+        if(DeviceManager.deviceList[sysCurrIndex1-1]){
+            return DeviceManager.deviceList[sysCurrIndex1-1].pIO.availabel
         }
         else{
             false
@@ -115,9 +115,8 @@ Rectangle {
         }
         onPressed: {
             loadViewsys(1,syscfg)
-            currentConfigId = sysCurrIndex
+            currentConfigId = sysCurrIndex1
             sigUpdateUI(sysCurrIndex-1)
-            altitudMode = heightOpation
         }
     }
     Text {
@@ -157,8 +156,8 @@ Rectangle {
         }
         onPressed: {
             sigAltitudeModel(true)
-            sigUpdateUI(sysCurrIndex)
-            DeviceManager.deviceList[sysCurrIndex-1].pDeviceInformation.setHeightOption(1)
+            sigUpdateUI(sysCurrIndex1)
+            DeviceManager.deviceList[sysCurrIndex1-1].pDeviceInformation.setHeightOption(1)
         }
     }
     Text {
@@ -190,8 +189,8 @@ Rectangle {
         }
         onPressed: {
             sigAltitudeModel(false)
-            sigUpdateUI(sysCurrIndex)
-            DeviceManager.deviceList[sysCurrIndex-1].pDeviceInformation.setHeightOption(0)
+            sigUpdateUI(sysCurrIndex1)
+            DeviceManager.deviceList[sysCurrIndex1-1].pDeviceInformation.setHeightOption(0)
         }
     }
     Text {
@@ -208,20 +207,20 @@ Rectangle {
         x:150
         y:317
         onPressed: {
-            if(sysCurrIndex == 1){
+            if(sysCurrIndex1 == 1){
                 undetermined1 = !undetermined1
             }
-            else if(sysCurrIndex ==2){
+            else if(sysCurrIndex1 ==2){
                 undetermined2 = !undetermined2
             }
-            else if(sysCurrIndex ==3){
+            else if(sysCurrIndex1 ==3){
                 undetermined3 = !undetermined3
             }
-            else if(sysCurrIndex ==4){
+            else if(sysCurrIndex1 ==4){
                 undetermined4 = !undetermined4
             }
 //            sigUndetermined(sysCurrIndex)
-            DeviceManager.deviceList[sysCurrIndex-1].pIO.setAvailabel(!ctl.checked)
+            DeviceManager.deviceList[sysCurrIndex1-1].pIO.setAvailabel(!ctl.checked)
         }
 
         indicator: Rectangle{
@@ -280,8 +279,8 @@ Rectangle {
     }
     Text {
         id: s8
-        text: sysCurrIndex === 1 ? "PIN1" : sysCurrIndex === 2 ? "PIN4" :
-        sysCurrIndex === 3 ? "PIN7" : sysCurrIndex === 4 ? "PIN10" : ""
+        text: sysCurrIndex1 === 1 ? "PIN1" : sysCurrIndex1 === 2 ? "PIN4" :
+        sysCurrIndex1 === 3 ? "PIN7" : sysCurrIndex1 === 4 ? "PIN10" : ""
         color: pRgb(177, 213, 219)
         font.family: fontBold
         font.pixelSize: 16
@@ -290,8 +289,8 @@ Rectangle {
     }
     Text {
         id: s9
-        text: sysCurrIndex === 1 ? "PIN2" : sysCurrIndex === 2 ? "PIN5" :
-        sysCurrIndex === 3 ? "PIN8" : sysCurrIndex === 4 ? "PIN11" : ""
+        text: sysCurrIndex1 === 1 ? "PIN2" : sysCurrIndex1 === 2 ? "PIN5" :
+        sysCurrIndex1 === 3 ? "PIN8" : sysCurrIndex1 === 4 ? "PIN11" : ""
         color: pRgb(177, 213, 219)
         font.family: fontBold
         font.pixelSize: 16
@@ -301,8 +300,8 @@ Rectangle {
     }
     Text {
         id: s10
-        text: sysCurrIndex === 1 ? "PIN3" : sysCurrIndex === 2 ? "PIN6" :
-        sysCurrIndex === 3 ? "PIN9" : sysCurrIndex === 4 ? "PIN12" : ""
+        text: sysCurrIndex1 === 1 ? "PIN3" : sysCurrIndex1 === 2 ? "PIN6" :
+        sysCurrIndex1 === 3 ? "PIN9" : sysCurrIndex1 === 4 ? "PIN12" : ""
         color: pRgb(177, 213, 219)
         font.family: fontBold
         font.pixelSize: 16

@@ -21,6 +21,7 @@ public:
     Q_INVOKABLE virtual bool setData(const QModelIndex & index, const QVariant & value, int role = Qt::EditRole);
 
     Q_INVOKABLE void save();
+    Q_INVOKABLE void clearData();
 private:
 
 

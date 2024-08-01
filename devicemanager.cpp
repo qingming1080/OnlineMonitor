@@ -73,8 +73,7 @@ QList<Device *> DeviceManager::deviceList() const
     return m_deviceList;
 }
 
-
-void DeviceManager::addDevice()
+void DeviceManager::addDevice(const int &maxBacth, const int &sample, const int &lowerLimit, const int &port, const int &targetIp, const int &localIp, const int &heightOption, const QString &name, const QString &model, const QmlEnum::CONNECTTYPE &connectType, const int &id)
 {
     if(m_deviceList.size() == 4)
         return;
@@ -91,7 +90,19 @@ void DeviceManager::addDevice()
         if(m_deviceList.at(i) != nullptr){
             if(m_deviceList.at(i)->pDeviceInformation()->id() != i+1)
             {
-                m_deviceList.insert(i, new Device(i+1));
+                Device *d = new Device(i+1);
+                d->pDeviceInformation()->setMaxBacth(maxBacth);
+                d->pDeviceInformation()->setSample(sample);
+                d->pDeviceInformation()->setLowerLimit(lowerLimit);
+                d->pDeviceInformation()->setHeightOption(heightOption);
+                d->pDeviceInformation()->setName(name);
+                d->pDeviceInformation()->setModel(model);
+                d->pDeviceInformation()->setConnectType(connectType);
+                d->pDeviceInformation()->setMaxBacth(id);
+                d->pDeviceInformation()->setMaxBacth(port);
+                d->pDeviceInformation()->setMaxBacth(targetIp);
+                d->pDeviceInformation()->setMaxBacth(localIp);
+                m_deviceList.insert(i, d);
                 data.welder_id = i + 1;
                 break;
             }
