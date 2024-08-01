@@ -23,6 +23,10 @@ DeviceInformation::DeviceInformation(int welderID, QObject *parent)
     m_heightOption = data.height_option;
     m_connectType = static_cast<QmlEnum::CONNECTTYPE>(data.connect_type);
     m_connectID = data.connect_id;
+    m_mesPort = data.mes_port;
+    m_mesIP = data.mes_ip;
+    m_deviceIP = data.device_ip;
+
     if(welderID == 1){
         m_goodRate = 22;
         m_power = 12;
@@ -297,4 +301,43 @@ void DeviceInformation::setHeightPost(int newHeightPost)
         return;
     m_heightPost = newHeightPost;
     emit heightPostChanged();
+}
+
+QString DeviceInformation::mesIP() const
+{
+    return m_mesIP;
+}
+
+void DeviceInformation::setMesIP(const QString &newMesIP)
+{
+    if (m_mesIP == newMesIP)
+        return;
+    m_mesIP = newMesIP;
+    emit mesIPChanged();
+}
+
+QString DeviceInformation::deviceIP() const
+{
+    return m_deviceIP;
+}
+
+void DeviceInformation::setDeviceIP(const QString &newDeviceIP)
+{
+    if (m_deviceIP == newDeviceIP)
+        return;
+    m_deviceIP = newDeviceIP;
+    emit deviceIPChanged();
+}
+
+int DeviceInformation::mesPort() const
+{
+    return m_mesPort;
+}
+
+void DeviceInformation::setMesPort(int newMesPort)
+{
+    if (m_mesPort == newMesPort)
+        return;
+    m_mesPort = newMesPort;
+    emit mesPortChanged();
 }

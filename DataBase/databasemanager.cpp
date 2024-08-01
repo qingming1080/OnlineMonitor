@@ -77,6 +77,9 @@ _Configuration_Data DataBaseManager::getConfigurationData(int welderID)
         data.height_option    = query.value(QmlEnum::CONFIGURATION_height_option).toInt();
         data.connect_type     = query.value(QmlEnum::CONFIGURATION_connect_type).toInt();
         data.connect_id       = query.value(QmlEnum::CONFIGURATION_connect_id).toInt();
+        data.mes_port         = query.value(QmlEnum::CONFIGURATION_mes_port).toInt();
+        data.mes_ip           = query.value(QmlEnum::CONFIGURATION_mes_ip).toString();
+        data.device_ip        = query.value(QmlEnum::CONFIGURATION_device_ip).toString();
 
         return data;
     }
@@ -1191,6 +1194,12 @@ QString DataBaseManager::getConfiguration_ColumnName(QmlEnum::CONFIGURATION_COLU
         return "connect_type";
     case QmlEnum::CONFIGURATION_connect_id:
         return "connect_id";
+    case QmlEnum::CONFIGURATION_mes_port:
+        return "mes_port";
+    case QmlEnum::CONFIGURATION_mes_ip:
+        return "mes_ip";
+    case QmlEnum::CONFIGURATION_device_ip:
+        return "device_ip";
     }
 
     return "";

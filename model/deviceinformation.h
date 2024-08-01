@@ -52,6 +52,14 @@ class DeviceInformation : public QObject
     // 焊接结果:焊后高度
     Q_PROPERTY(int heightPost                       READ heightPost     WRITE setHeightPost     NOTIFY heightPostChanged)
 
+    /// 2024/08/01 IP与端口 暴露
+    // 远程端口
+    Q_PROPERTY(QString mesIP                        READ mesIP          WRITE setMesIP          NOTIFY mesIPChanged)
+    // 远程IP
+    Q_PROPERTY(QString deviceIP                     READ deviceIP       WRITE setDeviceIP       NOTIFY deviceIPChanged)
+    // 客户端IP
+    Q_PROPERTY(int mesPort                          READ mesPort        WRITE setMesPort        NOTIFY mesPortChanged)
+
     /// 2024/04/07 设备状态 暴露
     // 设备状态(生产中，待机等)
     Q_PROPERTY(QString state                        READ state          WRITE setState          NOTIFY stateChanged)
@@ -115,6 +123,15 @@ public:
     Q_INVOKABLE int heightPost() const;
     Q_INVOKABLE void setHeightPost(int newHeightPost);
 
+    QString mesIP() const;
+    void setMesIP(const QString &newMesIP);
+
+    QString deviceIP() const;
+    void setDeviceIP(const QString &newDeviceIP);
+
+    int mesPort() const;
+    void setMesPort(int newMesPort);
+
 signals:
 
     void nameChanged();
@@ -152,6 +169,12 @@ signals:
 
     void heightPostChanged();
 
+    void mesIPChanged();
+
+    void deviceIPChanged();
+
+    void mesPortChanged();
+
 private:
     const int m_id;
     QString m_name{};
@@ -173,6 +196,10 @@ private:
     int m_energy{0};
     int m_heightPre{0};
     int m_heightPost{0};
+
+    int m_mesPort{0};
+    QString m_mesIP{};
+    QString m_deviceIP{};
 
     QString m_state{"未连接"};
 };
