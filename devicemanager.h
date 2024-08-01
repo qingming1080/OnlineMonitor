@@ -23,13 +23,8 @@ public:
     ///
     /// \brief addDevice : 新增一台设备
     ///
-    Q_INVOKABLE void addDevice(const int &maxBacth = 0,
-    const int &sample = 0,const int &lowerLimit = 0,
-    const int &port = 0,const int &targetIp = 0,
-    const int &localIp = 0,const int &heightOption = 0,
-    const QString &name = "",const QString &model = "",
-    const QmlEnum::CONNECTTYPE& connectType = QmlEnum::CONNECTTYPE_Network,
-    const int& id = 0);
+    Q_INVOKABLE void addDevice(const int &maxBacth, const int &sample, const int &lowerLimit, const int &port, const QString &targetIp, const QString &localIp, const int &heightOption, const QString &name, const QString &model, const int &connectType, const int &id);
+
     ///
     /// \brief removeDevice : 删除一台设备
     ///

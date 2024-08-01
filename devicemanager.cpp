@@ -8,7 +8,8 @@
 #include "signalmanager.h"
 #include <QElapsedTimer>
 #include "log/localrecord.h"
-
+#include "model/networkmodel.h"
+#include "model/rs232model.h"
 DeviceManager* DeviceManager::s_pInstance = nullptr;
 
 
@@ -73,12 +74,14 @@ QList<Device *> DeviceManager::deviceList() const
     return m_deviceList;
 }
 
-void DeviceManager::addDevice(const int &maxBacth, const int &sample, const int &lowerLimit, const int &port, const int &targetIp, const int &localIp, const int &heightOption, const QString &name, const QString &model, const QmlEnum::CONNECTTYPE &connectType, const int &id)
+
+void DeviceManager::addDevice(const int &maxBacth, const int &sample, const int &lowerLimit, const int &port, const QString &targetIp, const QString &localIp, const int &heightOption, const QString &name, const QString &model, const int &connectType, const int &id)
 {
     if(m_deviceList.size() == 4)
         return;
 
     _Configuration_Data data;
+
     for(int i = 0; i < 4; ++i)
     {
         if(i == m_deviceList.size())
@@ -91,26 +94,26 @@ void DeviceManager::addDevice(const int &maxBacth, const int &sample, const int 
             if(m_deviceList.at(i)->pDeviceInformation()->id() != i+1)
             {
                 Device *d = new Device(i+1);
-                d->pDeviceInformation()->setMaxBacth(maxBacth);
-                d->pDeviceInformation()->setSample(sample);
-                d->pDeviceInformation()->setLowerLimit(lowerLimit);
-                d->pDeviceInformation()->setHeightOption(heightOption);
-                d->pDeviceInformation()->setName(name);
-                d->pDeviceInformation()->setModel(model);
-                d->pDeviceInformation()->setConnectType(connectType);
-                d->pDeviceInformation()->setMaxBacth(id);
-                d->pDeviceInformation()->setMaxBacth(port);
-                d->pDeviceInformation()->setMaxBacth(targetIp);
-                d->pDeviceInformation()->setMaxBacth(localIp);
                 m_deviceList.insert(i, d);
                 data.welder_id = i + 1;
+                data.welder_name = name;
+                data.welder_type = model;
+                data.production_bacth = maxBacth;
+                data.model_sample = sample;
+                data.lower_limit = lowerLimit;
+                data.height_option = heightOption;
+                data.connect_type = connectType;
+                data.connect_id = id;
+                data.mes_port = port;
+                data.mes_ip = targetIp;
+                data.device_ip = localIp;
                 break;
             }
         }
     }
 
-
     DataBaseManager::getInstance()->insertConfigurationDevice(data);
+
     m_deviceNum++;
     emit deviceNumChanged();
     emit deviceListChanged();

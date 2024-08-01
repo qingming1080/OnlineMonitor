@@ -11,6 +11,8 @@ Rectangle {
     property int itemCount: equipmentCount
     property int currIndex: 0
     property int currentConfigId: 0 // 多设备时放大界面数据判断
+    property int networkId: 1
+    property int loadType: 0
     property bool musysTmp1: false
     property bool musysTmp2: false
     property bool musysTmp3: false
@@ -57,6 +59,7 @@ Rectangle {
     color: pRgb(153, 204, 255)
 
     signal sigSysCheck(var id)
+    signal sigAddDevice()
     function sysCheck(id){
         sigSysCheck(id)
     }
@@ -168,6 +171,16 @@ Rectangle {
     Component{
         id:syscfg
         Item {
+            Connections{
+                target: sysUI
+                function onSigAddDevice(){
+                    DeviceManager.addDevice(t1.text,t2.text,
+                    t3.text,t7.text,t8.text,t9.text,
+                    altitudMode?1:0,t4.text,com1.currentText,loadType,networkId)
+                    networkId = 1
+                    loadType = 0
+                }
+            }
             Rectangle{
                 x:30
                 y:25
@@ -213,7 +226,6 @@ Rectangle {
                     font.family: fontBold
                     font.pixelSize: 16
                     inputMethodHints: Qt.ImhDigitsOnly
-
                     background: Rectangle{
                         radius: 6
                         border.width: 3
@@ -240,6 +252,7 @@ Rectangle {
                     MouseArea {
                         anchors.fill: parent
                         onClicked: {
+                            t1.forceActiveFocus()
                             t1.focus = true
                             keyboardYype = 0
                         }
@@ -564,7 +577,10 @@ Rectangle {
                         if(equipmentCount > 1){
                             sigUndetermined(currentConfigId)
                         }
-                        if(equipmentCount === 1){
+                        if(isAdd){
+                            altitudMode = true
+                        }
+                        else if(equipmentCount === 1){
                             DeviceManager.deviceList[0].pDeviceInformation.setHeightOption(1)
                         }
                         else{
@@ -600,7 +616,10 @@ Rectangle {
                         border.width: 2
                     }
                     onPressed: {
-                        if(equipmentCount === 1){
+                        if(isAdd){
+                            altitudMode = false
+                        }
+                        else if(equipmentCount === 1){
                             DeviceManager.deviceList[0].pDeviceInformation.setHeightOption(0)
                         }
                         else{
@@ -616,169 +635,6 @@ Rectangle {
                 height: 613
                 color: pRgb(43, 112, 173)
                 radius: 3
-                //                Text {
-                //                    id: s7
-                //                    text: qsTr("是否开启待定")
-                //                    color: "#99ccff"
-                //                    font.family: fontBold
-                //                    font.pixelSize: 20
-                //                    x:110
-                //                    y:362
-                //                }
-                //                Switch{
-                //                    id:ctl
-                //                    x:269
-                //                    y:356
-                //                    onPressed: {
-                //                        if(equipmentCount === 1){
-                //                            DeviceManager.deviceList[0].pIO.setAvailabel(!ctl.checked)
-                //                        }
-                //                        else{
-                //                            DeviceManager.deviceList[currentConfigId-1].pIO.setAvailabel(!ctl.checked)
-                //                        }
-
-                //                    }
-
-                //                    indicator: Rectangle{
-                //                        id:indicator
-                //                        implicitWidth: 150
-                //                        implicitHeight:35
-                //                        x:ctl.leftPadding
-                //                        y:parent.height / 2 - height / 2
-                //                        border.width: 3
-                //                        radius: 20
-                //                        color: pRgb(232, 232, 232)
-                //                        border.color: "#99ccff"
-                //                        //小圆点
-                //                        Rectangle{
-                //                            id:smallRect
-                //                            width: 72
-                //                            height: 28
-                //                            radius: 20
-                //                            border.width: 3
-                //                            color: "#2b70ad"
-                //                            border.color: "#99ccff"
-                //                            anchors.verticalCenter: parent.verticalCenter
-                //                            //改变小圆点位置
-                //                            NumberAnimation on x{
-                //                                to:smallRect.width
-                //                                running: undeterMined? true : false
-                //                                duration: 0
-                //                            }
-                //                            NumberAnimation on x{
-                //                                to:6
-                //                                running: undeterMined? false : true;
-                //                                duration: 0
-                //                            }
-                //                        }
-                //                        Text {
-                //                            anchors.left: parent.left
-                //                            anchors.top: parent.top
-                //                            anchors.topMargin: 5
-                //                            anchors.leftMargin: 25
-                //                            text: qsTr("关闭")
-                //                            color: undeterMined? pRgb(43, 112, 173) : "#e5e6e7"
-                //                            font.family: fontBold
-                //                            font.pixelSize: 16
-                //                        }
-                //                        Text {
-                //                            anchors.right: parent.right
-                //                            anchors.top: parent.top
-                //                            anchors.topMargin: 5
-                //                            anchors.rightMargin: 25
-                //                            text: qsTr("启动")
-                //                            color: undeterMined? "#e5e6e7" : pRgb(43, 112, 173)
-                //                            font.family: fontBold
-                //                            font.pixelSize: 16
-                //                        }
-                //                    }
-                //                }
-                //                Text {
-                //                    id: s8
-                //                    text: currentConfigId === 1 ? "PIN1" : currentConfigId === 2 ? "PIN4" :
-                //                                                                                   currentConfigId === 3 ? "PIN7" : currentConfigId === 4 ? "PIN10" : "PIN1"
-                //                    color: pRgb(177, 213, 219)
-                //                    font.family: fontBold
-                //                    font.pixelSize: 16
-                //                    x:103
-                //                    y:440
-                //                }
-                //                Text {
-                //                    id: s9
-                //                    text: currentConfigId === 1 ? "PIN2" : currentConfigId === 2 ? "PIN5" :
-                //                                                                                   currentConfigId === 3 ? "PIN8" : currentConfigId === 4 ? "PIN11" : "PIN2"
-                //                    color: pRgb(177, 213, 219)
-                //                    font.family: fontBold
-                //                    font.pixelSize: 16
-                //                    anchors.left: s8.left
-                //                    anchors.top: s8.bottom
-                //                    anchors.topMargin: 20
-                //                }
-                //                Text {
-                //                    id: s10
-                //                    text: currentConfigId === 1 ? "PIN3" : currentConfigId === 2 ? "PIN6" :
-                //                                                                                   currentConfigId === 3 ? "PIN9" : currentConfigId === 4 ? "PIN12" : "PIN3"
-                //                    color: pRgb(177, 213, 219)
-                //                    font.family: fontBold
-                //                    font.pixelSize: 16
-                //                    anchors.left: s9.left
-                //                    anchors.top: s9.bottom
-                //                    anchors.topMargin: 20
-                //                }
-                //                Image {
-                //                    id: im1
-                //                    source: "qrc:/image/alarm.png"
-                //                    x:197
-                //                    y:440
-                //                }
-                //                Image {
-                //                    id: im2
-                //                    source: "qrc:/image/restoration.png"
-                //                    anchors.left: im1.left
-                //                    anchors.top: im1.bottom
-                //                    anchors.topMargin: 13
-                //                    anchors.leftMargin: -2
-                //                }
-                //                Image {
-                //                    id: im3
-                //                    width: 30
-                //                    height: 30
-                //                    source: !undeterMined ? "qrc:/image/undetermined1.png" : "qrc:/image/undetermined.png"
-                //                    anchors.left: im2.left
-                //                    anchors.top: im2.bottom
-                //                    anchors.topMargin: 13
-                //                }
-                //                Text {
-                //                    id: s11
-                //                    text: qsTr("报警")
-                //                    color: pRgb(177, 213, 219)
-                //                    font.family: fontBold
-                //                    font.pixelSize: 16
-                //                    anchors.top: s8.top
-                //                    anchors.left: s8.right
-                //                    anchors.leftMargin: 139
-                //                }
-                //                Text {
-                //                    id: s12
-                //                    text: qsTr("复位")
-                //                    color: pRgb(177, 213, 219)
-                //                    font.family: fontBold
-                //                    font.pixelSize: 16
-                //                    anchors.top: s9.top
-                //                    anchors.left: s9.right
-                //                    anchors.leftMargin: 139
-                //                }
-                //                Text {
-                //                    id: s13
-                //                    text: qsTr("待定")
-                //                    color: pRgb(177, 213, 219)
-                //                    font.family: fontBold
-                //                    font.pixelSize: 16
-                //                    anchors.top: s10.top
-                //                    anchors.left: s10.right
-                //                    anchors.leftMargin: 139
-                //                }
-
                 Text {
                     id: s14
                     x:23
@@ -852,7 +708,10 @@ Rectangle {
                     anchors.leftMargin: 23
                     model: ["L20-VG", "L20-TS", "20DP", "20MA", "自定义"]
                     displayText:{
-                        if(equipmentCount === 1){
+                        if(isAdd){
+                            return currentText
+                        }
+                        else if(equipmentCount === 1){
                             if(DeviceManager.deviceList[0]){
                                 return DeviceManager.deviceList[0].pDeviceInformation.model
                             }
@@ -870,7 +729,10 @@ Rectangle {
                         }
                     }
                     onDataAlter: {
-                        if(equipmentCount === 1){
+                        if(isAdd){
+                            return com1.currentText
+                        }
+                        else if(equipmentCount === 1){
                             DeviceManager.deviceList[0].pDeviceInformation.setModel(com1.currentText)
                         }
                         else{
@@ -999,9 +861,16 @@ Rectangle {
                 }
                 Loader{
                     id:loader
+                    focus: true
                     sourceComponent: {
                         if(isAdd){
-                            return ctl1.checked ? rect1 : rect2
+                            if(ctl1.checked){
+                                loadType = 1
+                            }
+                            else{
+                                loadType = 0
+                            }
+                            return ctl1.checked ? rect2 : rect1
                         }
                         else if(equipmentCount === 1){
                             return DeviceManager.deviceList[0].pDeviceInformation.connectType === 0 ? rect1 : rect2
@@ -1066,9 +935,15 @@ Rectangle {
                             x:233
                             y:55
                             model: ["ETH0", "ETH1", "ETH2", "ETH3"]
+                            onDisplayTextChanged: {
+                                if(isAdd){
+                                    networkId = com2.currentIndex+1
+                                }
+                            }
+
                             displayText: {
                                 if(isAdd){
-                                    return "ETH0"
+                                    return currentText
                                 }
                                 else if(equipmentCount === 1){
                                     if(DeviceManager.deviceList[0].pDeviceInformation.connectID === 1){
@@ -1291,9 +1166,14 @@ Rectangle {
                             x:233
                             y:40
                             model: ["COM1", "COM2"]
+                            onDisplayTextChanged: {
+                                if(isAdd){
+                                    networkId = com3.currentIndex+1
+                                }
+                            }
                             displayText: {
                                 if(isAdd){
-                                    return "ETH0"
+                                    return currentText
                                 }
                                 else if(equipmentCount === 1){
                                     if(DeviceManager.deviceList[0].pDeviceInformation.connectID === 1){
@@ -1513,10 +1393,10 @@ Rectangle {
                 }
                 onPressed: {
                     if(isAdd){
+                        Qt.callLater(sigAddDevice)
                         if(!oneself){
                             switchUI(1)
                         }
-                        DeviceManager.addDevice()
                         oneself = false
                         sigUndetermined(1)
                         loadViewsys(2,musys)

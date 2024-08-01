@@ -77,6 +77,9 @@ _Configuration_Data DataBaseManager::getConfigurationData(int welderID)
         data.height_option    = query.value(QmlEnum::CONFIGURATION_height_option).toInt();
         data.connect_type     = query.value(QmlEnum::CONFIGURATION_connect_type).toInt();
         data.connect_id       = query.value(QmlEnum::CONFIGURATION_connect_id).toInt();
+        data.mes_port         = query.value(QmlEnum::CONFIGURATION_mes_port).toInt();
+        data.mes_ip           = query.value(QmlEnum::CONFIGURATION_mes_ip).toString();
+        data.device_ip        = query.value(QmlEnum::CONFIGURATION_device_ip).toString();
 
         return data;
     }
@@ -129,7 +132,10 @@ bool DataBaseManager::insertConfigurationDevice(_Configuration_Data data)
                               ", :height_option"
                               ", :connect_type"
                               ", :connect_id"
-                              ", 0)")
+                              ", 0"
+                              ", :mes_port"
+                              ", :mes_ip"
+                              ", :device_ip)")
                           .arg(CONFIGURATION_TABLENAME);
 
     // 绑定属性
@@ -143,6 +149,9 @@ bool DataBaseManager::insertConfigurationDevice(_Configuration_Data data)
     query.bindValue(":height_option", data.height_option);
     query.bindValue(":connect_type", data.connect_type);
     query.bindValue(":connect_id", data.connect_id);
+    query.bindValue(":mes_port", data.mes_port);
+    query.bindValue(":mes_ip", data.mes_ip);
+    query.bindValue(":device_ip", data.device_ip);
     bool ret = query.exec();
     return ret;
 }
@@ -1191,6 +1200,12 @@ QString DataBaseManager::getConfiguration_ColumnName(QmlEnum::CONFIGURATION_COLU
         return "connect_type";
     case QmlEnum::CONFIGURATION_connect_id:
         return "connect_id";
+    case QmlEnum::CONFIGURATION_mes_port:
+        return "mes_port";
+    case QmlEnum::CONFIGURATION_mes_ip:
+        return "mes_ip";
+    case QmlEnum::CONFIGURATION_device_ip:
+        return "device_ip";
     }
 
     return "";

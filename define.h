@@ -28,6 +28,9 @@ struct _Configuration_Data
     int height_option{0};       // 高度模式
     int connect_type{0};        // 连接方式     0_RS232  1_Network
     int connect_id{0};          // 连接方式ID
+    int mes_port{0};            // 远程端口
+    QString mes_ip{""};         // 远程IP
+    QString device_ip{""};      // 客户端IP
 };
 Q_DECLARE_METATYPE(_Configuration_Data)
 
