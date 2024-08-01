@@ -10,6 +10,7 @@ Rectangle {
     property string eqText3: ""
     property string eqText4: ""
     property int sysCurrIndex: 0
+    property int sysCurrIndex1: 0
     property bool undetermined: {
         if(DeviceManager.deviceList[sysCurrIndex-1]){
             return DeviceManager.deviceList[sysCurrIndex-1].pIO.availabel
@@ -33,7 +34,7 @@ Rectangle {
                 currIndex = 0
             }
             else{
-                sysCheck(sysCurrIndex)
+                sysCheck(sysCurrIndex1)
                 currIndex = sysCurrIndex
             }
         }

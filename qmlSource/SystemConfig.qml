@@ -1343,7 +1343,8 @@ Rectangle {
                 id:s1
                 x:41
                 y:68
-                sysCurrIndex:1
+                sysCurrIndex:DeviceManager.deviceList[0].pDeviceInformation.id
+                sysCurrIndex1:1
                 heightOpation:{
                     if(DeviceManager.deviceList[0]){
                         return DeviceManager.deviceList[0].pDeviceInformation.heightOption
@@ -1405,7 +1406,8 @@ Rectangle {
                         return false
                     }
                 }
-                sysCurrIndex:2
+                sysCurrIndex:DeviceManager.deviceList[1].pDeviceInformation.id
+                sysCurrIndex1:2
                 visible: musysTmp2
                 eqText1:{
                     if(DeviceManager.deviceList[1]){
@@ -1449,7 +1451,8 @@ Rectangle {
                 id:s3
                 x:654
                 y:68
-                sysCurrIndex:3
+                sysCurrIndex:DeviceManager.deviceList[2].pDeviceInformation.id
+                sysCurrIndex1:3
                 heightOpation:{
                     if(DeviceManager.deviceList[2]){
                         return DeviceManager.deviceList[2].pDeviceInformation.heightOption
@@ -1518,7 +1521,8 @@ Rectangle {
                 id:s4
                 x:961
                 y:68
-                sysCurrIndex:4
+                sysCurrIndex:DeviceManager.deviceList[3].pDeviceInformation.id
+                sysCurrIndex1:4
                 visible: musysTmp4
                 heightOpation:{
                     if(DeviceManager.deviceList[3]){
