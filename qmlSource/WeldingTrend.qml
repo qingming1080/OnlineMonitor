@@ -138,6 +138,7 @@ Rectangle {
                 xColumn: 1
                 yColumn: 2
             }
+            useOpenGL: true
         }
         LineSeries {
             id:lineSeries1
@@ -153,6 +154,7 @@ Rectangle {
                 xColumn: 1
                 yColumn: 2
             }
+            useOpenGL: true
         }
         LineSeries {
             id:lineSeries2
@@ -169,6 +171,7 @@ Rectangle {
                 xColumn: 1
                 yColumn: 2
             }
+            useOpenGL: true
         }
         LineSeries {
             id:lineSeries3
@@ -185,6 +188,7 @@ Rectangle {
                 xColumn: 1
                 yColumn: 2
             }
+            useOpenGL: true
         }
     }
 }

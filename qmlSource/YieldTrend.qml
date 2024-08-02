@@ -297,7 +297,6 @@ Rectangle {
             labelsFont.pixelSize: 12
             labelsFont.bold: true
             gridVisible:false
-
         }
         ValueAxis{
             id:myAxisY
@@ -325,12 +324,14 @@ Rectangle {
                 xColumn: 1
                 yColumn: 2
             }
+            useOpenGL: true
         }
         ScatterSeries{
             id:lineSeries1
             axisX: myAxisX
             axisY:myAxisY
             markerSize: 10
+            useOpenGL: true
         }
     }
 }

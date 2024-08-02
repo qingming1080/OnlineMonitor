@@ -25,10 +25,10 @@ Rectangle {
         }
     }
     function updateUI(){
-        view.removePage()
-        for(var j = 0; j < equipmentCount;j++){
-            view.addPage(j)
-        }
+//        view.removePage()
+//        for(var j = 0; j < equipmentCount;j++){
+//            view.addPage(j)
+//        }
         sigUpdateUI(view.currentIndex)
     }
     Rectangle{
@@ -43,14 +43,72 @@ Rectangle {
             anchors.fill: parent
             clip: true
             Component.onCompleted: {
-                for(var j = 0; j < equipmentCount;j++){
-                    addPage(j)
-                }
+//                for(var j = 0; j < equipmentCount;j++){
+//                    addPage(j)
+//                }
                 view.setCurrentIndex(swipeIndex)
             }
+
             onCurrentIndexChanged: {
                 swipeCurrIndex = view.currentIndex
                 sigUpdateUI(view.currentIndex)
+//                swipeDelegate.currentIndex = view.currentIndex
+            }
+            Loader {
+                sourceComponent: view1
+                asynchronous:true
+                active: swipeView.currentIndex === 0
+            }
+            Loader {
+                sourceComponent: view2
+                asynchronous:true
+                active: swipeView.currentIndex === 1
+            }
+            Loader {
+                sourceComponent: view3
+                asynchronous:true
+                active: swipeView.currentIndex === 2
+            }
+            Loader {
+                sourceComponent: view4
+                asynchronous:true
+                active: swipeView.currentIndex === 3
+            }
+            Component {
+                id: view1
+                SwipePage {
+                    pbtnIndex:rect1
+                    width: view.width
+                    height: view.height
+                    color:"transparent"
+                }
+            }
+
+            Component {
+                id: view2
+                SwipePage {
+                    pbtnIndex:rect2
+                    width: view.width
+                    height: view.height
+                    color:"transparent"
+                }
+            }
+
+            Component {
+                id: view3
+                SwipePage {
+                    width: view.width
+                    height: view.height
+                    color:"transparent"
+                }
+            }
+            Component {
+                id: view4
+                SwipePage {
+                    width: view.width
+                    height: view.height
+                    color:"transparent"
+                }
             }
             function addPage(index) {
                 var pageComponent = Qt.createComponent("SwipePage.qml");

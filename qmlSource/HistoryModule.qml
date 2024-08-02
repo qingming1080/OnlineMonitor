@@ -70,8 +70,8 @@ Rectangle {
         }
         RadioButton{
             id:bt1
-            width: 30
-            height: 30
+            width: 34
+            height: 34
             anchors.left: name.right
             anchors.top: name.top
             anchors.leftMargin: 30
@@ -79,9 +79,9 @@ Rectangle {
             checked: true
             indicator: Rectangle
             {
-                width: 30
-                height: 30
-                radius: 15
+                width: 34
+                height: 34
+                radius: 17
                 color: bt1.checked ? "#0068a7" : "#e8e8e8"
                 border.color: bt1.checked ? "#afc3d8" : "#0068a8"
                 border.width: 2
@@ -103,17 +103,17 @@ Rectangle {
 
         RadioButton{
             id:bt2
-            width: 30
-            height: 30
+            width: 34
+            height: 34
             anchors.left: b1.right
             anchors.top: b1.top
             anchors.leftMargin: 40
             ButtonGroup.group: group1
             indicator: Rectangle
             {
-                width: 30
-                height: 30
-                radius: 15
+                width: 34
+                height: 34
+                radius: 17
                 color: bt2.checked ? "#0068a7" : "#e8e8e8"
                 border.color: bt2.checked ? "#afc3d8" : "#0068a8"
                 border.width: 2
@@ -135,17 +135,17 @@ Rectangle {
 
         RadioButton{
             id:bt3
-            width: 30
-            height: 30
+            width: 34
+            height: 34
             anchors.left: parent.left
             anchors.top: name.top
             anchors.leftMargin: 338
             ButtonGroup.group: group1
             indicator: Rectangle
             {
-                width: 30
-                height: 30
-                radius: 15
+                width: 34
+                height: 34
+                radius: 17
                 color: bt3.checked ? "#0068a7" : "#e8e8e8"
                 border.color: bt3.checked ? "#afc3d8" : "#0068a8"
                 border.width: 2
@@ -176,17 +176,17 @@ Rectangle {
 
         RadioButton{
             id:bt4
-            width: 30
-            height: 30
+            width: 34
+            height: 34
             anchors.left: parent.left
             anchors.top: name.top
             anchors.leftMargin: 462
             ButtonGroup.group: group1
             indicator: Rectangle
             {
-                width: 30
-                height: 30
-                radius: 15
+                width: 34
+                height: 34
+                radius: 17
                 color: bt4.checked ? "#0068a7" : "#e8e8e8"
                 border.color: bt4.checked ? "#afc3d8" : "#0068a8"
                 border.width: 2
@@ -217,17 +217,17 @@ Rectangle {
 
         RadioButton{
             id:bt5
-            width: 30
-            height: 30
+            width: 34
+            height: 34
             anchors.left: parent.left
             anchors.top: name.top
             anchors.leftMargin: 586
             ButtonGroup.group: group1
             indicator: Rectangle
             {
-                width: 30
-                height: 30
-                radius: 15
+                width: 34
+                height: 34
+                radius: 17
                 color: bt5.checked ? "#0068a7" : "#e8e8e8"
                 border.color: bt5.checked ? "#afc3d8" : "#0068a8"
                 border.width: 2
@@ -268,8 +268,8 @@ Rectangle {
         }
         RadioButton{
             id:bt8
-            width: 30
-            height: 30
+            width: 34
+            height: 34
             anchors.left: name1.right
             anchors.top: name.top
             anchors.leftMargin: 28
@@ -277,9 +277,9 @@ Rectangle {
             checked: true
             indicator: Rectangle
             {
-                width: 30
-                height: 30
-                radius: 15
+                width: 34
+                height: 34
+                radius: 17
                 color: bt8.checked ? "#0068a7" : "#e8e8e8"
                 border.color: bt8.checked ? "#afc3d8" : "#0068a8"
                 border.width: 2
@@ -300,17 +300,17 @@ Rectangle {
         }
         RadioButton{
             id:bt9
-            width: 30
-            height: 30
+            width: 34
+            height: 34
             anchors.left: b8.right
             anchors.top: b8.top
             anchors.leftMargin: 30
             ButtonGroup.group: group2
             indicator: Rectangle
             {
-                width: 30
-                height: 30
-                radius: 15
+                width: 34
+                height: 34
+                radius: 17
                 color: bt9.checked ? "#0068a7" : "#e8e8e8"
                 border.color: bt9.checked ? "#afc3d8" : "#0068a8"
                 border.width: 2
@@ -331,17 +331,17 @@ Rectangle {
         }
         RadioButton{
             id:bt11
-            width: 30
-            height: 30
+            width: 34
+            height: 34
             anchors.left: b9.right
             anchors.top: b9.top
             anchors.leftMargin: 15
             ButtonGroup.group: group2
             indicator: Rectangle
             {
-                width: 30
-                height: 30
-                radius: 15
+                width: 34
+                height: 34
+                radius: 17
                 color: bt11.checked ? "#0068a7" : "#e8e8e8"
                 border.color: bt11.checked ? "#afc3d8" : "#0068a8"
                 border.width: 2
@@ -362,17 +362,17 @@ Rectangle {
         }
         RadioButton{
             id:bt10
-            width: 30
-            height: 30
+            width: 34
+            height: 34
             anchors.left: b11.right
             anchors.top: b11.top
             anchors.leftMargin: 8
             ButtonGroup.group: group2
             indicator: Rectangle
             {
-                width: 30
-                height: 30
-                radius: 15
+                width: 34
+                height: 34
+                radius: 17
                 color: bt10.checked ? "#0068a7" : "#e8e8e8"
                 border.color: bt10.checked ? "#afc3d8" : "#0068a8"
                 border.width: 2

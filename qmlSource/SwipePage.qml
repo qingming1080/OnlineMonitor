@@ -17,7 +17,7 @@ Rectangle {
     property int parameter5: 0
     function newModel(){
         mt1.text = "创建模型"
-//        mt2.text = "清除数据"
+        //        mt2.text = "清除数据"
         loader.sourceComponent = mode2
         loader1.sourceComponent = weld2
     }
@@ -66,6 +66,7 @@ Rectangle {
 
     Loader{
         id:loader1
+        asynchronous:true
         sourceComponent: weld1
     }
     Component{
@@ -211,6 +212,7 @@ Rectangle {
     }
     Loader{
         id:loader
+        asynchronous:true
         sourceComponent: mode1
     }
 
@@ -624,5 +626,4 @@ Rectangle {
             }
         }
     }
-
 }
