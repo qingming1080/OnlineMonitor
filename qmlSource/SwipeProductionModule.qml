@@ -52,7 +52,6 @@ Rectangle {
             onCurrentIndexChanged: {
                 swipeCurrIndex = view.currentIndex
                 sigUpdateUI(view.currentIndex)
-//                swipeDelegate.currentIndex = view.currentIndex
             }
             Loader {
                 sourceComponent: view1

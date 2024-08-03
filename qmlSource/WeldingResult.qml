@@ -12,6 +12,10 @@ Rectangle {
     property int imgtopMargin: 1
     property int imgcenterX: 1
     property int imgcenterY: 1
+    Component.onCompleted: {
+        sigUpdateUI(swipeCurrIndex)
+    }
+
     Connections{
         target: window
         function onSigUpdateUI(index){
