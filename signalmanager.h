@@ -12,6 +12,7 @@ public:
 signals:
     void signalAddRecord(const QDateTime& time, const QString& text);
 
+    void showLegend();
 private:
     explicit SignalManager(QObject *parent = nullptr);
 

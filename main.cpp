@@ -17,6 +17,8 @@
 #include "DataBase/databasemanager.h"
 #include "model/system.h"
 #include "log/localrecord.h"
+#include "multiyaxisplot.h"
+#include "timeyaxisplot.h"
 // 自定义消息处理程序
 void myMessageHandler(QtMsgType type, const QMessageLogContext &context, const QString &msg)
 {
@@ -61,7 +63,8 @@ int main(int argc, char *argv[])
     qmlRegisterType<Trend>("Trend",1,0,"Trend");
     qmlRegisterType<System>("System",1,0,"System");
     qmlRegisterType<QmlEnum>("QmlEnum",1,0,"QmlEnum");
-
+    qmlRegisterType<LineChartItem>("CustomChart", 1, 0, "CustomChart");
+    qmlRegisterType<TimeChartItem>("CustomTimeChart", 1, 0, "CustomTimeChart");
 
     const QUrl url(QStringLiteral("qrc:/qmlSource/main.qml"));
     QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,

@@ -21,6 +21,10 @@ Window {
     property int swipeCurrIndex: 0
     property var keyboardYype: 0
 
+    onSwipeCurrIndexChanged: {
+        sigSwipeCurrIndex(swipeCurrIndex)
+    }
+
     onKeyboardYypeChanged: {
         if(keyboardYype === 0){
             bin.value = 1200
@@ -99,6 +103,7 @@ Window {
     signal sigPassError()
     signal sigDelDevice()
     signal sigRecover()
+    signal sigSwipeCurrIndex(var swipeCurrIndex)
     function switchUI(id){
         equipmentCurrentIndex = id
         sigSwitch(id)

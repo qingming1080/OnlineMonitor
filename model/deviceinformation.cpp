@@ -139,7 +139,7 @@ void DeviceInformation::setHeightOption(int newHeightOption)
         return;
     m_heightOption = newHeightOption;
     emit heightOptionChanged();
-
+    emit SignalManager::getInstance()->showLegend();
     DataBaseManager::getInstance()->setConfigurationData(m_id, QmlEnum::CONFIGURATION_height_option, m_heightOption);
 }
 

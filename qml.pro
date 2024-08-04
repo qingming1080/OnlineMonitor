@@ -63,5 +63,7 @@ HEADERS += \
     model/rs232model.h \
     model/system.h \
     model/trend.h \
+    multiyaxisplot.h \
     qmlenum.h \
-    signalmanager.h
+    signalmanager.h \
+    timeyaxisplot.h
