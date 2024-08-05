@@ -114,7 +114,9 @@ Rectangle {
         color:"#007dbc"
         Component.onCompleted: {
             btnSwitch()
-            chart.setIndex(swipeCurrIndex)
+            if(equipmentCount > 0){
+                chart.setIndex(swipeCurrIndex)
+            }
         }
         Button{
             id:b1
