@@ -143,6 +143,8 @@ void Trend::setYieldTrendData(_Yield_TrendData data)
 {
     // 清除当前折线数据
     m_pYieldTrend->clear();
+    // 2024/08/05
+    m_yieldData.clear();
 
     for(int row = 0; row < data.points.size(); ++row)
     {
@@ -154,6 +156,8 @@ void Trend::setYieldTrendData(_Yield_TrendData data)
         m_pYieldTrend->setItem(row, 0, yieldItem);
         m_pYieldTrend->setItem(row, 1, yield_X_Item);
         m_pYieldTrend->setItem(row, 2, yield_Y_Item);
+
+        m_yieldData.push_back(QPointF(time.toMSecsSinceEpoch(), data.points.at(row).first));
     }
 
     m_startTime = data.startTime;
@@ -173,6 +177,11 @@ void Trend::setEndTime(const QString &newEndTime)
         return;
     m_endTime = newEndTime;
     emit endTimeChanged();
+}
+
+QVector<QPointF> Trend::getYieldData() const
+{
+    return m_yieldData;
 }
 
 QString Trend::startTime() const

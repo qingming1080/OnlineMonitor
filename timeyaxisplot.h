@@ -96,7 +96,7 @@ public:
         }
 
         // 坐标转换函数
-        auto mapToPlotCoordinates = [&](const QPointF &point) -> QPointF {
+        auto mapToPlotCoordinates = [&](const QPointF & point) -> QPointF {
             float x = marginLeft + ((point.x() - minTime) / static_cast<float>(timeRange)) * plotWidth;
             float y = height() - marginBottom - ((point.y() / 100.0) * plotHeight); // y坐标的转换 (假设数据点y的范围是0到100)
             return QPointF(x, y);
@@ -121,7 +121,7 @@ public:
         dataPoints = points;
     }
     Q_INVOKABLE void setIndex(int index){
-//        setDataPoints(DeviceManager::getInstance()->deviceList().at(index)->pTrend()->pYieldTrend());
+        setDataPoints(DeviceManager::getInstance()->deviceList().at(index)->pTrend()->getYieldData());
         update();
     }
     Q_INVOKABLE int swipeCurrIndex() const

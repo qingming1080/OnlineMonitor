@@ -903,8 +903,8 @@ _Yield_TrendData DataBaseManager::getYieldTrendData(int interVal, int welderID)
         {
             endTime = query.value(QmlEnum::PRODUCTION_create_time).toDateTime();
             startTime = endTime.addSecs(interVal);
-            result.startTime = startTime.toString("yyyy-MM-dd hh:dd:ss");
-            result.endTime   = endTime.toString("yyyy-MM-dd hh:dd:ss");
+            result.startTime = startTime.toString("yyyy-MM-dd hh:mm:ss");
+            result.endTime   = endTime.toString("yyyy-MM-dd hh:mm:ss");
         }
         else
         {
@@ -958,7 +958,7 @@ _Yield_TrendData DataBaseManager::getYieldTrendData(int interVal, int welderID)
     for(int i = 0; i < 60; ++i)
     {
         QPair<int, QString> pair;
-        pair.second = startTime.addSecs(timeInterVal * (i+1)).toString("yyyy-MM-dd hh:mm:ss");
+        pair.second = startTime.addSecs(timeInterVal * i).toString("yyyy-MM-dd hh:mm:ss");
         result.points.push_back(pair);
         production_num_list.push_back(0);
         good_num_list.push_back(0);
