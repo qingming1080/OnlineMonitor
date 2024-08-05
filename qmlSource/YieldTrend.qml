@@ -114,6 +114,7 @@ Rectangle {
         color:"#007dbc"
         Component.onCompleted: {
             btnSwitch()
+            chart.setIndex(swipeCurrIndex)
         }
         Button{
             id:b1
@@ -144,7 +145,6 @@ Rectangle {
                 bbbb.color = "#007dbc"
                 buttonSynchronization(equiInforIndex,1)
                 DeviceManager.deviceList[swipeCurrIndex].pTrend.setYieldType(0)
-                chart.setIndex(swipeCurrIndex)
             }
             contentItem: Text {
                 id:t1
@@ -183,7 +183,6 @@ Rectangle {
                 bbbb.color = "#007dbc"
                 buttonSynchronization(equiInforIndex,2)
                 DeviceManager.deviceList[swipeCurrIndex].pTrend.setYieldType(1)
-                chart.setIndex(swipeCurrIndex)
             }
             contentItem: Text {
                 id:t2
@@ -222,7 +221,6 @@ Rectangle {
                 bbbb.color = "#007dbc"
                 buttonSynchronization(equiInforIndex,3)
                 DeviceManager.deviceList[swipeCurrIndex].pTrend.setYieldType(2)
-                chart.setIndex(swipeCurrIndex)
             }
             contentItem: Text {
                 id:t3
@@ -261,7 +259,6 @@ Rectangle {
                 bbbb.color = pRgb(177, 213, 219)
                 buttonSynchronization(equiInforIndex,4)
                 DeviceManager.deviceList[swipeCurrIndex].pTrend.setYieldType(3)
-                chart.setIndex(swipeCurrIndex)
             }
             contentItem: Text {
                 id:t4

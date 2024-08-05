@@ -24,14 +24,17 @@ public:
     TimeChartItem(QQuickItem *parent = nullptr) : QQuickPaintedItem(parent)
     {
         setIndex(0);
-        // 初始化数据点（使用时间戳）
-        setDataPoints({
-            QPointF(QDateTime::fromString("2023-01-01 00:00:00", Qt::ISODate).toMSecsSinceEpoch(), 20.0),
-            QPointF(QDateTime::fromString("2023-01-01 01:00:00", Qt::ISODate).toMSecsSinceEpoch(), 40.0),
-            QPointF(QDateTime::fromString("2023-01-01 02:00:00", Qt::ISODate).toMSecsSinceEpoch(), 50.0),
-            QPointF(QDateTime::fromString("2023-01-01 03:00:00", Qt::ISODate).toMSecsSinceEpoch(), 60.0),
-            QPointF(QDateTime::fromString("2023-01-01 04:00:00", Qt::ISODate).toMSecsSinceEpoch(), 100.0)
+        connect(SignalManager::getInstance(),&SignalManager::changeYieldTrendData,[&](){
+            setIndex(m_swipeCurrIndex);
         });
+        // 初始化数据点（使用时间戳）
+//        setDataPoints({
+//            QPointF(QDateTime::fromString("2023-01-01 00:00:00", Qt::ISODate).toMSecsSinceEpoch(), 20.0),
+//            QPointF(QDateTime::fromString("2023-01-01 01:00:00", Qt::ISODate).toMSecsSinceEpoch(), 40.0),
+//            QPointF(QDateTime::fromString("2023-01-01 02:00:00", Qt::ISODate).toMSecsSinceEpoch(), 50.0),
+//            QPointF(QDateTime::fromString("2023-01-01 03:00:00", Qt::ISODate).toMSecsSinceEpoch(), 60.0),
+//            QPointF(QDateTime::fromString("2023-01-01 04:00:00", Qt::ISODate).toMSecsSinceEpoch(), 100.0)
+//        });
     }
     void paint(QPainter *painter) override
     {

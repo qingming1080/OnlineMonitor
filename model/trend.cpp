@@ -164,6 +164,7 @@ void Trend::setYieldTrendData(_Yield_TrendData data)
     m_endTime   = data.endTime;
     emit startTimeChanged();
     emit endTimeChanged();
+    emit SignalManager::getInstance()->changeYieldTrendData();
 }
 
 QString Trend::endTime() const
