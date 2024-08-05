@@ -267,6 +267,8 @@ public:
         emit swipeCurrIndexChanged();
     }
     void setIndex(int index){
+        if(index >= DeviceManager::getInstance()->deviceList().size())
+            return;
         m_xMin = DeviceManager::getInstance()->deviceList().at(index)->pTrend()->idMinX();
         m_xMax = DeviceManager::getInstance()->deviceList().at(index)->pTrend()->idMaxX();
         m_yMin1 = DeviceManager::getInstance()->deviceList().at(index)->pTrend()->timeMinY();
@@ -281,6 +283,8 @@ public:
     }
 public slots:
     void setShow(){
+        if(m_swipeCurrIndex >= DeviceManager::getInstance()->deviceList().size())
+            return;
         if(DeviceManager::getInstance()->deviceList().at(m_swipeCurrIndex)->pDeviceInformation()->heightOption() == 0){
             setShowLegend(false);
         }

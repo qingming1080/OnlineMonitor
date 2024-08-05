@@ -38,6 +38,8 @@ public:
     }
     void paint(QPainter *painter) override
     {
+        if(m_swipeCurrIndex >= DeviceManager::getInstance()->deviceList().size())
+            return;
         painter->setRenderHint(QPainter::Antialiasing);
         // 添加外部字体
         QFontDatabase fontDb;
@@ -124,6 +126,8 @@ public:
         dataPoints = points;
     }
     Q_INVOKABLE void setIndex(int index){
+        if(index >= DeviceManager::getInstance()->deviceList().size())
+            return;
         setDataPoints(DeviceManager::getInstance()->deviceList().at(index)->pTrend()->getYieldData());
         update();
     }
