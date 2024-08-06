@@ -42,7 +42,7 @@ int main(int argc, char *argv[])
     qputenv("QT_IM_MODULE", QByteArray("qtvirtualkeyboard"));
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     // 安装自定义消息处理程序
-    qInstallMessageHandler(myMessageHandler);
+//    qInstallMessageHandler(myMessageHandler);
     QApplication app(argc, argv);
     LocalRecord::getInstance()->start();
     DeviceManager::getInstance();
