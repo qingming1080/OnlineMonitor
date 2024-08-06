@@ -18,6 +18,7 @@ Rectangle {
     property int parameter4: 0
     property int parameter5: 0
     property int listSize: 0
+    property bool switchingEquipment: false
     signal sigBtnSynchronization(var index,var time)
     signal sigSwipeCurrIndex(var index)
     onRect1Changed: {
@@ -43,6 +44,12 @@ Rectangle {
     }
     function loadViewpro(viewName, component) {
 //        var startTime = new Date();
+        if(viewName === 3){
+            switchingEquipment = true
+        }
+        else{
+            switchingEquipment = false
+        }
 
         prostack.pop()
         if (proViews[viewName]) {
@@ -215,7 +222,7 @@ Rectangle {
                     verticalAlignment: Text.AlignVCenter
                     font.family: fontBold
                 }
-                onClicked: {
+                onPressed: {
                     if(mt1.text === "新建模型"){
                         popup.openPop(3)
                     }
@@ -490,7 +497,7 @@ Rectangle {
                                 MouseArea {
                                     id: mouseArea
                                     anchors.fill: parent
-                                    onClicked: {
+                                    onPressed: {
                                         taskplanView.currentIndex = index
                                         parameter1 = Manual.data(Manual.index(index,0),QmlEnum.MANUAL_energy)
                                         parameter2 = Manual.data(Manual.index(index,0),QmlEnum.MANUAL_amplitude)
@@ -625,7 +632,7 @@ Rectangle {
                                     }
                                     MouseArea {
                                         anchors.fill: parent
-                                        onClicked: {
+                                        onPressed: {
                                             textField.focus = true
                                             keyboardYype = 0
                                         }
@@ -665,7 +672,7 @@ Rectangle {
                                     }
                                     MouseArea {
                                         anchors.fill: parent
-                                        onClicked: {
+                                        onPressed: {
                                             textField1.focus = true
                                             keyboardYype = 0
                                         }

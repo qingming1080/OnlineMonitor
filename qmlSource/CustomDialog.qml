@@ -1,6 +1,7 @@
 import QtQuick 2.0
 import QtQuick.Controls 2.15
 import QtGraphicalEffects 1.15
+import QmlEnum 1.0
 Popup {
     id:customPopup
     width: 567
@@ -69,7 +70,7 @@ Popup {
                     source: "qrc:/image/close.png"
                 }
             }
-            onClicked: {
+            onPressed: {
                 customPopup.close()
                 sigPassError()
             }
@@ -85,7 +86,7 @@ Popup {
     Component{
         id:inputpass
         Rectangle{
-            y:34
+            y:33
             width: 567
             height: 236
             color: "#b1d5db"
@@ -146,7 +147,7 @@ Popup {
                     verticalAlignment: Text.AlignVCenter
                     font.family: fontBold
                 }
-                onClicked: {
+                onPressed: {
                     if(DeviceManager.getPasswordLevel(t1.text) === 1){
                         close()
                         sigRoot()
@@ -181,7 +182,7 @@ Popup {
     Component{
         id:passerror
         Rectangle{
-            y:34
+            y:33
             width: 567
             height: 236
             color: "#b1d5db"
@@ -215,7 +216,7 @@ Popup {
                     verticalAlignment: Text.AlignVCenter
                     font.family: fontBold
                 }
-                onClicked: {
+                onPressed: {
                     close()
                     sigPassError()
                 }
@@ -225,7 +226,7 @@ Popup {
     Component{
         id:newpass
         Rectangle{
-            y:34
+            y:33
             width: 567
             height: 236
             color: "#b1d5db"
@@ -279,7 +280,7 @@ Popup {
                     verticalAlignment: Text.AlignVCenter
                     font.family: fontBold
                 }
-                onClicked: {
+                onPressed: {
                     DeviceManager.setUserPassword(t1.text)
                     close()
                 }
@@ -289,7 +290,7 @@ Popup {
     Component{
         id:dataeficiency
         Rectangle{
-            y:34
+            y:33
             width: 567
             height: 236
             color: "#b1d5db"
@@ -323,7 +324,7 @@ Popup {
                     verticalAlignment: Text.AlignVCenter
                     font.family: fontBold
                 }
-                onClicked: {
+                onPressed: {
                     close()
                 }
             }
@@ -332,7 +333,7 @@ Popup {
     Component{
         id:language
         Rectangle{
-            y:34
+            y:33
             width: 567
             height: 236
             color: "#b1d5db"
@@ -352,7 +353,7 @@ Popup {
                 width: 30
                 height: 30
                 x:208
-                y:34
+                y:33
                 checked:true
                 indicator: Rectangle
                 {
@@ -433,27 +434,57 @@ Popup {
     Component{
         id:sysInfor
         Rectangle{
-            y:34
+            y:33
             width: 567
             height: 236
             color: "#b1d5db"
             ListView{
                 id: taskplanView
-                width: 567
-                height: 200
-                y:20
+                width: 260
+                height: 220
+                anchors.centerIn: parent
                 model: Message
                 delegate: Rectangle{
                     id: regionItem
                     height: 20
-                    width: 567
-                    color: "transparent"
-                    Text{
-                        font.pixelSize: 16
-                        text: messegStr
-                        font.family: fontBold
-                        color:"#004b8d"
-                        anchors.centerIn: regionItem
+                    Row{
+                        anchors.fill: parent
+                        Text{
+                            font.pixelSize: 16
+                            text: {
+                                var str = time + "设备" + welderID
+                                if(messageType === QmlEnum.MESSAGE_suspicious){
+                                    str += "出现可疑品"
+                                }
+                                else if(messageType === QmlEnum.MESSAGE_defective){
+                                    str += "出现次品"
+                                }
+                                else if(messageType === QmlEnum.MESSAGE_noConnect){
+                                    str += "未连接"
+                                }
+                                else if(messageType === QmlEnum.MESSAGE_lowerValue){
+                                    str += "良率下降至下限值"
+                                }
+                                else if(messageType === QmlEnum.MESSAGE_defectiveOften){
+                                    str += "频繁出现次品"
+                                }
+                                else if(messageType === QmlEnum.MESSAGE_suspiciousOften){
+                                    str += "频繁出现可疑品"
+                                }
+                                else if(messageType === QmlEnum.MESSAGE_upperValue){
+                                    str += "自动学习次数超过上限值"
+                                }
+                                else if(messageType === QmlEnum.MESSAGE_studyOver){
+                                    str += "自动学习已完成"
+                                }
+                                else if(messageType === QmlEnum.MESSAGE_touchSuccess){
+                                    str += "创建模型已完成"
+                                }
+                                return str
+                            }
+                            font.family: fontBold
+                            color:"#004b8d"
+                        }
                     }
                 }
             }
@@ -462,7 +493,7 @@ Popup {
     Component{
         id:sysConfig
         Rectangle{
-            y:34
+            y:33
             width: 567
             height: 236
             color: "#b1d5db"
@@ -496,7 +527,7 @@ Popup {
                     verticalAlignment: Text.AlignVCenter
                     font.family: fontBold
                 }
-                onClicked: {
+                onPressed: {
                     close()
                 }
             }

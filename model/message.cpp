@@ -65,9 +65,10 @@ void Message::addMessage(int welderID, QmlEnum::MESSAGE state)
     }
 }
 
-
 Message::Message(QObject *parent)
     : QAbstractListModel{parent}
 {
-
+    addMessage(1,QmlEnum::MESSAGE_suspicious);
+    addMessage(1,QmlEnum::MESSAGE_suspicious);
+    addMessage(1,QmlEnum::MESSAGE_suspicious);
 }

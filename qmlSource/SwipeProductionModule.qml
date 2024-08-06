@@ -9,11 +9,6 @@ Rectangle {
         function onEquipmentCountChanged(){
             updateUI()
         }
-        function onSigNewModel(){
-            var lastPage = view.contentChildren[view.currentIndex]
-            lastPage.newModel()
-            view.interactive = false
-        }
         function onSigRecover(){
             view.interactive = true
         }
@@ -40,9 +35,9 @@ Rectangle {
     //        radius: 5
     SwipePage {
         id:view
-        x:58
+        x:30
         y:29
-        width: 1173
+        width: 1220
         height: 664
         color: pRgb(43, 112, 173)
         radius: 5
@@ -176,14 +171,14 @@ Rectangle {
 
 
     Button{
-        x:1176
+        x:1206
         y:34
-        width: 30
-        height: 30
+        width: 40
+        height: 40
         background: Rectangle{
             color: "transparent"
             Image {
-                anchors.fill: parent
+                anchors.centerIn: parent
                 source: "qrc:/image/reduce.png"
             }
         }

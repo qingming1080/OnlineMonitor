@@ -71,7 +71,7 @@ Rectangle {
         inputMethodHints: Qt.ImhDigitsOnly
         MouseArea {
             anchors.fill: parent
-            onClicked: {
+            onPressed: {
                 t1.focus = true
                 keyboardYype = 0
             }
@@ -105,7 +105,7 @@ Rectangle {
         inputMethodHints: Qt.ImhDigitsOnly
         MouseArea {
             anchors.fill: parent
-            onClicked: {
+            onPressed: {
                 t2.focus = true
                 keyboardYype = 0
             }
@@ -139,7 +139,7 @@ Rectangle {
         inputMethodHints: Qt.ImhDigitsOnly
         MouseArea {
             anchors.fill: parent
-            onClicked: {
+            onPressed: {
                 t3.focus = true
                 keyboardYype = 0
             }
@@ -173,7 +173,7 @@ Rectangle {
         inputMethodHints: Qt.ImhDigitsOnly
         MouseArea {
             anchors.fill: parent
-            onClicked: {
+            onPressed: {
                 t4.focus = true
                 keyboardYype = 0
             }

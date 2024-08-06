@@ -43,7 +43,7 @@ int main(int argc, char *argv[])
     qputenv("QT_IM_MODULE", QByteArray("qtvirtualkeyboard"));
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     // 安装自定义消息处理程序
-//    qInstallMessageHandler(myMessageHandler);
+    qInstallMessageHandler(myMessageHandler);
     QApplication app(argc, argv);
     LocalRecord::getInstance()->start();
     DeviceManager::getInstance();
@@ -65,8 +65,8 @@ int main(int argc, char *argv[])
     qmlRegisterType<Trend>("Trend",1,0,"Trend");
     qmlRegisterType<System>("System",1,0,"System");
     qmlRegisterType<QmlEnum>("QmlEnum",1,0,"QmlEnum");
-    qmlRegisterType<LineChartItem>("CustomChart", 1, 0, "CustomChart");
-    qmlRegisterType<TimeChartItem>("CustomTimeChart", 1, 0, "CustomTimeChart");
+//    qmlRegisterType<LineChartItem>("CustomChart", 1, 0, "CustomChart");
+//    qmlRegisterType<TimeChartItem>("CustomTimeChart", 1, 0, "CustomTimeChart");
 
     const QUrl url(QStringLiteral("qrc:/qmlSource/main.qml"));
     QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,

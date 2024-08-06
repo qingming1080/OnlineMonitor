@@ -63,7 +63,7 @@ ComboBox{
                     item.color = "white"
                     tt.color = pRgb(43, 112, 173)
                 }
-                onClicked: {
+                onPressed: {
                     comboBox.currentIndex = index
                     comboBox.popup.visible = false
                     dataAlter()

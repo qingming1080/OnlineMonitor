@@ -202,7 +202,7 @@ Rectangle {
     Text {
         text: qsTr("焊接结果")
         font.family: fontBold
-        font.pixelSize: mode === 1 ? 17 : 20
+        font.pixelSize: /*mode === 1 ? 17 :*/ 20
         color: pRgb(153, 204, 255)
         x:17
         y:9
@@ -219,14 +219,14 @@ Rectangle {
         y:powerY
         text: qsTr("功率: ") + eqText1 + "W"
         font.family: fontBold
-        font.pixelSize:mode === 1 ? 14: 16
+        font.pixelSize:/*mode === 1 ? 14:*/ 16
         color: pRgb(171, 206, 213)
     }
     Text {
         id:t2
         text: qsTr("时间: ") + eqText2 + "S"
         font.family: fontBold
-        font.pixelSize:mode === 1 ? 14: 16
+        font.pixelSize:/*mode === 1 ? 14: */16
         color: pRgb(171, 206, 213)
         anchors.left: t1.left
         anchors.top: t1.bottom
@@ -236,7 +236,7 @@ Rectangle {
         id:t3
         text: qsTr("能量: ") + eqText3 + "J"
         font.family: fontBold
-        font.pixelSize:mode === 1 ? 14: 16
+        font.pixelSize:/*mode === 1 ? 14:*/ 16
         color: pRgb(171, 206, 213)
         anchors.left: t2.left
         anchors.top: t2.bottom
@@ -246,7 +246,7 @@ Rectangle {
         id:t4
         text: qsTr("焊前高度: ") + eqText4 + "mm"
         font.family: fontBold
-        font.pixelSize: mode === 1 ? 14:16
+        font.pixelSize: /*mode === 1 ? 14:*/16
         color: pRgb(171, 206, 213)
         anchors.left: t3.left
         anchors.top: t3.bottom
@@ -258,7 +258,7 @@ Rectangle {
         id:t5
         text: qsTr("焊后高度: ") + eqText5 + "mm"
         font.family: fontBold
-        font.pixelSize: mode === 1 ? 14:16
+        font.pixelSize: /*mode === 1 ? 14:*/16
         color: pRgb(171, 206, 213)
         anchors.left: t4.left
         anchors.top: t4.bottom

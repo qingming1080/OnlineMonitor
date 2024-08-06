@@ -81,15 +81,15 @@ Window {
         var ret = (r << 16 | g << 8 | b)
         return ("#"+ret.toString(16)).toUpperCase();
     }
-//    function disableConsoleLog() {
-//        // 重定向 console.log() 到一个空函数
-//        console.log = function() {};
-//    }
+    function disableConsoleLog() {
+        // 重定向 console.log() 到一个空函数
+        console.log = function() {};
+    }
 
-//    Component.onCompleted: {
-//        // 调用函数来禁用控制台打印
-//        disableConsoleLog();
-//    }
+    Component.onCompleted: {
+        // 调用函数来禁用控制台打印
+        disableConsoleLog();
+    }
     // 缓存已加载的视图
     property var cachedViews: []
     signal sigSwitch(var id)
@@ -246,14 +246,6 @@ Window {
     }
 
     Component{
-        id:swipepro
-        SwipeProductionModule{
-            id:swpMode
-            width: 1280
-            height: 740
-        }
-    }
-    Component{
         id:rootview
         RootConfigView{
             width: 1280
@@ -264,7 +256,8 @@ Window {
         id:popup
         width: 567
         height: 271
-        anchors.centerIn: parent
+        x:window.width/2 - 567/2
+        y:window.height/2 - 271
     }
     Binding {
         id:bin
@@ -277,7 +270,7 @@ Window {
         z: 99
         x: window.width/2-inputPannelID.width/2
         y: window.height      // 默认让其处于窗口最下方,貌似隐藏一样
-        width: keyboardYype === 0 ? 400 : window.width*2/3
+        width: keyboardYype === 0 ? 400 : window.width
         visible: true       // 一直显示
         states: State
         {

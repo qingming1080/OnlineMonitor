@@ -20,7 +20,7 @@ Rectangle {
     Text {
         text: qsTr("焊接参数")
         font.family: fontBold
-        font.pixelSize: mode === 1 ? 17:20
+        font.pixelSize: /*mode === 1 ? 17:*/20
         color: pRgb(153, 204, 255)
         x:17
         y:9
@@ -38,7 +38,7 @@ Rectangle {
         source: "qrc:/image/amplitude.png"
         anchors.top: im1.bottom
         anchors.left: im1.left
-        anchors.topMargin: altitudeMode ? 10 :22
+        anchors.topMargin: altitudeMode ? 12 :22
         width: altitudeMode ? 25:30
         height: altitudeMode ? 25:30
     }
@@ -47,7 +47,7 @@ Rectangle {
         source: "qrc:/image/pressure.png"
         anchors.top: im2.bottom
         anchors.left: im2.left
-        anchors.topMargin: altitudeMode ? 10 :22
+        anchors.topMargin: altitudeMode ? 12 :22
         width: altitudeMode ? 25:30
         height: altitudeMode ? 25:30
     }
@@ -56,7 +56,7 @@ Rectangle {
         source: "qrc:/image/height.png"
         anchors.top: im3.bottom
         anchors.left: im3.left
-        anchors.topMargin: altitudeMode ? 10 :22
+        anchors.topMargin: altitudeMode ? 12 :22
         visible: altitudeMode
         width: altitudeMode ? 25:30
         height: altitudeMode ? 25:30
@@ -66,7 +66,7 @@ Rectangle {
         source: "qrc:/image/height.png"
         anchors.top: im4.bottom
         anchors.left: im4.left
-        anchors.topMargin: altitudeMode ? 10 :22
+        anchors.topMargin: altitudeMode ? 12 :22
         visible: altitudeMode
         width: altitudeMode ? 25:30
         height: altitudeMode ? 25:30
@@ -75,7 +75,7 @@ Rectangle {
         id: t1
         text: qsTr("能量")
         font.family: fontBold
-        font.pixelSize: mode === 1 ?14:16
+        font.pixelSize: /*mode === 1 ?14:*/16
         color: pRgb(171, 206, 213)
         anchors.verticalCenter: im1.verticalCenter
         anchors.left: im1.right
@@ -85,7 +85,7 @@ Rectangle {
         id: t2
         text: qsTr("振幅")
         font.family: fontBold
-        font.pixelSize: mode === 1 ?14:16
+        font.pixelSize: /*mode === 1 ?14:*/16
         color: pRgb(171, 206, 213)
         anchors.top: t1.bottom
         anchors.left: t1.left
@@ -95,7 +95,7 @@ Rectangle {
         id: t3
         text: qsTr("压力")
         font.family: fontBold
-        font.pixelSize: mode === 1 ?14:16
+        font.pixelSize: /*mode === 1 ?14:*/16
         color: pRgb(171, 206, 213)
         anchors.top: t2.bottom
         anchors.left: t2.left
@@ -105,7 +105,7 @@ Rectangle {
         id: t4
         text: qsTr("焊前高度")
         font.family: fontBold
-        font.pixelSize: mode === 1 ?14:16
+        font.pixelSize: /*mode === 1 ?14:*/16
         color: pRgb(171, 206, 213)
         anchors.top: t3.bottom
         anchors.left: t3.left
@@ -116,7 +116,7 @@ Rectangle {
         id: t5
         text: qsTr("焊后高度")
         font.family: fontBold
-        font.pixelSize: mode === 1 ?14:16
+        font.pixelSize: /*mode === 1 ?14:*/16
         color: pRgb(171, 206, 213)
         anchors.top: t4.bottom
         anchors.left: t4.left
@@ -125,7 +125,7 @@ Rectangle {
     }
     TextField{
         id:f1
-        width: mode === 1 ? 75:98
+        width: /*mode === 1 ? 75:*/98
         height: altitudeMode ? 28 :30
         anchors.left: t1.right
         anchors.leftMargin: altitudeMode ? 35:10
@@ -144,20 +144,20 @@ Rectangle {
         text:eqText1
         MouseArea {
             anchors.fill: parent
-            onClicked: {
-                f1.focus = true
+            onPressed: {
+                f1.forceActiveFocus()
                 keyboardYype = 0
             }
         }
     }
     TextField{
         id:f2
-        width: mode === 1 ? 75:98
+        width: /*mode === 1 ? 75:*/98
         height: altitudeMode ? 28 :30
         anchors.left: t2.right
         anchors.leftMargin: altitudeMode ? 35:10
         anchors.verticalCenter: t2.verticalCenter
-        anchors.topMargin: mode === 1 ? 20:25
+        anchors.topMargin: /*mode === 1 ? 20:*/25
         horizontalAlignment: TextInput.AlignHCenter
         verticalAlignment: TextInput.AlignVCenter
         color: pRgb(43, 112, 173)
@@ -172,20 +172,20 @@ Rectangle {
         text:eqText2
         MouseArea {
             anchors.fill: parent
-            onClicked: {
-                f2.focus = true
+            onPressed: {
+                f2.forceActiveFocus()
                 keyboardYype = 0
             }
         }
     }
     TextField{
         id:f3
-        width: mode === 1 ? 75:98
+        width: /*mode === 1 ? 75:*/98
         height: altitudeMode ? 28 :30
         anchors.left: t3.right
         anchors.leftMargin: altitudeMode ? 35:10
         anchors.verticalCenter: t3.verticalCenter
-        anchors.topMargin: mode === 1 ? 20:25
+        anchors.topMargin: /*mode === 1 ? 20:*/25
         horizontalAlignment: TextInput.AlignHCenter
         verticalAlignment: TextInput.AlignVCenter
         color: pRgb(43, 112, 173)
@@ -200,20 +200,20 @@ Rectangle {
         text:eqText3
         MouseArea {
             anchors.fill: parent
-            onClicked: {
-                f3.focus = true
+            onPressed: {
+                f3.forceActiveFocus()
                 keyboardYype = 0
             }
         }
     }
     TextField{
         id:f4
-        width: mode === 1 ? 75:98
+        width: /*mode === 1 ? 75:*/98
         height: altitudeMode ? 28 :30
         anchors.left: t4.right
         anchors.leftMargin: altitudeMode ? 8:10
         anchors.verticalCenter: t4.verticalCenter
-        anchors.topMargin: mode === 1 ? 20:25
+        anchors.topMargin:/* mode === 1 ? 20:*/25
         horizontalAlignment: TextInput.AlignHCenter
         verticalAlignment: TextInput.AlignVCenter
         color: pRgb(43, 112, 173)
@@ -229,20 +229,20 @@ Rectangle {
         visible: altitudeMode
         MouseArea {
             anchors.fill: parent
-            onClicked: {
-                f4.focus = true
+            onPressed: {
+                f4.forceActiveFocus()
                 keyboardYype = 0
             }
         }
     }
     TextField{
         id:f5
-        width: mode === 1 ? 75:98
+        width: /*mode === 1 ? 75:*/98
         height: altitudeMode ? 28 :30
         anchors.left: t5.right
         anchors.leftMargin: altitudeMode ? 8:10
         anchors.verticalCenter: t5.verticalCenter
-        anchors.topMargin: mode === 1 ? 20:25
+        anchors.topMargin: /*mode === 1 ? 20:*/25
         horizontalAlignment: TextInput.AlignHCenter
         verticalAlignment: TextInput.AlignVCenter
         color: pRgb(43, 112, 173)
@@ -258,8 +258,8 @@ Rectangle {
         visible: altitudeMode
         MouseArea {
             anchors.fill: parent
-            onClicked: {
-                f5.focus = true
+            onPressed: {
+                f5.forceActiveFocus()
                 keyboardYype = 0
             }
         }

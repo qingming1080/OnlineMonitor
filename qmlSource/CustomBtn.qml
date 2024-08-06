@@ -57,7 +57,7 @@ Rectangle {
 
     MouseArea{
         anchors.fill: parent
-        onClicked: {
+        onPressed: {
             if(!tmp){
                 if(index !== 3){
                     tmp = true

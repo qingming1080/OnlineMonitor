@@ -26,6 +26,7 @@ public:
     /// \param state : 产品状态
     ///
     Q_INVOKABLE void addMessage(int welderID, QmlEnum::MESSAGE state);
+
 private:
     explicit Message(QObject *parent = nullptr);
 

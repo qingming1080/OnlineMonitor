@@ -22,12 +22,19 @@ Rectangle {
         loader1.sourceComponent = weld2
     }
 
+    Connections{
+        target: window
+        function onSigNewModel(){
+            newModel()
+        }
+    }
+
     EquipmentInfor{
         id:s1
-        x: 42
+        x:42
         y:35
-        width:  208
-        height: mt1.text === "新建模型" ? 235 :203
+        width:  258
+        height: mt1.text === "新建模型" ? 255 :225
         color: "#0c5696"
         eqText1:{
             if(DeviceManager.deviceList[swipeCurrIndex]){
@@ -74,10 +81,10 @@ Rectangle {
         Item {
             WeldingResult{
                 id:s3
-                width:  212
+                width:  258
                 height:  246
-                x:50
-                y:284
+                x:42
+                y:314
                 color: "#0c5696"
                 eqText1:{
                     if(DeviceManager.deviceList[swipeCurrIndex]){
@@ -128,10 +135,10 @@ Rectangle {
         Item {
             WeldingParameter{
                 id:s3_1
-                width:  212
-                height:  215
-                x:  50
-                y:  248
+                width:  258
+                height:  236
+                x:42
+                y:274
                 color:  "#0c5696"
                 eqText1:parameter1
                 eqText2:parameter2
@@ -143,9 +150,9 @@ Rectangle {
     }
     Button{
         id:s4
-        x: 50
-        y: mt1.text === "新建模型" ? 552 :482
-        width:   210
+        x: 42
+        y: mt1.text === "新建模型" ? 580 :520
+        width:   258
         height:  45
         background: Rectangle{
             radius: 6
@@ -161,7 +168,7 @@ Rectangle {
             verticalAlignment: Text.AlignVCenter
             font.family: fontBold
         }
-        onClicked: {
+        onPressed: {
             if(mt1.text === "新建模型"){
                 popup.openPop(2)
             }
@@ -184,13 +191,12 @@ Rectangle {
         id:s5
         anchors.left: s4.left
         anchors.top: s4.bottom
-        anchors.topMargin:  23
-        width:   210
+        anchors.topMargin:  10
+        width:   258
         height:  45
         visible: mt1.text === "创建模型" ? true:false
         background: Rectangle{
             radius: 6
-            border.width: 2
             border.color: pRgb(43, 112, 173)
             color: "#0c5696"
         }
@@ -222,9 +228,9 @@ Rectangle {
             x:0
             RealtimeYield{
                 id:s2
-                width:  288
-                height:  235
-                x: 279
+                width:  300
+                height:  255
+                x: 329
                 y: 35
                 color:  "#0c5696"
                 revealing:{
@@ -281,8 +287,8 @@ Rectangle {
             YieldTrend{
                 id:s6
                 width:  514
-                height:  235
-                x: 598
+                height:  255
+                x: 658
                 y: 35
                 color:  "#0c5696"
                 equiInforIndex:1
@@ -292,16 +298,16 @@ Rectangle {
                 id:s7
                 width:  502
                 height:  311
-                x: 269
-                y: 284
+                x: 329
+                y: 314
                 color:  "#0c5696"
             }
             AbnormalInfor{
                 id:s8
-                width:  303
+                width:  313
                 height:  311
-                x: 778
-                y: 284
+                x: 858
+                y: 314
                 color:  "#0c5696"
             }
         }
@@ -311,22 +317,22 @@ Rectangle {
         Item {
             Rectangle{
                 id:rect
-                x: 269
+                x: 319
                 y: 36
-                width:812
-                height: 560
+                width:842
+                height: 582
                 color: "#0c5696"
                 radius: 3
             }
             Rectangle{
-                width:810
-                height: 558
-                x: 270
+                width:840
+                height: 580
+                x: 320
                 y: 37
                 color: pRgb(43, 112, 173)
                 Text{
                     id:t1
-                    x:808/7/2+5-width/2
+                    x:840/7/2+5-width/2
                     y:11
                     font.pixelSize: 16
                     text: "全选"
@@ -361,7 +367,7 @@ Rectangle {
                 }
                 Text{
                     id:t2
-                    x:808/8 + 808/8/2-width/2
+                    x:840/8 + 840/8/2-width/2
                     y:11
                     font.pixelSize: 16
                     text: "序号"
@@ -370,7 +376,7 @@ Rectangle {
                 }
                 Text{
                     id:t3
-                    x:808/8*2 + 808/8/2-width/2
+                    x:840/8*2 + 840/8/2-width/2
                     y:11
                     font.pixelSize: 16
                     text: "焊接时间"
@@ -379,7 +385,7 @@ Rectangle {
                 }
                 Text{
                     id:t4
-                    x:808/8*3 + 808/8/2-width/2
+                    x:840/8*3 + 840/8/2-width/2
                     y:11
                     font.pixelSize: 16
                     text: "功率"
@@ -388,7 +394,7 @@ Rectangle {
                 }
                 Text{
                     id:t5
-                    x:808/8*4 + 808/8/2-width/2
+                    x:840/8*4 + 840/8/2-width/2
                     y:11
                     font.pixelSize: 16
                     text: "能量"
@@ -397,7 +403,7 @@ Rectangle {
                 }
                 Text{
                     id:t6
-                    x:808/8*5 + 808/8/2-width/2
+                    x:840/8*5 + 840/8/2-width/2
                     y:11
                     font.pixelSize: 16
                     text: "日期"
@@ -406,7 +412,7 @@ Rectangle {
                 }
                 Text{
                     id:t7
-                    x:808/8*6 + 808/8/2-width/2
+                    x:840/8*6 + 840/8/2-width/2
                     y:11
                     font.pixelSize: 16
                     text: "拉力"
@@ -415,7 +421,7 @@ Rectangle {
                 }
                 Text{
                     id:t8
-                    x:808/8*7 + 808/8/2-width/2
+                    x:840/8*7 + 840/8/2-width/2
                     y:11
                     font.pixelSize: 16
                     text: "残留度"
@@ -424,8 +430,8 @@ Rectangle {
                 }
                 ListView{
                     id: taskplanView
-                    width:810
-                    height: 510
+                    width:840
+                    height: 535
                     y:40
                     clip: true
                     model: Manual
@@ -435,12 +441,12 @@ Rectangle {
                     delegate: Rectangle{
                         id: regionItem
                         height: 36
-                        width: 810
+                        width: 840
                         color: index % 2 === 0 ? "#afc3d8" : "#2d71ae"
                         MouseArea {
                             id: mouseArea
                             anchors.fill: parent
-                            onClicked: {
+                            onPressed: {
                                 taskplanView.currentIndex = index
                                 parameter1 = Manual.data(Manual.index(index,0),QmlEnum.MANUAL_energy)
                                 parameter2 = Manual.data(Manual.index(index,0),QmlEnum.MANUAL_amplitude)
@@ -451,7 +457,7 @@ Rectangle {
                         }
                         Button{
                             id:bt
-                            x:808/8/2-width/2
+                            x:840/8/2-width/2
                             anchors.verticalCenter: parent.verticalCenter
                             width: 30
                             height: 30
@@ -465,6 +471,7 @@ Rectangle {
                                     fillMode: Image.PreserveAspectFit // 保持图片的宽高比，适应按钮大小
                                 }
                             }
+
                             onPressed: {
                                 if(im1.source == "qrc:/image/unlock.png"){
                                     im1.source = "qrc:/image/lock.png"
@@ -502,7 +509,7 @@ Rectangle {
                             }
                         }
                         Text{
-                            x:808/8*1 + 808/8/2-width/2
+                            x:840/8*1 + 840/8/2-width/2
                             anchors.verticalCenter: parent.verticalCenter
                             font.pixelSize: 16
                             text: serial_number
@@ -511,7 +518,7 @@ Rectangle {
                         }
                         Text{
                             anchors.verticalCenter: parent.verticalCenter
-                            x:808/8*2 + 808/8/2-width/2
+                            x:840/8*2 + 840/8/2-width/2
                             font.pixelSize: 16
                             text: time
                             font.family: fontBold
@@ -519,7 +526,7 @@ Rectangle {
                         }
                         Text{
                             anchors.verticalCenter: parent.verticalCenter
-                            x:808/8*3 + 808/8/2-width/2
+                            x:840/8*3 + 840/8/2-width/2
                             font.pixelSize: 16
                             text: power
                             font.family: fontBold
@@ -527,7 +534,7 @@ Rectangle {
                         }
                         Text{
                             anchors.verticalCenter: parent.verticalCenter
-                            x:808/8*4 + 808/8/2-width/2
+                            x:840/8*4 + 840/8/2-width/2
                             font.pixelSize: 16
                             text: energy
                             font.family: fontBold
@@ -535,7 +542,7 @@ Rectangle {
                         }
                         Text{
                             anchors.verticalCenter: parent.verticalCenter
-                            x:808/8*5 + 808/8/2-width/2
+                            x:840/8*5 + 840/8/2-width/2
                             font.pixelSize: 16
                             text: create_time
                             font.family: fontBold
@@ -546,7 +553,7 @@ Rectangle {
                             width: 100
                             height: 33
                             anchors.verticalCenter: parent.verticalCenter
-                            x:808/8*6 + 808/8/2-width/2
+                            x:840/8*6 + 840/8/2-width/2
                             horizontalAlignment: TextInput.AlignHCenter
                             verticalAlignment: TextInput.AlignVCenter
                             color: index % 2 === 0 ? pRgb(175, 195, 216) : "#014c8d"
@@ -575,8 +582,8 @@ Rectangle {
                             }
                             MouseArea {
                                 anchors.fill: parent
-                                onClicked: {
-                                    textField.focus = true
+                                onPressed: {
+                                    textField.forceActiveFocus()
                                     keyboardYype = 0
                                 }
                             }
@@ -586,7 +593,7 @@ Rectangle {
                             width: 100
                             height: 33
                             anchors.verticalCenter: parent.verticalCenter
-                            x:808/8*7 + 808/8/2-width/2
+                            x:840/8*7 + 840/8/2-width/2
                             horizontalAlignment: TextInput.AlignHCenter
                             verticalAlignment: TextInput.AlignVCenter
                             color: index % 2 === 0 ? pRgb(175, 195, 216) : "#014c8d"
@@ -595,8 +602,8 @@ Rectangle {
                             text:actual_degree
                             inputMethodHints: Qt.ImhDigitsOnly
                             background: Rectangle{
-                                radius: 6
-                                border.width: 3
+                                radius: 3
+                                border.width: 2
                                 border.color: index % 2 === 0 ? "#2d71ae" : "#afc3d8"
                                 color: index % 2 !== 0 ? "#2d71ae" : "#afc3d8"
                             }
@@ -615,8 +622,8 @@ Rectangle {
                             }
                             MouseArea {
                                 anchors.fill: parent
-                                onClicked: {
-                                    textField1.focus = true
+                                onPressed: {
+                                    textField1.forceActiveFocus()
                                     keyboardYype = 0
                                 }
                             }

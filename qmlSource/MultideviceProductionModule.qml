@@ -754,7 +754,7 @@ Rectangle {
 //            verticalAlignment: Text.AlignVCenter
 //            font.family: fontBold
 //        }
-//        onClicked: {
+//        onPressed: {
 //            mt1.text = "创建模型"
 //            mt2.text = "清除数据"
 //        }
@@ -807,7 +807,7 @@ Rectangle {
             verticalAlignment: Text.AlignVCenter
             font.family: fontBold
         }
-        onClicked: {
+        onPressed: {
             popup.openPop(6)
         }
     }

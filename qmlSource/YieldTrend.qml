@@ -3,7 +3,7 @@ import QtQuick.Controls 2.5
 import QtCharts 2.15
 import Device 1.0
 import Trend 1.0
-import CustomTimeChart 1.0
+//import CustomTimeChart 1.0
 
 //良率趋势
 Rectangle {
@@ -90,7 +90,7 @@ Rectangle {
     Text {
         text: qsTr("良率趋势")
         font.family: fontBold
-        font.pixelSize: mode === 1 ? 17 : 20
+        font.pixelSize: /*mode === 1 ? 17 :*/ 20
         color: pRgb(153, 204, 255)
         x:17
         y:9
@@ -132,7 +132,7 @@ Rectangle {
                 color:pRgb(177, 213, 219)
                 radius: 3
             }
-            onClicked: {
+            onPressed: {
                 bbbb.border.color = "#007dbc"
                 b.border.color = "#00488d"
                 bb.border.color = "#007dbc"
@@ -170,7 +170,7 @@ Rectangle {
                 color:"#007dbc"
                 radius: 3
             }
-            onClicked: {
+            onPressed: {
                 bbbb.border.color = "#007dbc"
                 b.border.color = "#007dbc"
                 bb.border.color = "#00488d"
@@ -208,7 +208,7 @@ Rectangle {
                 color:"#007dbc"
                 radius: 3
             }
-            onClicked: {
+            onPressed: {
                 bbbb.border.color = "#007dbc"
                 b.border.color = "#007dbc"
                 bb.border.color = "#007dbc"
@@ -246,7 +246,7 @@ Rectangle {
                 color: "#007dbc"
                 radius: 3
             }
-            onClicked: {
+            onPressed: {
                 bbbb.border.color = "#00488d"
                 b.border.color = "#007dbc"
                 bb.border.color = "#007dbc"
@@ -283,75 +283,75 @@ Rectangle {
     }
 
     property int timer: 0
-    CustomTimeChart{
-        id:chart
-        anchors.top: line.bottom // 使图表的顶部与父项的顶部对齐
-        fillColor: "transparent"
-        width: 590
-    }
-
-//    ChartView {
+//    CustomTimeChart{
 //        id:chart
 //        anchors.top: line.bottom // 使图表的顶部与父项的顶部对齐
+//        fillColor: "transparent"
 //        width: 590
-//        height: 240
-//        antialiasing: true
-//        backgroundColor: "transparent"
-//        animationOptions: ChartView.SeriesAnimations
-//        titleColor: "red"
-//        titleFont.family: fontBold
-//        titleFont.pixelSize: 20
-//        margins.left: 10
-//        margins.right: 10
-//        margins.top: 10
-//        margins.bottom: 10
-//        legend.visible: false
-//        DateTimeAxis {
-//            id: myAxisX
-//            format: "MM-dd hh:mm" // 时间格式
-//            tickCount: 5
-//            min: startTime
-//            max: endTime
-//            labelsColor: "#a3c7d0"
-//            labelsFont.pixelSize: 12
-//            labelsFont.bold: true
-//            gridVisible:false
-//        }
-//        ValueAxis{
-//            id:myAxisY
-//            min:0
-//            max:100
-//            tickCount: 3
-//            labelsColor: "#a3c7d0"
-//            labelsFont.pixelSize: 16
-//            labelsFont.bold: true
-//            labelFormat: '%d%'
-//            color:"#1398fa"
-//            lineVisible: false
-
-//        }
-//        LineSeries {
-//            id:lineSeries
-//            axisX: myAxisX
-//            axisY:myAxisY
-//            color: "#1398fa"
-//            width: 3
-//            VXYModelMapper{
-//                model: DeviceManager.deviceList[swipeCurrIndex].pTrend.pYieldTrend
-//                series: lineSeries
-//                firstRow: 0
-//                xColumn: 1
-//                yColumn: 2
-//            }
-//            useOpenGL: true
-//        }
-//        ScatterSeries{
-//            id:lineSeries1
-//            axisX: myAxisX
-//            axisY:myAxisY
-//            markerSize: 10
-//            useOpenGL: true
-//        }
 //    }
+
+    ChartView {
+        id:chart
+        anchors.top: line.bottom // 使图表的顶部与父项的顶部对齐
+        width: 590
+        height: 240
+        antialiasing: true
+        backgroundColor: "transparent"
+        animationOptions: ChartView.SeriesAnimations
+        titleColor: "red"
+        titleFont.family: fontBold
+        titleFont.pixelSize: 20
+        margins.left: 10
+        margins.right: 10
+        margins.top: 10
+        margins.bottom: 10
+        legend.visible: false
+        DateTimeAxis {
+            id: myAxisX
+            format: "MM-dd hh:mm" // 时间格式
+            tickCount: 5
+            min: startTime
+            max: endTime
+            labelsColor: "#a3c7d0"
+            labelsFont.pixelSize: 12
+            labelsFont.bold: true
+            gridVisible:false
+        }
+        ValueAxis{
+            id:myAxisY
+            min:0
+            max:100
+            tickCount: 3
+            labelsColor: "#a3c7d0"
+            labelsFont.pixelSize: 16
+            labelsFont.bold: true
+            labelFormat: '%d%'
+            color:"#1398fa"
+            lineVisible: false
+
+        }
+        LineSeries {
+            id:lineSeries
+            axisX: myAxisX
+            axisY:myAxisY
+            color: "#1398fa"
+            width: 3
+            VXYModelMapper{
+                model: DeviceManager.deviceList[swipeCurrIndex].pTrend.pYieldTrend
+                series: lineSeries
+                firstRow: 0
+                xColumn: 1
+                yColumn: 2
+            }
+            useOpenGL: true
+        }
+        ScatterSeries{
+            id:lineSeries1
+            axisX: myAxisX
+            axisY:myAxisY
+            markerSize: 10
+            useOpenGL: true
+        }
+    }
 
 }
