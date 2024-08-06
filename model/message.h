@@ -7,6 +7,12 @@
 class Message : public QAbstractListModel
 {
     Q_OBJECT
+    struct Message_Data{
+        int welderID;
+        QmlEnum::MESSAGE messageType;
+        QString time;
+    };
+
 public:
     static Message* getInstance();
 
@@ -19,14 +25,14 @@ public:
     /// \param welderID : 设备号
     /// \param state : 产品状态
     ///
-    Q_INVOKABLE void addMessage(int welderID, QmlEnum::PRODUCTSTATE state);
+    Q_INVOKABLE void addMessage(int welderID, QmlEnum::MESSAGE state);
 private:
     explicit Message(QObject *parent = nullptr);
 
 private:
     static Message* s_pMessage;
 
-    QList<QString> m_data;
+    QList<Message_Data> m_data;
 };
 
 #endif // MESSAGE_H
