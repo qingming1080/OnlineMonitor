@@ -141,14 +141,6 @@ public:
     };
     Q_ENUM(IO_COLUMN)
 
-    // 产品优良状态
-    enum PRODUCTSTATE
-    {
-        PRODUCTSTATE_Excelleng = 0,    // 良品
-        PRODUCTSTATE_Difference,       // 次品
-        PRODUCTSTATE_Suspicious,       // 未知
-    };
-    Q_ENUM(PRODUCTSTATE)
 
     // 设备连接方式
     enum CONNECTTYPE
@@ -165,6 +157,19 @@ public:
         SIGNAL_noDefinite = 2,
     };
     Q_ENUM(SIGNAL)
+
+    enum MESSAGE{
+        MESSAGE_suspicious = 0,         // 出现可疑品
+        MESSAGE_defective  = 1,         // 出现次品
+        MESSAGE_noConnect  = 2,         // 未连接
+        MESSAGE_lowerValue = 3,         // 良率下降至下限值
+        MESSAGE_defectiveOften = 4,     // 频繁出现次品
+        MESSAGE_suspiciousOften = 5,    // 频繁出现可疑品
+        MESSAGE_upperValue = 6,         // 自动学习次数超过上限值
+        MESSAGE_studyOver   = 7,        // 自动学习已完成
+        MESSAGE_touchSuccess = 8,       // 创建模型已完成
+    };
+    Q_ENUM(MESSAGE)
 
 public:
     explicit QmlEnum(QObject *parent = nullptr){}
