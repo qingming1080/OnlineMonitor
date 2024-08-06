@@ -81,15 +81,15 @@ Window {
         var ret = (r << 16 | g << 8 | b)
         return ("#"+ret.toString(16)).toUpperCase();
     }
-    function disableConsoleLog() {
-        // 重定向 console.log() 到一个空函数
-        console.log = function() {};
-    }
+//    function disableConsoleLog() {
+//        // 重定向 console.log() 到一个空函数
+//        console.log = function() {};
+//    }
 
-    Component.onCompleted: {
-        // 调用函数来禁用控制台打印
-        disableConsoleLog();
-    }
+//    Component.onCompleted: {
+//        // 调用函数来禁用控制台打印
+//        disableConsoleLog();
+//    }
     // 缓存已加载的视图
     property var cachedViews: []
     signal sigSwitch(var id)

@@ -10,6 +10,8 @@
 #include "log/localrecord.h"
 #include "model/networkmodel.h"
 #include "model/rs232model.h"
+#include "model/devicenames.h"
+
 DeviceManager* DeviceManager::s_pInstance = nullptr;
 
 
@@ -35,11 +37,18 @@ DeviceManager::DeviceManager(QObject *parent)
 void DeviceManager::init()
 {
     QList<int> list = DataBaseManager::getInstance()->getDeviceNums();
-
+    QList<QString> names;
     m_deviceNum = list.size();
 
+
+
     for(int i = 0; i < list.size(); ++i)
+    {
         m_deviceList.push_back(new Device(list.at(i)));
+        names.push_back(m_deviceList.last()->pDeviceInformation()->name());
+    }
+
+    DeviceNames::getInstance()->setNames(names);
 }
 
 int DeviceManager::deviceNum() const
@@ -117,6 +126,14 @@ void DeviceManager::addDevice(const int &maxBacth, const int &sample, const int 
     m_deviceNum++;
     emit deviceNumChanged();
     emit deviceListChanged();
+
+    QList<QString> names;
+    for(int i = 0; i < m_deviceList.size(); ++i)
+    {
+        names.push_back(m_deviceList.at(i)->pDeviceInformation()->name());
+    }
+
+    DeviceNames::getInstance()->setNames(names);
 }
 
 void DeviceManager::removeDevice(int welderID)
@@ -139,5 +156,13 @@ void DeviceManager::removeDevice(int welderID)
             return;
         }
     }
+
+    QList<QString> names;
+    for(int i = 0; i < m_deviceList.size(); ++i)
+    {
+        names.push_back(m_deviceList.at(i)->pDeviceInformation()->name());
+    }
+
+    DeviceNames::getInstance()->setNames(names);
 }
 

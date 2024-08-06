@@ -19,6 +19,7 @@
 #include "log/localrecord.h"
 #include "multiyaxisplot.h"
 #include "timeyaxisplot.h"
+#include "model/devicenames.h"
 // 自定义消息处理程序
 void myMessageHandler(QtMsgType type, const QMessageLogContext &context, const QString &msg)
 {
@@ -42,7 +43,7 @@ int main(int argc, char *argv[])
     qputenv("QT_IM_MODULE", QByteArray("qtvirtualkeyboard"));
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     // 安装自定义消息处理程序
-    qInstallMessageHandler(myMessageHandler);
+//    qInstallMessageHandler(myMessageHandler);
     QApplication app(argc, argv);
     LocalRecord::getInstance()->start();
     DeviceManager::getInstance();
@@ -55,6 +56,7 @@ int main(int argc, char *argv[])
     pQmlContext->setContextProperty("NetworkModel", NetworkModel::getInstance());
     pQmlContext->setContextProperty("RS232Model", RS232Model::getInstance());
     pQmlContext->setContextProperty("DataBaseManager", DataBaseManager::getInstance());
+    pQmlContext->setContextProperty("DeviceNames", DeviceNames::getInstance());
     pQmlContext->setContextProperty("Manual", new Manual(1));
 
     qmlRegisterType<Device>("Device",1,0,"Device");

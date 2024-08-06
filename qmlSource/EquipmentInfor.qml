@@ -15,6 +15,21 @@ Rectangle {
         x:17
         y:9
     }
+
+    CustomComboBox{
+        id:com1
+        width: 243
+        height: 40
+        anchors.top: parent.top
+        anchors.topMargin: 10
+        anchors.right: parent.right
+        anchors.leftMargin: 20
+        model: DeviceNames
+        onDataAlter: {
+            swipeCurrIndex = com1.currentIndex
+            sigUpdateUI(swipeCurrIndex)
+        }
+    }
     Rectangle{
         y:42
         height: 1

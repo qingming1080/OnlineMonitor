@@ -24,7 +24,7 @@ Rectangle {
 
     EquipmentInfor{
         id:s1
-        x: 52
+        x: 42
         y:35
         width:  208
         height: mt1.text === "新建模型" ? 235 :203
@@ -224,7 +224,7 @@ Rectangle {
                 id:s2
                 width:  288
                 height:  235
-                x: 269
+                x: 279
                 y: 35
                 color:  "#0c5696"
                 revealing:{
@@ -282,7 +282,7 @@ Rectangle {
                 id:s6
                 width:  514
                 height:  235
-                x: 568
+                x: 598
                 y: 35
                 color:  "#0c5696"
                 equiInforIndex:1
