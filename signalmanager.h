@@ -13,6 +13,8 @@ signals:
     void signalAddRecord(const QDateTime& time, const QString& text);
 
     void showLegend();
+
+    void changeYieldTrendData();
 private:
     explicit SignalManager(QObject *parent = nullptr);
 
