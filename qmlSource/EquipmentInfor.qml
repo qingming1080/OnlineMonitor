@@ -16,21 +16,22 @@ Rectangle {
         y:9
     }
 
-    CustomComboBox{
-        id:com1
-        width: 100
-        height: 40
-        anchors.top: parent.top
-        anchors.topMargin: 10
-        anchors.right: parent.right
-        anchors.rightMargin: 20
-        model: DeviceNames
-        onDataAlter: {
-            swipeCurrIndex = com1.currentIndex
-            sigUpdateUI(swipeCurrIndex)
-        }
-        visible: switchingEquipment
-    }
+//    CustomComboBox{
+//        id:com1
+//        width: 100
+//        height: 40
+//        anchors.top: parent.top
+//        anchors.topMargin: 10
+//        anchors.right: parent.right
+//        anchors.rightMargin: 20
+//        model: DeviceNames
+//        currentIndex: swipeCurrIndex
+//        onDataAlter: {
+//            swipeCurrIndex = com1.currentIndex
+//            sigUpdateUI(swipeCurrIndex)
+//        }
+//        visible: switchingEquipment
+//    }
     Rectangle{
         y:42
         height: 1

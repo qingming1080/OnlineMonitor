@@ -269,7 +269,7 @@ Rectangle {
         id: im1
         width: imgWidHei
         height: imgWidHei
-        x:mode == 1 ? 33 : 39
+        x:/*mode == 1 ? 33 :*/ 39
         y:imgY
         source: "qrc:/image/module.png"
     }
@@ -279,7 +279,7 @@ Rectangle {
         height: imgWidHei
         anchors.left: im1.left
         anchors.top: im1.bottom
-        anchors.topMargin: imgtopMargin
+        anchors.topMargin: equipmentCount > 1 ? 20 :imgtopMargin
         source: "qrc:/image/instantiation.png"
         Image{
             x:imgcenterX
@@ -293,7 +293,7 @@ Rectangle {
         height: imgWidHei
         anchors.left: im2.left
         anchors.top: im2.bottom
-        anchors.topMargin: 17
+        anchors.topMargin: equipmentCount > 1 ? 20 :17
         source: "qrc:/image/instantiation.png"
         Image{
             anchors.centerIn: parent
@@ -306,7 +306,7 @@ Rectangle {
         height: imgWidHei
         anchors.left: im3.left
         anchors.top: im3.bottom
-        anchors.topMargin: 17
+        anchors.topMargin: equipmentCount > 1 ? 20 :17
         source: "qrc:/image/height.png"
         visible:altitudeMode
     }
@@ -316,7 +316,7 @@ Rectangle {
         height: imgWidHei
         anchors.left: im4.left
         anchors.top: im4.bottom
-        anchors.topMargin: 17
+        anchors.topMargin: equipmentCount > 1 ? 20 :17
         source: "qrc:/image/height.png"
         visible: altitudeMode
     }

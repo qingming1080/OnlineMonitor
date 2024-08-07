@@ -95,15 +95,30 @@ void DeviceManager::addDevice(const int &maxBacth, const int &sample, const int 
     {
         if(i == m_deviceList.size())
         {
-            m_deviceList.push_back(new Device(i+1));
             data.welder_id = i + 1;
+            data.welder_name = name;
+            data.welder_type = model;
+            data.production_bacth = maxBacth;
+            data.model_sample = sample;
+            data.lower_limit = lowerLimit;
+            data.height_option = heightOption;
+            data.connect_type = connectType;
+            data.connect_id = id;
+            data.mes_port = port;
+            data.mes_ip = targetIp;
+            data.device_ip = localIp;
+
+            DataBaseManager::getInstance()->insertConfigurationDevice(data);
+
+            Device *d = new Device(i+1);
+            m_deviceList.insert(i, d);
+
+            m_deviceList.push_back(d);
             break;
         }
         if(m_deviceList.at(i) != nullptr){
             if(m_deviceList.at(i)->pDeviceInformation()->id() != i+1)
             {
-                Device *d = new Device(i+1);
-                m_deviceList.insert(i, d);
                 data.welder_id = i + 1;
                 data.welder_name = name;
                 data.welder_type = model;
@@ -116,12 +131,16 @@ void DeviceManager::addDevice(const int &maxBacth, const int &sample, const int 
                 data.mes_port = port;
                 data.mes_ip = targetIp;
                 data.device_ip = localIp;
+
+                DataBaseManager::getInstance()->insertConfigurationDevice(data);
+
+                Device *d = new Device(i+1);
+                m_deviceList.insert(i, d);
+
                 break;
             }
         }
     }
-
-    DataBaseManager::getInstance()->insertConfigurationDevice(data);
 
     m_deviceNum++;
     emit deviceNumChanged();

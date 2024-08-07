@@ -42,6 +42,7 @@ public:
     Q_INVOKABLE void setUserPassword(QString newPassword);
 
     Q_INVOKABLE QString getHistoryName(int welderID);
+
 signals:
     void deviceNumChanged();
 

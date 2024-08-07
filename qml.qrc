@@ -47,5 +47,6 @@
         <file>image/pressure.png</file>
         <file>image/shake.png</file>
         <file>image/module.png</file>
+        <file>image/switch.png</file>
     </qresource>
 </RCC>

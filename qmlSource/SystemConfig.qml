@@ -253,7 +253,6 @@ Rectangle {
                         anchors.fill: parent
                         onPressed: {
                             t1.forceActiveFocus()
-                            t1.focus = true
                             keyboardYype = 0
                         }
                     }
@@ -290,7 +289,7 @@ Rectangle {
                     MouseArea {
                         anchors.fill: parent
                         onPressed: {
-                            t2.focus = true
+                            t2.forceActiveFocus()
                             keyboardYype = 0
                         }
                     }
@@ -344,7 +343,7 @@ Rectangle {
                     MouseArea {
                         anchors.fill: parent
                         onPressed: {
-                            t3.focus = true
+                            t3.forceActiveFocus()
                             keyboardYype = 0
                         }
                     }
@@ -399,7 +398,7 @@ Rectangle {
                     MouseArea {
                         anchors.fill: parent
                         onPressed: {
-                            t7.focus = true
+                            t7.forceActiveFocus()
                             keyboardYype = 0
                         }
                     }
@@ -454,7 +453,7 @@ Rectangle {
                     MouseArea {
                         anchors.fill: parent
                         onPressed: {
-                            t8.focus = true
+                            t8.forceActiveFocus()
                             keyboardYype = 0
                         }
                     }
@@ -510,7 +509,7 @@ Rectangle {
                     MouseArea {
                         anchors.fill: parent
                         onPressed: {
-                            t9.focus = true
+                            t9.forceActiveFocus()
                             keyboardYype = 0
                         }
                     }
@@ -665,7 +664,7 @@ Rectangle {
                     MouseArea {
                         anchors.fill: parent
                         onPressed: {
-                            t4.focus = true
+                            t4.forceActiveFocus()
                             keyboardYype = 1
                         }
                     }
@@ -1004,7 +1003,7 @@ Rectangle {
                             MouseArea {
                                 anchors.fill: parent
                                 onPressed: {
-                                    t5.focus = true
+                                    t5.forceActiveFocus()
                                     keyboardYype = 0
                                 }
                             }
@@ -1044,7 +1043,7 @@ Rectangle {
                             MouseArea {
                                 anchors.fill: parent
                                 onPressed: {
-                                    t6.focus = true
+                                    t6.forceActiveFocus()
                                     keyboardYype = 0
                                 }
                             }
@@ -1084,7 +1083,7 @@ Rectangle {
                             MouseArea {
                                 anchors.fill: parent
                                 onPressed: {
-                                    t7.focus = true
+                                    t7.forceActiveFocus()
                                     keyboardYype = 0
                                 }
                             }

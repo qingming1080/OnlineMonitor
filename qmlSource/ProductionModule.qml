@@ -633,7 +633,7 @@ Rectangle {
                                     MouseArea {
                                         anchors.fill: parent
                                         onPressed: {
-                                            textField.focus = true
+                                            textField.forceActiveFocus()
                                             keyboardYype = 0
                                         }
                                     }
@@ -673,7 +673,7 @@ Rectangle {
                                     MouseArea {
                                         anchors.fill: parent
                                         onPressed: {
-                                            textField1.focus = true
+                                            textField1.forceActiveFocus()
                                             keyboardYype = 0
                                         }
                                     }

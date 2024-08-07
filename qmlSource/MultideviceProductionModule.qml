@@ -237,6 +237,7 @@ Rectangle {
             }
             onPressed: {
                 mpro.swipeIndex = 0
+                swipeCurrIndex = 0
                 loadViewpro(3,swipe)
                 sigUpdateUI(0)
             }
@@ -384,6 +385,7 @@ Rectangle {
             }
             onPressed: {
                 mpro.swipeIndex = 1
+                swipeCurrIndex = 1
                 loadViewpro(3,swipe)
                 sigUpdateUI(1)
             }
@@ -554,6 +556,7 @@ Rectangle {
             }
             onPressed: {
                 mpro.swipeIndex = 2
+                swipeCurrIndex = 2
                 loadViewpro(3,swipe)
                 sigUpdateUI(2)
             }
@@ -728,6 +731,7 @@ Rectangle {
                 else{
                     mpro.swipeIndex = 2
                 }
+                swipeCurrIndex = 3
                 loadViewpro(3,swipe)
                 sigUpdateUI(3)
             }

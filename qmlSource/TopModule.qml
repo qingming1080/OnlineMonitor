@@ -107,7 +107,7 @@ Rectangle {
         Connections{
             target: bt1
             function onSigBtnSwitch(index){
-                if(index === 1){
+                if(index === 1 && interFaceId !== index){
                     bt1Check()
                     switchUI(1)
                 }
@@ -124,7 +124,7 @@ Rectangle {
         Connections{
             target: bt2
             function onSigBtnSwitch(index){
-                if(index === 2){
+                if(index === 2 && interFaceId !== index){
                     bt2Check()
                     switchUI(2)
                 }
@@ -141,7 +141,7 @@ Rectangle {
         Connections{
             target: bt3
             function onSigBtnSwitch(index){
-                if(index === 3){
+                if(index === 3 && interFaceId !== index){
                     popup.openPop(1)
                 }
             }
@@ -163,9 +163,4 @@ Rectangle {
             }
         }
     }
-
-
-
-
-
 }

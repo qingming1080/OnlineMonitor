@@ -19,6 +19,7 @@ Window {
     property int equipmentCount: DeviceManager.deviceNum
     property int equipmentCurrentIndex: 0
     property int swipeCurrIndex: 0
+    property int interFaceId: 0
     property var keyboardYype: 0
 
     onSwipeCurrIndexChanged: {
@@ -26,12 +27,12 @@ Window {
     }
 
     onKeyboardYypeChanged: {
-        if(keyboardYype === 0){
-            bin.value = 1200
-        }
-        else{
-            bin.value = 2560
-        }
+//        if(keyboardYype === 0){
+//            bin.value = 1200
+//        }
+//        else{
+//            bin.value = 2560
+//        }
     }
 
     FontLoader {
@@ -159,6 +160,7 @@ Window {
                 target: window
                 function onSigSwitch(id){
                     stackView1.pop()
+                    interFaceId = id
                     if(id === 1){
                         loadView(id,pro)
                         p1.bt1Check()
@@ -270,7 +272,7 @@ Window {
         z: 99
         x: window.width/2-inputPannelID.width/2
         y: window.height      // 默认让其处于窗口最下方,貌似隐藏一样
-        width: keyboardYype === 0 ? 400 : window.width
+        width: /*keyboardYype === 0 ? 400 :*/ window.width
         visible: true       // 一直显示
         states: State
         {
