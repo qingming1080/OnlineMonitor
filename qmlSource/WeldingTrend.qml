@@ -75,6 +75,7 @@ Rectangle {
             font.pixelSize: 16
             font.bold: true
             labelColor: "#a3c7d0"
+            font.family: fontBold
         }
         Component.onCompleted: {
             sigUpdateUI(swipeCurrIndex)

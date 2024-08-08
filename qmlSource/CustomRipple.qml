@@ -15,7 +15,7 @@ Item {
     property int canvasWidth: width < height ? width : height
     //
     property int fontPx: 34
-    property string fontFamily: "Arial"
+    property string fontFamily: fontBold
     property color waveColor: {
         var c = "#1598ff"
         var c1 = "red"
