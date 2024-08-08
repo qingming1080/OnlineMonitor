@@ -51,6 +51,7 @@ Rectangle {
     Text {
         text: qsTr("设备信息")
         font.family: fontBold
+        font.bold: true
         font.pixelSize: 17
         color: pRgb(153, 204, 255)
         x:17
@@ -66,6 +67,7 @@ Rectangle {
         id:t1
         text: qsTr("设备名称: ") + eqText1
         font.family: fontBold
+        font.bold: true
         font.pixelSize: 16
         color: pRgb(171, 206, 213)
         x:26
@@ -75,6 +77,7 @@ Rectangle {
         id:t2
         text: qsTr("设备型号: ") + eqText2
         font.family: fontBold
+        font.bold: true
         font.pixelSize: 16
         color: pRgb(171, 206, 213)
         anchors.top:t1.bottom
@@ -85,6 +88,7 @@ Rectangle {
         id:t3
         text: qsTr("连接方式: ") + eqText3
         font.family: fontBold
+        font.bold: true
         font.pixelSize: 16
         color: pRgb(171, 206, 213)
         anchors.top:t2.bottom
@@ -95,6 +99,7 @@ Rectangle {
         id:t4
         text: qsTr("设备状态: ") + eqText4
         font.family: fontBold
+        font.bold: true
         font.pixelSize: 16
         color: pRgb(171, 206, 213)
         anchors.top:t3.bottom
@@ -124,6 +129,7 @@ Rectangle {
         text: qsTr("高度模式")
         color: pRgb(177, 213, 219)
         font.family: fontBold
+        font.bold: true
         font.pixelSize: 16
         x:26
         y:252
@@ -133,18 +139,19 @@ Rectangle {
         text: qsTr("启动")
         color: pRgb(177, 213, 219)
         font.family: fontBold
+        font.bold: true
         font.pixelSize: 16
-        anchors.top: s4.top
-        anchors.left: s4.right
-        anchors.leftMargin: 62
-        anchors.topMargin: 3
+        anchors.verticalCenter: bt1.verticalCenter
+        anchors.left: bt1.right
+        anchors.leftMargin: 5
     }
     RadioButton{
         id:bt1
         width: 30
         height: 30
-        x:113
-        y:252
+        anchors.verticalCenter: s4.verticalCenter
+        anchors.left: s4.right
+        anchors.leftMargin: 10
         indicator: Rectangle
         {
             width: 30
@@ -165,18 +172,19 @@ Rectangle {
         text: qsTr("关闭")
         color: pRgb(177, 213, 219)
         font.family: fontBold
+        font.bold: true
         font.pixelSize: 16
-        anchors.top: s5.top
-        anchors.left: s5.right
-        anchors.leftMargin: 48
+        anchors.verticalCenter: bt2.verticalCenter
+        anchors.left: bt2.right
+        anchors.leftMargin: 5
     }
     RadioButton{
         id:bt2
         width: 30
         height: 30
-        anchors.left: bt1.right
-        anchors.top: bt1.top
-        anchors.leftMargin: 56
+        anchors.verticalCenter: s5.verticalCenter
+        anchors.left: s5.right
+        anchors.leftMargin: 8
         checked: true
         indicator: Rectangle
         {
@@ -198,14 +206,16 @@ Rectangle {
         text: qsTr("是否开启待定")
         color: "#99ccff"
         font.family: fontBold
+        font.bold: true
         font.pixelSize: 17
         x:24
         y:319
     }
     Switch{
         id:ctl
-        x:150
-        y:317
+        anchors.verticalCenter: s7.verticalCenter
+        anchors.left: s7.right
+        anchors.leftMargin: 5
         onPressed: {
             if(sysCurrIndex1 == 1){
                 undetermined1 = !undetermined1
@@ -219,13 +229,13 @@ Rectangle {
             else if(sysCurrIndex1 ==4){
                 undetermined4 = !undetermined4
             }
-//            sigUndetermined(sysCurrIndex)
+            //            sigUndetermined(sysCurrIndex)
             DeviceManager.deviceList[sysCurrIndex1-1].pIO.setAvailabel(!ctl.checked)
         }
 
         indicator: Rectangle{
             id:indicator
-            implicitWidth: 118
+            implicitWidth: 110
             implicitHeight:27
             x:ctl.leftPadding
             y:parent.height / 2 - height / 2
@@ -236,7 +246,7 @@ Rectangle {
             //小圆点
             Rectangle{
                 id:smallRect
-                width: 58
+                width: 55
                 height: 22
                 radius: 15
                 border.width: 3
@@ -258,21 +268,23 @@ Rectangle {
             Text {
                 anchors.left: parent.left
                 anchors.top: parent.top
-                anchors.topMargin: 3
+                anchors.topMargin: 5
                 anchors.leftMargin: 14
                 text: qsTr("关闭")
                 color: undetermined? pRgb(43, 112, 173) : "#e5e6e7"
                 font.family: fontBold
+                font.bold: true
                 font.pixelSize: 14
             }
             Text {
                 anchors.right: parent.right
                 anchors.top: parent.top
-                anchors.topMargin: 3
+                anchors.topMargin: 5
                 anchors.rightMargin: 14
                 text: qsTr("启动")
                 color: undetermined? "#e5e6e7" : pRgb(43, 112, 173)
                 font.family: fontBold
+                font.bold: true
                 font.pixelSize: 14
             }
         }
@@ -280,9 +292,10 @@ Rectangle {
     Text {
         id: s8
         text: sysCurrIndex1 === 1 ? "PIN1" : sysCurrIndex1 === 2 ? "PIN4" :
-        sysCurrIndex1 === 3 ? "PIN7" : sysCurrIndex1 === 4 ? "PIN10" : ""
+                                                                   sysCurrIndex1 === 3 ? "PIN7" : sysCurrIndex1 === 4 ? "PIN10" : ""
         color: pRgb(177, 213, 219)
         font.family: fontBold
+        font.bold: true
         font.pixelSize: 16
         x:18
         y:380
@@ -290,9 +303,10 @@ Rectangle {
     Text {
         id: s9
         text: sysCurrIndex1 === 1 ? "PIN2" : sysCurrIndex1 === 2 ? "PIN5" :
-        sysCurrIndex1 === 3 ? "PIN8" : sysCurrIndex1 === 4 ? "PIN11" : ""
+                                                                   sysCurrIndex1 === 3 ? "PIN8" : sysCurrIndex1 === 4 ? "PIN11" : ""
         color: pRgb(177, 213, 219)
         font.family: fontBold
+        font.bold: true
         font.pixelSize: 16
         anchors.left: s8.left
         anchors.top: s8.bottom
@@ -301,9 +315,10 @@ Rectangle {
     Text {
         id: s10
         text: sysCurrIndex1 === 1 ? "PIN3" : sysCurrIndex1 === 2 ? "PIN6" :
-        sysCurrIndex1 === 3 ? "PIN9" : sysCurrIndex1 === 4 ? "PIN12" : ""
+                                                                   sysCurrIndex1 === 3 ? "PIN9" : sysCurrIndex1 === 4 ? "PIN12" : ""
         color: pRgb(177, 213, 219)
         font.family: fontBold
+        font.bold: true
         font.pixelSize: 16
         anchors.left: s9.left
         anchors.top: s9.bottom
@@ -322,7 +337,7 @@ Rectangle {
         source: "qrc:/image/restoration.png"
         anchors.left: im1.left
         anchors.top: im1.bottom
-        anchors.topMargin: 18
+        anchors.topMargin: 10
         width: 22
         height: 22
     }
@@ -331,7 +346,7 @@ Rectangle {
         source: undetermined ? "qrc:/image/undetermined.png" : "qrc:/image/undetermined1.png"
         anchors.left: im2.left
         anchors.top: im2.bottom
-        anchors.topMargin: 18
+        anchors.topMargin: 10
         width: 22
         height: 22
     }
@@ -340,6 +355,7 @@ Rectangle {
         text: qsTr("报警")
         color: pRgb(177, 213, 219)
         font.family: fontBold
+        font.bold: true
         font.pixelSize: 16
         anchors.top: s8.top
         anchors.left: s8.right
@@ -350,6 +366,7 @@ Rectangle {
         text: qsTr("复位")
         color: pRgb(177, 213, 219)
         font.family: fontBold
+        font.bold: true
         font.pixelSize: 16
         anchors.top: s9.top
         anchors.left: s9.right
@@ -360,6 +377,7 @@ Rectangle {
         text: qsTr("待定")
         color: pRgb(177, 213, 219)
         font.family: fontBold
+        font.bold: true
         font.pixelSize: 16
         anchors.top: s10.top
         anchors.topMargin: 3

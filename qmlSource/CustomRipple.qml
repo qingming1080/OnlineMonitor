@@ -56,7 +56,7 @@ Item {
             ctx.stroke();
 
             var progress_text = qsTr("%1 %").arg(parseInt(percent*100));
-            ctx.font = fontPx + "px '" + fontFamily + "'";
+            ctx.font = "bold 30px 'Source Han Sans', sans-serif";
             ctx.textAlign = "center";
             ctx.fillStyle = waveColor;
             //canvas字体高度和居中还有点问题
@@ -69,7 +69,7 @@ Item {
             ctx.clip();
             drawWave(ctx, waveColor, 0, 0, false);
             ctx.clip();
-            ctx.font = fontPx + "px '" + fontFamily + "'";
+            ctx.font = "bold 30px 'Source Han Sans', sans-serif"
             ctx.textAlign = "center";
             ctx.fillStyle = "white";
             ctx.fillText(progress_text, canvasWidth/2, canvasWidth/2+fontPx/2-5);

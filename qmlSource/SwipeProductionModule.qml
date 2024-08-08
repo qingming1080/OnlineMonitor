@@ -42,132 +42,132 @@ Rectangle {
         color: pRgb(43, 112, 173)
         radius: 5
     }
-//    SwipeView{
-//        id:view
-//        x:58
-//        y:29
-//        width: 1173
-//        height: 664
-//        background: Rectangle{
-//            color: pRgb(43, 112, 173)
-//            radius: 5
-//        }
-//        clip: true
-//        Component.onCompleted: {
-//            //                for(var j = 0; j < equipmentCount;j++){
-//            //                    addPage(j)
-//            //                }
-//            view.setCurrentIndex(swipeIndex)
-//        }
+    //    SwipeView{
+    //        id:view
+    //        x:58
+    //        y:29
+    //        width: 1173
+    //        height: 664
+    //        background: Rectangle{
+    //            color: pRgb(43, 112, 173)
+    //            radius: 5
+    //        }
+    //        clip: true
+    //        Component.onCompleted: {
+    //            //                for(var j = 0; j < equipmentCount;j++){
+    //            //                    addPage(j)
+    //            //                }
+    //            view.setCurrentIndex(swipeIndex)
+    //        }
 
-//        onCurrentIndexChanged: {
-//            swipeCurrIndex = view.currentIndex
-//            sigUpdateUI(view.currentIndex)
-//        }
-//        SwipePage {
-//            width: view.width
-//            height: view.height
-//            color:"transparent"
-//        }
-//        //            Loader {
-//        //                sourceComponent: view1
-//        //                asynchronous:true
-//        //                active: view.currentIndex === 0
-//        //            }
-//        //            Loader {
-//        //                sourceComponent: view2
-//        //                asynchronous:true
-//        //                active: view.currentIndex === 1
-//        //            }
-//        //            Loader {
-//        //                sourceComponent: view3
-//        //                asynchronous:true
-//        //                active: view.currentIndex === 2
-//        //            }
-//        //            Loader {
-//        //                sourceComponent: view4
-//        //                asynchronous:true
-//        //                active: view.currentIndex === 3
-//        //            }
-//        //            Component {
-//        //                id: view1
-//        //                SwipePage {
-//        //                    pbtnIndex:rect1
-//        //                    width: view.width
-//        //                    height: view.height
-//        //                    color:"transparent"
-//        //                }
-//        //            }
+    //        onCurrentIndexChanged: {
+    //            swipeCurrIndex = view.currentIndex
+    //            sigUpdateUI(view.currentIndex)
+    //        }
+    //        SwipePage {
+    //            width: view.width
+    //            height: view.height
+    //            color:"transparent"
+    //        }
+    //        //            Loader {
+    //        //                sourceComponent: view1
+    //        //                asynchronous:true
+    //        //                active: view.currentIndex === 0
+    //        //            }
+    //        //            Loader {
+    //        //                sourceComponent: view2
+    //        //                asynchronous:true
+    //        //                active: view.currentIndex === 1
+    //        //            }
+    //        //            Loader {
+    //        //                sourceComponent: view3
+    //        //                asynchronous:true
+    //        //                active: view.currentIndex === 2
+    //        //            }
+    //        //            Loader {
+    //        //                sourceComponent: view4
+    //        //                asynchronous:true
+    //        //                active: view.currentIndex === 3
+    //        //            }
+    //        //            Component {
+    //        //                id: view1
+    //        //                SwipePage {
+    //        //                    pbtnIndex:rect1
+    //        //                    width: view.width
+    //        //                    height: view.height
+    //        //                    color:"transparent"
+    //        //                }
+    //        //            }
 
-//        //            Component {
-//        //                id: view2
-//        //                SwipePage {
-//        //                    pbtnIndex:rect2
-//        //                    width: view.width
-//        //                    height: view.height
-//        //                    color:"transparent"
-//        //                }
-//        //            }
+    //        //            Component {
+    //        //                id: view2
+    //        //                SwipePage {
+    //        //                    pbtnIndex:rect2
+    //        //                    width: view.width
+    //        //                    height: view.height
+    //        //                    color:"transparent"
+    //        //                }
+    //        //            }
 
-//        //            Component {
-//        //                id: view3
-//        //                SwipePage {
-//        //                    width: view.width
-//        //                    height: view.height
-//        //                    color:"transparent"
-//        //                }
-//        //            }
-//        //            Component {
-//        //                id: view4
-//        //                SwipePage {
-//        //                    width: view.width
-//        //                    height: view.height
-//        //                    color:"transparent"
-//        //                }
-//        //            }
-//        function addPage(index) {
-//            var pageComponent = Qt.createComponent("SwipePage.qml");
-//            if (pageComponent.status === Component.Ready) {
-//                if(index === 0){
-//                    var page = pageComponent.createObject(view, {"pbtnIndex":rect1,"width": view.width, "height": view.height,"color":"transparent"});
-//                }
-//                else if(index === 1){
-//                    page = pageComponent.createObject(view, {"pbtnIndex":rect2,"width": view.width, "height": view.height,"color":"transparent"});
-//                }
-//                else{
-//                    page = pageComponent.createObject(view, {"width": view.width, "height": view.height,"color":"transparent"});
-//                }
-//                view.addItem(page)
-//            }
-//        }
-//        function removePage() {
-//            if (view.count > 0) {
-//                var num = view.count
-//                for(var i = 0;i < num;i++){
-//                    var lastPage = view.contentChildren[i]
-//                    view.removeItem(lastPage);
-//                }
-//            }
-//        }
-//        //        }
-////        PageIndicator {
-////            id: indicator
-////            count: equipmentCount
-////            currentIndex: view.currentIndex
-////            spacing: 33
-////            anchors.bottom: view.bottom
-////            anchors.bottomMargin: 20
-////            anchors.horizontalCenter: parent.horizontalCenter
-////            delegate: Rectangle {
-////                width: 20
-////                height: 20
-////                radius: 10
-////                border.width: 2
-////                border.color: "#149bff"
-////                color: index === indicator.currentIndex ? "#0c5696" : "#e8e8e8"
-////            }
-////        }
-//    }
+    //        //            Component {
+    //        //                id: view3
+    //        //                SwipePage {
+    //        //                    width: view.width
+    //        //                    height: view.height
+    //        //                    color:"transparent"
+    //        //                }
+    //        //            }
+    //        //            Component {
+    //        //                id: view4
+    //        //                SwipePage {
+    //        //                    width: view.width
+    //        //                    height: view.height
+    //        //                    color:"transparent"
+    //        //                }
+    //        //            }
+    //        function addPage(index) {
+    //            var pageComponent = Qt.createComponent("SwipePage.qml");
+    //            if (pageComponent.status === Component.Ready) {
+    //                if(index === 0){
+    //                    var page = pageComponent.createObject(view, {"pbtnIndex":rect1,"width": view.width, "height": view.height,"color":"transparent"});
+    //                }
+    //                else if(index === 1){
+    //                    page = pageComponent.createObject(view, {"pbtnIndex":rect2,"width": view.width, "height": view.height,"color":"transparent"});
+    //                }
+    //                else{
+    //                    page = pageComponent.createObject(view, {"width": view.width, "height": view.height,"color":"transparent"});
+    //                }
+    //                view.addItem(page)
+    //            }
+    //        }
+    //        function removePage() {
+    //            if (view.count > 0) {
+    //                var num = view.count
+    //                for(var i = 0;i < num;i++){
+    //                    var lastPage = view.contentChildren[i]
+    //                    view.removeItem(lastPage);
+    //                }
+    //            }
+    //        }
+    //        //        }
+    ////        PageIndicator {
+    ////            id: indicator
+    ////            count: equipmentCount
+    ////            currentIndex: view.currentIndex
+    ////            spacing: 33
+    ////            anchors.bottom: view.bottom
+    ////            anchors.bottomMargin: 20
+    ////            anchors.horizontalCenter: parent.horizontalCenter
+    ////            delegate: Rectangle {
+    ////                width: 20
+    ////                height: 20
+    ////                radius: 10
+    ////                border.width: 2
+    ////                border.color: "#149bff"
+    ////                color: index === indicator.currentIndex ? "#0c5696" : "#e8e8e8"
+    ////            }
+    ////        }
+    //    }
 
 
     Button{
@@ -190,20 +190,25 @@ Rectangle {
     Text {
         id: version
         color: "#639ed6"
-        x:895
-        y:718
+        anchors.top: timeText.top
+        anchors.right: timeText.left
+        anchors.rightMargin: 20
         font.family: fontBold
+        font.bold: true
         font.pixelSize: 14
         text: qsTr("系统版本号: v2.0.1")
     }
     // 显示时间的文本
     Text {
         id: timeText
-        anchors.left: version.right
-        anchors.top: version.top
-        anchors.leftMargin: 27
+        y:718
+        anchors.right: parent.right
+        anchors.bottom: parent.bottom
+        anchors.rightMargin: 10
+        anchors.bottomMargin: 5
         font.pixelSize: 14
         font.family: fontBold
+        font.bold: true
         color: "#639ed6"
         text: getCurrentTime()
 

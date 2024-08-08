@@ -18,6 +18,7 @@ ComboBox{
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
             font.family: fontBold
+            font.bold: true
             font.pixelSize: 16
         }
     }
@@ -48,6 +49,7 @@ ComboBox{
                 color: pRgb(43, 112, 173)
                 anchors.centerIn: item
                 font.family: fontBold
+                font.bold: true
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
             }

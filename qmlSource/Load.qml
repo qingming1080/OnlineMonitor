@@ -16,10 +16,10 @@ Rectangle {
     Text {
         text: qsTr("在线监测系统")
         x:483
-        y:244
+        y:254
         color: pRgb(43, 112, 173)
         font.family: fontBold
-        font.pixelSize: 64
+        font.pixelSize: LanguageManger.language === "SimplifiedChinese" ? 64 : 40
         width: 384
         height: 92
     }

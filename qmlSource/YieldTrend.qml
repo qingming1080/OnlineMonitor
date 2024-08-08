@@ -90,7 +90,8 @@ Rectangle {
     Text {
         text: qsTr("良率趋势")
         font.family: fontBold
-        font.pixelSize: /*mode === 1 ? 17 :*/ 20
+        font.bold: true
+        font.pixelSize: LanguageManger.language === "SimplifiedChinese" ? 20 : 18
         color: pRgb(153, 204, 255)
         x:17
         y:9
@@ -142,9 +143,6 @@ Rectangle {
         color:"#007dbc"
         Component.onCompleted: {
             btnSwitch()
-            if(equipmentCount > 0){
-                chart.setIndex(swipeCurrIndex)
-            }
         }
         Button{
             id:b1
@@ -179,7 +177,7 @@ Rectangle {
             contentItem: Text {
                 id:t1
                 anchors.centerIn: parent
-                text: "1小时"
+                text: qsTr("1小时")
                 font.pixelSize: 16
                 color: pRgb(153, 204, 255)
                 horizontalAlignment: Text.AlignHCenter
@@ -217,7 +215,7 @@ Rectangle {
             contentItem: Text {
                 id:t2
                 anchors.centerIn: parent
-                text: "24小时"
+                text: qsTr("24小时")
                 font.pixelSize: 16
                 color: pRgb(153, 204, 255)
                 horizontalAlignment: Text.AlignHCenter
@@ -255,7 +253,7 @@ Rectangle {
             contentItem: Text {
                 id:t3
                 anchors.centerIn: parent
-                text: "7天"
+                text: qsTr("7天")
                 font.pixelSize: 16
                 color: pRgb(153, 204, 255)
                 horizontalAlignment: Text.AlignHCenter
@@ -293,7 +291,7 @@ Rectangle {
             contentItem: Text {
                 id:t4
                 anchors.centerIn: parent
-                text: "30天"
+                text: qsTr("30天")
                 font.pixelSize: 16
                 color: pRgb(153, 204, 255)
                 horizontalAlignment: Text.AlignHCenter

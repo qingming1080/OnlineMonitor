@@ -242,13 +242,14 @@ Rectangle {
             color: pRgb(43, 112, 173)
         }
         contentItem: Text {
-            text: "客户密码重置"
+            text: qsTr("客户密码重置")
             font.pixelSize: 20
             color: pRgb(153, 204, 255)
             anchors.centerIn: parent  // 确保文本在按钮内居中对齐
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
             font.family: fontBold
+            font.bold: true
         }
         onPressed: {
 
@@ -267,13 +268,14 @@ Rectangle {
             color: pRgb(43, 112, 173)
         }
         contentItem: Text {
-            text: "保存"
+            text: qsTr("保存")
             font.pixelSize: 20
             color: pRgb(153, 204, 255)
             anchors.centerIn: parent  // 确保文本在按钮内居中对齐
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
             font.family: fontBold
+            font.bold: true
         }
         onPressed: {
             if(DeviceManager.deviceList[0]){
@@ -315,13 +317,14 @@ Rectangle {
             color: pRgb(43, 112, 173)
         }
         contentItem: Text {
-            text: "初始化"
+            text: qsTr("初始化")
             font.pixelSize: 20
             color: pRgb(153, 204, 255)
             anchors.centerIn: parent  // 确保文本在按钮内居中对齐
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
             font.family: fontBold
+            font.bold: true
         }
         onPressed: {
 
@@ -330,20 +333,25 @@ Rectangle {
     Text {
         id: version
         color: "#639ed6"
-        x:895
-        y:718
+        anchors.top: timeText.top
+        anchors.right: timeText.left
+        anchors.rightMargin: 20
         font.family: fontBold
+        font.bold: true
         font.pixelSize: 14
         text: qsTr("系统版本号: v2.0.1")
     }
     // 显示时间的文本
     Text {
         id: timeText
-        anchors.left: version.right
-        anchors.top: version.top
-        anchors.leftMargin: 27
+        y:718
+        anchors.right: parent.right
+        anchors.bottom: parent.bottom
+        anchors.rightMargin: 10
+        anchors.bottomMargin: 5
         font.pixelSize: 14
         font.family: fontBold
+        font.bold: true
         color: "#639ed6"
         text: getCurrentTime()
 

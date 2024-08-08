@@ -26,18 +26,18 @@ Rectangle {
                         imgcenterY = 4
                         imgcenterX = 10
                         imgtopMargin = 14
-                        textMargin = 17
+                        textMargin = 23
                         imgWidHei = 20
-                        powerY = 46
+                        powerY = 50
                         imgY = 48
                     }
                     else{
                         imgcenterY = 6
                         imgcenterX = 17
                         imgtopMargin = 17
-                        textMargin = 30
+                        textMargin = 35
                         imgWidHei = 31
-                        powerY = 72
+                        powerY = 75
                         imgY = 68
                     }
                 }
@@ -47,18 +47,18 @@ Rectangle {
                         imgcenterY = 4
                         imgcenterX = 10
                         imgtopMargin = 14
-                        textMargin = 17
+                        textMargin = 23
                         imgWidHei = 20
-                        powerY = 46
+                        powerY = 50
                         imgY = 48
                     }
                     else{
                         imgcenterY = 6
                         imgcenterX = 17
                         imgtopMargin = 17
-                        textMargin = 30
+                        textMargin = 35
                         imgWidHei = 31
-                        powerY = 72
+                        powerY = 75
                         imgY = 68
                     }
                 }
@@ -68,18 +68,18 @@ Rectangle {
                         imgcenterY = 4
                         imgcenterX = 10
                         imgtopMargin = 14
-                        textMargin = 17
+                        textMargin = 23
                         imgWidHei = 20
-                        powerY = 46
+                        powerY = 50
                         imgY = 48
                     }
                     else{
                         imgcenterY = 6
                         imgcenterX = 17
                         imgtopMargin = 17
-                        textMargin = 30
+                        textMargin = 35
                         imgWidHei = 31
-                        powerY = 72
+                        powerY = 75
                         imgY = 68
                     }
                 }
@@ -89,18 +89,18 @@ Rectangle {
                         imgcenterY = 4
                         imgcenterX = 10
                         imgtopMargin = 14
-                        textMargin = 17
+                        textMargin = 23
                         imgWidHei = 20
-                        powerY = 46
+                        powerY = 50
                         imgY = 48
                     }
                     else{
                         imgcenterY = 6
                         imgcenterX = 17
                         imgtopMargin = 17
-                        textMargin = 30
+                        textMargin = 35
                         imgWidHei = 31
-                        powerY = 72
+                        powerY = 75
                         imgY = 68
                     }
                 }
@@ -112,16 +112,16 @@ Rectangle {
                         imgcenterY = 4
                         imgcenterX = 10
                         imgtopMargin = 14
-                        textMargin = 17
+                        textMargin = 23
                         imgWidHei = 24
-                        powerY = 59
+                        powerY = 65
                         imgY = 59
                     }
                     else{
                         imgcenterY = 6
                         imgcenterX = 17
                         imgtopMargin = 17
-                        textMargin = 30
+                        textMargin = 35
                         imgWidHei = 36
                         powerY = 85
                         imgY = 79
@@ -133,7 +133,7 @@ Rectangle {
                         imgcenterY = 4
                         imgcenterX = 10
                         imgtopMargin = 14
-                        textMargin = 17
+                        textMargin = 23
                         imgWidHei = 24
                         powerY = 59
                         imgY = 59
@@ -142,7 +142,7 @@ Rectangle {
                         imgcenterY = 6
                         imgcenterX = 17
                         imgtopMargin = 17
-                        textMargin = 30
+                        textMargin = 35
                         imgWidHei = 36
                         powerY = 85
                         imgY = 79
@@ -154,7 +154,7 @@ Rectangle {
                         imgcenterY = 4
                         imgcenterX = 10
                         imgtopMargin = 14
-                        textMargin = 17
+                        textMargin = 23
                         imgWidHei = 24
                         powerY = 59
                         imgY = 59
@@ -163,7 +163,7 @@ Rectangle {
                         imgcenterY = 6
                         imgcenterX = 17
                         imgtopMargin = 17
-                        textMargin = 30
+                        textMargin = 35
                         imgWidHei = 36
                         powerY = 85
                         imgY = 79
@@ -175,7 +175,7 @@ Rectangle {
                         imgcenterY = 4
                         imgcenterX = 10
                         imgtopMargin = 14
-                        textMargin = 17
+                        textMargin = 23
                         imgWidHei = 24
                         powerY = 59
                         imgY = 59
@@ -184,7 +184,7 @@ Rectangle {
                         imgcenterY = 6
                         imgcenterX = 17
                         imgtopMargin = 17
-                        textMargin = 30
+                        textMargin = 35
                         imgWidHei = 36
                         powerY = 85
                         imgY = 79
@@ -202,7 +202,8 @@ Rectangle {
     Text {
         text: qsTr("焊接结果")
         font.family: fontBold
-        font.pixelSize: /*mode === 1 ? 17 :*/ 20
+        font.bold: true
+        font.pixelSize: LanguageManger.language === "SimplifiedChinese" ? 20 : 18
         color: pRgb(153, 204, 255)
         x:17
         y:9
@@ -219,6 +220,7 @@ Rectangle {
         y:powerY
         text: qsTr("功率: ") + eqText1 + "W"
         font.family: fontBold
+        font.bold: true
         font.pixelSize:/*mode === 1 ? 14:*/ 16
         color: pRgb(171, 206, 213)
     }
@@ -226,6 +228,7 @@ Rectangle {
         id:t2
         text: qsTr("时间: ") + eqText2 + "S"
         font.family: fontBold
+        font.bold: true
         font.pixelSize:/*mode === 1 ? 14: */16
         color: pRgb(171, 206, 213)
         anchors.left: t1.left
@@ -236,6 +239,7 @@ Rectangle {
         id:t3
         text: qsTr("能量: ") + eqText3 + "J"
         font.family: fontBold
+        font.bold: true
         font.pixelSize:/*mode === 1 ? 14:*/ 16
         color: pRgb(171, 206, 213)
         anchors.left: t2.left
@@ -246,6 +250,7 @@ Rectangle {
         id:t4
         text: qsTr("焊前高度: ") + eqText4 + "mm"
         font.family: fontBold
+        font.bold: true
         font.pixelSize: /*mode === 1 ? 14:*/16
         color: pRgb(171, 206, 213)
         anchors.left: t3.left
@@ -258,6 +263,7 @@ Rectangle {
         id:t5
         text: qsTr("焊后高度: ") + eqText5 + "mm"
         font.family: fontBold
+        font.bold: true
         font.pixelSize: /*mode === 1 ? 14:*/16
         color: pRgb(171, 206, 213)
         anchors.left: t4.left

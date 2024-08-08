@@ -88,12 +88,13 @@ Rectangle {
     }
     Text {
         x:94
-        y:6
+        y:15
         width: 180
         height: 44
-        text: "在线监测系统"
+        text: qsTr("在线监测系统")
         color: pRgb(153, 204, 255)
         font.family: fontBold
+        font.bold: true
         font.pixelSize: 30
     }
     CustomBtn{
@@ -102,7 +103,7 @@ Rectangle {
         tmp:true
         width: 157
         height: 60
-        btnText:"生产界面"
+        btnText:qsTr("生产界面")
         index:1
         Connections{
             target: bt1
@@ -119,7 +120,7 @@ Rectangle {
         anchors.left: bt1.right
         width: 157
         height: 60
-        btnText:"历史记录"
+        btnText:qsTr("历史记录")
         index:2
         Connections{
             target: bt2
@@ -136,7 +137,7 @@ Rectangle {
         anchors.left: bt2.right
         width: 157
         height: 60
-        btnText:"系统配置"
+        btnText:qsTr("系统配置")
         index:3
         Connections{
             target: bt3

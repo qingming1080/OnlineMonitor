@@ -91,7 +91,7 @@ Popup {
             height: 236
             color: "#b1d5db"
             Text {
-                x:203
+                anchors.horizontalCenter: parent.horizontalCenter
                 y:49
                 text: qsTr("请输入操作员密码")
                 font.pixelSize: 20
@@ -99,6 +99,7 @@ Popup {
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
                 font.family: fontBold
+                font.bold: true
             }
             TextField{
                 id:t1
@@ -110,6 +111,7 @@ Popup {
                 verticalAlignment: TextInput.AlignVCenter
                 color: "#004b8d"
                 font.family: fontBold
+                font.bold: true
                 font.pixelSize: 20
                 background: Rectangle{
                     radius: 6
@@ -139,13 +141,14 @@ Popup {
                 }
                 contentItem: Text {
                     id: mt1
-                    text: "确认"
+                    text: qsTr("确认")
                     font.pixelSize: mode == 1 ? 17:20
                     color: pRgb(153, 204, 255)
                     anchors.centerIn: parent  // 确保文本在按钮内居中对齐
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
                     font.family: fontBold
+                    font.bold: true
                 }
                 onPressed: {
                     if(DeviceManager.getPasswordLevel(t1.text) === 1){
@@ -187,7 +190,7 @@ Popup {
             height: 236
             color: "#b1d5db"
             Text {
-                x:203
+                anchors.horizontalCenter: parent.horizontalCenter
                 y:49
                 text: qsTr("密码错误请重新输入!")
                 font.pixelSize: 20
@@ -195,6 +198,7 @@ Popup {
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
                 font.family: fontBold
+                font.bold: true
             }
             Button{
                 id:s4
@@ -208,13 +212,14 @@ Popup {
                 }
                 contentItem: Text {
                     id: mt1
-                    text: "确认"
+                    text:qsTr("确认")
                     font.pixelSize: mode == 1 ? 17:20
                     color: pRgb(153, 204, 255)
                     anchors.centerIn: parent  // 确保文本在按钮内居中对齐
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
                     font.family: fontBold
+                    font.bold: true
                 }
                 onPressed: {
                     close()
@@ -231,7 +236,7 @@ Popup {
             height: 236
             color: "#b1d5db"
             Text {
-                x:223
+                anchors.horizontalCenter: parent.horizontalCenter
                 y:49
                 text: qsTr("请输入新密码")
                 font.pixelSize: 20
@@ -239,6 +244,7 @@ Popup {
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
                 font.family: fontBold
+                font.bold: true
             }
             TextField{
                 id:t1
@@ -250,6 +256,7 @@ Popup {
                 verticalAlignment: TextInput.AlignVCenter
                 color: "#004b8d"
                 font.family: fontBold
+                font.bold: true
                 font.pixelSize: 20
                 background: Rectangle{
                     radius: 6
@@ -272,13 +279,14 @@ Popup {
                 }
                 contentItem: Text {
                     id: mt1
-                    text: "确认"
+                    text: qsTr("确认")
                     font.pixelSize: mode == 1 ? 17:20
                     color: pRgb(153, 204, 255)
                     anchors.centerIn: parent  // 确保文本在按钮内居中对齐
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
                     font.family: fontBold
+                    font.bold: true
                 }
                 onPressed: {
                     DeviceManager.setUserPassword(t1.text)
@@ -295,7 +303,7 @@ Popup {
             height: 236
             color: "#b1d5db"
             Text {
-                x:203
+                anchors.horizontalCenter: parent.horizontalCenter
                 y:49
                 text: qsTr("样本数不足请继续采样!")
                 font.pixelSize: 20
@@ -303,6 +311,7 @@ Popup {
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
                 font.family: fontBold
+                font.bold: true
             }
             Button{
                 id:s4
@@ -316,13 +325,14 @@ Popup {
                 }
                 contentItem: Text {
                     id: mt1
-                    text: "确认"
+                    text: qsTr("确认")
                     font.pixelSize: mode == 1 ? 17:20
                     color: pRgb(153, 204, 255)
                     anchors.centerIn: parent  // 确保文本在按钮内居中对齐
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
                     font.family: fontBold
+                    font.bold: true
                 }
                 onPressed: {
                     close()
@@ -344,6 +354,7 @@ Popup {
                 text: qsTr("简体中文")
                 color: "#004b8d"
                 font.family: fontBold
+                font.bold: true
                 font.pixelSize: 20
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
@@ -360,13 +371,12 @@ Popup {
                     width: 30
                     height: 30
                     radius: 15
-                    color: bt1.checked ? "#0d988c" : pRgb(232, 232, 232)
+                    color: LanguageManger.language === "SimplifiedChinese" ? "#0d988c" : pRgb(232, 232, 232)
                     border.color: "#004b8d"
                     border.width: 2
                 }
-                onPressed: {
+                onPressed: LanguageManger.loadLanguage("SimplifiedChinese")
 
-                }
             }
             Text {
                 id: s2
@@ -375,6 +385,7 @@ Popup {
                 text: qsTr("English")
                 color: "#004b8d"
                 font.family: fontBold
+                font.bold: true
                 font.pixelSize: 20
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
@@ -390,13 +401,11 @@ Popup {
                     width: 30
                     height: 30
                     radius: 15
-                    color: bt2.checked ? "#0d988c" : pRgb(232, 232, 232)
+                    color: LanguageManger.language === "English" ? "#0d988c" : pRgb(232, 232, 232)
                     border.color: "#004b8d"
                     border.width: 2
                 }
-                onPressed: {
-
-                }
+                onPressed: LanguageManger.loadLanguage("English")
             }
             Text {
                 id: s3
@@ -405,6 +414,7 @@ Popup {
                 text: qsTr("其他语言")
                 color: "#004b8d"
                 font.family: fontBold
+                font.bold: true
                 font.pixelSize: 20
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
@@ -483,6 +493,7 @@ Popup {
                                 return str
                             }
                             font.family: fontBold
+                            font.bold: true
                             color:"#004b8d"
                         }
                     }
@@ -506,6 +517,7 @@ Popup {
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
                 font.family: fontBold
+                font.bold: true
             }
             Button{
                 id:s4
@@ -519,13 +531,14 @@ Popup {
                 }
                 contentItem: Text {
                     id: mt1
-                    text: "确认"
+                    text: qsTr("确认")
                     font.pixelSize: mode == 1 ? 17:20
                     color: pRgb(153, 204, 255)
                     anchors.centerIn: parent  // 确保文本在按钮内居中对齐
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
                     font.family: fontBold
+                    font.bold: true
                 }
                 onPressed: {
                     close()

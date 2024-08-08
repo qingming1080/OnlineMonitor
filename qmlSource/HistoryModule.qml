@@ -66,6 +66,7 @@ Rectangle {
             anchors.topMargin: 20
             color: pRgb(177, 213, 219)
             font.family: fontBold
+            font.bold: true
             font.pixelSize: 20
         }
         RadioButton{
@@ -74,6 +75,7 @@ Rectangle {
             height: 34
             anchors.left: name.right
             anchors.top: name.top
+            anchors.topMargin: -5
             anchors.leftMargin: 30
             ButtonGroup.group: group1
             checked: true
@@ -94,20 +96,22 @@ Rectangle {
             id: b1
             anchors.left: bt1.right
             anchors.top: bt1.top
+            anchors.topMargin: 7
             anchors.leftMargin: 14
             text: qsTr("全选")
             color: pRgb(177, 213, 219)
             font.family: fontBold
-            font.pixelSize: 20
+            font.bold: true
+            font.pixelSize: LanguageManger.language === "SimplifiedChinese" ?20:16
         }
 
         RadioButton{
             id:bt2
             width: 34
             height: 34
-            anchors.left: b1.right
-            anchors.top: b1.top
-            anchors.leftMargin: 40
+            anchors.verticalCenter: bt1.verticalCenter
+            anchors.left: bt1.right
+            anchors.leftMargin: 80
             ButtonGroup.group: group1
             indicator: Rectangle
             {
@@ -124,22 +128,23 @@ Rectangle {
         }
         Text {
             id: b2
+            anchors.verticalCenter: bt2.verticalCenter
             anchors.left: bt2.right
-            anchors.top: bt2.top
             anchors.leftMargin: 14
             text: qsTr("设备1")
             color: pRgb(177, 213, 219)
             font.family: fontBold
-            font.pixelSize: 20
+            font.bold: true
+            font.pixelSize: LanguageManger.language === "SimplifiedChinese" ?20:16
         }
 
         RadioButton{
             id:bt3
             width: 34
             height: 34
-            anchors.left: parent.left
-            anchors.top: name.top
-            anchors.leftMargin: 338
+            anchors.verticalCenter: bt2.verticalCenter
+            anchors.left: bt2.right
+            anchors.leftMargin: 80
             ButtonGroup.group: group1
             indicator: Rectangle
             {
@@ -164,13 +169,14 @@ Rectangle {
         }
         Text {
             id: b3
+            anchors.verticalCenter: bt3.verticalCenter
             anchors.left: bt3.right
-            anchors.top: bt3.top
             anchors.leftMargin: 14
             text: qsTr("设备2")
             color: pRgb(177, 213, 219)
             font.family: fontBold
-            font.pixelSize: 20
+            font.bold: true
+            font.pixelSize: LanguageManger.language === "SimplifiedChinese" ?20:16
             visible: bt3.visible
         }
 
@@ -178,9 +184,9 @@ Rectangle {
             id:bt4
             width: 34
             height: 34
-            anchors.left: parent.left
-            anchors.top: name.top
-            anchors.leftMargin: 462
+            anchors.verticalCenter: bt3.verticalCenter
+            anchors.left: bt3.right
+            anchors.leftMargin: 80
             ButtonGroup.group: group1
             indicator: Rectangle
             {
@@ -205,13 +211,14 @@ Rectangle {
         }
         Text {
             id: b4
+            anchors.verticalCenter: bt4.verticalCenter
             anchors.left: bt4.right
-            anchors.top: bt4.top
             anchors.leftMargin: 14
             text: qsTr("设备3")
             color: pRgb(177, 213, 219)
             font.family: fontBold
-            font.pixelSize: 20
+            font.bold: true
+            font.pixelSize: LanguageManger.language === "SimplifiedChinese" ?20:16
             visible: bt4.visible
         }
 
@@ -219,9 +226,9 @@ Rectangle {
             id:bt5
             width: 34
             height: 34
-            anchors.left: parent.left
-            anchors.top: name.top
-            anchors.leftMargin: 586
+            anchors.verticalCenter: bt4.verticalCenter
+            anchors.left: bt4.right
+            anchors.leftMargin: 80
             ButtonGroup.group: group1
             indicator: Rectangle
             {
@@ -246,13 +253,14 @@ Rectangle {
         }
         Text {
             id: b5
+            anchors.verticalCenter: bt5.verticalCenter
             anchors.left: bt5.right
-            anchors.top: bt5.top
             anchors.leftMargin: 14
             text: qsTr("设备4")
             color: pRgb(177, 213, 219)
             font.family: fontBold
-            font.pixelSize: 20
+            font.bold: true
+            font.pixelSize: LanguageManger.language === "SimplifiedChinese" ?20:16
             visible: bt5.visible
         }
 
@@ -261,17 +269,18 @@ Rectangle {
             text: qsTr("结果")
             anchors.top: name.top
             anchors.left: parent.left
-            anchors.leftMargin: 783
+            anchors.leftMargin: 723
             color: pRgb(177, 213, 219)
             font.family: fontBold
+            font.bold: true
             font.pixelSize: 20
         }
         RadioButton{
             id:bt8
             width: 34
             height: 34
+            anchors.verticalCenter: name1.verticalCenter
             anchors.left: name1.right
-            anchors.top: name.top
             anchors.leftMargin: 28
             ButtonGroup.group: group2
             checked: true
@@ -290,21 +299,22 @@ Rectangle {
         }
         Text {
             id: b8
+            anchors.verticalCenter: bt8.verticalCenter
             anchors.left: bt8.right
-            anchors.top: bt8.top
             anchors.leftMargin: 14
             text: qsTr("全选")
             color: pRgb(177, 213, 219)
             font.family: fontBold
-            font.pixelSize: 20
+            font.bold: true
+            font.pixelSize: LanguageManger.language === "SimplifiedChinese" ?20:16
         }
         RadioButton{
             id:bt9
             width: 34
             height: 34
-            anchors.left: b8.right
-            anchors.top: b8.top
-            anchors.leftMargin: 30
+            anchors.verticalCenter: bt8.verticalCenter
+            anchors.left: bt8.right
+            anchors.leftMargin: 70
             ButtonGroup.group: group2
             indicator: Rectangle
             {
@@ -321,21 +331,22 @@ Rectangle {
         }
         Text {
             id: b9
+            anchors.verticalCenter: bt9.verticalCenter
             anchors.left: bt9.right
-            anchors.top: bt9.top
             anchors.leftMargin: 6
             text: qsTr("良")
             color: pRgb(177, 213, 219)
             font.family: fontBold
-            font.pixelSize: 20
+            font.bold: true
+            font.pixelSize: LanguageManger.language === "SimplifiedChinese" ?20:16
         }
         RadioButton{
             id:bt11
             width: 34
             height: 34
-            anchors.left: b9.right
-            anchors.top: b9.top
-            anchors.leftMargin: 15
+            anchors.verticalCenter: bt9.verticalCenter
+            anchors.left: bt9.right
+            anchors.leftMargin: 70
             ButtonGroup.group: group2
             indicator: Rectangle
             {
@@ -352,21 +363,22 @@ Rectangle {
         }
         Text {
             id: b11
+            anchors.verticalCenter: bt11.verticalCenter
             anchors.left: bt11.right
-            anchors.top: bt11.top
             anchors.leftMargin: 6
             text: qsTr("可疑")
             color: pRgb(177, 213, 219)
             font.family: fontBold
-            font.pixelSize: 20
+            font.bold: true
+            font.pixelSize: LanguageManger.language === "SimplifiedChinese" ?20:16
         }
         RadioButton{
             id:bt10
             width: 34
             height: 34
-            anchors.left: b11.right
-            anchors.top: b11.top
-            anchors.leftMargin: 8
+            anchors.verticalCenter: bt11.verticalCenter
+            anchors.left: bt11.right
+            anchors.leftMargin: 80
             ButtonGroup.group: group2
             indicator: Rectangle
             {
@@ -383,13 +395,14 @@ Rectangle {
         }
         Text {
             id: b10
+            anchors.verticalCenter: bt10.verticalCenter
             anchors.left: bt10.right
-            anchors.top: bt10.top
-            anchors.leftMargin: 14
+            anchors.leftMargin: 10
             text: qsTr("次品")
             color: pRgb(177, 213, 219)
             font.family: fontBold
-            font.pixelSize: 20
+            font.bold: true
+            font.pixelSize: LanguageManger.language === "SimplifiedChinese" ?20:16
         }
     }
     Rectangle{
@@ -406,6 +419,7 @@ Rectangle {
             font.pixelSize: 16
             text: "设备名称"
             font.family: fontBold
+            font.bold: true
             color: pRgb(153, 204, 255)
         }
         Text{
@@ -414,6 +428,7 @@ Rectangle {
             font.pixelSize: 16
             text: "日期"
             font.family: fontBold
+            font.bold: true
             color: pRgb(153, 204, 255)
         }
         Text{
@@ -422,6 +437,7 @@ Rectangle {
             font.pixelSize: 16
             text: "能量"
             font.family: fontBold
+            font.bold: true
             color: pRgb(153, 204, 255)
         }
         Text{
@@ -430,6 +446,7 @@ Rectangle {
             font.pixelSize: 16
             text: "功率"
             font.family: fontBold
+            font.bold: true
             color: pRgb(153, 204, 255)
         }
         Text{
@@ -438,6 +455,7 @@ Rectangle {
             font.pixelSize: 16
             text: "结果"
             font.family: fontBold
+            font.bold: true
             color: pRgb(153, 204, 255)
         }
         ListView{
@@ -458,6 +476,7 @@ Rectangle {
                     font.pixelSize: 16
                     text: DeviceManager.getHistoryName(welder_id)
                     font.family: fontBold
+                    font.bold: true
                     color: index % 2 === 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
                 }
                 Text{
@@ -466,6 +485,7 @@ Rectangle {
                     font.pixelSize: 16
                     text: create_time
                     font.family: fontBold
+                    font.bold: true
                     color: index % 2 === 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
                 }
                 Text{
@@ -474,6 +494,7 @@ Rectangle {
                     font.pixelSize: 16
                     text: energy
                     font.family: fontBold
+                    font.bold: true
                     color: index % 2 === 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
                 }
                 Text{
@@ -482,6 +503,7 @@ Rectangle {
                     font.pixelSize: 16
                     text: power
                     font.family: fontBold
+                    font.bold: true
                     color: index % 2 === 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
                 }
                 Text{
@@ -490,6 +512,7 @@ Rectangle {
                     font.pixelSize: 16
                     text: final_result===0?"良品":final_result===1?"次品":"可疑"
                     font.family: fontBold
+                    font.bold: true
                     color: index % 2 === 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
                 }
             }
@@ -500,20 +523,25 @@ Rectangle {
     Text {
         id: version
         color: "#639ed6"
-        x:895
-        y:718
+        anchors.top: timeText.top
+        anchors.right: timeText.left
+        anchors.rightMargin: 20
         font.family: fontBold
+        font.bold: true
         font.pixelSize: 14
         text: qsTr("系统版本号: v2.0.1")
     }
     // 显示时间的文本
     Text {
         id: timeText
-        anchors.left: version.right
-        anchors.top: version.top
-        anchors.leftMargin: 27
+        y:718
+        anchors.right: parent.right
+        anchors.bottom: parent.bottom
+        anchors.rightMargin: 10
+        anchors.bottomMargin: 5
         font.pixelSize: 14
         font.family: fontBold
+        font.bold: true
         color: "#639ed6"
         text: getCurrentTime()
 

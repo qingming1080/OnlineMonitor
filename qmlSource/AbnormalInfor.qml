@@ -8,7 +8,8 @@ Rectangle {
     Text {
         text: qsTr("异常信息")
         font.family: fontBold
-        font.pixelSize: /*mode === 1 ? 17:*/20
+        font.bold: true
+        font.pixelSize: LanguageManger.language === "SimplifiedChinese" ? 20 : 18
         color: pRgb(153, 204, 255)
         x:17
         y:9
@@ -65,6 +66,7 @@ Rectangle {
                         return str
                     }
                     font.family: fontBold
+                    font.bold: true
                     color:listColor
                 }
             }

@@ -43,7 +43,7 @@ Rectangle {
         }
     }
     function loadViewpro(viewName, component) {
-//        var startTime = new Date();
+        //        var startTime = new Date();
         if(viewName === 3){
             switchingEquipment = true
         }
@@ -62,9 +62,9 @@ Rectangle {
             prostack.push(newItem);
         }
 
-//        var endTime = new Date();
-//        var loadTime = endTime - startTime;
-//        console.log("I WANT ProductionModule.qml 加载时间:", loadTime, "毫秒");
+        //        var endTime = new Date();
+        //        var loadTime = endTime - startTime;
+        //        console.log("I WANT ProductionModule.qml 加载时间:", loadTime, "毫秒");
     }
     function buttonSynchronization(index,time){
         if(index === 1){
@@ -99,8 +99,8 @@ Rectangle {
             Connections{
                 target: window
                 function onSigOneModel(){
-                    mt1.text = "创建模型"
-                    mt2.text = "清除数据"
+                    mt1.text = qsTr("创建模型")
+                    mt2.text = qsTr("清除数据")
                     loader.sourceComponent = mode2
                     loader1.sourceComponent = weld2
                 }
@@ -221,6 +221,7 @@ Rectangle {
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
                     font.family: fontBold
+                    font.bold: true
                 }
                 onPressed: {
                     if(mt1.text === "新建模型"){
@@ -256,12 +257,13 @@ Rectangle {
                 contentItem: Text {
                     id:mt2
                     anchors.centerIn: parent
-                    text:"新增设备"
+                    text: qsTr("新增设备")
                     font.pixelSize:mode == 1 ? 17: 20
                     color: pRgb(153, 204, 255)
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
                     font.family: fontBold
+                    font.bold: true
                 }
                 onPressed: {
                     if(mt2.text == "新增设备"){
@@ -386,8 +388,9 @@ Rectangle {
                             x:808/7/2+5-width/2
                             y:11
                             font.pixelSize: 16
-                            text: "全选"
+                            text: qsTr("全选")
                             font.family: fontBold
+                            font.bold: true
                             color: pRgb(153, 204, 255)
                         }
                         Button{
@@ -421,8 +424,9 @@ Rectangle {
                             x:960/8 + 960/8/2-width/2
                             y:11
                             font.pixelSize: 16
-                            text: "序号"
+                            text: qsTr("序号")
                             font.family: fontBold
+                            font.bold: true
                             color: pRgb(171, 206, 213)
                         }
                         Text{
@@ -430,8 +434,9 @@ Rectangle {
                             x:960/8*2 + 960/8/2-width/2
                             y:11
                             font.pixelSize: 16
-                            text: "焊接时间"
+                            text: qsTr("焊接时间")
                             font.family: fontBold
+                            font.bold: true
                             color: pRgb(171, 206, 213)
                         }
                         Text{
@@ -439,8 +444,9 @@ Rectangle {
                             x:960/8*3 + 960/8/2-width/2
                             y:11
                             font.pixelSize: 16
-                            text: "功率"
+                            text: qsTr("功率")
                             font.family: fontBold
+                            font.bold: true
                             color: pRgb(171, 206, 213)
                         }
                         Text{
@@ -448,8 +454,9 @@ Rectangle {
                             x:960/8*4 + 960/8/2-width/2
                             y:11
                             font.pixelSize: 16
-                            text: "能量"
+                            text: qsTr("能量")
                             font.family: fontBold
+                            font.bold: true
                             color: pRgb(171, 206, 213)
                         }
                         Text{
@@ -457,8 +464,9 @@ Rectangle {
                             x:960/8*5 + 960/8/2-width/2
                             y:11
                             font.pixelSize: 16
-                            text: "日期"
+                            text: qsTr("日期")
                             font.family: fontBold
+                            font.bold: true
                             color: pRgb(171, 206, 213)
                         }
                         Text{
@@ -466,8 +474,9 @@ Rectangle {
                             x:960/8*6 + 960/8/2-width/2
                             y:11
                             font.pixelSize: 16
-                            text: "拉力"
+                            text: qsTr("拉力")
                             font.family: fontBold
+                            font.bold: true
                             color: pRgb(171, 206, 213)
                         }
                         Text{
@@ -475,8 +484,9 @@ Rectangle {
                             x:960/8*7 + 960/8/2-width/2
                             y:11
                             font.pixelSize: 16
-                            text: "残留度"
+                            text: qsTr("残留度")
                             font.family: fontBold
+                            font.bold: true
                             color: pRgb(171, 206, 213)
                         }
                         ListView{
@@ -564,6 +574,7 @@ Rectangle {
                                     font.pixelSize: 16
                                     text: serial_number
                                     font.family: fontBold
+                                    font.bold: true
                                     color: index % 2 !== 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
                                 }
                                 Text{
@@ -572,6 +583,7 @@ Rectangle {
                                     font.pixelSize: 16
                                     text: time
                                     font.family: fontBold
+                                    font.bold: true
                                     color: index % 2 !== 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
                                 }
                                 Text{
@@ -580,6 +592,7 @@ Rectangle {
                                     font.pixelSize: 16
                                     text: power
                                     font.family: fontBold
+                                    font.bold: true
                                     color: index % 2 !== 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
                                 }
                                 Text{
@@ -588,6 +601,7 @@ Rectangle {
                                     font.pixelSize: 16
                                     text: energy
                                     font.family: fontBold
+                                    font.bold: true
                                     color: index % 2 !== 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
                                 }
                                 Text{
@@ -596,6 +610,7 @@ Rectangle {
                                     font.pixelSize: 16
                                     text: create_time
                                     font.family: fontBold
+                                    font.bold: true
                                     color: index % 2 !== 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
                                 }
                                 TextField{
@@ -608,6 +623,7 @@ Rectangle {
                                     verticalAlignment: TextInput.AlignVCenter
                                     color: index % 2 === 0 ? pRgb(175, 195, 216) : "#014c8d"
                                     font.family: fontBold
+                                    font.bold: true
                                     font.pixelSize: 16
                                     text:actual_force
                                     inputMethodHints: Qt.ImhDigitsOnly
@@ -648,6 +664,7 @@ Rectangle {
                                     verticalAlignment: TextInput.AlignVCenter
                                     color: index % 2 === 0 ? pRgb(175, 195, 216) : "#014c8d"
                                     font.family: fontBold
+                                    font.bold: true
                                     font.pixelSize: 16
                                     text:actual_degree
                                     inputMethodHints: Qt.ImhDigitsOnly
@@ -709,20 +726,25 @@ Rectangle {
     Text {
         id: version
         color: "#639ed6"
-        x:895
-        y:718
+        anchors.top: timeText.top
+        anchors.right: timeText.left
+        anchors.rightMargin: 20
         font.family: fontBold
+        font.bold: true
         font.pixelSize: 14
         text: qsTr("系统版本号: v2.0.1")
     }
     // 显示时间的文本
     Text {
         id: timeText
-        anchors.left: version.right
-        anchors.top: version.top
-        anchors.leftMargin: 27
+        y:718
+        anchors.right: parent.right
+        anchors.bottom: parent.bottom
+        anchors.rightMargin: 10
+        anchors.bottomMargin: 5
         font.pixelSize: 14
         font.family: fontBold
+        font.bold: true
         color: "#639ed6"
         text: getCurrentTime()
 

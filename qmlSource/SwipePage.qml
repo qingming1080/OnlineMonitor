@@ -16,8 +16,13 @@ Rectangle {
     property int parameter4: 0
     property int parameter5: 0
     function newModel(){
-        mt1.text = "创建模型"
-        //        mt2.text = "清除数据"
+        if(LanguageManger.language === "SimplifiedChinese"){
+            mt1.text = qsTr("创建模型")
+        }
+        else{
+            mt1.text = qsTr("Create Model")
+        }
+
         loader.sourceComponent = mode2
         loader1.sourceComponent = weld2
     }
@@ -29,166 +34,166 @@ Rectangle {
             createModel = true
         }
     }
-//    Button{
-//        width: 50
-//        height: 50
-//        Image {
-//            anchors.fill: parent
-//            width: 50
-//            height: 50
-//            source: "qrc:/image/switch.png"
-//        }
-//        background: Rectangle{
-//            color: "transparent"
-//        }
-//        onPressed: {
-//            deviceStatus.visible = !deviceStatus.visible
-//        }
-//    }
-//    Rectangle {
-//        id: deviceStatus
-//        radius: 3
-//        x:42
-//        y:35
-//        width:  258
-//        height: mt1.text === "新建模型" ? 255 :225
-//        color: "#0c5696"
-//        Rectangle{
-//            width: 258
-//            height: 44
-//            radius: 3
-//            color: "#007dbc"
-//            Text {
-//                id:t2
-//                text: qsTr("设备名称")
-//                font.family: fontBold
-//                font.pixelSize:  20
-//                color: pRgb(171, 206, 213)
-//                anchors.centerIn: parent
-//            }
-//        }
-//        Button{
-//            id:b1
-//            x:5
-//            y:50
-//            width: 248
-//            height: 44
-//            background: Rectangle{
-//                radius: 5
-//                width: 248
-//                height: 44
-//                color: pRgb(177, 213, 219)
-//                border.color: "#007dbc"
-//                border.width: 2
-//                Text {
-//                    text: {
-//                        if(DeviceManager.deviceList[0]){
-//                            return DeviceManager.deviceList[0].pDeviceInformation.name
-//                        }
-//                        return ""
-//                    }
-//                    font.family: fontBold
-//                    font.pixelSize:  20
-//                    color: "#0c5696"
-//                    anchors.centerIn: parent
-//                }
-//            }
-//            visible: equipmentCount >=1 ? true : false
-//        }
-//        Button{
-//            id:b2
-//            x:5
-//            anchors.top: b1.bottom
-//            anchors.topMargin: 8
-//            width: 248
-//            height: 44
-//            background: Rectangle{
-//                radius: 5
-//                width: 248
-//                height: 44
-//                color: pRgb(177, 213, 219)
-//                border.color: "#007dbc"
-//                border.width: 2
-//                Text {
-//                    text: {
-//                        if(DeviceManager.deviceList[1]){
-//                            return DeviceManager.deviceList[1].pDeviceInformation.name
-//                        }
-//                        return ""
-//                    }
-//                    font.family: fontBold
-//                    font.pixelSize:  20
-//                    color: "#0c5696"
-//                    anchors.centerIn: parent
-//                }
-//            }
-//            visible: equipmentCount >=2 ? true : false
-//        }
-//        Button{
-//            id:b3
-//            x:5
-//            anchors.top: b2.bottom
-//            anchors.topMargin: 8
-//            width: 248
-//            height: 44
-//            background: Rectangle{
-//                radius: 5
-//                width: 248
-//                height: 44
-//                color: pRgb(177, 213, 219)
-//                border.color: "#007dbc"
-//                border.width: 2
-//                Text {
-//                    text: {
-//                        if(DeviceManager.deviceList[2]){
-//                            return DeviceManager.deviceList[2].pDeviceInformation.name
-//                        }
-//                        return ""
-//                    }
-//                    font.family: fontBold
-//                    font.pixelSize:  20
-//                    color: "#0c5696"
-//                    anchors.centerIn: parent
-//                }
-//            }
-//            visible: equipmentCount >=3 ? true : false
-//        }
-//        Button{
-//            id:b4
-//            x:5
-//            anchors.top: b3.bottom
-//            anchors.topMargin: 8
-//            width: 248
-//            height: 44
-//            background: Rectangle{
-//                radius: 5
-//                width: 248
-//                height: 44
-//                color: pRgb(177, 213, 219)
-//                border.color: "#007dbc"
-//                border.width: 2
-//                Text {
-//                    text: {
-//                        if(DeviceManager.deviceList[3]){
-//                            return DeviceManager.deviceList[3].pDeviceInformation.name
-//                        }
-//                        return ""
-//                    }
-//                    font.family: fontBold
-//                    font.pixelSize:  20
-//                    color: "#0c5696"
-//                    anchors.centerIn: parent
-//                }
-//            }
-//            visible: equipmentCount >=4 ? true : false
-//        }
-//    }
+    //    Button{
+    //        width: 50
+    //        height: 50
+    //        Image {
+    //            anchors.fill: parent
+    //            width: 50
+    //            height: 50
+    //            source: "qrc:/image/switch.png"
+    //        }
+    //        background: Rectangle{
+    //            color: "transparent"
+    //        }
+    //        onPressed: {
+    //            deviceStatus.visible = !deviceStatus.visible
+    //        }
+    //    }
+    //    Rectangle {
+    //        id: deviceStatus
+    //        radius: 3
+    //        x:42
+    //        y:35
+    //        width:  258
+    //        height: mt1.text === "新建模型" ? 255 :225
+    //        color: "#0c5696"
+    //        Rectangle{
+    //            width: 258
+    //            height: 44
+    //            radius: 3
+    //            color: "#007dbc"
+    //            Text {
+    //                id:t2
+    //                text: qsTr("设备名称")
+    //                font.family: fontBold
+    //                font.pixelSize:  20
+    //                color: pRgb(171, 206, 213)
+    //                anchors.centerIn: parent
+    //            }
+    //        }
+    //        Button{
+    //            id:b1
+    //            x:5
+    //            y:50
+    //            width: 248
+    //            height: 44
+    //            background: Rectangle{
+    //                radius: 5
+    //                width: 248
+    //                height: 44
+    //                color: pRgb(177, 213, 219)
+    //                border.color: "#007dbc"
+    //                border.width: 2
+    //                Text {
+    //                    text: {
+    //                        if(DeviceManager.deviceList[0]){
+    //                            return DeviceManager.deviceList[0].pDeviceInformation.name
+    //                        }
+    //                        return ""
+    //                    }
+    //                    font.family: fontBold
+    //                    font.pixelSize:  20
+    //                    color: "#0c5696"
+    //                    anchors.centerIn: parent
+    //                }
+    //            }
+    //            visible: equipmentCount >=1 ? true : false
+    //        }
+    //        Button{
+    //            id:b2
+    //            x:5
+    //            anchors.top: b1.bottom
+    //            anchors.topMargin: 8
+    //            width: 248
+    //            height: 44
+    //            background: Rectangle{
+    //                radius: 5
+    //                width: 248
+    //                height: 44
+    //                color: pRgb(177, 213, 219)
+    //                border.color: "#007dbc"
+    //                border.width: 2
+    //                Text {
+    //                    text: {
+    //                        if(DeviceManager.deviceList[1]){
+    //                            return DeviceManager.deviceList[1].pDeviceInformation.name
+    //                        }
+    //                        return ""
+    //                    }
+    //                    font.family: fontBold
+    //                    font.pixelSize:  20
+    //                    color: "#0c5696"
+    //                    anchors.centerIn: parent
+    //                }
+    //            }
+    //            visible: equipmentCount >=2 ? true : false
+    //        }
+    //        Button{
+    //            id:b3
+    //            x:5
+    //            anchors.top: b2.bottom
+    //            anchors.topMargin: 8
+    //            width: 248
+    //            height: 44
+    //            background: Rectangle{
+    //                radius: 5
+    //                width: 248
+    //                height: 44
+    //                color: pRgb(177, 213, 219)
+    //                border.color: "#007dbc"
+    //                border.width: 2
+    //                Text {
+    //                    text: {
+    //                        if(DeviceManager.deviceList[2]){
+    //                            return DeviceManager.deviceList[2].pDeviceInformation.name
+    //                        }
+    //                        return ""
+    //                    }
+    //                    font.family: fontBold
+    //                    font.pixelSize:  20
+    //                    color: "#0c5696"
+    //                    anchors.centerIn: parent
+    //                }
+    //            }
+    //            visible: equipmentCount >=3 ? true : false
+    //        }
+    //        Button{
+    //            id:b4
+    //            x:5
+    //            anchors.top: b3.bottom
+    //            anchors.topMargin: 8
+    //            width: 248
+    //            height: 44
+    //            background: Rectangle{
+    //                radius: 5
+    //                width: 248
+    //                height: 44
+    //                color: pRgb(177, 213, 219)
+    //                border.color: "#007dbc"
+    //                border.width: 2
+    //                Text {
+    //                    text: {
+    //                        if(DeviceManager.deviceList[3]){
+    //                            return DeviceManager.deviceList[3].pDeviceInformation.name
+    //                        }
+    //                        return ""
+    //                    }
+    //                    font.family: fontBold
+    //                    font.pixelSize:  20
+    //                    color: "#0c5696"
+    //                    anchors.centerIn: parent
+    //                }
+    //            }
+    //            visible: equipmentCount >=4 ? true : false
+    //        }
+    //    }
     EquipmentInfor{
         id:s1
         x:42
         y:35
         width:  258
-        height: mt1.text === "新建模型" ? 255 :225
+        height: (mt1.text === "新建模型" || mt1.text === "New Model") ? 255 :225
         color: "#0c5696"
         eqText1:{
             if(DeviceManager.deviceList[swipeCurrIndex]){
@@ -305,7 +310,7 @@ Rectangle {
     Button{
         id:s4
         x: 42
-        y: mt1.text === "新建模型" ? 580 :520
+        y: (mt1.text === "新建模型" || mt1.text === "New Model") ? 580 :520
         width:   258
         height:  45
         background: Rectangle{
@@ -314,24 +319,25 @@ Rectangle {
         }
         contentItem: Text {
             id: mt1
-            text: "新建模型"
+            text: qsTr("新建模型")
             font.pixelSize:  17
             color: pRgb(153, 204, 255)
             anchors.centerIn: parent  // 确保文本在按钮内居中对齐
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
             font.family: fontBold
+            font.bold: true
         }
         onPressed: {
-            if(mt1.text === "新建模型"){
+            if((mt1.text === "新建模型" || mt1.text === "New Model")){
                 popup.openPop(2)
             }
-            else if(mt1.text === "创建模型"){
+            else if(mt1.text === "创建模型" || mt1.text === "Create Model"){
                 if(DeviceManager.deviceList[swipeCurrIndex].pDeviceInformation.sample <= listSize){
                     loader.sourceComponent = mode1
                     loader1.sourceComponent = weld1
                     Manual.save()
-                    mt1.text = "新建模型"
+                    LanguageManger.language === "SimplifiedChinese" ? mt1.text = "新建模型" : mt1.text = "New Model"
                     sigUpdateUI(0)
                     sigRecover()
                     createModel = false
@@ -349,7 +355,7 @@ Rectangle {
         anchors.topMargin:  10
         width:   258
         height:  45
-        visible: mt1.text === "创建模型" ? true:false
+        visible: (mt1.text === "创建模型" || mt1.text === "Create Model") ? true:false
         background: Rectangle{
             radius: 6
             border.color: pRgb(43, 112, 173)
@@ -358,17 +364,16 @@ Rectangle {
         contentItem: Text {
             id:mt2
             anchors.centerIn: parent
-            text: "清除数据"
+            text: qsTr("清除数据")
             font.pixelSize: 17
             color: pRgb(153, 204, 255)
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
             font.family: fontBold
+            font.bold: true
         }
         onPressed: {
-            if(mt2.text == "清除数据"){
-                Manual.clearData()
-            }
+            Manual.clearData()
         }
     }
     Loader{
@@ -490,8 +495,9 @@ Rectangle {
                     x:840/7/2+5-width/2
                     y:11
                     font.pixelSize: 16
-                    text: "全选"
+                    text: qsTr("全选")
                     font.family: fontBold
+                    font.bold: true
                     color: pRgb(153, 204, 255)
                 }
                 Button{
@@ -525,8 +531,9 @@ Rectangle {
                     x:840/8 + 840/8/2-width/2
                     y:11
                     font.pixelSize: 16
-                    text: "序号"
+                    text: qsTr("序号")
                     font.family: fontBold
+                    font.bold: true
                     color: pRgb(171, 206, 213)
                 }
                 Text{
@@ -534,8 +541,9 @@ Rectangle {
                     x:840/8*2 + 840/8/2-width/2
                     y:11
                     font.pixelSize: 16
-                    text: "焊接时间"
+                    text: qsTr("焊接时间")
                     font.family: fontBold
+                    font.bold: true
                     color: pRgb(171, 206, 213)
                 }
                 Text{
@@ -543,8 +551,9 @@ Rectangle {
                     x:840/8*3 + 840/8/2-width/2
                     y:11
                     font.pixelSize: 16
-                    text: "功率"
+                    text: qsTr("功率")
                     font.family: fontBold
+                    font.bold: true
                     color: pRgb(171, 206, 213)
                 }
                 Text{
@@ -552,8 +561,9 @@ Rectangle {
                     x:840/8*4 + 840/8/2-width/2
                     y:11
                     font.pixelSize: 16
-                    text: "能量"
+                    text: qsTr("能量")
                     font.family: fontBold
+                    font.bold: true
                     color: pRgb(171, 206, 213)
                 }
                 Text{
@@ -561,8 +571,9 @@ Rectangle {
                     x:840/8*5 + 840/8/2-width/2
                     y:11
                     font.pixelSize: 16
-                    text: "日期"
+                    text: qsTr("日期")
                     font.family: fontBold
+                    font.bold: true
                     color: pRgb(171, 206, 213)
                 }
                 Text{
@@ -570,8 +581,9 @@ Rectangle {
                     x:840/8*6 + 840/8/2-width/2
                     y:11
                     font.pixelSize: 16
-                    text: "拉力"
+                    text: qsTr("拉力")
                     font.family: fontBold
+                    font.bold: true
                     color: pRgb(171, 206, 213)
                 }
                 Text{
@@ -579,8 +591,9 @@ Rectangle {
                     x:840/8*7 + 840/8/2-width/2
                     y:11
                     font.pixelSize: 16
-                    text: "残留度"
+                    text: qsTr("残留度")
                     font.family: fontBold
+                    font.bold: true
                     color: pRgb(171, 206, 213)
                 }
                 ListView{
@@ -669,6 +682,7 @@ Rectangle {
                             font.pixelSize: 16
                             text: serial_number
                             font.family: fontBold
+                            font.bold: true
                             color: index % 2 !== 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
                         }
                         Text{
@@ -677,6 +691,7 @@ Rectangle {
                             font.pixelSize: 16
                             text: time
                             font.family: fontBold
+                            font.bold: true
                             color: index % 2 !== 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
                         }
                         Text{
@@ -685,6 +700,7 @@ Rectangle {
                             font.pixelSize: 16
                             text: power
                             font.family: fontBold
+                            font.bold: true
                             color: index % 2 !== 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
                         }
                         Text{
@@ -693,6 +709,7 @@ Rectangle {
                             font.pixelSize: 16
                             text: energy
                             font.family: fontBold
+                            font.bold: true
                             color: index % 2 !== 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
                         }
                         Text{
@@ -701,6 +718,7 @@ Rectangle {
                             font.pixelSize: 16
                             text: create_time
                             font.family: fontBold
+                            font.bold: true
                             color: index % 2 !== 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
                         }
                         TextField{
@@ -713,6 +731,7 @@ Rectangle {
                             verticalAlignment: TextInput.AlignVCenter
                             color: index % 2 === 0 ? pRgb(175, 195, 216) : "#014c8d"
                             font.family: fontBold
+                            font.bold: true
                             font.pixelSize: 16
                             text:actual_force
                             inputMethodHints: Qt.ImhDigitsOnly
@@ -753,6 +772,7 @@ Rectangle {
                             verticalAlignment: TextInput.AlignVCenter
                             color: index % 2 === 0 ? pRgb(175, 195, 216) : "#014c8d"
                             font.family: fontBold
+                            font.bold: true
                             font.pixelSize: 16
                             text:actual_degree
                             inputMethodHints: Qt.ImhDigitsOnly

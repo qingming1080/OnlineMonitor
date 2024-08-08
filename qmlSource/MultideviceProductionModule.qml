@@ -196,8 +196,8 @@ Rectangle {
             eqText4:{
                 if(DeviceManager.deviceList[0]){
                     return DeviceManager.deviceList[0].pDeviceInformation.goodCycles
-                    + DeviceManager.deviceList[0].pDeviceInformation.notDefinite
-                    +DeviceManager.deviceList[0].pDeviceInformation.suspectCycles
+                            + DeviceManager.deviceList[0].pDeviceInformation.notDefinite
+                            +DeviceManager.deviceList[0].pDeviceInformation.suspectCycles
                 }
                 else{
                     return ""
@@ -344,8 +344,8 @@ Rectangle {
             eqText4:{
                 if(DeviceManager.deviceList[1]){
                     return DeviceManager.deviceList[1].pDeviceInformation.goodCycles
-                    + DeviceManager.deviceList[1].pDeviceInformation.notDefinite
-                    +DeviceManager.deviceList[1].pDeviceInformation.suspectCycles
+                            + DeviceManager.deviceList[1].pDeviceInformation.notDefinite
+                            +DeviceManager.deviceList[1].pDeviceInformation.suspectCycles
                 }
                 else{
                     return ""
@@ -518,13 +518,13 @@ Rectangle {
             eqText4:{
                 if(DeviceManager.deviceList[2]){
                     return DeviceManager.deviceList[2].pDeviceInformation.goodCycles
-                    + DeviceManager.deviceList[2].pDeviceInformation.notDefinite
-                    +DeviceManager.deviceList[2].pDeviceInformation.suspectCycles
+                            + DeviceManager.deviceList[2].pDeviceInformation.notDefinite
+                            +DeviceManager.deviceList[2].pDeviceInformation.suspectCycles
                 }
                 else if(DeviceManager.deviceList[3]){
                     return DeviceManager.deviceList[3].pDeviceInformation.goodCycles
-                    + DeviceManager.deviceList[3].pDeviceInformation.notDefinite
-                    +DeviceManager.deviceList[3].pDeviceInformation.suspectCycles
+                            + DeviceManager.deviceList[3].pDeviceInformation.notDefinite
+                            +DeviceManager.deviceList[3].pDeviceInformation.suspectCycles
                 }
                 else{
                     return ""
@@ -688,13 +688,13 @@ Rectangle {
             eqText4:{
                 if(DeviceManager.deviceList[3]){
                     return DeviceManager.deviceList[3].pDeviceInformation.goodCycles
-                    + DeviceManager.deviceList[3].pDeviceInformation.notDefinite
-                    +DeviceManager.deviceList[3].pDeviceInformation.suspectCycles
+                            + DeviceManager.deviceList[3].pDeviceInformation.notDefinite
+                            +DeviceManager.deviceList[3].pDeviceInformation.suspectCycles
                 }
                 else if(DeviceManager.deviceList[2]){
                     return DeviceManager.deviceList[2].pDeviceInformation.goodCycles
-                    + DeviceManager.deviceList[2].pDeviceInformation.notDefinite
-                    +DeviceManager.deviceList[2].pDeviceInformation.suspectCycles
+                            + DeviceManager.deviceList[2].pDeviceInformation.notDefinite
+                            +DeviceManager.deviceList[2].pDeviceInformation.suspectCycles
                 }
                 else{
                     return ""
@@ -738,31 +738,31 @@ Rectangle {
         }
     }
 
-//    Button{
-//        id:b1
-//        x:195
-//        y:654
-//        width: 243
-//        height: 52
-//        background: Rectangle{
-//            radius: 6
-//            color: pRgb(43, 112, 173)
-//        }
-//        contentItem: Text {
-//            id:mt1
-//            anchors.centerIn: parent
-//            text: "新建模型"
-//            font.pixelSize: 20
-//            color: pRgb(153, 204, 255)
-//            horizontalAlignment: Text.AlignHCenter
-//            verticalAlignment: Text.AlignVCenter
-//            font.family: fontBold
-//        }
-//        onPressed: {
-//            mt1.text = "创建模型"
-//            mt2.text = "清除数据"
-//        }
-//    }
+    //    Button{
+    //        id:b1
+    //        x:195
+    //        y:654
+    //        width: 243
+    //        height: 52
+    //        background: Rectangle{
+    //            radius: 6
+    //            color: pRgb(43, 112, 173)
+    //        }
+    //        contentItem: Text {
+    //            id:mt1
+    //            anchors.centerIn: parent
+    //            text: "新建模型"
+    //            font.pixelSize: 20
+    //            color: pRgb(153, 204, 255)
+    //            horizontalAlignment: Text.AlignHCenter
+    //            verticalAlignment: Text.AlignVCenter
+    //            font.family: fontBold
+    //        }
+    //        onPressed: {
+    //            mt1.text = "创建模型"
+    //            mt2.text = "清除数据"
+    //        }
+    //    }
     Button{
         id:b2
         width: 243
@@ -778,12 +778,13 @@ Rectangle {
         contentItem: Text {
             id:mt2
             anchors.centerIn: parent
-            text: "新增设备"
+            text: qsTr("新增设备")
             font.pixelSize: 20
             color: pRgb(153, 204, 255)
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
             font.family: fontBold
+            font.bold: true
         }
         onPressed: {
             if(mt2.text == "新增设备"){
@@ -804,12 +805,13 @@ Rectangle {
         contentItem: Text {
             id:mt3
             anchors.centerIn: parent
-            text: "系统消息"
+            text:qsTr( "系统消息")
             font.pixelSize: 20
             color: pRgb(153, 204, 255)
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
             font.family: fontBold
+            font.bold: true
         }
         onPressed: {
             popup.openPop(6)
@@ -818,20 +820,25 @@ Rectangle {
     Text {
         id: version
         color: "#639ed6"
-        x:895
-        y:718
+        anchors.top: timeText.top
+        anchors.right: timeText.left
+        anchors.rightMargin: 20
         font.family: fontBold
+        font.bold: true
         font.pixelSize: 14
         text: qsTr("系统版本号: v2.0.1")
     }
     // 显示时间的文本
     Text {
         id: timeText
-        anchors.left: version.right
-        anchors.top: version.top
-        anchors.leftMargin: 27
+        y:718
+        anchors.right: parent.right
+        anchors.bottom: parent.bottom
+        anchors.rightMargin: 10
+        anchors.bottomMargin: 5
         font.pixelSize: 14
         font.family: fontBold
+        font.bold: true
         color: "#639ed6"
         text: getCurrentTime()
 

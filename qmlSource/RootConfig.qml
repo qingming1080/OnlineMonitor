@@ -16,6 +16,7 @@ Rectangle {
     Text {
         text: qsTr("系统参数配置")
         font.family: fontBold
+        font.bold: true
         font.pixelSize: 20
         color: pRgb(153, 204, 255)
         x:17
@@ -30,6 +31,7 @@ Rectangle {
     Text {
         text: qsTr("设备名称:") + name
         font.family: fontBold
+        font.bold: true
         font.pixelSize: 16
         color: "#abced5"
         x:15
@@ -38,6 +40,7 @@ Rectangle {
     Text {
         text: qsTr("设备型号:") + model
         font.family: fontBold
+        font.bold: true
         font.pixelSize: 16
         color: "#abced5"
         x:15
@@ -46,6 +49,7 @@ Rectangle {
     Text {
         text: qsTr("单因素系数:")
         font.family: fontBold
+        font.bold: true
         font.pixelSize: 16
         color: "#abced5"
         x:15
@@ -61,6 +65,7 @@ Rectangle {
         verticalAlignment: TextInput.AlignVCenter
         color: pRgb(43, 112, 173)
         font.family: fontBold
+        font.bold: true
         font.pixelSize: 16
         background: Rectangle{
             radius: 6
@@ -80,6 +85,7 @@ Rectangle {
     Text {
         text: qsTr("通用系数:")
         font.family: fontBold
+        font.bold: true
         font.pixelSize: 16
         color: "#abced5"
         x:15
@@ -95,6 +101,7 @@ Rectangle {
         verticalAlignment: TextInput.AlignVCenter
         color: pRgb(43, 112, 173)
         font.family: fontBold
+        font.bold: true
         font.pixelSize: 16
         background: Rectangle{
             radius: 6
@@ -114,6 +121,7 @@ Rectangle {
     Text {
         text: qsTr("其他系数:")
         font.family: fontBold
+        font.bold: true
         font.pixelSize: 16
         color: "#abced5"
         x:15
@@ -129,6 +137,7 @@ Rectangle {
         verticalAlignment: TextInput.AlignVCenter
         color: pRgb(43, 112, 173)
         font.family: fontBold
+        font.bold: true
         font.pixelSize: 16
         background: Rectangle{
             radius: 6
@@ -148,6 +157,7 @@ Rectangle {
     Text {
         text: qsTr("自动学习上限:")
         font.family: fontBold
+        font.bold: true
         font.pixelSize: 16
         color: "#abced5"
         x:15
@@ -163,6 +173,7 @@ Rectangle {
         verticalAlignment: TextInput.AlignVCenter
         color: pRgb(43, 112, 173)
         font.family: fontBold
+        font.bold: true
         font.pixelSize: 16
         background: Rectangle{
             radius: 6

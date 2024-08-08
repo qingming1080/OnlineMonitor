@@ -18,6 +18,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
         DataBase/databasemanager.cpp \
+        LanguageManger/languagemanger.cpp \
         devicemanager.cpp \
         fileobject.cpp \
         log/localrecord.cpp \
@@ -50,6 +51,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 HEADERS += \
     DataBase/databasemanager.h \
+    LanguageManger/languagemanger.h \
     define.h \
     devicemanager.h \
     fileobject.h \
@@ -69,3 +71,7 @@ HEADERS += \
     qmlenum.h \
     signalmanager.h \
     timeyaxisplot.h
+
+TRANSLATIONS += \
+        SimplifiedChinese.ts \
+        English.ts

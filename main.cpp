@@ -20,6 +20,7 @@
 #include "multiyaxisplot.h"
 #include "timeyaxisplot.h"
 #include "model/devicenames.h"
+#include "LanguageManger/languagemanger.h"
 // 自定义消息处理程序
 void myMessageHandler(QtMsgType type, const QMessageLogContext &context, const QString &msg)
 {
@@ -47,9 +48,16 @@ int main(int argc, char *argv[])
     QApplication app(argc, argv);
     LocalRecord::getInstance()->start();
     DeviceManager::getInstance();
+    LanguageManger LanguageManger;
+    QTranslator translator;
+    // 默认加载英文
+    translator.load(":/translations/en.ts");
+    app.installTranslator(&translator);
 
     QQmlApplicationEngine engine;
     QQmlContext* pQmlContext = engine.rootContext();
+    pQmlContext->setContextProperty("QTranslator",&translator);
+    pQmlContext->setContextProperty("LanguageManger",&LanguageManger);
     pQmlContext->setContextProperty("DeviceManager", DeviceManager::getInstance());
     pQmlContext->setContextProperty("History", History::getInstance());
     pQmlContext->setContextProperty("Message", Message::getInstance());
@@ -69,6 +77,11 @@ int main(int argc, char *argv[])
 //    qmlRegisterType<TimeChartItem>("CustomTimeChart", 1, 0, "CustomTimeChart");
 
     const QUrl url(QStringLiteral("qrc:/qmlSource/main.qml"));
+
+    QObject::connect(&LanguageManger,&LanguageManger::updata,[&](){
+        engine.retranslate();
+    });
+
     QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,
                      &app, [url](QObject *obj, const QUrl &objUrl) {
         if (!obj && url == objUrl)

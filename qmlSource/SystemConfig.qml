@@ -175,8 +175,8 @@ Rectangle {
                 target: sysUI
                 function onSigAddDevice(){
                     DeviceManager.addDevice(t1.text,t2.text,
-                    t3.text,t7.text,t8.text,t9.text,
-                    altitudMode?1:0,t4.text,com1.currentText,loadType,networkId)
+                                            t3.text,t7.text,t8.text,t9.text,
+                                            altitudMode?1:0,t4.text,com1.currentText,loadType,networkId)
                     networkId = 1
                     loadType = 0
                 }
@@ -193,6 +193,7 @@ Rectangle {
                     text: qsTr("设备配置")
                     color: pRgb(153, 204, 255)
                     font.family: fontBold
+                    font.bold: true
                     font.pixelSize: 20
                     x:33
                     y:16
@@ -206,10 +207,11 @@ Rectangle {
                 Text {
                     id: s1
                     x:35
-                    y:72
+                    y:75
                     text: qsTr("最大生产批量")
                     color: pRgb(177, 213, 219)
                     font.family: fontBold
+                    font.bold: true
                     font.pixelSize: 18
                 }
                 TextField{
@@ -224,6 +226,7 @@ Rectangle {
                     verticalAlignment: TextInput.AlignVCenter
                     color: pRgb(43, 112, 173)
                     font.family: fontBold
+                    font.bold: true
                     font.pixelSize: 18
                     inputMethodHints: Qt.ImhDigitsOnly
                     background: Rectangle{
@@ -263,10 +266,11 @@ Rectangle {
                     text: qsTr("学习样本数")
                     color: pRgb(177, 213, 219)
                     font.family: fontBold
+                    font.bold: true
                     font.pixelSize: 18
                     anchors.left: s1.left
                     anchors.top: s1.bottom
-                    anchors.topMargin: 44
+                    anchors.topMargin: 51
                 }
                 TextField{
                     id:t2
@@ -279,6 +283,7 @@ Rectangle {
                     verticalAlignment: TextInput.AlignVCenter
                     color: pRgb(43, 112, 173)
                     font.family: fontBold
+                    font.bold: true
                     font.pixelSize: 18
                     inputMethodHints: Qt.ImhDigitsOnly
                     background: Rectangle{
@@ -317,10 +322,11 @@ Rectangle {
                     text: qsTr("良率下限")
                     color: pRgb(177, 213, 219)
                     font.family: fontBold
+                    font.bold: true
                     font.pixelSize: 18
                     anchors.left: s2.left
                     anchors.top: s2.bottom
-                    anchors.topMargin: 43
+                    anchors.topMargin: 51
                 }
                 TextField{
                     id:t3
@@ -333,6 +339,7 @@ Rectangle {
                     verticalAlignment: TextInput.AlignVCenter
                     color: pRgb(43, 112, 173)
                     font.family: fontBold
+                    font.bold: true
                     font.pixelSize: 18
                     inputMethodHints: Qt.ImhDigitsOnly
                     background: Rectangle{
@@ -372,10 +379,11 @@ Rectangle {
                     text: qsTr("端口")
                     color: pRgb(177, 213, 219)
                     font.family: fontBold
+                    font.bold: true
                     font.pixelSize: 18
                     anchors.left: s3.left
                     anchors.top: s3.bottom
-                    anchors.topMargin: 46
+                    anchors.topMargin: 51
                 }
                 TextField{
                     id:t7
@@ -388,6 +396,7 @@ Rectangle {
                     verticalAlignment: TextInput.AlignVCenter
                     color: pRgb(43, 112, 173)
                     font.family: fontBold
+                    font.bold: true
                     font.pixelSize: 18
                     inputMethodHints: Qt.ImhDigitsOnly
                     background: Rectangle{
@@ -427,10 +436,11 @@ Rectangle {
                     text: qsTr("远程端IP")
                     color: pRgb(177, 213, 219)
                     font.family: fontBold
+                    font.bold: true
                     font.pixelSize: 18
                     anchors.left: s7.left
                     anchors.top: s7.bottom
-                    anchors.topMargin: 45
+                    anchors.topMargin: 51
                 }
                 TextField{
                     id:t8
@@ -443,6 +453,7 @@ Rectangle {
                     verticalAlignment: TextInput.AlignVCenter
                     color: pRgb(43, 112, 173)
                     font.family: fontBold
+                    font.bold: true
                     font.pixelSize: 18
                     inputMethodHints: Qt.ImhDigitsOnly
                     background: Rectangle{
@@ -483,10 +494,11 @@ Rectangle {
                     text: qsTr("客户端IP")
                     color: pRgb(177, 213, 219)
                     font.family: fontBold
+                    font.bold: true
                     font.pixelSize: 18
                     anchors.left: s8.left
                     anchors.top: s8.bottom
-                    anchors.topMargin: 43
+                    anchors.topMargin: 51
                 }
                 TextField{
                     id:t9
@@ -499,6 +511,7 @@ Rectangle {
                     verticalAlignment: TextInput.AlignVCenter
                     color: pRgb(43, 112, 173)
                     font.family: fontBold
+                    font.bold: true
                     font.pixelSize: 18
                     inputMethodHints: Qt.ImhDigitsOnly
                     background: Rectangle{
@@ -539,6 +552,7 @@ Rectangle {
                     text: qsTr("高度模式")
                     color: pRgb(177, 213, 219)
                     font.family: fontBold
+                    font.bold: true
                     font.pixelSize: 18
                     anchors.left: s9.left
                     anchors.top: s9.bottom
@@ -549,10 +563,11 @@ Rectangle {
                     text: qsTr("启动")
                     color: pRgb(177, 213, 219)
                     font.family: fontBold
+                    font.bold: true
                     font.pixelSize: 18
-                    anchors.top: s4.top
-                    anchors.left: s4.right
-                    anchors.leftMargin: 69
+                    anchors.verticalCenter: bt1.verticalCenter
+                    anchors.left: bt1.right
+                    anchors.leftMargin: 10
                 }
                 RadioButton{
                     id:bt1
@@ -561,7 +576,7 @@ Rectangle {
                     anchors.left: parent.left
                     anchors.top: parent.top
                     anchors.leftMargin: 220
-                    anchors.topMargin: 525
+                    anchors.topMargin: 518
                     checked: altitudMode
                     indicator: Rectangle
                     {
@@ -592,6 +607,7 @@ Rectangle {
                     text: qsTr("关闭")
                     color: pRgb(177, 213, 219)
                     font.family: fontBold
+                    font.bold: true
                     font.pixelSize: 18
                     anchors.top: s5.top
                     anchors.left: s5.right
@@ -641,11 +657,12 @@ Rectangle {
                     text: qsTr("设备名称")
                     color: pRgb(177, 213, 219)
                     font.family: fontBold
+                    font.bold: true
                     font.pixelSize: 18
                 }
                 TextField{
                     id:t4
-                    width: 243
+                    width: 180
                     height: 40
                     anchors.top: parent.top
                     anchors.topMargin: 66
@@ -655,6 +672,7 @@ Rectangle {
                     verticalAlignment: TextInput.AlignVCenter
                     color: pRgb(43, 112, 173)
                     font.family: fontBold
+                    font.bold: true
                     font.pixelSize: 18
                     background: Rectangle{
                         radius: 6
@@ -692,14 +710,15 @@ Rectangle {
                     text: qsTr("设备型号")
                     color: pRgb(177, 213, 219)
                     font.family: fontBold
+                    font.bold: true
                     font.pixelSize: 18
                     anchors.top: s14.top
                     anchors.left: s14.right
-                    anchors.leftMargin: 293
+                    anchors.leftMargin: 273
                 }
                 CustomComboBox{
                     id:com1
-                    width: 243
+                    width: 180
                     height: 40
                     anchors.top: parent.top
                     anchors.topMargin: 66
@@ -819,8 +838,8 @@ Rectangle {
                         Text {
                             anchors.left: parent.left
                             anchors.top: parent.top
-                            anchors.topMargin: 7
-                            anchors.leftMargin: 63
+                            anchors.topMargin: 9
+                            anchors.leftMargin: LanguageManger.language === "SimplifiedChinese" ? 63 : 50
                             text: qsTr("网络")
                             color: {
                                 if(isAdd){
@@ -834,12 +853,13 @@ Rectangle {
                                 }
                             }
                             font.family: fontBold
+                            font.bold: true
                             font.pixelSize: 18
                         }
                         Text {
                             anchors.right: parent.right
                             anchors.top: parent.top
-                            anchors.topMargin: 7
+                            anchors.topMargin: 9
                             anchors.rightMargin: 63
                             text: qsTr("RS232")
                             color: {
@@ -854,6 +874,7 @@ Rectangle {
                                 }
                             }
                             font.family: fontBold
+                            font.bold: true
                             font.pixelSize: 18
                         }
                     }
@@ -893,6 +914,7 @@ Rectangle {
                             text: qsTr("网络端口")
                             color: pRgb(43, 112, 173)
                             font.family: fontBold
+                            font.bold: true
                             font.pixelSize: 18
                             x:101
                             y:63
@@ -902,6 +924,7 @@ Rectangle {
                             text: qsTr("服务器端口")
                             color: pRgb(43, 112, 173)
                             font.family: fontBold
+                            font.bold: true
                             font.pixelSize: 18
                             anchors.left: s16.left
                             anchors.top: s16.bottom
@@ -912,6 +935,7 @@ Rectangle {
                             text: qsTr("设备IP地址")
                             color: pRgb(43, 112, 173)
                             font.family: fontBold
+                            font.bold: true
                             font.pixelSize: 18
                             anchors.left: s17.left
                             anchors.top: s17.bottom
@@ -922,6 +946,7 @@ Rectangle {
                             text: qsTr("本地IP地址")
                             color: pRgb(43, 112, 173)
                             font.family: fontBold
+                            font.bold: true
                             font.pixelSize: 18
                             anchors.left: s18.left
                             anchors.top: s18.bottom
@@ -993,6 +1018,7 @@ Rectangle {
                             verticalAlignment: TextInput.AlignVCenter
                             color: pRgb(43, 112, 173)
                             font.family: fontBold
+                            font.bold: true
                             font.pixelSize: 18
                             inputMethodHints: Qt.ImhDigitsOnly
                             background: Rectangle{
@@ -1033,6 +1059,7 @@ Rectangle {
                             verticalAlignment: TextInput.AlignVCenter
                             color: pRgb(43, 112, 173)
                             font.family: fontBold
+                            font.bold: true
                             font.pixelSize: 18
                             inputMethodHints: Qt.ImhDigitsOnly
                             background: Rectangle{
@@ -1073,6 +1100,7 @@ Rectangle {
                             verticalAlignment: TextInput.AlignVCenter
                             color: pRgb(43, 112, 173)
                             font.family: fontBold
+                            font.bold: true
                             font.pixelSize: 18
                             inputMethodHints: Qt.ImhDigitsOnly
                             background: Rectangle{
@@ -1118,6 +1146,7 @@ Rectangle {
                             text: qsTr("端口")
                             color: pRgb(43, 112, 173)
                             font.family: fontBold
+                            font.bold: true
                             font.pixelSize: 18
                             x:101
                             y:48
@@ -1127,6 +1156,7 @@ Rectangle {
                             text: qsTr("波特率")
                             color: pRgb(43, 112, 173)
                             font.family: fontBold
+                            font.bold: true
                             font.pixelSize: 18
                             x:101
                             y:105
@@ -1136,6 +1166,7 @@ Rectangle {
                             text: qsTr("数据位")
                             color: pRgb(43, 112, 173)
                             font.family: fontBold
+                            font.bold: true
                             font.pixelSize: 18
                             x:101
                             y:159
@@ -1145,6 +1176,7 @@ Rectangle {
                             text: qsTr("奇偶校验位")
                             color: pRgb(43, 112, 173)
                             font.family: fontBold
+                            font.bold: true
                             font.pixelSize: 18
                             x:101
                             y:214
@@ -1154,6 +1186,7 @@ Rectangle {
                             text: qsTr("停止位")
                             color: pRgb(43, 112, 173)
                             font.family: fontBold
+                            font.bold: true
                             font.pixelSize: 18
                             x:101
                             y:273
@@ -1348,27 +1381,28 @@ Rectangle {
                 }
             }
             Button{
-               id:bt4
-               x:131
-               y:662
-               width: 243
-               height: 52
-               background: Rectangle{
-                   radius: 6
-                   color: pRgb(43, 112, 173)
-               }
-               contentItem: Text {
-                   text: "系统保存"
-                   font.pixelSize: 20
-                   color: pRgb(153, 204, 255)
-                   anchors.centerIn: parent  // 确保文本在按钮内居中对齐
-                   horizontalAlignment: Text.AlignHCenter
-                   verticalAlignment: Text.AlignVCenter
-                   font.family: fontBold
-               }
-               onPressed: {
-                   popup.openPop(10)
-               }
+                id:bt4
+                x:131
+                y:662
+                width: 243
+                height: 52
+                background: Rectangle{
+                    radius: 6
+                    color: pRgb(43, 112, 173)
+                }
+                contentItem: Text {
+                    text: qsTr("系统保存")
+                    font.pixelSize: 20
+                    color: pRgb(153, 204, 255)
+                    anchors.centerIn: parent  // 确保文本在按钮内居中对齐
+                    horizontalAlignment: Text.AlignHCenter
+                    verticalAlignment: Text.AlignVCenter
+                    font.family: fontBold
+                    font.bold: true
+                }
+                onPressed: {
+                    popup.openPop(10)
+                }
             }
 
             Button{
@@ -1382,13 +1416,14 @@ Rectangle {
                     color: pRgb(43, 112, 173)
                 }
                 contentItem: Text {
-                    text: "设备保存"
+                    text: qsTr("设备保存")
                     font.pixelSize: 20
                     color: pRgb(153, 204, 255)
                     anchors.centerIn: parent  // 确保文本在按钮内居中对齐
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
                     font.family: fontBold
+                    font.bold: true
                 }
                 onPressed: {
                     if(isAdd){
@@ -1821,13 +1856,14 @@ Rectangle {
                     color: itemCount === 4 ? pRgb(232, 232, 232) : pRgb(43, 112, 173)
                 }
                 contentItem: Text {
-                    text: "新增设备"
+                    text: qsTr( "新增设备")
                     font.pixelSize: 20
                     color: pRgb(153, 204, 255)
                     anchors.centerIn: parent  // 确保文本在按钮内居中对齐
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
                     font.family: fontBold
+                    font.bold: true
                 }
                 onPressed: {
                     oneself = true
@@ -1848,13 +1884,14 @@ Rectangle {
                     color: currIndex === 0 ? pRgb(232, 232, 232) : pRgb(43, 112, 173)
                 }
                 contentItem: Text {
-                    text: "删除设备"
+                    text: qsTr("删除设备")
                     font.pixelSize: 20
                     color: pRgb(153, 204, 255)
                     anchors.centerIn: parent  // 确保文本在按钮内居中对齐
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
                     font.family: fontBold
+                    font.bold: true
                 }
                 onPressed: {
                     popup.openPop(9)
@@ -1871,13 +1908,14 @@ Rectangle {
                     color: pRgb(43, 112, 173)
                 }
                 contentItem: Text {
-                    text: "修改密码"
+                    text: qsTr("修改密码")
                     font.pixelSize: 20
                     color: pRgb(153, 204, 255)
                     anchors.centerIn: parent  // 确保文本在按钮内居中对齐
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
                     font.family: fontBold
+                    font.bold: true
                 }
                 onPressed: {
                     popup.openPop(7)
@@ -1890,20 +1928,25 @@ Rectangle {
     Text {
         id: version
         color: "#639ed6"
-        x:895
-        y:718
+        anchors.top: timeText.top
+        anchors.right: timeText.left
+        anchors.rightMargin: 20
         font.family: fontBold
+        font.bold: true
         font.pixelSize: 14
         text: qsTr("系统版本号: v2.0.1")
     }
     // 显示时间的文本
     Text {
         id: timeText
-        anchors.left: version.right
-        anchors.top: version.top
-        anchors.leftMargin: 27
+        y:718
+        anchors.right: parent.right
+        anchors.bottom: parent.bottom
+        anchors.rightMargin: 10
+        anchors.bottomMargin: 5
         font.pixelSize: 14
         font.family: fontBold
+        font.bold: true
         color: "#639ed6"
         text: getCurrentTime()
 

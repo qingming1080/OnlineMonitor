@@ -20,7 +20,8 @@ Rectangle {
     Text {
         text: qsTr("焊接参数")
         font.family: fontBold
-        font.pixelSize: /*mode === 1 ? 17:*/20
+        font.bold: true
+        font.pixelSize: LanguageManger.language === "SimplifiedChinese" ? 20 : 18
         color: pRgb(153, 204, 255)
         x:17
         y:9
@@ -75,52 +76,57 @@ Rectangle {
         id: t1
         text: qsTr("能量")
         font.family: fontBold
-        font.pixelSize: /*mode === 1 ?14:*/16
+        font.bold: true
+        font.pixelSize: LanguageManger.language === "SimplifiedChinese" ? 16 : 14
         color: pRgb(171, 206, 213)
         anchors.verticalCenter: im1.verticalCenter
         anchors.left: im1.right
-        anchors.leftMargin: 20
+        anchors.leftMargin: 10
     }
     Text {
         id: t2
         text: qsTr("振幅")
         font.family: fontBold
-        font.pixelSize: /*mode === 1 ?14:*/16
+        font.bold: true
+        font.pixelSize: LanguageManger.language === "SimplifiedChinese" ? 16 : 14
         color: pRgb(171, 206, 213)
-        anchors.top: t1.bottom
-        anchors.left: t1.left
-        anchors.topMargin: altitudeMode ? 14 : 31
+        anchors.verticalCenter: im2.verticalCenter
+        anchors.left: im2.right
+        anchors.leftMargin: 10
     }
     Text {
         id: t3
         text: qsTr("压力")
         font.family: fontBold
-        font.pixelSize: /*mode === 1 ?14:*/16
+        font.bold: true
+        font.pixelSize: LanguageManger.language === "SimplifiedChinese" ? 16 : 14
         color: pRgb(171, 206, 213)
-        anchors.top: t2.bottom
-        anchors.left: t2.left
-        anchors.topMargin: altitudeMode ? 14 : 31
+        anchors.verticalCenter: im3.verticalCenter
+        anchors.left: im3.right
+        anchors.leftMargin: 10
     }
     Text {
         id: t4
         text: qsTr("焊前高度")
         font.family: fontBold
-        font.pixelSize: /*mode === 1 ?14:*/16
+        font.bold: true
+        font.pixelSize: LanguageManger.language === "SimplifiedChinese" ? 16 : 14
         color: pRgb(171, 206, 213)
-        anchors.top: t3.bottom
-        anchors.left: t3.left
-        anchors.topMargin: altitudeMode ? 14 : 31
+        anchors.verticalCenter: im4.verticalCenter
+        anchors.left: im4.right
+        anchors.leftMargin: 10
         visible: altitudeMode
     }
     Text {
         id: t5
         text: qsTr("焊后高度")
         font.family: fontBold
-        font.pixelSize: /*mode === 1 ?14:*/16
+        font.bold: true
+        font.pixelSize: LanguageManger.language === "SimplifiedChinese" ? 16 : 14
         color: pRgb(171, 206, 213)
-        anchors.top: t4.bottom
-        anchors.left: t4.left
-        anchors.topMargin: altitudeMode ? 14 : 31
+        anchors.verticalCenter: im5.verticalCenter
+        anchors.left: im5.right
+        anchors.leftMargin: 10
         visible: altitudeMode
     }
     TextField{
@@ -128,13 +134,14 @@ Rectangle {
         width: /*mode === 1 ? 75:*/98
         height: altitudeMode ? 28 :30
         anchors.left: t1.right
-        anchors.leftMargin: altitudeMode ? 40:10
+        anchors.leftMargin: altitudeMode ? 38:25
         anchors.verticalCenter: t1.verticalCenter
         horizontalAlignment: TextInput.AlignHCenter
         verticalAlignment: TextInput.AlignVCenter
         color: pRgb(43, 112, 173)
         font.family: fontBold
-        font.pixelSize: 14
+        font.bold: true
+        font.pixelSize: 18
         inputMethodHints: Qt.ImhDigitsOnly
         background: Rectangle{
             radius: 6
@@ -154,15 +161,16 @@ Rectangle {
         id:f2
         width: /*mode === 1 ? 75:*/98
         height: altitudeMode ? 28 :30
-        anchors.left: t2.right
-        anchors.leftMargin: altitudeMode ? 40:10
-        anchors.verticalCenter: t2.verticalCenter
-        anchors.topMargin: /*mode === 1 ? 20:*/25
+        anchors.horizontalCenter: f1.horizontalCenter
+        anchors.top: f1.bottom
+        anchors.topMargin: !altitudeMode ? 23 : 10
+        anchors.right:  f1.right
         horizontalAlignment: TextInput.AlignHCenter
         verticalAlignment: TextInput.AlignVCenter
         color: pRgb(43, 112, 173)
         font.family: fontBold
-        font.pixelSize: 14
+        font.bold: true
+        font.pixelSize: 18
         inputMethodHints: Qt.ImhDigitsOnly
         background: Rectangle{
             radius: 6
@@ -182,15 +190,16 @@ Rectangle {
         id:f3
         width: /*mode === 1 ? 75:*/98
         height: altitudeMode ? 28 :30
-        anchors.left: t3.right
-        anchors.leftMargin: altitudeMode ? 40:10
-        anchors.verticalCenter: t3.verticalCenter
-        anchors.topMargin: /*mode === 1 ? 20:*/25
+        anchors.horizontalCenter: f2.horizontalCenter
+        anchors.top: f2.bottom
+        anchors.topMargin: !altitudeMode ? 23 : 10
+        anchors.right:  f2.right
         horizontalAlignment: TextInput.AlignHCenter
         verticalAlignment: TextInput.AlignVCenter
         color: pRgb(43, 112, 173)
         font.family: fontBold
-        font.pixelSize: 14
+        font.bold: true
+        font.pixelSize: 18
         inputMethodHints: Qt.ImhDigitsOnly
         background: Rectangle{
             radius: 6
@@ -210,15 +219,16 @@ Rectangle {
         id:f4
         width: /*mode === 1 ? 75:*/98
         height: altitudeMode ? 28 :30
-        anchors.left: t4.right
-        anchors.leftMargin: altitudeMode ? 8:10
-        anchors.verticalCenter: t4.verticalCenter
-        anchors.topMargin:/* mode === 1 ? 20:*/25
+        anchors.horizontalCenter: f3.horizontalCenter
+        anchors.top: f3.bottom
+        anchors.topMargin: 10
+        anchors.right:  f3.right
         horizontalAlignment: TextInput.AlignHCenter
         verticalAlignment: TextInput.AlignVCenter
         color: pRgb(43, 112, 173)
         font.family: fontBold
-        font.pixelSize: 14
+        font.bold: true
+        font.pixelSize: 18
         inputMethodHints: Qt.ImhDigitsOnly
         background: Rectangle{
             radius: 6
@@ -239,15 +249,16 @@ Rectangle {
         id:f5
         width: /*mode === 1 ? 75:*/98
         height: altitudeMode ? 28 :30
-        anchors.left: t5.right
-        anchors.leftMargin: altitudeMode ? 8:10
-        anchors.verticalCenter: t5.verticalCenter
-        anchors.topMargin: /*mode === 1 ? 20:*/25
+        anchors.horizontalCenter: f4.horizontalCenter
+        anchors.top: f4.bottom
+        anchors.topMargin: 10
+        anchors.right:  f4.right
         horizontalAlignment: TextInput.AlignHCenter
         verticalAlignment: TextInput.AlignVCenter
         color: pRgb(43, 112, 173)
         font.family: fontBold
-        font.pixelSize: 14
+        font.bold: true
+        font.pixelSize: 18
         inputMethodHints: Qt.ImhDigitsOnly
         background: Rectangle{
             radius: 6

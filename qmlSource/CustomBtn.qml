@@ -40,9 +40,8 @@ Rectangle {
         id: btText
         anchors.centerIn: parent
         font.family: fontBold
+        font.bold: true
         font.pixelSize: 24
-        width: 96
-        height: 35
         text: btnText
         color: pRgb(153, 204, 255)
     }

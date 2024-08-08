@@ -48,5 +48,9 @@
         <file>image/shake.png</file>
         <file>image/module.png</file>
         <file>image/switch.png</file>
+        <file>English.ts</file>
+        <file>SimplifiedChinese.ts</file>
+        <file>translations/English.qm</file>
+        <file>translations/SimplifiedChinese.qm</file>
     </qresource>
 </RCC>
