@@ -102,6 +102,34 @@ Rectangle {
         width: 97
         color: pRgb(174, 210, 216)
     }
+    Timer {
+        id: delayTimer
+        interval: 800  // 设置延时时间为500毫秒
+        onTriggered: {
+            DeviceManager.deviceList[swipeCurrIndex].pTrend.setYieldType(0)
+        }
+    }
+    Timer {
+        id: delayTimer1
+        interval: 800  // 设置延时时间为500毫秒
+        onTriggered: {
+            DeviceManager.deviceList[swipeCurrIndex].pTrend.setYieldType(1)
+        }
+    }
+    Timer {
+        id: delayTimer2
+        interval: 800  // 设置延时时间为500毫秒
+        onTriggered: {
+            DeviceManager.deviceList[swipeCurrIndex].pTrend.setYieldType(2)
+        }
+    }
+    Timer {
+        id: delayTimer3
+        interval: 800  // 设置延时时间为500毫秒
+        onTriggered: {
+            DeviceManager.deviceList[swipeCurrIndex].pTrend.setYieldType(3)
+        }
+    }
     Rectangle{
         id:btns
         width: 320
@@ -146,7 +174,7 @@ Rectangle {
                 bbb.color = "#007dbc"
                 bbbb.color = "#007dbc"
                 buttonSynchronization(equiInforIndex,1)
-                DeviceManager.deviceList[swipeCurrIndex].pTrend.setYieldType(0)
+                delayTimer.start()
             }
             contentItem: Text {
                 id:t1
@@ -184,7 +212,7 @@ Rectangle {
                 bbb.color = "#007dbc"
                 bbbb.color = "#007dbc"
                 buttonSynchronization(equiInforIndex,2)
-                DeviceManager.deviceList[swipeCurrIndex].pTrend.setYieldType(1)
+                delayTimer1.start()
             }
             contentItem: Text {
                 id:t2
@@ -222,7 +250,7 @@ Rectangle {
                 bbb.color = pRgb(177, 213, 219)
                 bbbb.color = "#007dbc"
                 buttonSynchronization(equiInforIndex,3)
-                DeviceManager.deviceList[swipeCurrIndex].pTrend.setYieldType(2)
+                delayTimer2.start()
             }
             contentItem: Text {
                 id:t3
@@ -260,7 +288,7 @@ Rectangle {
                 bbb.color = "#007dbc"
                 bbbb.color = pRgb(177, 213, 219)
                 buttonSynchronization(equiInforIndex,4)
-                DeviceManager.deviceList[swipeCurrIndex].pTrend.setYieldType(3)
+                delayTimer3.start()
             }
             contentItem: Text {
                 id:t4
@@ -283,12 +311,12 @@ Rectangle {
     }
 
     property int timer: 0
-//    CustomTimeChart{
-//        id:chart
-//        anchors.top: line.bottom // 使图表的顶部与父项的顶部对齐
-//        fillColor: "transparent"
-//        width: 590
-//    }
+    //    CustomTimeChart{
+    //        id:chart
+    //        anchors.top: line.bottom // 使图表的顶部与父项的顶部对齐
+    //        fillColor: "transparent"
+    //        width: 590
+    //    }
 
     ChartView {
         id:chart
