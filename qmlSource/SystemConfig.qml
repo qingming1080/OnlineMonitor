@@ -216,7 +216,7 @@ Rectangle {
                 }
                 TextField{
                     id:t1
-                    width: 243
+                    width: 180
                     height: 40
                     anchors.top: parent.top
                     anchors.topMargin: 66
@@ -274,7 +274,7 @@ Rectangle {
                 }
                 TextField{
                     id:t2
-                    width: 243
+                    width: 180
                     height: 40
                     anchors.top: t1.bottom
                     anchors.topMargin: 30
@@ -330,7 +330,7 @@ Rectangle {
                 }
                 TextField{
                     id:t3
-                    width: 243
+                    width: 180
                     height: 40
                     anchors.top: t2.bottom
                     anchors.topMargin: 30
@@ -387,7 +387,7 @@ Rectangle {
                 }
                 TextField{
                     id:t7
-                    width: 243
+                    width: 180
                     height: 40
                     anchors.top: t3.bottom
                     anchors.topMargin: 30
@@ -444,7 +444,7 @@ Rectangle {
                 }
                 TextField{
                     id:t8
-                    width: 243
+                    width: 180
                     height: 40
                     anchors.top: t7.bottom
                     anchors.topMargin: 30
@@ -502,7 +502,7 @@ Rectangle {
                 }
                 TextField{
                     id:t9
-                    width: 243
+                    width: 180
                     height: 40
                     anchors.top: t8.bottom
                     anchors.topMargin: 30
@@ -575,7 +575,7 @@ Rectangle {
                     height: 34
                     anchors.left: parent.left
                     anchors.top: parent.top
-                    anchors.leftMargin: 220
+                    anchors.leftMargin: 180
                     anchors.topMargin: 518
                     checked: altitudMode
                     indicator: Rectangle
@@ -611,7 +611,7 @@ Rectangle {
                     font.pixelSize: 18
                     anchors.top: s5.top
                     anchors.left: s5.right
-                    anchors.leftMargin: 88
+                    anchors.leftMargin: 92
                 }
                 RadioButton{
                     id:bt2

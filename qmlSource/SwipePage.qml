@@ -16,13 +16,6 @@ Rectangle {
     property int parameter4: 0
     property int parameter5: 0
     function newModel(){
-        if(LanguageManger.language === "SimplifiedChinese"){
-            mt1.text = qsTr("创建模型")
-        }
-        else{
-            mt1.text = qsTr("Create Model")
-        }
-
         loader.sourceComponent = mode2
         loader1.sourceComponent = weld2
     }
@@ -319,7 +312,24 @@ Rectangle {
         }
         contentItem: Text {
             id: mt1
-            text: qsTr("新建模型")
+            text: {
+                if(LanguageManger.language === "SimplifiedChinese"){
+                    if(createModel){
+                        return qsTr("创建模型")
+                    }
+                    else{
+                        return qsTr("新建模型")
+                    }
+                }
+                else{
+                    if(createModel){
+                        return qsTr("Create Model")
+                    }
+                    else{
+                        return qsTr("New Model")
+                    }
+                }
+            }
             font.pixelSize:  17
             color: pRgb(153, 204, 255)
             anchors.centerIn: parent  // 确保文本在按钮内居中对齐
@@ -337,7 +347,6 @@ Rectangle {
                     loader.sourceComponent = mode1
                     loader1.sourceComponent = weld1
                     Manual.save()
-                    LanguageManger.language === "SimplifiedChinese" ? mt1.text = "新建模型" : mt1.text = "New Model"
                     sigUpdateUI(0)
                     sigRecover()
                     createModel = false
@@ -364,7 +373,7 @@ Rectangle {
         contentItem: Text {
             id:mt2
             anchors.centerIn: parent
-            text: qsTr("清除数据")
+            text: LanguageManger.language === "SimplifiedChinese" ? qsTr("清除数据") : qsTr("Clear Data")
             font.pixelSize: 17
             color: pRgb(153, 204, 255)
             horizontalAlignment: Text.AlignHCenter
