@@ -26,6 +26,7 @@ Rectangle {
         target: window
         function onSigNewModel(){
             newModel()
+            createModel = true
         }
     }
 //    Button{
@@ -333,6 +334,7 @@ Rectangle {
                     mt1.text = "新建模型"
                     sigUpdateUI(0)
                     sigRecover()
+                    createModel = false
                 }
                 else{
                     popup.openPop(5)

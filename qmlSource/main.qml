@@ -21,7 +21,7 @@ Window {
     property int swipeCurrIndex: 0
     property int interFaceId: 0
     property var keyboardYype: 0
-
+    property bool createModel: false
     onSwipeCurrIndexChanged: {
         sigSwipeCurrIndex(swipeCurrIndex)
     }

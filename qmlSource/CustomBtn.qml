@@ -58,7 +58,7 @@ Rectangle {
     MouseArea{
         anchors.fill: parent
         onPressed: {
-            if(!tmp){
+            if(!tmp && createModel === false){
                 if(index !== 3){
                     tmp = true
                 }

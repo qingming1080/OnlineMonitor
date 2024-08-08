@@ -185,6 +185,7 @@ Rectangle {
         onPressed: {
             loadViewpro(2,multipro)
         }
+        visible: !createModel
     }
     Text {
         id: version

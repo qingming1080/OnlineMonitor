@@ -112,8 +112,6 @@ void DeviceManager::addDevice(const int &maxBacth, const int &sample, const int 
 
             Device *d = new Device(i+1);
             m_deviceList.insert(i, d);
-
-            m_deviceList.push_back(d);
             break;
         }
         if(m_deviceList.at(i) != nullptr){

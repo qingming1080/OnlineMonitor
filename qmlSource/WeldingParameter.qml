@@ -128,7 +128,7 @@ Rectangle {
         width: /*mode === 1 ? 75:*/98
         height: altitudeMode ? 28 :30
         anchors.left: t1.right
-        anchors.leftMargin: altitudeMode ? 35:10
+        anchors.leftMargin: altitudeMode ? 40:10
         anchors.verticalCenter: t1.verticalCenter
         horizontalAlignment: TextInput.AlignHCenter
         verticalAlignment: TextInput.AlignVCenter
@@ -155,7 +155,7 @@ Rectangle {
         width: /*mode === 1 ? 75:*/98
         height: altitudeMode ? 28 :30
         anchors.left: t2.right
-        anchors.leftMargin: altitudeMode ? 35:10
+        anchors.leftMargin: altitudeMode ? 40:10
         anchors.verticalCenter: t2.verticalCenter
         anchors.topMargin: /*mode === 1 ? 20:*/25
         horizontalAlignment: TextInput.AlignHCenter
@@ -183,7 +183,7 @@ Rectangle {
         width: /*mode === 1 ? 75:*/98
         height: altitudeMode ? 28 :30
         anchors.left: t3.right
-        anchors.leftMargin: altitudeMode ? 35:10
+        anchors.leftMargin: altitudeMode ? 40:10
         anchors.verticalCenter: t3.verticalCenter
         anchors.topMargin: /*mode === 1 ? 20:*/25
         horizontalAlignment: TextInput.AlignHCenter

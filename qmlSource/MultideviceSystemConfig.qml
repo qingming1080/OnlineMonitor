@@ -66,7 +66,7 @@ Rectangle {
         id:t1
         text: qsTr("设备名称: ") + eqText1
         font.family: fontBold
-        font.pixelSize: 14
+        font.pixelSize: 16
         color: pRgb(171, 206, 213)
         x:26
         y:54
@@ -75,7 +75,7 @@ Rectangle {
         id:t2
         text: qsTr("设备型号: ") + eqText2
         font.family: fontBold
-        font.pixelSize: 14
+        font.pixelSize: 16
         color: pRgb(171, 206, 213)
         anchors.top:t1.bottom
         anchors.left: t1.left
@@ -85,7 +85,7 @@ Rectangle {
         id:t3
         text: qsTr("连接方式: ") + eqText3
         font.family: fontBold
-        font.pixelSize: 14
+        font.pixelSize: 16
         color: pRgb(171, 206, 213)
         anchors.top:t2.bottom
         anchors.left: t2.left
@@ -95,15 +95,15 @@ Rectangle {
         id:t4
         text: qsTr("设备状态: ") + eqText4
         font.family: fontBold
-        font.pixelSize: 14
+        font.pixelSize: 16
         color: pRgb(171, 206, 213)
         anchors.top:t3.bottom
         anchors.left: t3.left
         anchors.topMargin: 24
     }
     Button{
-        width: 25
-        height: 25
+        width: 30
+        height: 30
         x:248
         y:7
         background: Rectangle{
@@ -124,7 +124,7 @@ Rectangle {
         text: qsTr("高度模式")
         color: pRgb(177, 213, 219)
         font.family: fontBold
-        font.pixelSize: 14
+        font.pixelSize: 16
         x:26
         y:252
     }
@@ -133,7 +133,7 @@ Rectangle {
         text: qsTr("启动")
         color: pRgb(177, 213, 219)
         font.family: fontBold
-        font.pixelSize: 14
+        font.pixelSize: 16
         anchors.top: s4.top
         anchors.left: s4.right
         anchors.leftMargin: 62
@@ -141,15 +141,15 @@ Rectangle {
     }
     RadioButton{
         id:bt1
-        width: 20
-        height: 20
+        width: 30
+        height: 30
         x:113
-        y:255
+        y:252
         indicator: Rectangle
         {
-            width: 20
-            height: 20
-            radius: 10
+            width: 30
+            height: 30
+            radius: 15
             color: heightOpation ? "#0d988c" : pRgb(232, 232, 232)
             border.color: "#b1d5db"
             border.width: 2
@@ -165,24 +165,24 @@ Rectangle {
         text: qsTr("关闭")
         color: pRgb(177, 213, 219)
         font.family: fontBold
-        font.pixelSize: 14
+        font.pixelSize: 16
         anchors.top: s5.top
         anchors.left: s5.right
         anchors.leftMargin: 48
     }
     RadioButton{
         id:bt2
-        width: 20
-        height: 20
+        width: 30
+        height: 30
         anchors.left: bt1.right
         anchors.top: bt1.top
         anchors.leftMargin: 56
         checked: true
         indicator: Rectangle
         {
-            width: 20
-            height: 20
-            radius: 10
+            width: 30
+            height: 30
+            radius: 15
             color: !heightOpation ? "#0d988c" : pRgb(232, 232, 232)
             border.color: "#b1d5db"
             border.width: 2
@@ -362,6 +362,7 @@ Rectangle {
         font.family: fontBold
         font.pixelSize: 16
         anchors.top: s10.top
+        anchors.topMargin: 3
         anchors.left: s10.right
         anchors.leftMargin: 109
     }
