@@ -80,9 +80,6 @@ public:
     Q_INVOKABLE QString endTime() const;
     Q_INVOKABLE void setEndTime(const QString &newEndTime);
 
-    // 2024/08/05 by:cxy
-    Q_INVOKABLE QVector<QPointF> getYieldData() const;
-
 signals:
 
     void idMinXChanged();
@@ -150,8 +147,6 @@ private:
 
     QTimer* m_weldTimer;
     QTimer* m_yieldTimer;
-
-    QVector<QPointF> m_yieldData;
 };
 
 #endif // TREND_H

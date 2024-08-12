@@ -47,6 +47,13 @@ QStandardItemModel *Trend::pYieldTrend() const
 
 void Trend::upYieldData()
 {
+    static int funcIndex = 0;
+    if(m_welderID == 3)
+    {
+        funcIndex++;
+        qDebug() << "I WANT UPDATE YIELD_TREND" << funcIndex;
+    }
+
     QElapsedTimer timer;
     timer.start();
 
@@ -141,23 +148,11 @@ void Trend::setWeldTrendData(_Weld_TrendData result)
 
 void Trend::setYieldTrendData(_Yield_TrendData data)
 {
-    // 清除当前折线数据
-    m_pYieldTrend->clear();
-    // 2024/08/05
-    m_yieldData.clear();
-
     for(int row = 0; row < data.points.size(); ++row)
     {
-        // 良率折线
-        QStandardItem* yieldItem      = new QStandardItem(QString::number(row));
         QDateTime time = QDateTime::fromString(data.points.at(row).second, "yyyy-MM-dd hh:mm:ss");
-        QStandardItem* yield_X_Item   = new QStandardItem(QString::number(time.toMSecsSinceEpoch()));
-        QStandardItem* yield_Y_Item   = new QStandardItem(QString::number(data.points.at(row).first));
-        m_pYieldTrend->setItem(row, 0, yieldItem);
-        m_pYieldTrend->setItem(row, 1, yield_X_Item);
-        m_pYieldTrend->setItem(row, 2, yield_Y_Item);
-
-        m_yieldData.push_back(QPointF(time.toMSecsSinceEpoch(), data.points.at(row).first));
+        m_pYieldTrend->setData(m_pYieldTrend->index(row, 1), QString::number(time.toMSecsSinceEpoch()));
+        m_pYieldTrend->setData(m_pYieldTrend->index(row, 2), QString::number(data.points.at(row).first));
     }
 
     m_startTime = data.startTime;
@@ -178,11 +173,6 @@ void Trend::setEndTime(const QString &newEndTime)
         return;
     m_endTime = newEndTime;
     emit endTimeChanged();
-}
-
-QVector<QPointF> Trend::getYieldData() const
-{
-    return m_yieldData;
 }
 
 QString Trend::startTime() const
@@ -217,14 +207,22 @@ void Trend::init()
 
     m_pYieldTrend   = new QStandardItemModel();
     m_pYieldTrend->setColumnCount(3);
+    for(int i = 0; i < 60; ++i)
+    {
+        QStandardItem* yieldItem      = new QStandardItem(QString::number(i));
+        QStandardItem* yield_X_Item   = new QStandardItem();
+        QStandardItem* yield_Y_Item   = new QStandardItem();
+
+        m_pYieldTrend->setItem(i, 0, yieldItem);
+        m_pYieldTrend->setItem(i, 1, yield_X_Item);
+        m_pYieldTrend->setItem(i, 2, yield_Y_Item);
+    }
 
 
     // 良率趋势刷新
     m_yieldTimer = new QTimer;
-    connect(m_yieldTimer, &QTimer::timeout, [=](){
-        upYieldData();
-    });
-    m_yieldTimer->start(1000*60*1);
+    connect(m_yieldTimer, &QTimer::timeout, this, &Trend::upYieldData);
+    m_yieldTimer->start(1000*1);
 
     upYieldData();
 }
