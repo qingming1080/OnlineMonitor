@@ -38,12 +38,18 @@ Item {
     property real speed: 0.1        //波浪速度,数越大速度越快
     property real offset: 0         //波浪x偏移量,用于动画
 
+    property var ctx: []
+    property var color_offset: []
+    property var progress_text: []
+    property var x_base: []
+    property var y_base: []
     Canvas {
         id: canvas
         width: canvasWidth
         height: canvasWidth
         onPaint: {
-            var ctx = getContext("2d");
+            ctx = getContext("2d");
+            ctx.reset()
             ctx.clearRect(0, 0, canvasWidth, canvasWidth);
             ctx.lineCap = "round";
 
@@ -51,11 +57,11 @@ Item {
             ctx.beginPath();
             ctx.arc(canvasWidth/2, canvasWidth/2, waveRadius+waveBorder-canvasMargin, 0, 2*Math.PI);
             ctx.lineWidth = waveBorder;
-            var color_offset = offset>Math.PI?(1-(offset-Math.PI)/Math.PI):(offset/Math.PI);
+            color_offset = offset>Math.PI?(1-(offset-Math.PI)/Math.PI):(offset/Math.PI);
             ctx.strokeStyle = /*Qt.lighter(waveColor, 1.5+0.3*color_offset);*/"#558dbd";
             ctx.stroke();
 
-            var progress_text = qsTr("%1 %").arg(parseInt(percent*100));
+            progress_text = qsTr("%1 %").arg(parseInt(percent*100));
             ctx.font = "bold 30px 'Source Han Sans', sans-serif";
             ctx.textAlign = "center";
             ctx.fillStyle = waveColor;
@@ -80,8 +86,8 @@ Item {
         function drawWave(ctx, w_color, x_offset, y_offset, reverse)
         {
             ctx.beginPath();
-            var x_base = canvasWidth/2-waveRadius;
-            var y_base = canvasWidth/2+waveRadius-waveRadius*2*percent;
+            x_base = canvasWidth/2-waveRadius;
+            y_base = canvasWidth/2+waveRadius-waveRadius*2*percent;
             //正弦波浪，横坐标步进为5px，右侧多加5是为了填补不足步进的部分
             for(var x_value = 0; x_value <= waveRadius*2 + 5; x_value += 5){
                 var y_value = waveHeight*Math.sin((reverse?-1:1)*(x_value)*waveWidth+offset+x_offset)+y_offset;
@@ -101,12 +107,12 @@ Item {
         id:time
         running: true
         repeat: true
-        interval: 35
+        interval: 150
         onTriggered:{
             //波浪移动
             offset += speed;
             offset %= Math.PI*2;
-            canvas.requestPaint();
+            canvas.requestPaint()
         }
     }
 }

@@ -1,4 +1,4 @@
-#include "trend.h"
+﻿#include "trend.h"
 #include <QTimer>
 #include "DataBase/databasemanager.h"
 #include <QDateTime>
@@ -20,51 +20,19 @@ Trend::Trend(int welderID, QObject *parent)
     emit SignalManager::getInstance()->signalAddRecord(QDateTime::currentDateTime(), text);
 }
 
-QStandardItemModel *Trend::pBeforeModel() const
-{
-    return m_pBeforeModel;
-}
-
-QStandardItemModel *Trend::pAfterModel() const
-{
-    return m_pAfterModel;
-}
-
-QStandardItemModel *Trend::pTimeModel() const
-{
-    return m_pTimeModel;
-}
-
-QStandardItemModel *Trend::pPowerModel() const
-{
-    return m_pPowerModel;
-}
-
-QStandardItemModel *Trend::pYieldTrend() const
-{
-    return m_pYieldTrend;
-}
-
 void Trend::upYieldData()
 {
-    static int funcIndex = 0;
-    if(m_welderID == 3)
-    {
-        funcIndex++;
-        qDebug() << "I WANT UPDATE YIELD_TREND" << funcIndex;
-    }
-
     QElapsedTimer timer;
     timer.start();
 
     if(m_yieldType == 0)
-        setYieldTrendData(DataBaseManager::getInstance()->getYieldTrendData(0-60*60, m_welderID));  // 一个小时 60s*60m
+        m_yieldData = DataBaseManager::getInstance()->getYieldTrendData(0-60*60, m_welderID);  // 一个小时 60s*60m
     else if(m_yieldType == 1)
-        setYieldTrendData(DataBaseManager::getInstance()->getYieldTrendData(0-60*60*24, m_welderID));   // 一天  60s*60m*24h
+        m_yieldData = DataBaseManager::getInstance()->getYieldTrendData(0-60*60*24, m_welderID);   // 一天  60s*60m*24h
     else if(m_yieldType == 2)
-        setYieldTrendData(DataBaseManager::getInstance()->getYieldTrendData(0-60*60*24*7, m_welderID)); // 七天
+        m_yieldData = DataBaseManager::getInstance()->getYieldTrendData(0-60*60*24*7, m_welderID); // 七天
     else if(m_yieldType == 3)
-        setYieldTrendData(DataBaseManager::getInstance()->getYieldTrendData(0-60*60*24*30, m_welderID)); // 三十天
+        m_yieldData = DataBaseManager::getInstance()->getYieldTrendData(0-60*60*24*30, m_welderID); // 三十天
 
     QString text = QString("%1号设备_Trend_良率趋势图刷新耗时:%2ms").arg(m_welderID).arg(timer.elapsed());
     emit SignalManager::getInstance()->signalAddRecord(QDateTime::currentDateTime(), text);
@@ -74,52 +42,6 @@ void Trend::upYieldData()
 
 void Trend::setWeldTrendData(_Weld_TrendData result)
 {
-    // 清除当前折线数据
-    m_pBeforeModel->clear();
-    m_pAfterModel->clear();
-    m_pTimeModel->clear();
-    m_pPowerModel->clear();
-
-    for(int row = 0; row < result.data.size(); ++row)
-    {
-        // 焊前高度
-        // 点下标
-        QStandardItem* before_Row_Item = new QStandardItem(QString::number(row));
-        // X坐标
-        QStandardItem* before_X_Item = new QStandardItem(QString::number(result.data.at(row).serial_number));
-        // Y坐标
-        QStandardItem* before_Y_Item = new QStandardItem(QString::number(result.data.at(row).pre_height));
-        m_pBeforeModel->setItem(row, 0, before_Row_Item);
-        m_pBeforeModel->setItem(row, 1, before_X_Item);
-        m_pBeforeModel->setItem(row, 2, before_Y_Item);
-
-        // 焊后高度
-        QStandardItem* after_Row_Item = new QStandardItem(QString::number(row));
-        QStandardItem* after_X_Item = new QStandardItem(QString::number(result.data.at(row).serial_number));
-        QStandardItem* after_Y_Item = new QStandardItem(QString::number(result.data.at(row).post_height));
-        m_pAfterModel->setItem(row, 0, after_Row_Item);
-        m_pAfterModel->setItem(row, 1, after_X_Item);
-        m_pAfterModel->setItem(row, 2, after_Y_Item);
-
-        // 时间
-        QStandardItem* time_Row_Item = new QStandardItem(QString::number(row));
-        QStandardItem* time_X_Item = new QStandardItem(QString::number(result.data.at(row).serial_number));
-        // 去掉数据库的s时间单位
-        QString time = result.data.at(row).time.left(result.data.at(row).time.length()-1);
-        QStandardItem* time_Y_Item = new QStandardItem(time);
-        m_pTimeModel->setItem(row, 0, time_Row_Item);
-        m_pTimeModel->setItem(row, 1, time_X_Item);
-        m_pTimeModel->setItem(row, 2, time_Y_Item);
-
-        // 功率
-        QStandardItem* power_Row_Item = new QStandardItem(QString::number(row));
-        QStandardItem* power_X_Item = new QStandardItem(QString::number(result.data.at(row).serial_number));
-        QStandardItem* power_Y_Item = new QStandardItem(QString::number(result.data.at(row).power));
-        m_pPowerModel->setItem(row, 0, power_Row_Item);
-        m_pPowerModel->setItem(row, 1, power_X_Item);
-        m_pPowerModel->setItem(row, 2, power_Y_Item);
-    }
-
     m_idMaxX = result.id_X_Max;
     m_idMinX = result.id_X_Min;
     emit idMaxXChanged();
@@ -146,20 +68,20 @@ void Trend::setWeldTrendData(_Weld_TrendData result)
     emit powerMinYChanged();
 }
 
-void Trend::setYieldTrendData(_Yield_TrendData data)
+void Trend::setYieldTrendData()
 {
-    for(int row = 0; row < data.points.size(); ++row)
-    {
-        QDateTime time = QDateTime::fromString(data.points.at(row).second, "yyyy-MM-dd hh:mm:ss");
-        m_pYieldTrend->setData(m_pYieldTrend->index(row, 1), QString::number(time.toMSecsSinceEpoch()));
-        m_pYieldTrend->setData(m_pYieldTrend->index(row, 2), QString::number(data.points.at(row).first));
-    }
-
-    m_startTime = data.startTime;
-    m_endTime   = data.endTime;
+    m_startTime = m_yieldData.startTime;
+    m_endTime   = m_yieldData.endTime;
     emit startTimeChanged();
     emit endTimeChanged();
     emit SignalManager::getInstance()->changeYieldTrendData();
+    emit signalYieldTrendChanged();
+
+    if(m_pXYSeries)
+    {
+        m_pXYSeries->replace(m_yieldData.points);
+        qDebug() << "I_WANT_TEST 刷新折线" << m_pXYSeries << m_yieldData.points.count() << m_startTime << m_endTime;
+    }
 }
 
 QString Trend::endTime() const
@@ -173,6 +95,14 @@ void Trend::setEndTime(const QString &newEndTime)
         return;
     m_endTime = newEndTime;
     emit endTimeChanged();
+}
+
+void Trend::setXYSeries(QAbstractSeries *series)
+{
+    m_pXYSeries = static_cast<QXYSeries*>(series);
+    setYieldTrendData();
+
+    qDebug() << QString("I_WANT_TEST 设备%1 设置折线").arg(m_welderID) << m_pXYSeries;
 }
 
 QString Trend::startTime() const
@@ -193,36 +123,11 @@ void Trend::init()
     QElapsedTimer tm;
     tm.start();
 
-    m_pBeforeModel  = new QStandardItemModel();
-    m_pBeforeModel->setColumnCount(3);
-
-    m_pAfterModel   = new QStandardItemModel();
-    m_pAfterModel->setColumnCount(3);
-
-    m_pTimeModel    = new QStandardItemModel();
-    m_pTimeModel->setColumnCount(3);
-
-    m_pPowerModel   = new QStandardItemModel();
-    m_pPowerModel->setColumnCount(3);
-
-    m_pYieldTrend   = new QStandardItemModel();
-    m_pYieldTrend->setColumnCount(3);
-    for(int i = 0; i < 60; ++i)
-    {
-        QStandardItem* yieldItem      = new QStandardItem(QString::number(i));
-        QStandardItem* yield_X_Item   = new QStandardItem();
-        QStandardItem* yield_Y_Item   = new QStandardItem();
-
-        m_pYieldTrend->setItem(i, 0, yieldItem);
-        m_pYieldTrend->setItem(i, 1, yield_X_Item);
-        m_pYieldTrend->setItem(i, 2, yield_Y_Item);
-    }
-
 
     // 良率趋势刷新
     m_yieldTimer = new QTimer;
     connect(m_yieldTimer, &QTimer::timeout, this, &Trend::upYieldData);
-    m_yieldTimer->start(1000*1);
+    m_yieldTimer->start(1000*60);
 
     upYieldData();
 }

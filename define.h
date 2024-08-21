@@ -1,10 +1,11 @@
-#ifndef DEFINE_H
+﻿#ifndef DEFINE_H
 #define DEFINE_H
 
 #include <QObject>
 #include <QString>
 #include <QByteArray>
 #include <QDateTime>
+#include <QPointF>
 
 #define CONFIGURATION_TABLENAME     QString("configuration")
 #define NETWORK_TABLENAME           QString("connection_network")
@@ -185,7 +186,17 @@ struct _Yield_TrendData
     QString startTime;
     // 结束时间
     QString endTime;
-    QList<QPair<int, QString>> points;
+    QList<QPointF> points;
+    _Yield_TrendData& operator=(const _Yield_TrendData& other){
+        this->points.clear();
+        this->startTime = other.startTime;
+        this->endTime   = other.endTime;
+//        this->points    = other.points;
+        for(int i = 0; i < other.points.count(); ++i)
+            this->points.push_back(other.points.at(i));
+
+        return *this;
+    }
 };
 
 

@@ -24,7 +24,7 @@ Rectangle {
             }
         }
         function onSigSwipeCurrIndex(swipeCurrIndex){
-            chartView.setSwipeCurrIndex(swipeCurrIndex)
+
         }
     }
 
@@ -64,7 +64,6 @@ Rectangle {
         anchors.right: parent.right // 使图表的右侧与父项的右侧对齐
         antialiasing: true
         backgroundColor: "transparent"
-        animationOptions: ChartView.SeriesAnimations
         titleColor: "red"
         titleFont.family: fontBold
         titleFont.pixelSize: 20
@@ -152,13 +151,6 @@ Rectangle {
             axisY:myAxisY2
             color: "#d5b989"
             width: 3
-            VXYModelMapper{
-                model: DeviceManager.deviceList[swipeCurrIndex].pTrend.pPowerModel
-                series: lineSeries
-                firstRow: 0
-                xColumn: 1
-                yColumn: 2
-            }
             useOpenGL: true
         }
         LineSeries {
@@ -168,13 +160,6 @@ Rectangle {
             axisY:myAxisY3
             color: "#cd9caa"
             width: 3
-            VXYModelMapper{
-                model: DeviceManager.deviceList[swipeCurrIndex].pTrend.pTimeModel
-                series: lineSeries1
-                firstRow: 0
-                xColumn: 1
-                yColumn: 2
-            }
             useOpenGL: true
         }
         LineSeries {
@@ -185,13 +170,6 @@ Rectangle {
             color: "#1398fa"
             width: 3
             visible: altitudeMode
-            VXYModelMapper{
-                model: DeviceManager.deviceList[swipeCurrIndex].pTrend.pBeforeModel
-                series: lineSeries2
-                firstRow: 0
-                xColumn: 1
-                yColumn: 2
-            }
             useOpenGL: true
         }
         LineSeries {
@@ -202,13 +180,6 @@ Rectangle {
             color: "#ccb2f8"
             width: 3
             visible: altitudeMode
-            VXYModelMapper{
-                model: DeviceManager.deviceList[swipeCurrIndex].pTrend.pAfterModel
-                series: lineSeries3
-                firstRow: 0
-                xColumn: 1
-                yColumn: 2
-            }
             useOpenGL: true
         }
     }

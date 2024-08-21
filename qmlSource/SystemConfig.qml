@@ -1426,29 +1426,44 @@ Rectangle {
                     font.bold: true
                 }
                 onPressed: {
-                    if(isAdd){
-                        Qt.callLater(sigAddDevice)
-                        if(!oneself){
-                            switchUI(1)
+                    if(t1.text >= 20000 && t1.text <= 1000000){
+                        if(t2.text >= 10 && t2.text <= 20){
+                            if(t3.text >= 90 && t3.text <= 99){
+                                if(isAdd){
+                                    Qt.callLater(sigAddDevice)
+                                    if(!oneself){
+                                        switchUI(1)
+                                    }
+                                    oneself = false
+                                    sigUndetermined(1)
+                                    loadViewsys(2,musys)
+                                    return
+                                }
+                                if(full.visible){//设置多设备时配置存储
+                                    DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.setMaxBacth(t1.text)
+                                    DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.setSample(t2.text)
+                                    DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.setLowerLimit(t3.text)
+                                    DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.setName(t4.text)
+                                }
+                                else{
+                                    DeviceManager.deviceList[0].pDeviceInformation.setMaxBacth(t1.text)
+                                    DeviceManager.deviceList[0].pDeviceInformation.setSample(t2.text)
+                                    DeviceManager.deviceList[0].pDeviceInformation.setLowerLimit(t3.text)
+                                    DeviceManager.deviceList[0].pDeviceInformation.setName(t4.text)
+                                }
+                                loadViewsys(2,musys)
+                            }
+                            else{
+                                popup.openPop(11)
+                            }
                         }
-                        oneself = false
-                        sigUndetermined(1)
-                        loadViewsys(2,musys)
-                        return
-                    }
-                    if(full.visible){//设置多设备时配置存储
-                        DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.setMaxBacth(t1.text)
-                        DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.setSample(t2.text)
-                        DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.setLowerLimit(t3.text)
-                        DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.setName(t4.text)
+                        else{
+                            popup.openPop(11)
+                        }
                     }
                     else{
-                        DeviceManager.deviceList[0].pDeviceInformation.setMaxBacth(t1.text)
-                        DeviceManager.deviceList[0].pDeviceInformation.setSample(t2.text)
-                        DeviceManager.deviceList[0].pDeviceInformation.setLowerLimit(t3.text)
-                        DeviceManager.deviceList[0].pDeviceInformation.setName(t4.text)
+                        popup.openPop(11)
                     }
-                    loadViewsys(2,musys)
                 }
             }
         }

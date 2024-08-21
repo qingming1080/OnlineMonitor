@@ -1,6 +1,7 @@
 QT += widgets quick virtualkeyboard charts serialport sql qml xml
 
 CONFIG += c++11
+CONFIG += C++11UTF8
 msvc {
     QMAKE_CFLAGS *= /utf-8
     QMAKE_CXXFLAGS *= /utf-8
@@ -67,10 +68,8 @@ HEADERS += \
     model/rs232model.h \
     model/system.h \
     model/trend.h \
-    multiyaxisplot.h \
     qmlenum.h \
-    signalmanager.h \
-    timeyaxisplot.h
+    signalmanager.h
 
 TRANSLATIONS += \
         SimplifiedChinese.ts \

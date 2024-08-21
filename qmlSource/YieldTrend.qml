@@ -1,4 +1,4 @@
-import QtQuick 2.0
+﻿import QtQuick 2.0
 import QtQuick.Controls 2.5
 import QtCharts 2.15
 import Device 1.0
@@ -7,8 +7,22 @@ import Trend 1.0
 
 //良率趋势
 Rectangle {
-    property var startTime: Date.fromLocaleString(Qt.locale(), DeviceManager.deviceList[swipeCurrIndex].pTrend.startTime, "yyyy-MM-dd hh:mm:ss")
-    property var endTime: Date.fromLocaleString(Qt.locale(), DeviceManager.deviceList[swipeCurrIndex].pTrend.endTime, "yyyy-MM-dd hh:mm:ss")
+    property var startTime: {
+        if(!swipevis){
+            Date.fromLocaleString(Qt.locale(), DeviceManager.deviceList[equiInforIndex-1].pTrend.startTime, "yyyy-MM-dd hh:mm:ss")
+        }
+        else{
+            Date.fromLocaleString(Qt.locale(), DeviceManager.deviceList[swipeCurrIndex].pTrend.startTime, "yyyy-MM-dd hh:mm:ss")
+        }
+    }
+    property var endTime:{
+        if(!swipevis){
+            Date.fromLocaleString(Qt.locale(), DeviceManager.deviceList[equiInforIndex-1].pTrend.endTime, "yyyy-MM-dd hh:mm:ss")
+        }
+        else{
+            Date.fromLocaleString(Qt.locale(), DeviceManager.deviceList[swipeCurrIndex].pTrend.endTime, "yyyy-MM-dd hh:mm:ss")
+        }
+    }
     property int equiInforIndex: 0
     property int btnIndex: 1
     onHeightChanged: {
@@ -301,20 +315,9 @@ Rectangle {
         }
     }
 
-    Connections{
-        target: window
-        function onSigSwipeCurrIndex(swipeCurrIndex){
-            chart.setSwipeCurrIndex(swipeCurrIndex)
-        }
-    }
+
 
     property int timer: 0
-    //    CustomTimeChart{
-    //        id:chart
-    //        anchors.top: line.bottom // 使图表的顶部与父项的顶部对齐
-    //        fillColor: "transparent"
-    //        width: 590
-    //    }
 
     ChartView {
         id:chart
@@ -323,7 +326,6 @@ Rectangle {
         height: 240
         antialiasing: true
         backgroundColor: "transparent"
-        animationOptions: ChartView.SeriesAnimations
         titleColor: "red"
         titleFont.family: fontBold
         titleFont.pixelSize: 20
@@ -332,6 +334,11 @@ Rectangle {
         margins.top: 10
         margins.bottom: 10
         legend.visible: false
+        clip: true
+        Component.onCompleted: {
+            chartUpdata()
+        }
+
         DateTimeAxis {
             id: myAxisX
             format: "MM-dd hh:mm" // 时间格式
@@ -362,22 +369,107 @@ Rectangle {
             axisY:myAxisY
             color: "#1398fa"
             width: 3
-            VXYModelMapper{
-                model: DeviceManager.deviceList[swipeCurrIndex].pTrend.pYieldTrend
-                series: lineSeries
-                firstRow: 0
-                xColumn: 1
-                yColumn: 2
-            }
-            useOpenGL: true
+            useOpenGL: false
+	    pointsVisible: true
         }
-        ScatterSeries{
-            id:lineSeries1
-            axisX: myAxisX
-            axisY:myAxisY
-            markerSize: 10
-            useOpenGL: true
+        Connections
+        {
+            target: DeviceManager
+            function onDeviceNumChanged(){
+                chartUpdata()
+            }
+        }
+        function chartUpdata(){
+            if(equipmentCount === 1){
+                DeviceManager.deviceList[0].pTrend.setXYSeries((chart.series(lineSeries.name)))
+                return
+            }
+
+            if(swipevis){
+                if(equipmentCount === 2){
+                    if(swipeCurrIndex === 0){
+                        DeviceManager.deviceList[0].pTrend.setXYSeries((chart.series(lineSeries.name)))
+                        DeviceManager.deviceList[1].pTrend.setXYSeries()
+                    }
+                    else if(swipeCurrIndex === 1){
+                        DeviceManager.deviceList[1].pTrend.setXYSeries((chart.series(lineSeries.name)))
+                        DeviceManager.deviceList[0].pTrend.setXYSeries()
+                    }
+
+                }
+                else if(equipmentCount === 3){
+                    if(swipeCurrIndex === 0){
+                        DeviceManager.deviceList[0].pTrend.setXYSeries((chart.series(lineSeries.name)))
+                        DeviceManager.deviceList[1].pTrend.setXYSeries()
+                        DeviceManager.deviceList[2].pTrend.setXYSeries()
+                    }
+                    else if(swipeCurrIndex === 1){
+                        DeviceManager.deviceList[1].pTrend.setXYSeries((chart.series(lineSeries.name)))
+                        DeviceManager.deviceList[0].pTrend.setXYSeries()
+                        DeviceManager.deviceList[2].pTrend.setXYSeries()
+                    }
+                    else if(swipeCurrIndex === 2){
+                        DeviceManager.deviceList[2].pTrend.setXYSeries((chart.series(lineSeries.name)))
+                        DeviceManager.deviceList[0].pTrend.setXYSeries()
+                        DeviceManager.deviceList[1].pTrend.setXYSeries()
+                    }
+                }
+                else if(equipmentCount === 4){
+                    if(swipeCurrIndex === 0){
+                        DeviceManager.deviceList[0].pTrend.setXYSeries((chart.series(lineSeries.name)))
+                        DeviceManager.deviceList[1].pTrend.setXYSeries()
+                        DeviceManager.deviceList[2].pTrend.setXYSeries()
+                        DeviceManager.deviceList[3].pTrend.setXYSeries()
+                    }
+                    else if(swipeCurrIndex === 1){
+                        DeviceManager.deviceList[1].pTrend.setXYSeries((chart.series(lineSeries.name)))
+                        DeviceManager.deviceList[0].pTrend.setXYSeries()
+                        DeviceManager.deviceList[2].pTrend.setXYSeries()
+                        DeviceManager.deviceList[3].pTrend.setXYSeries()
+                    }
+                    else if(swipeCurrIndex === 2){
+                        DeviceManager.deviceList[2].pTrend.setXYSeries((chart.series(lineSeries.name)))
+                        DeviceManager.deviceList[0].pTrend.setXYSeries()
+                        DeviceManager.deviceList[1].pTrend.setXYSeries()
+                        DeviceManager.deviceList[3].pTrend.setXYSeries()
+                    }
+                    else if(swipeCurrIndex === 3){
+                        DeviceManager.deviceList[3].pTrend.setXYSeries((chart.series(lineSeries.name)))
+                        DeviceManager.deviceList[0].pTrend.setXYSeries()
+                        DeviceManager.deviceList[1].pTrend.setXYSeries()
+                        DeviceManager.deviceList[2].pTrend.setXYSeries()
+                    }
+                }
+            }
+            else{
+                if(equipmentCount === 2){
+                    if(equiInforIndex === 1){
+                        DeviceManager.deviceList[0].pTrend.setXYSeries((chart.series(lineSeries.name)))
+                    }
+                    else if(equiInforIndex === 2){
+                        DeviceManager.deviceList[1].pTrend.setXYSeries((chart.series(lineSeries.name)))
+                    }
+                }
+                else if(equipmentCount === 3){
+                    if(equiInforIndex === 1){
+                        DeviceManager.deviceList[0].pTrend.setXYSeries((chart.series(lineSeries.name)))
+                    }
+                    DeviceManager.deviceList[1].pTrend.setXYSeries()
+                    DeviceManager.deviceList[2].pTrend.setXYSeries()
+                }
+                else if(equipmentCount === 4){
+                    DeviceManager.deviceList[0].pTrend.setXYSeries()
+                    DeviceManager.deviceList[1].pTrend.setXYSeries()
+                    DeviceManager.deviceList[1].pTrend.setXYSeries()
+                    DeviceManager.deviceList[3].pTrend.setXYSeries()
+                }
+            }
+        }
+        onVisibleChanged: {
+            if(visible){
+                chartUpdata()
+            }
         }
     }
-
 }
+

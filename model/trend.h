@@ -1,18 +1,16 @@
-#ifndef TREND_H
+﻿#ifndef TREND_H
 #define TREND_H
 
 #include <QObject>
 #include <QStandardItemModel>
 #include "define.h"
 
+#include <QtCharts>
+#include <QXYSeries>
+
 class Trend : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(QStandardItemModel *pBeforeModel READ pBeforeModel)  // 焊前高度
-    Q_PROPERTY(QStandardItemModel *pAfterModel  READ pAfterModel)   // 焊后高度
-    Q_PROPERTY(QStandardItemModel *pTimeModel   READ pTimeModel)    // 时间
-    Q_PROPERTY(QStandardItemModel *pPowerModel  READ pPowerModel)   // 功率
-    Q_PROPERTY(QStandardItemModel *pYieldTrend  READ pYieldTrend)   // 良率
     // 折线图范围
     Q_PROPERTY(int idMinX READ idMinX WRITE setIdMinX NOTIFY idMinXChanged)
     Q_PROPERTY(int idMaxX READ idMaxX WRITE setIdMaxX NOTIFY idMaxXChanged)
@@ -28,14 +26,12 @@ class Trend : public QObject
     Q_PROPERTY(QString startTime READ startTime WRITE setStartTime NOTIFY startTimeChanged FINAL)
     Q_PROPERTY(QString endTime READ endTime WRITE setEndTime NOTIFY endTimeChanged FINAL)
 
+    /// TEST 2024_08_18
+    friend class Device;
+    /// TEST 2024_08_18
+
 public:
     explicit Trend(int welderID=0, QObject *parent = nullptr);
-
-    Q_INVOKABLE QStandardItemModel *pBeforeModel() const;
-    Q_INVOKABLE QStandardItemModel *pAfterModel() const;
-    Q_INVOKABLE QStandardItemModel *pTimeModel() const;
-    Q_INVOKABLE QStandardItemModel *pPowerModel() const;
-    Q_INVOKABLE QStandardItemModel *pYieldTrend() const;
 
     // 更新良率趋势
     void upYieldData();
@@ -78,8 +74,10 @@ public:
     Q_INVOKABLE void setStartTime(const QString &newStartTime);
 
     Q_INVOKABLE QString endTime() const;
-    Q_INVOKABLE void setEndTime(const QString &newEndTime);
+    Q_INVOKABLE void setEndTime(const QString &newEndTime = nullptr);
 
+
+    Q_INVOKABLE void setXYSeries(QAbstractSeries *series);
 signals:
 
     void idMinXChanged();
@@ -108,20 +106,17 @@ signals:
 
     void endTimeChanged();
 
+    void signalYieldTrendChanged();
+
 private:
     void init();
 
     void setWeldTrendData(_Weld_TrendData data);
 
-    void setYieldTrendData(_Yield_TrendData data);
+    void setYieldTrendData();
 
 private:
     const int m_welderID;
-    QStandardItemModel* m_pBeforeModel;     // 焊前高度
-    QStandardItemModel* m_pAfterModel;      // 焊后高度
-    QStandardItemModel* m_pTimeModel;       // 时间
-    QStandardItemModel* m_pPowerModel;      // 功率
-    QStandardItemModel* m_pYieldTrend;      // 良率
 
     // 焊接趋势 X轴范围
     int m_idMinX;
@@ -147,6 +142,9 @@ private:
 
     QTimer* m_weldTimer;
     QTimer* m_yieldTimer;
+
+    _Yield_TrendData m_yieldData;
+    QXYSeries* m_pXYSeries;
 };
 
 #endif // TREND_H

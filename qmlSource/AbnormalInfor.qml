@@ -22,16 +22,18 @@ Rectangle {
     }
     ListView{
         id: taskplanView
-        width: 260
+        width: 270
         height: 220
         x:24
         y:68
         model: Message
+        clip: true
         delegate: Rectangle{
             id: regionItem
-            height: 20
+            height: 40
             Row{
                 anchors.fill: parent
+                spacing: 10
                 Text{
                     font.pixelSize: 16
                     text: {
@@ -65,6 +67,8 @@ Rectangle {
                         }
                         return str
                     }
+                    width: 270
+                    wrapMode: Text.WordWrap
                     font.family: fontBold
                     font.bold: true
                     color:listColor

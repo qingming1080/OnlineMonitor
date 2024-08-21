@@ -1,31 +1,9 @@
-import QtQuick 2.0
+﻿import QtQuick 2.0
 import QtQuick.Controls 1.4
 import QtQuick.Controls 2.15
 import QtQml.Models 2.15
 Rectangle {
     color: pRgb(153, 204, 255)
-    Connections{
-        target: window
-        function onEquipmentCountChanged(){
-            updateUI()
-        }
-        function onSigRecover(){
-            view.interactive = true
-        }
-    }
-    Connections{
-        target: mpro
-        function onSigSwipeCurrIndex(index){
-            view.setCurrentIndex(index)
-        }
-    }
-    function updateUI(){
-        //        view.removePage()
-        //        for(var j = 0; j < equipmentCount;j++){
-        //            view.addPage(j)
-        //        }
-        sigUpdateUI(view.currentIndex)
-    }
     //    Rectangle{
     //        x:78
     //        y:29
@@ -183,6 +161,10 @@ Rectangle {
             }
         }
         onPressed: {
+            if(equipmentCount === 3){
+                swipeCurrIndex = 0
+            }
+            swipevis = false
             loadViewpro(2,multipro)
         }
         visible: !createModel

@@ -1,4 +1,4 @@
-import QtQuick 2.6
+﻿import QtQuick 2.6
 import QtQuick.Window 2.12
 import QtQuick.Window 2.3
 import QtQuick.Layouts 1.12
@@ -11,6 +11,7 @@ import DeviceInformation 1.0
 import QtQml 2.15
 Window {
     id: window
+    flags: Qt.FramelessWindowHint
     visible: true
     width: 1280
     height: 800
@@ -22,6 +23,7 @@ Window {
     property int interFaceId: 0
     property var keyboardYype: 0
     property bool createModel: false
+    property bool swipevis: false
     onSwipeCurrIndexChanged: {
         sigSwipeCurrIndex(swipeCurrIndex)
     }

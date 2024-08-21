@@ -1,4 +1,4 @@
-import QtQuick 2.15
+﻿import QtQuick 2.15
 import QtQuick.Controls 1.4
 import QtQuick.Controls 2.15
 import Device 1.0
@@ -33,6 +33,7 @@ Rectangle {
     }
 
     Component.onCompleted: {
+        loadViewpro(3,swipe)
         if(equipmentCount > 1){
             mode = 1
             loadViewpro(2,multipro)

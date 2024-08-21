@@ -1,4 +1,4 @@
-import QtQuick 2.0
+﻿import QtQuick 2.0
 import QtQuick.Controls 1.4
 import QtQuick.Controls 2.15
 import Device 1.0
@@ -236,6 +236,7 @@ Rectangle {
                 }
             }
             onPressed: {
+                swipevis = true
                 mpro.swipeIndex = 0
                 swipeCurrIndex = 0
                 loadViewpro(3,swipe)
@@ -384,6 +385,7 @@ Rectangle {
                 }
             }
             onPressed: {
+                swipevis = true
                 mpro.swipeIndex = 1
                 swipeCurrIndex = 1
                 loadViewpro(3,swipe)
@@ -555,6 +557,7 @@ Rectangle {
                 }
             }
             onPressed: {
+                swipevis = true
                 mpro.swipeIndex = 2
                 swipeCurrIndex = 2
                 loadViewpro(3,swipe)
@@ -725,13 +728,15 @@ Rectangle {
                 }
             }
             onPressed: {
+                swipevis = true
                 if(equipmentCount === 4){
                     mpro.swipeIndex = 3
+                    swipeCurrIndex = 3
                 }
                 else{
                     mpro.swipeIndex = 2
+                    swipeCurrIndex = 2
                 }
-                swipeCurrIndex = 3
                 loadViewpro(3,swipe)
                 sigUpdateUI(3)
             }

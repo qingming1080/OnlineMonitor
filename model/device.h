@@ -34,6 +34,7 @@ public:
     Q_INVOKABLE IO *pIO() const;
     Q_INVOKABLE Trend *pTrend() const;
 
+    Q_INVOKABLE void test();
 signals:
 
 

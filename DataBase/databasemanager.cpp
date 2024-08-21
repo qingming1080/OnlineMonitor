@@ -1,4 +1,4 @@
-#include "databasemanager.h"
+﻿#include "databasemanager.h"
 #include <QDebug>
 #include <QSqlQuery>
 #include <QSqlError>
@@ -957,9 +957,6 @@ _Yield_TrendData DataBaseManager::getYieldTrendData(int interVal, int welderID)
     QList<int> good_num_list;           // 60个时间段每个时间段的良品总数列表
     for(int i = 0; i < 60; ++i)
     {
-        QPair<int, QString> pair;
-        pair.second = startTime.addSecs(timeInterVal * i).toString("yyyy-MM-dd hh:mm:ss");
-        result.points.push_back(pair);
         production_num_list.push_back(0);
         good_num_list.push_back(0);
     }
@@ -986,10 +983,13 @@ _Yield_TrendData DataBaseManager::getYieldTrendData(int interVal, int welderID)
     {
         int production_num = production_num_list.at(i);
         int good_num = good_num_list.at(i);
+        QPointF pos;
         if(production_num == 0)
-            result.points[i].first = 0;
+            pos.ry() = 0;
         else
-            result.points[i].first = double(good_num)/production_num * 100;
+            pos.ry() = int(double(good_num)/production_num * 100);
+        pos.rx() = startTime.addSecs(timeInterVal * i).toMSecsSinceEpoch();
+        result.points.push_back(pos);
     }
 
     return result;
@@ -1163,7 +1163,7 @@ void DataBaseManager::init()
 {
     m_database = QSqlDatabase::addDatabase("QSQLITE");
     QString dbPath = QCoreApplication::applicationDirPath() + "/onlinemonitor.db";
-    qDebug() << dbPath;
+    qDebug() << "I_WANT_TEST" << dbPath;
     m_database.setDatabaseName(dbPath);
     if (!m_database.open())
     {

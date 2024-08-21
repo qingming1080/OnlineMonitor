@@ -1,4 +1,4 @@
-import QtQuick 2.0
+﻿import QtQuick 2.0
 import QtQuick.Controls 1.4
 import QtQuick.Controls 2.15
 import QtQml.Models 2.15
@@ -27,160 +27,14 @@ Rectangle {
             createModel = true
         }
     }
-    //    Button{
-    //        width: 50
-    //        height: 50
-    //        Image {
-    //            anchors.fill: parent
-    //            width: 50
-    //            height: 50
-    //            source: "qrc:/image/switch.png"
-    //        }
-    //        background: Rectangle{
-    //            color: "transparent"
-    //        }
-    //        onPressed: {
-    //            deviceStatus.visible = !deviceStatus.visible
-    //        }
-    //    }
-    //    Rectangle {
-    //        id: deviceStatus
-    //        radius: 3
-    //        x:42
-    //        y:35
-    //        width:  258
-    //        height: mt1.text === "新建模型" ? 255 :225
-    //        color: "#0c5696"
-    //        Rectangle{
-    //            width: 258
-    //            height: 44
-    //            radius: 3
-    //            color: "#007dbc"
-    //            Text {
-    //                id:t2
-    //                text: qsTr("设备名称")
-    //                font.family: fontBold
-    //                font.pixelSize:  20
-    //                color: pRgb(171, 206, 213)
-    //                anchors.centerIn: parent
-    //            }
-    //        }
-    //        Button{
-    //            id:b1
-    //            x:5
-    //            y:50
-    //            width: 248
-    //            height: 44
-    //            background: Rectangle{
-    //                radius: 5
-    //                width: 248
-    //                height: 44
-    //                color: pRgb(177, 213, 219)
-    //                border.color: "#007dbc"
-    //                border.width: 2
-    //                Text {
-    //                    text: {
-    //                        if(DeviceManager.deviceList[0]){
-    //                            return DeviceManager.deviceList[0].pDeviceInformation.name
-    //                        }
-    //                        return ""
-    //                    }
-    //                    font.family: fontBold
-    //                    font.pixelSize:  20
-    //                    color: "#0c5696"
-    //                    anchors.centerIn: parent
-    //                }
-    //            }
-    //            visible: equipmentCount >=1 ? true : false
-    //        }
-    //        Button{
-    //            id:b2
-    //            x:5
-    //            anchors.top: b1.bottom
-    //            anchors.topMargin: 8
-    //            width: 248
-    //            height: 44
-    //            background: Rectangle{
-    //                radius: 5
-    //                width: 248
-    //                height: 44
-    //                color: pRgb(177, 213, 219)
-    //                border.color: "#007dbc"
-    //                border.width: 2
-    //                Text {
-    //                    text: {
-    //                        if(DeviceManager.deviceList[1]){
-    //                            return DeviceManager.deviceList[1].pDeviceInformation.name
-    //                        }
-    //                        return ""
-    //                    }
-    //                    font.family: fontBold
-    //                    font.pixelSize:  20
-    //                    color: "#0c5696"
-    //                    anchors.centerIn: parent
-    //                }
-    //            }
-    //            visible: equipmentCount >=2 ? true : false
-    //        }
-    //        Button{
-    //            id:b3
-    //            x:5
-    //            anchors.top: b2.bottom
-    //            anchors.topMargin: 8
-    //            width: 248
-    //            height: 44
-    //            background: Rectangle{
-    //                radius: 5
-    //                width: 248
-    //                height: 44
-    //                color: pRgb(177, 213, 219)
-    //                border.color: "#007dbc"
-    //                border.width: 2
-    //                Text {
-    //                    text: {
-    //                        if(DeviceManager.deviceList[2]){
-    //                            return DeviceManager.deviceList[2].pDeviceInformation.name
-    //                        }
-    //                        return ""
-    //                    }
-    //                    font.family: fontBold
-    //                    font.pixelSize:  20
-    //                    color: "#0c5696"
-    //                    anchors.centerIn: parent
-    //                }
-    //            }
-    //            visible: equipmentCount >=3 ? true : false
-    //        }
-    //        Button{
-    //            id:b4
-    //            x:5
-    //            anchors.top: b3.bottom
-    //            anchors.topMargin: 8
-    //            width: 248
-    //            height: 44
-    //            background: Rectangle{
-    //                radius: 5
-    //                width: 248
-    //                height: 44
-    //                color: pRgb(177, 213, 219)
-    //                border.color: "#007dbc"
-    //                border.width: 2
-    //                Text {
-    //                    text: {
-    //                        if(DeviceManager.deviceList[3]){
-    //                            return DeviceManager.deviceList[3].pDeviceInformation.name
-    //                        }
-    //                        return ""
-    //                    }
-    //                    font.family: fontBold
-    //                    font.pixelSize:  20
-    //                    color: "#0c5696"
-    //                    anchors.centerIn: parent
-    //                }
-    //            }
-    //            visible: equipmentCount >=4 ? true : false
-    //        }
-    //    }
+
+    /// TEST 2024_08_18
+    Button{
+        height: 50
+        width: 100
+        text: "刷新"
+        onClicked: DeviceManager.deviceList[swipeCurrIndex].test()
+    }
     EquipmentInfor{
         id:s1
         x:42

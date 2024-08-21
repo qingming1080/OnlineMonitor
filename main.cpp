@@ -1,4 +1,4 @@
-#include <QApplication>
+﻿#include <QApplication>
 #include <QQmlApplicationEngine>
 
 #include <QQmlContext>
@@ -17,17 +17,24 @@
 #include "DataBase/databasemanager.h"
 #include "model/system.h"
 #include "log/localrecord.h"
-#include "multiyaxisplot.h"
-#include "timeyaxisplot.h"
 #include "model/devicenames.h"
 #include "LanguageManger/languagemanger.h"
+
+#include <iostream>
 // 自定义消息处理程序
 void myMessageHandler(QtMsgType type, const QMessageLogContext &context, const QString &msg)
 {
+    /// TEST 2024_08_18
     // 过滤掉你不想显示的消息
     switch (type) {
     case QtDebugMsg:
-        break;
+    {
+        if(msg.contains("I_WANT_"))
+            std::cerr << msg.toLocal8Bit().toStdString() << std::endl;
+    }
+    /// TEST 2024_08_18
+//    case QtDebugMsg:
+//        break;
     case QtInfoMsg:
         break;
     case QtWarningMsg:
