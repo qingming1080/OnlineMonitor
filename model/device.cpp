@@ -121,6 +121,35 @@ void Device::test()
     }
     this->pTrend()->setYieldTrendData();
 //    qDebug() << QString("I_WANT_TEST 良率折线图刷新");
+
+    /// 焊接折线
+    this->pTrend()->setIdMaxX(150);
+    this->pTrend()->setIdMinX(0);
+    this->pTrend()->setBeforeMaxY(150);
+    this->pTrend()->setBeforeMinY(0);
+    this->pTrend()->setAfterMaxY(150);
+    this->pTrend()->setAfterMinY(0);
+    this->pTrend()->setTimeMaxY(150);
+    this->pTrend()->setTimeMinY(0);
+    this->pTrend()->setPowerMaxY(150);
+    this->pTrend()->setPowerMinY(0);
+    this->pTrend()->m_frontData.clear();
+    this->pTrend()->m_backData.clear();
+    this->pTrend()->m_timeData.clear();
+    this->pTrend()->m_powerData.clear();
+    for(int i = 0; i < 150; ++i){
+        QPointF pos;
+        pos.setX(i+1);
+        pos.setY(qrand() % 100);
+        this->pTrend()->m_frontData.push_back(pos);
+        pos.setY(qrand() % 100);
+        this->pTrend()->m_backData.push_back(pos);
+        pos.setY(qrand() % 100);
+        this->pTrend()->m_timeData.push_back(pos);
+        pos.setY(qrand() % 100);
+        this->pTrend()->m_powerData.push_back(pos);
+    }
+    this->pTrend()->upWeldData();
 }
 
 

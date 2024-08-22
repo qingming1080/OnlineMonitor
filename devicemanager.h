@@ -49,6 +49,8 @@ signals:
 
     void deviceListChanged();
 
+    Q_INVOKABLE void upDateBtns();
+
 private:
     explicit DeviceManager(QObject *parent = nullptr);
 

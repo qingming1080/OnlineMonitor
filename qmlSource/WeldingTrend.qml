@@ -23,9 +23,6 @@ Rectangle {
                 altitudeMode = altitudeModel4
             }
         }
-        function onSigSwipeCurrIndex(swipeCurrIndex){
-
-        }
     }
 
     radius: 3
@@ -132,11 +129,9 @@ Rectangle {
         }
         ValueAxis{
             id:myAxisY3
-            //            min:DeviceManager.deviceList[swipeCurrIndex].pTrend.timeMinY
-            //            max:DeviceManager.deviceList[swipeCurrIndex].pTrend.timeMaxY
-            min:0
-            max:1
-            tickCount: 12
+            min:DeviceManager.deviceList[swipeCurrIndex].pTrend.timeMinY
+            max:DeviceManager.deviceList[swipeCurrIndex].pTrend.timeMaxY
+            tickCount: 9
             labelsColor: "#a3c7d0"
             labelsFont.pixelSize: 12
             labelsFont.bold: true
@@ -151,7 +146,7 @@ Rectangle {
             axisY:myAxisY2
             color: "#d5b989"
             width: 3
-            useOpenGL: true
+
         }
         LineSeries {
             id:lineSeries1
@@ -160,7 +155,7 @@ Rectangle {
             axisY:myAxisY3
             color: "#cd9caa"
             width: 3
-            useOpenGL: true
+
         }
         LineSeries {
             id:lineSeries2
@@ -170,7 +165,7 @@ Rectangle {
             color: "#1398fa"
             width: 3
             visible: altitudeMode
-            useOpenGL: true
+
         }
         LineSeries {
             id:lineSeries3
@@ -180,7 +175,180 @@ Rectangle {
             color: "#ccb2f8"
             width: 3
             visible: altitudeMode
-            useOpenGL: true
+
+        }
+        Connections
+        {
+            target: DeviceManager
+            function onDeviceNumChanged(){
+                chartUpdata()
+            }
+        }
+        function chartUpdata(){
+            if(equipmentCount === 1){
+                DeviceManager.deviceList[0].pTrend.setFrontSeries((chartView.series(lineSeries2.name)))
+                DeviceManager.deviceList[0].pTrend.setBackSeries((chartView.series(lineSeries3.name)))
+                DeviceManager.deviceList[0].pTrend.setTimeSeries((chartView.series(lineSeries1.name)))
+                DeviceManager.deviceList[0].pTrend.setPowerSeries((chartView.series(lineSeries.name)))
+                return
+            }
+            if(swipevis){
+                if(equipmentCount === 2){
+                    if(swipeCurrIndex === 0){
+                        DeviceManager.deviceList[0].pTrend.setFrontSeries((chartView.series(lineSeries2.name)))
+                        DeviceManager.deviceList[0].pTrend.setBackSeries((chartView.series(lineSeries3.name)))
+                        DeviceManager.deviceList[0].pTrend.setTimeSeries((chartView.series(lineSeries1.name)))
+                        DeviceManager.deviceList[0].pTrend.setPowerSeries((chartView.series(lineSeries.name)))
+
+                        DeviceManager.deviceList[1].pTrend.setFrontSeries()
+                        DeviceManager.deviceList[1].pTrend.setBackSeries()
+                        DeviceManager.deviceList[1].pTrend.setTimeSeries()
+                        DeviceManager.deviceList[1].pTrend.setPowerSeries()
+                    }
+                    else if(swipeCurrIndex === 1){
+                        DeviceManager.deviceList[1].pTrend.setFrontSeries((chartView.series(lineSeries2.name)))
+                        DeviceManager.deviceList[1].pTrend.setBackSeries((chartView.series(lineSeries3.name)))
+                        DeviceManager.deviceList[1].pTrend.setTimeSeries((chartView.series(lineSeries1.name)))
+                        DeviceManager.deviceList[1].pTrend.setPowerSeries((chartView.series(lineSeries.name)))
+
+                        DeviceManager.deviceList[0].pTrend.setFrontSeries()
+                        DeviceManager.deviceList[0].pTrend.setBackSeries()
+                        DeviceManager.deviceList[0].pTrend.setTimeSeries()
+                        DeviceManager.deviceList[0].pTrend.setPowerSeries()
+                    }
+
+                }
+                else if(equipmentCount === 3){
+                    if(swipeCurrIndex === 0){
+                        DeviceManager.deviceList[0].pTrend.setFrontSeries((chartView.series(lineSeries2.name)))
+                        DeviceManager.deviceList[0].pTrend.setBackSeries((chartView.series(lineSeries3.name)))
+                        DeviceManager.deviceList[0].pTrend.setTimeSeries((chartView.series(lineSeries1.name)))
+                        DeviceManager.deviceList[0].pTrend.setPowerSeries((chartView.series(lineSeries.name)))
+
+                        DeviceManager.deviceList[1].pTrend.setFrontSeries()
+                        DeviceManager.deviceList[1].pTrend.setBackSeries()
+                        DeviceManager.deviceList[1].pTrend.setTimeSeries()
+                        DeviceManager.deviceList[1].pTrend.setPowerSeries()
+                        DeviceManager.deviceList[2].pTrend.setFrontSeries()
+                        DeviceManager.deviceList[2].pTrend.setBackSeries()
+                        DeviceManager.deviceList[2].pTrend.setTimeSeries()
+                        DeviceManager.deviceList[2].pTrend.setPowerSeries()
+                    }
+                    else if(swipeCurrIndex === 1){
+                        DeviceManager.deviceList[1].pTrend.setFrontSeries((chartView.series(lineSeries2.name)))
+                        DeviceManager.deviceList[1].pTrend.setBackSeries((chartView.series(lineSeries3.name)))
+                        DeviceManager.deviceList[1].pTrend.setTimeSeries((chartView.series(lineSeries1.name)))
+                        DeviceManager.deviceList[1].pTrend.setPowerSeries((chartView.series(lineSeries.name)))
+
+                        DeviceManager.deviceList[0].pTrend.setFrontSeries()
+                        DeviceManager.deviceList[0].pTrend.setBackSeries()
+                        DeviceManager.deviceList[0].pTrend.setTimeSeries()
+                        DeviceManager.deviceList[0].pTrend.setPowerSeries()
+                        DeviceManager.deviceList[2].pTrend.setFrontSeries()
+                        DeviceManager.deviceList[2].pTrend.setBackSeries()
+                        DeviceManager.deviceList[2].pTrend.setTimeSeries()
+                        DeviceManager.deviceList[2].pTrend.setPowerSeries()
+                    }
+                    else if(swipeCurrIndex === 2){
+                        DeviceManager.deviceList[2].pTrend.setFrontSeries((chartView.series(lineSeries2.name)))
+                        DeviceManager.deviceList[2].pTrend.setBackSeries((chartView.series(lineSeries3.name)))
+                        DeviceManager.deviceList[2].pTrend.setTimeSeries((chartView.series(lineSeries1.name)))
+                        DeviceManager.deviceList[2].pTrend.setPowerSeries((chartView.series(lineSeries.name)))
+
+                        DeviceManager.deviceList[1].pTrend.setFrontSeries()
+                        DeviceManager.deviceList[1].pTrend.setBackSeries()
+                        DeviceManager.deviceList[1].pTrend.setTimeSeries()
+                        DeviceManager.deviceList[1].pTrend.setPowerSeries()
+                        DeviceManager.deviceList[0].pTrend.setFrontSeries()
+                        DeviceManager.deviceList[0].pTrend.setBackSeries()
+                        DeviceManager.deviceList[0].pTrend.setTimeSeries()
+                        DeviceManager.deviceList[0].pTrend.setPowerSeries()
+                    }
+                }
+                else if(equipmentCount === 4){
+                    if(swipeCurrIndex === 0){
+                        DeviceManager.deviceList[0].pTrend.setFrontSeries((chartView.series(lineSeries2.name)))
+                        DeviceManager.deviceList[0].pTrend.setBackSeries((chartView.series(lineSeries3.name)))
+                        DeviceManager.deviceList[0].pTrend.setTimeSeries((chartView.series(lineSeries1.name)))
+                        DeviceManager.deviceList[0].pTrend.setPowerSeries((chartView.series(lineSeries.name)))
+
+                        DeviceManager.deviceList[1].pTrend.setFrontSeries()
+                        DeviceManager.deviceList[1].pTrend.setBackSeries()
+                        DeviceManager.deviceList[1].pTrend.setTimeSeries()
+                        DeviceManager.deviceList[1].pTrend.setPowerSeries()
+                        DeviceManager.deviceList[2].pTrend.setFrontSeries()
+                        DeviceManager.deviceList[2].pTrend.setBackSeries()
+                        DeviceManager.deviceList[2].pTrend.setTimeSeries()
+                        DeviceManager.deviceList[2].pTrend.setPowerSeries()
+                        DeviceManager.deviceList[3].pTrend.setFrontSeries()
+                        DeviceManager.deviceList[3].pTrend.setBackSeries()
+                        DeviceManager.deviceList[3].pTrend.setTimeSeries()
+                        DeviceManager.deviceList[3].pTrend.setPowerSeries()
+                    }
+                    else if(swipeCurrIndex === 1){
+                        DeviceManager.deviceList[1].pTrend.setFrontSeries((chartView.series(lineSeries2.name)))
+                        DeviceManager.deviceList[1].pTrend.setBackSeries((chartView.series(lineSeries3.name)))
+                        DeviceManager.deviceList[1].pTrend.setTimeSeries((chartView.series(lineSeries1.name)))
+                        DeviceManager.deviceList[1].pTrend.setPowerSeries((chartView.series(lineSeries.name)))
+
+                        DeviceManager.deviceList[0].pTrend.setFrontSeries()
+                        DeviceManager.deviceList[0].pTrend.setBackSeries()
+                        DeviceManager.deviceList[0].pTrend.setTimeSeries()
+                        DeviceManager.deviceList[0].pTrend.setPowerSeries()
+                        DeviceManager.deviceList[2].pTrend.setFrontSeries()
+                        DeviceManager.deviceList[2].pTrend.setBackSeries()
+                        DeviceManager.deviceList[2].pTrend.setTimeSeries()
+                        DeviceManager.deviceList[2].pTrend.setPowerSeries()
+                        DeviceManager.deviceList[3].pTrend.setFrontSeries()
+                        DeviceManager.deviceList[3].pTrend.setBackSeries()
+                        DeviceManager.deviceList[3].pTrend.setTimeSeries()
+                        DeviceManager.deviceList[3].pTrend.setPowerSeries()
+                    }
+                    else if(swipeCurrIndex === 2){
+                        DeviceManager.deviceList[2].pTrend.setFrontSeries((chartView.series(lineSeries2.name)))
+                        DeviceManager.deviceList[2].pTrend.setBackSeries((chartView.series(lineSeries3.name)))
+                        DeviceManager.deviceList[2].pTrend.setTimeSeries((chartView.series(lineSeries1.name)))
+                        DeviceManager.deviceList[2].pTrend.setPowerSeries((chartView.series(lineSeries.name)))
+
+                        DeviceManager.deviceList[1].pTrend.setFrontSeries()
+                        DeviceManager.deviceList[1].pTrend.setBackSeries()
+                        DeviceManager.deviceList[1].pTrend.setTimeSeries()
+                        DeviceManager.deviceList[1].pTrend.setPowerSeries()
+                        DeviceManager.deviceList[0].pTrend.setFrontSeries()
+                        DeviceManager.deviceList[0].pTrend.setBackSeries()
+                        DeviceManager.deviceList[0].pTrend.setTimeSeries()
+                        DeviceManager.deviceList[0].pTrend.setPowerSeries()
+                        DeviceManager.deviceList[3].pTrend.setFrontSeries()
+                        DeviceManager.deviceList[3].pTrend.setBackSeries()
+                        DeviceManager.deviceList[3].pTrend.setTimeSeries()
+                        DeviceManager.deviceList[3].pTrend.setPowerSeries()
+                    }
+                    else if(swipeCurrIndex === 3){
+                        DeviceManager.deviceList[3].pTrend.setFrontSeries((chartView.series(lineSeries2.name)))
+                        DeviceManager.deviceList[3].pTrend.setBackSeries((chartView.series(lineSeries3.name)))
+                        DeviceManager.deviceList[3].pTrend.setTimeSeries((chartView.series(lineSeries1.name)))
+                        DeviceManager.deviceList[3].pTrend.setPowerSeries((chartView.series(lineSeries.name)))
+
+                        DeviceManager.deviceList[1].pTrend.setFrontSeries()
+                        DeviceManager.deviceList[1].pTrend.setBackSeries()
+                        DeviceManager.deviceList[1].pTrend.setTimeSeries()
+                        DeviceManager.deviceList[1].pTrend.setPowerSeries()
+                        DeviceManager.deviceList[2].pTrend.setFrontSeries()
+                        DeviceManager.deviceList[2].pTrend.setBackSeries()
+                        DeviceManager.deviceList[2].pTrend.setTimeSeries()
+                        DeviceManager.deviceList[2].pTrend.setPowerSeries()
+                        DeviceManager.deviceList[0].pTrend.setFrontSeries()
+                        DeviceManager.deviceList[0].pTrend.setBackSeries()
+                        DeviceManager.deviceList[0].pTrend.setTimeSeries()
+                        DeviceManager.deviceList[0].pTrend.setPowerSeries()
+                    }
+                }
+            }
+        }
+        onVisibleChanged: {
+            if(visible){
+                chartUpdata()
+            }
         }
     }
 

@@ -35,6 +35,8 @@ public:
 
     // 更新良率趋势
     void upYieldData();
+    // 更新焊接趋势
+    void upWeldData();
 
 
     Q_INVOKABLE int idMinX() const;
@@ -77,7 +79,11 @@ public:
     Q_INVOKABLE void setEndTime(const QString &newEndTime = nullptr);
 
 
-    Q_INVOKABLE void setXYSeries(QAbstractSeries *series);
+    Q_INVOKABLE void setYieldSeries(QAbstractSeries *series);
+    Q_INVOKABLE void setFrontSeries(QAbstractSeries *series);
+    Q_INVOKABLE void setBackSeries(QAbstractSeries *series);
+    Q_INVOKABLE void setTimeSeries(QAbstractSeries *series);
+    Q_INVOKABLE void setPowerSeries(QAbstractSeries *series);
 signals:
 
     void idMinXChanged();
@@ -144,7 +150,16 @@ private:
     QTimer* m_yieldTimer;
 
     _Yield_TrendData m_yieldData;
-    QXYSeries* m_pXYSeries;
+    QVector<QPointF> m_frontData;
+    QVector<QPointF> m_backData;
+    QVector<QPointF> m_timeData;
+    QVector<QPointF> m_powerData;
+
+    QXYSeries* m_pYieldSeries = nullptr;
+    QXYSeries* m_pFrontSeries = nullptr;
+    QXYSeries* m_pBackSeries = nullptr;
+    QXYSeries* m_pTimeSeries = nullptr;
+    QXYSeries* m_pPowerSeries = nullptr;
 };
 
 #endif // TREND_H

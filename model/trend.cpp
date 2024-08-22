@@ -7,7 +7,7 @@
 #include <QDebug>
 #include <QElapsedTimer>
 #include "log/localrecord.h"
-
+#include "devicemanager.h"
 Trend::Trend(int welderID, QObject *parent)
     : QObject{parent}, m_welderID(welderID)
 {
@@ -34,8 +34,26 @@ void Trend::upYieldData()
     else if(m_yieldType == 3)
         m_yieldData = DataBaseManager::getInstance()->getYieldTrendData(0-60*60*24*30, m_welderID); // 三十天
 
+    setYieldTrendData();
+
     QString text = QString("%1号设备_Trend_良率趋势图刷新耗时:%2ms").arg(m_welderID).arg(timer.elapsed());
     emit SignalManager::getInstance()->signalAddRecord(QDateTime::currentDateTime(), text);
+}
+
+void Trend::upWeldData()
+{
+    if(m_pFrontSeries){
+        m_pFrontSeries->replace(m_frontData);
+    }
+    if(m_pBackSeries){
+        m_pBackSeries->replace(m_backData);
+    }
+    if(m_pTimeSeries){
+        m_pTimeSeries->replace(m_timeData);
+    }
+    if(m_pPowerSeries){
+        m_pPowerSeries->replace(m_powerData);
+    }
 }
 
 
@@ -77,10 +95,10 @@ void Trend::setYieldTrendData()
     emit SignalManager::getInstance()->changeYieldTrendData();
     emit signalYieldTrendChanged();
 
-    if(m_pXYSeries)
+    if(m_pYieldSeries)
     {
-        m_pXYSeries->replace(m_yieldData.points);
-        qDebug() << "I_WANT_TEST 刷新折线" << m_pXYSeries << m_yieldData.points.count() << m_startTime << m_endTime;
+        m_pYieldSeries->replace(m_yieldData.points);
+        qDebug() << "I_WANT_TEST 刷新折线" << m_pYieldSeries << m_yieldData.points.count() << m_startTime << m_endTime;
     }
 }
 
@@ -97,12 +115,41 @@ void Trend::setEndTime(const QString &newEndTime)
     emit endTimeChanged();
 }
 
-void Trend::setXYSeries(QAbstractSeries *series)
+void Trend::setYieldSeries(QAbstractSeries *series)
 {
-    m_pXYSeries = static_cast<QXYSeries*>(series);
+    m_pYieldSeries = static_cast<QXYSeries*>(series);
     setYieldTrendData();
 
-    qDebug() << QString("I_WANT_TEST 设备%1 设置折线").arg(m_welderID) << m_pXYSeries;
+    qDebug() << QString("I_WANT_TEST 设备%1 设置折线").arg(m_welderID) << m_pYieldSeries;
+}
+
+void Trend::setFrontSeries(QAbstractSeries *series)
+{
+    m_pFrontSeries = static_cast<QXYSeries*>(series);
+    if(m_pFrontSeries)
+        m_pFrontSeries->replace(m_frontData);
+    qDebug() << QString("I_WANT_TEST 设备%1 焊前高度").arg(m_welderID) << m_pFrontSeries;
+}
+
+void Trend::setBackSeries(QAbstractSeries *series)
+{
+    m_pBackSeries = static_cast<QXYSeries*>(series);
+    if(m_pBackSeries)
+        m_pBackSeries->replace(m_backData);
+}
+
+void Trend::setTimeSeries(QAbstractSeries *series)
+{
+    m_pTimeSeries = static_cast<QXYSeries*>(series);
+    if(m_pTimeSeries)
+        m_pTimeSeries->replace(m_timeData);
+}
+
+void Trend::setPowerSeries(QAbstractSeries *series)
+{
+    m_pPowerSeries = static_cast<QXYSeries*>(series);
+    if(m_pPowerSeries)
+        m_pPowerSeries->replace(m_powerData);
 }
 
 QString Trend::startTime() const
@@ -142,6 +189,9 @@ void Trend::setYieldType(int newYieldType)
     if (m_yieldType == newYieldType)
         return;
     m_yieldType = newYieldType;
+    emit yieldTypeChanged();
+    emit DeviceManager::getInstance()->upDateBtns();
+
     m_endTime = QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss");
     if(m_yieldType == 0){
         QDateTime time = QDateTime::currentDateTime().addSecs(-3600);
@@ -159,7 +209,7 @@ void Trend::setYieldType(int newYieldType)
         QDateTime time = QDateTime::currentDateTime().addDays(-30);
         m_startTime = time.toString("yyyy-MM-dd hh:mm:ss");
     }
-    emit yieldTypeChanged();
+
     emit startTimeChanged();
     emit endTimeChanged();
     upYieldData();

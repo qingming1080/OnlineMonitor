@@ -27,14 +27,14 @@ void myMessageHandler(QtMsgType type, const QMessageLogContext &context, const Q
     /// TEST 2024_08_18
     // 过滤掉你不想显示的消息
     switch (type) {
-    case QtDebugMsg:
-    {
-        if(msg.contains("I_WANT_"))
-            std::cerr << msg.toLocal8Bit().toStdString() << std::endl;
-    }
-    /// TEST 2024_08_18
 //    case QtDebugMsg:
-//        break;
+//    {
+//        if(msg.contains("I_WANT_"))
+//            std::cerr << msg.toLocal8Bit().toStdString() << std::endl;
+//    }
+    /// TEST 2024_08_18
+    case QtDebugMsg:
+        break;
     case QtInfoMsg:
         break;
     case QtWarningMsg:

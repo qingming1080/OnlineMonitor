@@ -8,7 +8,6 @@ import QmlEnum 1.0
 Rectangle {
     color: pRgb(153, 204, 255)
     radius: 5
-    property int pbtnIndex: 1
     property int listSize: 0
     property int parameter1: 0
     property int parameter2: 0
@@ -315,7 +314,6 @@ Rectangle {
                 y: 35
                 color:  "#0c5696"
                 equiInforIndex:1
-                btnIndex: pbtnIndex
             }
             WeldingTrend{
                 id:s7

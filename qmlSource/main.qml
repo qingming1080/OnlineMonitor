@@ -11,7 +11,7 @@ import DeviceInformation 1.0
 import QtQml 2.15
 Window {
     id: window
-    flags: Qt.FramelessWindowHint
+//    flags: Qt.FramelessWindowHint
     visible: true
     width: 1280
     height: 800
@@ -26,15 +26,6 @@ Window {
     property bool swipevis: false
     onSwipeCurrIndexChanged: {
         sigSwipeCurrIndex(swipeCurrIndex)
-    }
-
-    onKeyboardYypeChanged: {
-//        if(keyboardYype === 0){
-//            bin.value = 1200
-//        }
-//        else{
-//            bin.value = 2560
-//        }
     }
 
     FontLoader {

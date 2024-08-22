@@ -221,7 +221,6 @@ Rectangle {
             radius: 3
             color: "#0c5596"
             equiInforIndex:1
-            btnIndex:rect1
         }
         Button{
             width: 30
@@ -370,7 +369,6 @@ Rectangle {
             radius: 3
             color: "#0c5596"
             equiInforIndex:2
-            btnIndex:rect2
         }
         Button{
             width: 30
