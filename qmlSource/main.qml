@@ -11,7 +11,7 @@ import DeviceInformation 1.0
 import QtQml 2.15
 Window {
     id: window
-//    flags: Qt.FramelessWindowHint
+    flags: Qt.FramelessWindowHint
     visible: true
     width: 1280
     height: 800

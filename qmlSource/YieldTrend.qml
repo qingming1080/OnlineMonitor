@@ -491,6 +491,12 @@ Rectangle {
         Component.onCompleted: {
             chartUpdata()
         }
+        Component.onDestruction: {
+            DeviceManager.deviceList[0].pTrend.setYieldSeries(null)
+            DeviceManager.deviceList[1].pTrend.setYieldSeries(null)
+            DeviceManager.deviceList[2].pTrend.setYieldSeries(null)
+            DeviceManager.deviceList[3].pTrend.setYieldSeries(null)
+        }
 
         DateTimeAxis {
             id: myAxisX
@@ -542,55 +548,55 @@ Rectangle {
                 if(equipmentCount === 2){
                     if(swipeCurrIndex === 0){
                         DeviceManager.deviceList[0].pTrend.setYieldSeries((chart.series(lineSeries.name)))
-                        DeviceManager.deviceList[1].pTrend.setYieldSeries()
+                        DeviceManager.deviceList[1].pTrend.setYieldSeries(null)
                     }
                     else if(swipeCurrIndex === 1){
                         DeviceManager.deviceList[1].pTrend.setYieldSeries((chart.series(lineSeries.name)))
-                        DeviceManager.deviceList[0].pTrend.setYieldSeries()
+                        DeviceManager.deviceList[0].pTrend.setYieldSeries(null)
                     }
 
                 }
                 else if(equipmentCount === 3){
                     if(swipeCurrIndex === 0){
                         DeviceManager.deviceList[0].pTrend.setYieldSeries((chart.series(lineSeries.name)))
-                        DeviceManager.deviceList[1].pTrend.setYieldSeries()
-                        DeviceManager.deviceList[2].pTrend.setYieldSeries()
+                        DeviceManager.deviceList[1].pTrend.setYieldSeries(null)
+                        DeviceManager.deviceList[2].pTrend.setYieldSeries(null)
                     }
                     else if(swipeCurrIndex === 1){
                         DeviceManager.deviceList[1].pTrend.setYieldSeries((chart.series(lineSeries.name)))
-                        DeviceManager.deviceList[0].pTrend.setYieldSeries()
-                        DeviceManager.deviceList[2].pTrend.setYieldSeries()
+                        DeviceManager.deviceList[0].pTrend.setYieldSeries(null)
+                        DeviceManager.deviceList[2].pTrend.setYieldSeries(null)
                     }
                     else if(swipeCurrIndex === 2){
                         DeviceManager.deviceList[2].pTrend.setYieldSeries((chart.series(lineSeries.name)))
-                        DeviceManager.deviceList[0].pTrend.setYieldSeries()
-                        DeviceManager.deviceList[1].pTrend.setYieldSeries()
+                        DeviceManager.deviceList[0].pTrend.setYieldSeries(null)
+                        DeviceManager.deviceList[1].pTrend.setYieldSeries(null)
                     }
                 }
                 else if(equipmentCount === 4){
                     if(swipeCurrIndex === 0){
                         DeviceManager.deviceList[0].pTrend.setYieldSeries((chart.series(lineSeries.name)))
-                        DeviceManager.deviceList[1].pTrend.setYieldSeries()
-                        DeviceManager.deviceList[2].pTrend.setYieldSeries()
-                        DeviceManager.deviceList[3].pTrend.setYieldSeries()
+                        DeviceManager.deviceList[1].pTrend.setYieldSeries(null)
+                        DeviceManager.deviceList[2].pTrend.setYieldSeries(null)
+                        DeviceManager.deviceList[3].pTrend.setYieldSeries(null)
                     }
                     else if(swipeCurrIndex === 1){
                         DeviceManager.deviceList[1].pTrend.setYieldSeries((chart.series(lineSeries.name)))
-                        DeviceManager.deviceList[0].pTrend.setYieldSeries()
-                        DeviceManager.deviceList[2].pTrend.setYieldSeries()
-                        DeviceManager.deviceList[3].pTrend.setYieldSeries()
+                        DeviceManager.deviceList[0].pTrend.setYieldSeries(null)
+                        DeviceManager.deviceList[2].pTrend.setYieldSeries(null)
+                        DeviceManager.deviceList[3].pTrend.setYieldSeries(null)
                     }
                     else if(swipeCurrIndex === 2){
                         DeviceManager.deviceList[2].pTrend.setYieldSeries((chart.series(lineSeries.name)))
-                        DeviceManager.deviceList[0].pTrend.setYieldSeries()
-                        DeviceManager.deviceList[1].pTrend.setYieldSeries()
-                        DeviceManager.deviceList[3].pTrend.setYieldSeries()
+                        DeviceManager.deviceList[0].pTrend.setYieldSeries(null)
+                        DeviceManager.deviceList[1].pTrend.setYieldSeries(null)
+                        DeviceManager.deviceList[3].pTrend.setYieldSeries(null)
                     }
                     else if(swipeCurrIndex === 3){
                         DeviceManager.deviceList[3].pTrend.setYieldSeries((chart.series(lineSeries.name)))
-                        DeviceManager.deviceList[0].pTrend.setYieldSeries()
-                        DeviceManager.deviceList[1].pTrend.setYieldSeries()
-                        DeviceManager.deviceList[2].pTrend.setYieldSeries()
+                        DeviceManager.deviceList[0].pTrend.setYieldSeries(null)
+                        DeviceManager.deviceList[1].pTrend.setYieldSeries(null)
+                        DeviceManager.deviceList[2].pTrend.setYieldSeries(null)
                     }
                 }
             }
@@ -607,14 +613,14 @@ Rectangle {
                     if(equiInforIndex === 1){
                         DeviceManager.deviceList[0].pTrend.setYieldSeries((chart.series(lineSeries.name)))
                     }
-                    DeviceManager.deviceList[1].pTrend.setYieldSeries()
-                    DeviceManager.deviceList[2].pTrend.setYieldSeries()
+                    DeviceManager.deviceList[1].pTrend.setYieldSeries(null)
+                    DeviceManager.deviceList[2].pTrend.setYieldSeries(null)
                 }
                 else if(equipmentCount === 4){
-                    DeviceManager.deviceList[0].pTrend.setYieldSeries()
-                    DeviceManager.deviceList[1].pTrend.setYieldSeries()
-                    DeviceManager.deviceList[1].pTrend.setYieldSeries()
-                    DeviceManager.deviceList[3].pTrend.setYieldSeries()
+                    DeviceManager.deviceList[0].pTrend.setYieldSeries(null)
+                    DeviceManager.deviceList[1].pTrend.setYieldSeries(null)
+                    DeviceManager.deviceList[1].pTrend.setYieldSeries(null)
+                    DeviceManager.deviceList[3].pTrend.setYieldSeries(null)
                 }
             }
         }
