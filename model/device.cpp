@@ -30,7 +30,16 @@ Device::Device(int welderID, QObject *parent)
     m_pTrend              = new Trend(m_welderID);
 
     QString text = QString("%1号设备_Device_初始化共耗时:%2ms").arg(welderID).arg(timer.elapsed());
-    emit SignalManager::getInstance()->signalAddRecord(QDateTime::currentDateTime(), text);
+                       emit SignalManager::getInstance()->signalAddRecord(QDateTime::currentDateTime(), text);
+}
+
+Device::~Device()
+{
+    delete m_pDeviceInformation;
+    delete m_pIO;
+    delete m_pManual;
+    delete m_pSystem;
+    delete m_pTrend;
 }
 
 DeviceInformation *Device::pDeviceInformation() const
@@ -66,8 +75,8 @@ void Device::test()
     this->pDeviceInformation()->setGoodRate((double)hegeNum/(hegeNum+keyiNum+cipingNum)*100);
     qDebug() << QString("I_WANT_TEST 实时良率修改  合格产品：%1  可疑产品：%2  次品：%3").arg(hegeNum).arg(keyiNum).arg(cipingNum);
 
-    /// 焊接结果
-    int power        = qrand() % 100;
+                /// 焊接结果
+                int power        = qrand() % 100;
     int time         = qrand() % 100;
     int energy       = qrand() % 100;
     int heightPre    = qrand() % 100;
@@ -78,14 +87,14 @@ void Device::test()
     this->pDeviceInformation()->setEnergy(energy);
     this->pDeviceInformation()->setHeightPre(heightPre);
     this->pDeviceInformation()->setHeightPost(heightPost);
-//    qDebug() << QString("I_WANT_TEST 焊接结果修改  功率:%1  时间:%2  能量:%3  焊前高度:%1  焊后高度:%2").arg(power).arg(time).arg(energy).arg(heightPre).arg(heightPost);
+    //    qDebug() << QString("I_WANT_TEST 焊接结果修改  功率:%1  时间:%2  能量:%3  焊前高度:%1  焊后高度:%2").arg(power).arg(time).arg(energy).arg(heightPre).arg(heightPost);
 
     /// 系统消息
     for(int i = 0; i < 10; ++i)
     {
         QmlEnum::MESSAGE messageType = static_cast<QmlEnum::MESSAGE>(qrand()%9);
         Message::getInstance()->addMessage(m_welderID, messageType);
-//        qDebug() << QString("I_WANT_TEST 设备警告添加消息 ： %1").arg(messageType);
+        //        qDebug() << QString("I_WANT_TEST 设备警告添加消息 ： %1").arg(messageType);
     }
 
     /// 良率折线
@@ -120,7 +129,7 @@ void Device::test()
         this->pTrend()->m_yieldData.points.push_back(pos);
     }
     this->pTrend()->setYieldTrendData();
-//    qDebug() << QString("I_WANT_TEST 良率折线图刷新");
+    //    qDebug() << QString("I_WANT_TEST 良率折线图刷新");
 
     /// 焊接折线
     this->pTrend()->setIdMaxX(150);

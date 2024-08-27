@@ -27,6 +27,7 @@ class Device : public QObject
 
 public:
     explicit Device(int welderID = 0, QObject *parent = nullptr);
+    ~Device();
 
     Q_INVOKABLE DeviceInformation *pDeviceInformation() const;
     Q_INVOKABLE Manual *pManual() const;
