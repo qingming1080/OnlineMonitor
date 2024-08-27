@@ -527,7 +527,7 @@ Rectangle {
             axisX: myAxisX
             axisY:myAxisY
             color: "#1398fa"
-            width: 3
+            width: 1
             useOpenGL: false
             pointsVisible: true
         }

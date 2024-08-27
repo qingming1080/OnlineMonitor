@@ -165,7 +165,7 @@ Rectangle {
             axisX: myAxisX
             axisY:myAxisY2
             color: "#d5b989"
-            width: 3
+            width: 1
 
         }
         LineSeries {
@@ -174,7 +174,7 @@ Rectangle {
             axisX: myAxisX
             axisY:myAxisY3
             color: "#cd9caa"
-            width: 3
+            width: 1
 
         }
         LineSeries {
@@ -183,7 +183,7 @@ Rectangle {
             axisX: myAxisX
             axisY:myAxisY
             color: "#1398fa"
-            width: 3
+            width: 1
             visible: altitudeMode
 
         }
@@ -193,7 +193,7 @@ Rectangle {
             axisX: myAxisX
             axisY:myAxisY1
             color: "#ccb2f8"
-            width: 3
+            width: 1
             visible: altitudeMode
 
         }
