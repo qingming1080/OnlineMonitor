@@ -8,7 +8,6 @@
 #include "signalmanager.h"
 
 LocalRecord* LocalRecord::s_pLocalRecord = nullptr;
-QString log_file_path = "";
 
 LocalRecord::LocalRecord(QObject *parent) : QThread(parent)
 {
@@ -21,32 +20,18 @@ LocalRecord::LocalRecord(QObject *parent) : QThread(parent)
 
 void LocalRecord::initData()
 {
-    QDateTime time = QDateTime::currentDateTime();
-    // 使用 year(),month()等函数，会造成一分时，字符串为1而不为01的问题
-    QString year    = time.toString("yyyy");
-    QString month   = time.toString("MM");
-    QString day     = time.toString("dd");
-    QString hour    = time.toString("hh");
-    QString minute  = time.toString("mm");
-    QString second  = time.toString("ss");
-    QString msec    = time.toString("zzz");
-    QString dirPath = QCoreApplication::applicationDirPath()+QString("/record/%1_%2").arg(year).arg(month);;
-    QDir dir(dirPath);
-    // 路径不存在,则创建路径
-    if(!dir.exists()){
-        // 注：makePath创建绝对路径，makeDir创建子路径，即makePath不需要管record文件夹是否存在
-        dir.mkpath(dirPath);
-    }
-    log_file_path = dirPath+ "/" +QString("%1_%2_%3_%4_%5_%6.xml").arg(year, month, day, hour, minute, second);
-    QFile file(log_file_path);
+    QThread* thread = new QThread();
+    this->moveToThread(thread);
+}
+
+void LocalRecord::touchLogFile(QString fileName)
+{
+    QFile file(fileName);
     // 文件是否存在
     if(!file.exists()){
         qDebug() << "创建文件";
-        touchRecordFile(log_file_path);
+        touchRecordFile(fileName);
     }
-
-    QThread* thread = new QThread();
-    this->moveToThread(thread);
 }
 
 LocalRecord *LocalRecord::getInstance()
@@ -99,7 +84,17 @@ void LocalRecord::writeDataToLocalRecord(Log_Data data)
     QString second  = data.time.toString("ss");
     QString msec    = data.time.toString("zzz");
 
-    QFile file(log_file_path);
+    QString fileDir = QCoreApplication::applicationDirPath()+QString("/record/%1").arg(data.time.toString("yyyyMMdd"));
+    QDir dir(fileDir);
+    // 路径不存在,则创建路径
+    if(!dir.exists()){
+        // 注：makePath创建绝对路径，makeDir创建子路径，即makePath不需要管record文件夹是否存在
+        dir.mkpath(fileDir);
+    }
+    QString fileName = QCoreApplication::applicationDirPath()+QString("/record/%1/%2.xml").arg(data.time.toString("yyyyMMdd")).arg(data.time.toString("yyyyMMdd_hh"));;
+    touchLogFile(fileName);
+
+    QFile file(fileName);
     file.open(QIODevice::ReadWrite);
     QDomDocument doc;
     doc.setContent(&file);

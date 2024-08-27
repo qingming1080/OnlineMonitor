@@ -34,6 +34,8 @@ private:
 
     void initData();
 
+    void touchLogFile(QString fileName);
+
     void writeDataToLocalRecord(Log_Data data);
 
     void touchRecordFile(QString filePath);
