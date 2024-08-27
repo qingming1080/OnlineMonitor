@@ -240,7 +240,7 @@ Rectangle {
                                 DeviceManager.deviceList[0].pDeviceInformation.maxBacth
                             }
                             else{
-                                return ""
+                                return 20000
                             }
                         }
                         else{
@@ -248,7 +248,7 @@ Rectangle {
                                 DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.maxBacth
                             }
                             else{
-                                return ""
+                                return 20000
                             }
                         }
                     }
@@ -304,7 +304,7 @@ Rectangle {
                                 DeviceManager.deviceList[0].pDeviceInformation.sample
                             }
                             else{
-                                return ""
+                                return 20
                             }
                         }
                         else{
@@ -312,7 +312,7 @@ Rectangle {
                                 DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.sample
                             }
                             else{
-                                return ""
+                                return 20
                             }
                         }
                     }
@@ -360,7 +360,7 @@ Rectangle {
                                 DeviceManager.deviceList[0].pDeviceInformation.lowerLimit
                             }
                             else{
-                                return ""
+                                return 99
                             }
                         }
                         else{
@@ -368,7 +368,7 @@ Rectangle {
                                 DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.lowerLimit
                             }
                             else{
-                                return ""
+                                return 99
                             }
                         }
                     }
