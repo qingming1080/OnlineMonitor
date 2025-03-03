@@ -1,4 +1,4 @@
-#ifndef DATABASEMANAGER_H
+﻿#ifndef DATABASEMANAGER_H
 #define DATABASEMANAGER_H
 
 #include <QObject>
@@ -64,6 +64,13 @@ public:
     ///
     bool insertConfigurationDevice(_Configuration_Data data);
 
+    ///
+    /// \brief insertConfigurationDevice : 插入Configuration表格一行数据
+    /// \param data : 数据
+    /// \return : 更新结果
+
+    bool updateConfigurationDevice(_Configuration_Data data);
+
 
 /////////////////////////connection_network////////////////////////////////
     ///
@@ -95,6 +102,8 @@ public:
     ///
     bool insertNetworkRow(_Network_Data data);
 
+    QStringList getNetworkInfoById(int id);
+
 /////////////////////////connection_rs232////////////////////////////////
     ///
     /// \brief getRS232Data : 获取connection_rs232表格数据
@@ -124,6 +133,8 @@ public:
     /// \return : 插入结果
     ///
     bool insertRS232Row(_RS232_Data data);
+
+    _RS232_Data getRS232DataById(int id);
 
 /////////////////////////io_data////////////////////////////////
 /// 只处理待定
@@ -331,12 +342,14 @@ private:
 
     QList<_Production_Data> getAllTrendData(int welderID, int interVal, QDateTime startTime, QDateTime endTime);
 
+    QString getD2eviceInfo();
+
 private:
     static DataBaseManager* s_pDataBaseManager;
 
     QSqlDatabase m_database;
 
-    bool b_hasFeature{false};      // 支持读取表格行列数量
+    bool b_hasFeature{false};      // 支持读取表格行列数量全视觉之眼系统
 };
 
 #endif // DATABASEMANAGER_H

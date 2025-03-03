@@ -1,4 +1,4 @@
-#include "deviceinformation.h"
+﻿#include "deviceinformation.h"
 #include "DataBase/databasemanager.h"
 #include <QVariant>
 

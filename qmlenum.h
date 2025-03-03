@@ -1,4 +1,4 @@
-#ifndef QMLENUM_H
+﻿#ifndef QMLENUM_H
 #define QMLENUM_H
 
 #include <QObject>
@@ -101,20 +101,22 @@ public:
         MODEL_create_time          = 2,       // 创建时间
         MODEL_energy               = 3,       // 能量
         MODEL_amplitude            = 4,       // 振幅
-        MODEL_pressure             = 5,       // 压力
-        MODEL_time_alpha           = 6,       // 焊机时间Alpha
-        MODEL_time_beta            = 7,       // 焊机时间Beta
-        MODEL_power_alpha          = 8,       // 功率Alpha
-        MODEL_power_beta           = 9,       // 功率Beta
-        MODEL_pre_height_alpha     = 10,      // 焊前高度Alpha
-        MODEL_pre_height_beta      = 11,      // 焊前高度Beta
-        MODEL_post_height_alpha    = 12,      // 焊后高度Alpha
-        MODEL_post_height_beta     = 13,      // 焊后高度Beta
-        MODEL_force_alpha          = 14,      // 撕拉力Alpha
-        MODEL_force_beta           = 15,      // 撕拉力Beta
-        MODEL_residual_alpha       = 16,      // 残留度Alpha
-        MODEL_residual_beta        = 17,      // 残留度Beta
-        MODEL_current_sample_count = 18,      // 当前样本数
+        // MODEL_pressure             = 5,       // 压力
+        MODEL_tp                   = 5,       // 压力
+        MODEL_wp                   = 6,       // 压力
+        MODEL_time_alpha           = 7,       // 焊机时间Alpha
+        MODEL_time_beta            = 8,       // 焊机时间Beta
+        MODEL_power_alpha          = 9,       // 功率Alpha
+        MODEL_power_beta           = 10,       // 功率Beta
+        MODEL_pre_height_alpha     = 11,      // 焊前高度Alpha
+        MODEL_pre_height_beta      = 12,      // 焊前高度Beta
+        MODEL_post_height_alpha    = 13,      // 焊后高度Alpha
+        MODEL_post_height_beta     = 14,      // 焊后高度Beta
+        MODEL_force_alpha          = 15,      // 撕拉力Alpha
+        MODEL_force_beta           = 16,      // 撕拉力Beta
+        MODEL_residual_alpha       = 17,      // 残留度Alpha
+        MODEL_residual_beta        = 18,      // 残留度Beta
+        MODEL_current_sample_count = 19,      // 当前样本数
     };
     Q_ENUM(MODEL_COLUMN)
 
@@ -168,6 +170,7 @@ public:
         MESSAGE_upperValue = 6,         // 自动学习次数超过上限值
         MESSAGE_studyOver   = 7,        // 自动学习已完成
         MESSAGE_touchSuccess = 8,       // 创建模型已完成
+        MESSAGE_setupComplete = 9,      //设备已连接
     };
     Q_ENUM(MESSAGE)
 

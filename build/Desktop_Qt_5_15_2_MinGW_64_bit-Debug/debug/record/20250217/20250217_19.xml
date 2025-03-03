@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<Record>
+    <node>
+        <Time>2025/02/17 19:00:23:122</Time>
+        <Text>1号设备_Trend_良率趋势图刷新耗时:38ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/17 19:01:23:123</Time>
+        <Text>1号设备_Trend_良率趋势图刷新耗时:39ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/17 19:02:23:125</Time>
+        <Text>1号设备_Trend_良率趋势图刷新耗时:40ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/17 19:03:23:122</Time>
+        <Text>1号设备_Trend_良率趋势图刷新耗时:38ms</Text>
+    </node>
+</Record>

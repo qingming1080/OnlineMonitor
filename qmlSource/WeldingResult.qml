@@ -1,4 +1,4 @@
-import QtQuick 2.0
+﻿import QtQuick 2.0
 //焊接结果
 Rectangle {
     property string eqText1: ""
@@ -226,7 +226,7 @@ Rectangle {
     }
     Text {
         id:t2
-        text: qsTr("时间: ") + eqText2 + "S"
+        text: qsTr("时间: ") + eqText2/100.0 + "S"
         font.family: fontBold
         font.bold: true
         font.pixelSize:/*mode === 1 ? 14: */16
@@ -248,7 +248,7 @@ Rectangle {
     }
     Text {
         id:t4
-        text: qsTr("焊前高度: ") + eqText4 + "mm"
+        text: qsTr("焊前高度: ") + eqText4/100.0 + "mm"
         font.family: fontBold
         font.bold: true
         font.pixelSize: /*mode === 1 ? 14:*/16
@@ -261,7 +261,7 @@ Rectangle {
     }
     Text {
         id:t5
-        text: qsTr("焊后高度: ") + eqText5 + "mm"
+        text: qsTr("焊后高度: ") + eqText5/100.0 + "mm"
         font.family: fontBold
         font.bold: true
         font.pixelSize: /*mode === 1 ? 14:*/16

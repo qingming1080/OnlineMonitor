@@ -2,6 +2,7 @@
 import QtQuick.Controls 1.4
 import QtQuick.Controls 2.15
 import QtQml.Models 2.15
+import "TimeUtils.js" as TimeUtils
 Rectangle {
     color: pRgb(153, 204, 255)
     //    Rectangle{
@@ -192,7 +193,7 @@ Rectangle {
         font.family: fontBold
         font.bold: true
         color: "#639ed6"
-        text: getCurrentTime()
+        text: TimeUtils.getCurrentTime()
 
         // 定时器每秒更新一次
         Timer {
@@ -200,8 +201,26 @@ Rectangle {
             repeat: true
             running: true
             onTriggered: {
-                timeText.text = getCurrentTime()
+                timeText.text = TimeUtils.getCurrentTime()
+            }
+        }
+
+        MouseArea {
+            anchors.fill: parent
+            cursorShape: Qt.PointingHandCursor
+            drag.target: timeDialog
+            onClicked: {
+                timeDialog.open()  // 点击时弹出对话框
             }
         }
     }
+
+    TimeSettingDialog {
+            id: timeDialog
+            onTimeSelected: {
+                // 接收 timeDialog 中发出的 timeSelected 信号，并更新 timeText 显示的时间
+                let date = new Date(year, month - 1, day, hour, minute, second);  // JavaScript 中月份是从 0 开始的
+                timeText.text = date.toLocaleString();  // 将选中的时间转为本地时间字符串
+            }
+        }
 }

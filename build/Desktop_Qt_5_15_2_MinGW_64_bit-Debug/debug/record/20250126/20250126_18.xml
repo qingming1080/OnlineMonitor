@@ -1,0 +1,335 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<Record>
+    <node>
+        <Time>2025/01/26 18:00:12:323</Time>
+        <Text>4号设备_Trend_良率趋势图刷新耗时:57ms</Text>
+    </node>
+    <node>
+        <Time>2025/01/26 18:00:29:489</Time>
+        <Text>1号设备_Trend_良率趋势图刷新耗时:35ms</Text>
+    </node>
+    <node>
+        <Time>2025/01/26 18:00:40:667</Time>
+        <Text>2号设备_Trend_良率趋势图刷新耗时:56ms</Text>
+    </node>
+    <node>
+        <Time>2025/01/26 18:00:56:925</Time>
+        <Text>3号设备_Trend_良率趋势图刷新耗时:34ms</Text>
+    </node>
+    <node>
+        <Time>2025/01/26 18:03:52:327</Time>
+        <Text>DeviceManager初始化耗时:3ms</Text>
+    </node>
+    <node>
+        <Time>2025/01/26 18:03:52:468</Time>
+        <Text>History_初始化共耗时:132ms 加载150条数据</Text>
+    </node>
+    <node>
+        <Time>2025/01/26 18:03:52:468</Time>
+        <Text>NetWork_初始化共耗时:0ms</Text>
+    </node>
+    <node>
+        <Time>2025/01/26 18:03:52:468</Time>
+        <Text>RS232_初始化耗时:0ms</Text>
+    </node>
+    <node>
+        <Time>2025/01/26 18:03:52:468</Time>
+        <Text>1号设备_Manual_初始化耗时:0ms</Text>
+    </node>
+    <node>
+        <Time>2025/01/26 18:11:43:190</Time>
+        <Text>DeviceManager初始化耗时:3ms</Text>
+    </node>
+    <node>
+        <Time>2025/01/26 18:11:43:489</Time>
+        <Text>History_初始化共耗时:288ms 加载150条数据</Text>
+    </node>
+    <node>
+        <Time>2025/01/26 18:11:43:489</Time>
+        <Text>NetWork_初始化共耗时:0ms</Text>
+    </node>
+    <node>
+        <Time>2025/01/26 18:11:43:489</Time>
+        <Text>RS232_初始化耗时:0ms</Text>
+    </node>
+    <node>
+        <Time>2025/01/26 18:11:43:489</Time>
+        <Text>1号设备_Manual_初始化耗时:0ms</Text>
+    </node>
+    <node>
+        <Time>2025/01/26 18:13:10:510</Time>
+        <Text>1号设备_DeviceInformation_初始化耗时:0ms</Text>
+    </node>
+    <node>
+        <Time>2025/01/26 18:13:10:511</Time>
+        <Text>1号设备_IO_初始化耗时:0ms</Text>
+    </node>
+    <node>
+        <Time>2025/01/26 18:13:10:511</Time>
+        <Text>1号设备_Manual_初始化耗时:0ms</Text>
+    </node>
+    <node>
+        <Time>2025/01/26 18:13:10:511</Time>
+        <Text>1号设备_System_初始化耗时:0ms</Text>
+    </node>
+    <node>
+        <Time>2025/01/26 18:13:10:544</Time>
+        <Text>1号设备_Trend_良率趋势图刷新耗时:32ms</Text>
+    </node>
+    <node>
+        <Time>2025/01/26 18:13:10:544</Time>
+        <Text>1号设备_Trend_初始化耗时:32ms</Text>
+    </node>
+    <node>
+        <Time>2025/01/26 18:13:10:544</Time>
+        <Text>1号设备_Device_初始化共耗时:33ms</Text>
+    </node>
+    <node>
+        <Time>2025/01/26 18:14:10:575</Time>
+        <Text>1号设备_Trend_良率趋势图刷新耗时:75ms</Text>
+    </node>
+    <node>
+        <Time>2025/01/26 18:15:10:620</Time>
+        <Text>1号设备_Trend_良率趋势图刷新耗时:119ms</Text>
+    </node>
+    <node>
+        <Time>2025/01/26 18:16:05:723</Time>
+        <Text>1号设备_DeviceInformation_初始化耗时:0ms</Text>
+    </node>
+    <node>
+        <Time>2025/01/26 18:16:05:723</Time>
+        <Text>1号设备_IO_初始化耗时:0ms</Text>
+    </node>
+    <node>
+        <Time>2025/01/26 18:16:05:723</Time>
+        <Text>1号设备_Manual_初始化耗时:0ms</Text>
+    </node>
+    <node>
+        <Time>2025/01/26 18:16:05:723</Time>
+        <Text>1号设备_System_初始化耗时:0ms</Text>
+    </node>
+    <node>
+        <Time>2025/01/26 18:16:05:810</Time>
+        <Text>1号设备_Trend_良率趋势图刷新耗时:86ms</Text>
+    </node>
+    <node>
+        <Time>2025/01/26 18:16:05:810</Time>
+        <Text>1号设备_Trend_初始化耗时:86ms</Text>
+    </node>
+    <node>
+        <Time>2025/01/26 18:16:05:810</Time>
+        <Text>1号设备_Device_初始化共耗时:87ms</Text>
+    </node>
+    <node>
+        <Time>2025/01/26 18:17:39:329</Time>
+        <Text>1号设备_DeviceInformation_初始化耗时:0ms</Text>
+    </node>
+    <node>
+        <Time>2025/01/26 18:17:39:329</Time>
+        <Text>1号设备_IO_初始化耗时:0ms</Text>
+    </node>
+    <node>
+        <Time>2025/01/26 18:17:39:330</Time>
+        <Text>1号设备_Manual_初始化耗时:0ms</Text>
+    </node>
+    <node>
+        <Time>2025/01/26 18:17:39:330</Time>
+        <Text>1号设备_System_初始化耗时:0ms</Text>
+    </node>
+    <node>
+        <Time>2025/01/26 18:17:39:404</Time>
+        <Text>1号设备_Trend_良率趋势图刷新耗时:74ms</Text>
+    </node>
+    <node>
+        <Time>2025/01/26 18:17:39:404</Time>
+        <Text>1号设备_Trend_初始化耗时:74ms</Text>
+    </node>
+    <node>
+        <Time>2025/01/26 18:17:39:404</Time>
+        <Text>1号设备_Device_初始化共耗时:75ms</Text>
+    </node>
+    <node>
+        <Time>2025/01/26 18:30:05:589</Time>
+        <Text>1号设备_DeviceInformation_初始化耗时:0ms</Text>
+    </node>
+    <node>
+        <Time>2025/01/26 18:30:05:589</Time>
+        <Text>1号设备_IO_初始化耗时:0ms</Text>
+    </node>
+    <node>
+        <Time>2025/01/26 18:30:05:589</Time>
+        <Text>1号设备_Manual_初始化耗时:0ms</Text>
+    </node>
+    <node>
+        <Time>2025/01/26 18:30:05:589</Time>
+        <Text>1号设备_System_初始化耗时:0ms</Text>
+    </node>
+    <node>
+        <Time>2025/01/26 18:30:05:672</Time>
+        <Text>1号设备_Trend_良率趋势图刷新耗时:82ms</Text>
+    </node>
+    <node>
+        <Time>2025/01/26 18:30:05:672</Time>
+        <Text>1号设备_Trend_初始化耗时:82ms</Text>
+    </node>
+    <node>
+        <Time>2025/01/26 18:30:05:672</Time>
+        <Text>1号设备_Device_初始化共耗时:83ms</Text>
+    </node>
+    <node>
+        <Time>2025/01/26 18:31:05:644</Time>
+        <Text>1号设备_Trend_良率趋势图刷新耗时:65ms</Text>
+    </node>
+    <node>
+        <Time>2025/01/26 18:32:05:689</Time>
+        <Text>1号设备_Trend_良率趋势图刷新耗时:111ms</Text>
+    </node>
+    <node>
+        <Time>2025/01/26 18:33:05:701</Time>
+        <Text>1号设备_Trend_良率趋势图刷新耗时:113ms</Text>
+    </node>
+    <node>
+        <Time>2025/01/26 18:34:05:691</Time>
+        <Text>1号设备_Trend_良率趋势图刷新耗时:109ms</Text>
+    </node>
+    <node>
+        <Time>2025/01/26 18:34:45:299</Time>
+        <Text>1号设备_DeviceInformation_初始化耗时:0ms</Text>
+    </node>
+    <node>
+        <Time>2025/01/26 18:34:45:299</Time>
+        <Text>1号设备_IO_初始化耗时:0ms</Text>
+    </node>
+    <node>
+        <Time>2025/01/26 18:34:45:299</Time>
+        <Text>1号设备_Manual_初始化耗时:0ms</Text>
+    </node>
+    <node>
+        <Time>2025/01/26 18:34:45:299</Time>
+        <Text>1号设备_System_初始化耗时:0ms</Text>
+    </node>
+    <node>
+        <Time>2025/01/26 18:34:45:374</Time>
+        <Text>1号设备_Trend_良率趋势图刷新耗时:74ms</Text>
+    </node>
+    <node>
+        <Time>2025/01/26 18:34:45:374</Time>
+        <Text>1号设备_Trend_初始化耗时:74ms</Text>
+    </node>
+    <node>
+        <Time>2025/01/26 18:34:45:374</Time>
+        <Text>1号设备_Device_初始化共耗时:75ms</Text>
+    </node>
+    <node>
+        <Time>2025/01/26 18:36:24:222</Time>
+        <Text>DeviceManager初始化耗时:3ms</Text>
+    </node>
+    <node>
+        <Time>2025/01/26 18:36:24:534</Time>
+        <Text>History_初始化共耗时:294ms 加载150条数据</Text>
+    </node>
+    <node>
+        <Time>2025/01/26 18:36:24:534</Time>
+        <Text>NetWork_初始化共耗时:0ms</Text>
+    </node>
+    <node>
+        <Time>2025/01/26 18:36:24:534</Time>
+        <Text>RS232_初始化耗时:0ms</Text>
+    </node>
+    <node>
+        <Time>2025/01/26 18:36:24:534</Time>
+        <Text>1号设备_Manual_初始化耗时:0ms</Text>
+    </node>
+    <node>
+        <Time>2025/01/26 18:36:42:423</Time>
+        <Text>1号设备_DeviceInformation_初始化耗时:0ms</Text>
+    </node>
+    <node>
+        <Time>2025/01/26 18:36:42:424</Time>
+        <Text>1号设备_IO_初始化耗时:0ms</Text>
+    </node>
+    <node>
+        <Time>2025/01/26 18:36:42:424</Time>
+        <Text>1号设备_Manual_初始化耗时:0ms</Text>
+    </node>
+    <node>
+        <Time>2025/01/26 18:36:42:424</Time>
+        <Text>1号设备_System_初始化耗时:0ms</Text>
+    </node>
+    <node>
+        <Time>2025/01/26 18:36:42:505</Time>
+        <Text>1号设备_Trend_良率趋势图刷新耗时:80ms</Text>
+    </node>
+    <node>
+        <Time>2025/01/26 18:36:42:505</Time>
+        <Text>1号设备_Trend_初始化耗时:80ms</Text>
+    </node>
+    <node>
+        <Time>2025/01/26 18:36:42:505</Time>
+        <Text>1号设备_Device_初始化共耗时:81ms</Text>
+    </node>
+    <node>
+        <Time>2025/01/26 18:37:42:523</Time>
+        <Text>1号设备_Trend_良率趋势图刷新耗时:76ms</Text>
+    </node>
+    <node>
+        <Time>2025/01/26 18:38:42:540</Time>
+        <Text>1号设备_Trend_良率趋势图刷新耗时:115ms</Text>
+    </node>
+    <node>
+        <Time>2025/01/26 18:39:42:532</Time>
+        <Text>1号设备_Trend_良率趋势图刷新耗时:117ms</Text>
+    </node>
+    <node>
+        <Time>2025/01/26 18:40:42:490</Time>
+        <Text>1号设备_Trend_良率趋势图刷新耗时:68ms</Text>
+    </node>
+    <node>
+        <Time>2025/01/26 18:41:42:539</Time>
+        <Text>1号设备_Trend_良率趋势图刷新耗时:117ms</Text>
+    </node>
+    <node>
+        <Time>2025/01/26 18:42:42:532</Time>
+        <Text>1号设备_Trend_良率趋势图刷新耗时:122ms</Text>
+    </node>
+    <node>
+        <Time>2025/01/26 18:43:42:545</Time>
+        <Text>1号设备_Trend_良率趋势图刷新耗时:109ms</Text>
+    </node>
+    <node>
+        <Time>2025/01/26 18:44:12:147</Time>
+        <Text>1号设备_Trend_良率趋势图刷新耗时:81ms</Text>
+    </node>
+    <node>
+        <Time>2025/01/26 18:44:12:648</Time>
+        <Text>1号设备_Trend_良率趋势图刷新耗时:72ms</Text>
+    </node>
+    <node>
+        <Time>2025/01/26 18:44:13:219</Time>
+        <Text>1号设备_Trend_良率趋势图刷新耗时:76ms</Text>
+    </node>
+    <node>
+        <Time>2025/01/26 18:44:13:606</Time>
+        <Text>1号设备_Trend_良率趋势图刷新耗时:68ms</Text>
+    </node>
+    <node>
+        <Time>2025/01/26 18:44:42:546</Time>
+        <Text>1号设备_Trend_良率趋势图刷新耗时:115ms</Text>
+    </node>
+    <node>
+        <Time>2025/01/26 18:45:42:541</Time>
+        <Text>1号设备_Trend_良率趋势图刷新耗时:118ms</Text>
+    </node>
+    <node>
+        <Time>2025/01/26 18:46:42:560</Time>
+        <Text>1号设备_Trend_良率趋势图刷新耗时:127ms</Text>
+    </node>
+    <node>
+        <Time>2025/01/26 18:47:42:533</Time>
+        <Text>1号设备_Trend_良率趋势图刷新耗时:110ms</Text>
+    </node>
+    <node>
+        <Time>2025/01/26 18:48:42:552</Time>
+        <Text>1号设备_Trend_良率趋势图刷新耗时:130ms</Text>
+    </node>
+</Record>

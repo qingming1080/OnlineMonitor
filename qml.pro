@@ -1,4 +1,4 @@
-QT += widgets quick virtualkeyboard charts serialport sql qml xml
+QT += widgets quick virtualkeyboard charts serialport sql qml xml serialbus
 
 CONFIG += c++11
 CONFIG += C++11UTF8
@@ -19,11 +19,14 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
         DataBase/databasemanager.cpp \
+        DataHandler/timehandler.cpp \
         LanguageManger/languagemanger.cpp \
         devicemanager.cpp \
         fileobject.cpp \
         log/localrecord.cpp \
         main.cpp \
+        modbus/hbmodbusclient.cpp \
+        modbus/hbserver.cpp \
         model/device.cpp \
         model/deviceinformation.cpp \
         model/devicenames.cpp \
@@ -52,11 +55,14 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 HEADERS += \
     DataBase/databasemanager.h \
+    DataHandler/timehandler.h \
     LanguageManger/languagemanger.h \
     define.h \
     devicemanager.h \
     fileobject.h \
     log/localrecord.h \
+    modbus/hbmodbusclient.h \
+    modbus/hbserver.h \
     model/device.h \
     model/deviceinformation.h \
     model/devicenames.h \

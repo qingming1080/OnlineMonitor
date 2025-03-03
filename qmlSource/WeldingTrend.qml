@@ -1,4 +1,4 @@
-import QtQuick 2.0
+﻿import QtQuick 2.0
 import QtCharts 2.15
 import Device 1.0
 import Trend 1.0
@@ -113,11 +113,12 @@ Rectangle {
             id:myAxisY
             min:DeviceManager.deviceList[swipeCurrIndex].pTrend.beforeMinY
             max:DeviceManager.deviceList[swipeCurrIndex].pTrend.beforeMaxY
-            tickCount: 9
+            tickCount: 12
             labelsColor: "#a3c7d0"
             labelsFont.pixelSize: 12
             labelsFont.bold: true
-            labelFormat: '%d'
+            //labelFormat: '%d'
+            labelFormat: '%.2f'
             gridVisible:false
             color:"#1398fa"
             visible: altitudeMode
@@ -126,11 +127,12 @@ Rectangle {
             id:myAxisY1
             min:DeviceManager.deviceList[swipeCurrIndex].pTrend.afterMinY
             max:DeviceManager.deviceList[swipeCurrIndex].pTrend.afterMaxY
-            tickCount: 9
+            tickCount:12
             labelsColor: "#a3c7d0"
             labelsFont.pixelSize: 12
             labelsFont.bold: true
-            labelFormat: '%d'
+            //labelFormat: '%d'
+            labelFormat: '%.2f'
             gridVisible:false
             color:"#ccb2f8"
             visible: altitudeMode
@@ -139,7 +141,7 @@ Rectangle {
             id:myAxisY2
             min:DeviceManager.deviceList[swipeCurrIndex].pTrend.powerMinY
             max:DeviceManager.deviceList[swipeCurrIndex].pTrend.powerMaxY
-            tickCount: 9
+            tickCount: 12
             labelsColor: "#a3c7d0"
             labelsFont.pixelSize: 12
             labelsFont.bold: true
@@ -151,7 +153,7 @@ Rectangle {
             id:myAxisY3
             min:DeviceManager.deviceList[swipeCurrIndex].pTrend.timeMinY
             max:DeviceManager.deviceList[swipeCurrIndex].pTrend.timeMaxY
-            tickCount: 9
+            tickCount: 12
             labelsColor: "#a3c7d0"
             labelsFont.pixelSize: 12
             labelsFont.bold: true

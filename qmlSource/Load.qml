@@ -1,4 +1,4 @@
-import QtQuick 2.0
+﻿import QtQuick 2.0
 
 Rectangle {
     color: pRgb(153, 204, 255)
@@ -14,7 +14,7 @@ Rectangle {
         source: "qrc:/image/title.png"
     }
     Text {
-        text: qsTr("在线监测系统")
+        text: qsTr("全视之眼系统")
         x:483
         y:254
         color: pRgb(43, 112, 173)

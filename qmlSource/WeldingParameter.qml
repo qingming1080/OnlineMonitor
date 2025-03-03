@@ -1,5 +1,6 @@
-import QtQuick 2.0
+﻿import QtQuick 2.0
 import QtQuick.Controls 2.15
+import "TimeUtils.js" as TimeUtils
 //焊接参数
 Rectangle {
     color: pRgb(43, 112, 173)
@@ -26,6 +27,22 @@ Rectangle {
         x:17
         y:9
     }
+    Image {
+        id: setting
+        source: "qrc:/image/setting.png"
+        x:altitudeMode ? 105:106
+        y:altitudeMode ? 12:11
+        width: altitudeMode ? 15:16
+        height: altitudeMode ? 15:16
+
+        MouseArea {
+            anchors.fill: parent
+            onClicked: {
+                parameterSetting.open()
+            }
+        }
+    }
+
     Image {
         id: im1
         source: "qrc:/image/shake.png"
@@ -274,5 +291,14 @@ Rectangle {
                 keyboardYype = 0
             }
         }
+    }
+
+    ParameterSettingDiolog {
+        id: parameterSetting
+        // onTimeSelected: {
+        //     // 接收 timeDialog 中发出的 timeSelected 信号，并更新 timeText 显示的时间
+        //     let date = new Date(year, month - 1, day, hour, minute, second);  // JavaScript 中月份是从 0 开始的
+        //     timeText.text = date.toLocaleString();  // 将选中的时间转为本地时间字符串
+        // }
     }
 }

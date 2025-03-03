@@ -1,4 +1,4 @@
-import QtQuick 2.0
+﻿import QtQuick 2.0
 import QtQuick.Controls 2.5
 Rectangle {
     color: pRgb(43, 112, 173)
@@ -91,7 +91,7 @@ Rectangle {
         y:15
         width: 180
         height: 44
-        text: qsTr("在线监测系统")
+        text: qsTr("全视之眼系统")
         color: pRgb(153, 204, 255)
         font.family: fontBold
         font.bold: true

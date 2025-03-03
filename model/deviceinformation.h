@@ -1,4 +1,4 @@
-#ifndef DEVICEINFORMATION_H
+﻿#ifndef DEVICEINFORMATION_H
 #define DEVICEINFORMATION_H
 
 #include <QObject>
@@ -194,14 +194,17 @@ private:
     int m_power{0};
     int m_time{0};
     int m_energy{0};
-    int m_heightPre{0};
-    int m_heightPost{0};
+    // int m_heightPre{0};
+    // int m_heightPost{0};
+    double m_heightPre{0};
+    double m_heightPost{0};
 
     int m_mesPort{0};
     QString m_mesIP{};
     QString m_deviceIP{};
 
     QString m_state{"未连接"};
+    //QString m_state{};
 };
 
 #endif // DEVICEINFORMATION:H

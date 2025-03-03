@@ -52,5 +52,9 @@
         <file>SimplifiedChinese.ts</file>
         <file>translations/English.qm</file>
         <file>translations/SimplifiedChinese.qm</file>
+        <file>qmlSource/TimeSettingDialog.qml</file>
+        <file>qmlSource/TimeUtils.js</file>
+        <file>image/setting.png</file>
+        <file>qmlSource/ParameterSettingDiolog.qml</file>
     </qresource>
 </RCC>

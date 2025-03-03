@@ -1,0 +1,187 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<Record>
+    <node>
+        <Time>2025/02/06 09:54:09:681</Time>
+        <Text>DeviceManager初始化耗时:9ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/06 09:54:10:088</Time>
+        <Text>History_初始化共耗时:393ms 加载150条数据</Text>
+    </node>
+    <node>
+        <Time>2025/02/06 09:54:10:088</Time>
+        <Text>NetWork_初始化共耗时:0ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/06 09:54:10:088</Time>
+        <Text>RS232_初始化耗时:0ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/06 09:54:10:088</Time>
+        <Text>1号设备_Manual_初始化耗时:0ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/06 09:54:24:029</Time>
+        <Text>History_修改筛选设备耗时:43ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/06 09:54:24:903</Time>
+        <Text>History_修改筛选设备耗时:42ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/06 09:54:30:054</Time>
+        <Text>History_修改筛选设备耗时:44ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/06 09:54:31:847</Time>
+        <Text>History_修改筛选设备耗时:43ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/06 09:54:33:654</Time>
+        <Text>History_修改筛选设备耗时:40ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/06 09:54:34:264</Time>
+        <Text>History_修改筛选设备耗时:45ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/06 09:54:35:059</Time>
+        <Text>History_修改筛选设备耗时:43ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/06 09:54:46:683</Time>
+        <Text>History_修改筛选设备耗时:44ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/06 09:54:47:737</Time>
+        <Text>History_修改筛选设备耗时:46ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/06 09:54:49:027</Time>
+        <Text>History_修改筛选设备耗时:43ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/06 09:54:49:682</Time>
+        <Text>History_修改筛选设备耗时:40ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/06 09:54:50:361</Time>
+        <Text>History_修改筛选设备耗时:45ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/06 09:55:34:001</Time>
+        <Text>History_修改筛选设备耗时:43ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/06 09:57:17:510</Time>
+        <Text>History_修改筛选设备耗时:42ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/06 09:57:18:461</Time>
+        <Text>History_修改筛选设备耗时:43ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/06 09:57:19:109</Time>
+        <Text>History_修改筛选设备耗时:43ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/06 09:57:49:227</Time>
+        <Text>DeviceManager初始化耗时:1ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/06 09:57:49:367</Time>
+        <Text>History_初始化共耗时:131ms 加载150条数据</Text>
+    </node>
+    <node>
+        <Time>2025/02/06 09:57:49:367</Time>
+        <Text>NetWork_初始化共耗时:0ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/06 09:57:49:367</Time>
+        <Text>RS232_初始化耗时:0ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/06 09:57:49:367</Time>
+        <Text>1号设备_Manual_初始化耗时:0ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/06 09:58:11:508</Time>
+        <Text>1号设备_DeviceInformation_初始化耗时:0ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/06 09:58:11:509</Time>
+        <Text>1号设备_IO_初始化耗时:1ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/06 09:58:11:509</Time>
+        <Text>1号设备_Manual_初始化耗时:0ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/06 09:58:11:510</Time>
+        <Text>1号设备_System_初始化耗时:0ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/06 09:58:11:545</Time>
+        <Text>1号设备_Trend_良率趋势图刷新耗时:35ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/06 09:58:11:545</Time>
+        <Text>1号设备_Trend_初始化耗时:35ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/06 09:58:11:545</Time>
+        <Text>1号设备_Device_初始化共耗时:37ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/06 09:58:15:555</Time>
+        <Text>History_修改筛选设备耗时:44ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/06 09:58:17:484</Time>
+        <Text>History_修改筛选设备耗时:139ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/06 09:58:19:347</Time>
+        <Text>History_修改筛选设备耗时:45ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/06 09:58:26:724</Time>
+        <Text>2号设备_DeviceInformation_初始化耗时:0ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/06 09:58:26:724</Time>
+        <Text>2号设备_IO_初始化耗时:0ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/06 09:58:26:725</Time>
+        <Text>2号设备_Manual_初始化耗时:0ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/06 09:58:26:725</Time>
+        <Text>2号设备_System_初始化耗时:0ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/06 09:58:26:759</Time>
+        <Text>2号设备_Trend_良率趋势图刷新耗时:34ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/06 09:58:26:759</Time>
+        <Text>2号设备_Trend_初始化耗时:34ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/06 09:58:26:759</Time>
+        <Text>2号设备_Device_初始化共耗时:34ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/06 09:58:30:090</Time>
+        <Text>History_修改筛选设备耗时:44ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/06 09:59:11:549</Time>
+        <Text>1号设备_Trend_良率趋势图刷新耗时:36ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/06 09:59:26:749</Time>
+        <Text>2号设备_Trend_良率趋势图刷新耗时:36ms</Text>
+    </node>
+</Record>

@@ -1,10 +1,11 @@
-#ifndef DEVICEMANAGER_H
+﻿#ifndef DEVICEMANAGER_H
 #define DEVICEMANAGER_H
 
 #include <QObject>
 #include <QMap>
 #include "model/device.h"
 #include "qmlenum.h"
+
 ///
 /// \brief The DeviceManager class : 设备管理
 ///
@@ -15,10 +16,16 @@ class DeviceManager : public QObject
     Q_PROPERTY(QList<Device *> deviceList READ deviceList  NOTIFY deviceListChanged)
     // 设备数量
     Q_PROPERTY(int deviceNum READ deviceNum  NOTIFY deviceNumChanged)
+
 public:
     static DeviceManager* getInstance();
 
     Q_INVOKABLE QList<Device *> deviceList() const;
+
+    //获取指针
+    Device* getDeviceByNetworkID(int networkID);
+
+    Device* getDeviceByRs232ID(int rs232ID);
 
     ///
     /// \brief addDevice : 新增一台设备
@@ -43,6 +50,7 @@ public:
 
     Q_INVOKABLE QString getHistoryName(int welderID);
 
+
 signals:
     void deviceNumChanged();
 
@@ -50,6 +58,8 @@ signals:
     void deviceListChanged();
 
     Q_INVOKABLE void upDateBtns();
+
+
 
 private:
     explicit DeviceManager(QObject *parent = nullptr);

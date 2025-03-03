@@ -1,4 +1,4 @@
-#include "devicemanager.h"
+﻿#include "devicemanager.h"
 #include "DataBase/databasemanager.h"
 #include "model/deviceinformation.h"
 #include "define.h"
@@ -32,6 +32,30 @@ DeviceManager::DeviceManager(QObject *parent)
     init();
 
     emit SignalManager::getInstance()->signalAddRecord(QDateTime::currentDateTime(), QString("DeviceManager初始化耗时:%1ms").arg(timer.elapsed()));
+}
+
+Device *DeviceManager::getDeviceByNetworkID(int networkID)
+{
+    for(int i = 0; i < m_deviceList.size(); ++i)
+    {
+        if(m_deviceList.at(i)->pDeviceInformation()->connectType() == QmlEnum::CONNECTTYPE_Network
+            && m_deviceList.at(i)->pDeviceInformation()->connectID() == networkID)
+            return m_deviceList.at(i);
+    }
+
+    return nullptr;
+}
+
+Device *DeviceManager::getDeviceByRs232ID(int rs232ID)
+{
+    for(int i = 0; i < m_deviceList.size(); ++i)
+    {
+        if(m_deviceList.at(i)->pDeviceInformation()->connectType() == QmlEnum::CONNECTTYPE_RS232
+            && m_deviceList.at(i)->pDeviceInformation()->connectID() == rs232ID)
+            return m_deviceList.at(i);
+    }
+
+    return nullptr;
 }
 
 void DeviceManager::init()
@@ -91,6 +115,11 @@ void DeviceManager::addDevice(const int &maxBacth, const int &sample, const int 
 
     _Configuration_Data data;
 
+     m_deviceNum++;
+    emit deviceNumChanged();
+
+    // bool added = false;
+
     for(int i = 0; i < 4; ++i)
     {
         if(i == m_deviceList.size())
@@ -140,8 +169,8 @@ void DeviceManager::addDevice(const int &maxBacth, const int &sample, const int 
         }
     }
 
-    m_deviceNum++;
-    emit deviceNumChanged();
+
+
     emit deviceListChanged();
 
     QList<QString> names;
@@ -152,6 +181,10 @@ void DeviceManager::addDevice(const int &maxBacth, const int &sample, const int 
 
     DeviceNames::getInstance()->setNames(names);
 }
+
+
+
+
 
 void DeviceManager::removeDevice(int welderID)
 {
@@ -182,4 +215,5 @@ void DeviceManager::removeDevice(int welderID)
 
     DeviceNames::getInstance()->setNames(names);
 }
+
 

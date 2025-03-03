@@ -1,17 +1,22 @@
-import QtQuick 2.0
+﻿import QtQuick 2.0
 import QtQuick.Controls 1.4
 import QtQuick.Controls 2.5
 import Device 1.0
 import DeviceInformation 1.0
 import IO 1.0
 import QmlEnum 1.0
+import "TimeUtils.js" as TimeUtils
 //系统配置
 Rectangle {
     id: sysUI
+    // property bool isFirstDeviceConfigured: false
+    // property string firstDeviceLocalIp: ""
+
     property int itemCount: equipmentCount
     property int currIndex: 0
     property int currentConfigId: 0 // 多设备时放大界面数据判断
     property int networkId: 1
+    property int rs232Id: 1
     property int loadType: 0
     property bool musysTmp1: false
     property bool musysTmp2: false
@@ -23,7 +28,8 @@ Rectangle {
     property bool undetermined3: false
     property bool undetermined4: false
     property bool undeterMined: {
-        if(equipmentCount === 1){
+        //if(equipmentCount === 1){
+        if(equipmentCount === 0){
             if(DeviceManager.deviceList[0]){
                 return DeviceManager.deviceList[0].pIO.availabel
             }
@@ -75,6 +81,26 @@ Rectangle {
             loader1.push(newItem);
         }
     }
+
+    // function updateIsFirstDeviceConfigured() {
+    //     var countZero = 0;
+
+    //     // 遍历 DeviceManager.deviceList 中的每个设备
+    //     for (var i = 0; i < DeviceManager.deviceList.length; i++) {
+    //         var connectType = DeviceManager.deviceList[i].pDeviceInformation.connectType;
+
+    //         // 判断 connectType 是否为 0，统计为 0 的个数
+    //         if (connectType === 0) {
+    //             countZero++;
+    //         }
+    //     }
+
+    //     // 判断 connectType 为 0 的总个数来设置 isFirstDeviceConfigured
+    //     isFirstDeviceConfigured = (countZero > 0);  // 如果 connectType = 0 的个数大于 1，设置为 true，否则为 false
+    //     console.log("retrn: "+ isFirstDeviceConfigured )
+    //     return isFirstDeviceConfigured;
+    // }
+
     Connections{
         target: window
         function onSigSysConfig(){
@@ -88,7 +114,7 @@ Rectangle {
         }
         else{
             loadViewsys(2,musys)
-            currIndex = 0
+            // currIndex = 0
         }
     }
 
@@ -176,11 +202,17 @@ Rectangle {
                 function onSigAddDevice(){
                     DeviceManager.addDevice(t1.text,t2.text,
                                             t3.text,t7.text,t8.text,t9.text,
-                                            altitudMode?1:0,t4.text,com1.currentText,loadType,networkId)
-                    networkId = 1
-                    loadType = 0
+                                            // altitudMode?1:0,t4.text,com1.currentText,loadType,networkId)
+                                           altitudMode?1:0,t4.text,com1.currentText,loadType,loadType ? rs232Id:networkId )
+                    // networkId = 1
+                    // rs232Id = 1
+                    // loadType = 0
+                    // DeviceManager.deviceListChanged()
+
                 }
+
             }
+
             Rectangle{
                 x:30
                 y:25
@@ -235,7 +267,8 @@ Rectangle {
                         border.color: "#99ccff"
                     }
                     text:{
-                        if(equipmentCount === 1){
+                        // if(equipmentCount === 1){
+                        if(equipmentCount === 0){
                             if(DeviceManager.deviceList[0]){
                                 DeviceManager.deviceList[0].pDeviceInformation.maxBacth
                             }
@@ -299,7 +332,8 @@ Rectangle {
                         }
                     }
                     text:{
-                        if(equipmentCount === 1){
+                        // if(equipmentCount === 1){
+                        if(equipmentCount === 0){
                             if(DeviceManager.deviceList[0]){
                                 DeviceManager.deviceList[0].pDeviceInformation.sample
                             }
@@ -355,7 +389,8 @@ Rectangle {
                         }
                     }
                     text:{
-                        if(equipmentCount === 1){
+                        // if(equipmentCount === 1){
+                        if(equipmentCount === 0){
                             if(DeviceManager.deviceList[0]){
                                 DeviceManager.deviceList[0].pDeviceInformation.lowerLimit
                             }
@@ -412,7 +447,8 @@ Rectangle {
                         }
                     }
                     text:{
-                        if(equipmentCount === 1){
+                       // if(equipmentCount === 1){
+                        if(equipmentCount === 0){
                             if(DeviceManager.deviceList[0]){
                                 DeviceManager.deviceList[0].pDeviceInformation.lowerLimit
                             }
@@ -469,7 +505,8 @@ Rectangle {
                         }
                     }
                     text:{
-                        if(equipmentCount === 1){
+                        // if(equipmentCount === 1){
+                        if(equipmentCount === 0){
                             if(DeviceManager.deviceList[0]){
                                 DeviceManager.deviceList[0].pDeviceInformation.lowerLimit
                             }
@@ -527,7 +564,8 @@ Rectangle {
                         }
                     }
                     text:{
-                        if(equipmentCount === 1){
+                        // if(equipmentCount === 1){
+                        if(equipmentCount === 0){
                             if(DeviceManager.deviceList[0]){
                                 DeviceManager.deviceList[0].pDeviceInformation.lowerLimit
                             }
@@ -594,7 +632,8 @@ Rectangle {
                         if(isAdd){
                             altitudMode = true
                         }
-                        else if(equipmentCount === 1){
+                        // else if(equipmentCount === 1){
+                        else if(equipmentCount === 0){
                             DeviceManager.deviceList[0].pDeviceInformation.setHeightOption(1)
                         }
                         else{
@@ -634,7 +673,8 @@ Rectangle {
                         if(isAdd){
                             altitudMode = false
                         }
-                        else if(equipmentCount === 1){
+                        // else if(equipmentCount === 1){
+                        else if(equipmentCount === 0){
                             DeviceManager.deviceList[0].pDeviceInformation.setHeightOption(0)
                         }
                         else{
@@ -687,7 +727,8 @@ Rectangle {
                         }
                     }
                     text:{
-                        if(equipmentCount === 1){
+                        // if(equipmentCount === 1){
+                        if(equipmentCount === 0){
                             if(DeviceManager.deviceList[0]){
                                 return DeviceManager.deviceList[0].pDeviceInformation.name
                             }
@@ -729,8 +770,10 @@ Rectangle {
                         if(isAdd){
                             return currentText
                         }
-                        else if(equipmentCount === 1){
+                       // else if(equipmentCount === 1){
+                        else if(equipmentCount === 0){
                             if(DeviceManager.deviceList[0]){
+                                 DeviceManager.deviceListChanged()
                                 return DeviceManager.deviceList[0].pDeviceInformation.model
                             }
                             else{
@@ -739,25 +782,34 @@ Rectangle {
                         }
                         else{
                             if(DeviceManager.deviceList[currentConfigId-1]){
+                                 DeviceManager.deviceListChanged()
                                 return DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.model
                             }
                             else{
                                 return ""
                             }
                         }
+
                     }
                     onDataAlter: {
                         if(isAdd){
                             return com1.currentText
                         }
-                        else if(equipmentCount === 1){
+                        //else if(equipmentCount === 1){
+                        else if(equipmentCount === 0){
+                             DeviceManager.deviceListChanged()
                             DeviceManager.deviceList[0].pDeviceInformation.setModel(com1.currentText)
                         }
                         else{
+                             DeviceManager.deviceListChanged()
                             DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.setModel(com1.currentText)
                         }
+
                     }
                 }
+
+
+
                 Switch{
                     id:ctl1
                     x:228
@@ -766,20 +818,21 @@ Rectangle {
                         if(isAdd){
 
                         }
-                        if(equipmentCount === 1){
+                       // if(equipmentCount === 1){
+                        if(equipmentCount === 0){
                             if(ctl1.checked){
-                                DeviceManager.deviceList[0].pDeviceInformation.setConnectType(0)
+                                DeviceManager.deviceList[0].pDeviceInformation.setConnectType(1)
                             }
                             else{
-                                DeviceManager.deviceList[0].pDeviceInformation.setConnectType(1)
+                                DeviceManager.deviceList[0].pDeviceInformation.setConnectType(0)
                             }
                         }
                         else{
                             if(ctl1.checked){
-                                DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.setConnectType(0)
+                                DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.setConnectType(1)
                             }
                             else{
-                                DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.setConnectType(1)
+                                DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.setConnectType(0)
                             }
                         }
                     }
@@ -810,7 +863,8 @@ Rectangle {
                                     if(isAdd){
                                         return ctl1.checked
                                     }
-                                    else if(equipmentCount === 1){
+                                    //else if(equipmentCount === 1){
+                                    else if(equipmentCount === 0){
                                         return DeviceManager.deviceList[0].pDeviceInformation.connectType !== 0? true : false
                                     }
                                     else{
@@ -825,7 +879,8 @@ Rectangle {
                                     if(isAdd){
                                         return !ctl1.checked
                                     }
-                                    else if(equipmentCount === 1){
+                                    // else if(equipmentCount === 1){
+                                    else if(equipmentCount === 0){
                                         return DeviceManager.deviceList[0].pDeviceInformation.connectType !== 0? false : true
                                     }
                                     else{
@@ -845,7 +900,8 @@ Rectangle {
                                 if(isAdd){
                                     return ctl1.checked ? pRgb(43, 112, 173) : "#e5e6e7"
                                 }
-                                else if(equipmentCount === 1){
+                                // else if(equipmentCount === 1){
+                                else if(equipmentCount === 0){
                                     return DeviceManager.deviceList[0].pDeviceInformation.connectType !== 0 ? pRgb(43, 112, 173) : "#e5e6e7"
                                 }
                                 else{
@@ -866,7 +922,8 @@ Rectangle {
                                 if(isAdd){
                                     return !ctl1.checked ? pRgb(43, 112, 173) : "#e5e6e7"
                                 }
-                                else if(equipmentCount === 1){
+                                // else if(equipmentCount === 1){
+                                else if(equipmentCount === 0){
                                     return DeviceManager.deviceList[0].pDeviceInformation.connectType !== 0? "#e5e6e7" : pRgb(43, 112, 173)
                                 }
                                 else{
@@ -884,21 +941,21 @@ Rectangle {
                     focus: true
                     sourceComponent: {
                         if(isAdd){
-                            if(ctl1.checked){
-                                loadType = 1
-                            }
-                            else{
-                                loadType = 0
-                            }
+                            loadType = ctl1.checked ? 1 : 0
                             return ctl1.checked ? rect2 : rect1
                         }
-                        else if(equipmentCount === 1){
+                        // else if(equipmentCount === 1){
+                        else if(equipmentCount === 0){
+                            DeviceManager.deviceListChanged()
                             return DeviceManager.deviceList[0].pDeviceInformation.connectType === 0 ? rect1 : rect2
                         }
                         else{
+                            DeviceManager.deviceListChanged()
                             return DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.connectType === 0 ? rect1 : rect2
                         }
+
                     }
+
                 }
                 Component{
                     id:rect1
@@ -958,55 +1015,69 @@ Rectangle {
                             height: 40
                             x:233
                             y:55
-                            model: ["ETH0", "ETH1", "ETH2", "ETH3"]
+                            model: ["ETH1", "ETH2", "ETH3", "ETH4"]
                             onDisplayTextChanged: {
                                 if(isAdd){
                                     networkId = com2.currentIndex+1
+
+                                    console.log("currentText: ",currentText,"equipmentCount:",equipmentCount, "networkId:", networkId)
                                 }
                             }
 
                             displayText: {
                                 if(isAdd){
+                                    console.log("currentText: ",currentText,"equipmentCount:",equipmentCount,"currentConfigId:",currentConfigId)
                                     return currentText
+
                                 }
-                                else if(equipmentCount === 1){
+                                // else if(equipmentCount === 1){
+                                else if(equipmentCount === 0){
+                                     console.log("currentText: ",currentText,"equipmentCount<0:",equipmentCount, "networkId:", networkId,"currentConfigId:",currentConfigId)
                                     if(DeviceManager.deviceList[0].pDeviceInformation.connectID === 1){
-                                        return "ETH0"
+                                        return "ETH1"
                                     }
                                     else if(DeviceManager.deviceList[0].pDeviceInformation.connectID === 2){
-                                        return "ETH1"
+                                        return "ETH2"
                                     }
                                     else if(DeviceManager.deviceList[0].pDeviceInformation.connectID === 3){
-                                        return "ETH2"
+                                        return "ETH3"
                                     }
                                     else if(DeviceManager.deviceList[0].pDeviceInformation.connectID === 4){
-                                        return "ETH3"
+                                        return "ETH4"
                                     }
+
                                 }
                                 else{
+                                     console.log("currentText: ",currentText,"equipmentCount>>0:",equipmentCount, "networkId:", networkId,"currentConfigId:",currentConfigId)
                                     if(DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.connectID === 1){
-                                        return "ETH0"
-                                    }
-                                    else if(DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.connectID === 2){
                                         return "ETH1"
                                     }
-                                    else if(DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.connectID === 3){
+                                    else if(DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.connectID === 2){
                                         return "ETH2"
                                     }
-                                    else if(DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.connectID === 4){
+                                    else if(DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.connectID === 3){
                                         return "ETH3"
                                     }
+                                    else if(DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.connectID === 4){
+                                        return "ETH4"
+                                    }
+
                                 }
                             }
                             onDataAlter: {
-                                if(equipmentCount === 1){
+                                // if(equipmentCount === 1){
+                                 console.log("currentText: ",currentText,"equipmentCount>>0:",equipmentCount, "networkId:", networkId,"currentConfigId:",currentConfigId)
+                                if(equipmentCount === 0){
                                     DeviceManager.deviceList[0].pDeviceInformation.setConnectID(com2.currentIndex+1)
                                 }
                                 else{
                                     DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.setConnectID(com2.currentIndex+1)
                                 }
+                                 DeviceManager.deviceListChanged()
+
                             }
                         }
+
                         TextField{
                             id:t5
                             width: 243
@@ -1034,10 +1105,8 @@ Rectangle {
                                 }
                             }
                             text: {
-                                if(com2.displayText === "ETH0"){
-                                    return NetworkModel.getDataByWelderID(1,QmlEnum.NETWORK_server_port)
-                                }
-                                else if(com2.displayText === "ETH1"){
+                                if(com2.displayText === "ETH1"){
+
                                     return NetworkModel.getDataByWelderID(2,QmlEnum.NETWORK_server_port)
                                 }
                                 else if(com2.displayText === "ETH2"){
@@ -1046,7 +1115,25 @@ Rectangle {
                                 else if(com2.displayText === "ETH3"){
                                     return NetworkModel.getDataByWelderID(4,QmlEnum.NETWORK_server_port)
                                 }
+                                else if(com2.displayText === "ETH4"){
+                                    return NetworkModel.getDataByWelderID(5,QmlEnum.NETWORK_server_port)
+                                }
                             }
+
+                            onTextChanged: {
+                                   if (com2.displayText === "ETH1") {
+                                       NetworkModel.setNetworkData(2, QmlEnum.NETWORK_server_port, t5.text);
+                                   } else if (com2.displayText === "ETH2") {
+                                       NetworkModel.setNetworkData(3, QmlEnum.NETWORK_server_port, t5.text);
+                                   } else if (com2.displayText === "ETH3") {
+                                       NetworkModel.setNetworkData(4, QmlEnum.NETWORK_server_port, t5.text);
+                                   } else if (com2.displayText === "ETH4") {
+                                       NetworkModel.setNetworkData(5, QmlEnum.NETWORK_server_port, t5.text);
+                                   }
+                                    DeviceManager.deviceListChanged()
+
+                               }
+
                         }
                         TextField{
                             id:t6
@@ -1075,10 +1162,7 @@ Rectangle {
                                 }
                             }
                             text:{
-                                if(com2.displayText === "ETH0"){
-                                    return NetworkModel.getDataByWelderID(1,QmlEnum.NETWORK_remote_ip)
-                                }
-                                else if(com2.displayText === "ETH1"){
+                                if(com2.displayText === "ETH1"){
                                     return NetworkModel.getDataByWelderID(2,QmlEnum.NETWORK_remote_ip)
                                 }
                                 else if(com2.displayText === "ETH2"){
@@ -1087,10 +1171,28 @@ Rectangle {
                                 else if(com2.displayText === "ETH3"){
                                     return NetworkModel.getDataByWelderID(4,QmlEnum.NETWORK_remote_ip)
                                 }
+                                else if(com2.displayText === "ETH4"){
+                                    return NetworkModel.getDataByWelderID(5,QmlEnum.NETWORK_remote_ip)
+                                }
                             }
+
+                            onTextChanged: {
+                                   if (com2.displayText === "ETH1") {
+                                       NetworkModel.setNetworkData(2, QmlEnum.NETWORK_remote_ip, t6.text);
+                                   } else if (com2.displayText === "ETH2") {
+                                       NetworkModel.setNetworkData(3, QmlEnum.NETWORK_remote_ip, t6.text);
+                                   } else if (com2.displayText === "ETH3") {
+                                       NetworkModel.setNetworkData(4, QmlEnum.NETWORK_remote_ip, t6.text);
+                                   } else if (com2.displayText === "ETH4") {
+                                       NetworkModel.setNetworkData(5, QmlEnum.NETWORK_remote_ip, t6.text);
+                                   }
+                                    DeviceManager.deviceListChanged()
+
+                               }
                         }
-                        TextField{
-                            id:t7
+
+                        TextField {
+                            id: t7
                             width: 243
                             height: 40
                             anchors.top: t6.bottom
@@ -1103,11 +1205,12 @@ Rectangle {
                             font.bold: true
                             font.pixelSize: 18
                             inputMethodHints: Qt.ImhDigitsOnly
-                            background: Rectangle{
+                            background: Rectangle {
                                 radius: 6
                                 border.width: 3
                                 border.color: "#99ccff"
                             }
+
                             MouseArea {
                                 anchors.fill: parent
                                 onPressed: {
@@ -1115,22 +1218,39 @@ Rectangle {
                                     keyboardYype = 0
                                 }
                             }
-                            text:{
-                                if(com2.displayText === "ETH0"){
-                                    return NetworkModel.getDataByWelderID(1,QmlEnum.NETWORK_local_ip)
+
+                            text: {
+                                if (com2.displayText === "ETH1") {
+                                    return NetworkModel.getDataByWelderID(2, QmlEnum.NETWORK_local_ip)
                                 }
-                                else if(com2.displayText === "ETH1"){
-                                    return NetworkModel.getDataByWelderID(2,QmlEnum.NETWORK_local_ip)
+                                else if (com2.displayText === "ETH2") {
+                                    return NetworkModel.getDataByWelderID(3, QmlEnum.NETWORK_local_ip)
                                 }
-                                else if(com2.displayText === "ETH2"){
-                                    return NetworkModel.getDataByWelderID(3,QmlEnum.NETWORK_local_ip)
+                                else if (com2.displayText === "ETH3") {
+                                    return NetworkModel.getDataByWelderID(4, QmlEnum.NETWORK_local_ip)
                                 }
-                                else if(com2.displayText === "ETH3"){
-                                    return NetworkModel.getDataByWelderID(4,QmlEnum.NETWORK_local_ip)
+                                else if (com2.displayText === "ETH4") {
+                                    return NetworkModel.getDataByWelderID(5, QmlEnum.NETWORK_local_ip)
                                 }
                             }
+
+                            onTextChanged: {
+                                   if (com2.displayText === "ETH1") {
+                                       NetworkModel.setNetworkData(2, QmlEnum.NETWORK_local_ip, t7.text);
+                                   } else if (com2.displayText === "ETH2") {
+                                       NetworkModel.setNetworkData(3, QmlEnum.NETWORK_local_ip, t7.text);
+                                   } else if (com2.displayText === "ETH3") {
+                                       NetworkModel.setNetworkData(4, QmlEnum.NETWORK_local_ip, t7.text);
+                                   } else if (com2.displayText === "ETH4") {
+                                       NetworkModel.setNetworkData(5, QmlEnum.NETWORK_local_ip, t7.text);
+                                   }
+                                    DeviceManager.deviceListChanged()
+                            }
                         }
+
+
                     }
+
                 }
                 Component{
                     id:rect2
@@ -1200,20 +1320,25 @@ Rectangle {
                             model: ["COM1", "COM2"]
                             onDisplayTextChanged: {
                                 if(isAdd){
-                                    networkId = com3.currentIndex+1
+                                    console.log("rs232-onDisplayTextChanged-currentTex1t: ",currentText,"equipmentCount:",equipmentCount)
+                                    rs232Id = com3.currentIndex+1
+                                    console.log("rs232-onDisplayTextChanged-currentTex2t: ",currentText,"equipmentCount:",equipmentCount,"rs232Id:" , rs232Id)
                                 }
                             }
                             displayText: {
                                 if(isAdd){
+                                    console.log("rs232-currentText: ",currentText,"equipmentCount:",equipmentCount)
                                     return currentText
                                 }
-                                else if(equipmentCount === 1){
+                                // else if(equipmentCount === 1){
+                                else if(equipmentCount === 0){
                                     if(DeviceManager.deviceList[0].pDeviceInformation.connectID === 1){
                                         return "COM1"
                                     }
                                     else if(DeviceManager.deviceList[0].pDeviceInformation.connectID === 2){
                                         return "COM2"
                                     }
+
                                 }
                                 else{
                                     if(DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.connectID === 1){
@@ -1222,15 +1347,21 @@ Rectangle {
                                     else if(DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.connectID === 2){
                                         return "COM2"
                                     }
+
                                 }
                             }
                             onDataAlter: {
-                                if(equipmentCount === 1){
+                                // if(equipmentCount === 1){
+                                    if(equipmentCount === 0){
+                                     console.log("rs232-onDataAlter-currentText: ",currentText,"equipmentCount:",equipmentCount)
                                     DeviceManager.deviceList[0].pDeviceInformation.setConnectID(com3.currentIndex+1)
                                 }
                                 else{
+                                    console.log("rs232-onDataAlter-currentText2: ",currentText,"equipmentCount:",equipmentCount)
                                     DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.setConnectID(com3.currentIndex+1)
                                 }
+                                    DeviceManager.deviceListChanged()
+
                             }
                         }
                         CustomComboBox{
@@ -1239,7 +1370,7 @@ Rectangle {
                             height: 40
                             x:233
                             y:97
-                            model: ["2400", "9600", "19200","115200"]
+                            model: ["2400", "4800", "9600","19200","38400","115200"]
                             displayText:{
                                 if(com3.displayText === "COM1"){
                                     return RS232Model.getDataByWelderID(1,QmlEnum.RS232_baud_rate)
@@ -1247,6 +1378,7 @@ Rectangle {
                                 else if(com3.displayText === "COM2"){
                                     return RS232Model.getDataByWelderID(2,QmlEnum.RS232_baud_rate)
                                 }
+
                             }
                             onDataAlter: {
                                 if(com3.displayText === "COM1"){
@@ -1256,6 +1388,8 @@ Rectangle {
                                     RS232Model.setRS232Data(2,QmlEnum.RS232_baud_rate,currentText)
                                 }
                                 com4.displayText = currentText
+                                DeviceManager.deviceListChanged()
+
                             }
                         }
                         CustomComboBox{
@@ -1275,22 +1409,24 @@ Rectangle {
                             }
                             onDataAlter: {
                                 if(com3.displayText === "COM1"){
-                                    if(com7.currentIndex === 0){
+                                    if(com5.currentIndex === 0){
                                         RS232Model.setRS232Data(1,QmlEnum.RS232_data_bit,7)
                                     }
-                                    else if(com7.currentIndex === 1){
+                                    else if(com5.currentIndex === 1){
                                         RS232Model.setRS232Data(1,QmlEnum.RS232_data_bit,8)
                                     }
                                 }
                                 else if(com3.displayText === "COM2"){
-                                    if(com7.currentIndex === 0){
+                                    if(com5.currentIndex === 0){
                                         RS232Model.setRS232Data(2,QmlEnum.RS232_data_bit,7)
                                     }
-                                    else if(com7.currentIndex === 1){
+                                    else if(com5.currentIndex === 1){
                                         RS232Model.setRS232Data(2,QmlEnum.RS232_data_bit,8)
                                     }
                                 }
                                 com5.displayText = currentText
+                                DeviceManager.deviceListChanged()
+
                             }
                         }
                         CustomComboBox{
@@ -1307,6 +1443,7 @@ Rectangle {
                                 else if(com3.displayText === "COM2"){
                                     return RS232Model.getDataByWelderID(2,QmlEnum.RS232_parity_bit)
                                 }
+
                             }
                             onDataAlter: {
                                 if(com3.displayText === "COM1"){
@@ -1316,6 +1453,8 @@ Rectangle {
                                     RS232Model.setRS232Data(2,QmlEnum.RS232_parity_bit,currentText)
                                 }
                                 com6.displayText = currentText
+                                DeviceManager.deviceListChanged()
+
                             }
                         }
                         CustomComboBox{
@@ -1332,6 +1471,7 @@ Rectangle {
                                 else if(com3.displayText === "COM2"){
                                     return RS232Model.getDataByWelderID(2,QmlEnum.RS232_stop_bit)
                                 }
+
                             }
                             onDataAlter: {
                                 if(com3.displayText === "COM1"){
@@ -1357,6 +1497,7 @@ Rectangle {
                                     }
                                 }
                                 com7.displayText = currentText
+                                DeviceManager.deviceListChanged()
                             }
                         }
                     }
@@ -1368,6 +1509,7 @@ Rectangle {
                     x:1170
                     y:10
                     visible: equipmentCount > 1 ? true : false
+                    //visible: equipmentCount > 1
                     background: Rectangle{
                         color: "transparent"
                         Image {
@@ -1437,15 +1579,21 @@ Rectangle {
                                     oneself = false
                                     sigUndetermined(1)
                                     loadViewsys(2,musys)
+                                    isAdd = false
                                     return
                                 }
-                                if(full.visible){//设置多设备时配置存储
+                                //if(full.visible){//设置多设备时配置存储
+                                if(equipmentCount > 1){//设置多设备时配置存储
                                     DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.setMaxBacth(t1.text)
                                     DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.setSample(t2.text)
                                     DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.setLowerLimit(t3.text)
                                     DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.setName(t4.text)
                                 }
                                 else{
+                                    // DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.setMaxBacth(t1.text)
+                                    // DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.setSample(t2.text)
+                                    // DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.setLowerLimit(t3.text)
+                                    // DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.setName(t4.text)
                                     DeviceManager.deviceList[0].pDeviceInformation.setMaxBacth(t1.text)
                                     DeviceManager.deviceList[0].pDeviceInformation.setSample(t2.text)
                                     DeviceManager.deviceList[0].pDeviceInformation.setLowerLimit(t3.text)
@@ -1529,6 +1677,8 @@ Rectangle {
                 id:s2
                 x:347
                 y:68
+                sysCurrIndex:DeviceManager.deviceList[1].pDeviceInformation.id
+                sysCurrIndex1:2
                 heightOpation:{
                     if(DeviceManager.deviceList[1]){
                         return DeviceManager.deviceList[1].pDeviceInformation.heightOption
@@ -1538,8 +1688,6 @@ Rectangle {
                         return false
                     }
                 }
-                sysCurrIndex:DeviceManager.deviceList[1].pDeviceInformation.id
-                sysCurrIndex1:2
                 visible: musysTmp2
                 eqText1:{
                     if(DeviceManager.deviceList[1]){
@@ -1579,6 +1727,7 @@ Rectangle {
                     }
                 }
             }
+
             MultideviceSystemConfig{
                 id:s3
                 x:654
@@ -1645,7 +1794,7 @@ Rectangle {
                 }
                 onSigAltitudeModel: {
                     if(visible){
-                        altitudeModel2 = tmp
+                        altitudeModel3 = tmp
                     }
                 }
             }
@@ -1719,6 +1868,7 @@ Rectangle {
                     }
                 }
             }
+
             Connections{
                 target: sysUI
                 function onSigSysCheck(id){
@@ -1854,7 +2004,7 @@ Rectangle {
                         //                            undetermined1 = p1
                         //                        }
                     }
-                    currIndex = 0
+                    // currIndex = 0
                 }
             }
             Button{
@@ -1881,7 +2031,13 @@ Rectangle {
                     font.bold: true
                 }
                 onPressed: {
-                    oneself = true
+                    isAdd = true
+                    oneself = true //打开就是新增完设备就是进入生产页面
+                    // isFirstDeviceConfigured = updateIsFirstDeviceConfigured()
+                    // console.log("isFirstDeviceConfigured :" + isFirstDeviceConfigured)
+                    if (equipmentCount >= 0 && equipmentCount <= 3) {
+                        currentConfigId = equipmentCount + 1;
+                    }
                     popup.openPop(8)
                 }
             }
@@ -1909,6 +2065,9 @@ Rectangle {
                     font.bold: true
                 }
                 onPressed: {
+                    if (equipmentCount > 0) {
+                        currentConfigId = equipmentCount-1;
+                    }
                     popup.openPop(9)
                 }
             }
@@ -1934,6 +2093,7 @@ Rectangle {
                 }
                 onPressed: {
                     popup.openPop(7)
+
                 }
             }
         }
@@ -1963,7 +2123,7 @@ Rectangle {
         font.family: fontBold
         font.bold: true
         color: "#639ed6"
-        text: getCurrentTime()
+        text: TimeUtils.getCurrentTime()
 
         // 定时器每秒更新一次
         Timer {
@@ -1971,8 +2131,26 @@ Rectangle {
             repeat: true
             running: true
             onTriggered: {
-                timeText.text = getCurrentTime()
+                timeText.text = TimeUtils.getCurrentTime()
             }
+        }
+
+        MouseArea {
+            anchors.fill: parent
+            cursorShape: Qt.PointingHandCursor
+            drag.target: timeDissalog
+            onClicked: {
+                timeDialog.open()  // 点击时弹出对话框
+            }
+        }
+    }
+
+    TimeSettingDialog {
+        id: timeDialog
+        onTimeSelected: {
+            // 接收 timeDialog 中发出的 timeSelected 信号，并更新 timeText 显示的时间
+            let date = new Date(year, month - 1, day, hour, minute, second);  // JavaScript 中月份是从 0 开始的
+            timeText.text = date.toLocaleString();  // 将选中的时间转为本地时间字符串
         }
     }
 }

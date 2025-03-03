@@ -1,4 +1,4 @@
-#ifndef DEVICE_H
+﻿#ifndef DEVICE_H
 #define DEVICE_H
 
 #include <QObject>
@@ -35,7 +35,12 @@ public:
     Q_INVOKABLE IO *pIO() const;
     Q_INVOKABLE Trend *pTrend() const;
 
-    Q_INVOKABLE void test();
+    // Q_INVOKABLE void test();
+
+    //获取和更新 plotIndex
+    int getPlotIndex() const;
+    void incrementPlotIndex();
+
 signals:
 
 
@@ -57,6 +62,8 @@ private:
     System* m_pSystem;
 
     Trend* m_pTrend;
+
+    int plotIndex;  // 每个设备独有的 plotIndex
 
 };
 

@@ -51,6 +51,8 @@ struct _Network_Data
 
 
 
+
+
 struct _RS232_Data
 {
     int id;                 // 串口id
@@ -100,7 +102,9 @@ struct _Model_Data
     QString create_time;               // 创建时间
     int energy;                        // 能量
     int amplitude;                     // 振幅
-    int pressure;                      // 压力
+    // int pressure;                      // 压力
+    int tp;                            //焊接压力
+    int wp;                            // 触发压力
     QString time_alpha;                // 焊机时间Alpha
     QString time_beta;                 // 焊机时间Beta
     int power_alpha;                   // 功率Alpha
@@ -141,7 +145,6 @@ struct _Production_Data
     int not_definite_cycles;               // 可疑
     int final_result;                      // 产品状态 0_合格 1_次品 2_可疑
 };
-
 
 
 struct _System_Data

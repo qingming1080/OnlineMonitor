@@ -5,6 +5,7 @@ import QtQml.Models 2.15
 import Device 1.0
 import DeviceInformation 1.0
 import QmlEnum 1.0
+
 Rectangle {
     color: pRgb(153, 204, 255)
     radius: 5
@@ -27,13 +28,13 @@ Rectangle {
         }
     }
 
-    /// TEST 2024_08_18
-    Button{
-        height: 50
-        width: 100
-        text: "刷新"
-        onClicked: DeviceManager.deviceList[swipeCurrIndex].test()
-    }
+    // *// TEST 2024_08_18
+ // /*   Button{
+ //        height: 50
+ //        width: 100
+ //        text: "刷新"
+ //        on*/Clicked: DeviceManager.deviceList[swipeCurrIndex].test()
+ //    }
     EquipmentInfor{
         id:s1
         x:42
@@ -590,7 +591,8 @@ Rectangle {
                             x:840/8*6 + 840/8/2-width/2
                             horizontalAlignment: TextInput.AlignHCenter
                             verticalAlignment: TextInput.AlignVCenter
-                            color: index % 2 === 0 ? pRgb(175, 195, 216) : "#014c8d"
+                            //color: index % 2 === 0 ? pRgb(175, 195, 216) : "#014c8d"
+                            color: index % 2 === 0 ? "#014c8d" : pRgb(175, 195, 216)
                             font.family: fontBold
                             font.bold: true
                             font.pixelSize: 16
@@ -604,7 +606,7 @@ Rectangle {
                             }
                             cursorDelegate: Rectangle {
                                 width: textField.cursorWidth
-                                height: textField.font.pixelSize * 1.1
+                                height: textField.font.pixelSize * 1.5
                                 color: index % 2 === 0 ? "#2d71ae" : "#afc3d8"
                                 visible: textField.activeFocus
                                 anchors.verticalCenter: parent.verticalCenter
@@ -631,7 +633,8 @@ Rectangle {
                             x:840/8*7 + 840/8/2-width/2
                             horizontalAlignment: TextInput.AlignHCenter
                             verticalAlignment: TextInput.AlignVCenter
-                            color: index % 2 === 0 ? pRgb(175, 195, 216) : "#014c8d"
+                            // color: index % 2 === 0 ? pRgb(175, 195, 216) : "#014c8d"
+                            color: index % 2 === 0 ? "#014c8d" : pRgb(175, 195, 216)
                             font.family: fontBold
                             font.bold: true
                             font.pixelSize: 16
@@ -644,15 +647,15 @@ Rectangle {
                                 color: index % 2 !== 0 ? "#2d71ae" : "#afc3d8"
                             }
                             cursorDelegate: Rectangle {
-                                width: textField.cursorWidth
-                                height: textField.font.pixelSize * 1.1
+                                width: textField1.cursorWidth
+                                height: textField1.font.pixelSize * 1.5
                                 color: index % 2 === 0 ? "#2d71ae" : "#afc3d8"
-                                visible: textField.activeFocus
+                                visible: textField1.activeFocus
                                 anchors.verticalCenter: parent.verticalCenter
                                 Text {
                                     text: "|"
                                     color: index % 2 === 0 ? "#2d71ae" : "#afc3d8"
-                                    font.pixelSize: textField.font.pixelSize
+                                    font.pixelSize: textField1.font.pixelSize
                                     anchors.centerIn: parent
                                 }
                             }

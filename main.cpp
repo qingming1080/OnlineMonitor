@@ -20,6 +20,12 @@
 #include "model/devicenames.h"
 #include "LanguageManger/languagemanger.h"
 
+//modbus
+#include "modbus/hbmodbusclient.h"
+#include "DataHandler/timehandler.h"
+
+
+
 #include <iostream>
 // 自定义消息处理程序
 void myMessageHandler(QtMsgType type, const QMessageLogContext &context, const QString &msg)
@@ -54,12 +60,18 @@ int main(int argc, char *argv[])
     qInstallMessageHandler(myMessageHandler);
     QApplication app(argc, argv);
     LocalRecord::getInstance()->start();
-    DeviceManager::getInstance();
+
     LanguageManger LanguageManger;
     QTranslator translator;
     // 默认加载英文
     translator.load(":/translations/en.ts");
     app.installTranslator(&translator);
+
+    DeviceManager* deviceManager = DeviceManager::getInstance();
+
+    //modbus
+    HBModbusClient  *modbusClient = new HBModbusClient(deviceManager);
+
 
     QQmlApplicationEngine engine;
     QQmlContext* pQmlContext = engine.rootContext();
@@ -73,6 +85,9 @@ int main(int argc, char *argv[])
     pQmlContext->setContextProperty("DataBaseManager", DataBaseManager::getInstance());
     pQmlContext->setContextProperty("DeviceNames", DeviceNames::getInstance());
     pQmlContext->setContextProperty("Manual", new Manual(1));
+    pQmlContext->setContextProperty("HBModbusClient", modbusClient);
+
+
 
     qmlRegisterType<Device>("Device",1,0,"Device");
     qmlRegisterType<IO>("IO",1,0,"IO");
@@ -82,6 +97,7 @@ int main(int argc, char *argv[])
     qmlRegisterType<QmlEnum>("QmlEnum",1,0,"QmlEnum");
 //    qmlRegisterType<LineChartItem>("CustomChart", 1, 0, "CustomChart");
 //    qmlRegisterType<TimeChartItem>("CustomTimeChart", 1, 0, "CustomTimeChart");
+
 
     const QUrl url(QStringLiteral("qrc:/qmlSource/main.qml"));
 

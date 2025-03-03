@@ -1,7 +1,8 @@
-import QtQuick 2.0
+﻿import QtQuick 2.0
 import QtQuick.Controls 2.15
 import Device 1.0
 import System 1.0
+import "TimeUtils.js" as TimeUtils
 Rectangle {
     radius: 5
     color: pRgb(153, 204, 255)
@@ -353,7 +354,7 @@ Rectangle {
         font.family: fontBold
         font.bold: true
         color: "#639ed6"
-        text: getCurrentTime()
+        text: TimeUtils.getCurrentTime()
 
         // 定时器每秒更新一次
         Timer {
@@ -361,7 +362,7 @@ Rectangle {
             repeat: true
             running: true
             onTriggered: {
-                timeText.text = getCurrentTime()
+                timeText.text = TimeUtils.getCurrentTime()
             }
         }
     }

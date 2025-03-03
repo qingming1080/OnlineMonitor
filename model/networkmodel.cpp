@@ -1,6 +1,5 @@
-#include "networkmodel.h"
+﻿#include "networkmodel.h"
 #include "DataBase/databasemanager.h"
-
 #include "signalmanager.h"
 #include <QElapsedTimer>
 #include "log/localrecord.h"

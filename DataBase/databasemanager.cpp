@@ -156,6 +156,46 @@ bool DataBaseManager::insertConfigurationDevice(_Configuration_Data data)
     return ret;
 }
 
+bool DataBaseManager::updateConfigurationDevice(_Configuration_Data data)
+{
+    QSqlQuery query;
+
+    // 构建更新SQL语句，更新指定welder_id的设备配置
+    QString execStr = QString("UPDATE %1 SET "
+                              "welder_name = :welder_name, "
+                              "welder_type = :welder_type, "
+                              "production_bacth = :production_bacth, "
+                              "model_sample = :model_sample, "
+                              "lower_limit = :lower_limit, "
+                              "height_option = :height_option, "
+                              "connect_type = :connect_type, "
+                              "connect_id = :connect_id, "
+                              "mes_port = :mes_port, "
+                              "mes_ip = :mes_ip, "
+                              "device_ip = :device_ip "
+                              "WHERE welder_id = :welder_id")
+                          .arg(CONFIGURATION_TABLENAME);
+
+    // 绑定参数
+    query.prepare(execStr);
+    query.bindValue(":welder_name", data.welder_name);
+    query.bindValue(":welder_type", data.welder_type);
+    query.bindValue(":production_bacth", data.production_bacth);
+    query.bindValue(":model_sample", data.model_sample);
+    query.bindValue(":lower_limit", data.lower_limit);
+    query.bindValue(":height_option", data.height_option);
+    query.bindValue(":connect_type", data.connect_type);
+    query.bindValue(":connect_id", data.connect_id);
+    query.bindValue(":mes_port", data.mes_port);
+    query.bindValue(":mes_ip", data.mes_ip);
+    query.bindValue(":device_ip", data.device_ip);
+    query.bindValue(":welder_id", data.welder_id); // 确保用 welder_id 来指定更新的记录
+
+    bool ret = query.exec();
+    return ret;
+}
+
+
 QList<_Network_Data> DataBaseManager::getNetworkData()
 {
     QList<_Network_Data> list;
@@ -174,13 +214,13 @@ QList<_Network_Data> DataBaseManager::getNetworkData()
         data.id             = query.value(QmlEnum::NETWORK_id).toInt();
         data.type           = query.value(QmlEnum::NETWORK_type).toInt();
         data.protocol       = query.value(QmlEnum::NETWORK_protocol).toInt();
-        data.local_ip       = query.value(QmlEnum::NETWORK_local_ip).toString();
-        data.local_port     = query.value(QmlEnum::NETWORK_local_port).toInt();
-        data.remote_ip      = query.value(QmlEnum::NETWORK_remote_ip).toString();
         data.server_port    = query.value(QmlEnum::NETWORK_server_port).toInt();
+        data.remote_ip      = query.value(QmlEnum::NETWORK_remote_ip).toString();
+        data.local_ip       = query.value(QmlEnum::NETWORK_local_ip).toString();
         data.user           = query.value(QmlEnum::NETWORK_user).toString();
 
         list.push_back(data);
+
     }
 
     return list;
@@ -232,10 +272,9 @@ bool DataBaseManager::insertNetworkRow(_Network_Data data)
                               ":id"
                               ", :type"
                               ", :protocol"
-                              ", :local_ip"
-                              ", :local_port"
-                              ", :remote_ip"
                               ", :server_port"
+                              ", :remote_ip"
+                              ", :local_ip"
                               ", :user)")
                           .arg(NETWORK_TABLENAME);
 
@@ -244,14 +283,52 @@ bool DataBaseManager::insertNetworkRow(_Network_Data data)
     query.bindValue(":id", data.id);
     query.bindValue(":type", data.type);
     query.bindValue(":protocol", data.protocol);
-    query.bindValue(":local_ip", data.local_ip);
-    query.bindValue(":local_port", data.local_port);
-    query.bindValue(":remote_ip", data.remote_ip);
     query.bindValue(":server_port", data.server_port);
+    query.bindValue(":remote_ip", data.remote_ip);
+    query.bindValue(":local_ip", data.local_ip);
     query.bindValue(":user", data.user);
 
     return query.exec();
 }
+
+QStringList DataBaseManager::getNetworkInfoById(int id)
+{
+    QStringList result;  // 用来存储查询结果，包含 remote_ip、server_port 和 local_ip
+
+    // 获取列名
+    QString remoteIpColumn = getNetwork_ColumnName(QmlEnum::NETWORK_remote_ip);
+    QString serverPortColumn = getNetwork_ColumnName(QmlEnum::NETWORK_server_port);
+    QString localIpColumn = getNetwork_ColumnName(QmlEnum::NETWORK_local_ip);
+
+    // 如果列名获取失败（空字符串），则直接返回
+    if (remoteIpColumn.isEmpty() || serverPortColumn.isEmpty() || localIpColumn.isEmpty()) {
+        return result;
+    }
+
+    // 构造查询字符串，选择 id 匹配的行
+    QSqlQuery query;
+    QString execStr = QString("SELECT %1, %2, %3 FROM %4 WHERE id = %5")
+                          .arg(remoteIpColumn)
+                          .arg(serverPortColumn)
+                          .arg(localIpColumn)
+                          .arg(NETWORK_TABLENAME)
+                          .arg(id);
+
+    if (!query.exec(execStr)) {
+        qDebug() << "查询失败: " << query.lastError();
+        return result;  // 返回空的结果
+    }
+
+    // 查询结果存在时，取出 remote_ip, server_port 和 local_ip
+    if (query.next()) {
+        result << query.value(0).toString();  // remote_ip
+        result << query.value(1).toString();  // server_port
+        result << query.value(2).toString();  // local_ip
+    }
+
+    return result;
+}
+
 
 QList<_RS232_Data> DataBaseManager::getRS232Data()
 {
@@ -280,6 +357,23 @@ QList<_RS232_Data> DataBaseManager::getRS232Data()
 
     return list;
 }
+
+_RS232_Data DataBaseManager::getRS232DataById(int id)
+{
+    QList<_RS232_Data> list = getRS232Data();  // 获取所有 RS232 数据
+
+    // 遍历列表查找匹配的 id
+    for (const _RS232_Data &data : list) {
+        if (data.id == id) {
+            return data;  // 返回匹配的 RS232 数据
+        }
+    }
+
+    // 如果没有找到对应的 id，返回一个空的 _RS232_Data 对象
+    return _RS232_Data();
+}
+
+
 
 bool DataBaseManager::setRS232Data(int id, QmlEnum::RS232_COLUMN column, QVariant data)
 {
@@ -570,7 +664,9 @@ QList<_Model_Data> DataBaseManager::getModelData()
         data.create_time           = query.value(QmlEnum::MODEL_create_time).toString();
         data.energy                = query.value(QmlEnum::MODEL_energy).toInt();
         data.amplitude             = query.value(QmlEnum::MODEL_amplitude).toInt();
-        data.pressure              = query.value(QmlEnum::MODEL_pressure).toInt();
+        // data.pressure              = query.value(QmlEnum::MODEL_pressure).toInt();
+        data.tp                    = query.value(QmlEnum::MODEL_tp).toInt();
+        data.wp                    = query.value(QmlEnum::MODEL_wp).toInt();
         data.time_alpha            = query.value(QmlEnum::MODEL_time_alpha).toString();
         data.time_beta             = query.value(QmlEnum::MODEL_time_beta).toString();
         data.power_alpha           = query.value(QmlEnum::MODEL_power_alpha).toInt();
@@ -624,7 +720,9 @@ bool DataBaseManager::insertModelRow(_Model_Data data)
                               ", :create_time"
                               ", :energy"
                               ", :amplitude"
-                              ", :pressure"
+                              // ", :pressure"
+                              ", :WP"
+                              ", :TP"
                               ", :time_alpha"
                               ", :time_beta"
                               ", :power_alpha"
@@ -647,7 +745,9 @@ bool DataBaseManager::insertModelRow(_Model_Data data)
     query.bindValue(":create_time", data.create_time);
     query.bindValue(":energy", data.energy);
     query.bindValue(":amplitude", data.amplitude);
-    query.bindValue(":pressure", data.pressure);
+    // query.bindValue(":pressure", data.pressure);
+    query.bindValue(":pressure", data.tp);
+    query.bindValue(":pressure", data.wp);
     query.bindValue(":time_alpha", data.time_alpha);
     query.bindValue(":time_beta", data.time_beta);
     query.bindValue(":power_alpha", data.power_alpha);
@@ -1018,42 +1118,87 @@ bool DataBaseManager::clearProduction()
     return query.exec(execStr);
 }
 
+// bool DataBaseManager::insertProductionRow(_Production_Data data)
+// {
+//     QSqlQuery query;
+//     // %1_表格名称
+//     QString execStr = QString("INSERT INTO %1 values("
+//                               ":id"
+//                               ", :welder_id"
+//                               ", :model_id"
+//                               ", :create_time"
+//                               ", :serial_number"
+//                               ", :cycle_count"
+//                               ", :batch_count"
+//                               ", :energy"
+//                               ", :amplitude"
+//                               ", :pressure"
+//                               ", :time"
+//                               ", :power"
+//                               ", :pre_height"
+//                               ", :post_height"
+//                               ", :force"
+//                               ", :residual"
+//                               ", :good_rate"
+//                               ", :good_subtotal_cycles"
+//                               ", :suspect_subtotal_cycles"
+//                               ", :not_definite_cycles"
+//                               ", :final_result")
+//                           .arg(PRODUCTION_TABLENAME);
+
+//     // 绑定属性
+//     query.prepare(execStr);
+//     query.bindValue(":id", data.id);
+//     query.bindValue(":welder_id", data.welder_id);
+//     query.bindValue(":model_id", data.model_id);
+//     query.bindValue(":create_time", data.create_time);
+//     query.bindValue(":serial_number", data.serial_number);
+//     query.bindValue(":cycle_count", data.cycle_count);
+//     query.bindValue(":batch_count", data.batch_count);
+//     query.bindValue(":energy", data.energy);
+//     query.bindValue(":amplitude", data.amplitude);
+//     query.bindValue(":pressure", data.pressure);
+//     query.bindValue(":time", data.time);
+//     query.bindValue(":power", data.power);
+//     query.bindValue(":pre_height", data.pre_height);
+//     query.bindValue(":post_height", data.post_height);
+//     query.bindValue(":force", data.force);
+//     query.bindValue(":residual", data.residual);
+//     query.bindValue(":good_rate", data.good_rate);
+//     query.bindValue(":good_subtotal_cycles", data.good_subtotal_cycles);
+//     query.bindValue(":suspect_subtotal_cycles", data.suspect_subtotal_cycles);
+//     query.bindValue(":not_definite_cycles", data.not_definite_cycles);
+//     query.bindValue(":final_result", data.final_result);
+
+
+//     return query.exec();
+// }
+
 bool DataBaseManager::insertProductionRow(_Production_Data data)
 {
     QSqlQuery query;
-    // %1_表格名称
-    QString execStr = QString("INSERT INTO %1 values("
-                              ":id"
-                              ", :welder_id"
-                              ", :model_id"
-                              ", :create_time"
-                              ", :serial_number"
-                              ", :cycle_count"
-                              ", :batch_count"
-                              ", :energy"
-                              ", :amplitude"
-                              ", :pressure"
-                              ", :time"
-                              ", :power"
-                              ", :pre_height"
-                              ", :post_height"
-                              ", :force"
-                              ", :residual"
-                              ", :good_rate"
-                              ", :good_subtotal_cycles"
-                              ", :suspect_subtotal_cycles"
-                              ", :not_definite_cycles)")
-                          .arg(PRODUCTION_TABLENAME);
 
-    // 绑定属性
+    // SQL 语句，不包括自增的 id 字段
+    QString execStr = QString("INSERT INTO %1 ("
+                              "welder_id, model_id, create_time,cycle_count,"
+                              "energy, amplitude, pressure, time, power, pre_height, post_height, force, "
+                              "residual, good_rate, good_subtotal_cycles, suspect_subtotal_cycles, "
+                              "not_definite_cycles, final_result) VALUES ("
+                              ":welder_id, :model_id, :create_time, :cycle_count,"
+                              ":energy, :amplitude, :pressure, :time, :power, :pre_height, :post_height, :force, "
+                              ":residual, :good_rate, :good_subtotal_cycles, :suspect_subtotal_cycles, "
+                              ":not_definite_cycles, :final_result)").arg(PRODUCTION_TABLENAME);
+
+    // 准备查询
     query.prepare(execStr);
-    query.bindValue(":id", data.id);
+
+    // 绑定参数
     query.bindValue(":welder_id", data.welder_id);
     query.bindValue(":model_id", data.model_id);
     query.bindValue(":create_time", data.create_time);
-    query.bindValue(":serial_number", data.serial_number);
+    //query.bindValue(":serial_number",data.serial_number);
     query.bindValue(":cycle_count", data.cycle_count);
-    query.bindValue(":batch_count", data.batch_count);
+    //query.bindValue(":batch_count",data.batch_count);
     query.bindValue(":energy", data.energy);
     query.bindValue(":amplitude", data.amplitude);
     query.bindValue(":pressure", data.pressure);
@@ -1067,11 +1212,45 @@ bool DataBaseManager::insertProductionRow(_Production_Data data)
     query.bindValue(":good_subtotal_cycles", data.good_subtotal_cycles);
     query.bindValue(":suspect_subtotal_cycles", data.suspect_subtotal_cycles);
     query.bindValue(":not_definite_cycles", data.not_definite_cycles);
+    query.bindValue(":final_result", data.final_result);
 
+    // 调试输出
+    qDebug() << "SQL Query:" << execStr;
+    qDebug() << "Bound Values:" << query.boundValues();
 
+    // 执行插入并检查结果
+    QSqlDatabase db = QSqlDatabase::database();
+    db.transaction(); // 开启事务
 
-    return query.exec();
+    if (!query.exec()) {
+        qDebug() << "Insert failed:" << query.lastError().text();
+        db.rollback(); // 回滚事务
+        return false;
+    }
+
+    // 获取最后插入的自增 id
+    int lastInsertedId = query.lastInsertId().toInt();
+
+    // 更新 serial_number 和 batch_count
+    QSqlQuery updateQuery;
+    QString updateStr = QString("UPDATE %1 SET serial_number = :serial_number, batch_count = :batch_count WHERE id = :id")
+                            .arg(PRODUCTION_TABLENAME);
+    updateQuery.prepare(updateStr);
+    updateQuery.bindValue(":serial_number", lastInsertedId);
+    updateQuery.bindValue(":batch_count", lastInsertedId);
+    updateQuery.bindValue(":id", lastInsertedId);
+
+    if (!updateQuery.exec()) {
+        qDebug() << "Update failed:" << updateQuery.lastError().text();
+        db.rollback(); // 回滚事务
+        return false;
+    }
+
+    db.commit(); // 提交事务
+    return true;
 }
+
+
 
 QList<_System_Data> DataBaseManager::getSystemData(int welderID)
 {
@@ -1327,8 +1506,12 @@ QString DataBaseManager::getModel_ColumnName(QmlEnum::MODEL_COLUMN column)
         return "energy";
     case QmlEnum::MODEL_amplitude:
         return "amplitude";
-    case QmlEnum::MODEL_pressure:
+    // case QmlEnum::MODEL_pressure:
         return "pressure";
+    case QmlEnum::MODEL_tp:
+        return "tp";
+    case QmlEnum::MODEL_wp:
+        return "wp";
     case QmlEnum::MODEL_time_alpha:
         return "time_alpha";
     case QmlEnum::MODEL_time_beta:
@@ -1463,3 +1646,21 @@ QList<_Production_Data> DataBaseManager::getAllTrendData(int welderID, int inter
 
     return list;
 }
+
+// QString DataBaseManager::getDeviceInfo()
+// {
+
+//     int DEV_ID;
+//     //焊机类型;
+//     int DEV_TYPE;// 0 VG, 1, TC, 2 2000X
+//     int CONNETID;// 0 Ethernet, 1 Serial, 2 analog
+//     int DEV_AVAILABLE; // 0 Close, 1 Open
+//     int DEV_IP;
+//     int LOCAL_IP;
+
+//      QSqlQuery query;
+
+//      QSqlQuery
+
+
+// }

@@ -9,6 +9,9 @@ import "."
 import Device 1.0
 import DeviceInformation 1.0
 import QtQml 2.15
+import "TimeUtils.js" as TimeUtils
+
+
 Window {
     id: window
     flags: Qt.FramelessWindowHint
@@ -24,6 +27,7 @@ Window {
     property var keyboardYype: 0
     property bool createModel: false
     property bool swipevis: false
+
     onSwipeCurrIndexChanged: {
         sigSwipeCurrIndex(swipeCurrIndex)
     }
@@ -82,8 +86,18 @@ Window {
 
     Component.onCompleted: {
         // 调用函数来禁用控制台打印
-        disableConsoleLog();
+       disableConsoleLog();
     }
+
+    Timer {
+        id: startTimer
+        interval: 100  // 延时1秒
+        running: true
+        onTriggered: {
+            HBModbusClient.setLED(true);
+        }
+    }
+
     // 缓存已加载的视图
     property var cachedViews: []
     signal sigSwitch(var id)
@@ -102,31 +116,6 @@ Window {
         equipmentCurrentIndex = id
         sigSwitch(id)
         sigUpdateUI(swipeCurrIndex)
-    }
-
-    // 获取当前时间的函数
-    function getCurrentTime() {
-        var date = new Date()
-        var year = date.getFullYear()
-        var month = date.getMonth() + 1 // 月份从0开始，需要加1
-        var day = date.getDate()
-        var hours = date.getHours()
-        var minutes = date.getMinutes()
-        var seconds = date.getSeconds()
-        var dayOfWeek = date.getDay()
-
-        // 星期数组
-        var daysOfWeek = ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"]
-
-        // 格式化时间字符串
-        return year + "年" + formatTimeComponent(month) + "月" + formatTimeComponent(day) + "日 " +
-                formatTimeComponent(hours) + ":" + formatTimeComponent(minutes) + ":" + formatTimeComponent(seconds) + " " +
-                daysOfWeek[dayOfWeek]
-    }
-
-    // 格式化时间组件为两位数字
-    function formatTimeComponent(component) {
-        return component < 10 ? "0" + component : component
     }
 
     StackView{

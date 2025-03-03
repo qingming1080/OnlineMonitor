@@ -4,6 +4,8 @@ import QtQuick.Controls 2.15
 import Device 1.0
 import DeviceInformation 1.0
 import QmlEnum 1.0
+import "TimeUtils.js" as TimeUtils
+
 Rectangle {
     id:mpro
     color: pRgb(153, 204, 255)
@@ -622,7 +624,8 @@ Rectangle {
                                     x:960/8*6 + 960/8/2-width/2
                                     horizontalAlignment: TextInput.AlignHCenter
                                     verticalAlignment: TextInput.AlignVCenter
-                                    color: index % 2 === 0 ? pRgb(175, 195, 216) : "#014c8d"
+                                    //color: index % 2 === 0 ? pRgb(175, 195, 216) : "#014c8d"
+                                    color: index % 2 === 0 ? "#014c8d" : pRgb(175, 195, 216)
                                     font.family: fontBold
                                     font.bold: true
                                     font.pixelSize: 16
@@ -663,7 +666,8 @@ Rectangle {
                                     x:960/8*7 + 960/8/2-width/2
                                     horizontalAlignment: TextInput.AlignHCenter
                                     verticalAlignment: TextInput.AlignVCenter
-                                    color: index % 2 === 0 ? pRgb(175, 195, 216) : "#014c8d"
+                                    //color: index % 2 === 0 ? pRgb(175, 195, 216) : "#014c8d"
+                                    color: index % 2 === 0 ? "#014c8d" : pRgb(175, 195, 216)
                                     font.family: fontBold
                                     font.bold: true
                                     font.pixelSize: 16
@@ -676,15 +680,15 @@ Rectangle {
                                         color: index % 2 !== 0 ? "#2d71ae" : "#afc3d8"
                                     }
                                     cursorDelegate: Rectangle {
-                                        width: textField.cursorWidth
+                                        width: textField1.cursorWidth
                                         height: textField.font.pixelSize * 1.1
                                         color: index % 2 === 0 ? "#2d71ae" : "#afc3d8"
-                                        visible: textField.activeFocus
+                                        visible: textField1.activeFocus
                                         anchors.verticalCenter: parent.verticalCenter
                                         Text {
                                             text: "|"
                                             color: index % 2 === 0 ? "#2d71ae" : "#afc3d8"
-                                            font.pixelSize: textField.font.pixelSize
+                                            font.pixelSize: textField1.font.pixelSize
                                             anchors.centerIn: parent
                                         }
                                     }
@@ -695,6 +699,7 @@ Rectangle {
                                             keyboardYype = 0
                                         }
                                     }
+
                                 }
 
                             }
@@ -735,6 +740,7 @@ Rectangle {
         font.pixelSize: 14
         text: qsTr("系统版本号: v2.0.1")
     }
+
     // 显示时间的文本
     Text {
         id: timeText
@@ -747,7 +753,7 @@ Rectangle {
         font.family: fontBold
         font.bold: true
         color: "#639ed6"
-        text: getCurrentTime()
+        text: TimeUtils.getCurrentTime()
 
         // 定时器每秒更新一次
         Timer {
@@ -755,8 +761,26 @@ Rectangle {
             repeat: true
             running: true
             onTriggered: {
-                timeText.text = getCurrentTime()
+                timeText.text = TimeUtils.getCurrentTime()
+            }
+        }
+        MouseArea {
+            anchors.fill: parent
+            cursorShape: Qt.PointingHandCursor
+            drag.target: timeDialog
+            onClicked: {
+                timeDialog.open()  // 点击时弹出对话框
             }
         }
     }
+
+    TimeSettingDialog {
+            id: timeDialog
+            onTimeSelected: {
+                // 接收 timeDialog 中发出的 timeSelected 信号，并更新 timeText 显示的时间
+                let date = new Date(year, month - 1, day, hour, minute, second);  // JavaScript 中月份是从 0 开始的
+                timeText.text = date.toLocaleString();  // 将选中的时间转为本地时间字符串
+            }
+        }
+
 }

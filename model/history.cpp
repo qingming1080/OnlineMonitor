@@ -1,4 +1,4 @@
-#include "history.h"
+﻿#include "history.h"
 #include "DataBase/databasemanager.h"
 #include <QtMath>
 
@@ -24,7 +24,8 @@ History::History(QObject *parent)
     timer.start();
 
     m_data = DataBaseManager::getInstance()->getProductionData();
-//    std::reverse(m_data.begin(), m_data.end());
+   // std::reverse(m_data.begin(), m_data.end());
+
 
     QString text = QString("History_初始化共耗时:%1ms 加载%2条数据").arg(timer.elapsed()).arg(m_data.size());
     emit SignalManager::getInstance()->signalAddRecord(QDateTime::currentDateTime(), text);
@@ -58,6 +59,24 @@ int History::deviceID() const
     return m_deviceID;
 }
 
+// void History::setDeviceID(int newDeviceID)
+// {
+//     QElapsedTimer timer;
+//     timer.start();
+
+//     if (m_deviceID == newDeviceID)
+//         return;
+
+//     m_deviceID = newDeviceID;
+//     emit beginResetModel();
+//     m_data = DataBaseManager::getInstance()->getProductionData(m_deviceID, m_finalResult);
+//     emit endResetModel();
+//     emit deviceIDChanged();
+
+//     QString text = QString("History_修改筛选设备耗时:%1ms").arg(timer.elapsed());
+//     emit SignalManager::getInstance()->signalAddRecord(QDateTime::currentDateTime(), text);
+// }
+
 void History::setDeviceID(int newDeviceID)
 {
     QElapsedTimer timer;
@@ -68,13 +87,26 @@ void History::setDeviceID(int newDeviceID)
 
     m_deviceID = newDeviceID;
     emit beginResetModel();
-    m_data = DataBaseManager::getInstance()->getProductionData(m_deviceID, m_finalResult);
+
+    // 根据新的设备ID加载数据
+    if (newDeviceID == 0) {
+        m_data = DataBaseManager::getInstance()->getProductionData();  // 获取所有设备的数据
+    } else {
+        m_data = DataBaseManager::getInstance()->getProductionData(newDeviceID);  // 获取特定设备的数据
+    }
+
+    // 按照记录时间排序，确保最新的记录排在前面
+    std::sort(m_data.begin(), m_data.end(), [](const _Production_Data &a, const _Production_Data &b) {
+        return a.create_time > b.create_time;  // 降序排序，最新记录在前
+    });
+
     emit endResetModel();
     emit deviceIDChanged();
 
     QString text = QString("History_修改筛选设备耗时:%1ms").arg(timer.elapsed());
     emit SignalManager::getInstance()->signalAddRecord(QDateTime::currentDateTime(), text);
 }
+
 
 int History::rowCount(const QModelIndex &parent) const
 {

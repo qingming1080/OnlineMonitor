@@ -1,0 +1,1199 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<Record>
+    <node>
+        <Time>2025/02/08 14:00:24:319</Time>
+        <Text>1号设备_Trend_良率趋势图刷新耗时:59ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:00:24:369</Time>
+        <Text>2号设备_Trend_良率趋势图刷新耗时:57ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:01:24:305</Time>
+        <Text>1号设备_Trend_良率趋势图刷新耗时:54ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:01:24:385</Time>
+        <Text>2号设备_Trend_良率趋势图刷新耗时:60ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:02:24:323</Time>
+        <Text>1号设备_Trend_良率趋势图刷新耗时:63ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:02:24:385</Time>
+        <Text>2号设备_Trend_良率趋势图刷新耗时:61ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:03:24:321</Time>
+        <Text>1号设备_Trend_良率趋势图刷新耗时:60ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:03:24:370</Time>
+        <Text>2号设备_Trend_良率趋势图刷新耗时:59ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:04:24:321</Time>
+        <Text>1号设备_Trend_良率趋势图刷新耗时:66ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:04:24:382</Time>
+        <Text>2号设备_Trend_良率趋势图刷新耗时:54ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:05:00:763</Time>
+        <Text>1号设备_Trend_良率趋势图刷新耗时:39ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:05:01:572</Time>
+        <Text>1号设备_Trend_良率趋势图刷新耗时:41ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:05:02:286</Time>
+        <Text>1号设备_Trend_良率趋势图刷新耗时:38ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:05:24:304</Time>
+        <Text>1号设备_Trend_良率趋势图刷新耗时:44ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:05:24:361</Time>
+        <Text>2号设备_Trend_良率趋势图刷新耗时:37ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:06:24:299</Time>
+        <Text>1号设备_Trend_良率趋势图刷新耗时:38ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:06:24:363</Time>
+        <Text>2号设备_Trend_良率趋势图刷新耗时:40ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:06:44:590</Time>
+        <Text>1号设备_Trend_良率趋势图刷新耗时:43ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:06:45:663</Time>
+        <Text>1号设备_Trend_良率趋势图刷新耗时:38ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:06:46:461</Time>
+        <Text>1号设备_Trend_良率趋势图刷新耗时:40ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:06:46:959</Time>
+        <Text>1号设备_Trend_良率趋势图刷新耗时:43ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:06:47:685</Time>
+        <Text>1号设备_Trend_良率趋势图刷新耗时:38ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:12:00:377</Time>
+        <Text>1号设备_DeviceInformation_初始化耗时:0ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:12:00:377</Time>
+        <Text>1号设备_IO_初始化耗时:0ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:12:00:377</Time>
+        <Text>1号设备_Manual_初始化耗时:0ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:12:00:377</Time>
+        <Text>1号设备_System_初始化耗时:0ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:12:00:409</Time>
+        <Text>1号设备_Trend_良率趋势图刷新耗时:35ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:12:00:409</Time>
+        <Text>1号设备_Trend_初始化耗时:35ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:12:00:409</Time>
+        <Text>1号设备_Device_初始化共耗时:35ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:12:00:409</Time>
+        <Text>2号设备_DeviceInformation_初始化耗时:0ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:12:00:409</Time>
+        <Text>2号设备_IO_初始化耗时:0ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:12:00:409</Time>
+        <Text>2号设备_Manual_初始化耗时:0ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:12:00:409</Time>
+        <Text>2号设备_System_初始化耗时:0ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:12:00:441</Time>
+        <Text>2号设备_Trend_良率趋势图刷新耗时:35ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:12:00:441</Time>
+        <Text>2号设备_Trend_初始化耗时:35ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:12:00:441</Time>
+        <Text>2号设备_Device_初始化共耗时:35ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:12:00:441</Time>
+        <Text>DeviceManager初始化耗时:82ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:12:00:613</Time>
+        <Text>History_初始化共耗时:136ms 加载150条数据</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:12:00:613</Time>
+        <Text>NetWork_初始化共耗时:0ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:12:00:613</Time>
+        <Text>RS232_初始化耗时:0ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:12:00:613</Time>
+        <Text>1号设备_Manual_初始化耗时:0ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:12:48:325</Time>
+        <Text>3号设备_DeviceInformation_初始化耗时:0ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:12:48:325</Time>
+        <Text>3号设备_IO_初始化耗时:0ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:12:48:325</Time>
+        <Text>3号设备_Manual_初始化耗时:0ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:12:48:325</Time>
+        <Text>3号设备_System_初始化耗时:0ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:12:48:361</Time>
+        <Text>3号设备_Trend_良率趋势图刷新耗时:36ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:12:48:361</Time>
+        <Text>3号设备_Trend_初始化耗时:36ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:12:48:361</Time>
+        <Text>3号设备_Device_初始化共耗时:36ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:13:00:408</Time>
+        <Text>1号设备_Trend_良率趋势图刷新耗时:38ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:13:00:452</Time>
+        <Text>2号设备_Trend_良率趋势图刷新耗时:43ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:13:59:251</Time>
+        <Text>1号设备_DeviceInformation_初始化耗时:0ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:13:59:251</Time>
+        <Text>1号设备_IO_初始化耗时:0ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:13:59:251</Time>
+        <Text>1号设备_Manual_初始化耗时:0ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:13:59:251</Time>
+        <Text>1号设备_System_初始化耗时:0ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:13:59:533</Time>
+        <Text>1号设备_Trend_良率趋势图刷新耗时:284ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:13:59:533</Time>
+        <Text>1号设备_Trend_初始化耗时:284ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:13:59:533</Time>
+        <Text>1号设备_Device_初始化共耗时:285ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:13:59:533</Time>
+        <Text>2号设备_DeviceInformation_初始化耗时:0ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:13:59:533</Time>
+        <Text>2号设备_IO_初始化耗时:0ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:13:59:533</Time>
+        <Text>2号设备_Manual_初始化耗时:0ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:13:59:533</Time>
+        <Text>2号设备_System_初始化耗时:0ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:13:59:564</Time>
+        <Text>2号设备_Trend_良率趋势图刷新耗时:35ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:13:59:564</Time>
+        <Text>2号设备_Trend_初始化耗时:35ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:13:59:564</Time>
+        <Text>2号设备_Device_初始化共耗时:35ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:13:59:564</Time>
+        <Text>3号设备_DeviceInformation_初始化耗时:0ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:13:59:564</Time>
+        <Text>3号设备_IO_初始化耗时:0ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:13:59:564</Time>
+        <Text>3号设备_Manual_初始化耗时:0ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:13:59:564</Time>
+        <Text>3号设备_System_初始化耗时:0ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:13:59:611</Time>
+        <Text>3号设备_Trend_良率趋势图刷新耗时:37ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:13:59:611</Time>
+        <Text>3号设备_Trend_初始化耗时:37ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:13:59:611</Time>
+        <Text>3号设备_Device_初始化共耗时:37ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:13:59:611</Time>
+        <Text>DeviceManager初始化耗时:367ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:13:59:769</Time>
+        <Text>History_初始化共耗时:142ms 加载150条数据</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:13:59:769</Time>
+        <Text>NetWork_初始化共耗时:0ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:13:59:769</Time>
+        <Text>RS232_初始化耗时:0ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:13:59:769</Time>
+        <Text>1号设备_Manual_初始化耗时:0ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:14:59:280</Time>
+        <Text>1号设备_Trend_良率趋势图刷新耗时:37ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:14:59:571</Time>
+        <Text>2号设备_Trend_良率趋势图刷新耗时:35ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:14:59:608</Time>
+        <Text>3号设备_Trend_良率趋势图刷新耗时:36ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:15:11:505</Time>
+        <Text>4号设备_DeviceInformation_初始化耗时:0ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:15:11:505</Time>
+        <Text>4号设备_IO_初始化耗时:0ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:15:11:505</Time>
+        <Text>4号设备_Manual_初始化耗时:0ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:15:11:506</Time>
+        <Text>4号设备_System_初始化耗时:0ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:15:11:542</Time>
+        <Text>4号设备_Trend_良率趋势图刷新耗时:36ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:15:11:542</Time>
+        <Text>4号设备_Trend_初始化耗时:36ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:15:11:542</Time>
+        <Text>4号设备_Device_初始化共耗时:37ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:15:59:285</Time>
+        <Text>1号设备_Trend_良率趋势图刷新耗时:37ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:15:59:561</Time>
+        <Text>2号设备_Trend_良率趋势图刷新耗时:37ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:15:59:599</Time>
+        <Text>3号设备_Trend_良率趋势图刷新耗时:37ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:16:11:531</Time>
+        <Text>4号设备_Trend_良率趋势图刷新耗时:37ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:16:59:291</Time>
+        <Text>1号设备_Trend_良率趋势图刷新耗时:47ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:16:59:570</Time>
+        <Text>2号设备_Trend_良率趋势图刷新耗时:44ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:16:59:611</Time>
+        <Text>3号设备_Trend_良率趋势图刷新耗时:41ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:17:11:532</Time>
+        <Text>4号设备_Trend_良率趋势图刷新耗时:36ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:17:59:283</Time>
+        <Text>1号设备_Trend_良率趋势图刷新耗时:39ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:17:59:564</Time>
+        <Text>2号设备_Trend_良率趋势图刷新耗时:39ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:17:59:612</Time>
+        <Text>3号设备_Trend_良率趋势图刷新耗时:47ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:18:11:579</Time>
+        <Text>4号设备_Trend_良率趋势图刷新耗时:84ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:18:59:332</Time>
+        <Text>1号设备_Trend_良率趋势图刷新耗时:79ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:18:59:614</Time>
+        <Text>2号设备_Trend_良率趋势图刷新耗时:78ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:18:59:676</Time>
+        <Text>3号设备_Trend_良率趋势图刷新耗时:74ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:19:11:565</Time>
+        <Text>4号设备_Trend_良率趋势图刷新耗时:69ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:19:59:331</Time>
+        <Text>1号设备_Trend_良率趋势图刷新耗时:79ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:19:59:613</Time>
+        <Text>2号设备_Trend_良率趋势图刷新耗时:85ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:19:59:684</Time>
+        <Text>3号设备_Trend_良率趋势图刷新耗时:81ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:20:11:575</Time>
+        <Text>4号设备_Trend_良率趋势图刷新耗时:80ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:20:59:313</Time>
+        <Text>1号设备_Trend_良率趋势图刷新耗时:61ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:20:59:613</Time>
+        <Text>2号设备_Trend_良率趋势图刷新耗时:89ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:20:59:676</Time>
+        <Text>3号设备_Trend_良率趋势图刷新耗时:65ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:21:11:575</Time>
+        <Text>4号设备_Trend_良率趋势图刷新耗时:69ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:21:59:322</Time>
+        <Text>1号设备_Trend_良率趋势图刷新耗时:76ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:21:59:620</Time>
+        <Text>2号设备_Trend_良率趋势图刷新耗时:79ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:21:59:689</Time>
+        <Text>3号设备_Trend_良率趋势图刷新耗时:72ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:22:11:571</Time>
+        <Text>4号设备_Trend_良率趋势图刷新耗时:78ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:22:59:326</Time>
+        <Text>1号设备_Trend_良率趋势图刷新耗时:82ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:22:59:630</Time>
+        <Text>2号设备_Trend_良率趋势图刷新耗时:95ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:22:59:715</Time>
+        <Text>3号设备_Trend_良率趋势图刷新耗时:83ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:23:11:556</Time>
+        <Text>4号设备_Trend_良率趋势图刷新耗时:63ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:23:59:321</Time>
+        <Text>1号设备_Trend_良率趋势图刷新耗时:76ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:23:59:604</Time>
+        <Text>2号设备_Trend_良率趋势图刷新耗时:78ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:23:59:664</Time>
+        <Text>3号设备_Trend_良率趋势图刷新耗时:69ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:24:11:588</Time>
+        <Text>4号设备_Trend_良率趋势图刷新耗时:77ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:24:59:335</Time>
+        <Text>1号设备_Trend_良率趋势图刷新耗时:74ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:24:59:587</Time>
+        <Text>2号设备_Trend_良率趋势图刷新耗时:63ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:24:59:634</Time>
+        <Text>3号设备_Trend_良率趋势图刷新耗时:58ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:25:11:600</Time>
+        <Text>4号设备_Trend_良率趋势图刷新耗时:85ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:25:59:317</Time>
+        <Text>1号设备_Trend_良率趋势图刷新耗时:63ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:25:59:588</Time>
+        <Text>2号设备_Trend_良率趋势图刷新耗时:64ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:25:59:641</Time>
+        <Text>3号设备_Trend_良率趋势图刷新耗时:49ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:26:11:598</Time>
+        <Text>4号设备_Trend_良率趋势图刷新耗时:80ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:26:59:311</Time>
+        <Text>1号设备_Trend_良率趋势图刷新耗时:64ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:26:59:593</Time>
+        <Text>2号设备_Trend_良率趋势图刷新耗时:71ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:26:59:656</Time>
+        <Text>3号设备_Trend_良率趋势图刷新耗时:67ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:27:11:580</Time>
+        <Text>4号设备_Trend_良率趋势图刷新耗时:70ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:27:59:320</Time>
+        <Text>1号设备_Trend_良率趋势图刷新耗时:63ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:27:59:591</Time>
+        <Text>2号设备_Trend_良率趋势图刷新耗时:67ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:27:59:655</Time>
+        <Text>3号设备_Trend_良率趋势图刷新耗时:61ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:28:11:571</Time>
+        <Text>4号设备_Trend_良率趋势图刷新耗时:63ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:28:59:317</Time>
+        <Text>1号设备_Trend_良率趋势图刷新耗时:70ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:28:59:573</Time>
+        <Text>2号设备_Trend_良率趋势图刷新耗时:61ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:28:59:651</Time>
+        <Text>3号设备_Trend_良率趋势图刷新耗时:64ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:29:11:571</Time>
+        <Text>4号设备_Trend_良率趋势图刷新耗时:62ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:29:59:309</Time>
+        <Text>1号设备_Trend_良率趋势图刷新耗时:69ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:29:59:575</Time>
+        <Text>2号设备_Trend_良率趋势图刷新耗时:59ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:29:59:654</Time>
+        <Text>3号设备_Trend_良率趋势图刷新耗时:69ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:30:11:602</Time>
+        <Text>4号设备_Trend_良率趋势图刷新耗时:90ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:30:59:319</Time>
+        <Text>1号设备_Trend_良率趋势图刷新耗时:68ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:30:59:601</Time>
+        <Text>2号设备_Trend_良率趋势图刷新耗时:70ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:30:59:648</Time>
+        <Text>3号设备_Trend_良率趋势图刷新耗时:59ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:31:11:601</Time>
+        <Text>4号设备_Trend_良率趋势图刷新耗时:92ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:31:59:335</Time>
+        <Text>1号设备_Trend_良率趋势图刷新耗时:81ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:31:59:614</Time>
+        <Text>2号设备_Trend_良率趋势图刷新耗时:77ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:31:59:690</Time>
+        <Text>3号设备_Trend_良率趋势图刷新耗时:74ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:32:11:578</Time>
+        <Text>4号设备_Trend_良率趋势图刷新耗时:65ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:32:59:330</Time>
+        <Text>1号设备_Trend_良率趋势图刷新耗时:84ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:32:59:612</Time>
+        <Text>2号设备_Trend_良率趋势图刷新耗时:83ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:32:59:684</Time>
+        <Text>3号设备_Trend_良率趋势图刷新耗时:82ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:33:10:881</Time>
+        <Text>1号设备_DeviceInformation_初始化耗时:0ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:33:10:881</Time>
+        <Text>1号设备_IO_初始化耗时:0ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:33:10:881</Time>
+        <Text>1号设备_Manual_初始化耗时:0ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:33:10:881</Time>
+        <Text>1号设备_System_初始化耗时:0ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:33:10:912</Time>
+        <Text>1号设备_Trend_良率趋势图刷新耗时:38ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:33:10:912</Time>
+        <Text>1号设备_Trend_初始化耗时:38ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:33:10:912</Time>
+        <Text>1号设备_Device_初始化共耗时:38ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:33:10:912</Time>
+        <Text>2号设备_DeviceInformation_初始化耗时:0ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:33:10:912</Time>
+        <Text>2号设备_IO_初始化耗时:0ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:33:10:912</Time>
+        <Text>2号设备_Manual_初始化耗时:0ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:33:10:912</Time>
+        <Text>2号设备_System_初始化耗时:0ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:33:10:943</Time>
+        <Text>2号设备_Trend_良率趋势图刷新耗时:35ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:33:10:943</Time>
+        <Text>2号设备_Trend_初始化耗时:35ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:33:10:943</Time>
+        <Text>2号设备_Device_初始化共耗时:35ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:33:10:943</Time>
+        <Text>3号设备_DeviceInformation_初始化耗时:0ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:33:10:943</Time>
+        <Text>3号设备_IO_初始化耗时:0ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:33:10:943</Time>
+        <Text>3号设备_Manual_初始化耗时:0ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:33:10:943</Time>
+        <Text>3号设备_System_初始化耗时:0ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:33:10:991</Time>
+        <Text>3号设备_Trend_良率趋势图刷新耗时:35ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:33:10:991</Time>
+        <Text>3号设备_Trend_初始化耗时:36ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:33:10:991</Time>
+        <Text>3号设备_Device_初始化共耗时:36ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:33:10:991</Time>
+        <Text>4号设备_DeviceInformation_初始化耗时:0ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:33:10:991</Time>
+        <Text>4号设备_IO_初始化耗时:0ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:33:10:991</Time>
+        <Text>4号设备_Manual_初始化耗时:0ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:33:10:991</Time>
+        <Text>4号设备_System_初始化耗时:0ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:33:11:023</Time>
+        <Text>4号设备_Trend_良率趋势图刷新耗时:37ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:33:11:023</Time>
+        <Text>4号设备_Trend_初始化耗时:37ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:33:11:023</Time>
+        <Text>4号设备_Device_初始化共耗时:37ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:33:11:023</Time>
+        <Text>DeviceManager初始化耗时:149ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:33:11:164</Time>
+        <Text>History_初始化共耗时:139ms 加载150条数据</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:33:11:164</Time>
+        <Text>NetWork_初始化共耗时:0ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:33:11:164</Time>
+        <Text>RS232_初始化耗时:0ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:33:11:164</Time>
+        <Text>1号设备_Manual_初始化耗时:0ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:34:10:908</Time>
+        <Text>1号设备_Trend_良率趋势图刷新耗时:39ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:34:10:953</Time>
+        <Text>2号设备_Trend_良率趋势图刷新耗时:42ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:34:10:993</Time>
+        <Text>3号设备_Trend_良率趋势图刷新耗时:40ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:34:11:034</Time>
+        <Text>4号设备_Trend_良率趋势图刷新耗时:39ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:35:10:920</Time>
+        <Text>1号设备_Trend_良率趋势图刷新耗时:49ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:35:10:958</Time>
+        <Text>2号设备_Trend_良率趋势图刷新耗时:38ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:35:10:996</Time>
+        <Text>3号设备_Trend_良率趋势图刷新耗时:38ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:35:11:036</Time>
+        <Text>4号设备_Trend_良率趋势图刷新耗时:39ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:35:49:735</Time>
+        <Text>2号设备_Trend_良率趋势图刷新耗时:39ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:35:50:089</Time>
+        <Text>2号设备_Trend_良率趋势图刷新耗时:41ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:35:50:397</Time>
+        <Text>2号设备_Trend_良率趋势图刷新耗时:38ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:35:50:931</Time>
+        <Text>2号设备_Trend_良率趋势图刷新耗时:39ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:35:51:408</Time>
+        <Text>2号设备_Trend_良率趋势图刷新耗时:38ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:36:10:905</Time>
+        <Text>1号设备_Trend_良率趋势图刷新耗时:35ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:36:10:941</Time>
+        <Text>2号设备_Trend_良率趋势图刷新耗时:33ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:36:10:976</Time>
+        <Text>3号设备_Trend_良率趋势图刷新耗时:35ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:36:11:017</Time>
+        <Text>4号设备_Trend_良率趋势图刷新耗时:34ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:37:10:905</Time>
+        <Text>1号设备_Trend_良率趋势图刷新耗时:35ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:37:10:939</Time>
+        <Text>2号设备_Trend_良率趋势图刷新耗时:34ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:37:10:983</Time>
+        <Text>3号设备_Trend_良率趋势图刷新耗时:38ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:37:11:021</Time>
+        <Text>4号设备_Trend_良率趋势图刷新耗时:36ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:38:10:911</Time>
+        <Text>1号设备_Trend_良率趋势图刷新耗时:42ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:38:10:950</Time>
+        <Text>2号设备_Trend_良率趋势图刷新耗时:39ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:38:10:992</Time>
+        <Text>3号设备_Trend_良率趋势图刷新耗时:41ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:38:11:033</Time>
+        <Text>4号设备_Trend_良率趋势图刷新耗时:41ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:39:10:968</Time>
+        <Text>1号设备_Trend_良率趋势图刷新耗时:81ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:39:11:083</Time>
+        <Text>2号设备_Trend_良率趋势图刷新耗时:113ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:39:11:178</Time>
+        <Text>3号设备_Trend_良率趋势图刷新耗时:94ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:39:11:265</Time>
+        <Text>4号设备_Trend_良率趋势图刷新耗时:92ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:40:10:943</Time>
+        <Text>1号设备_Trend_良率趋势图刷新耗时:68ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:40:11:008</Time>
+        <Text>2号设备_Trend_良率趋势图刷新耗时:55ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:40:11:070</Time>
+        <Text>3号设备_Trend_良率趋势图刷新耗时:62ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:40:11:133</Time>
+        <Text>4号设备_Trend_良率趋势图刷新耗时:69ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:41:10:949</Time>
+        <Text>1号设备_Trend_良率趋势图刷新耗时:75ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:41:11:027</Time>
+        <Text>2号设备_Trend_良率趋势图刷新耗时:78ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:41:11:097</Time>
+        <Text>3号设备_Trend_良率趋势图刷新耗时:70ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:41:11:174</Time>
+        <Text>4号设备_Trend_良率趋势图刷新耗时:76ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:42:10:942</Time>
+        <Text>1号设备_Trend_良率趋势图刷新耗时:68ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:42:11:005</Time>
+        <Text>2号设备_Trend_良率趋势图刷新耗时:60ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:42:11:068</Time>
+        <Text>3号设备_Trend_良率趋势图刷新耗时:61ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:42:11:137</Time>
+        <Text>4号设备_Trend_良率趋势图刷新耗时:69ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:43:10:945</Time>
+        <Text>1号设备_Trend_良率趋势图刷新耗时:67ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:43:11:010</Time>
+        <Text>2号设备_Trend_良率趋势图刷新耗时:60ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:43:11:057</Time>
+        <Text>3号设备_Trend_良率趋势图刷新耗时:57ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:43:11:127</Time>
+        <Text>4号设备_Trend_良率趋势图刷新耗时:62ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:44:10:937</Time>
+        <Text>1号设备_Trend_良率趋势图刷新耗时:70ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:44:11:009</Time>
+        <Text>2号设备_Trend_良率趋势图刷新耗时:63ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:44:11:073</Time>
+        <Text>3号设备_Trend_良率趋势图刷新耗时:68ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:44:11:136</Time>
+        <Text>4号设备_Trend_良率趋势图刷新耗时:65ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:45:10:952</Time>
+        <Text>1号设备_Trend_良率趋势图刷新耗时:79ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:45:11:033</Time>
+        <Text>2号设备_Trend_良率趋势图刷新耗时:80ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:45:11:116</Time>
+        <Text>3号设备_Trend_良率趋势图刷新耗时:82ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:45:11:194</Time>
+        <Text>4号设备_Trend_良率趋势图刷新耗时:78ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:46:10:941</Time>
+        <Text>1号设备_Trend_良率趋势图刷新耗时:69ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:46:11:004</Time>
+        <Text>2号设备_Trend_良率趋势图刷新耗时:62ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:46:11:067</Time>
+        <Text>3号设备_Trend_良率趋势图刷新耗时:70ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:46:11:149</Time>
+        <Text>4号设备_Trend_良率趋势图刷新耗时:69ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:47:10:976</Time>
+        <Text>1号设备_Trend_良率趋势图刷新耗时:89ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:47:11:047</Time>
+        <Text>2号设备_Trend_良率趋势图刷新耗时:70ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:47:11:109</Time>
+        <Text>3号设备_Trend_良率趋势图刷新耗时:73ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:47:11:205</Time>
+        <Text>4号设备_Trend_良率趋势图刷新耗时:82ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:48:10:939</Time>
+        <Text>1号设备_Trend_良率趋势图刷新耗时:68ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:48:11:002</Time>
+        <Text>2号设备_Trend_良率趋势图刷新耗时:58ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:48:11:065</Time>
+        <Text>3号设备_Trend_良率趋势图刷新耗时:59ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:48:11:127</Time>
+        <Text>4号设备_Trend_良率趋势图刷新耗时:66ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:49:10:939</Time>
+        <Text>1号设备_Trend_良率趋势图刷新耗时:63ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:49:11:018</Time>
+        <Text>2号设备_Trend_良率趋势图刷新耗时:68ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:49:11:082</Time>
+        <Text>3号设备_Trend_良率趋势图刷新耗时:67ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:49:11:145</Time>
+        <Text>4号设备_Trend_良率趋势图刷新耗时:70ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:50:10:947</Time>
+        <Text>1号设备_Trend_良率趋势图刷新耗时:63ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:50:10:994</Time>
+        <Text>2号设备_Trend_良率趋势图刷新耗时:59ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:50:11:059</Time>
+        <Text>3号设备_Trend_良率趋势图刷新耗时:58ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:50:11:121</Time>
+        <Text>4号设备_Trend_良率趋势图刷新耗时:64ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:51:10:927</Time>
+        <Text>1号设备_Trend_良率趋势图刷新耗时:56ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:51:10:991</Time>
+        <Text>2号设备_Trend_良率趋势图刷新耗时:52ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:51:11:039</Time>
+        <Text>3号设备_Trend_良率趋势图刷新耗时:59ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:51:11:101</Time>
+        <Text>4号设备_Trend_良率趋势图刷新耗时:59ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:52:10:947</Time>
+        <Text>1号设备_Trend_良率趋势图刷新耗时:63ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:52:10:996</Time>
+        <Text>2号设备_Trend_良率趋势图刷新耗时:52ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:52:11:059</Time>
+        <Text>3号设备_Trend_良率趋势图刷新耗时:57ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:52:11:105</Time>
+        <Text>4号设备_Trend_良率趋势图刷新耗时:54ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:53:10:926</Time>
+        <Text>1号设备_Trend_良率趋势图刷新耗时:60ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:53:10:989</Time>
+        <Text>2号设备_Trend_良率趋势图刷新耗时:60ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:53:11:052</Time>
+        <Text>3号设备_Trend_良率趋势图刷新耗时:60ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:53:11:115</Time>
+        <Text>4号设备_Trend_良率趋势图刷新耗时:66ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:54:10:926</Time>
+        <Text>1号设备_Trend_良率趋势图刷新耗时:61ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:54:11:005</Time>
+        <Text>2号设备_Trend_良率趋势图刷新耗时:65ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:54:11:053</Time>
+        <Text>3号设备_Trend_良率趋势图刷新耗时:52ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:54:11:115</Time>
+        <Text>4号设备_Trend_良率趋势图刷新耗时:56ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:55:10:944</Time>
+        <Text>1号设备_Trend_良率趋势图刷新耗时:64ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:55:10:991</Time>
+        <Text>2号设备_Trend_良率趋势图刷新耗时:59ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:55:11:055</Time>
+        <Text>3号设备_Trend_良率趋势图刷新耗时:52ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:55:11:117</Time>
+        <Text>4号设备_Trend_良率趋势图刷新耗时:65ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:56:10:944</Time>
+        <Text>1号设备_Trend_良率趋势图刷新耗时:66ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:56:11:006</Time>
+        <Text>2号设备_Trend_良率趋势图刷新耗时:65ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:56:11:069</Time>
+        <Text>3号设备_Trend_良率趋势图刷新耗时:57ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:56:11:132</Time>
+        <Text>4号设备_Trend_良率趋势图刷新耗时:63ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:57:10:917</Time>
+        <Text>1号设备_Trend_良率趋势图刷新耗时:61ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:57:10:981</Time>
+        <Text>2号设备_Trend_良率趋势图刷新耗时:56ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:57:11:044</Time>
+        <Text>3号设备_Trend_良率趋势图刷新耗时:60ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:57:11:106</Time>
+        <Text>4号设备_Trend_良率趋势图刷新耗时:59ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:58:10:938</Time>
+        <Text>1号设备_Trend_良率趋势图刷新耗时:63ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:58:10:986</Time>
+        <Text>2号设备_Trend_良率趋势图刷新耗时:52ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:58:11:050</Time>
+        <Text>3号设备_Trend_良率趋势图刷新耗时:64ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:58:11:112</Time>
+        <Text>4号设备_Trend_良率趋势图刷新耗时:58ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:59:10:951</Time>
+        <Text>1号设备_Trend_良率趋势图刷新耗时:73ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:59:11:037</Time>
+        <Text>2号设备_Trend_良率趋势图刷新耗时:82ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:59:11:120</Time>
+        <Text>3号设备_Trend_良率趋势图刷新耗时:82ms</Text>
+    </node>
+    <node>
+        <Time>2025/02/08 14:59:11:200</Time>
+        <Text>4号设备_Trend_良率趋势图刷新耗时:79ms</Text>
+    </node>
+</Record>

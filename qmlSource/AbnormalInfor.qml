@@ -1,4 +1,4 @@
-import QtQuick 2.0
+﻿import QtQuick 2.0
 import QmlEnum 1.0
 //异常信息
 Rectangle {
@@ -63,6 +63,8 @@ Rectangle {
                             str += "自动学习已完成"
                         }
                         else if(messageType === QmlEnum.MESSAGE_touchSuccess){
+                            str += "创建模型已完成"
+                        }else if(messageType === QmlEnum.MESSAGE_setupComplete){
                             str += "创建模型已完成"
                         }
                         return str

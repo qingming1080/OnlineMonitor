@@ -38,7 +38,6 @@ public:
     // 更新焊接趋势
     void upWeldData();
 
-
     Q_INVOKABLE int idMinX() const;
     Q_INVOKABLE void setIdMinX(int newIdMinX);
 
@@ -149,6 +148,18 @@ private:
     QTimer* m_weldTimer;
     QTimer* m_yieldTimer;
 
+    // _Yield_TrendData m_yieldData;
+    // QVector<QPointF> m_frontData;
+    // QVector<QPointF> m_backData;
+    // QVector<QPointF> m_timeData;
+    // QVector<QPointF> m_powerData;
+
+    // QXYSeries* m_pYieldSeries = nullptr;
+    // QXYSeries* m_pFrontSeries = nullptr;
+    // QXYSeries* m_pBackSeries = nullptr;
+    // QXYSeries* m_pTimeSeries = nullptr;
+    // QXYSeries* m_pPowerSeries = nullptr;
+public:
     _Yield_TrendData m_yieldData;
     QVector<QPointF> m_frontData;
     QVector<QPointF> m_backData;

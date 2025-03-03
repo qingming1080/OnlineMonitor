@@ -1,4 +1,4 @@
-import QtQuick 2.0
+﻿import QtQuick 2.0
 import QtQuick.Controls 2.15
 import QtGraphicalEffects 1.15
 import QmlEnum 1.0
@@ -118,6 +118,10 @@ Popup {
                 font.family: fontBold
                 font.bold: true
                 font.pixelSize: 20
+
+                //设置密码输入的字符为星号（*）
+                echoMode: TextInput.Password //密码模式，输入的字符变成星号
+
                 background: Rectangle{
                     radius: 6
                 }
@@ -630,4 +634,5 @@ Popup {
             }
         }
     }
+
 }

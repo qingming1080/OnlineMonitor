@@ -57,7 +57,6 @@ void Trend::upWeldData()
 }
 
 
-
 void Trend::setWeldTrendData(_Weld_TrendData result)
 {
     m_idMaxX = result.id_X_Max;
@@ -175,8 +174,11 @@ void Trend::init()
     m_yieldTimer = new QTimer;
     connect(m_yieldTimer, &QTimer::timeout, this, &Trend::upYieldData);
     m_yieldTimer->start(1000*60);
-
     upYieldData();
+
+    // m_weldTimer = new QTimer(this);
+    // connect(m_weldTimer, &QTimer::timeout, this, &Trend::upWeldData);
+    // m_weldTimer->start(1000 * 1);  // 每2秒刷新一次焊接数据
 }
 
 int Trend::yieldType() const
