@@ -31,12 +31,6 @@ HBModbusClient::HBModbusClient(DeviceManager *deviceManager, QObject *parent)
 
     connect(readTimer, &QTimer::timeout, this, &HBModbusClient::readModbusData);
 
-    //connect(writeTimer, &QTimer::timeout, this, &HBModbusClient::writeModbusData);
-
-
-    // connect(readTimer, &QTimer::timeout, this, &HBModbusClient::updateTrendData);
-
-
     connect(reconnectTimer, &QTimer::timeout, this, &HBModbusClient::attemptReconnect);
 
     connect(modbusClient, &QModbusTcpClient::errorOccurred, this, &HBModbusClient::onModbusError);
@@ -46,6 +40,7 @@ HBModbusClient::HBModbusClient(DeviceManager *deviceManager, QObject *parent)
     // 连接到服务器
     connectToServer(QString(LOCAL_IP), SERVER_PORT);
 
+    connect(modbusClient, &QModbusClient::stateChanged, this, &HBModbusClient::onModbusStateChanged);
 
      // 启动定时器
     startReading(1000);
@@ -79,6 +74,16 @@ bool HBModbusClient::connectToServer(const QString &host, int port)
     modbusClient->setConnectionParameter(QModbusTcpClient::NetworkPortParameter, port);
 
     return modbusClient->connectDevice();
+}
+void HBModbusClient::onModbusStateChanged(QModbusDevice::State state)
+{
+    if (state == QModbusDevice::ConnectedState) {
+        qDebug() << "Connected to Modbus server!";
+        onDeviceNumChanged();  // 连接成功后更新设备状态
+    } else if (state == QModbusDevice::UnconnectedState) {
+        qDebug() << "Modbus server disconnected!";
+        reconnectTimer->start();  // 开始尝试重连
+    }
 }
 
 void HBModbusClient::onModbusError(QModbusTcpClient::Error error)
@@ -169,16 +174,14 @@ void HBModbusClient::DiscretedsReadyRead() {
 
     if (reply) {
         if (reply->error() != QModbusDevice::NoError) {
-            // 如果出现错误（如断开连接），将所有设备的状态设置为 "未连接"
+
             qDebug() << "Modbus 错误:" << reply->errorString();
 
-            // 遍历所有设备，设置状态为 "未连接"
             for (Device *device : m_deviceManager->deviceList()) {
                 device->pDeviceInformation()->setState("未连接");
                 qDebug() << "设备 ID:" << device->pDeviceInformation()->id() << "状态: 未连接";
             }
         } else {
-            // 没有错误，正常处理结果
             QModbusDataUnit unit = reply->result();
             QVector<int> result;
             for (int i = 0; i < unit.valueCount(); ++i) {
@@ -188,7 +191,6 @@ void HBModbusClient::DiscretedsReadyRead() {
 
             emit dataReceived(result);
 
-            // 根据读取到的结果更新设备状态
             for (Device *device : m_deviceManager->deviceList()) {
                 int deviceId = device->pDeviceInformation()->id();
                 int stateIndex = (deviceId - 1) * 5;

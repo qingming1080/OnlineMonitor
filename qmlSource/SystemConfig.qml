@@ -27,6 +27,12 @@ Rectangle {
     property bool undetermined2: false
     property bool undetermined3: false
     property bool undetermined4: false
+
+    property Timer updateTimer: Timer {
+           interval: 1000
+           repeat: false
+           onTriggered: DeviceManager.deviceListChanged()
+       }
     property bool undeterMined: {
         //if(equipmentCount === 1){
         if(equipmentCount === 0){
@@ -1121,6 +1127,7 @@ Rectangle {
                             }
 
                             onTextChanged: {
+                                 updateTimer.restart();
                                    if (com2.displayText === "ETH1") {
                                        NetworkModel.setNetworkData(2, QmlEnum.NETWORK_server_port, t5.text);
                                    } else if (com2.displayText === "ETH2") {
@@ -1130,7 +1137,7 @@ Rectangle {
                                    } else if (com2.displayText === "ETH4") {
                                        NetworkModel.setNetworkData(5, QmlEnum.NETWORK_server_port, t5.text);
                                    }
-                                    DeviceManager.deviceListChanged()
+                                    // DeviceManager.deviceListChanged()
 
                                }
 
@@ -1177,7 +1184,9 @@ Rectangle {
                             }
 
                             onTextChanged: {
+                                 updateTimer.restart();
                                    if (com2.displayText === "ETH1") {
+                                       console.log("1111111111111text")
                                        NetworkModel.setNetworkData(2, QmlEnum.NETWORK_remote_ip, t6.text);
                                    } else if (com2.displayText === "ETH2") {
                                        NetworkModel.setNetworkData(3, QmlEnum.NETWORK_remote_ip, t6.text);
@@ -1186,7 +1195,8 @@ Rectangle {
                                    } else if (com2.displayText === "ETH4") {
                                        NetworkModel.setNetworkData(5, QmlEnum.NETWORK_remote_ip, t6.text);
                                    }
-                                    DeviceManager.deviceListChanged()
+                                   // console.log("1DeviceManager.deviceListChanged()111111111111text")
+                                   //  DeviceManager.deviceListChanged()
 
                                }
                         }
@@ -1235,7 +1245,9 @@ Rectangle {
                             }
 
                             onTextChanged: {
+                                 updateTimer.restart();
                                    if (com2.displayText === "ETH1") {
+                                       console.log("1DeviceManager.deviceListChanged()111111111111text")
                                        NetworkModel.setNetworkData(2, QmlEnum.NETWORK_local_ip, t7.text);
                                    } else if (com2.displayText === "ETH2") {
                                        NetworkModel.setNetworkData(3, QmlEnum.NETWORK_local_ip, t7.text);
@@ -1244,13 +1256,11 @@ Rectangle {
                                    } else if (com2.displayText === "ETH4") {
                                        NetworkModel.setNetworkData(5, QmlEnum.NETWORK_local_ip, t7.text);
                                    }
-                                    DeviceManager.deviceListChanged()
+                                   // console.log("1DeviceManager.deviceListChanged()111111111111text")
+                                   //  DeviceManager.deviceListChanged()
                             }
                         }
-
-
                     }
-
                 }
                 Component{
                     id:rect2

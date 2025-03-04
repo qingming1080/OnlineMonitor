@@ -28,8 +28,8 @@ public:
     static constexpr int COILS_REGISTERS_ADDRESS_BASE = SYS_COILS_REGISTERS_COUNT;
 
     static constexpr int SERVER_PORT = 502;
-     // static constexpr char LOCAL_IP[13] = "127.0.0.1";
-    static constexpr char LOCAL_IP[13] = "192.168.1.38";
+     static constexpr char LOCAL_IP[13] = "127.0.0.1";
+    // static constexpr char LOCAL_IP[13] = "192.168.1.38";
 
     enum HOLDING_REGISTERS
     {
@@ -73,6 +73,7 @@ public:
         DEV_PARITY_BIT,
         DEV_STOP_BIT,
 
+         //read or write
         DEV_ENERGY_SET,
         DEV_AMPLITUDE_SET,
         DEV_TP_SET,
@@ -191,10 +192,13 @@ public:
 
 signals:
     void dataReceived(const QVector<int>& result);
+    void reconnected();
+
 
 public slots:
 
     void onModbusError(QModbusDevice::Error error);
+    void onModbusStateChanged(QModbusDevice::State state);
 
     void attemptReconnect();                            // 尝试重连
     void readModbusData();                              // 读取 Modbus 数据

@@ -2,6 +2,7 @@
 import QtQuick.Controls 2.15
 import "TimeUtils.js" as TimeUtils
 //焊接参数
+
 Rectangle {
     color: pRgb(43, 112, 173)
     property string eqText1: ""
@@ -11,37 +12,72 @@ Rectangle {
     property string eqText5: ""
     property bool altitudeMode:DeviceManager.deviceList[swipeCurrIndex].pDeviceInformation.heightOption
                                === 1 ? true:false
-    radius: 3
-    Rectangle{
-        y:42
-        height: 1
-        width: 97
-        color: pRgb(174, 210, 216)
-    }
-    Text {
-        text: qsTr("焊接参数")
-        font.family: fontBold
-        font.bold: true
-        font.pixelSize: LanguageManger.language === "SimplifiedChinese" ? 20 : 18
-        color: pRgb(153, 204, 255)
-        x:17
-        y:9
-    }
-    Image {
-        id: setting
-        source: "qrc:/image/setting.png"
-        x:altitudeMode ? 105:106
-        y:altitudeMode ? 12:11
-        width: altitudeMode ? 15:16
-        height: altitudeMode ? 15:16
 
-        MouseArea {
-            anchors.fill: parent
-            onClicked: {
-                parameterSetting.open()
-            }
-        }
-    }
+    property int selectedTab: 0  // 0: 焊接参数, 1: 参数设置
+    property int deviceID: DeviceManager.deviceList[swipeCurrIndex].pDeviceInformation.id
+
+    radius: 3
+    Rectangle {
+           width: 129
+           height: 35
+           border.color: selectedTab === 0 ? pRgb(232, 232, 232) : pRgb(43, 112, 173)  // 选中时边框颜色
+           border.width: 1  // 设置边框宽度
+           color: selectedTab === 0 ? pRgb(232, 232, 232) : pRgb(43, 112, 173) // 选中时背景颜色
+           radius: 1  // 设置圆角
+           anchors.left: parent.left
+           anchors.top: parent.top
+
+           Text {
+               text: qsTr("焊接参数")
+               font.family: fontBold
+               font.bold: true
+               font.pixelSize: LanguageManger.language === "SimplifiedChinese" ? 20 : 18
+               color: selectedTab === 0 ? pRgb(43, 112, 173): pRgb(153, 204, 255)  // 选中时文字颜色
+               anchors.centerIn: parent  // 使文字居中
+           }
+
+           MouseArea {
+               anchors.fill: parent
+               onClicked: {
+                   selectedTab = 0  // 设置选中标签为焊接参数
+                   console.log("焊接参数点击了！")
+                   // 在这里执行相应的操作
+               }
+           }
+       }
+
+       // 参数设置标签
+       Rectangle {
+           width: 129
+           height: 35
+           border.color: selectedTab === 1 ? pRgb(232, 232, 232) : pRgb(43, 112, 173)  // 选中时边框颜色
+           border.width: 1  // 设置边框宽度
+           color: selectedTab === 1 ? pRgb(43, 112, 173) : pRgb(43, 112, 173)   // 选中时背景颜色
+           radius: 1 // 设置圆角
+           anchors.left: parent.left
+           anchors.top: parent.top
+           anchors.leftMargin: 129  // 设置距离焊接参数标签的间隔
+
+           Text {
+               text: qsTr("参数设置")
+               font.family: fontBold
+               font.bold: true
+               font.pixelSize: LanguageManger.language === "SimplifiedChinese" ? 20 : 18
+               color: selectedTab === 1 ? pRgb(232, 232, 232): pRgb(153, 204, 255)   // 选中时文字颜色
+               anchors.centerIn: parent  // 使文字居中
+           }
+
+           MouseArea {
+               anchors.fill: parent
+               onClicked: {
+                   selectedTab = 1
+                   parameterSetting.open()
+                   console.log("deviceID: ", DeviceManager.deviceList[swipeCurrIndex].pDeviceInformation.id)
+
+               }
+           }
+
+   }
 
     Image {
         id: im1
@@ -301,4 +337,5 @@ Rectangle {
         //     timeText.text = date.toLocaleString();  // 将选中的时间转为本地时间字符串
         // }
     }
+
 }

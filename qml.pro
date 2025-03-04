@@ -1,5 +1,4 @@
 QT += widgets quick virtualkeyboard charts serialport sql qml xml serialbus
-
 CONFIG += c++11
 CONFIG += C++11UTF8
 msvc {
