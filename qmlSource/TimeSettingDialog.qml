@@ -98,7 +98,7 @@ Dialog {
 
                     TextField {
                         id: yearField
-                        text: "2024"
+                        text: "2025"
                         inputMethodHints: Qt.ImhFormattedNumbersOnly
                         color: "#004b8d"
                         horizontalAlignment: TextInput.AlignHCenter

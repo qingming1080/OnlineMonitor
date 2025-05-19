@@ -744,31 +744,31 @@ Rectangle {
         }
     }
 
-    //    Button{
-    //        id:b1
-    //        x:195
-    //        y:654
-    //        width: 243
-    //        height: 52
-    //        background: Rectangle{
-    //            radius: 6
-    //            color: pRgb(43, 112, 173)
-    //        }
-    //        contentItem: Text {
-    //            id:mt1
-    //            anchors.centerIn: parent
-    //            text: "新建模型"
-    //            font.pixelSize: 20
-    //            color: pRgb(153, 204, 255)
-    //            horizontalAlignment: Text.AlignHCenter
-    //            verticalAlignment: Text.AlignVCenter
-    //            font.family: fontBold
-    //        }
-    //        onPressed: {
-    //            mt1.text = "创建模型"
-    //            mt2.text = "清除数据"
-    //        }
-    //    }
+       // Button{
+       //     id:b1
+       //     x:195
+       //     y:654
+       //     width: 243
+       //     height: 52
+       //     background: Rectangle{
+       //         radius: 6
+       //         color: pRgb(43, 112, 173)
+       //     }
+       //     contentItem: Text {
+       //         id:mt1
+       //         anchors.centerIn: parent
+       //         text: "新建模型"
+       //         font.pixelSize: 20
+       //         color: pRgb(153, 204, 255)
+       //         horizontalAlignment: Text.AlignHCenter
+       //         verticalAlignment: Text.AlignVCenter
+       //         font.family: fontBold
+       //     }
+       //     onPressed: {
+       //         mt1.text = "创建模型"
+       //         mt2.text = "清除数据"
+       //     }
+       // }
     Button{
         id:b2
         width: 243

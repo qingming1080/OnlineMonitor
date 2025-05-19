@@ -66,12 +66,9 @@ int main(int argc, char *argv[])
     // 默认加载英文
     translator.load(":/translations/en.ts");
     app.installTranslator(&translator);
+    HBModbusClient* modbus = new HBModbusClient();
 
-    DeviceManager* deviceManager = DeviceManager::getInstance();
-
-    //modbus
-    HBModbusClient  *modbusClient = new HBModbusClient(deviceManager);
-
+    Manual* manual = new Manual(1,modbus);
 
     QQmlApplicationEngine engine;
     QQmlContext* pQmlContext = engine.rootContext();
@@ -84,8 +81,9 @@ int main(int argc, char *argv[])
     pQmlContext->setContextProperty("RS232Model", RS232Model::getInstance());
     pQmlContext->setContextProperty("DataBaseManager", DataBaseManager::getInstance());
     pQmlContext->setContextProperty("DeviceNames", DeviceNames::getInstance());
-    pQmlContext->setContextProperty("Manual", new Manual(1));
-    pQmlContext->setContextProperty("HBModbusClient", modbusClient);
+    pQmlContext->setContextProperty("Manual",manual);
+    // pQmlContext->setContextProperty("HBModbusClient", HBModbusClient::getInstance());
+    pQmlContext->setContextProperty("HBModbusClient",modbus);
 
 
 
@@ -95,6 +93,7 @@ int main(int argc, char *argv[])
     qmlRegisterType<Trend>("Trend",1,0,"Trend");
     qmlRegisterType<System>("System",1,0,"System");
     qmlRegisterType<QmlEnum>("QmlEnum",1,0,"QmlEnum");
+    //qmlRegisterType<Manual>("Manual",1,0,"Manual");
 //    qmlRegisterType<LineChartItem>("CustomChart", 1, 0, "CustomChart");
 //    qmlRegisterType<TimeChartItem>("CustomTimeChart", 1, 0, "CustomTimeChart");
 

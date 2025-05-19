@@ -33,6 +33,10 @@ Rectangle {
            repeat: false
            onTriggered: DeviceManager.deviceListChanged()
        }
+    function isValidIP(ip) {
+        var regex = /^(25[0-5]|2[0-4][0-9]|1?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|1?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|1?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|1?[0-9][0-9]?)$/;
+        return regex.test(ip);
+    }
     property bool undeterMined: {
         //if(equipmentCount === 1){
         if(equipmentCount === 0){
@@ -87,25 +91,6 @@ Rectangle {
             loader1.push(newItem);
         }
     }
-
-    // function updateIsFirstDeviceConfigured() {
-    //     var countZero = 0;
-
-    //     // 遍历 DeviceManager.deviceList 中的每个设备
-    //     for (var i = 0; i < DeviceManager.deviceList.length; i++) {
-    //         var connectType = DeviceManager.deviceList[i].pDeviceInformation.connectType;
-
-    //         // 判断 connectType 是否为 0，统计为 0 的个数
-    //         if (connectType === 0) {
-    //             countZero++;
-    //         }
-    //     }
-
-    //     // 判断 connectType 为 0 的总个数来设置 isFirstDeviceConfigured
-    //     isFirstDeviceConfigured = (countZero > 0);  // 如果 connectType = 0 的个数大于 1，设置为 true，否则为 false
-    //     console.log("retrn: "+ isFirstDeviceConfigured )
-    //     return isFirstDeviceConfigured;
-    // }
 
     Connections{
         target: window
@@ -1185,6 +1170,10 @@ Rectangle {
 
                             onTextChanged: {
                                  updateTimer.restart();
+                                if (!isValidIP(t6.text)) {
+                                        console.log("Invalid IP address: " + t6.text);
+                                        return; // 不执行设置，避免无效数据
+                                    }
                                    if (com2.displayText === "ETH1") {
                                        console.log("1111111111111text")
                                        NetworkModel.setNetworkData(2, QmlEnum.NETWORK_remote_ip, t6.text);
@@ -1246,6 +1235,10 @@ Rectangle {
 
                             onTextChanged: {
                                  updateTimer.restart();
+                                if (!isValidIP(t6.text)) {
+                                        console.log("Invalid IP address: " + t6.text);
+                                        return; // 不执行设置，避免无效数据
+                                    }
                                    if (com2.displayText === "ETH1") {
                                        console.log("1DeviceManager.deviceListChanged()111111111111text")
                                        NetworkModel.setNetworkData(2, QmlEnum.NETWORK_local_ip, t7.text);

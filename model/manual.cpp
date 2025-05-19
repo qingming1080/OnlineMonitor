@@ -5,17 +5,50 @@
 #include <QDebug>
 #include <QElapsedTimer>
 #include "log/localrecord.h"
+#include "modbus/hbmodbusclient.h"
 
-Manual::Manual(int welderID, QObject *parent)
-    : QAbstractListModel{parent}, m_welderID(welderID)
+
+
+Manual::Manual(int welderID,HBModbusClient* modbusClient, QObject *parent)
+    : QAbstractListModel{parent}, m_welderID(welderID),m_modbusClient(modbusClient)
 {
-    QElapsedTimer timer;
-    timer.start();
+    // m_modbusClient = HBModbusClient::getInstance();
+
+    // QElapsedTimer timer;
+    // timer.start();
 
     m_data = DataBaseManager::getInstance()->getManualData(m_welderID);
+    // QString text = QString("%1号设备_Manual_初始化耗时:%2ms").arg(welderID).arg(timer.elapsed());
+    // emit SignalManager::getInstance()->signalAddRecord(QDateTime::currentDateTime(), text);
 
-    QString text = QString("%1号设备_Manual_初始化耗时:%2ms").arg(welderID).arg(timer.elapsed());
-    emit SignalManager::getInstance()->signalAddRecord(QDateTime::currentDateTime(), text);
+    connect(&m_flushTimer, &QTimer::timeout, this, &Manual::flushPendingData);
+    m_flushTimer.start(1000);
+
+}
+
+Manual::~Manual()
+{
+    if (m_modbusClient) {
+        disconnect(m_modbusClient, &HBModbusClient::signalNewManualData,
+                   this, &Manual::onNewManualData);
+    }
+    qDebug() << "Manual 析构，断开 Modbus 信号";
+
+}
+
+int Manual::welderID() const
+{
+ return m_welderID;
+}
+
+void Manual::setWelderID(int id) {
+    if (m_welderID != id) {
+        m_welderID = id;
+
+         loadData();  // 重新加载数据
+        emit welderIDChanged();
+
+    }
 }
 
 int Manual::rowCount(const QModelIndex &parent) const
@@ -172,13 +205,20 @@ bool Manual::setData(const QModelIndex &index, const QVariant &value, int role)
 
 void Manual::save()
 {
+
+    QSqlDatabase db = QSqlDatabase::database();
+    db.transaction();  // 开启事务
+
     DataBaseManager::getInstance()->removeManualDevice(m_welderID);
 
     for(int i = 0; i < m_data.size(); ++i)
     {
         DataBaseManager::getInstance()->insertManualRow(m_data.at(i));
     }
+
+     db.commit();  // 提交事务
 }
+
 
 void Manual::clearData()
 {
@@ -187,4 +227,59 @@ void Manual::clearData()
     endResetModel();
 }
 
+void Manual::loadData()
+{
+    beginResetModel();  // 通知 QML 模型发生变化
+    m_data = DataBaseManager::getInstance()->getManualData(m_welderID); // 重新加载数据
+
+    endResetModel();
+}
+
+
+void Manual::startReading()
+{
+    connect(m_modbusClient, &HBModbusClient::signalNewManualData,
+            this, &Manual::onNewManualData);
+    qDebug() << "Manual 开始接收 Modbus 数据";
+}
+
+void Manual::stopReading()
+{
+    disconnect(m_modbusClient, &HBModbusClient::signalNewManualData,
+               this, &Manual::onNewManualData);
+    qDebug() << "Manual 停止接收 Modbus 数据";
+}
+
+
+void Manual::onNewManualData(const _Manual_Data& data)
+{
+    if (data.welder_id != m_welderID)
+        return;
+
+    auto it = std::find_if(m_data.begin(), m_data.end(), [&](const _Manual_Data& d) {
+        return d.serial_number == data.serial_number;
+    });
+
+    if (it != m_data.end())
+        return;
+
+    m_pendingData.append(data);
+}
+
+
+
+void Manual::flushPendingData()
+{
+    if (m_pendingData.isEmpty())
+        return;
+
+    int newRows = m_pendingData.size();
+
+    beginInsertRows(QModelIndex(), m_data.size(), m_data.size() + newRows - 1);
+    m_data.append(m_pendingData);
+    endInsertRows();
+
+    m_pendingData.clear();
+
+}
 

@@ -217,3 +217,20 @@ void DeviceManager::removeDevice(int welderID)
 }
 
 
+void DeviceManager::startManualMode(int deviceID) {
+    m_manualModeDeviceID = deviceID;
+    m_manualDataList.clear();
+    emit manualDataListChanged();
+    qDebug() << "手动模式已启动, 监听设备ID:" << deviceID;
+}
+
+void DeviceManager::stopManualMode() {
+    m_manualModeDeviceID = -1;
+    m_manualDataList.clear();
+    emit manualDataListChanged();
+    qDebug() << "手动模式已停止";
+}
+
+QList<QString> DeviceManager::manualDataList() const {
+    return m_manualDataList;
+}

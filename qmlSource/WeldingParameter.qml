@@ -18,12 +18,13 @@ Rectangle {
 
     radius: 3
     Rectangle {
-           width: 129
+           width:  equipmentCount == 1 ? 117 : 129
            height: 35
-           border.color: selectedTab === 0 ? pRgb(232, 232, 232) : pRgb(43, 112, 173)  // 选中时边框颜色
+           //border.color: selectedTab === 0 ? pRgb(43, 112, 173) :  pRgb(232, 232, 232) // 选中时边框颜色
+           border.color: selectedTab === 0 ?  pRgb(232, 232, 232): pRgb(43, 112, 173) // 选中时边框颜色
            border.width: 1  // 设置边框宽度
+           radius: 1
            color: selectedTab === 0 ? pRgb(232, 232, 232) : pRgb(43, 112, 173) // 选中时背景颜色
-           radius: 1  // 设置圆角
            anchors.left: parent.left
            anchors.top: parent.top
 
@@ -48,12 +49,13 @@ Rectangle {
 
        // 参数设置标签
        Rectangle {
-           width: 129
+           width: equipmentCount == 1 ? 116 : 129
            height: 35
-           border.color: selectedTab === 1 ? pRgb(232, 232, 232) : pRgb(43, 112, 173)  // 选中时边框颜色
-           border.width: 1  // 设置边框宽度
-           color: selectedTab === 1 ? pRgb(43, 112, 173) : pRgb(43, 112, 173)   // 选中时背景颜色
-           radius: 1 // 设置圆角
+          // border.color: selectedTab === 1 ? pRgb(43, 112, 173) :  pRgb(232, 232, 232) // 选中时边框颜色
+           border.color: selectedTab === 1 ?  pRgb(232, 232, 232): pRgb(43, 112, 173) // 选中时边框颜色
+           border.width: 0.5 // 设置边框宽度
+           color: selectedTab === 1 ?  pRgb(232, 232, 232) : pRgb(43, 112, 173)   // 选中时背景颜色
+           radius: 1
            anchors.left: parent.left
            anchors.top: parent.top
            anchors.leftMargin: 129  // 设置距离焊接参数标签的间隔
@@ -63,7 +65,7 @@ Rectangle {
                font.family: fontBold
                font.bold: true
                font.pixelSize: LanguageManger.language === "SimplifiedChinese" ? 20 : 18
-               color: selectedTab === 1 ? pRgb(232, 232, 232): pRgb(153, 204, 255)   // 选中时文字颜色
+               color: selectedTab === 1 ? pRgb(43, 112, 173) : pRgb(153, 204, 255)   // 选中时文字颜色
                anchors.centerIn: parent  // 使文字居中
            }
 
@@ -73,10 +75,21 @@ Rectangle {
                    selectedTab = 1
                    parameterSetting.open()
                    console.log("deviceID: ", DeviceManager.deviceList[swipeCurrIndex].pDeviceInformation.id)
-
+                   HBModbusClient.readParameterSetting(deviceID)
+                   console.log("energy_set: ",result[0].toString())
+                   console.log("amplitude_set: ",result[1].toString())
+                   console.log("tp_set: ",result[2].toString())
+                   console.log("wp_set: ",result[3].toString())
+                   console.log("time_max_set: ",result[4].toString())
+                   console.log("time_min_set: ",result[5].toString())
+                   console.log("power_min_set: ",result[6].toString())
+                   console.log("power_max_set: ",result[7].toString())
+                   console.log("pre_hehigtmin_set: ",result[8].toString())
+                   console.log("pre_hehigtmax_set: ",result[9].toString())
+                   console.log("post_hehigtmin_set: ",result[10].toString())
+                   console.log("post_hehigtmax_set: ",result[11].toString())
                }
            }
-
    }
 
     Image {

@@ -40,7 +40,11 @@ Dialog {
             property var startPosition
 
             onPressed: {
+                // cursorShape = Qt.ClosedHandCursor
                 dragArea.startPosition = Qt.point(mouse.x, mouse.y);
+            }
+            onReleased: {
+                // cursorShape = Qt.OpenHandCursor
             }
 
             onPositionChanged: {
@@ -48,27 +52,14 @@ Dialog {
                 parameterSetting.x += mouse.x - dragArea.startPosition.x;
                 parameterSetting.y += mouse.y - dragArea.startPosition.y;
                 console.log("parameterSetting.x:", parameterSetting.x,"parameterSetting.y:",parameterSetting.y)
+
+                // parameterSetting.x = Math.max(0, Math.min(1353, newX))  // 1920 - 567
+                // parameterSetting.y = Math.max(0, Math.min(720, newY))   // 1080 - 360
             }
         }
     }
 
-    // signal timeSelected(int year, int month, int day, int hour, int minute, int second)
-
-    // Text {
-    //     id: errorText
-    //     text: "请检查设置参数"
-    //     //color: pRgb(153, 204, 255)
-    //     color:"#004b8d"
-    //     font.pixelSize: 16
-    //     font.family: "Arial" ;
-    //     font.bold: true
-    //     visible: errorText.text.length > 0
-    //     horizontalAlignment: Text.AlignHCenter
-    //     verticalAlignment: Text.AlignVCenter
-    //     anchors.horizontalCenter: parent.horizontalCenter
-    //     // x:200
-    //     y:30
-    // }
+ 
 
 
     contentItem: Flickable {
@@ -80,6 +71,7 @@ Dialog {
         Rectangle{
             x:260
             y:45
+
             Column {
                 id: column
                 spacing: 30
@@ -413,72 +405,56 @@ Dialog {
                 font.bold: true
             }
             onClicked: {
+                console.log("deviceIDPARMSEdIOLOG:",deviceID)
 
-                parameterSetting.close()
+                // 从 TextField 获取用户输入的数据
+                var energyValue = energy_set.text
+                var amplitudeValue = amplitude_set.text
+                var tpValue = tp_set.text
+                var wpValue = wp_set.text
+                var timeMaxValue = time_max_set.text
+                var timeMinValue = time_min_set.text
+                var powerMinValue = power_min_set.text
+                var powerMaxValue = power_max_set.text
+                var preHeightMinValue = pre_hehigtmin_set.text
+                var preHeightMaxValue = pre_hehigtmax_set.text
+                var postHeightMinValue = post_hehigtmin_set.text
+                var postHeightMaxValue = post_hehigtmax_set.text
 
-                // errorText.text = "";  // 清除错误信息
+                // 校验函数：检查输入值是否为有效数字
+                    function isValidNumber(value) {
+                        return !isNaN(value) && value.trim() !== "" && value !== null;
+                    }
 
-                // let year = parseInt(yearField.text);
-                // let month = parseInt(monthField.text);
-                // let day = parseInt(dayField.text);
-                // let hour = parseInt(hourField.text);
-                // let minute = parseInt(minuteField.text);
-                // let second = parseInt(secondField.text);
+                    // 校验所有输入值
+                    if (!isValidNumber(energyValue) || !isValidNumber(amplitudeValue) || !isValidNumber(tpValue) ||
+                        !isValidNumber(wpValue) || !isValidNumber(timeMaxValue) || !isValidNumber(timeMinValue) ||
+                        !isValidNumber(powerMinValue) || !isValidNumber(powerMaxValue) || !isValidNumber(preHeightMinValue) ||
+                        !isValidNumber(preHeightMaxValue) || !isValidNumber(postHeightMinValue) || !isValidNumber(postHeightMaxValue)) {
 
-                // let isValidDate = true;
+                        console.log("请输入有效的数字！");
+                        return;  // 退出操作，不发送数据
+                    }
 
-                // // 检查是否为数字
-                // if (isNaN(year) || isNaN(month) || isNaN(day) || isNaN(hour) || isNaN(minute) || isNaN(second)) {
-                //     isValidDate = false;
-                //     errorText.text = "所有字段必须是数字！";
-                // }
+                // 转换为整数数组传递给 C++ 层
+                HBModbusClient.writeParameterSetting(
+                            deviceID,
+                            [
+                                parseInt(energyValue),
+                                parseInt(amplitudeValue),
+                                parseInt(tpValue),
+                                parseInt(wpValue),
+                                parseInt(timeMaxValue),
+                                parseInt(timeMinValue),
+                                parseInt(powerMinValue),
+                                parseInt(powerMaxValue),
+                                parseInt(preHeightMinValue),
+                                parseInt(preHeightMaxValue),
+                                parseInt(postHeightMinValue),
+                                parseInt(postHeightMaxValue)
+                            ]
+                            );
 
-                // // 检查年份范围
-                // if (year < 1900 || year > 2100) {
-                //     isValidDate = false;
-                //     errorText.text = "无效的年份！";
-                // }
-
-                // // 检查月份范围
-                // if (month < 1 || month > 12) {
-                //     isValidDate = false;
-                //     errorText.text = "无效的月份！";
-                // }
-
-                // // 检查日期范围
-                // let daysInMonth = new Date(year, month, 0).getDate();  // 获取该月总天数
-                // if (day < 1 || day > daysInMonth) {
-                //     isValidDate = false;
-                //     errorText.text = "无效的日期！";
-                // }
-
-                // // 闰年检查
-                // if (month === 2 && day === 29) {
-                //     let isLeapYear = (year % 4 === 0 && year % 100 !== 0) || (year % 400 === 0);
-                //     if (!isLeapYear) {
-                //         isValidDate = false;
-                //         errorText.text = "无效的日期：该年份不是闰年！";
-                //     }
-                // }
-
-                // // 检查时间范围
-                // if (hour < 0 || hour > 23 || minute < 0 || minute > 59 || second < 0 || second > 59) {
-                //     isValidDate = false;
-                //     errorText.text = "无效的时间！";
-                // }
-
-                // // 如果日期和时间有效，发出信号并关闭对话框
-                // if (isValidDate) {
-                //     timeSelected(year, month, day, hour, minute, second);  // 发出时间信号
-                //     timeDialog.close();  // 关闭对话框
-                // }
-
-                //  HBModbusClient.setIO(1,1);
-                // HBModbusClient.setIO(2,1);
-                // HBModbusClient.setIO(3,1);
-                // HBModbusClient.setIO(4,1);
-                // // HBModbusClient.setLED(false);
-                // HBModbusClient.writeSetTime(year, month, day, hour, minute, second);
                 parameterSetting.close()
 
             }
@@ -510,6 +486,25 @@ Dialog {
             }
         }
 
+        Connections {
+               target: HBModbusClient  // 指定信号来源对象
+
+               onParameterdata: {  // 连接到 parameterdata 信号
+                   console.log("Received parameter data:", result);
+                   energy_set.text = result[0].toString()
+                   amplitude_set.text = result[1].toString()
+                   tp_set.text = result[2].toString()
+                   wp_set.text = result[3].toString()
+                   time_max_set.text = result[4].toString()
+                   time_min_set.text = result[5].toString()
+                   power_min_set.text = result[6].toString()
+                   power_max_set.text = result[7].toString()
+                   pre_hehigtmin_set.text = result[8].toString()
+                   pre_hehigtmax_set.text = result[9].toString()
+                   post_hehigtmin_set.text = result[10].toString()
+                   post_hehigtmax_set.text = result[11].toString()
+               }
+           }
     }
 
 }

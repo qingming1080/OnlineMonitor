@@ -79,3 +79,8 @@ HEADERS += \
 TRANSLATIONS += \
         SimplifiedChinese.ts \
         English.ts
+
+DISTFILES +=
+
+INCLUDEPATH += $$PWD/LIB
+DEPENDPATH += $$PWD/LIB

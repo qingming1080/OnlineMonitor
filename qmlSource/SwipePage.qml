@@ -5,6 +5,7 @@ import QtQml.Models 2.15
 import Device 1.0
 import DeviceInformation 1.0
 import QmlEnum 1.0
+//import Manual 1.0
 
 Rectangle {
     color: pRgb(153, 204, 255)
@@ -194,6 +195,8 @@ Rectangle {
         }
         onPressed: {
             if((mt1.text === "新建模型" || mt1.text === "New Model")){
+                Manual.setWelderID(swipeCurrIndex+1)
+                Manual.startReading()
                 popup.openPop(2)
             }
             else if(mt1.text === "创建模型" || mt1.text === "Create Model"){
@@ -201,6 +204,7 @@ Rectangle {
                     loader.sourceComponent = mode1
                     loader1.sourceComponent = weld1
                     Manual.save()
+                    Manual.stopReading()
                     sigUpdateUI(0)
                     sigRecover()
                     createModel = false

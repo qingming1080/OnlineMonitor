@@ -11,6 +11,8 @@
 #include "define.h"
 #include "model/message.h"
 #include "qmlenum.h"
+#include "devicemanager.h"
+
 
 constexpr char HBModbusClient::LOCAL_IP[13];
 constexpr int HBModbusClient::SERVER_PORT;
@@ -20,13 +22,13 @@ unsigned short HBModbusClient::m_Holdings[SYS_HOLDING_REGISTERS_COUNT + DEV_HOLD
 unsigned short HBModbusClient::m_Inputs[DEV_INPUT_REGISTERS_COUNT * DEV_COUNT] = {0};
 
 
-HBModbusClient::HBModbusClient(DeviceManager *deviceManager, QObject *parent)
+
+HBModbusClient::HBModbusClient( QObject *parent)
     : QObject(parent),
     modbusClient(new QModbusTcpClient(this)),
     readTimer(new QTimer(this)),
-    writeTimer(new QTimer(this)),
     reconnectTimer(new QTimer(this)),
-    m_deviceManager(deviceManager)
+    m_deviceManager(DeviceManager::getInstance())
 {
 
     connect(readTimer, &QTimer::timeout, this, &HBModbusClient::readModbusData);
@@ -42,9 +44,9 @@ HBModbusClient::HBModbusClient(DeviceManager *deviceManager, QObject *parent)
 
     connect(modbusClient, &QModbusClient::stateChanged, this, &HBModbusClient::onModbusStateChanged);
 
+
      // 启动定时器
     startReading(1000);
-    writeTimer->start(2000);
 }
 
 void HBModbusClient::startReading(int interval)
@@ -61,7 +63,6 @@ HBModbusClient::~HBModbusClient()
 
     delete modbusClient;
     delete readTimer;
-    delete writeTimer;
     delete reconnectTimer;
     delete m_deviceManager;
 
@@ -243,49 +244,6 @@ void HBModbusClient::CoilsReadyRead()
     }
 }
 
-
-void HBModbusClient::HoldingsReadyRead()
-{
-    QModbusReply *reply = qobject_cast<QModbusReply *>(sender());
-    if (reply) {
-        if (reply->error() != QModbusDevice::NoError) {
-            qDebug() << "Modbus error:" << reply->errorString();
-        } else {
-            // 读取结果
-            QModbusDataUnit unit = reply->result();
-            QVector<int> result;
-            for (int i = 0; i < unit.valueCount(); ++i) {
-                result.append(unit.value(i));
-            }
-
-            // 发射信号，通知设备管理器更新设备数据
-            emit dataReceived(result);
-
-            // 遍历设备列表，根据设备 ID 更新数据
-
-            for (Device *device : m_deviceManager->deviceList()) {
-
-                int deviceId = device->pDeviceInformation()->id();
-
-                // 根据设备 ID 更新对应设备的能量值
-                if (deviceId == 1 && result.size() > 0) {
-                   device->pDeviceInformation()->setEnergy(result[0]);
-                } else if (deviceId == 2 && result.size() > 1) {
-                   device->pDeviceInformation()->setEnergy(result[1]);
-                } else if (deviceId == 3 && result.size() > 2) {
-                   device->pDeviceInformation()->setEnergy(result[2]);
-                } else if (deviceId == 4 && result.size() > 3) {
-                   device->pDeviceInformation()->setEnergy(result[3]);
-                }
-            }
-        }
-
-        reply->deleteLater();
-    }
-
-}
-
-
 void HBModbusClient::InputsReadyRead()
 {
     QModbusReply *reply = qobject_cast<QModbusReply *>(sender());
@@ -382,6 +340,26 @@ void HBModbusClient::processDeviceData(Device *device, const QVector<int> &resul
 
     QDateTime dateTime(QDate(DEV_YY, DEV_YY_MM, DEV_DD),QTime(DEV_HH, DEV_MM, DEV_SS));
 
+    _Manual_Data M_data;
+
+    M_data.id = DEV_CYCLE_COUNT;
+    M_data.welder_id = deviceId;
+    M_data.create_time = dateTime.toString("yyyy-MM-dd");
+    M_data.serial_number = DEV_CYCLE_COUNT;
+    M_data.cycle_count = DEV_CYCLE_COUNT;
+    M_data.energy = DEV_ENERGY;
+    M_data.amplitude = DEV_AMPLITUDE;
+    M_data.pressure = DEV_WP;
+    M_data.time = QString::number(DEV_TIME / 100.0, 'f', 2);
+    M_data.power = DEV_POWER;
+    M_data.pre_height = static_cast<double>(DEV_PRE_HEIGHT) / 100.0;
+    M_data.post_height = static_cast<double>(DEV_PRE_HEIGHT) / 100.0;
+    M_data.actual_force = 200;
+    M_data.actual_degree = 150;
+    qDebug() << "_Manual_Data" << "_Manual_Data _Manual_Data 为 0";
+    emit signalNewManualData(M_data);
+
+
     _Production_Data data;
 
     data.welder_id = deviceId;
@@ -393,7 +371,7 @@ void HBModbusClient::processDeviceData(Device *device, const QVector<int> &resul
     data.energy = DEV_ENERGY;
     data.amplitude = DEV_AMPLITUDE;
     data.pressure = DEV_WP;
-    data.time = QString::number(DEV_TIME / 100.0, 'f', 2); ;
+    data.time = QString::number(DEV_TIME / 100.0, 'f', 2);
     data.power = DEV_POWER;
     data.pre_height = static_cast<double>(DEV_PRE_HEIGHT) / 100.0;
     data.post_height = static_cast<double>(DEV_POST_HEIGHT) / 100.0;
@@ -538,6 +516,62 @@ void HBModbusClient::handleDeviceRemoval(int deviceID, const QMap<int, int>& dev
     }
 }
 
+// QVector<int> HBModbusClient::prepareDeviceData(Device *device) {
+//     QVector<int> data(17, 0);
+
+//     const QString model = device->pDeviceInformation()->model();
+//     data[1] = (model == "L20-VG") ? 0 :
+//                   (model == "L20-TS") ? 1 :
+//                   (model == "20DP") ? 2 :
+//                   (model == "20MA") ? 3 :
+//                   (model == "自定义") ? 4 : -1;
+
+//     // 获取连接方式
+//     QmlEnum::CONNECTTYPE connectType = device->pDeviceInformation()->connectType();
+//     if (connectType == QmlEnum::CONNECTTYPE_Network) {
+//         QStringList networkInfo = DataBaseManager::getInstance()->getNetworkInfoById(device->pDeviceInformation()->connectID() + 1);
+//         if (!networkInfo.isEmpty()) {
+//             auto ipList = networkInfo.at(0).split(".");
+//             for (int i = 0; i < 4; ++i) {
+//                 data[3 + i] = ipList.at(i).toInt();
+//             }
+//             data[11] = networkInfo.at(1).toInt();
+
+//             auto localIpList = networkInfo.at(2).split(".");
+//             for (int i = 0; i < 4; ++i) {
+//                 data[7 + i] = localIpList.at(i).toInt();
+//             }
+//         }
+//     } else {
+//         // RS232 数据配置
+//         _RS232_Data rs232Data = DataBaseManager::getInstance()->getRS232DataById(device->pDeviceInformation()->connectID());
+//         data[0] = 1;  // 设置 DEV_TYPE 为 RS232
+//         data[12] = (rs232Data.port == "COM1") ? 0 : 1;
+//         data[13] = getBaudRateIndex(rs232Data.baud_rate);
+//         data[14] = (rs232Data.data_bit == 8) ? 1 : 0;
+//         data[15] = (rs232Data.parity_bit == "None") ? 0 : (rs232Data.parity_bit == "Odd" ? 1 : 2);
+//         data[16] = getStopBitIndex(rs232Data.stop_bit);
+//     }
+
+//     data[2] = 1;  // 设置 DEV_AVAILABLE 为 1（设备可用）
+
+//     return data;
+// }
+
+void HBModbusClient::parseIp(const QString& ipStr, QVector<int>& data, int startIndex) {
+    QStringList ipList = ipStr.split(".");
+    if (ipList.size() == 4) {
+        for (int i = 0; i < 4; ++i) {
+            bool ok;
+            int ipPart = ipList.at(i).toInt(&ok);
+            data[startIndex + i] = (ok && ipPart >= 0 && ipPart <= 255) ? ipPart : 0;
+        }
+    } else {
+        // 如果 IP 地址格式不正确，设置为默认值
+        std::fill(data.begin() + startIndex, data.begin() + startIndex + 4, 0);
+    }
+}
+
 QVector<int> HBModbusClient::prepareDeviceData(Device *device) {
     QVector<int> data(17, 0);
 
@@ -552,17 +586,16 @@ QVector<int> HBModbusClient::prepareDeviceData(Device *device) {
     QmlEnum::CONNECTTYPE connectType = device->pDeviceInformation()->connectType();
     if (connectType == QmlEnum::CONNECTTYPE_Network) {
         QStringList networkInfo = DataBaseManager::getInstance()->getNetworkInfoById(device->pDeviceInformation()->connectID() + 1);
-        if (!networkInfo.isEmpty()) {
-            auto ipList = networkInfo.at(0).split(".");
-            for (int i = 0; i < 4; ++i) {
-                data[3 + i] = ipList.at(i).toInt();
-            }
-            data[11] = networkInfo.at(1).toInt();
+        if (!networkInfo.isEmpty()&& networkInfo.size() >= 3) {
+            parseIp(networkInfo.at(0), data, 3);
 
-            auto localIpList = networkInfo.at(2).split(".");
-            for (int i = 0; i < 4; ++i) {
-                data[7 + i] = localIpList.at(i).toInt();
-            }
+            // 处理网络配置
+            bool ok;
+            data[11] = networkInfo.at(1).toInt(&ok);
+            if (!ok) data[11] = 0;
+
+            // 处理本地 IP 地址
+            parseIp(networkInfo.at(2), data, 7);
         }
     } else {
         // RS232 数据配置
@@ -893,3 +926,154 @@ void HBModbusClient::checkAlarmIsAllZeroRead()
 
     reply->deleteLater();
 }
+
+// void HBModbusClient::readParameterSetting(int deviceID) {
+//     int startAddress = 0;
+//     int registerCount = 12;
+
+//     switch (deviceID) {
+//     case 1: startAddress = 38; break;
+//     case 2: startAddress = 68; break;
+//     case 3: startAddress = 98; break;
+//     case 4: startAddress = 128; break;
+//     default:
+//         qWarning() << "未知设备 ID：" << deviceID;
+//         return;
+//     }
+
+//     QModbusDataUnit dataUnit(QModbusDataUnit::HoldingRegisters, startAddress, registerCount);
+//     QModbusReply *reply = modbusClient->sendReadRequest(dataUnit, 1);
+
+//     if (reply) {
+
+//         connect(reply, &QModbusReply::finished, this, &HBModbusClient::HoldingsReadyRead);
+//     } else {
+//         qWarning() << "发送读取请求失败!";
+//     }
+// }
+
+
+
+// void HBModbusClient::HoldingsReadyRead()
+// {
+//     QModbusReply *reply = qobject_cast<QModbusReply *>(sender());
+//     if (reply) {
+//         if (reply->error() != QModbusDevice::NoError) {
+//             qDebug() << "Modbus error:" << reply->errorString();
+//         } else {
+//             // 读取结果
+//             QModbusDataUnit unit = reply->result();
+//             QVector<int> result;
+//             for (int i = 0; i < unit.valueCount(); ++i) {
+//                 result.append(unit.value(i));
+//             }
+
+//             // 发射信号，通知设备管理器更新设备数据
+//             emit parameterdata(result);
+//         }
+
+//         reply->deleteLater();
+//     }
+
+// }
+
+// 读取设备的参数设置
+void HBModbusClient::readParameterSetting(int deviceID) {
+    int startAddress = 0;
+    int registerCount = 12;
+    switch (deviceID) {
+    case 1: startAddress = 38; break;
+    case 2: startAddress = 68; break;
+    case 3: startAddress = 98; break;
+    case 4: startAddress = 128; break;
+    default:
+        qWarning() << "未知设备 ID：" << deviceID;
+        return;
+    }
+
+    // 创建 Modbus 数据单元
+    QModbusDataUnit dataUnit(QModbusDataUnit::HoldingRegisters, startAddress, registerCount);
+    QModbusReply *reply = modbusClient->sendReadRequest(dataUnit, 1);
+
+    if (reply) {
+        // 连接读取完成信号到对应槽函数
+        qDebug() << "Modbus error:readParameterSetting";
+        connect(reply, &QModbusReply::finished, this, &HBModbusClient::HoldingsReadyRead);
+    } else {
+        qWarning() << "发送读取请求失败!";
+    }
+}
+
+// 当读取完成时，这个函数会被调用来处理结果
+void HBModbusClient::HoldingsReadyRead()
+{
+    qDebug() << "Modbus error:HoldingsReadyRead;";
+
+    QModbusReply *reply = qobject_cast<QModbusReply *>(sender());
+    if (reply) {
+        if (reply->error() != QModbusDevice::NoError) {
+            qDebug() << "Modbus error:" << reply->errorString();
+        } else {
+            // 读取结果
+            QModbusDataUnit unit = reply->result();
+            QVector<int> result;
+            for (int i = 0; i < unit.valueCount(); ++i) {
+                result.append(unit.value(i));
+                qDebug() << "result:" << i << " : " << result.at(i);
+            }
+
+            // 发射信号，将数据传递给 QML 或其他需要的数据处理模块
+            emit parameterdata(result);
+        }
+
+        reply->deleteLater();
+    }
+}
+
+
+void HBModbusClient::writeParameterSetting(int deviceID, const QVector<int>& parameters) {
+    int startAddress = 0;
+    int registerCount = parameters.size();  // 假设有 12 个寄存器需要写入
+
+    // 根据设备 ID 设置起始地址
+    switch (deviceID) {
+    case 1: startAddress = 38; break;
+    case 2: startAddress = 68; break;
+    case 3: startAddress = 98; break;
+    case 4: startAddress = 128; break;
+    default:
+        qWarning() << "未知设备 ID：" << deviceID;
+        return;
+    }
+
+    QModbusDataUnit dataUnit(QModbusDataUnit::HoldingRegisters, startAddress, registerCount);
+
+    // 将 QML 中的参数值转换为 Modbus 写入的值
+    for (int i = 0; i < parameters.size(); ++i) {
+        dataUnit.setValue(i, parameters[i]);
+    }
+
+    // 发送写入请求
+    QModbusReply *reply = modbusClient->sendWriteRequest(dataUnit, 1);
+
+    if (reply) {
+        connect(reply, &QModbusReply::finished, this, &HBModbusClient::WriteParametersReady);
+    } else {
+        qWarning() << "发送写入请求失败!";
+    }
+}
+
+void HBModbusClient::WriteParametersReady()
+{
+    QModbusReply *reply = qobject_cast<QModbusReply *>(sender());
+    if (reply) {
+        if (reply->error() != QModbusDevice::NoError) {
+            qDebug() << "Modbus 写入错误:" << reply->errorString();
+        } else {
+            qDebug() << "参数设置成功写入！";
+        }
+
+        reply->deleteLater();
+    }
+}
+

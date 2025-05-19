@@ -228,12 +228,14 @@ Rectangle {
                 }
                 onPressed: {
                     if(mt1.text === "新建模型"){
+                        Manual.startReading()
                         popup.openPop(3)
                     }
                     else if(mt1.text === "创建模型"){
                         if(DeviceManager.deviceList[0].pDeviceInformation.sample <= listSize){
                             loader.sourceComponent = mode1
                             loader1.sourceComponent = weld1
+                            Manual.stopReading()
                             Manual.save()
                             mt1.text = "新建模型"
                             mt2.text = "新增设备"
@@ -368,6 +370,7 @@ Rectangle {
                     }
                 }
             }
+
             Component{
                 id:mode2
                 Item {
@@ -492,13 +495,14 @@ Rectangle {
                             font.bold: true
                             color: pRgb(171, 206, 213)
                         }
+
                         ListView{
                             id: taskplanView
                             width: 960
                             height: 615
                             y:40
                             clip: true
-                            model: Manual
+                            model:Manual
                             onCountChanged:{
                                 listSize = taskplanView.count
                             }
@@ -575,7 +579,8 @@ Rectangle {
                                     x:960/8*1 + 960/8/2-width/2
                                     anchors.verticalCenter: parent.verticalCenter
                                     font.pixelSize: 16
-                                    text: serial_number
+                                    //text: serial_number
+                                    text:serial_number
                                     font.family: fontBold
                                     font.bold: true
                                     color: index % 2 !== 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
@@ -584,7 +589,7 @@ Rectangle {
                                     anchors.verticalCenter: parent.verticalCenter
                                     x:960/8*2 + 960/8/2-width/2
                                     font.pixelSize: 16
-                                    text: time
+                                    text:time
                                     font.family: fontBold
                                     font.bold: true
                                     color: index % 2 !== 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
@@ -593,7 +598,7 @@ Rectangle {
                                     anchors.verticalCenter: parent.verticalCenter
                                     x:960/8*3 + 960/8/2-width/2
                                     font.pixelSize: 16
-                                    text: power
+                                    text:power
                                     font.family: fontBold
                                     font.bold: true
                                     color: index % 2 !== 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
@@ -611,7 +616,7 @@ Rectangle {
                                     anchors.verticalCenter: parent.verticalCenter
                                     x:960/8*5 + 960/8/2-width/2
                                     font.pixelSize: 16
-                                    text: create_time
+                                    text:create_time
                                     font.family: fontBold
                                     font.bold: true
                                     color: index % 2 !== 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
@@ -709,6 +714,7 @@ Rectangle {
             }
         }
     }
+
 
     Component{
         id:multipro
