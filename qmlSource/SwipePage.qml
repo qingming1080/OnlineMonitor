@@ -5,7 +5,7 @@ import QtQml.Models 2.15
 import Device 1.0
 import DeviceInformation 1.0
 import QmlEnum 1.0
-//import Manual 1.0
+// import Manual 1.0
 
 Rectangle {
     color: pRgb(153, 204, 255)
@@ -29,13 +29,13 @@ Rectangle {
         }
     }
 
-    // *// TEST 2024_08_18
- // /*   Button{
- //        height: 50
- //        width: 100
- //        text: "刷新"
- //        on*/Clicked: DeviceManager.deviceList[swipeCurrIndex].test()
- //    }
+ //  TEST 2024_08_18
+    // Button{
+    //     height: 50
+    //     width: 100
+    //     text: "刷新"
+    //     onClicked: DeviceManager.deviceList[swipeCurrIndex].test()
+    // }
     EquipmentInfor{
         id:s1
         x:42

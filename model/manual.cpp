@@ -5,14 +5,12 @@
 #include <QDebug>
 #include <QElapsedTimer>
 #include "log/localrecord.h"
-#include "modbus/hbmodbusclient.h"
 
 
 
-Manual::Manual(int welderID,HBModbusClient* modbusClient, QObject *parent)
-    : QAbstractListModel{parent}, m_welderID(welderID),m_modbusClient(modbusClient)
+Manual::Manual(int welderID,QObject *parent)
+    : QAbstractListModel{parent}, m_welderID(welderID)
 {
-    // m_modbusClient = HBModbusClient::getInstance();
 
     // QElapsedTimer timer;
     // timer.start();
@@ -28,11 +26,6 @@ Manual::Manual(int welderID,HBModbusClient* modbusClient, QObject *parent)
 
 Manual::~Manual()
 {
-    if (m_modbusClient) {
-        disconnect(m_modbusClient, &HBModbusClient::signalNewManualData,
-                   this, &Manual::onNewManualData);
-    }
-    qDebug() << "Manual 析构，断开 Modbus 信号";
 
 }
 
@@ -72,7 +65,8 @@ QVariant Manual::data(const QModelIndex &index, int role) const
     case QmlEnum::MANUAL_COLUMN::MANUAL_create_time:
         return data.create_time;
     case QmlEnum::MANUAL_COLUMN::MANUAL_serial_number:
-        return data.serial_number;
+        // return data.serial_number;
+        return row + 1;
     case QmlEnum::MANUAL_COLUMN::MANUAL_cycle_count:
         return data.cycle_count;
     case QmlEnum::MANUAL_COLUMN::MANUAL_energy:
@@ -93,6 +87,8 @@ QVariant Manual::data(const QModelIndex &index, int role) const
         return data.actual_force;
     case QmlEnum::MANUAL_COLUMN::MANUAL_actual_degree:
         return data.actual_degree;
+    case QmlEnum::MANUAL_COLUMN::MANUAL_selected:
+        return data.selected;
     default:
         return QVariant();
     }
@@ -116,6 +112,7 @@ QHash<int, QByteArray> Manual::roleNames() const
     roles[QmlEnum::MANUAL_COLUMN::MANUAL_post_height]      = "post_height";
     roles[QmlEnum::MANUAL_COLUMN::MANUAL_actual_force]     = "actual_force";
     roles[QmlEnum::MANUAL_COLUMN::MANUAL_actual_degree]    = "actual_degree";
+    roles[QmlEnum::MANUAL_COLUMN::MANUAL_selected]         = "selected";
 
     return roles;
 }
@@ -198,6 +195,12 @@ bool Manual::setData(const QModelIndex &index, const QVariant &value, int role)
         m_data[row].actual_degree = value.toInt();
         return true;
     }
+    case QmlEnum::MANUAL_COLUMN::MANUAL_selected:
+    {
+        m_data[row].selected = value.toBool();
+        emit dataChanged(index, index, {role});
+        return true;
+    }
     default:
         return false;
     }
@@ -238,15 +241,15 @@ void Manual::loadData()
 
 void Manual::startReading()
 {
-    connect(m_modbusClient, &HBModbusClient::signalNewManualData,
-            this, &Manual::onNewManualData);
+    // connect(m_modbusClient, &HBModbusClient::signalNewManualData,
+    //         this, &Manual::onNewManualData);
     qDebug() << "Manual 开始接收 Modbus 数据";
 }
 
 void Manual::stopReading()
 {
-    disconnect(m_modbusClient, &HBModbusClient::signalNewManualData,
-               this, &Manual::onNewManualData);
+    // disconnect(m_modbusClient, &HBModbusClient::signalNewManualData,
+    //            this, &Manual::onNewManualData);
     qDebug() << "Manual 停止接收 Modbus 数据";
 }
 
@@ -265,8 +268,6 @@ void Manual::onNewManualData(const _Manual_Data& data)
 
     m_pendingData.append(data);
 }
-
-
 
 void Manual::flushPendingData()
 {

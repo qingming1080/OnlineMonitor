@@ -7,6 +7,7 @@
 class History : public QAbstractListModel
 {
     Q_OBJECT
+
     Q_PROPERTY(int deviceID READ deviceID WRITE setDeviceID NOTIFY deviceIDChanged)
     Q_PROPERTY(int finalResult READ finalResult WRITE setFinalResult NOTIFY finalResultChanged)
 public:

@@ -3,16 +3,50 @@
 
 #include <QObject>
 #include <QModbusTcpClient>
-#include <QModbusDataUnit>
 #include <QModbusReply>
 #include <QTimer>
 #include <QVector>
-#include "define.h"
-#include "devicemanager.h"
+#include <QMutex>
+#include "model/device.h"
 
 class HBModbusClient : public QObject
 {
     Q_OBJECT
+
+public:
+
+    static HBModbusClient* GetInstance();
+    ~HBModbusClient();
+
+    void Init();
+
+    template<typename T>
+    QVector<T> readRegisters(QModbusDataUnit::RegisterType type, int start, int count);
+    Q_INVOKABLE void writeHoldingRegisters(int start, const QVector<quint16>& values);
+    Q_INVOKABLE void writeCoils(int start, const QVector<quint8>& values);
+
+    template<typename Setter>
+    void pollRegisters(QModbusDataUnit::RegisterType type, int count, Setter setter, const char* errMsg);
+
+    void pollAllRegisters(QModbusDataUnit::RegisterType type, int count, const char* errMsg);
+
+    void pollHoldings(int start, int count, const char* errMsg);
+
+    void processRegister(QModbusDataUnit::RegisterType type, int address, quint16 value);
+
+    // 只在CycleCount变化时，批量分发所有输入寄存器到UI和数据库
+    void dispatchInputsOnCycleCountChanged();
+    // 获取指定设备的某个输入寄存器值（设备ID: 1~DEV_COUNT，regEnum为INPUT_REGISTERS枚举）
+    quint16 getInputRegister(int devId, int regEnum) const;
+
+    // 获取指定设备的全部输入寄存器（返回QVector，便于UI/DeviceManager批量处理）
+    QVector<quint16> getDeviceInputs(int devId) const;
+
+    // 刷新指定设备的曲线数据（Power/Time/PreHeight/PostHeight）
+    void updateDeviceTrend(Device* dev, quint16 power, quint16 time, quint16 preHeight, quint16 postHeight);
+
+    Q_INVOKABLE void setRTC(int year, int month, int day, int hour, int minute, int second);
+
 public:
 
     static constexpr int DEV_HOLDING_REGISTERS_COUNT = 30;
@@ -29,11 +63,13 @@ public:
     static constexpr int COILS_REGISTERS_ADDRESS_BASE = SYS_COILS_REGISTERS_COUNT;
 
     static constexpr int SERVER_PORT = 502;
-     static constexpr char LOCAL_IP[13] = "127.0.0.1";
-    // static constexpr char LOCAL_IP[13] = "192.168.1.38";
 
+#ifdef RASPBERRY
+    static constexpr char LOCAL_IP[13] = "192.168.1.38";
+#else
+    static constexpr char LOCAL_IP[13] = "127.0.0.1";
+#endif
 
-     //modbus
      enum HOLDING_REGISTERS
      {
          SYS_RTC_YY = 0,
@@ -144,105 +180,41 @@ public:
          DEV_MM,
          DEV_SS,
 
-         END_OF_DEV_INPUT_REGISTERS = DEV_INPUT_REGISTERS_COUNT
+         END_OF_DEV_INPUT_REGISTERS = DEV_INPUT_REGISTERS_COUNT * DEV_COUNT,
      };
 
 
-public:
-    // static HBModbusClient* getInstance();
+
+protected:
     explicit HBModbusClient(QObject *parent = nullptr);
-    ~HBModbusClient();
 
+private:
+    bool connectToServer(const QString &host, int port);
+    void disconnect();
+    void reconnectToServer();
 
-    bool connectToServer(const QString &host, int port);                                      // 连接到 Modbus 服务器
-    void startReading(int interval);                                                          // 开始定时读取数据
+signals:
 
-    void readModbusRegisters(QModbusDataUnit::RegisterType registerType, int startAddress, int registerCount, void (HBModbusClient::*finishedSignal)());
-    void readDiscreteInputs(int startAddress, int inputCount, void (HBModbusClient::*finishedSignal)());
+    void connectedChanged(bool connected);
 
-    //input
-    void processDeviceData(Device *device, const QVector<int> &result, int offset);           // 处理设备数据的函数
-    void updateTrendData(Device *device, int preHeight, int postHeight, int time, int power);
+public slots:
 
-    //device connetion
-    void handleDeviceRemoval(int deviceID, const QMap<int, int>& deviceOffsets);
-    QVector<int> prepareDeviceData(Device *device);
-    void parseIp(const QString& ipStr, QVector<int>& data, int startIndex);
-    int getBaudRateIndex(int baudRate);
-    int getStopBitIndex(double stopBit);
-    void writeModbusData(int offset, const QVector<int>& data);
+    void onPollTimeout();
 
-
-
-    void resetCoilsToZero();
-    void checkAndResetCoils();
-
-    //I.O
-    Q_INVOKABLE void setIO(int deviceID,int DEV_WELD_ALARM);
-    bool getCoilAddressesAndValues(int deviceID, int DEV_WELD_ALARM, int &coilAddress1, int &coilAddress2, int &coilValue1, int &coilValue2);
-
-    void resetButton();
-
-    void resetCoilsAtAddresses(const QList<int>& addresses);
-    void checkAlarmIsAllZero();
-    void checkAlarmIsAllZeroRead();
-
-
-    Q_INVOKABLE void writeSetTime(int year, int month, int day, int hour, int minute, int second);
-    Q_INVOKABLE void setLED(bool state);
-
-    Q_INVOKABLE void readParameterSetting(int deviceID);
-    Q_INVOKABLE void writeParameterSetting(int deviceID, const QVector<int>& parameters);
-
-
+private:
     static unsigned char    m_Coils[SYS_COILS_REGISTERS_COUNT + DEV_COILS_REGISTERS_COUNT * DEV_COUNT];
     static unsigned char    m_Discreteds[DEV_DISCRETE_REGISTERS_COUNT * DEV_COUNT];
     static unsigned short   m_Holdings[SYS_HOLDING_REGISTERS_COUNT + DEV_HOLDING_REGISTERS_COUNT * DEV_COUNT];
     static unsigned short   m_Inputs[DEV_INPUT_REGISTERS_COUNT * DEV_COUNT];
 
-signals:
-    void dataReceived(const QVector<int>& result);
-    void reconnected();
-    void parameterdata(const QVector<int>& result);
+    static HBModbusClient* m_instance;
+    QModbusTcpClient *modbusClient;
 
-    void signalNewManualData(const _Manual_Data& data);
+    QTimer *m_timer;
 
+    QTimer* m_reconnectTimer;
 
-public slots:
-
-    void onModbusError(QModbusDevice::Error error);
-    void onModbusStateChanged(QModbusDevice::State state);
-
-    void attemptReconnect();                            // 尝试重连
-    void readModbusData();                              // 读取 Modbus 数据
-
-
-    void CoilsReadyRead();                              // read colis
-    void HoldingsReadyRead();                           // read holdings
-    void InputsReadyRead();                             // read input
-    void DiscretedsReadyRead();                         // read discreteds
-    void coilWriteFinished();
-    void onDeviceNumChanged();
-    void WriteParametersReady();
-
-private:
-
-    //IO/地址
-    QList<int> alarmIoAddress = {11, 12, 16, 17, 21, 22, 26, 27};
-    QMap<int, bool> coilStatus;
-    int readCounter = 0;
-
-
-private:
-    QModbusTcpClient *modbusClient;               // Modbus TCP 客户端
-
-    QTimer *readTimer;                            // 定时器，用于定时读取数据
-
-    QTimer *reconnectTimer;                       // 重连定时器
-    DeviceManager *m_deviceManager;                  // 设备管理器，处理设备数据
-
-    QMap<int, int> m_lastCycleCounts;             //存储每个设备  lastCycleCounts
-
+    QMutex m_mutex;
 };
 
 #endif // HBMODBUSCLIENT_H

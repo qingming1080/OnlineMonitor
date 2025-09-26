@@ -54,6 +54,7 @@ public:
         MANUAL_post_height     = 11,   // 焊后高度
         MANUAL_actual_force    = 12,   // 撕拉力
         MANUAL_actual_degree   = 13,   // 残留度
+        MANUAL_selected,
     };
     Q_ENUM(MANUAL_COLUMN)
 

@@ -92,6 +92,8 @@ struct _Manual_Data
     int post_height;          // 焊后高度
     int actual_force;         // 撕拉力
     int actual_degree;        // 残留度
+    bool selected = false;
+
 };
 
 

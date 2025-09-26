@@ -13,7 +13,7 @@ class Manual : public QAbstractListModel
     Q_PROPERTY(int welderID READ welderID WRITE setWelderID NOTIFY welderIDChanged)
 public:
 
-    explicit Manual(int welderID = 0,HBModbusClient* modbusClient= nullptr,QObject *parent = nullptr);
+    explicit Manual(int welderID = 0, QObject *parent = nullptr);
     ~Manual();
 
     Q_INVOKABLE int welderID() const;
@@ -42,8 +42,6 @@ signals:
 
 private:
     int m_welderID;
-
-    HBModbusClient* m_modbusClient;
 
     QList<_Manual_Data> m_data;
 

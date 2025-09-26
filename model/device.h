@@ -43,7 +43,6 @@ public:
 
 signals:
 
-
     void pProductionChanged();
 
     void pSystemChanged();

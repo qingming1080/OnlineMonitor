@@ -437,23 +437,23 @@ Dialog {
                     }
 
                 // 转换为整数数组传递给 C++ 层
-                HBModbusClient.writeParameterSetting(
-                            deviceID,
-                            [
-                                parseInt(energyValue),
-                                parseInt(amplitudeValue),
-                                parseInt(tpValue),
-                                parseInt(wpValue),
-                                parseInt(timeMaxValue),
-                                parseInt(timeMinValue),
-                                parseInt(powerMinValue),
-                                parseInt(powerMaxValue),
-                                parseInt(preHeightMinValue),
-                                parseInt(preHeightMaxValue),
-                                parseInt(postHeightMinValue),
-                                parseInt(postHeightMaxValue)
-                            ]
-                            );
+                // HBModbusClient.writeParameterSetting(
+                //             deviceID,
+                //             [
+                //                 parseInt(energyValue),
+                //                 parseInt(amplitudeValue),
+                //                 parseInt(tpValue),
+                //                 parseInt(wpValue),
+                //                 parseInt(timeMaxValue),
+                //                 parseInt(timeMinValue),
+                //                 parseInt(powerMinValue),
+                //                 parseInt(powerMaxValue),
+                //                 parseInt(preHeightMinValue),
+                //                 parseInt(preHeightMaxValue),
+                //                 parseInt(postHeightMinValue),
+                //                 parseInt(postHeightMaxValue)
+                //             ]
+                //             );
 
                 parameterSetting.close()
 

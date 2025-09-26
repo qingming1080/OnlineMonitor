@@ -33,6 +33,9 @@ class Trend : public QObject
 public:
     explicit Trend(int welderID=0, QObject *parent = nullptr);
 
+    void appendWeldPoint(quint16 power, quint16 time, quint16 preHeight, quint16 postHeight);
+
+
     // 更新良率趋势
     void upYieldData();
     // 更新焊接趋势
@@ -148,29 +151,32 @@ private:
     QTimer* m_weldTimer;
     QTimer* m_yieldTimer;
 
-    // _Yield_TrendData m_yieldData;
-    // QVector<QPointF> m_frontData;
-    // QVector<QPointF> m_backData;
-    // QVector<QPointF> m_timeData;
-    // QVector<QPointF> m_powerData;
-
-    // QXYSeries* m_pYieldSeries = nullptr;
-    // QXYSeries* m_pFrontSeries = nullptr;
-    // QXYSeries* m_pBackSeries = nullptr;
-    // QXYSeries* m_pTimeSeries = nullptr;
-    // QXYSeries* m_pPowerSeries = nullptr;
-public:
     _Yield_TrendData m_yieldData;
     QVector<QPointF> m_frontData;
     QVector<QPointF> m_backData;
     QVector<QPointF> m_timeData;
     QVector<QPointF> m_powerData;
 
+    int m_plotIndex = 0;
+
     QXYSeries* m_pYieldSeries = nullptr;
     QXYSeries* m_pFrontSeries = nullptr;
     QXYSeries* m_pBackSeries = nullptr;
     QXYSeries* m_pTimeSeries = nullptr;
     QXYSeries* m_pPowerSeries = nullptr;
+
+// public:
+//     _Yield_TrendData m_yieldData;
+//     QVector<QPointF> m_frontData;
+//     QVector<QPointF> m_backData;
+//     QVector<QPointF> m_timeData;
+//     QVector<QPointF> m_powerData;
+
+//     QXYSeries* m_pYieldSeries = nullptr;
+//     QXYSeries* m_pFrontSeries = nullptr;
+//     QXYSeries* m_pBackSeries = nullptr;
+//     QXYSeries* m_pTimeSeries = nullptr;
+//     QXYSeries* m_pPowerSeries = nullptr;
 };
 
 #endif // TREND_H

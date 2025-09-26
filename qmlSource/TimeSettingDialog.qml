@@ -323,14 +323,12 @@ Dialog {
                 if (isValidDate) {
                     timeSelected(year, month, day, hour, minute, second);  // 发出时间信号
                     timeDialog.close();  // 关闭对话框
+                    //这里将年月日时间写入到
+
                 }
 
-                 HBModbusClient.setIO(1,1);
-                HBModbusClient.setIO(2,1);
-                HBModbusClient.setIO(3,1);
-                HBModbusClient.setIO(4,1);
-                // HBModbusClient.setLED(false);
-                HBModbusClient.writeSetTime(year, month, day, hour, minute, second);
+                modbusClient.setRTC(year, month, day, hour, minute, second)
+
 
             }
         }

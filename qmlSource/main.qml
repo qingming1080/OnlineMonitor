@@ -94,7 +94,7 @@ Window {
         interval: 100  // 延时1秒
         running: true
         onTriggered: {
-            HBModbusClient.setLED(true);
+            // HBModbusClient.setLED(true);
         }
     }
 

@@ -540,18 +540,27 @@ Rectangle {
                                         }
                                     }
                                     onPressed: {
+                                        var newSelected = false
+
                                         if(im1.source == "qrc:/image/unlock.png"){
                                             im1.source = "qrc:/image/lock.png"
+                                            newSelected = true
                                         }
                                         else if(im1.source == "qrc:/image/lock.png"){
                                             im1.source = "qrc:/image/unlock.png"
+                                             newSelected = false
                                         }
                                         else if(im1.source == "qrc:/image/lock1.png"){
                                             im1.source = "qrc:/image/unlock1.png"
+                                            newSelected = false
                                         }
                                         else if(im1.source == "qrc:/image/unlock1.png"){
                                             im1.source = "qrc:/image/lock1.png"
+                                            newSelected = true
                                         }
+
+                                        Manual.setData(Manual.index(index, 0),newSelected,QmlEnum.MANUAL_selected)
+
                                     }
                                 }
                                 Connections{
@@ -579,7 +588,6 @@ Rectangle {
                                     x:960/8*1 + 960/8/2-width/2
                                     anchors.verticalCenter: parent.verticalCenter
                                     font.pixelSize: 16
-                                    //text: serial_number
                                     text:serial_number
                                     font.family: fontBold
                                     font.bold: true

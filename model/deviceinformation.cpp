@@ -27,14 +27,14 @@ DeviceInformation::DeviceInformation(int welderID, QObject *parent)
     m_mesIP = data.mes_ip;
     m_deviceIP = data.device_ip;
 
-    if(welderID == 1){
-        m_goodRate = 22;
-        m_power = 12;
-    }
-    if(welderID == 4){
-        m_power = 16;
-        m_goodRate = 30;
-    }
+    // if(welderID == 1){
+    //     m_goodRate = 22;
+    //     m_power = 12;
+    // }
+    // if(welderID == 4){
+    //     m_power = 16;
+    //     m_goodRate = 30;
+    // }
 
     QString text = QString("%1号设备_DeviceInformation_初始化耗时:%2ms").arg(welderID).arg(timer.elapsed());
     emit SignalManager::getInstance()->signalAddRecord(QDateTime::currentDateTime(), text);
