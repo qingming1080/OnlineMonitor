@@ -37,7 +37,8 @@ SOURCES += \
         model/rs232model.cpp \
         model/system.cpp \
         model/trend.cpp \
-        signalmanager.cpp
+        signalmanager.cpp \
+        tools/utilityapplauncher.cpp
 
 RESOURCES += qml.qrc
 
@@ -74,7 +75,8 @@ HEADERS += \
     model/system.h \
     model/trend.h \
     qmlenum.h \
-    signalmanager.h
+    signalmanager.h \
+    tools/utilityapplauncher.h
 
 TRANSLATIONS += \
         SimplifiedChinese.ts \

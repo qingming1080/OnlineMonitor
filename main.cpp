@@ -19,6 +19,7 @@
 #include "log/localrecord.h"
 #include "model/devicenames.h"
 #include "LanguageManger/languagemanger.h"
+#include "tools/utilityapplauncher.h"
 
 //modbus
 #include "modbus/hbmodbusclient.h"
@@ -61,6 +62,9 @@ int main(int argc, char *argv[])
     QApplication app(argc, argv);
     LocalRecord::getInstance()->start();
 
+    //启动modbus服务器进程
+    UtilityAppLauncher::instance()->startUtilityApp();
+
     LanguageManger LanguageManger;
     QTranslator translator;
     // 默认加载英文
@@ -83,6 +87,7 @@ int main(int argc, char *argv[])
 
     pQmlContext->setContextProperty("Manual",manual);
     pQmlContext->setContextProperty("modbusClient", HBModbusClient::GetInstance());
+
 
 
 
