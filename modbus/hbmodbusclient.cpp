@@ -30,7 +30,7 @@ HBModbusClient::HBModbusClient( QObject *parent)
 
 }
 
-HBModbusClient *HBModbusClient::GetInstance()
+HBModbusClient *HBModbusClient::getInstance()
 {
     if (!m_instance)
         m_instance = new HBModbusClient();

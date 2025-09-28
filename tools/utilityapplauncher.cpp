@@ -3,7 +3,7 @@
 #include <QDebug>
 #include <QTimer>
 
-UtilityAppLauncher* UtilityAppLauncher::instance()
+UtilityAppLauncher* UtilityAppLauncher::getInstance()
 {
     static UtilityAppLauncher s_instance;
     return &s_instance;

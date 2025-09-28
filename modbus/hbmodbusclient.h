@@ -15,7 +15,7 @@ class HBModbusClient : public QObject
 
 public:
 
-    static HBModbusClient* GetInstance();
+    static HBModbusClient* getInstance();
     ~HBModbusClient();
 
     void Init();

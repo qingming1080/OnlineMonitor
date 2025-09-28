@@ -63,7 +63,7 @@ int main(int argc, char *argv[])
     LocalRecord::getInstance()->start();
 
     //启动modbus服务器进程
-    UtilityAppLauncher::instance()->startUtilityApp();
+    UtilityAppLauncher::getInstance()->startUtilityApp();
 
     LanguageManger LanguageManger;
     QTranslator translator;
@@ -86,10 +86,7 @@ int main(int argc, char *argv[])
     pQmlContext->setContextProperty("DeviceNames", DeviceNames::getInstance());
 
     pQmlContext->setContextProperty("Manual",manual);
-    pQmlContext->setContextProperty("modbusClient", HBModbusClient::GetInstance());
-
-
-
+    pQmlContext->setContextProperty("ModbusClient", HBModbusClient::getInstance());
 
 
     qmlRegisterType<Device>("Device",1,0,"Device");

@@ -327,7 +327,7 @@ Dialog {
 
                 }
 
-                modbusClient.setRTC(year, month, day, hour, minute, second)
+                ModbusClient.setRTC(year, month, day, hour, minute, second)
 
 
             }

@@ -8,7 +8,7 @@ class UtilityAppLauncher : public QObject
 {
     Q_OBJECT
 public:
-    static UtilityAppLauncher* instance();
+    static UtilityAppLauncher* getInstance();
 
 
     Q_INVOKABLE void startUtilityApp();
