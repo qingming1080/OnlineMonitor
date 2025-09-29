@@ -91,10 +91,11 @@ Window {
 
     Timer {
         id: startTimer
-        interval: 100  // 延时1秒
+        interval: 1000  // 延时1秒
         running: true
+        repeat: false
         onTriggered: {
-            // HBModbusClient.setLED(true);
+               ModbusClient.setSysLedStatus(true)
         }
     }
 

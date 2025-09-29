@@ -108,6 +108,7 @@ Rectangle {
             // currIndex = 0
         }
     }
+    ///TODO    onItemCountChanged
 
     onItemCountChanged: {
         if(itemCount == 0){
@@ -190,6 +191,8 @@ Rectangle {
         Item {
             Connections{
                 target: sysUI
+
+                //TODO onSigAddDevice
                 function onSigAddDevice(){
                     DeviceManager.addDevice(t1.text,t2.text,
                                             t3.text,t7.text,t8.text,t9.text,
@@ -257,6 +260,9 @@ Rectangle {
                         border.width: 3
                         border.color: "#99ccff"
                     }
+
+                    //TODO
+
                     text:{
                         // if(equipmentCount === 1){
                         if(equipmentCount === 0){
@@ -1000,6 +1006,7 @@ Rectangle {
                             anchors.top: s18.bottom
                             anchors.topMargin: 33
                         }
+                        //TODO CustomComboBox
                         CustomComboBox{
                             id:com2
                             width: 243
@@ -1095,6 +1102,7 @@ Rectangle {
                                     keyboardYype = 0
                                 }
                             }
+                            //TODO
                             text: {
                                 if(com2.displayText === "ETH1"){
 
@@ -1153,6 +1161,7 @@ Rectangle {
                                     keyboardYype = 0
                                 }
                             }
+                                   //TODO
                             text:{
                                 if(com2.displayText === "ETH1"){
                                     return NetworkModel.getDataByWelderID(2,QmlEnum.NETWORK_remote_ip)
@@ -1621,6 +1630,7 @@ Rectangle {
     }
     Component{
         id:musys
+        //TODO
         Item{
             MultideviceSystemConfig{
                 id:s1

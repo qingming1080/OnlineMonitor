@@ -5,6 +5,7 @@
 #include <QSqlRecord>
 #include <QSqlDriver>
 #include <QApplication>
+#include <QFile>
 
 DataBaseManager* DataBaseManager::s_pDataBaseManager = nullptr;
 
@@ -1340,10 +1341,11 @@ DataBaseManager::DataBaseManager(QObject *parent)
 
 void DataBaseManager::init()
 {
-    m_database = QSqlDatabase::addDatabase("QSQLITE");
+
     QString dbPath = QCoreApplication::applicationDirPath() + "/onlinemonitor.db";
-    qDebug() << "I_WANT_TEST" << dbPath;
+    m_database = QSqlDatabase::addDatabase("QSQLITE");
     m_database.setDatabaseName(dbPath);
+    qDebug() << "I_WANT_TEST" << dbPath;
     if (!m_database.open())
     {
         qDebug() << "Database Open Fail ";
@@ -1356,6 +1358,7 @@ void DataBaseManager::init()
         qDebug() << "数据库是否允许获取行数" << b_hasFeature;
     }
 }
+
 
 QString DataBaseManager::getConfiguration_ColumnName(QmlEnum::CONFIGURATION_COLUMN column)
 {
