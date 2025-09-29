@@ -1342,7 +1342,27 @@ DataBaseManager::DataBaseManager(QObject *parent)
 void DataBaseManager::init()
 {
 
-    QString dbPath = QCoreApplication::applicationDirPath() + "/onlinemonitor.db";
+    QString dbName = "onlinemonitor.db";
+    QString dbPath = QCoreApplication::applicationDirPath() + "/" + dbName;
+
+    if (!QFile::exists(dbPath))
+    {
+        QString resourcePath = QString(":/databaseSource/%1").arg(dbName); // 假设放在 qrc:/database/
+        if (!QFile::exists(resourcePath))
+        {
+            qDebug() << "Resource database not found:" << resourcePath;
+            return;
+        }
+
+        if (!QFile::copy(resourcePath, dbPath))
+        {
+            qDebug() << "Failed to copy database from resource to:" << dbPath;
+            return;
+        }
+
+        QFile::setPermissions(dbPath, QFile::WriteOwner | QFile::ReadOwner);
+        qDebug() << "Database copied from resource to:" << dbPath;
+    }
     m_database = QSqlDatabase::addDatabase("QSQLITE");
     m_database.setDatabaseName(dbPath);
     qDebug() << "I_WANT_TEST" << dbPath;
