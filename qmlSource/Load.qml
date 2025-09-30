@@ -11,7 +11,7 @@ Rectangle {
         height: 127.5
         x:235
         y:205
-        source: "qrc:/image/title.png"
+        source: "qrc:/images/logo_hb.png"
     }
     Text {
         text: qsTr("全视之眼系统")

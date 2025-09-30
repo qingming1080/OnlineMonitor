@@ -79,7 +79,7 @@ Rectangle {
         width: 64
         height: 36
         background: Image {
-            source: "qrc:/image/title.png"  // 替换为你的图像路径
+            source: "qrc:/images/logo_hb.png"  // 替换为你的图像路径
             fillMode: Image.PreserveAspectCrop  // 调整图片填充模式
         }
         onPressed: {

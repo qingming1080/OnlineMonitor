@@ -1,7 +1,5 @@
 <RCC>
     <qresource prefix="/">
-        <file>fonts/SourceHanSansCN-Bold.ttf</file>
-        <file>fonts/SourceHanSansCN-Normal.ttf</file>
         <file>qmlSource/AbnormalInfor.qml</file>
         <file>qmlSource/CustomBtn.qml</file>
         <file>qmlSource/CustomComboBox.qml</file>
@@ -25,36 +23,10 @@
         <file>qmlSource/WeldingResult.qml</file>
         <file>qmlSource/WeldingTrend.qml</file>
         <file>qmlSource/YieldTrend.qml</file>
-        <file>image/J.png</file>
-        <file>image/load.png</file>
-        <file>image/title.png</file>
-        <file>image/alarm.png</file>
-        <file>image/undetermined.png</file>
-        <file>image/polygon.png</file>
-        <file>image/restoration.png</file>
-        <file>image/height.png</file>
-        <file>image/close.png</file>
-        <file>image/unlock.png</file>
-        <file>image/unlock1.png</file>
-        <file>image/full.png</file>
-        <file>image/undetermined1.png</file>
-        <file>image/instantiation.png</file>
-        <file>image/vector.png</file>
-        <file>image/reduce.png</file>
-        <file>image/lock.png</file>
-        <file>image/lock1.png</file>
-        <file>image/amplitude.png</file>
-        <file>image/pressure.png</file>
-        <file>image/shake.png</file>
-        <file>image/module.png</file>
-        <file>image/switch.png</file>
         <file>English.ts</file>
         <file>SimplifiedChinese.ts</file>
-        <file>translations/English.qm</file>
-        <file>translations/SimplifiedChinese.qm</file>
         <file>qmlSource/TimeSettingDialog.qml</file>
         <file>qmlSource/TimeUtils.js</file>
-        <file>image/setting.png</file>
         <file>qmlSource/ParameterSettingDiolog.qml</file>
     </qresource>
 </RCC>

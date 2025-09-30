@@ -1526,7 +1526,7 @@ Rectangle {
                         color: "transparent"
                         Image {
                             anchors.fill: parent
-                            source: "qrc:/image/reduce.png"
+                            source: "qrc:/images/btn_fullscreen_exit.png"
                         }
                     }
                     onPressed: {

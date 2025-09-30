@@ -411,17 +411,17 @@ Rectangle {
                                 Image {
                                     id:im
                                     anchors.fill: parent
-                                    source: "qrc:/image/unlock.png"
+                                    source: "qrc:/images/btn_unlock_double_line.png"
                                     fillMode: Image.PreserveAspectFit // 保持图片的宽高比，适应按钮大小
                                 }
                             }
                             onPressed: {
                                 tableFlag = true
-                                if(im.source == "qrc:/image/unlock.png"){
-                                    im.source = "qrc:/image/lock.png"
+                                if(im.source == "qrc:/images/btn_unlock_double_line.png"){
+                                    im.source = "qrc:/images/btn_lock_double_line.png"
                                 }
                                 else{
-                                    im.source = "qrc:/image/unlock.png"
+                                    im.source = "qrc:/images/btn_unlock_double_line.png"
                                 }
                             }
                         }
@@ -535,27 +535,27 @@ Rectangle {
                                         Image {
                                             id:im1
                                             anchors.fill: parent
-                                            source: index % 2 !== 0 ? "qrc:/image/lock.png" : "qrc:/image/lock1.png"
+                                            source: index % 2 !== 0 ? "qrc:/images/btn_lock_double_line.png" : "qrc:/images/btn_lock_single_line.png"
                                             fillMode: Image.PreserveAspectFit // 保持图片的宽高比，适应按钮大小
                                         }
                                     }
                                     onPressed: {
                                         var newSelected = false
 
-                                        if(im1.source == "qrc:/image/unlock.png"){
-                                            im1.source = "qrc:/image/lock.png"
+                                        if(im1.source == "qrc:/images/btn_unlock_double_line.png"){
+                                            im1.source = "qrc:/images/btn_lock_double_line.png"
                                             newSelected = true
                                         }
-                                        else if(im1.source == "qrc:/image/lock.png"){
-                                            im1.source = "qrc:/image/unlock.png"
+                                        else if(im1.source == "qrc:/images/btn_lock_double_line.png"){
+                                            im1.source = "qrc:/images/btn_unlock_double_line.png"
                                              newSelected = false
                                         }
-                                        else if(im1.source == "qrc:/image/lock1.png"){
-                                            im1.source = "qrc:/image/unlock1.png"
+                                        else if(im1.source == "qrc:/images/btn_lock_single_line.png"){
+                                            im1.source = "qrc:/images/btn_unlock_single_line.png"
                                             newSelected = false
                                         }
-                                        else if(im1.source == "qrc:/image/unlock1.png"){
-                                            im1.source = "qrc:/image/lock1.png"
+                                        else if(im1.source == "qrc:/images/btn_unlock_single_line.png"){
+                                            im1.source = "qrc:/images/btn_lock_single_line.png"
                                             newSelected = true
                                         }
 
@@ -567,19 +567,19 @@ Rectangle {
                                     target: bt1
                                     function onPressed(){
                                         if(index % 2 === 0){
-                                            if(im.source == "qrc:/image/unlock.png"){
-                                                im1.source = "qrc:/image/unlock1.png"
+                                            if(im.source == "qrc:/images/btn_unlock_double_line.png"){
+                                                im1.source = "qrc:/images/btn_unlock_single_line.png"
                                             }
                                             else{
-                                                im1.source = "qrc:/image/lock1.png"
+                                                im1.source = "qrc:/images/btn_lock_single_line.png"
                                             }
                                         }
                                         else{
-                                            if(im.source == "qrc:/image/unlock.png"){
-                                                im1.source = "qrc:/image/unlock.png"
+                                            if(im.source == "qrc:/images/btn_unlock_double_line.png"){
+                                                im1.source = "qrc:/images/btn_unlock_double_line.png"
                                             }
                                             else{
-                                                im1.source = "qrc:/image/lock.png"
+                                                im1.source = "qrc:/images/btn_lock_double_line.png"
                                             }
                                         }
                                     }

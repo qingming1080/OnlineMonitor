@@ -72,7 +72,7 @@ Popup {
             background: Rectangle{
                 color: "transparent"
                 Image {
-                    source: "qrc:/image/close.png"
+                    source: "qrc:/images/btn_close_dialog.png"
                 }
             }
             onPressed: {

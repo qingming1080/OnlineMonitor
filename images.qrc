@@ -1,28 +1,28 @@
 <RCC>
     <qresource prefix="/">
-        <file>images/alarm.png</file>
-        <file>images/amplitude.png</file>
-        <file>images/close.png</file>
-        <file>images/full.png</file>
-        <file>images/height.png</file>
+        <file>images/bg_load.png</file>
+        <file>images/btn_close_dialog.png</file>
+        <file>images/btn_fullscreen_enter.png</file>
+        <file>images/btn_fullscreen_exit.png</file>
+        <file>images/btn_lock_double_line.png</file>
+        <file>images/btn_lock_single_line.png</file>
+        <file>images/btn_unlock_double_line.png</file>
+        <file>images/btn_unlock_single_line.png</file>
+        <file>images/icon_amplitude.png</file>
+        <file>images/icon_energy.png</file>
+        <file>images/icon_energy_unit.png</file>
+        <file>images/icon_io_alarm.png</file>
+        <file>images/icon_io_reset.png</file>
+        <file>images/icon_io_suspicious_off.png</file>
+        <file>images/icon_io_suspicious_on.png</file>
+        <file>images/icon_preheight.png</file>
+        <file>images/icon_wp.png</file>
         <file>images/instantiation.png</file>
-        <file>images/J.png</file>
-        <file>images/load.png</file>
-        <file>images/lock.png</file>
-        <file>images/lock1.png</file>
-        <file>images/module.png</file>
+        <file>images/logo_hb.png</file>
+        <file>images/icon_power.png</file>
         <file>images/polygon.png</file>
-        <file>images/pressure.png</file>
-        <file>images/reduce.png</file>
-        <file>images/restoration.png</file>
         <file>images/setting.png</file>
-        <file>images/shake.png</file>
         <file>images/switch.png</file>
-        <file>images/title.png</file>
-        <file>images/undetermined.png</file>
-        <file>images/undetermined1.png</file>
-        <file>images/unlock.png</file>
-        <file>images/unlock1.png</file>
         <file>images/vector.png</file>
     </qresource>
 </RCC>

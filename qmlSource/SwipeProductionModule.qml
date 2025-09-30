@@ -158,7 +158,7 @@ Rectangle {
             color: "transparent"
             Image {
                 anchors.centerIn: parent
-                source: "qrc:/image/reduce.png"
+                source: "qrc:/images/btn_fullscreen_exit.png"
             }
         }
         onPressed: {

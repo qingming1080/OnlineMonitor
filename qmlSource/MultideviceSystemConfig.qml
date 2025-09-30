@@ -115,7 +115,7 @@ Rectangle {
             color: "transparent"
             Image {
                 anchors.fill: parent
-                source: "qrc:/image/full.png"
+                source: "qrc:/images/btn_fullscreen_enter.png"
             }
         }
         onPressed: {
@@ -326,7 +326,7 @@ Rectangle {
     }
     Image {
         id: im1
-        source: "qrc:/image/alarm.png"
+        source: "qrc:/images/icon_io_alarm"
         x:93
         y:379
         width: 22
@@ -334,7 +334,7 @@ Rectangle {
     }
     Image {
         id: im2
-        source: "qrc:/image/restoration.png"
+        source: "qrc:/images/icon_io_reset.png"
         anchors.left: im1.left
         anchors.top: im1.bottom
         anchors.topMargin: 10
@@ -343,7 +343,7 @@ Rectangle {
     }
     Image {
         id: im3
-        source: undetermined ? "qrc:/image/undetermined.png" : "qrc:/image/undetermined1.png"
+        source: undetermined ? "qrc:/images/icon_io_suspicious_on.png" : "qrc:/images/icon_io_suspicious_off.png"
         anchors.left: im2.left
         anchors.top: im2.bottom
         anchors.topMargin: 10
