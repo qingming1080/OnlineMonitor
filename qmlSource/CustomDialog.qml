@@ -459,11 +459,11 @@ Popup {
                     width: 30
                     height: 30
                     radius: 15
-                    color: LanguageManger.language === "SimplifiedChinese" ? "#0d988c" : pRgb(232, 232, 232)
+                    color: LanguageManager.language === "SimplifiedChinese" ? "#0d988c" : pRgb(232, 232, 232)
                     border.color: "#004b8d"
                     border.width: 2
                 }
-                onPressed: LanguageManger.loadLanguage("SimplifiedChinese")
+                onPressed: LanguageManager.loadLanguage("SimplifiedChinese")
 
             }
             Text {
@@ -489,43 +489,43 @@ Popup {
                     width: 30
                     height: 30
                     radius: 15
-                    color: LanguageManger.language === "English" ? "#0d988c" : pRgb(232, 232, 232)
+                    color: LanguageManager.language === "English" ? "#0d988c" : pRgb(232, 232, 232)
                     border.color: "#004b8d"
                     border.width: 2
                 }
-                onPressed: LanguageManger.loadLanguage("English")
+                onPressed: LanguageManager.loadLanguage("English")
             }
-            Text {
-                id: s3
-                x:262
-                y:165
-                text: qsTr("其他语言")
-                color: "#004b8d"
-                font.family: fontBold
-                font.bold: true
-                font.pixelSize: 20
-                horizontalAlignment: Text.AlignHCenter
-                verticalAlignment: Text.AlignVCenter
-            }
-            RadioButton{
-                id:bt3
-                width: 30
-                height: 30
-                x:208
-                y:164
-                indicator: Rectangle
-                {
-                    width: 30
-                    height: 30
-                    radius: 15
-                    color: bt3.checked ? "#0d988c" : pRgb(232, 232, 232)
-                    border.color: "#004b8d"
-                    border.width: 2
-                }
-                onPressed: {
+            // Text {
+            //     id: s3
+            //     x:262
+            //     y:165
+            //     text: qsTr("其他语言")
+            //     color: "#004b8d"
+            //     font.family: fontBold
+            //     font.bold: true
+            //     font.pixelSize: 20
+            //     horizontalAlignment: Text.AlignHCenter
+            //     verticalAlignment: Text.AlignVCenter
+            // }
+            // RadioButton{
+            //     id:bt3
+            //     width: 30
+            //     height: 30
+            //     x:208
+            //     y:164
+            //     indicator: Rectangle
+            //     {
+            //         width: 30
+            //         height: 30
+            //         radius: 15
+            //         color: bt3.checked ? "#0d988c" : pRgb(232, 232, 232)
+            //         border.color: "#004b8d"
+            //         border.width: 2
+            //     }
+            //     onPressed: {
 
-                }
-            }
+            //     }
+            // }
         }
     }
 

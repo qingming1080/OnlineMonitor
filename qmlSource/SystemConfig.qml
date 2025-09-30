@@ -891,7 +891,7 @@ Rectangle {
                             anchors.left: parent.left
                             anchors.top: parent.top
                             anchors.topMargin: 9
-                            anchors.leftMargin: LanguageManger.language === "SimplifiedChinese" ? 63 : 50
+                            anchors.leftMargin: LanguageManager.language === "SimplifiedChinese" ? 63 : 50
                             text: qsTr("网络")
                             color: {
                                 if(isAdd){

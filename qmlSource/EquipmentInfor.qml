@@ -11,7 +11,7 @@ Rectangle {
         text: qsTr("设备信息")
         font.family: fontBold
         font.bold: true
-        font.pixelSize: LanguageManger.language === "SimplifiedChinese" ? 20 : 18
+        font.pixelSize: LanguageManager.language === "SimplifiedChinese" ? 20 : 18
         color: pRgb(153, 204, 255)
         x:17
         y:9
@@ -44,7 +44,7 @@ Rectangle {
         text: qsTr("设备名称: ") + eqText1
         font.family: fontBold
         font.bold: true
-        font.pixelSize: LanguageManger.language === "SimplifiedChinese" ?16 : 14
+        font.pixelSize: LanguageManager.language === "SimplifiedChinese" ?16 : 14
         color: pRgb(171, 206, 213)
         x:/*mode === 1 ? 33 :*/ 39
         y:/*mode === 1 ? 54 :*/ 63
@@ -54,7 +54,7 @@ Rectangle {
         text: qsTr("设备型号: ") + eqText2
         font.family: fontBold
         font.bold: true
-        font.pixelSize: LanguageManger.language === "SimplifiedChinese" ?16 : 14
+        font.pixelSize: LanguageManager.language === "SimplifiedChinese" ?16 : 14
         color: pRgb(171, 206, 213)
         anchors.top:t1.bottom
         anchors.left: t1.left
@@ -65,7 +65,7 @@ Rectangle {
         text: qsTr("连接方式: ") + eqText3
         font.family: fontBold
         font.bold: true
-        font.pixelSize: LanguageManger.language === "SimplifiedChinese" ?16 : 14
+        font.pixelSize: LanguageManager.language === "SimplifiedChinese" ?16 : 14
         color: pRgb(171, 206, 213)
         anchors.top:t2.bottom
         anchors.left: t2.left
@@ -76,7 +76,7 @@ Rectangle {
         text: qsTr("设备状态: ") + eqText4
         font.family: fontBold
         font.bold: true
-        font.pixelSize: LanguageManger.language === "SimplifiedChinese" ?16 : 14
+        font.pixelSize: LanguageManager.language === "SimplifiedChinese" ?16 : 14
         color: pRgb(171, 206, 213)
         anchors.top:t3.bottom
         anchors.left: t3.left

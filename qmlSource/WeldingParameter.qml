@@ -32,7 +32,7 @@ Rectangle {
                text: qsTr("焊接参数")
                font.family: fontBold
                font.bold: true
-               font.pixelSize: LanguageManger.language === "SimplifiedChinese" ? 20 : 18
+               font.pixelSize: LanguageManager.language === "SimplifiedChinese" ? 20 : 18
                color: selectedTab === 0 ? pRgb(43, 112, 173): pRgb(153, 204, 255)  // 选中时文字颜色
                anchors.centerIn: parent  // 使文字居中
            }
@@ -64,7 +64,7 @@ Rectangle {
                text: qsTr("参数设置")
                font.family: fontBold
                font.bold: true
-               font.pixelSize: LanguageManger.language === "SimplifiedChinese" ? 20 : 18
+               font.pixelSize: LanguageManager.language === "SimplifiedChinese" ? 20 : 18
                color: selectedTab === 1 ? pRgb(43, 112, 173) : pRgb(153, 204, 255)   // 选中时文字颜色
                anchors.centerIn: parent  // 使文字居中
            }
@@ -143,7 +143,7 @@ Rectangle {
         text: qsTr("能量")
         font.family: fontBold
         font.bold: true
-        font.pixelSize: LanguageManger.language === "SimplifiedChinese" ? 16 : 14
+        font.pixelSize: LanguageManager.language === "SimplifiedChinese" ? 16 : 14
         color: pRgb(171, 206, 213)
         anchors.verticalCenter: im1.verticalCenter
         anchors.left: im1.right
@@ -154,7 +154,7 @@ Rectangle {
         text: qsTr("振幅")
         font.family: fontBold
         font.bold: true
-        font.pixelSize: LanguageManger.language === "SimplifiedChinese" ? 16 : 14
+        font.pixelSize: LanguageManager.language === "SimplifiedChinese" ? 16 : 14
         color: pRgb(171, 206, 213)
         anchors.verticalCenter: im2.verticalCenter
         anchors.left: im2.right
@@ -165,7 +165,7 @@ Rectangle {
         text: qsTr("压力")
         font.family: fontBold
         font.bold: true
-        font.pixelSize: LanguageManger.language === "SimplifiedChinese" ? 16 : 14
+        font.pixelSize: LanguageManager.language === "SimplifiedChinese" ? 16 : 14
         color: pRgb(171, 206, 213)
         anchors.verticalCenter: im3.verticalCenter
         anchors.left: im3.right
@@ -176,7 +176,7 @@ Rectangle {
         text: qsTr("焊前高度")
         font.family: fontBold
         font.bold: true
-        font.pixelSize: LanguageManger.language === "SimplifiedChinese" ? 16 : 14
+        font.pixelSize: LanguageManager.language === "SimplifiedChinese" ? 16 : 14
         color: pRgb(171, 206, 213)
         anchors.verticalCenter: im4.verticalCenter
         anchors.left: im4.right
@@ -188,7 +188,7 @@ Rectangle {
         text: qsTr("焊后高度")
         font.family: fontBold
         font.bold: true
-        font.pixelSize: LanguageManger.language === "SimplifiedChinese" ? 16 : 14
+        font.pixelSize: LanguageManager.language === "SimplifiedChinese" ? 16 : 14
         color: pRgb(171, 206, 213)
         anchors.verticalCenter: im5.verticalCenter
         anchors.left: im5.right

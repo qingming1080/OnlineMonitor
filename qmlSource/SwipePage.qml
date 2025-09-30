@@ -168,7 +168,7 @@ Rectangle {
         contentItem: Text {
             id: mt1
             text: {
-                if(LanguageManger.language === "SimplifiedChinese"){
+                if(LanguageManager.language === "SimplifiedChinese"){
                     if(createModel){
                         return qsTr("创建模型")
                     }
@@ -231,7 +231,7 @@ Rectangle {
         contentItem: Text {
             id:mt2
             anchors.centerIn: parent
-            text: LanguageManger.language === "SimplifiedChinese" ? qsTr("清除数据") : qsTr("Clear Data")
+            text: LanguageManager.language === "SimplifiedChinese" ? qsTr("清除数据") : qsTr("Clear Data")
             font.pixelSize: 17
             color: pRgb(153, 204, 255)
             horizontalAlignment: Text.AlignHCenter

@@ -19,7 +19,7 @@ Rectangle {
         y:254
         color: pRgb(43, 112, 173)
         font.family: fontBold
-        font.pixelSize: LanguageManger.language === "SimplifiedChinese" ? 64 : 40
+        font.pixelSize: LanguageManager.language === "SimplifiedChinese" ? 64 : 40
         width: 384
         height: 92
     }

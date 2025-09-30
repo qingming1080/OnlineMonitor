@@ -37,7 +37,7 @@ Rectangle {
         text: qsTr("实时良率")
         font.family: fontBold
         font.bold: true
-        font.pixelSize: LanguageManger.language === "SimplifiedChinese" ? 20 : 18
+        font.pixelSize: LanguageManager.language === "SimplifiedChinese" ? 20 : 18
         color: pRgb(153, 204, 255)
         x:17
         y:9
@@ -49,7 +49,7 @@ Rectangle {
         text: qsTr("合格: ") + eqText1
         font.family: fontBold
         font.bold: true
-        font.pixelSize: LanguageManger.language === "SimplifiedChinese" ?16 : 14
+        font.pixelSize: LanguageManager.language === "SimplifiedChinese" ?16 : 14
         color: pRgb(171, 206, 213)
     }
     Text {
@@ -57,7 +57,7 @@ Rectangle {
         text: qsTr("可疑: ") + eqText2
         font.family: fontBold
         font.bold: true
-        font.pixelSize: LanguageManger.language === "SimplifiedChinese" ?16 : 14
+        font.pixelSize: LanguageManager.language === "SimplifiedChinese" ?16 : 14
         color: pRgb(171, 206, 213)
         anchors.left: t1.left
         anchors.top: t1.bottom
@@ -69,7 +69,7 @@ Rectangle {
         text: qsTr("次品: ") + eqText3
         font.family: fontBold
         font.bold: true
-        font.pixelSize: LanguageManger.language === "SimplifiedChinese" ?16 : 14
+        font.pixelSize: LanguageManager.language === "SimplifiedChinese" ?16 : 14
         color: pRgb(171, 206, 213)
         anchors.left: revealing === false ? t1.left : t2.left
         anchors.top: revealing === false ? t1.bottom : t2.bottom
@@ -80,7 +80,7 @@ Rectangle {
         text: qsTr("总计: ") + eqText4
         font.family: fontBold
         font.bold: true
-        font.pixelSize: LanguageManger.language === "SimplifiedChinese" ?16 : 14
+        font.pixelSize: LanguageManager.language === "SimplifiedChinese" ?16 : 14
         color: pRgb(171, 206, 213)
         anchors.left: t3.left
         anchors.top: t3.bottom

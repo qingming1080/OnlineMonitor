@@ -19,7 +19,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
         DataBase/databasemanager.cpp \
         DataHandler/timehandler.cpp \
-        LanguageManger/languagemanger.cpp \
+        LanguageManger/languageManager.cpp \
         devicemanager.cpp \
         fileobject.cpp \
         log/localrecord.cpp \
@@ -42,7 +42,9 @@ SOURCES += \
 
 RESOURCES += qml.qrc \
     databaseSource.qrc \
-    images.qrc
+    fonts.qrc \
+    images.qrc \
+    languageTranslation.qrc
 
 # Additional import path used to resolve QML modules in Qt Creator's code model
 QML_IMPORT_PATH =
@@ -58,7 +60,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 HEADERS += \
     DataBase/databasemanager.h \
     DataHandler/timehandler.h \
-    LanguageManger/languagemanger.h \
+    LanguageManger/languageManager.h \
     define.h \
     devicemanager.h \
     fileobject.h \

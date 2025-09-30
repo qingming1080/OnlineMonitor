@@ -18,7 +18,7 @@
 #include "model/system.h"
 #include "log/localrecord.h"
 #include "model/devicenames.h"
-#include "LanguageManger/languagemanger.h"
+#include "LanguageManger/languageManager.h"
 #include "tools/utilityapplauncher.h"
 
 //modbus
@@ -65,7 +65,7 @@ int main(int argc, char *argv[])
     //启动modbus服务器进程
     UtilityAppLauncher::getInstance()->startUtilityApp();
 
-    LanguageManger LanguageManger;
+    LanguageManager languageManager;
     QTranslator translator;
     // 默认加载英文
     translator.load(":/translations/en.ts");
@@ -76,7 +76,7 @@ int main(int argc, char *argv[])
     QQmlApplicationEngine engine;
     QQmlContext* pQmlContext = engine.rootContext();
     pQmlContext->setContextProperty("QTranslator",&translator);
-    pQmlContext->setContextProperty("LanguageManger",&LanguageManger);
+    pQmlContext->setContextProperty("LanguageManager",&languageManager);
     pQmlContext->setContextProperty("DeviceManager", DeviceManager::getInstance());
     pQmlContext->setContextProperty("History", History::getInstance());
     pQmlContext->setContextProperty("Message", Message::getInstance());
@@ -101,7 +101,7 @@ int main(int argc, char *argv[])
 
     const QUrl url(QStringLiteral("qrc:/qmlSource/main.qml"));
 
-    QObject::connect(&LanguageManger,&LanguageManger::updata,[&](){
+    QObject::connect(&languageManager,&LanguageManager::translationsReloaded,[&](){
         engine.retranslate();
     });
 
