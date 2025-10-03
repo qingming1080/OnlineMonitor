@@ -41,7 +41,8 @@ Rectangle {
         x:42
         y:35
         width:  258
-        height: (mt1.text === "新建模型" || mt1.text === "New Model") ? 255 :225
+        //TODO Need to have a double check
+        height: (mt1.text === "新建模型" || mt1.text === "New Model") ? 255 : 225
         color: "#0c5696"
         eqText1:{
             if(DeviceManager.deviceList[swipeCurrIndex]){
@@ -62,7 +63,7 @@ Rectangle {
         eqText3:{
             if(DeviceManager.deviceList[swipeCurrIndex]){
                 return DeviceManager.deviceList[swipeCurrIndex].pDeviceInformation.connectType === 1
-                        ? "RS232" : "网络连接"
+                        ? "RS232" : "TCP/IP"
             }
             else{
                 return ""
@@ -158,6 +159,7 @@ Rectangle {
     Button{
         id:s4
         x: 42
+        //TODO Need to have a double check
         y: (mt1.text === "新建模型" || mt1.text === "New Model") ? 580 :520
         width:   258
         height:  45
@@ -167,22 +169,17 @@ Rectangle {
         }
         contentItem: Text {
             id: mt1
-            text: {
-                if(LanguageManger.language === "SimplifiedChinese"){
-                    if(createModel){
-                        return qsTr("创建模型")
-                    }
-                    else{
-                        return qsTr("新建模型")
-                    }
+            text:
+            {
+                if(createModel)
+                {
+                    // return qsTr("创建模型")
+                    return GlobalLanguageDefine.strCreateModel
                 }
-                else{
-                    if(createModel){
-                        return qsTr("Create Model")
-                    }
-                    else{
-                        return qsTr("New Model")
-                    }
+                else
+                {
+                    // return qsTr("新建模型")
+                    return GlobalLanguageDefine.strNewModel
                 }
             }
             font.pixelSize:  17
@@ -190,16 +187,20 @@ Rectangle {
             anchors.centerIn: parent  // 确保文本在按钮内居中对齐
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
-            font.family: fontBold
+            font.family: GlobalSystemDefine.fontBold
             font.bold: true
         }
         onPressed: {
-            if((mt1.text === "新建模型" || mt1.text === "New Model")){
+            // if(mt1.text === qsTr("新建模型"))
+            if(mt1.text === GlobalLanguageDefine.strNewModel)
+            {
                 Manual.setWelderID(swipeCurrIndex+1)
                 Manual.startReading()
                 popup.openPop(2)
             }
-            else if(mt1.text === "创建模型" || mt1.text === "Create Model"){
+            // else if(mt1.text === qsTr("创建模型"))
+            else if(mt1.text === GlobalLanguageDefine.strCreateModel)
+            {
                 if(DeviceManager.deviceList[swipeCurrIndex].pDeviceInformation.sample <= listSize){
                     loader.sourceComponent = mode1
                     loader1.sourceComponent = weld1
@@ -222,7 +223,8 @@ Rectangle {
         anchors.topMargin:  10
         width:   258
         height:  45
-        visible: (mt1.text === "创建模型" || mt1.text === "Create Model") ? true:false
+        // visible: (mt1.text === qsTr("创建模型")) ? true : false
+        visible: (mt1.text === GlobalLanguageDefine.strCreateModel) ? true : false
         background: Rectangle{
             radius: 6
             border.color: pRgb(43, 112, 173)
@@ -231,12 +233,13 @@ Rectangle {
         contentItem: Text {
             id:mt2
             anchors.centerIn: parent
-            text: LanguageManger.language === "SimplifiedChinese" ? qsTr("清除数据") : qsTr("Clear Data")
+            // text: qsTr("清除数据")
+            text: GlobalLanguageDefine.strClearData
             font.pixelSize: 17
             color: pRgb(153, 204, 255)
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
-            font.family: fontBold
+            font.family: GlobalSystemDefine.fontBold
             font.bold: true
         }
         onPressed: {
@@ -361,8 +364,9 @@ Rectangle {
                     x:840/7/2+5-width/2
                     y:11
                     font.pixelSize: 16
-                    text: qsTr("全选")
-                    font.family: fontBold
+                    // text: qsTr("全选")
+                    text: GlobalLanguageDefine.strSelectAll
+                    font.family: GlobalSystemDefine.fontBold
                     font.bold: true
                     color: pRgb(153, 204, 255)
                 }
@@ -384,10 +388,12 @@ Rectangle {
                     }
                     onPressed: {
                         tableFlag = true
-                        if(im.source == "qrc:/image/unlock.png"){
+                        if(im.source == "qrc:/image/unlock.png")
+                        {
                             im.source = "qrc:/image/lock.png"
                         }
-                        else{
+                        else
+                        {
                             im.source = "qrc:/image/unlock.png"
                         }
                     }
@@ -397,8 +403,9 @@ Rectangle {
                     x:840/8 + 840/8/2-width/2
                     y:11
                     font.pixelSize: 16
-                    text: qsTr("序号")
-                    font.family: fontBold
+                    // text: qsTr("序号")
+                    text: GlobalLanguageDefine.strSerialNumber
+                    font.family: GlobalSystemDefine.fontBold
                     font.bold: true
                     color: pRgb(171, 206, 213)
                 }
@@ -407,8 +414,9 @@ Rectangle {
                     x:840/8*2 + 840/8/2-width/2
                     y:11
                     font.pixelSize: 16
-                    text: qsTr("焊接时间")
-                    font.family: fontBold
+                    // text: qsTr("焊接时间")
+                    text: GlobalLanguageDefine.strWeldingTime
+                    font.family: GlobalSystemDefine.fontBold
                     font.bold: true
                     color: pRgb(171, 206, 213)
                 }
@@ -417,8 +425,9 @@ Rectangle {
                     x:840/8*3 + 840/8/2-width/2
                     y:11
                     font.pixelSize: 16
-                    text: qsTr("功率")
-                    font.family: fontBold
+                    // text: qsTr("功率")
+                    text: GlobalLanguageDefine.strPower
+                    font.family: GlobalSystemDefine.fontBold
                     font.bold: true
                     color: pRgb(171, 206, 213)
                 }
@@ -427,8 +436,9 @@ Rectangle {
                     x:840/8*4 + 840/8/2-width/2
                     y:11
                     font.pixelSize: 16
-                    text: qsTr("能量")
-                    font.family: fontBold
+                    // text: qsTr("能量")
+                    text: GlobalLanguageDefine.strEnergy
+                    font.family: GlobalSystemDefine.fontBold
                     font.bold: true
                     color: pRgb(171, 206, 213)
                 }
@@ -437,8 +447,9 @@ Rectangle {
                     x:840/8*5 + 840/8/2-width/2
                     y:11
                     font.pixelSize: 16
-                    text: qsTr("日期")
-                    font.family: fontBold
+                    // text: qsTr("日期")
+                    text: GlobalLanguageDefine.strDate
+                    font.family: GlobalSystemDefine.fontBold
                     font.bold: true
                     color: pRgb(171, 206, 213)
                 }
@@ -447,8 +458,9 @@ Rectangle {
                     x:840/8*6 + 840/8/2-width/2
                     y:11
                     font.pixelSize: 16
-                    text: qsTr("拉力")
-                    font.family: fontBold
+                    // text: qsTr("拉力")
+                    text: GlobalLanguageDefine.strTensile
+                    font.family: GlobalSystemDefine.fontBold
                     font.bold: true
                     color: pRgb(171, 206, 213)
                 }
@@ -457,8 +469,9 @@ Rectangle {
                     x:840/8*7 + 840/8/2-width/2
                     y:11
                     font.pixelSize: 16
-                    text: qsTr("残留度")
-                    font.family: fontBold
+                    // text: qsTr("残留度")
+                    text: GlobalLanguageDefine.strResidual
+                    font.family: GlobalSystemDefine.fontBold
                     font.bold: true
                     color: pRgb(171, 206, 213)
                 }
@@ -490,7 +503,7 @@ Rectangle {
                             }
                         }
                         Button{
-                            id:bt
+                            id: bt
                             x:840/8/2-width/2
                             anchors.verticalCenter: parent.verticalCenter
                             width: 30
@@ -507,16 +520,20 @@ Rectangle {
                             }
 
                             onPressed: {
-                                if(im1.source == "qrc:/image/unlock.png"){
+                                if(im1.source == "qrc:/image/unlock.png")
+                                {
                                     im1.source = "qrc:/image/lock.png"
                                 }
-                                else if(im1.source == "qrc:/image/lock.png"){
+                                else if(im1.source == "qrc:/image/lock.png")
+                                {
                                     im1.source = "qrc:/image/unlock.png"
                                 }
-                                else if(im1.source == "qrc:/image/lock1.png"){
+                                else if(im1.source == "qrc:/image/lock1.png")
+                                {
                                     im1.source = "qrc:/image/unlock1.png"
                                 }
-                                else if(im1.source == "qrc:/image/unlock1.png"){
+                                else if(im1.source == "qrc:/image/unlock1.png")
+                                {
                                     im1.source = "qrc:/image/lock1.png"
                                 }
                             }
@@ -547,7 +564,7 @@ Rectangle {
                             anchors.verticalCenter: parent.verticalCenter
                             font.pixelSize: 16
                             text: serial_number
-                            font.family: fontBold
+                            font.family: GlobalSystemDefine.fontBold
                             font.bold: true
                             color: index % 2 !== 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
                         }
@@ -556,7 +573,7 @@ Rectangle {
                             x:840/8*2 + 840/8/2-width/2
                             font.pixelSize: 16
                             text: time
-                            font.family: fontBold
+                            font.family: GlobalSystemDefine.fontBold
                             font.bold: true
                             color: index % 2 !== 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
                         }
@@ -630,7 +647,7 @@ Rectangle {
                             }
                         }
                         TextField{
-                            id:textField1
+                            id: textField1
                             width: 100
                             height: 33
                             anchors.verticalCenter: parent.verticalCenter

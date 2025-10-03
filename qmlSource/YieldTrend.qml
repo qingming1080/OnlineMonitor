@@ -3,6 +3,9 @@ import QtQuick.Controls 2.5
 import QtCharts 2.15
 import Device 1.0
 import Trend 1.0
+import GlobalLanguageDefine 1.0
+import GlobalSystemDefine 1.0
+import LanguageEnum 1.0
 //import CustomTimeChart 1.0
 
 //良率趋势
@@ -319,10 +322,11 @@ Rectangle {
     }
 
     Text {
-        text: qsTr("良率趋势")
-        font.family: fontBold
+        // text: qsTr("良率趋势")
+        text: GlobalLanguageDefine.strYieldTrend
+        font.family: GlobalSystemDefine.fontBold
         font.bold: true
-        font.pixelSize: LanguageManger.language === "SimplifiedChinese" ? 20 : 18
+        font.pixelSize: LanguageManger.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 20 : 18
         color: pRgb(153, 204, 255)
         x:17
         y:9
@@ -383,12 +387,13 @@ Rectangle {
             contentItem: Text {
                 id:t1
                 anchors.centerIn: parent
-                text: qsTr("1小时")
+                // text: "1" + qsTr("小时")
+                text: "1" + GlobalLanguageDefine.strHour
                 font.pixelSize: 16
                 color: pRgb(153, 204, 255)
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
-                font.family: fontNormal
+                font.family: GlobalSystemDefine.fontNormal
             }
         }
         Button{
@@ -408,12 +413,13 @@ Rectangle {
             contentItem: Text {
                 id:t2
                 anchors.centerIn: parent
-                text: qsTr("24小时")
+                // text: "24" + qsTr("小时")
+                text: "24" + GlobalLanguageDefine.strHours
                 font.pixelSize: 16
                 color: pRgb(153, 204, 255)
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
-                font.family: fontNormal
+                font.family: GlobalSystemDefine.fontNormal
             }
         }
         Button{
@@ -433,12 +439,13 @@ Rectangle {
             contentItem: Text {
                 id:t3
                 anchors.centerIn: parent
-                text: qsTr("7天")
+                // text: "7" + qsTr("天")
+                text: "7" + GlobalLanguageDefine.strDays
                 font.pixelSize: 16
                 color: pRgb(153, 204, 255)
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
-                font.family: fontNormal
+                font.family: GlobalSystemDefine.fontNormal
             }
         }
         Button{
@@ -458,17 +465,16 @@ Rectangle {
             contentItem: Text {
                 id:t4
                 anchors.centerIn: parent
-                text: qsTr("30天")
+                // text: "30" + qsTr("天")
+                text: "30" + GlobalLanguageDefine.strDays
                 font.pixelSize: 16
                 color: pRgb(153, 204, 255)
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
-                font.family: fontNormal
+                font.family: GlobalSystemDefine.fontNormal
             }
         }
     }
-
-
 
     property int timer: 0
 
@@ -480,7 +486,7 @@ Rectangle {
         antialiasing: true
         backgroundColor: "transparent"
         titleColor: "red"
-        titleFont.family: fontBold
+        titleFont.family: GlobalSystemDefine.fontBold
         titleFont.pixelSize: 20
         margins.left: 10
         margins.right: 10

@@ -11,7 +11,7 @@ TimeHandler::TimeHandler(QObject *parent): QObject(parent){
 }
 
 
-void TimeHandler::setTime(int year, int month, int day, int hour, int minute, int second)
+void TimeHandler::setTime(const int year, const int month, const int day, const int hour, const int minute, const int second)
 {
 
     QVector<int> timeData = {year, month, day, hour, minute, second};

@@ -1,5 +1,7 @@
 ﻿import QtQuick 2.0
 import QtQuick.Controls 2.5
+import GlobalLanguageDefine 1.0
+import GlobalSystemDefine 1.0
 Rectangle {
     color: pRgb(43, 112, 173)
 
@@ -91,9 +93,10 @@ Rectangle {
         y:15
         width: 180
         height: 44
-        text: qsTr("全视之眼系统")
+        // text: qsTr("全视之眼系统")
+        text: GlobalLanguageDefine.strSystemName
         color: pRgb(153, 204, 255)
-        font.family: fontBold
+        font.family: GlobalSystemDefine.fontBold
         font.bold: true
         font.pixelSize: 30
     }
@@ -103,7 +106,8 @@ Rectangle {
         tmp:true
         width: 157
         height: 60
-        btnText:qsTr("生产界面")
+        // btnText:qsTr("生产界面")
+        btnText: GlobalLanguageDefine.strProductionInterface
         index:1
         Connections{
             target: bt1
@@ -120,7 +124,8 @@ Rectangle {
         anchors.left: bt1.right
         width: 157
         height: 60
-        btnText:qsTr("历史记录")
+        // btnText:qsTr("历史记录")
+        btnText: GlobalLanguageDefine.strHistoryRecord
         index:2
         Connections{
             target: bt2
@@ -137,7 +142,8 @@ Rectangle {
         anchors.left: bt2.right
         width: 157
         height: 60
-        btnText:qsTr("系统配置")
+        // btnText:qsTr("系统配置")
+        btnText: GlobalLanguageDefine.strSystemConfig
         index:3
         Connections{
             target: bt3

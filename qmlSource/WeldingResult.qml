@@ -1,4 +1,7 @@
 ﻿import QtQuick 2.0
+import GlobalLanguageDefine 1.0
+import GlobalSystemDefine 1.0
+import LanguageEnum 1.0
 //焊接结果
 Rectangle {
     property string eqText1: ""
@@ -200,10 +203,11 @@ Rectangle {
     color: pRgb(43, 112, 173)
     radius: 3
     Text {
-        text: qsTr("焊接结果")
-        font.family: fontBold
+        // text: qsTr("焊接结果")
+        text: GlobalLanguageDefine.strWeldingResult
+        font.family: GlobalSystemDefine.fontBold
         font.bold: true
-        font.pixelSize: LanguageManger.language === "SimplifiedChinese" ? 20 : 18
+        font.pixelSize: LanguageManger.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 20 : 18
         color: pRgb(153, 204, 255)
         x:17
         y:9
@@ -216,18 +220,20 @@ Rectangle {
     }
     Text {
         id:t1
-        x:mode == 1 ? 80 : 92
-        y:powerY
-        text: qsTr("功率: ") + eqText1 + "W"
-        font.family: fontBold
+        x: mode == 1 ? 80 : 92
+        y: powerY
+        // text: qsTr("功率") + ": " + eqText1 + "W"
+        text: GlobalLanguageDefine.strPower + ": " + eqText1 + "W"
+        font.family: GlobalSystemDefine.fontBold
         font.bold: true
         font.pixelSize:/*mode === 1 ? 14:*/ 16
         color: pRgb(171, 206, 213)
     }
     Text {
         id:t2
-        text: qsTr("时间: ") + eqText2/100.0 + "S"
-        font.family: fontBold
+        // text: qsTr("时间") + ": " + eqText2/100.0 + "S"
+        text: GlobalLanguageDefine.strTime + ": " + eqText1/100.0 + "S"
+        font.family: GlobalSystemDefine.fontBold
         font.bold: true
         font.pixelSize:/*mode === 1 ? 14: */16
         color: pRgb(171, 206, 213)
@@ -237,8 +243,9 @@ Rectangle {
     }
     Text {
         id:t3
-        text: qsTr("能量: ") + eqText3 + "J"
-        font.family: fontBold
+        // text: qsTr("能量") + ": " + eqText3 + "J"
+        text: GlobalLanguageDefine.strEnergy + ": " + eqText3 + "J"
+        font.family: GlobalSystemDefine.fontBold
         font.bold: true
         font.pixelSize:/*mode === 1 ? 14:*/ 16
         color: pRgb(171, 206, 213)
@@ -248,8 +255,9 @@ Rectangle {
     }
     Text {
         id:t4
-        text: qsTr("焊前高度: ") + eqText4/100.0 + "mm"
-        font.family: fontBold
+        // text: qsTr("焊前高度") + ": " + eqText4/100.0 + "mm"
+        text: GlobalLanguageDefine.strPreWeldHeight + ": " + eqText4/100.0 + "mm"
+        font.family: GlobalSystemDefine.fontBold
         font.bold: true
         font.pixelSize: /*mode === 1 ? 14:*/16
         color: pRgb(171, 206, 213)
@@ -261,8 +269,9 @@ Rectangle {
     }
     Text {
         id:t5
-        text: qsTr("焊后高度: ") + eqText5/100.0 + "mm"
-        font.family: fontBold
+        // text: qsTr("焊后高度") + ": " + eqText5/100.0 + "mm"
+        text: GlobalLanguageDefine.strPostWeldHeight + ": " + eqText5/100.0 + "mm"
+        font.family: GlobalSystemDefine.fontBold
         font.bold: true
         font.pixelSize: /*mode === 1 ? 14:*/16
         color: pRgb(171, 206, 213)

@@ -7,41 +7,41 @@ LanguageManger::LanguageManger(QObject *parent)
 {
     translator = new QTranslator();
     // 初始加载一个默认语言，例如英语
-    QSettings set(QCoreApplication::applicationDirPath() + "/config.ini",QSettings::IniFormat);
-
-    QString Language = set.value("LanguageManger/Language").toString();
-    loadLanguage(Language);
-    // loadLanguage("SimplifiedChinese");
-    //    loadLanguage("English");
+    QSettings configure(QCoreApplication::applicationDirPath() + "/config.ini", QSettings::IniFormat);
+    QString strLanguage = configure.value("LanguageManger/Language").toString();
+    m_iLanguageIndex = -1;
+    if((strLanguage == "SimplifiedChinese") || (strLanguage == "English"))
+        loadLanguage(strLanguage);
+    else
+        loadLanguage("SimplifiedChinese");
 }
 void LanguageManger::loadLanguage(const QString &languageCode)
 {
-    setLanguage(languageCode);
-    QSettings set(QCoreApplication::applicationDirPath() + "/config.ini",QSettings::IniFormat);
+    // 如果之前已经加载了翻译器，则先移除
+    qApp->removeTranslator(translator);
+    translator->load(QString(":/languagePackages/%1.qm").arg(languageCode));
+    qApp->installTranslator(translator);
+
+    QSettings set(QCoreApplication::applicationDirPath() + "/config.ini", QSettings::IniFormat);
     set.setValue("LanguageManger/Language",languageCode);
-    if (qApp->removeTranslator(translator)) {
-        // 如果之前已经加载了翻译器，则先移除
-        qDebug() << QString(":/translations/%1.qm").arg(languageCode);
-        translator->load(QString(":/translations/%1.qm").arg(languageCode));
-        //        translator.load("D:/OnlineMonitor/translations");
-        qApp->installTranslator(translator);
-    } else {
-        // 否则直接加载
-        translator->load(QString(":/translations/%1.qm").arg(languageCode));
-        qApp->installTranslator(translator);
-    }
-    emit updata();
+
+    if(languageCode == "SimplifiedChinese")
+        setLanguageIndex(LanguageEnum::SIMPLIFIED_CHINESE);
+    else if(languageCode == "English")
+        setLanguageIndex(LanguageEnum::ENGLISH);
+    else
+        setLanguageIndex(LanguageEnum::SIMPLIFIED_CHINESE);
 }
 
-QString LanguageManger::language() const
+int LanguageManger::getLanguageIndex() const
 {
-    return m_language;
+    return m_iLanguageIndex;
 }
 
-void LanguageManger::setLanguage(const QString &newLanguage)
+void LanguageManger::setLanguageIndex(int languageIndex)
 {
-    if (m_language == newLanguage)
+    if (m_iLanguageIndex == languageIndex)
         return;
-    m_language = newLanguage;
-    emit languageChanged();
+    m_iLanguageIndex = languageIndex;
+    emit notifyLanguageIndexChanged();
 }

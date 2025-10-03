@@ -1,5 +1,7 @@
 ﻿import QtQuick 2.0
 import QtQuick.Controls 2.15
+import GlobalLanguageDefine 1.0
+import GlobalSystemDefine 1.0
 
 Dialog {
     id: parameterSetting
@@ -23,12 +25,13 @@ Dialog {
             Text {
                 //anchors.horizontalCenter: parent.horizontalCenter
                 anchors.centerIn: parent
-                text: qsTr("设置参数")
+                // text: qsTr("设置参数")
+                text: GlobalLanguageDefine.strSetParameters
                 font.pixelSize: 18
                 color: pRgb(153, 204, 255)
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
-                font.family: fontBold
+                font.family: GlobalSystemDefine.fontBold
                 font.bold: true
             }
         }
@@ -82,7 +85,8 @@ Dialog {
                     anchors.horizontalCenter: parent.horizontalCenter
 
                     Label {
-                        text: "能        量:"
+                        // text: "能        量:"
+                        text: GlobalLanguageDefine.strEnergy + ": "
                         font.pixelSize: 14
                         font.family: "Arial"
                         anchors.verticalCenter: parent.verticalCenter
@@ -111,7 +115,8 @@ Dialog {
 
 
                     Label {
-                        text: "振        幅:"
+                        // text: "振        幅:"
+                        text: GlobalLanguageDefine.strAmplitude + ": "
                         font.pixelSize: 14
                         font.family: "Arial"
                         anchors.verticalCenter: parent.verticalCenter
@@ -141,8 +146,8 @@ Dialog {
 
 
                     Label {
-
-                        text: "焊接压力:"
+                        // text: "焊接压力:"
+                        text: GlobalLanguageDefine.strWeldPressure + ": "
                         font.pixelSize: 14
                         font.family: "Arial"
                         anchors.verticalCenter: parent.verticalCenter
@@ -176,7 +181,15 @@ Dialog {
                     spacing: 15
                     anchors.horizontalCenter: parent.horizontalCenter
 
-                    Label { text: "触发压力:" ; font.pixelSize: 14; font.family: "Arial" ; anchors.verticalCenter: parent.verticalCenter; color:"#004b8d"; font.bold: true }
+                    Label {
+                        // text: "触发压力:" ;
+                        text: GlobalLanguageDefine.strTriggerPressure + ": "
+                        font.pixelSize: 14;
+                        font.family: "Arial" ;
+                        anchors.verticalCenter: parent.verticalCenter;
+                        color:"#004b8d";
+                        font.bold: true
+                    }
 
                     TextField {
                         id: tp_set
@@ -198,7 +211,15 @@ Dialog {
                         }
                     }
 
-                    Label { text: "时间上限:" ; font.pixelSize: 14; font.family: "Arial" ; anchors.verticalCenter: parent.verticalCenter; color:"#004b8d"; font.bold: true }
+                    Label {
+                        // text: "时间上限:" ;
+                        text: GlobalLanguageDefine.strTimeUpper + ": "
+                        font.pixelSize: 14;
+                        font.family: "Arial" ;
+                        anchors.verticalCenter: parent.verticalCenter;
+                        color:"#004b8d";
+                        font.bold: true
+                    }
 
                     TextField {
                         id: time_max_set
@@ -220,7 +241,15 @@ Dialog {
                         }
                     }
 
-                    Label { text: "时间下限:" ;  font.pixelSize: 14; font.family: "Arial" ; anchors.verticalCenter: parent.verticalCenter; color:"#004b8d"; font.bold: true }
+                    Label {
+                        // text: "时间下限:" ;
+                        text: GlobalLanguageDefine.strTimeLower + ": "
+                        font.pixelSize: 14;
+                        font.family: "Arial" ;
+                        anchors.verticalCenter: parent.verticalCenter;
+                        color:"#004b8d";
+                        font.bold: true
+                    }
 
                     TextField {
                         id: time_min_set
@@ -246,7 +275,15 @@ Dialog {
                 Row {
                     spacing: 15
                     anchors.horizontalCenter: parent.horizontalCenter
-                    Label { text: "功率下限:" ; font.pixelSize: 14; font.family: "Arial" ; anchors.verticalCenter: parent.verticalCenter; color:"#004b8d"; font.bold: true }
+                    Label {
+                        // text: "功率下限:" ;
+                        text: GlobalLanguageDefine.strPowerLower + ": "
+                        font.pixelSize: 14;
+                        font.family: "Arial" ;
+                        anchors.verticalCenter: parent.verticalCenter;
+                        color:"#004b8d";
+                        font.bold: true
+                    }
 
                     TextField {
                         id: power_min_set
@@ -268,7 +305,15 @@ Dialog {
                         }
                     }
 
-                    Label { text: "功率上限:" ;  font.pixelSize: 14; font.family: "Arial" ; anchors.verticalCenter: parent.verticalCenter; color:"#004b8d"; font.bold: true }
+                    Label {
+                        // text: "功率上限:" ;
+                        text: GlobalLanguageDefine.strPowerUpper + ": "
+                        font.pixelSize: 14;
+                        font.family: "Arial" ;
+                        anchors.verticalCenter: parent.verticalCenter;
+                        color:"#004b8d";
+                        font.bold: true
+                    }
 
                     TextField {
                         id: power_max_set
@@ -289,7 +334,15 @@ Dialog {
                             border.color: "#004b8d"
                         }
                     }
-                    Label { text: "预焊下限:" ; font.pixelSize: 14; font.family: "Arial" ; anchors.verticalCenter: parent.verticalCenter; color:"#004b8d"; font.bold: true }
+                    Label {
+                        // text: "预焊下限:" ;
+                        text: GlobalLanguageDefine.strPreheightLower + ": "
+                        font.pixelSize: 14;
+                        font.family: "Arial" ;
+                        anchors.verticalCenter: parent.verticalCenter;
+                        color:"#004b8d";
+                        font.bold: true
+                    }
 
                     TextField {
                         id: pre_hehigtmin_set
@@ -315,8 +368,15 @@ Dialog {
                     spacing: 15
                     anchors.horizontalCenter: parent.horizontalCenter
 
-
-                    Label { text: "预焊上限:" ;  font.pixelSize: 14; font.family: "Arial" ; anchors.verticalCenter: parent.verticalCenter; color:"#004b8d"; font.bold: true }
+                    Label {
+                        // text: "预焊上限:" ;
+                        text: GlobalLanguageDefine.strPreheightUpper + ": "
+                        font.pixelSize: 14;
+                        font.family: "Arial" ;
+                        anchors.verticalCenter: parent.verticalCenter;
+                        color:"#004b8d";
+                        font.bold: true
+                    }
 
                     TextField {
                         id: pre_hehigtmax_set
@@ -338,7 +398,15 @@ Dialog {
                         }
                     }
 
-                    Label { text: "终焊下限:" ; font.pixelSize: 14; font.family: "Arial" ; anchors.verticalCenter: parent.verticalCenter; color:"#004b8d"; font.bold: true }
+                    Label {
+                        // text: "终焊下限:" ;
+                        text: GlobalLanguageDefine.strPostHeightLower + ": "
+                        font.pixelSize: 14;
+                        font.family: "Arial" ;
+                        anchors.verticalCenter: parent.verticalCenter;
+                        color:"#004b8d";
+                        font.bold: true
+                    }
 
                     TextField {
                         id: post_hehigtmin_set
@@ -360,7 +428,15 @@ Dialog {
                         }
                     }
 
-                    Label { text: "终焊上限:" ;  font.pixelSize: 14; font.family: "Arial" ; anchors.verticalCenter: parent.verticalCenter; color:"#004b8d"; font.bold: true }
+                    Label {
+                        // text: "终焊上限:" ;
+                        text: GlobalLanguageDefine.strPostHeightUpper + ": "
+                        font.pixelSize: 14;
+                        font.family: "Arial" ;
+                        anchors.verticalCenter: parent.verticalCenter;
+                        color:"#004b8d";
+                        font.bold: true
+                    }
 
                     TextField {
                         id: post_hehigtmax_set
@@ -395,13 +471,14 @@ Dialog {
                 color: pRgb(43, 112, 173)
             }
             contentItem: Text {
-                text:qsTr("确认")
+                // text:qsTr("确认")
+                text: GlobalLanguageDefine.strOK
                 font.pixelSize: 20
                 color: pRgb(153, 204, 255)
                 anchors.centerIn: parent
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
-                font.family: fontBold
+                font.family: GlobalSystemDefine.fontBold
                 font.bold: true
             }
             onClicked: {
@@ -471,13 +548,14 @@ Dialog {
             }
 
             contentItem: Text {
-                text:qsTr("取消")
+                // text: qsTr("取消")
+                text: GlobalLanguageDefine.strCancel
                 font.pixelSize: 20
                 color: pRgb(153, 204, 255)
                 anchors.centerIn: parent
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
-                font.family: fontBold
+                font.family: GlobalSystemDefine.fontBold
                 font.bold: true
             }
 

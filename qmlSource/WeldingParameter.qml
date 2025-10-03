@@ -1,5 +1,8 @@
 ﻿import QtQuick 2.0
 import QtQuick.Controls 2.15
+import GlobalLanguageDefine 1.0
+import GlobalSystemDefine 1.0
+import LanguageEnum         1.0
 import "TimeUtils.js" as TimeUtils
 //焊接参数
 
@@ -21,7 +24,7 @@ Rectangle {
            width:  equipmentCount == 1 ? 117 : 129
            height: 35
            //border.color: selectedTab === 0 ? pRgb(43, 112, 173) :  pRgb(232, 232, 232) // 选中时边框颜色
-           border.color: selectedTab === 0 ?  pRgb(232, 232, 232): pRgb(43, 112, 173) // 选中时边框颜色
+           border.color: selectedTab === 0 ? pRgb(232, 232, 232) : pRgb(43, 112, 173) // 选中时边框颜色
            border.width: 1  // 设置边框宽度
            radius: 1
            color: selectedTab === 0 ? pRgb(232, 232, 232) : pRgb(43, 112, 173) // 选中时背景颜色
@@ -29,11 +32,12 @@ Rectangle {
            anchors.top: parent.top
 
            Text {
-               text: qsTr("焊接参数")
-               font.family: fontBold
+               // text: qsTr("焊接参数")
+               text: GlobalLanguageDefine.strWeldingParameter
+               font.family: GlobalSystemDefine.fontBold
                font.bold: true
-               font.pixelSize: LanguageManger.language === "SimplifiedChinese" ? 20 : 18
-               color: selectedTab === 0 ? pRgb(43, 112, 173): pRgb(153, 204, 255)  // 选中时文字颜色
+               font.pixelSize: LanguageManger.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 20 : 18
+               color: selectedTab === 0 ? pRgb(43, 112, 173) : pRgb(153, 204, 255)  // 选中时文字颜色
                anchors.centerIn: parent  // 使文字居中
            }
 
@@ -61,10 +65,11 @@ Rectangle {
            anchors.leftMargin: 129  // 设置距离焊接参数标签的间隔
 
            Text {
-               text: qsTr("参数设置")
-               font.family: fontBold
+               // text: qsTr("参数设置")
+               text: GlobalLanguageDefine.strParameterSetting
+               font.family: GlobalSystemDefine.fontBold
                font.bold: true
-               font.pixelSize: LanguageManger.language === "SimplifiedChinese" ? 20 : 18
+               font.pixelSize: LanguageManger.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 20 : 18
                color: selectedTab === 1 ? pRgb(43, 112, 173) : pRgb(153, 204, 255)   // 选中时文字颜色
                anchors.centerIn: parent  // 使文字居中
            }
@@ -140,10 +145,11 @@ Rectangle {
     }
     Text {
         id: t1
-        text: qsTr("能量")
-        font.family: fontBold
+        // text: qsTr("能量")
+        text: GlobalLanguageDefine.strEnergy
+        font.family: GlobalSystemDefine.fontBold
         font.bold: true
-        font.pixelSize: LanguageManger.language === "SimplifiedChinese" ? 16 : 14
+        font.pixelSize: LanguageManger.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 16 : 14
         color: pRgb(171, 206, 213)
         anchors.verticalCenter: im1.verticalCenter
         anchors.left: im1.right
@@ -151,10 +157,11 @@ Rectangle {
     }
     Text {
         id: t2
-        text: qsTr("振幅")
-        font.family: fontBold
+        // text: qsTr("振幅")
+        text: GlobalLanguageDefine.strAmplitude
+        font.family: GlobalSystemDefine.fontBold
         font.bold: true
-        font.pixelSize: LanguageManger.language === "SimplifiedChinese" ? 16 : 14
+        font.pixelSize: LanguageManger.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 16 : 14
         color: pRgb(171, 206, 213)
         anchors.verticalCenter: im2.verticalCenter
         anchors.left: im2.right
@@ -162,10 +169,11 @@ Rectangle {
     }
     Text {
         id: t3
-        text: qsTr("压力")
-        font.family: fontBold
+        // text: qsTr("压力")
+        text: GlobalLanguageDefine.strWeldPressure
+        font.family: GlobalSystemDefine.fontBold
         font.bold: true
-        font.pixelSize: LanguageManger.language === "SimplifiedChinese" ? 16 : 14
+        font.pixelSize: LanguageManger.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 16 : 14
         color: pRgb(171, 206, 213)
         anchors.verticalCenter: im3.verticalCenter
         anchors.left: im3.right
@@ -173,10 +181,11 @@ Rectangle {
     }
     Text {
         id: t4
-        text: qsTr("焊前高度")
-        font.family: fontBold
+        // text: qsTr("焊前高度")
+        text: GlobalLanguageDefine.strPreWeldHeight
+        font.family: GlobalSystemDefine.fontBold
         font.bold: true
-        font.pixelSize: LanguageManger.language === "SimplifiedChinese" ? 16 : 14
+        font.pixelSize: LanguageManger.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 16 : 14
         color: pRgb(171, 206, 213)
         anchors.verticalCenter: im4.verticalCenter
         anchors.left: im4.right
@@ -185,10 +194,11 @@ Rectangle {
     }
     Text {
         id: t5
-        text: qsTr("焊后高度")
-        font.family: fontBold
+        // text: qsTr("焊后高度")
+        text: GlobalLanguageDefine.strPostWeldHeight
+        font.family: GlobalSystemDefine.fontBold
         font.bold: true
-        font.pixelSize: LanguageManger.language === "SimplifiedChinese" ? 16 : 14
+        font.pixelSize: LanguageManger.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 16 : 14
         color: pRgb(171, 206, 213)
         anchors.verticalCenter: im5.verticalCenter
         anchors.left: im5.right
@@ -205,7 +215,7 @@ Rectangle {
         horizontalAlignment: TextInput.AlignHCenter
         verticalAlignment: TextInput.AlignVCenter
         color: pRgb(43, 112, 173)
-        font.family: fontBold
+        font.family: GlobalSystemDefine.fontBold
         font.bold: true
         font.pixelSize: 18
         inputMethodHints: Qt.ImhDigitsOnly
@@ -214,7 +224,7 @@ Rectangle {
             border.width: 2
             border.color: "#99ccff"
         }
-        text:eqText1
+        text: eqText1
         MouseArea {
             anchors.fill: parent
             onPressed: {
@@ -234,7 +244,7 @@ Rectangle {
         horizontalAlignment: TextInput.AlignHCenter
         verticalAlignment: TextInput.AlignVCenter
         color: pRgb(43, 112, 173)
-        font.family: fontBold
+        font.family: GlobalSystemDefine.fontBold
         font.bold: true
         font.pixelSize: 18
         inputMethodHints: Qt.ImhDigitsOnly
@@ -263,7 +273,7 @@ Rectangle {
         horizontalAlignment: TextInput.AlignHCenter
         verticalAlignment: TextInput.AlignVCenter
         color: pRgb(43, 112, 173)
-        font.family: fontBold
+        font.family: GlobalSystemDefine.fontBold
         font.bold: true
         font.pixelSize: 18
         inputMethodHints: Qt.ImhDigitsOnly
@@ -292,7 +302,7 @@ Rectangle {
         horizontalAlignment: TextInput.AlignHCenter
         verticalAlignment: TextInput.AlignVCenter
         color: pRgb(43, 112, 173)
-        font.family: fontBold
+        font.family: GlobalSystemDefine.fontBold
         font.bold: true
         font.pixelSize: 18
         inputMethodHints: Qt.ImhDigitsOnly
@@ -322,7 +332,7 @@ Rectangle {
         horizontalAlignment: TextInput.AlignHCenter
         verticalAlignment: TextInput.AlignVCenter
         color: pRgb(43, 112, 173)
-        font.family: fontBold
+        font.family: GlobalSystemDefine.fontBold
         font.bold: true
         font.pixelSize: 18
         inputMethodHints: Qt.ImhDigitsOnly
@@ -342,7 +352,7 @@ Rectangle {
         }
     }
 
-    ParameterSettingDiolog {
+    ParameterSettingDialog {
         id: parameterSetting
         // onTimeSelected: {
         //     // 接收 timeDialog 中发出的 timeSelected 信号，并更新 timeText 显示的时间

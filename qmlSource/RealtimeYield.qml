@@ -1,4 +1,7 @@
 import QtQuick 2.0
+import GlobalLanguageDefine 1.0
+import GlobalSystemDefine   1.0
+import LanguageEnum         1.0
 //实时良率
 Rectangle {
     property string eqText1: ""
@@ -34,10 +37,11 @@ Rectangle {
         color: pRgb(174, 210, 216)
     }
     Text {
-        text: qsTr("实时良率")
-        font.family: fontBold
+        // text: qsTr("实时良率")
+        text: GlobalLanguageDefine.strRealtimeYield
+        font.family: GlobalSystemDefine.fontBold
         font.bold: true
-        font.pixelSize: LanguageManger.language === "SimplifiedChinese" ? 20 : 18
+        font.pixelSize: LanguageManger.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 20 : 18
         color: pRgb(153, 204, 255)
         x:17
         y:9
@@ -46,18 +50,20 @@ Rectangle {
         id:t1
         x:19
         y:65
-        text: qsTr("合格: ") + eqText1
-        font.family: fontBold
+        // text: qsTr("合格") + ": " + eqText1
+        text: GlobalLanguageDefine.strQualified + ": " + eqText1
+        font.family: GlobalSystemDefine.fontBold
         font.bold: true
-        font.pixelSize: LanguageManger.language === "SimplifiedChinese" ?16 : 14
+        font.pixelSize: LanguageManger.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 16 : 14
         color: pRgb(171, 206, 213)
     }
     Text {
         id:t2
-        text: qsTr("可疑: ") + eqText2
-        font.family: fontBold
+        // text: qsTr("可疑") + ": " + eqText2
+        text: GlobalLanguageDefine.strSuspicious + ": " + eqText2
+        font.family: GlobalSystemDefine.fontBold
         font.bold: true
-        font.pixelSize: LanguageManger.language === "SimplifiedChinese" ?16 : 14
+        font.pixelSize: LanguageManger.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 16 : 14
         color: pRgb(171, 206, 213)
         anchors.left: t1.left
         anchors.top: t1.bottom
@@ -66,10 +72,11 @@ Rectangle {
     }
     Text {
         id:t3
-        text: qsTr("次品: ") + eqText3
-        font.family: fontBold
+        // text: qsTr("次品") + ": " + eqText3
+        text: GlobalLanguageDefine.strDefective + ": " + eqText3
+        font.family: GlobalSystemDefine.fontBold
         font.bold: true
-        font.pixelSize: LanguageManger.language === "SimplifiedChinese" ?16 : 14
+        font.pixelSize: LanguageManger.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 16 : 14
         color: pRgb(171, 206, 213)
         anchors.left: revealing === false ? t1.left : t2.left
         anchors.top: revealing === false ? t1.bottom : t2.bottom
@@ -77,10 +84,11 @@ Rectangle {
     }
     Text {
         id:t4
-        text: qsTr("总计: ") + eqText4
-        font.family: fontBold
+        // text: qsTr("总计") + ": " + eqText4
+        text: GlobalLanguageDefine.strTotal + ": " + eqText4
+        font.family: GlobalSystemDefine.fontBold
         font.bold: true
-        font.pixelSize: LanguageManger.language === "SimplifiedChinese" ?16 : 14
+        font.pixelSize: LanguageManger.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 16 : 14
         color: pRgb(171, 206, 213)
         anchors.left: t3.left
         anchors.top: t3.bottom

@@ -1,6 +1,7 @@
 ﻿import QtQuick 2.15
 import QtQuick.Controls 2.15
-
+import GlobalLanguageDefine 1.0
+import GlobalSystemDefine 1.0
 Dialog {
     id: timeDialog
     modal: true
@@ -22,12 +23,13 @@ Dialog {
             Text {
                 //anchors.horizontalCenter: parent.horizontalCenter
                 anchors.centerIn: parent
-                text: qsTr("设置时间")
+                // text: qsTr("设置时间")
+                text: GlobalLanguageDefine.strTimeSettings
                 font.pixelSize: 18
                 color: pRgb(153, 204, 255)
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
-                font.family: fontBold
+                font.family: GlobalSystemDefine.fontBold
                 font.bold: true
             }
         }
@@ -54,9 +56,10 @@ Dialog {
 
     Text {
         id: errorText
-        text: "请输入当前时间"
+        // text: qsTr("请输入当前时间")
+        text: GlobalLanguageDefine.strEnterCurrentTime
         //color: pRgb(153, 204, 255)
-        color:"#004b8d"
+        color: "#004b8d"
         font.pixelSize: 16
         font.family: "Arial" ;
         font.bold: true
@@ -88,7 +91,8 @@ Dialog {
                     anchors.horizontalCenter: parent.horizontalCenter
 
                     Label {
-                        text: "年:"
+                        // text: qsTr("年") + ":"
+                        text: GlobalLanguageDefine.strYear + ":"
                         font.pixelSize: 20
                         font.family: "Arial"
                         anchors.verticalCenter: parent.verticalCenter
@@ -117,7 +121,8 @@ Dialog {
 
 
                     Label {
-                        text: "月:"
+                        // text: qsTr("月") + ":"
+                        text: GlobalLanguageDefine.Month + ":"
                         font.pixelSize: 20
                         font.family: "Arial"
                         anchors.verticalCenter: parent.verticalCenter
@@ -146,8 +151,8 @@ Dialog {
                     }
 
                     Label {
-
-                        text: "日:"
+                        // text: qsTr("日") + ":"
+                        text: GlobalLanguageDefine.strDay + ":"
                         font.pixelSize: 20
                         font.family: "Arial"
                         anchors.verticalCenter: parent.verticalCenter
@@ -180,7 +185,15 @@ Dialog {
                 Row {
                     spacing: 15
                     anchors.horizontalCenter: parent.horizontalCenter
-                    Label { text: "时:" ; font.pixelSize: 20; font.family: "Arial" ; anchors.verticalCenter: parent.verticalCenter; color:"#004b8d"; font.bold: true }
+                    Label {
+                        // text: qsTr("时") + ":" ;
+                        text: GlobalLanguageDefine.strHour + ":"
+                        font.pixelSize: 20;
+                        font.family: "Arial" ;
+                        anchors.verticalCenter: parent.verticalCenter;
+                        color:"#004b8d";
+                        font.bold: true
+                    }
 
                     TextField {
                         id: hourField
@@ -202,7 +215,15 @@ Dialog {
                         }
                     }
 
-                    Label { text: "分:" ;  font.pixelSize: 20; font.family: "Arial" ; anchors.verticalCenter: parent.verticalCenter; color:"#004b8d"; font.bold: true }
+                    Label {
+                        // text: qsTr("分") + ":" ;
+                        text: GlobalLanguageDefine.strMinute + ":"
+                        font.pixelSize: 20;
+                        font.family: "Arial" ;
+                        anchors.verticalCenter: parent.verticalCenter;
+                        color:"#004b8d";
+                        font.bold: true
+                    }
 
                     TextField {
                         id: minuteField
@@ -224,7 +245,15 @@ Dialog {
                         }
                     }
 
-                    Label { text: "秒:" ;  font.pixelSize: 20; font.family: "Arial" ; anchors.verticalCenter: parent.verticalCenter; color:"#004b8d"; font.bold: true }
+                    Label {
+                        // text: qsTr("秒") + ":" ;
+                        text: GlobalLanguageDefine.strSecond + ":"
+                        font.pixelSize: 20;
+                        font.family: "Arial" ;
+                        anchors.verticalCenter: parent.verticalCenter;
+                        color:"#004b8d";
+                        font.bold: true
+                    }
                     TextField {
                         id: secondField
                         text: "0"
@@ -258,13 +287,14 @@ Dialog {
                 color: pRgb(43, 112, 173)
             }
             contentItem: Text {
-                text:qsTr("确认")
+                // text: qsTr("确认")
+                text: GlobalLanguageDefine.strOK
                 font.pixelSize: 20
                 color: pRgb(153, 204, 255)
                 anchors.centerIn: parent
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
-                font.family: fontBold
+                font.family: GlobalSystemDefine.fontBold
                 font.bold: true
             }
             onClicked: {
@@ -282,26 +312,30 @@ Dialog {
                 // 检查是否为数字
                 if (isNaN(year) || isNaN(month) || isNaN(day) || isNaN(hour) || isNaN(minute) || isNaN(second)) {
                     isValidDate = false;
-                    errorText.text = "所有字段必须是数字！";
+                    // errorText.text = qsTr("所有字段必须是数字!");
+                    errorText.text = GlobalLanguageDefine.strInvalidNumeric
                 }
 
                 // 检查年份范围
                 if (year < 1900 || year > 2100) {
                     isValidDate = false;
-                    errorText.text = "无效的年份！";
+                    // errorText.text = qsTr("无效的年份!");
+                    errorText.text = GlobalLanguageDefine.strInvalidYear
                 }
 
                 // 检查月份范围
                 if (month < 1 || month > 12) {
                     isValidDate = false;
-                    errorText.text = "无效的月份！";
+                    // errorText.text = qsTr("无效的月份!");
+                    errorText.text = GlobalLanguageDefine.strInvalidMonth
                 }
 
                 // 检查日期范围
                 let daysInMonth = new Date(year, month, 0).getDate();  // 获取该月总天数
                 if (day < 1 || day > daysInMonth) {
                     isValidDate = false;
-                    errorText.text = "无效的日期！";
+                    // errorText.text = qsTr("无效的日期!");
+                    errorText.text = GlobalLanguageDefine.strInvalidDay
                 }
 
                 // 闰年检查
@@ -309,14 +343,16 @@ Dialog {
                     let isLeapYear = (year % 4 === 0 && year % 100 !== 0) || (year % 400 === 0);
                     if (!isLeapYear) {
                         isValidDate = false;
-                        errorText.text = "无效的日期：该年份不是闰年！";
+                        // errorText.text = qsTr("无效的日期：该年份不是闰年!");
+                        errorText.text = GlobalLanguageDefine.strInvalidLeapYear
                     }
                 }
 
                 // 检查时间范围
                 if (hour < 0 || hour > 23 || minute < 0 || minute > 59 || second < 0 || second > 59) {
                     isValidDate = false;
-                    errorText.text = "无效的时间！";
+                    // errorText.text = qsTr("无效的时间!");
+                    errorText.text = GlobalLanguageDefine.strInvalidDate
                 }
 
                 // 如果日期和时间有效，发出信号并关闭对话框
@@ -344,13 +380,14 @@ Dialog {
             }
 
             contentItem: Text {
-                text:qsTr("取消")
+                // text:qsTr("取消")
+                text: GlobalLanguageDefine.strCancel
                 font.pixelSize: 20
                 color: pRgb(153, 204, 255)
                 anchors.centerIn: parent
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
-                font.family: fontBold
+                font.family: GlobalSystemDefine.fontBold
                 font.bold: true
             }
 

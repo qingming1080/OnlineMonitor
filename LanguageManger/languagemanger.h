@@ -4,31 +4,36 @@
 #include <QObject>
 #include <QTranslator>
 
+class LanguageEnum : public QObject
+{
+    Q_OBJECT
+public:
+    enum LANGUAGE_INDEX
+    {
+        SIMPLIFIED_CHINESE = 0,
+        ENGLISH
+    };
+    Q_ENUM(LANGUAGE_INDEX)
+
+public:
+    explicit LanguageEnum(QObject *parent = nullptr){}
+};
 
 class LanguageManger : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(QString language READ language WRITE setLanguage NOTIFY languageChanged FINAL)
+    Q_PROPERTY(int LanguageIndex READ getLanguageIndex WRITE setLanguageIndex NOTIFY notifyLanguageIndexChanged FINAL)
 public:
     explicit LanguageManger(QObject *parent = nullptr);
-
     Q_INVOKABLE void loadLanguage(const QString &languageCode);
 
-    Q_INVOKABLE QString language() const;
-    Q_INVOKABLE void setLanguage(const QString &newLanguage);
-
+    int getLanguageIndex() const;
+    void setLanguageIndex(int languageIndex);
 private:
     QTranslator *translator;
-
 signals:
-    void updata();
-
-    void languageChanged();
-
+    void notifyLanguageIndexChanged();
 private:
-    QString m_language;
-
+    int m_iLanguageIndex;
 };
-
-
 #endif // LANGUAGEMANGER_H

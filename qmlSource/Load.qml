@@ -1,5 +1,7 @@
 ﻿import QtQuick 2.0
-
+import GlobalLanguageDefine 1.0
+import GlobalSystemDefine 1.0
+import LanguageEnum 1.0
 Rectangle {
     color: pRgb(153, 204, 255)
     width: 1280
@@ -14,32 +16,33 @@ Rectangle {
         source: "qrc:/image/title.png"
     }
     Text {
-        text: qsTr("全视之眼系统")
-        x:483
-        y:254
+        text: GlobalLanguageDefine.strSystemName
+        x: 483
+        y: 254
         color: pRgb(43, 112, 173)
-        font.family: fontBold
-        font.pixelSize: LanguageManger.language === "SimplifiedChinese" ? 64 : 40
+        font.family: GlobalSystemDefine.fontBold
+        font.pixelSize: LanguageManger.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 64 : 40
         width: 384
         height: 92
     }
     Text {
-        text: qsTr("V2.0.0")
+        text: GlobalSystemDefine.strVersionNumber
         color: pRgb(43, 112, 173)
-        x:919
-        y:266
-        font.family: fontNormal
+        x: 919
+        y: 266
+        font.family: GlobalSystemDefine.fontBold
         font.pixelSize: 48
         width: 135
         height: 70
     }
     Text {
         id:lotext
-        text: qsTr("Loading" + loading)
+        // text: qsTr("Loading") + loading
+        text: GlobalLanguageDefine.strLoading + loading
         color: pRgb(43, 112, 173)
         x:520
         y:411
-        font.family: fontNormal
+        font.family: GlobalSystemDefine.fontNormal
         font.pixelSize: 48
         width: 221
         height: 70

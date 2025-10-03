@@ -4,6 +4,8 @@ import QtQuick.Controls 2.15
 import Device 1.0
 import DeviceInformation 1.0
 import QmlEnum 1.0
+import GlobalLanguageDefine 1.0
+import GlobalSystemDefine 1.0
 import "TimeUtils.js" as TimeUtils
 
 Rectangle {
@@ -102,8 +104,10 @@ Rectangle {
             Connections{
                 target: window
                 function onSigOneModel(){
-                    mt1.text = qsTr("创建模型")
-                    mt2.text = qsTr("清除数据")
+                    // mt1.text = qsTr("创建模型")
+                    mt1.text = GlobalLanguageDefine.strCreateModel
+                    // mt2.text = qsTr("清除数据")
+                    mt2.text = GlobalLanguageDefine.strClearData
                     loader.sourceComponent = mode2
                     loader1.sourceComponent = weld2
                 }
@@ -119,7 +123,7 @@ Rectangle {
                 eqText1:DeviceManager.deviceList[0].pDeviceInformation.name
                 eqText2:DeviceManager.deviceList[0].pDeviceInformation.model
                 eqText3:DeviceManager.deviceList[0].pDeviceInformation.connectType === 1
-                        ? "RS232" : "网络连接"
+                        ? "RS232" : "TCP/IP"
                 eqText4:DeviceManager.deviceList[0].pDeviceInformation.state
             }
 
@@ -194,7 +198,7 @@ Rectangle {
                         altitudeMode:{
                             if(equipmentCount === 1){
                                 return DeviceManager.deviceList[0].pDeviceInformation.heightOption
-                                        === 1 ? true:false
+                                        === 1 ? true : false
                             }
                         }
                         eqText1:parameter1
@@ -217,28 +221,36 @@ Rectangle {
                 }
                 contentItem: Text {
                     id: mt1
-                    text: "新建模型"
+                    // text: "新建模型"
+                    text: GlobalLanguageDefine.strNewModel
                     font.pixelSize: mode == 1 ? 17:20
                     color: pRgb(153, 204, 255)
                     anchors.centerIn: parent  // 确保文本在按钮内居中对齐
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
-                    font.family: fontBold
+                    font.family: GlobalSystemDefine.fontBold
                     font.bold: true
                 }
                 onPressed: {
-                    if(mt1.text === "新建模型"){
+                    // if(mt1.text === "新建模型")
+                    if(mt1.text === GlobalLanguageDefine.strNewModel)
+                    {
                         Manual.startReading()
                         popup.openPop(3)
                     }
-                    else if(mt1.text === "创建模型"){
-                        if(DeviceManager.deviceList[0].pDeviceInformation.sample <= listSize){
+                    // else if(mt1.text === "创建模型")
+                    else if(mt1.text === GlobalLanguageDefine.strCreateModel)
+                    {
+                        if(DeviceManager.deviceList[0].pDeviceInformation.sample <= listSize)
+                        {
                             loader.sourceComponent = mode1
                             loader1.sourceComponent = weld1
                             Manual.stopReading()
                             Manual.save()
-                            mt1.text = "新建模型"
-                            mt2.text = "新增设备"
+                            // mt1.text = "新建模型"
+                            mt1.text = GlobalLanguageDefine.strNewModel
+                            // mt2.text = "新增设备"
+                            mt2.text = GlobalLanguageDefine.strAddDevice
                             sigUpdateUI(0)
                         }
                         else{
@@ -262,16 +274,19 @@ Rectangle {
                 contentItem: Text {
                     id:mt2
                     anchors.centerIn: parent
-                    text: qsTr("新增设备")
+                    // text: qsTr("新增设备")
+                    text: GlobalLanguageDefine.strAddDevice
                     font.pixelSize:mode == 1 ? 17: 20
                     color: pRgb(153, 204, 255)
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
-                    font.family: fontBold
+                    font.family: GlobalSystemDefine.fontBold
                     font.bold: true
                 }
                 onPressed: {
-                    if(mt2.text == "新增设备"){
+                    // if(mt2.text == "新增设备")
+                    if(mt2.text === GlobalLanguageDefine.strAddDevice)
+                    {
                         popup.openPop(8)
                     }
                 }
@@ -394,8 +409,9 @@ Rectangle {
                             x:808/7/2+5-width/2
                             y:11
                             font.pixelSize: 16
-                            text: qsTr("全选")
-                            font.family: fontBold
+                            // text: qsTr("全选")
+                            text: GlobalLanguageDefine.strSelectAll
+                            font.family: GlobalSystemDefine.fontBold
                             font.bold: true
                             color: pRgb(153, 204, 255)
                         }
@@ -430,8 +446,9 @@ Rectangle {
                             x:960/8 + 960/8/2-width/2
                             y:11
                             font.pixelSize: 16
-                            text: qsTr("序号")
-                            font.family: fontBold
+                            // text: qsTr("序号")
+                            text: GlobalLanguageDefine.strSerialNumber
+                            font.family: GlobalSystemDefine.fontBold
                             font.bold: true
                             color: pRgb(171, 206, 213)
                         }
@@ -440,8 +457,9 @@ Rectangle {
                             x:960/8*2 + 960/8/2-width/2
                             y:11
                             font.pixelSize: 16
-                            text: qsTr("焊接时间")
-                            font.family: fontBold
+                            // text: qsTr("焊接时间")
+                            text: GlobalLanguageDefine.strWeldingTime
+                            font.family: GlobalSystemDefine.fontBold
                             font.bold: true
                             color: pRgb(171, 206, 213)
                         }
@@ -450,8 +468,9 @@ Rectangle {
                             x:960/8*3 + 960/8/2-width/2
                             y:11
                             font.pixelSize: 16
-                            text: qsTr("功率")
-                            font.family: fontBold
+                            // text: qsTr("功率")
+                            text: GlobalLanguageDefine.strPower
+                            font.family: GlobalSystemDefine.fontBold
                             font.bold: true
                             color: pRgb(171, 206, 213)
                         }
@@ -460,8 +479,9 @@ Rectangle {
                             x:960/8*4 + 960/8/2-width/2
                             y:11
                             font.pixelSize: 16
-                            text: qsTr("能量")
-                            font.family: fontBold
+                            // text: qsTr("能量")
+                            text: GlobalLanguageDefine.strEnergy
+                            font.family: GlobalSystemDefine.fontBold
                             font.bold: true
                             color: pRgb(171, 206, 213)
                         }
@@ -470,8 +490,9 @@ Rectangle {
                             x:960/8*5 + 960/8/2-width/2
                             y:11
                             font.pixelSize: 16
-                            text: qsTr("日期")
-                            font.family: fontBold
+                            // text: qsTr("日期")
+                            text: GlobalLanguageDefine.strDate
+                            font.family: GlobalSystemDefine.fontBold
                             font.bold: true
                             color: pRgb(171, 206, 213)
                         }
@@ -480,8 +501,9 @@ Rectangle {
                             x:960/8*6 + 960/8/2-width/2
                             y:11
                             font.pixelSize: 16
-                            text: qsTr("拉力")
-                            font.family: fontBold
+                            // text: qsTr("拉力")
+                            text: GlobalLanguageDefine.strTensile
+                            font.family: GlobalSystemDefine.fontBold
                             font.bold: true
                             color: pRgb(171, 206, 213)
                         }
@@ -490,8 +512,9 @@ Rectangle {
                             x:960/8*7 + 960/8/2-width/2
                             y:11
                             font.pixelSize: 16
-                            text: qsTr("残留度")
-                            font.family: fontBold
+                            // text: qsTr("残留度")
+                            text: GlobalLanguageDefine.strResidual
+                            font.family: GlobalSystemDefine.fontBold
                             font.bold: true
                             color: pRgb(171, 206, 213)
                         }
@@ -585,47 +608,47 @@ Rectangle {
                                     }
                                 }
                                 Text{
-                                    x:960/8*1 + 960/8/2-width/2
+                                    x: 960/8*1 + 960/8/2-width/2
                                     anchors.verticalCenter: parent.verticalCenter
                                     font.pixelSize: 16
                                     text:serial_number
-                                    font.family: fontBold
+                                    font.family: GlobalSystemDefine.fontBold
                                     font.bold: true
                                     color: index % 2 !== 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
                                 }
                                 Text{
                                     anchors.verticalCenter: parent.verticalCenter
-                                    x:960/8*2 + 960/8/2-width/2
+                                    x: 960/8*2 + 960/8/2-width/2
                                     font.pixelSize: 16
-                                    text:time
-                                    font.family: fontBold
+                                    text: time
+                                    font.family: GlobalSystemDefine.fontBold
                                     font.bold: true
                                     color: index % 2 !== 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
                                 }
                                 Text{
                                     anchors.verticalCenter: parent.verticalCenter
-                                    x:960/8*3 + 960/8/2-width/2
+                                    x: 960/8*3 + 960/8/2-width/2
                                     font.pixelSize: 16
-                                    text:power
-                                    font.family: fontBold
+                                    text: power
+                                    font.family: GlobalSystemDefine.fontBold
                                     font.bold: true
                                     color: index % 2 !== 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
                                 }
                                 Text{
                                     anchors.verticalCenter: parent.verticalCenter
-                                    x:960/8*4 + 960/8/2-width/2
+                                    x: 960/8*4 + 960/8/2-width/2
                                     font.pixelSize: 16
                                     text: energy
-                                    font.family: fontBold
+                                    font.family: GlobalSystemDefine.fontBold
                                     font.bold: true
                                     color: index % 2 !== 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
                                 }
                                 Text{
                                     anchors.verticalCenter: parent.verticalCenter
-                                    x:960/8*5 + 960/8/2-width/2
+                                    x: 960/8*5 + 960/8/2-width/2
                                     font.pixelSize: 16
-                                    text:create_time
-                                    font.family: fontBold
+                                    text: create_time
+                                    font.family: GlobalSystemDefine.fontBold
                                     font.bold: true
                                     color: index % 2 !== 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
                                 }
@@ -634,12 +657,12 @@ Rectangle {
                                     width: 100
                                     height: 33
                                     anchors.verticalCenter: parent.verticalCenter
-                                    x:960/8*6 + 960/8/2-width/2
+                                    x: 960/8*6 + 960/8/2-width/2
                                     horizontalAlignment: TextInput.AlignHCenter
                                     verticalAlignment: TextInput.AlignVCenter
                                     //color: index % 2 === 0 ? pRgb(175, 195, 216) : "#014c8d"
                                     color: index % 2 === 0 ? "#014c8d" : pRgb(175, 195, 216)
-                                    font.family: fontBold
+                                    font.family: GlobalSystemDefine.fontBold
                                     font.bold: true
                                     font.pixelSize: 16
                                     text:actual_force
@@ -676,12 +699,12 @@ Rectangle {
                                     width: 100
                                     height: 33
                                     anchors.verticalCenter: parent.verticalCenter
-                                    x:960/8*7 + 960/8/2-width/2
+                                    x: 960/8*7 + 960/8/2-width/2
                                     horizontalAlignment: TextInput.AlignHCenter
                                     verticalAlignment: TextInput.AlignVCenter
                                     //color: index % 2 === 0 ? pRgb(175, 195, 216) : "#014c8d"
                                     color: index % 2 === 0 ? "#014c8d" : pRgb(175, 195, 216)
-                                    font.family: fontBold
+                                    font.family: GlobalSystemDefine.fontBold
                                     font.bold: true
                                     font.pixelSize: 16
                                     text:actual_degree
@@ -712,9 +735,7 @@ Rectangle {
                                             keyboardYype = 0
                                         }
                                     }
-
                                 }
-
                             }
                         }
                     }
@@ -749,10 +770,11 @@ Rectangle {
         anchors.top: timeText.top
         anchors.right: timeText.left
         anchors.rightMargin: 20
-        font.family: fontBold
+        font.family: GlobalSystemDefine.fontBold
         font.bold: true
         font.pixelSize: 14
-        text: qsTr("系统版本号: v2.0.1")
+        // text: qsTr("系统版本号") + ": " + "v2.0.1"
+        text: GlobalLanguageDefine.strSystemVersion + GlobalSystemDefine.strVersionNumber
     }
 
     // 显示时间的文本
@@ -764,7 +786,7 @@ Rectangle {
         anchors.rightMargin: 10
         anchors.bottomMargin: 5
         font.pixelSize: 14
-        font.family: fontBold
+        font.family: GlobalSystemDefine.fontBold
         font.bold: true
         color: "#639ed6"
         text: TimeUtils.getCurrentTime()

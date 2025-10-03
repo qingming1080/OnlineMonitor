@@ -2,6 +2,9 @@
 import QtCharts 2.15
 import Device 1.0
 import Trend 1.0
+import GlobalLanguageDefine 1.0
+import GlobalSystemDefine 1.0
+import LanguageEnum 1.0
 //import CustomChart 1.0
 //焊接趋势
 Rectangle {
@@ -27,10 +30,11 @@ Rectangle {
 
     radius: 3
     Text {
-        text: qsTr("焊接趋势")
-        font.family: fontBold
+        // text: qsTr("焊接趋势")
+        text: GlobalLanguageDefine.strWeldingTrend
+        font.family: GlobalSystemDefine.fontBold
         font.bold: true
-        font.pixelSize: LanguageManger.language === "SimplifiedChinese" ? 20 : 18
+        font.pixelSize: LanguageManger.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 20 : 18
         color: pRgb(153, 204, 255)
         x:17
         y:9
@@ -62,7 +66,7 @@ Rectangle {
         antialiasing: true
         backgroundColor: "transparent"
         titleColor: "red"
-        titleFont.family: fontBold
+        titleFont.family: GlobalSystemDefine.fontBold
         titleFont.pixelSize: 20
         margins.left: 10
         margins.right: 10
@@ -72,7 +76,7 @@ Rectangle {
             font.pixelSize: 16
             font.bold: true
             labelColor: "#a3c7d0"
-            font.family: fontBold
+            font.family: GlobalSystemDefine.fontBold
         }
         Component.onCompleted: {
             sigUpdateUI(swipeCurrIndex)
@@ -163,7 +167,8 @@ Rectangle {
         }
         LineSeries {
             id:lineSeries
-            name: "功率"
+            // name: "功率"
+            name: GlobalLanguageDefine.strPower
             axisX: myAxisX
             axisY:myAxisY2
             color: "#d5b989"
@@ -172,7 +177,8 @@ Rectangle {
         }
         LineSeries {
             id:lineSeries1
-            name: "时间"
+            // name: "时间"
+            name: GlobalLanguageDefine.strTime
             axisX: myAxisX
             axisY:myAxisY3
             color: "#cd9caa"
@@ -181,7 +187,8 @@ Rectangle {
         }
         LineSeries {
             id:lineSeries2
-            name: "焊前高度"
+            // name: "焊前高度"
+            name: GlobalLanguageDefine.strPreWeldHeight
             axisX: myAxisX
             axisY:myAxisY
             color: "#1398fa"
@@ -191,7 +198,8 @@ Rectangle {
         }
         LineSeries {
             id:lineSeries3
-            name: "焊后高度"
+            // name: "焊后高度"
+            name: GlobalLanguageDefine.strPostWeldHeight
             axisX: myAxisX
             axisY:myAxisY1
             color: "#ccb2f8"
@@ -373,5 +381,4 @@ Rectangle {
             }
         }
     }
-
 }

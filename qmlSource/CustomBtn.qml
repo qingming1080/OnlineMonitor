@@ -1,5 +1,6 @@
 import QtQuick 2.0
 import QtQuick.Controls 2.5
+import GlobalSystemDefine 1.0
 Rectangle {
     border.color: "transparent"
     property string btnText: ""
@@ -39,7 +40,7 @@ Rectangle {
     Text {
         id: btText
         anchors.centerIn: parent
-        font.family: fontBold
+        font.family: GlobalSystemDefine.fontBold
         font.bold: true
         font.pixelSize: 24
         text: btnText

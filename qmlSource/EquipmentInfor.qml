@@ -1,4 +1,7 @@
 import QtQuick 2.0
+import GlobalLanguageDefine 1.0
+import GlobalSystemDefine 1.0
+import LanguageEnum 1.0
 //设备信息
 Rectangle {
     property string eqText1: ""
@@ -8,10 +11,11 @@ Rectangle {
     color: pRgb(43, 112, 173)
     radius: 3
     Text {
-        text: qsTr("设备信息")
-        font.family: fontBold
+        // text: qsTr("设备信息")
+        text: GlobalLanguageDefine.strEquipmentInfo
+        font.family: GlobalSystemDefine.fontBold
         font.bold: true
-        font.pixelSize: LanguageManger.language === "SimplifiedChinese" ? 20 : 18
+        font.pixelSize: LanguageManger.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 20 : 18
         color: pRgb(153, 204, 255)
         x:17
         y:9
@@ -41,20 +45,22 @@ Rectangle {
     }
     Text {
         id:t1
-        text: qsTr("设备名称: ") + eqText1
-        font.family: fontBold
+        // text: qsTr("设备名称") + ": " + eqText1
+        text: GlobalLanguageDefine.strDeviceName + ": " + eqText1
+        font.family: GlobalSystemDefine.fontBold
         font.bold: true
-        font.pixelSize: LanguageManger.language === "SimplifiedChinese" ?16 : 14
+        font.pixelSize: LanguageManger.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 16 : 14
         color: pRgb(171, 206, 213)
         x:/*mode === 1 ? 33 :*/ 39
         y:/*mode === 1 ? 54 :*/ 63
     }
     Text {
         id:t2
-        text: qsTr("设备型号: ") + eqText2
-        font.family: fontBold
+        // text: qsTr("设备型号") + ": " + eqText2
+        text: GlobalLanguageDefine.strDeviceModel + ": " + eqText2
+        font.family: GlobalSystemDefine.fontBold
         font.bold: true
-        font.pixelSize: LanguageManger.language === "SimplifiedChinese" ?16 : 14
+        font.pixelSize: LanguageManger.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 16 : 14
         color: pRgb(171, 206, 213)
         anchors.top:t1.bottom
         anchors.left: t1.left
@@ -62,10 +68,11 @@ Rectangle {
     }
     Text {
         id:t3
-        text: qsTr("连接方式: ") + eqText3
-        font.family: fontBold
+        // text: qsTr("连接方式") + ": " + eqText3
+        text: GlobalLanguageDefine.strConnectionMethod + ": " + eqText3
+        font.family: GlobalSystemDefine.fontBold
         font.bold: true
-        font.pixelSize: LanguageManger.language === "SimplifiedChinese" ?16 : 14
+        font.pixelSize: LanguageManger.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 16 : 14
         color: pRgb(171, 206, 213)
         anchors.top:t2.bottom
         anchors.left: t2.left
@@ -73,10 +80,11 @@ Rectangle {
     }
     Text {
         id:t4
-        text: qsTr("设备状态: ") + eqText4
-        font.family: fontBold
+        // text: qsTr("设备状态") + ": " + eqText4
+        text: GlobalLanguageDefine.strDeviceStatus + ": " + eqText4
+        font.family: GlobalSystemDefine.fontBold
         font.bold: true
-        font.pixelSize: LanguageManger.language === "SimplifiedChinese" ?16 : 14
+        font.pixelSize: LanguageManger.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 16 : 14
         color: pRgb(171, 206, 213)
         anchors.top:t3.bottom
         anchors.left: t3.left

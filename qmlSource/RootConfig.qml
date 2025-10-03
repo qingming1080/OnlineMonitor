@@ -1,5 +1,6 @@
 import QtQuick 2.0
 import QtQuick.Controls 2.15
+import GlobalLanguageDefine 1.0
 Rectangle {
     property string name: ""
     property string model: ""
@@ -14,8 +15,9 @@ Rectangle {
     color: pRgb(43, 112, 173)
     radius: 6
     Text {
-        text: qsTr("系统参数配置")
-        font.family: fontBold
+        // text: qsTr("系统参数配置")
+        text: GlobalLanguageDefine.strSystemParamConfig
+        font.family: GlobalSystemDefine.fontBold
         font.bold: true
         font.pixelSize: 20
         color: pRgb(153, 204, 255)
@@ -29,8 +31,9 @@ Rectangle {
         color: pRgb(174, 210, 216)
     }
     Text {
-        text: qsTr("设备名称:") + name
-        font.family: fontBold
+        // text: qsTr("设备名称") + ": " + name
+        text: GlobalLanguageDefine.strDeviceName + ": " + name
+        font.family: GlobalSystemDefine.fontBold
         font.bold: true
         font.pixelSize: 16
         color: "#abced5"
@@ -38,8 +41,9 @@ Rectangle {
         y:69
     }
     Text {
-        text: qsTr("设备型号:") + model
-        font.family: fontBold
+        // text: qsTr("设备型号") + ": " + model
+        text: GlobalLanguageDefine.strDeviceModel + ": " + model
+        font.family: GlobalSystemDefine.fontBold
         font.bold: true
         font.pixelSize: 16
         color: "#abced5"
@@ -47,8 +51,9 @@ Rectangle {
         y:121
     }
     Text {
-        text: qsTr("单因素系数:")
-        font.family: fontBold
+        // text: qsTr("单因素系数") + ": "
+        text: GlobalLanguageDefine.strSingleFactorCoeff + ": "
+        font.family: GlobalSystemDefine.fontBold
         font.bold: true
         font.pixelSize: 16
         color: "#abced5"
@@ -64,7 +69,7 @@ Rectangle {
         horizontalAlignment: TextInput.AlignHCenter
         verticalAlignment: TextInput.AlignVCenter
         color: pRgb(43, 112, 173)
-        font.family: fontBold
+        font.family: GlobalSystemDefine.fontBold
         font.bold: true
         font.pixelSize: 16
         background: Rectangle{
@@ -83,8 +88,9 @@ Rectangle {
         }
     }
     Text {
-        text: qsTr("通用系数:")
-        font.family: fontBold
+        // text: qsTr("通用系数") + ": "
+        text: GlobalLanguageDefine.strGeneralCoeff + ": "
+        font.family: GlobalSystemDefine.fontBold
         font.bold: true
         font.pixelSize: 16
         color: "#abced5"
@@ -100,7 +106,7 @@ Rectangle {
         horizontalAlignment: TextInput.AlignHCenter
         verticalAlignment: TextInput.AlignVCenter
         color: pRgb(43, 112, 173)
-        font.family: fontBold
+        font.family: GlobalSystemDefine.fontBold
         font.bold: true
         font.pixelSize: 16
         background: Rectangle{
@@ -119,8 +125,9 @@ Rectangle {
         }
     }
     Text {
-        text: qsTr("其他系数:")
-        font.family: fontBold
+        // text: qsTr("其他系数") + ": "
+        text: GlobalLanguageDefine.strOtherCoeff + ": "
+        font.family: GlobalSystemDefine.fontBold
         font.bold: true
         font.pixelSize: 16
         color: "#abced5"
@@ -136,7 +143,7 @@ Rectangle {
         horizontalAlignment: TextInput.AlignHCenter
         verticalAlignment: TextInput.AlignVCenter
         color: pRgb(43, 112, 173)
-        font.family: fontBold
+        font.family: GlobalSystemDefine.fontBold
         font.bold: true
         font.pixelSize: 16
         background: Rectangle{
@@ -155,8 +162,9 @@ Rectangle {
         }
     }
     Text {
-        text: qsTr("自动学习上限:")
-        font.family: fontBold
+        // text: qsTr("自动学习上限") + ": "
+        text: GlobalLanguageDefine.strAutoLearnLimit + ": "
+        font.family: GlobalSystemDefine.fontBold
         font.bold: true
         font.pixelSize: 16
         color: "#abced5"
@@ -172,7 +180,7 @@ Rectangle {
         horizontalAlignment: TextInput.AlignHCenter
         verticalAlignment: TextInput.AlignVCenter
         color: pRgb(43, 112, 173)
-        font.family: fontBold
+        font.family: GlobalSystemDefine.fontBold
         font.bold: true
         font.pixelSize: 16
         background: Rectangle{

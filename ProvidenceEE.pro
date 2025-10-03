@@ -40,7 +40,10 @@ SOURCES += \
         signalmanager.cpp \
         tools/utilityapplauncher.cpp
 
-RESOURCES += qml.qrc
+RESOURCES += qml.qrc \
+    fonts.qrc \
+    res.qrc
+# fonts.qrc  # 注释掉字体资源文件以减少编译内存使用
 
 # Additional import path used to resolve QML modules in Qt Creator's code model
 QML_IMPORT_PATH =
@@ -79,8 +82,7 @@ HEADERS += \
     tools/utilityapplauncher.h
 
 TRANSLATIONS += \
-        SimplifiedChinese.ts \
-        English.ts
+        SimplifiedChinese.ts
 
 DISTFILES +=
 

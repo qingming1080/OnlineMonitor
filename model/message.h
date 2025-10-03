@@ -7,7 +7,8 @@
 class Message : public QAbstractListModel
 {
     Q_OBJECT
-    struct Message_Data{
+    struct Message_Data
+    {
         int welderID;
         QmlEnum::MESSAGE messageType;
         QString time;

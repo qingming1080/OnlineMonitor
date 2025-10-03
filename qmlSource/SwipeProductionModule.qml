@@ -2,6 +2,8 @@
 import QtQuick.Controls 1.4
 import QtQuick.Controls 2.15
 import QtQml.Models 2.15
+import GlobalLanguageDefine 1.0
+import GlobalSystemDefine 1.0
 import "TimeUtils.js" as TimeUtils
 Rectangle {
     color: pRgb(153, 204, 255)
@@ -176,10 +178,11 @@ Rectangle {
         anchors.top: timeText.top
         anchors.right: timeText.left
         anchors.rightMargin: 20
-        font.family: fontBold
+        font.family: GlobalSystemDefine.fontBold
         font.bold: true
         font.pixelSize: 14
-        text: qsTr("系统版本号: v2.0.1")
+        // text: qsTr("系统版本号") + ": " + "v2.0.1"
+        text: GlobalLanguageDefine.strSystemVersion + ": " + GlobalSystemDefine.strVersionNumber
     }
     // 显示时间的文本
     Text {
@@ -190,7 +193,7 @@ Rectangle {
         anchors.rightMargin: 10
         anchors.bottomMargin: 5
         font.pixelSize: 14
-        font.family: fontBold
+        font.family: GlobalSystemDefine.fontBold
         font.bold: true
         color: "#639ed6"
         text: TimeUtils.getCurrentTime()

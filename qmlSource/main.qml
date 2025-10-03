@@ -32,16 +32,6 @@ Window {
         sigSwipeCurrIndex(swipeCurrIndex)
     }
 
-    FontLoader {
-        id: normal
-        source: "qrc:/fonts/SourceHanSansCN-Normal.ttf"
-    }
-    FontLoader {
-        id: bold
-        source: "qrc:/fonts/SourceHanSansCN-Bold.ttf"
-    }
-    property string fontNormal: normal.name
-    property string fontBold: bold.name
     property bool altitudeModel1: {
         if(DeviceManager.deviceList[0]){
             DeviceManager.deviceList[0].pDeviceInformation.heightOption === 0 ? false : true

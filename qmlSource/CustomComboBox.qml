@@ -1,5 +1,6 @@
 import QtQuick 2.0
 import QtQuick.Controls 2.5
+import GlobalSystemDefine 1.0
 ComboBox{
     id:comboBox
     signal dataAlter()
@@ -17,7 +18,7 @@ ComboBox{
             anchors.centerIn: parent
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
-            font.family: fontBold
+            font.family: GlobalSystemDefine.fontBold
             font.bold: true
             font.pixelSize: 16
         }
@@ -48,7 +49,7 @@ ComboBox{
                 font.pixelSize: 16  // 设置字体大小
                 color: pRgb(43, 112, 173)
                 anchors.centerIn: item
-                font.family: fontBold
+                font.family: GlobalSystemDefine.fontBold
                 font.bold: true
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter

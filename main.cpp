@@ -33,7 +33,8 @@ void myMessageHandler(QtMsgType type, const QMessageLogContext &context, const Q
 {
     /// TEST 2024_08_18
     // 过滤掉你不想显示的消息
-    switch (type) {
+    switch (type)
+    {
    // case QtDebugMsg:
    // {
    //     if(msg.contains("I_WANT_"))
@@ -50,6 +51,8 @@ void myMessageHandler(QtMsgType type, const QMessageLogContext &context, const Q
         break;
     case QtFatalMsg:
         abort();
+    case QtDebugMsg:
+        break;
     }
 }
 
@@ -66,17 +69,17 @@ int main(int argc, char *argv[])
     UtilityAppLauncher::instance()->startUtilityApp();
 
     LanguageManger LanguageManger;
-    QTranslator translator;
-    // 默认加载英文
-    translator.load(":/translations/en.ts");
-    app.installTranslator(&translator);
+    // QTranslator translator;
+    // // 默认加载英文
+    // translator.load(":/translations/en.ts");
+    // app.installTranslator(&translator);
 
     Manual* manual = new Manual();
 
     QQmlApplicationEngine engine;
     QQmlContext* pQmlContext = engine.rootContext();
-    pQmlContext->setContextProperty("QTranslator",&translator);
-    pQmlContext->setContextProperty("LanguageManger",&LanguageManger);
+    // pQmlContext->setContextProperty("QTranslator", &translator);
+    pQmlContext->setContextProperty("LanguageManger", &LanguageManger);
     pQmlContext->setContextProperty("DeviceManager", DeviceManager::getInstance());
     pQmlContext->setContextProperty("History", History::getInstance());
     pQmlContext->setContextProperty("Message", Message::getInstance());
@@ -84,13 +87,8 @@ int main(int argc, char *argv[])
     pQmlContext->setContextProperty("RS232Model", RS232Model::getInstance());
     pQmlContext->setContextProperty("DataBaseManager", DataBaseManager::getInstance());
     pQmlContext->setContextProperty("DeviceNames", DeviceNames::getInstance());
-
-    pQmlContext->setContextProperty("Manual",manual);
+    pQmlContext->setContextProperty("Manual", manual);
     pQmlContext->setContextProperty("modbusClient", HBModbusClient::GetInstance());
-
-
-
-
 
     qmlRegisterType<Device>("Device",1,0,"Device");
     qmlRegisterType<IO>("IO",1,0,"IO");
@@ -98,13 +96,17 @@ int main(int argc, char *argv[])
     qmlRegisterType<Trend>("Trend",1,0,"Trend");
     qmlRegisterType<System>("System",1,0,"System");
     qmlRegisterType<QmlEnum>("QmlEnum",1,0,"QmlEnum");
+    qmlRegisterType<LanguageEnum>("LanguageEnum", 1, 0, "LanguageEnum");
 //    qmlRegisterType<LineChartItem>("CustomChart", 1, 0, "CustomChart");
 //    qmlRegisterType<TimeChartItem>("CustomTimeChart", 1, 0, "CustomTimeChart");
 
+    qmlRegisterSingletonType(QUrl("qrc:/qmlSource/GlobalLanguageDefine.qml"),   "GlobalLanguageDefine", 1,  0,  "GlobalLanguageDefine");
+    qmlRegisterSingletonType(QUrl("qrc:/qmlSource/GlobalSystemDefine.qml"),     "GlobalSystemDefine",   1,  0,  "GlobalSystemDefine");
+    qmlRegisterSingletonType(QUrl("qrc:/qmlSource/GlobalMessageDefine.qml"),    "GlobalMessageDefine",  1,  0,  "GlobalMessageDefine");
 
     const QUrl url(QStringLiteral("qrc:/qmlSource/main.qml"));
 
-    QObject::connect(&LanguageManger,&LanguageManger::updata,[&](){
+    QObject::connect(&LanguageManger,&LanguageManger::notifyLanguageIndexChanged,[&](){
         engine.retranslate();
     });
 

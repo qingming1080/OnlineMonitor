@@ -1,15 +1,19 @@
 ﻿import QtQuick 2.0
 import QmlEnum 1.0
+import GlobalLanguageDefine 1.0
+import GlobalMessageDefine 1.0
+import GlobalSystemDefine 1.0
+import LanguageEnum 1.0
 //异常信息
 Rectangle {
     color: pRgb(43, 112, 173)
     property color listColor: pRgb(153, 204, 255)
     radius: 3
     Text {
-        text: qsTr("异常信息")
-        font.family: fontBold
+        text: GlobalLanguageDefine.strExceptionMesssage
+        font.family: GlobalSystemDefine.fontBold
         font.bold: true
-        font.pixelSize: LanguageManger.language === "SimplifiedChinese" ? 20 : 18
+        font.pixelSize: LanguageManger.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 20 : 18
         color: pRgb(153, 204, 255)
         x:17
         y:9
@@ -36,42 +40,10 @@ Rectangle {
                 spacing: 10
                 Text{
                     font.pixelSize: 16
-                    text: {
-                        var str = time + "设备" + welderID
-                        if(messageType === QmlEnum.MESSAGE_suspicious){
-                            str += "出现可疑品"
-                        }
-                        else if(messageType === QmlEnum.MESSAGE_defective){
-                            str += "出现次品"
-                        }
-                        else if(messageType === QmlEnum.MESSAGE_noConnect){
-                            str += "未连接"
-                        }
-                        else if(messageType === QmlEnum.MESSAGE_lowerValue){
-                            str += "良率下降至下限值"
-                        }
-                        else if(messageType === QmlEnum.MESSAGE_defectiveOften){
-                            str += "频繁出现次品"
-                        }
-                        else if(messageType === QmlEnum.MESSAGE_suspiciousOften){
-                            str += "频繁出现可疑品"
-                        }
-                        else if(messageType === QmlEnum.MESSAGE_upperValue){
-                            str += "自动学习次数超过上限值"
-                        }
-                        else if(messageType === QmlEnum.MESSAGE_studyOver){
-                            str += "自动学习已完成"
-                        }
-                        else if(messageType === QmlEnum.MESSAGE_touchSuccess){
-                            str += "创建模型已完成"
-                        }else if(messageType === QmlEnum.MESSAGE_setupComplete){
-                            str += "创建模型已完成"
-                        }
-                        return str
-                    }
+                    text: GlobalMessageDefine.getGlobalMessage(messageType, time, welderID)
                     width: 270
                     wrapMode: Text.WordWrap
-                    font.family: fontBold
+                    font.family: GlobalSystemDefine.fontBold
                     font.bold: true
                     color:listColor
                 }

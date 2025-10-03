@@ -1,5 +1,5 @@
 import QtQuick 2.0
-
+import GlobalSystemDefine 1.0
 Item {
     id: control
 
@@ -15,7 +15,7 @@ Item {
     property int canvasWidth: width < height ? width : height
     //
     property int fontPx: 34
-    property string fontFamily: fontBold
+    property string fontFamily: GlobalSystemDefine.fontBold
     property color waveColor: {
         var c = "#1598ff"
         var c1 = "red"
@@ -61,7 +61,7 @@ Item {
             ctx.strokeStyle = /*Qt.lighter(waveColor, 1.5+0.3*color_offset);*/"#558dbd";
             ctx.stroke();
 
-            progress_text = qsTr("%1 %").arg(parseInt(percent*100));
+            progress_text = ("%1 %").arg(parseInt(percent*100));
             ctx.font = "bold 30px 'Source Han Sans', sans-serif";
             ctx.textAlign = "center";
             ctx.fillStyle = waveColor;

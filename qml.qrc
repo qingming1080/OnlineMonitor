@@ -1,7 +1,5 @@
 <RCC>
     <qresource prefix="/">
-        <file>fonts/SourceHanSansCN-Bold.ttf</file>
-        <file>fonts/SourceHanSansCN-Normal.ttf</file>
         <file>qmlSource/AbnormalInfor.qml</file>
         <file>qmlSource/CustomBtn.qml</file>
         <file>qmlSource/CustomComboBox.qml</file>
@@ -48,13 +46,13 @@
         <file>image/shake.png</file>
         <file>image/module.png</file>
         <file>image/switch.png</file>
-        <file>English.ts</file>
-        <file>SimplifiedChinese.ts</file>
-        <file>translations/English.qm</file>
-        <file>translations/SimplifiedChinese.qm</file>
         <file>qmlSource/TimeSettingDialog.qml</file>
         <file>qmlSource/TimeUtils.js</file>
         <file>image/setting.png</file>
-        <file>qmlSource/ParameterSettingDiolog.qml</file>
+        <file>qmlSource/ParameterSettingDialog.qml</file>
+        <file>qmlSource/GlobalSystemDefine.qml</file>
+        <file>qmlSource/qmldir</file>
+        <file>qmlSource/GlobalLanguageDefine.qml</file>
+        <file>qmlSource/GlobalMessageDefine.qml</file>
     </qresource>
 </RCC>

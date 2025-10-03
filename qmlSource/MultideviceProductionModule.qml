@@ -3,7 +3,7 @@ import QtQuick.Controls 1.4
 import QtQuick.Controls 2.15
 import Device 1.0
 import DeviceInformation 1.0
-
+import GlobalLanguageDefine 1.0
 import "TimeUtils.js" as TimeUtils
 
 //多设备生产界面
@@ -141,7 +141,7 @@ Rectangle {
             eqText3:{
                 if(DeviceManager.deviceList[0]){
                     return DeviceManager.deviceList[0].pDeviceInformation.connectType === 1
-                            ? "RS232" : "网络连接"
+                            ? "RS232" : "TCP/IP"
                 }
                 else{
                     return ""
@@ -255,7 +255,7 @@ Rectangle {
         radius: 5
         color: pRgb(43, 112, 173)
         onHeightChanged: {
-            if(height>290){
+            if(height > 290){
                 s6.visible = true
             }
             else{
@@ -271,25 +271,29 @@ Rectangle {
             radius: 3
             color: "#0c5596"
             eqText1:{
-                if(DeviceManager.deviceList[1]){
+                if(DeviceManager.deviceList[1])
+                {
                     return DeviceManager.deviceList[1].pDeviceInformation.name
                 }
-                else{
+                else
+                {
                     return ""
                 }
             }
             eqText2:{
-                if(DeviceManager.deviceList[1]){
+                if(DeviceManager.deviceList[1])
+                {
                     return DeviceManager.deviceList[1].pDeviceInformation.model
                 }
-                else{
+                else
+                {
                     return ""
                 }
             }
             eqText3:{
                 if(DeviceManager.deviceList[1]){
                     return DeviceManager.deviceList[1].pDeviceInformation.connectType === 1
-                            ? "RS232" : "网络连接"
+                            ? "RS232" : "TCP/IP"
                 }
                 else{
                     return ""
@@ -444,11 +448,11 @@ Rectangle {
             eqText3:{
                 if(DeviceManager.deviceList[2]){
                     return DeviceManager.deviceList[2].pDeviceInformation.connectType === 1
-                            ? "RS232" : "网络连接"
+                            ? "RS232" : "TCP/IP"
                 }
                 else if(DeviceManager.deviceList[3]){
                     return DeviceManager.deviceList[3].pDeviceInformation.connectType === 1
-                            ? "RS232" : "网络连接"
+                            ? "RS232" : "TCP/IP"
                 }
                 else{
                     return ""
@@ -615,11 +619,11 @@ Rectangle {
             eqText3:{
                 if(DeviceManager.deviceList[3]){
                     return DeviceManager.deviceList[3].pDeviceInformation.connectType === 1
-                            ? "RS232" : "网络连接"
+                            ? "RS232" : "TCP/IP"
                 }
                 else if(DeviceManager.deviceList[2]){
                     return DeviceManager.deviceList[2].pDeviceInformation.connectType === 1
-                            ? "RS232" : "网络连接"
+                            ? "RS232" : "TCP/IP"
                 }
                 else{
                     return ""
@@ -784,16 +788,19 @@ Rectangle {
         contentItem: Text {
             id:mt2
             anchors.centerIn: parent
-            text: qsTr("新增设备")
+            // text: qsTr("新增设备")
+            text: GlobalLanguageDefine.strAddDevice
             font.pixelSize: 20
             color: pRgb(153, 204, 255)
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
-            font.family: fontBold
+            font.family: GlobalSystemDefine.fontBold
             font.bold: true
         }
         onPressed: {
-            if(mt2.text == "新增设备"){
+            // if(mt2.text === qsTr("新增设备"))
+            if(mt2.text === GlobalLanguageDefine.strAddDevice)
+            {
                 popup.openPop(8)
             }
         }
@@ -811,12 +818,13 @@ Rectangle {
         contentItem: Text {
             id:mt3
             anchors.centerIn: parent
-            text:qsTr( "系统消息")
+            // text: qsTr( "系统消息")
+            text: GlobalLanguageDefine.strSystemMessage
             font.pixelSize: 20
             color: pRgb(153, 204, 255)
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
-            font.family: fontBold
+            font.family: GlobalSystemDefine.fontBold
             font.bold: true
         }
         onPressed: {
@@ -829,10 +837,11 @@ Rectangle {
         anchors.top: timeText.top
         anchors.right: timeText.left
         anchors.rightMargin: 20
-        font.family: fontBold
+        font.family: GlobalSystemDefine.fontBold
         font.bold: true
         font.pixelSize: 14
-        text: qsTr("系统版本号: v2.0.1")
+        // text: qsTr("系统版本号") + ": " + "v2.0.1"
+        text: GlobalLanguageDefine.strSystemVersion + GlobalSystemDefine.strVersionNumber
 
     }
     // 显示时间的文本
@@ -844,7 +853,7 @@ Rectangle {
         anchors.rightMargin: 10
         anchors.bottomMargin: 5
         font.pixelSize: 14
-        font.family: fontBold
+        font.family: GlobalSystemDefine.fontBold
         font.bold: true
         color: "#639ed6"
         text: TimeUtils.getCurrentTime()

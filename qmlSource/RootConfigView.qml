@@ -2,6 +2,8 @@
 import QtQuick.Controls 2.15
 import Device 1.0
 import System 1.0
+import GlobalLanguageDefine 1.0
+import GlobalSystemDefine 1.0
 import "TimeUtils.js" as TimeUtils
 Rectangle {
     radius: 5
@@ -243,13 +245,14 @@ Rectangle {
             color: pRgb(43, 112, 173)
         }
         contentItem: Text {
-            text: qsTr("客户密码重置")
+            // text: qsTr("客户密码重置")
+            text: GlobalLanguageDefine.strCustomerPasswordReset
             font.pixelSize: 20
             color: pRgb(153, 204, 255)
             anchors.centerIn: parent  // 确保文本在按钮内居中对齐
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
-            font.family: fontBold
+            font.family: GlobalSystemDefine.fontBold
             font.bold: true
         }
         onPressed: {
@@ -269,13 +272,14 @@ Rectangle {
             color: pRgb(43, 112, 173)
         }
         contentItem: Text {
-            text: qsTr("保存")
+            // text: qsTr("保存")
+            text: GlobalLanguageDefine.strSave
             font.pixelSize: 20
             color: pRgb(153, 204, 255)
             anchors.centerIn: parent  // 确保文本在按钮内居中对齐
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
-            font.family: fontBold
+            font.family: GlobalSystemDefine.fontBold
             font.bold: true
         }
         onPressed: {
@@ -318,13 +322,14 @@ Rectangle {
             color: pRgb(43, 112, 173)
         }
         contentItem: Text {
-            text: qsTr("初始化")
+            // text: qsTr("初始化")
+            text: GlobalLanguageDefine.strInitialize
             font.pixelSize: 20
             color: pRgb(153, 204, 255)
             anchors.centerIn: parent  // 确保文本在按钮内居中对齐
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
-            font.family: fontBold
+            font.family: GlobalSystemDefine.fontBold
             font.bold: true
         }
         onPressed: {
@@ -337,10 +342,11 @@ Rectangle {
         anchors.top: timeText.top
         anchors.right: timeText.left
         anchors.rightMargin: 20
-        font.family: fontBold
+        font.family: GlobalSystemDefine.fontBold
         font.bold: true
         font.pixelSize: 14
-        text: qsTr("系统版本号: v2.0.1")
+        // text: qsTr("系统版本号") + ": " + "v2.0.1"
+        text: GlobalLanguageDefine.strSystemVersion + ": " + GlobalSystemDefine.strVersionNumber
     }
     // 显示时间的文本
     Text {
@@ -351,7 +357,7 @@ Rectangle {
         anchors.rightMargin: 10
         anchors.bottomMargin: 5
         font.pixelSize: 14
-        font.family: fontBold
+        font.family: GlobalSystemDefine.fontBold
         font.bold: true
         color: "#639ed6"
         text: TimeUtils.getCurrentTime()

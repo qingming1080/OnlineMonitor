@@ -3,6 +3,7 @@ import QtQuick.Controls 2.15
 import Device 1.0
 import DeviceInformation 1.0
 import IO 1.0
+import GlobalLanguageDefine 1.0
 //系统配置（小）
 Rectangle {
     property string eqText1: ""
@@ -49,8 +50,9 @@ Rectangle {
     }
 
     Text {
-        text: qsTr("设备信息")
-        font.family: fontBold
+        // text: qsTr("设备信息")
+        text: GlobalLanguageDefine.strEquipmentInfo
+        font.family: GlobalSystemDefine.fontBold
         font.bold: true
         font.pixelSize: 17
         color: pRgb(153, 204, 255)
@@ -65,8 +67,9 @@ Rectangle {
     }
     Text {
         id:t1
-        text: qsTr("设备名称: ") + eqText1
-        font.family: fontBold
+        // text: qsTr("设备名称") + ": " + eqText1
+        text: GlobalLanguageDefine.strDeviceName + ": " + eqText1
+        font.family: GlobalSystemDefine.fontBold
         font.bold: true
         font.pixelSize: 16
         color: pRgb(171, 206, 213)
@@ -75,8 +78,9 @@ Rectangle {
     }
     Text {
         id:t2
-        text: qsTr("设备型号: ") + eqText2
-        font.family: fontBold
+        // text: qsTr("设备型号") + ": " + eqText2
+        text: GlobalLanguageDefine.strDeviceModel + ": " + eqText2
+        font.family: GlobalSystemDefine.fontBold
         font.bold: true
         font.pixelSize: 16
         color: pRgb(171, 206, 213)
@@ -86,8 +90,9 @@ Rectangle {
     }
     Text {
         id:t3
-        text: qsTr("连接方式: ") + eqText3
-        font.family: fontBold
+        // text: qsTr("连接方式") + ": " + eqText3
+        text: GlobalLanguageDefine.strConnectionMethod + ": " + eqText3
+        font.family: GlobalSystemDefine.fontBold
         font.bold: true
         font.pixelSize: 16
         color: pRgb(171, 206, 213)
@@ -97,8 +102,9 @@ Rectangle {
     }
     Text {
         id:t4
-        text: qsTr("设备状态: ") + eqText4
-        font.family: fontBold
+        // text: qsTr("设备状态") + ": " + eqText4
+        text: GlobalLanguageDefine.strDeviceStatus + ": " + eqText4
+        font.family: GlobalSystemDefine.fontBold
         font.bold: true
         font.pixelSize: 16
         color: pRgb(171, 206, 213)
@@ -126,9 +132,10 @@ Rectangle {
     }
     Text {
         id: s4
-        text: qsTr("高度模式")
+        // text: qsTr("高度模式")
+        text: GlobalLanguageDefine.strHeightMode
         color: pRgb(177, 213, 219)
-        font.family: fontBold
+        font.family: GlobalSystemDefine.fontBold
         font.bold: true
         font.pixelSize: 16
         x:26
@@ -136,9 +143,10 @@ Rectangle {
     }
     Text {
         id: s5
-        text: qsTr("启动")
+        // text: qsTr("启动")
+        text: GlobalLanguageDefine.strStart
         color: pRgb(177, 213, 219)
-        font.family: fontBold
+        font.family: GlobalSystemDefine.fontBold
         font.bold: true
         font.pixelSize: 16
         anchors.verticalCenter: bt1.verticalCenter
@@ -169,9 +177,10 @@ Rectangle {
     }
     Text {
         id: s6
-        text: qsTr("关闭")
+        // text: qsTr("关闭")
+        text: GlobalLanguageDefine.strClose
         color: pRgb(177, 213, 219)
-        font.family: fontBold
+        font.family: GlobalSystemDefine.fontBold
         font.bold: true
         font.pixelSize: 16
         anchors.verticalCenter: bt2.verticalCenter
@@ -203,9 +212,10 @@ Rectangle {
     }
     Text {
         id: s7
-        text: qsTr("是否开启待定")
+        // text: qsTr("是否开启待定")
+        text: GlobalLanguageDefine.strOpenPending
         color: "#99ccff"
-        font.family: fontBold
+        font.family: GlobalSystemDefine.fontBold
         font.bold: true
         font.pixelSize: 17
         x:24
@@ -270,9 +280,10 @@ Rectangle {
                 anchors.top: parent.top
                 anchors.topMargin: 5
                 anchors.leftMargin: 14
-                text: qsTr("关闭")
+                // text: qsTr("关闭")
+                text: GlobalLanguageDefine.strClose
                 color: undetermined? pRgb(43, 112, 173) : "#e5e6e7"
-                font.family: fontBold
+                font.family: GlobalSystemDefine.fontBold
                 font.bold: true
                 font.pixelSize: 14
             }
@@ -281,9 +292,10 @@ Rectangle {
                 anchors.top: parent.top
                 anchors.topMargin: 5
                 anchors.rightMargin: 14
-                text: qsTr("启动")
+                // text: qsTr("启动")
+                text: GlobalLanguageDefine.strStart
                 color: undetermined? "#e5e6e7" : pRgb(43, 112, 173)
-                font.family: fontBold
+                font.family: GlobalSystemDefine.fontBold
                 font.bold: true
                 font.pixelSize: 14
             }
@@ -294,7 +306,7 @@ Rectangle {
         text: sysCurrIndex1 === 1 ? "PIN1" : sysCurrIndex1 === 2 ? "PIN4" :
                                                                    sysCurrIndex1 === 3 ? "PIN7" : sysCurrIndex1 === 4 ? "PIN10" : ""
         color: pRgb(177, 213, 219)
-        font.family: fontBold
+        font.family: GlobalSystemDefine.fontBold
         font.bold: true
         font.pixelSize: 16
         x:18
@@ -305,7 +317,7 @@ Rectangle {
         text: sysCurrIndex1 === 1 ? "PIN2" : sysCurrIndex1 === 2 ? "PIN5" :
                                                                    sysCurrIndex1 === 3 ? "PIN8" : sysCurrIndex1 === 4 ? "PIN11" : ""
         color: pRgb(177, 213, 219)
-        font.family: fontBold
+        font.family: GlobalSystemDefine.fontBold
         font.bold: true
         font.pixelSize: 16
         anchors.left: s8.left
@@ -317,7 +329,7 @@ Rectangle {
         text: sysCurrIndex1 === 1 ? "PIN3" : sysCurrIndex1 === 2 ? "PIN6" :
                                                                    sysCurrIndex1 === 3 ? "PIN9" : sysCurrIndex1 === 4 ? "PIN12" : ""
         color: pRgb(177, 213, 219)
-        font.family: fontBold
+        font.family: GlobalSystemDefine.fontBold
         font.bold: true
         font.pixelSize: 16
         anchors.left: s9.left
@@ -352,9 +364,10 @@ Rectangle {
     }
     Text {
         id: s11
-        text: qsTr("报警")
+        // text: qsTr("报警")
+        text: GlobalLanguageDefine.strAlarm
         color: pRgb(177, 213, 219)
-        font.family: fontBold
+        font.family: GlobalSystemDefine.fontBold
         font.bold: true
         font.pixelSize: 16
         anchors.top: s8.top
@@ -363,9 +376,10 @@ Rectangle {
     }
     Text {
         id: s12
-        text: qsTr("复位")
+        // text: qsTr("复位")
+        text: GlobalLanguageDefine.strReset
         color: pRgb(177, 213, 219)
-        font.family: fontBold
+        font.family: GlobalSystemDefine.fontBold
         font.bold: true
         font.pixelSize: 16
         anchors.top: s9.top
@@ -374,9 +388,10 @@ Rectangle {
     }
     Text {
         id: s13
-        text: qsTr("待定")
+        // text: qsTr("待定")
+        text: GlobalLanguageDefine.strPending
         color: pRgb(177, 213, 219)
-        font.family: fontBold
+        font.family: GlobalSystemDefine.fontBold
         font.bold: true
         font.pixelSize: 16
         anchors.top: s10.top

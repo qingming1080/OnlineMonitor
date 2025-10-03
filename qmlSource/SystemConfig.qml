@@ -5,6 +5,9 @@ import Device 1.0
 import DeviceInformation 1.0
 import IO 1.0
 import QmlEnum 1.0
+import GlobalLanguageDefine 1.0
+import GlobalSystemDefine   1.0
+import LanguageEnum         1.0
 import "TimeUtils.js" as TimeUtils
 //系统配置
 Rectangle {
@@ -213,9 +216,10 @@ Rectangle {
                 radius: 3
                 Text {
                     id: name
-                    text: qsTr("设备配置")
+                    // text: qsTr("设备配置")
+                    text: GlobalLanguageDefine.strDeviceConfig
                     color: pRgb(153, 204, 255)
-                    font.family: fontBold
+                    font.family: GlobalSystemDefine.fontBold
                     font.bold: true
                     font.pixelSize: 20
                     x:33
@@ -231,9 +235,10 @@ Rectangle {
                     id: s1
                     x:35
                     y:75
-                    text: qsTr("最大生产批量")
+                    // text: qsTr("最大生产批量")
+                    text: GlobalLanguageDefine.strMaxProduction
                     color: pRgb(177, 213, 219)
-                    font.family: fontBold
+                    font.family: GlobalSystemDefine.fontBold
                     font.bold: true
                     font.pixelSize: 18
                 }
@@ -248,7 +253,7 @@ Rectangle {
                     horizontalAlignment: TextInput.AlignHCenter
                     verticalAlignment: TextInput.AlignVCenter
                     color: pRgb(43, 112, 173)
-                    font.family: fontBold
+                    font.family: GlobalSystemDefine.fontBold
                     font.bold: true
                     font.pixelSize: 18
                     inputMethodHints: Qt.ImhDigitsOnly
@@ -287,9 +292,10 @@ Rectangle {
 
                 Text {
                     id: s2
-                    text: qsTr("学习样本数")
+                    // text: qsTr("学习样本数")
+                    text: GlobalLanguageDefine.strLearningSamples
                     color: pRgb(177, 213, 219)
-                    font.family: fontBold
+                    font.family: GlobalSystemDefine.fontBold
                     font.bold: true
                     font.pixelSize: 18
                     anchors.left: s1.left
@@ -306,7 +312,7 @@ Rectangle {
                     horizontalAlignment: TextInput.AlignHCenter
                     verticalAlignment: TextInput.AlignVCenter
                     color: pRgb(43, 112, 173)
-                    font.family: fontBold
+                    font.family: GlobalSystemDefine.fontBold
                     font.bold: true
                     font.pixelSize: 18
                     inputMethodHints: Qt.ImhDigitsOnly
@@ -344,9 +350,10 @@ Rectangle {
                 }
                 Text {
                     id: s3
-                    text: qsTr("良率下限")
+                    // text: qsTr("良率下限")
+                    text: GlobalLanguageDefine.strYieldLowerLimit
                     color: pRgb(177, 213, 219)
-                    font.family: fontBold
+                    font.family: GlobalSystemDefine.fontBold
                     font.bold: true
                     font.pixelSize: 18
                     anchors.left: s2.left
@@ -363,7 +370,7 @@ Rectangle {
                     horizontalAlignment: TextInput.AlignHCenter
                     verticalAlignment: TextInput.AlignVCenter
                     color: pRgb(43, 112, 173)
-                    font.family: fontBold
+                    font.family: GlobalSystemDefine.fontBold
                     font.bold: true
                     font.pixelSize: 18
                     inputMethodHints: Qt.ImhDigitsOnly
@@ -402,9 +409,10 @@ Rectangle {
 
                 Text {
                     id: s7
-                    text: qsTr("端口")
+                    // text: qsTr("端口")
+                    text: GlobalLanguageDefine.strPort
                     color: pRgb(177, 213, 219)
-                    font.family: fontBold
+                    font.family: GlobalSystemDefine.fontBold
                     font.bold: true
                     font.pixelSize: 18
                     anchors.left: s3.left
@@ -421,7 +429,7 @@ Rectangle {
                     horizontalAlignment: TextInput.AlignHCenter
                     verticalAlignment: TextInput.AlignVCenter
                     color: pRgb(43, 112, 173)
-                    font.family: fontBold
+                    font.family: GlobalSystemDefine.fontBold
                     font.bold: true
                     font.pixelSize: 18
                     inputMethodHints: Qt.ImhDigitsOnly
@@ -460,9 +468,10 @@ Rectangle {
 
                 Text {
                     id: s8
-                    text: qsTr("远程端IP")
+                    // text: qsTr("远程端") + "IP"
+                    text: GlobalLanguageDefine.strRemoteEnd + "IP"
                     color: pRgb(177, 213, 219)
-                    font.family: fontBold
+                    font.family: GlobalSystemDefine.fontBold
                     font.bold: true
                     font.pixelSize: 18
                     anchors.left: s7.left
@@ -479,7 +488,7 @@ Rectangle {
                     horizontalAlignment: TextInput.AlignHCenter
                     verticalAlignment: TextInput.AlignVCenter
                     color: pRgb(43, 112, 173)
-                    font.family: fontBold
+                    font.family: GlobalSystemDefine.fontBold
                     font.bold: true
                     font.pixelSize: 18
                     inputMethodHints: Qt.ImhDigitsOnly
@@ -519,9 +528,10 @@ Rectangle {
 
                 Text {
                     id: s9
-                    text: qsTr("客户端IP")
+                    // text: qsTr("客户端") + "IP"
+                    text: GlobalLanguageDefine.strClient + "IP"
                     color: pRgb(177, 213, 219)
-                    font.family: fontBold
+                    font.family: GlobalSystemDefine.fontBold
                     font.bold: true
                     font.pixelSize: 18
                     anchors.left: s8.left
@@ -538,7 +548,7 @@ Rectangle {
                     horizontalAlignment: TextInput.AlignHCenter
                     verticalAlignment: TextInput.AlignVCenter
                     color: pRgb(43, 112, 173)
-                    font.family: fontBold
+                    font.family: GlobalSystemDefine.fontBold
                     font.bold: true
                     font.pixelSize: 18
                     inputMethodHints: Qt.ImhDigitsOnly
@@ -578,9 +588,10 @@ Rectangle {
 
                 Text {
                     id: s4
-                    text: qsTr("高度模式")
+                    // text: qsTr("高度模式")
+                    text: GlobalLanguageDefine.strHeightMode
                     color: pRgb(177, 213, 219)
-                    font.family: fontBold
+                    font.family: GlobalSystemDefine.fontBold
                     font.bold: true
                     font.pixelSize: 18
                     anchors.left: s9.left
@@ -589,9 +600,10 @@ Rectangle {
                 }
                 Text {
                     id: s5
-                    text: qsTr("启动")
+                    // text: qsTr("启动")
+                    text: GlobalLanguageDefine.strStart
                     color: pRgb(177, 213, 219)
-                    font.family: fontBold
+                    font.family: GlobalSystemDefine.fontBold
                     font.bold: true
                     font.pixelSize: 18
                     anchors.verticalCenter: bt1.verticalCenter
@@ -634,9 +646,10 @@ Rectangle {
                 }
                 Text {
                     id: s6
-                    text: qsTr("关闭")
+                    // text: qsTr("关闭")
+                    text: GlobalLanguageDefine.strClose
                     color: pRgb(177, 213, 219)
-                    font.family: fontBold
+                    font.family: GlobalSystemDefine.fontBold
                     font.bold: true
                     font.pixelSize: 18
                     anchors.top: s5.top
@@ -685,9 +698,10 @@ Rectangle {
                     id: s14
                     x:23
                     y:74
-                    text: qsTr("设备名称")
+                    // text: qsTr("设备名称")
+                    text: GlobalLanguageDefine.strDeviceName
                     color: pRgb(177, 213, 219)
-                    font.family: fontBold
+                    font.family: GlobalSystemDefine.fontBold
                     font.bold: true
                     font.pixelSize: 18
                 }
@@ -702,7 +716,7 @@ Rectangle {
                     horizontalAlignment: TextInput.AlignHCenter
                     verticalAlignment: TextInput.AlignVCenter
                     color: pRgb(43, 112, 173)
-                    font.family: fontBold
+                    font.family: GlobalSystemDefine.fontBold
                     font.bold: true
                     font.pixelSize: 18
                     background: Rectangle{
@@ -739,9 +753,10 @@ Rectangle {
                 }
                 Text {
                     id: s15
-                    text: qsTr("设备型号")
+                    // text: qsTr("设备型号")
+                    text: GlobalLanguageDefine.strDeviceModel
                     color: pRgb(177, 213, 219)
-                    font.family: fontBold
+                    font.family: GlobalSystemDefine.fontBold
                     font.bold: true
                     font.pixelSize: 18
                     anchors.top: s14.top
@@ -756,7 +771,7 @@ Rectangle {
                     anchors.topMargin: 66
                     anchors.left: s15.right
                     anchors.leftMargin: 23
-                    model: ["L20-VG", "L20-TS", "20DP", "20MA", "自定义"]
+                    model: ["L20-VG", "L20-TS", "20DP", "20MA", GlobalLanguageDefine.strCustomized]
                     displayText:{
                         if(isAdd){
                             return currentText
@@ -885,8 +900,9 @@ Rectangle {
                             anchors.left: parent.left
                             anchors.top: parent.top
                             anchors.topMargin: 9
-                            anchors.leftMargin: LanguageManger.language === "SimplifiedChinese" ? 63 : 50
-                            text: qsTr("网络")
+                            anchors.leftMargin: LanguageManger.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 63 : 50
+                            // text: qsTr("网络")
+                            text: "TCP/IP"
                             color: {
                                 if(isAdd){
                                     return ctl1.checked ? pRgb(43, 112, 173) : "#e5e6e7"
@@ -899,7 +915,7 @@ Rectangle {
                                     return DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.connectType !== 0 ? pRgb(43, 112, 173) : "#e5e6e7"
                                 }
                             }
-                            font.family: fontBold
+                            font.family: GlobalSystemDefine.fontBold
                             font.bold: true
                             font.pixelSize: 18
                         }
@@ -908,7 +924,7 @@ Rectangle {
                             anchors.top: parent.top
                             anchors.topMargin: 9
                             anchors.rightMargin: 63
-                            text: qsTr("RS232")
+                            text: "RS232"
                             color: {
                                 if(isAdd){
                                     return !ctl1.checked ? pRgb(43, 112, 173) : "#e5e6e7"
@@ -921,7 +937,7 @@ Rectangle {
                                     return DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.connectType !== 0? "#e5e6e7" : pRgb(43, 112, 173)
                                 }
                             }
-                            font.family: fontBold
+                            font.family: GlobalSystemDefine.fontBold
                             font.bold: true
                             font.pixelSize: 18
                         }
@@ -959,9 +975,10 @@ Rectangle {
                         color: "#78b0e7"
                         Text {
                             id: s16
-                            text: qsTr("网络端口")
+                            // text: qsTr("网络端口")
+                            text: GlobalLanguageDefine.strNetworkPort
                             color: pRgb(43, 112, 173)
-                            font.family: fontBold
+                            font.family: GlobalSystemDefine.fontBold
                             font.bold: true
                             font.pixelSize: 18
                             x:101
@@ -969,9 +986,10 @@ Rectangle {
                         }
                         Text {
                             id: s17
-                            text: qsTr("服务器端口")
+                            // text: qsTr("服务器端口")
+                            text: GlobalLanguageDefine.strServerPort
                             color: pRgb(43, 112, 173)
-                            font.family: fontBold
+                            font.family: GlobalSystemDefine.fontBold
                             font.bold: true
                             font.pixelSize: 18
                             anchors.left: s16.left
@@ -980,9 +998,10 @@ Rectangle {
                         }
                         Text {
                             id: s18
-                            text: qsTr("设备IP地址")
+                            // text: qsTr("设备") + "IP" + qsTr("地址")
+                            text: GlobalLanguageDefine.strDevice + "IP" + GlobalLanguageDefine.strAddress
                             color: pRgb(43, 112, 173)
-                            font.family: fontBold
+                            font.family: GlobalSystemDefine.fontBold
                             font.bold: true
                             font.pixelSize: 18
                             anchors.left: s17.left
@@ -991,9 +1010,10 @@ Rectangle {
                         }
                         Text {
                             id: s19
-                            text: qsTr("本地IP地址")
+                            // text: qsTr("本地") + "IP" + qsTr("地址")
+                            text: GlobalLanguageDefine.strLocal + "IP" + GlobalLanguageDefine.strAddress
                             color: pRgb(43, 112, 173)
-                            font.family: fontBold
+                            font.family: GlobalSystemDefine.fontBold
                             font.bold: true
                             font.pixelSize: 18
                             anchors.left: s18.left
@@ -1079,7 +1099,7 @@ Rectangle {
                             horizontalAlignment: TextInput.AlignHCenter
                             verticalAlignment: TextInput.AlignVCenter
                             color: pRgb(43, 112, 173)
-                            font.family: fontBold
+                            font.family: GlobalSystemDefine.fontBold
                             font.bold: true
                             font.pixelSize: 18
                             inputMethodHints: Qt.ImhDigitsOnly
@@ -1137,7 +1157,7 @@ Rectangle {
                             horizontalAlignment: TextInput.AlignHCenter
                             verticalAlignment: TextInput.AlignVCenter
                             color: pRgb(43, 112, 173)
-                            font.family: fontBold
+                            font.family: GlobalSystemDefine.fontBold
                             font.bold: true
                             font.pixelSize: 18
                             inputMethodHints: Qt.ImhDigitsOnly
@@ -1200,7 +1220,7 @@ Rectangle {
                             horizontalAlignment: TextInput.AlignHCenter
                             verticalAlignment: TextInput.AlignVCenter
                             color: pRgb(43, 112, 173)
-                            font.family: fontBold
+                            font.family: GlobalSystemDefine.fontBold
                             font.bold: true
                             font.pixelSize: 18
                             inputMethodHints: Qt.ImhDigitsOnly
@@ -1266,9 +1286,10 @@ Rectangle {
                         color: "#78b0e7"
                         Text {
                             id: s20
-                            text: qsTr("端口")
+                            // text: qsTr("端口")
+                            text: GlobalLanguageDefine.strPort
                             color: pRgb(43, 112, 173)
-                            font.family: fontBold
+                            font.family: GlobalSystemDefine.fontBold
                             font.bold: true
                             font.pixelSize: 18
                             x:101
@@ -1276,9 +1297,10 @@ Rectangle {
                         }
                         Text {
                             id: s21
-                            text: qsTr("波特率")
+                            // text: qsTr("波特率")
+                            text: GlobalLanguageDefine.strBaudRate
                             color: pRgb(43, 112, 173)
-                            font.family: fontBold
+                            font.family: GlobalSystemDefine.fontBold
                             font.bold: true
                             font.pixelSize: 18
                             x:101
@@ -1286,9 +1308,10 @@ Rectangle {
                         }
                         Text {
                             id: s22
-                            text: qsTr("数据位")
+                            // text: qsTr("数据位")
+                            text: GlobalLanguageDefine.strDataBits
                             color: pRgb(43, 112, 173)
-                            font.family: fontBold
+                            font.family: GlobalSystemDefine.fontBold
                             font.bold: true
                             font.pixelSize: 18
                             x:101
@@ -1296,9 +1319,10 @@ Rectangle {
                         }
                         Text {
                             id: s23
-                            text: qsTr("奇偶校验位")
+                            // text: qsTr("奇偶校验位")
+                            text: GlobalLanguageDefine.strParity
                             color: pRgb(43, 112, 173)
-                            font.family: fontBold
+                            font.family: GlobalSystemDefine.fontBold
                             font.bold: true
                             font.pixelSize: 18
                             x:101
@@ -1306,9 +1330,10 @@ Rectangle {
                         }
                         Text {
                             id: s24
-                            text: qsTr("停止位")
+                            // text: qsTr("停止位")
+                            text: GlobalLanguageDefine.strStopBits
                             color: pRgb(43, 112, 173)
-                            font.family: fontBold
+                            font.family: GlobalSystemDefine.fontBold
                             font.bold: true
                             font.pixelSize: 18
                             x:101
@@ -1536,13 +1561,14 @@ Rectangle {
                     color: pRgb(43, 112, 173)
                 }
                 contentItem: Text {
-                    text: qsTr("系统保存")
+                    // text: qsTr("系统保存")
+                    text: GlobalLanguageDefine.strSystemSave
                     font.pixelSize: 20
                     color: pRgb(153, 204, 255)
                     anchors.centerIn: parent  // 确保文本在按钮内居中对齐
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
-                    font.family: fontBold
+                    font.family: GlobalSystemDefine.fontBold
                     font.bold: true
                 }
                 onPressed: {
@@ -1561,13 +1587,14 @@ Rectangle {
                     color: pRgb(43, 112, 173)
                 }
                 contentItem: Text {
-                    text: qsTr("设备保存")
+                    // text: qsTr("设备保存")
+                    text: GlobalLanguageDefine.DeviceSave
                     font.pixelSize: 20
                     color: pRgb(153, 204, 255)
                     anchors.centerIn: parent  // 确保文本在按钮内居中对齐
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
-                    font.family: fontBold
+                    font.family: GlobalSystemDefine.fontBold
                     font.bold: true
                 }
                 onPressed: {
@@ -1656,7 +1683,7 @@ Rectangle {
                 }
                 eqText3:{
                     if(DeviceManager.deviceList[0]){
-                        DeviceManager.deviceList[0].pDeviceInformation.connectType === 0  ? "网络连接" : "RS232"
+                        DeviceManager.deviceList[0].pDeviceInformation.connectType === 0  ? "TCP/IP" : "RS232"
                     }
                     else{
                         return ""
@@ -1710,7 +1737,7 @@ Rectangle {
                 }
                 eqText3:{
                     if(DeviceManager.deviceList[1]){
-                        DeviceManager.deviceList[1].pDeviceInformation.connectType === 0 ? "网络连接" : "RS232"
+                        DeviceManager.deviceList[1].pDeviceInformation.connectType === 0 ? "TCP/IP" : "RS232"
                     }
                     else{
                         return ""
@@ -1775,10 +1802,10 @@ Rectangle {
                 }
                 eqText3:{
                     if(DeviceManager.deviceList[2]){
-                        DeviceManager.deviceList[2].pDeviceInformation.connectType === 0  ? "网络连接" : "RS232"
+                        DeviceManager.deviceList[2].pDeviceInformation.connectType === 0  ? "TCP/IP" : "RS232"
                     }
                     else if(DeviceManager.deviceList[3]){
-                        DeviceManager.deviceList[3].pDeviceInformation.connectType === 0  ? "网络连接" : "RS232"
+                        DeviceManager.deviceList[3].pDeviceInformation.connectType === 0  ? "TCP/IP" : "RS232"
                     }
                     else{
                         return ""
@@ -1845,10 +1872,10 @@ Rectangle {
                 }
                 eqText3:{
                     if(DeviceManager.deviceList[3]){
-                        DeviceManager.deviceList[3].pDeviceInformation.connectType === 0  ? "网络连接" : "RS232"
+                        DeviceManager.deviceList[3].pDeviceInformation.connectType === 0  ? "TCP/IP" : "RS232"
                     }
                     else if(DeviceManager.deviceList[2]){
-                        DeviceManager.deviceList[2].pDeviceInformation.connectType === 0  ? "网络连接" : "RS232"
+                        DeviceManager.deviceList[2].pDeviceInformation.connectType === 0  ? "TCP/IP" : "RS232"
                     }
                     else{
                         return ""
@@ -2024,13 +2051,14 @@ Rectangle {
                     color: itemCount === 4 ? pRgb(232, 232, 232) : pRgb(43, 112, 173)
                 }
                 contentItem: Text {
-                    text: qsTr( "新增设备")
+                    // text: qsTr( "新增设备")
+                    text: GlobalLanguageDefine.strAddDevice
                     font.pixelSize: 20
                     color: pRgb(153, 204, 255)
                     anchors.centerIn: parent  // 确保文本在按钮内居中对齐
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
-                    font.family: fontBold
+                    font.family: GlobalSystemDefine.fontBold
                     font.bold: true
                 }
                 onPressed: {
@@ -2058,13 +2086,14 @@ Rectangle {
                     color: currIndex === 0 ? pRgb(232, 232, 232) : pRgb(43, 112, 173)
                 }
                 contentItem: Text {
-                    text: qsTr("删除设备")
+                    // text: qsTr("删除设备")
+                    text: GlobalLanguageDefine.strDeleteDevice
                     font.pixelSize: 20
                     color: pRgb(153, 204, 255)
                     anchors.centerIn: parent  // 确保文本在按钮内居中对齐
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
-                    font.family: fontBold
+                    font.family: GlobalSystemDefine.fontBold
                     font.bold: true
                 }
                 onPressed: {
@@ -2085,13 +2114,14 @@ Rectangle {
                     color: pRgb(43, 112, 173)
                 }
                 contentItem: Text {
-                    text: qsTr("修改密码")
+                    // text: qsTr("修改密码")
+                    text: GlobalLanguageDefine.strChangePassword
                     font.pixelSize: 20
                     color: pRgb(153, 204, 255)
                     anchors.centerIn: parent  // 确保文本在按钮内居中对齐
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
-                    font.family: fontBold
+                    font.family: GlobalSystemDefine.fontBold
                     font.bold: true
                 }
                 onPressed: {
@@ -2109,10 +2139,11 @@ Rectangle {
         anchors.top: timeText.top
         anchors.right: timeText.left
         anchors.rightMargin: 20
-        font.family: fontBold
+        font.family: GlobalSystemDefine.fontBold
         font.bold: true
         font.pixelSize: 14
-        text: qsTr("系统版本号: v2.0.1")
+        // text: qsTr("系统版本号") + ": " + "v2.0.1"
+        text: GlobalLanguageDefine.strSystemVersion + ": " + GlobalSystemDefine.strVersionNumber
     }
     // 显示时间的文本
     Text {
@@ -2123,7 +2154,7 @@ Rectangle {
         anchors.rightMargin: 10
         anchors.bottomMargin: 5
         font.pixelSize: 14
-        font.family: fontBold
+        font.family: GlobalSystemDefine.fontBold
         font.bold: true
         color: "#639ed6"
         text: TimeUtils.getCurrentTime()

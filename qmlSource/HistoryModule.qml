@@ -4,6 +4,9 @@ import QtQml.Models 2.2
 import QtQuick.Controls 2.5
 import Qt.labs.qmlmodels 1.0
 import QtQuick.Controls.Styles 1.4
+import GlobalLanguageDefine 1.0
+import GlobalSystemDefine 1.0
+import LanguageEnum 1.0
 import "TimeUtils.js" as TimeUtils
 Rectangle {
     property int itemCount: equipmentCount
@@ -60,13 +63,14 @@ Rectangle {
         radius: 3
         Text {
             id: name
-            text: qsTr("设备")
+            // text: qsTr("设备")
+            text: GlobalLanguageDefine.strDevice
             anchors.top: parent.top
             anchors.left: parent.left
             anchors.leftMargin: 20
             anchors.topMargin: 20
             color: pRgb(177, 213, 219)
-            font.family: fontBold
+            font.family: GlobalSystemDefine.fontBold
             font.bold: true
             font.pixelSize: 20
         }
@@ -100,11 +104,12 @@ Rectangle {
             anchors.top: bt1.top
             anchors.topMargin: 7
             anchors.leftMargin: 14
-            text: qsTr("全选")
+            // text: qsTr("全选")
+            text: GlobalLanguageDefine.strSelectAll
             color: pRgb(177, 213, 219)
-            font.family: fontBold
+            font.family: GlobalSystemDefine.fontBold
             font.bold: true
-            font.pixelSize: LanguageManger.language === "SimplifiedChinese" ?20:16
+            font.pixelSize: LanguageManger.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 20 : 16
         }
 
         RadioButton{
@@ -133,11 +138,12 @@ Rectangle {
             anchors.verticalCenter: bt2.verticalCenter
             anchors.left: bt2.right
             anchors.leftMargin: 14
-            text: qsTr("设备1")
+            // text: qsTr("设备") + "1"
+            text: GlobalLanguageDefine.strDevice + "1"
             color: pRgb(177, 213, 219)
-            font.family: fontBold
+            font.family: GlobalSystemDefine.fontBold
             font.bold: true
-            font.pixelSize: LanguageManger.language === "SimplifiedChinese" ?20:16
+            font.pixelSize: LanguageManger.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 20 : 16
         }
 
         RadioButton{
@@ -174,11 +180,12 @@ Rectangle {
             anchors.verticalCenter: bt3.verticalCenter
             anchors.left: bt3.right
             anchors.leftMargin: 14
-            text: qsTr("设备2")
+            // text: qsTr("设备") + "2"
+            text: GlobalLanguageDefine.strDevice + "2"
             color: pRgb(177, 213, 219)
-            font.family: fontBold
+            font.family: GlobalSystemDefine.fontBold
             font.bold: true
-            font.pixelSize: LanguageManger.language === "SimplifiedChinese" ?20:16
+            font.pixelSize: LanguageManger.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 20 : 16
             visible: bt3.visible
         }
 
@@ -216,11 +223,12 @@ Rectangle {
             anchors.verticalCenter: bt4.verticalCenter
             anchors.left: bt4.right
             anchors.leftMargin: 14
-            text: qsTr("设备3")
+            // text: qsTr("设备") + "3"
+            text: GlobalLanguageDefine.strDevice + "3"
             color: pRgb(177, 213, 219)
-            font.family: fontBold
+            font.family: GlobalSystemDefine.fontBold
             font.bold: true
-            font.pixelSize: LanguageManger.language === "SimplifiedChinese" ?20:16
+            font.pixelSize: LanguageManger.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 20 : 16
             visible: bt4.visible
         }
 
@@ -258,22 +266,24 @@ Rectangle {
             anchors.verticalCenter: bt5.verticalCenter
             anchors.left: bt5.right
             anchors.leftMargin: 14
-            text: qsTr("设备4")
+            // text: qsTr("设备") + "4"
+            text: GlobalLanguageDefine.strDevice + "4"
             color: pRgb(177, 213, 219)
-            font.family: fontBold
+            font.family: GlobalSystemDefine.fontBold
             font.bold: true
-            font.pixelSize: LanguageManger.language === "SimplifiedChinese" ?20:16
+            font.pixelSize: LanguageManger.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 20 : 16
             visible: bt5.visible
         }
 
         Text {
             id: name1
-            text: qsTr("结果")
+            // text: qsTr("结果")
+            text: GlobalLanguageDefine.strResult
             anchors.top: name.top
             anchors.left: parent.left
             anchors.leftMargin: 723
             color: pRgb(177, 213, 219)
-            font.family: fontBold
+            font.family: GlobalSystemDefine.fontBold
             font.bold: true
             font.pixelSize: 20
         }
@@ -304,11 +314,12 @@ Rectangle {
             anchors.verticalCenter: bt8.verticalCenter
             anchors.left: bt8.right
             anchors.leftMargin: 14
-            text: qsTr("全选")
+            // text: qsTr("全选")
+            text: GlobalLanguageDefine.strSelectAll
             color: pRgb(177, 213, 219)
-            font.family: fontBold
+            font.family: GlobalSystemDefine.fontBold
             font.bold: true
-            font.pixelSize: LanguageManger.language === "SimplifiedChinese" ?20:16
+            font.pixelSize: LanguageManger.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 20 : 16
         }
         RadioButton{
             id:bt9
@@ -336,11 +347,12 @@ Rectangle {
             anchors.verticalCenter: bt9.verticalCenter
             anchors.left: bt9.right
             anchors.leftMargin: 6
-            text: qsTr("良")
+            // text: qsTr("良")
+            text: GlobalLanguageDefine.strGood
             color: pRgb(177, 213, 219)
-            font.family: fontBold
+            font.family: GlobalSystemDefine.fontBold
             font.bold: true
-            font.pixelSize: LanguageManger.language === "SimplifiedChinese" ?20:16
+            font.pixelSize: LanguageManger.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 20 : 16
         }
         RadioButton{
             id:bt11
@@ -368,11 +380,12 @@ Rectangle {
             anchors.verticalCenter: bt11.verticalCenter
             anchors.left: bt11.right
             anchors.leftMargin: 6
-            text: qsTr("可疑")
+            // text: qsTr("可疑")
+            text: GlobalLanguageDefine.strSuspicious
             color: pRgb(177, 213, 219)
-            font.family: fontBold
+            font.family: GlobalSystemDefine.fontBold
             font.bold: true
-            font.pixelSize: LanguageManger.language === "SimplifiedChinese" ?20:16
+            font.pixelSize: LanguageManger.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 20 : 16
         }
         RadioButton{
             id:bt10
@@ -400,11 +413,12 @@ Rectangle {
             anchors.verticalCenter: bt10.verticalCenter
             anchors.left: bt10.right
             anchors.leftMargin: 10
-            text: qsTr("次品")
+            // text: qsTr("次品")
+            text: GlobalLanguageDefine.strDefective
             color: pRgb(177, 213, 219)
-            font.family: fontBold
+            font.family: GlobalSystemDefine.fontBold
             font.bold: true
-            font.pixelSize: LanguageManger.language === "SimplifiedChinese" ?20:16
+            font.pixelSize: LanguageManger.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 20 : 16
         }
     }
     Rectangle{
@@ -419,8 +433,9 @@ Rectangle {
             x:1220/5/2-width/2
             y:5
             font.pixelSize: 16
-            text: "设备名称"
-            font.family: fontBold
+            // text: "设备名称"
+            text: GlobalLanguageDefine.strDeviceName
+            font.family: GlobalSystemDefine.fontBold
             font.bold: true
             color: pRgb(153, 204, 255)
         }
@@ -428,8 +443,9 @@ Rectangle {
             x:1220/5*1 + 1220/5/2-width/2
             y:5
             font.pixelSize: 16
-            text: "日期"
-            font.family: fontBold
+            // text: "日期"
+            text: GlobalLanguageDefine.strDate
+            font.family: GlobalSystemDefine.fontBold
             font.bold: true
             color: pRgb(153, 204, 255)
         }
@@ -437,8 +453,9 @@ Rectangle {
             x:1220/5*2 + 1220/5/2-width/2
             y:5
             font.pixelSize: 16
-            text: "能量"
-            font.family: fontBold
+            // text: "能量"
+            text: GlobalLanguageDefine.strEnergy
+            font.family: GlobalSystemDefine.fontBold
             font.bold: true
             color: pRgb(153, 204, 255)
         }
@@ -446,8 +463,9 @@ Rectangle {
             x:1220/5*3 + 1220/5/2-width/2
             y:5
             font.pixelSize: 16
-            text: "功率"
-            font.family: fontBold
+            // text: "功率"
+            text: GlobalLanguageDefine.strPower
+            font.family: GlobalSystemDefine.fontBold
             font.bold: true
             color: pRgb(153, 204, 255)
         }
@@ -455,8 +473,9 @@ Rectangle {
             x:1220/5*4 + 1220/5/2-width/2
             y:5
             font.pixelSize: 16
-            text: "结果"
-            font.family: fontBold
+            // text: "结果"
+            text: GlobalLanguageDefine.strResult
+            font.family: GlobalSystemDefine.fontBold
             font.bold: true
             color: pRgb(153, 204, 255)
         }
@@ -477,7 +496,7 @@ Rectangle {
                     anchors.verticalCenter: parent.verticalCenter
                     font.pixelSize: 16
                     text: DeviceManager.getHistoryName(welder_id)
-                    font.family: fontBold
+                    font.family: GlobalSystemDefine.fontBold
                     font.bold: true
                     color: index % 2 === 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
                 }
@@ -486,7 +505,7 @@ Rectangle {
                     x:1220/5*1 + 1220/5/2-width/2
                     font.pixelSize: 16
                     text: create_time
-                    font.family: fontBold
+                    font.family: GlobalSystemDefine.fontBold
                     font.bold: true
                     color: index % 2 === 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
                 }
@@ -495,7 +514,7 @@ Rectangle {
                     x:1220/5*2 + 1220/5/2-width/2
                     font.pixelSize: 16
                     text: energy
-                    font.family: fontBold
+                    font.family: GlobalSystemDefine.fontBold
                     font.bold: true
                     color: index % 2 === 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
                 }
@@ -504,7 +523,7 @@ Rectangle {
                     x:1220/5*3 + 1220/5/2-width/2
                     font.pixelSize: 16
                     text: power
-                    font.family: fontBold
+                    font.family: GlobalSystemDefine.fontBold
                     font.bold: true
                     color: index % 2 === 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
                 }
@@ -512,8 +531,27 @@ Rectangle {
                     anchors.verticalCenter: parent.verticalCenter
                     x:1220/5*4 + 1220/5/2-width/2
                     font.pixelSize: 16
-                    text: final_result===0?"良品":final_result===1?"次品":"可疑"
-                    font.family: fontBold
+                    text: {
+                        // var strResult = qsTr("可疑")
+                        var strResult = GlobalLanguageDefine.strSuspicious
+                        switch(final_result)
+                        {
+                        case 0:
+                            // strResult = qsTr("良品")
+                            strResult = GlobalLanguageDefine.strGood
+                            break;
+                        case 1:
+                            // strResult = qsTr("次品")
+                            strResult = GlobalLanguageDefine.strDefective
+                            break;
+                        default:
+                            // strResult = qsTr("可疑")
+                            strResult = GlobalLanguageDefine.strSuspicious
+                            break;
+                        }
+                        return strResult;
+                    }
+                    font.family: GlobalSystemDefine.fontBold
                     font.bold: true
                     color: index % 2 === 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
                 }
@@ -528,10 +566,11 @@ Rectangle {
         anchors.top: timeText.top
         anchors.right: timeText.left
         anchors.rightMargin: 20
-        font.family: fontBold
+        font.family: GlobalSystemDefine.fontBold
         font.bold: true
         font.pixelSize: 14
-        text: qsTr("系统版本号: v2.0.1")
+        // text: qsTr("系统版本号") + ": " + "v2.0.1"
+        text: GlobalLanguageDefine.strSystemVersion + ": " + GlobalSystemDefine.strVersionNumber
     }
     // 显示时间的文本
     Text {
@@ -542,7 +581,7 @@ Rectangle {
         anchors.rightMargin: 10
         anchors.bottomMargin: 5
         font.pixelSize: 14
-        font.family: fontBold
+        font.family: GlobalSystemDefine.fontBold
         font.bold: true
         color: "#639ed6"
         text: TimeUtils.getCurrentTime()
