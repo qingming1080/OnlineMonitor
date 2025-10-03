@@ -99,7 +99,7 @@ Rectangle {
 
     Image {
         id: im1
-        source: "qrc:/image/shake.png"
+        source: "qrc:/images/icon_energy.png"
         x:altitudeMode ? 17:30
         y:altitudeMode ? 50:58
         width: altitudeMode ? 25:30
@@ -107,7 +107,7 @@ Rectangle {
     }
     Image {
         id: im2
-        source: "qrc:/image/amplitude.png"
+        source: "qrc:/images/icon_amplitude.png"
         anchors.top: im1.bottom
         anchors.left: im1.left
         anchors.topMargin: altitudeMode ? 12 :22
@@ -116,7 +116,7 @@ Rectangle {
     }
     Image {
         id: im3
-        source: "qrc:/image/pressure.png"
+        source: "qrc:/images/icon_wp.png"
         anchors.top: im2.bottom
         anchors.left: im2.left
         anchors.topMargin: altitudeMode ? 12 :22
@@ -125,7 +125,7 @@ Rectangle {
     }
     Image {
         id: im4
-        source: "qrc:/image/height.png"
+        source: "qrc:/images/icon_preheight.png"
         anchors.top: im3.bottom
         anchors.left: im3.left
         anchors.topMargin: altitudeMode ? 12 :22
@@ -135,7 +135,7 @@ Rectangle {
     }
     Image {
         id: im5
-        source: "qrc:/image/height.png"
+        source: "qrc:/images/icon_preheight.png"
         anchors.top: im4.bottom
         anchors.left: im4.left
         anchors.topMargin: altitudeMode ? 12 :22

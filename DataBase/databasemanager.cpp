@@ -5,6 +5,7 @@
 #include <QSqlRecord>
 #include <QSqlDriver>
 #include <QApplication>
+#include <QFile>
 
 DataBaseManager* DataBaseManager::s_pDataBaseManager = nullptr;
 
@@ -1340,10 +1341,31 @@ DataBaseManager::DataBaseManager(QObject *parent)
 
 void DataBaseManager::init()
 {
+
+    QString dbName = "onlinemonitor.db";
+    QString dbPath = QCoreApplication::applicationDirPath() + "/" + dbName;
+
+    if (!QFile::exists(dbPath))
+    {
+        QString resourcePath = QString(":/databaseSource/%1").arg(dbName); // 假设放在 qrc:/database/
+        if (!QFile::exists(resourcePath))
+        {
+            qDebug() << "Resource database not found:" << resourcePath;
+            return;
+        }
+
+        if (!QFile::copy(resourcePath, dbPath))
+        {
+            qDebug() << "Failed to copy database from resource to:" << dbPath;
+            return;
+        }
+
+        QFile::setPermissions(dbPath, QFile::WriteOwner | QFile::ReadOwner);
+        qDebug() << "Database copied from resource to:" << dbPath;
+    }
     m_database = QSqlDatabase::addDatabase("QSQLITE");
-    QString dbPath = QCoreApplication::applicationDirPath() + "/onlinemonitor.db";
-    qDebug() << "I_WANT_TEST" << dbPath;
     m_database.setDatabaseName(dbPath);
+    qDebug() << "I_WANT_TEST" << dbPath;
     if (!m_database.open())
     {
         qDebug() << "Database Open Fail ";
@@ -1356,6 +1378,7 @@ void DataBaseManager::init()
         qDebug() << "数据库是否允许获取行数" << b_hasFeature;
     }
 }
+
 
 QString DataBaseManager::getConfiguration_ColumnName(QmlEnum::CONFIGURATION_COLUMN column)
 {

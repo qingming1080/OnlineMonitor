@@ -20,9 +20,6 @@ class DataBaseManager : public QObject
 {
     Q_OBJECT
 public:
-
-
-public:
     static DataBaseManager* getInstance();
 
     ~DataBaseManager();

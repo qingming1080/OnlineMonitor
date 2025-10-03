@@ -15,10 +15,12 @@ class HBModbusClient : public QObject
 
 public:
 
-    static HBModbusClient* GetInstance();
+    static HBModbusClient* getInstance();
     ~HBModbusClient();
 
     void Init();
+
+    int calculateBaseAddress(int devId) const;
 
     template<typename T>
     QVector<T> readRegisters(QModbusDataUnit::RegisterType type, int start, int count);
@@ -46,6 +48,12 @@ public:
     void updateDeviceTrend(Device* dev, quint16 power, quint16 time, quint16 preHeight, quint16 postHeight);
 
     Q_INVOKABLE void setRTC(int year, int month, int day, int hour, int minute, int second);
+
+    Q_INVOKABLE void setSysLedStatus(bool condition);
+
+    // Q_INVOKABLE void updateSysLedStatus();
+
+    Q_INVOKABLE void handleDeviceCoilStatus(int devId, int value); // Updated to handle resetIdx logic
 
 public:
 
@@ -193,6 +201,11 @@ private:
     void disconnect();
     void reconnectToServer();
 
+    void processSysBtnRBit4();
+    void clearRejectAndSuspectForDevice(int devId);
+
+    void updateSysLedStatus(); // Ensure LED status reflects device states
+
 signals:
 
     void connectedChanged(bool connected);
@@ -215,6 +228,8 @@ private:
     QTimer* m_reconnectTimer;
 
     QMutex m_mutex;
+
+    bool m_updateLedStatus = false; // 标志位：是否需要更新LED状态
 };
 
 #endif // HBMODBUSCLIENT_H

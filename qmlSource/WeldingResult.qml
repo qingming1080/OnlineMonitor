@@ -286,7 +286,7 @@ Rectangle {
         height: imgWidHei
         x:/*mode == 1 ? 33 :*/ 39
         y:imgY
-        source: "qrc:/image/module.png"
+        source: "qrc:/images/icon_power.png"
     }
     Image {
         id: im2
@@ -295,11 +295,11 @@ Rectangle {
         anchors.left: im1.left
         anchors.top: im1.bottom
         anchors.topMargin: equipmentCount > 1 ? 20 :imgtopMargin
-        source: "qrc:/image/instantiation.png"
+        source: "qrc:/images/instantiation.png"
         Image{
             x:imgcenterX
             y:imgcenterY
-            source: "qrc:/image/vector.png"
+            source: "qrc:/images/vector.png"
         }
     }
     Image {
@@ -309,10 +309,10 @@ Rectangle {
         anchors.left: im2.left
         anchors.top: im2.bottom
         anchors.topMargin: equipmentCount > 1 ? 20 :17
-        source: "qrc:/image/instantiation.png"
+        source: "qrc:/images/instantiation.png"
         Image{
             anchors.centerIn: parent
-            source: "qrc:/image/J.png"
+            source: "qrc:/images/icon_energy_unit.png"
         }
     }
     Image {
@@ -322,7 +322,7 @@ Rectangle {
         anchors.left: im3.left
         anchors.top: im3.bottom
         anchors.topMargin: equipmentCount > 1 ? 20 :17
-        source: "qrc:/image/height.png"
+        source: "qrc:/images/icon_preheight.png"
         visible:altitudeMode
     }
     Image {
@@ -332,7 +332,7 @@ Rectangle {
         anchors.left: im4.left
         anchors.top: im4.bottom
         anchors.topMargin: equipmentCount > 1 ? 20 :17
-        source: "qrc:/image/height.png"
+        source: "qrc:/images/icon_preheight.png"
         visible: altitudeMode
     }
 }

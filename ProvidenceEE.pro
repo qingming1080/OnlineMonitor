@@ -1,4 +1,4 @@
-QT += widgets quick virtualkeyboard charts serialport sql qml xml serialbus
+QT += widgets quick virtualkeyboard charts serialport sql qml xml serialbus core
 CONFIG += c++11
 CONFIG += C++11UTF8
 msvc {
@@ -19,7 +19,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
         DataBase/databasemanager.cpp \
         DataHandler/timehandler.cpp \
-        LanguageManger/languagemanger.cpp \
+        LanguageManger/languageManager.cpp \
         devicemanager.cpp \
         fileobject.cpp \
         log/localrecord.cpp \
@@ -41,9 +41,10 @@ SOURCES += \
         tools/utilityapplauncher.cpp
 
 RESOURCES += qml.qrc \
+    databaseSource.qrc \
     fonts.qrc \
-    res.qrc
-# fonts.qrc  # 注释掉字体资源文件以减少编译内存使用
+    images.qrc \
+    languageTranslation.qrc
 
 # Additional import path used to resolve QML modules in Qt Creator's code model
 QML_IMPORT_PATH =
@@ -59,7 +60,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 HEADERS += \
     DataBase/databasemanager.h \
     DataHandler/timehandler.h \
-    LanguageManger/languagemanger.h \
+    LanguageManger/languageManager.h \
     define.h \
     devicemanager.h \
     fileobject.h \

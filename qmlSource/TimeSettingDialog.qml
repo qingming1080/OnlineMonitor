@@ -363,9 +363,11 @@ Dialog {
 
                 }
 
-                modbusClient.setRTC(year, month, day, hour, minute, second)
-
-
+                ModbusClient.setRTC(year, month, day, hour, minute, second)
+                ModbusClient.handleDeviceCoilStatus(1,2);
+                ModbusClient.handleDeviceCoilStatus(2,1);
+                ModbusClient.handleDeviceCoilStatus(3,2);
+                ModbusClient.handleDeviceCoilStatus(4,1);
             }
         }
 
