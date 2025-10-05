@@ -13,7 +13,7 @@ Rectangle {
         text: GlobalLanguageDefine.strExceptionMesssage
         font.family: GlobalSystemDefine.fontBold
         font.bold: true
-        font.pixelSize: LanguageManger.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 20 : 18
+        font.pixelSize: LanguageManager.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 20 : 18
         color: pRgb(153, 204, 255)
         x:17
         y:9

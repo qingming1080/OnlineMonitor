@@ -467,7 +467,7 @@ Popup {
                     width: 30
                     height: 30
                     radius: 15
-                    color: LanguageManger.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? "#0d988c" : pRgb(232, 232, 232)
+                    color: LanguageManager.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? "#0d988c" : pRgb(232, 232, 232)
                     border.color: "#004b8d"
                     border.width: 2
                 }
@@ -497,7 +497,7 @@ Popup {
                     width: 30
                     height: 30
                     radius: 15
-                    color: LanguageManger.LanguageIndex === LanguageEnum.ENGLISH ? "#0d988c" : pRgb(232, 232, 232)
+                    color: LanguageManager.LanguageIndex === LanguageEnum.ENGLISH ? "#0d988c" : pRgb(232, 232, 232)
                     border.color: "#004b8d"
                     border.width: 2
                 }

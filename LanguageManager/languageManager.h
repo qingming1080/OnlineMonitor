@@ -24,7 +24,7 @@ class LanguageManager : public QObject
     Q_OBJECT
     Q_PROPERTY(int LanguageIndex READ getLanguageIndex WRITE setLanguageIndex NOTIFY notifyLanguageIndexChanged FINAL)
 public:
-    explicit LanguageManger(QObject *parent = nullptr);
+    explicit LanguageManager(QObject *parent = nullptr);
     Q_INVOKABLE void loadLanguage(const QString &languageCode);
 
     int getLanguageIndex() const;
@@ -36,4 +36,4 @@ signals:
 private:
     int m_iLanguageIndex;
 };
-#endif // LANGUAGEMANGER_H
+#endif // LANGUAGEMANAGER_H

@@ -19,17 +19,17 @@ class Device : public QObject
 {
     Q_OBJECT
 
-    Q_PROPERTY(DeviceInformation *pDeviceInformation READ pDeviceInformation)   // 设备信息
-    Q_PROPERTY(IO *pIO                               READ pIO)                  // IO
-    Q_PROPERTY(Manual *pManual                       READ pManual)              // Manual表格
-    Q_PROPERTY(System *pSystem                       READ pSystem)              // System表格
-    Q_PROPERTY(Trend *pTrend                         READ pTrend)               // 折线
+    Q_PROPERTY(DeviceInformation* DevInfoObject READ getDevInfoObject CONSTANT)   // 设备信息
+    Q_PROPERTY(IO *pIO                               READ pIO CONSTANT)                  // IO
+    Q_PROPERTY(Manual *pManual                       READ pManual CONSTANT)              // Manual表格
+    Q_PROPERTY(System *pSystem                       READ pSystem CONSTANT)              // System表格
+    Q_PROPERTY(Trend *pTrend                         READ pTrend CONSTANT)               // 折线
 
 public:
     explicit Device(int welderID = 0, QObject *parent = nullptr);
     ~Device();
 
-    Q_INVOKABLE DeviceInformation *pDeviceInformation() const;
+    DeviceInformation* getDevInfoObject() const;
     Q_INVOKABLE Manual *pManual() const;
     Q_INVOKABLE System *pSystem() const;
     Q_INVOKABLE IO *pIO() const;
@@ -55,7 +55,7 @@ signals:
 private:
     const int m_welderID;
 
-    DeviceInformation* m_pDeviceInformation{nullptr};   // 设备信息
+    DeviceInformation* m_ptrDevInfo;   // 设备信息
     IO* m_pIO;
     Manual* m_pManual;
     System* m_pSystem;

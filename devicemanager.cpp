@@ -38,8 +38,8 @@ Device *DeviceManager::getDeviceByNetworkID(int networkID)
 {
     for(int i = 0; i < m_deviceList.size(); ++i)
     {
-        if(m_deviceList.at(i)->pDeviceInformation()->connectType() == QmlEnum::CONNECTTYPE_Network
-            && m_deviceList.at(i)->pDeviceInformation()->connectID() == networkID)
+        if(m_deviceList.at(i)->getDevInfoObject()->connectType() == QmlEnum::CONNECTTYPE_Network
+            && m_deviceList.at(i)->getDevInfoObject()->connectID() == networkID)
             return m_deviceList.at(i);
     }
 
@@ -50,8 +50,8 @@ Device *DeviceManager::getDeviceByRs232ID(int rs232ID)
 {
     for(int i = 0; i < m_deviceList.size(); ++i)
     {
-        if(m_deviceList.at(i)->pDeviceInformation()->connectType() == QmlEnum::CONNECTTYPE_RS232
-            && m_deviceList.at(i)->pDeviceInformation()->connectID() == rs232ID)
+        if(m_deviceList.at(i)->getDevInfoObject()->connectType() == QmlEnum::CONNECTTYPE_RS232
+            && m_deviceList.at(i)->getDevInfoObject()->connectID() == rs232ID)
             return m_deviceList.at(i);
     }
 
@@ -69,7 +69,7 @@ void DeviceManager::init()
     for(int i = 0; i < list.size(); ++i)
     {
         m_deviceList.push_back(new Device(list.at(i)));
-        names.push_back(m_deviceList.last()->pDeviceInformation()->name());
+        names.push_back(m_deviceList.last()->getDevInfoObject()->name());
     }
 
     DeviceNames::getInstance()->setNames(names);
@@ -94,8 +94,8 @@ QString DeviceManager::getHistoryName(int welderID)
 {
     for(int i = 0; i < m_deviceList.size(); ++i)
     {
-        if(m_deviceList.at(i)->pDeviceInformation()->id() == welderID)
-            return m_deviceList.at(i)->pDeviceInformation()->name();
+        if(m_deviceList.at(i)->getDevInfoObject()->id() == welderID)
+            return m_deviceList.at(i)->getDevInfoObject()->name();
     }
 
     return "";
@@ -144,7 +144,7 @@ void DeviceManager::addDevice(const int &maxBacth, const int &sample, const int 
             break;
         }
         if(m_deviceList.at(i) != nullptr){
-            if(m_deviceList.at(i)->pDeviceInformation()->id() != i+1)
+            if(m_deviceList.at(i)->getDevInfoObject()->id() != i+1)
             {
                 data.welder_id = i + 1;
                 data.welder_name = name;
@@ -176,7 +176,7 @@ void DeviceManager::addDevice(const int &maxBacth, const int &sample, const int 
     QList<QString> names;
     for(int i = 0; i < m_deviceList.size(); ++i)
     {
-        names.push_back(m_deviceList.at(i)->pDeviceInformation()->name());
+        names.push_back(m_deviceList.at(i)->getDevInfoObject()->name());
     }
 
     DeviceNames::getInstance()->setNames(names);
@@ -194,7 +194,7 @@ void DeviceManager::removeDevice(int welderID)
     for(int i = 0; i < m_deviceList.size(); ++i)
     {
         Device* pDevice = m_deviceList.at(i);
-        if(pDevice->pDeviceInformation()->id() == welderID)
+        if(pDevice->getDevInfoObject()->id() == welderID)
         {
 
             m_deviceList.removeOne(pDevice);
@@ -210,7 +210,7 @@ void DeviceManager::removeDevice(int welderID)
     QList<QString> names;
     for(int i = 0; i < m_deviceList.size(); ++i)
     {
-        names.push_back(m_deviceList.at(i)->pDeviceInformation()->name());
+        names.push_back(m_deviceList.at(i)->getDevInfoObject()->name());
     }
 
     DeviceNames::getInstance()->setNames(names);

@@ -34,7 +34,7 @@ Window {
 
     property bool altitudeModel1: {
         if(DeviceManager.deviceList[0]){
-            DeviceManager.deviceList[0].pDeviceInformation.heightOption === 0 ? false : true
+            DeviceManager.deviceList[0].DevInfoObject.heightOption === 0 ? false : true
         }
         else{
             return false
@@ -42,7 +42,7 @@ Window {
     }
     property bool altitudeModel2: {
         if(DeviceManager.deviceList[1]){
-            DeviceManager.deviceList[1].pDeviceInformation.heightOption === 0 ? false : true
+            DeviceManager.deviceList[1].DevInfoObject.heightOption === 0 ? false : true
         }
         else{
             return false
@@ -50,7 +50,7 @@ Window {
     }
     property bool altitudeModel3: {
         if(DeviceManager.deviceList[2]){
-            DeviceManager.deviceList[2].pDeviceInformation.heightOption === 0 ? false : true
+            DeviceManager.deviceList[2].DevInfoObject.heightOption === 0 ? false : true
         }
         else{
             return false
@@ -58,7 +58,7 @@ Window {
     }
     property bool altitudeModel4: {
         if(DeviceManager.deviceList[3]){
-            DeviceManager.deviceList[3].pDeviceInformation.heightOption === 0 ? false : true
+            DeviceManager.deviceList[3].DevInfoObject.heightOption === 0 ? false : true
         }
         else{
             return false

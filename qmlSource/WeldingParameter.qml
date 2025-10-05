@@ -13,11 +13,11 @@ Rectangle {
     property string eqText3: ""
     property string eqText4: ""
     property string eqText5: ""
-    property bool altitudeMode:DeviceManager.deviceList[swipeCurrIndex].pDeviceInformation.heightOption
+    property bool altitudeMode:DeviceManager.deviceList[swipeCurrIndex].DevInfoObject.heightOption
                                === 1 ? true:false
 
     property int selectedTab: 0  // 0: 焊接参数, 1: 参数设置
-    property int deviceID: DeviceManager.deviceList[swipeCurrIndex].pDeviceInformation.id
+    property int deviceID: DeviceManager.deviceList[swipeCurrIndex].DevInfoObject.id
 
     radius: 3
     Rectangle {
@@ -36,7 +36,7 @@ Rectangle {
                text: GlobalLanguageDefine.strWeldingParameter
                font.family: GlobalSystemDefine.fontBold
                font.bold: true
-               font.pixelSize: LanguageManger.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 20 : 18
+               font.pixelSize: LanguageManager.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 20 : 18
                color: selectedTab === 0 ? pRgb(43, 112, 173) : pRgb(153, 204, 255)  // 选中时文字颜色
                anchors.centerIn: parent  // 使文字居中
            }
@@ -69,7 +69,7 @@ Rectangle {
                text: GlobalLanguageDefine.strParameterSetting
                font.family: GlobalSystemDefine.fontBold
                font.bold: true
-               font.pixelSize: LanguageManger.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 20 : 18
+               font.pixelSize: LanguageManager.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 20 : 18
                color: selectedTab === 1 ? pRgb(43, 112, 173) : pRgb(153, 204, 255)   // 选中时文字颜色
                anchors.centerIn: parent  // 使文字居中
            }
@@ -79,7 +79,7 @@ Rectangle {
                onClicked: {
                    selectedTab = 1
                    parameterSetting.open()
-                   console.log("deviceID: ", DeviceManager.deviceList[swipeCurrIndex].pDeviceInformation.id)
+                   console.log("deviceID: ", DeviceManager.deviceList[swipeCurrIndex].DevInfoObject.id)
                    HBModbusClient.readParameterSetting(deviceID)
                    console.log("energy_set: ",result[0].toString())
                    console.log("amplitude_set: ",result[1].toString())
@@ -149,7 +149,7 @@ Rectangle {
         text: GlobalLanguageDefine.strEnergy
         font.family: GlobalSystemDefine.fontBold
         font.bold: true
-        font.pixelSize: LanguageManger.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 16 : 14
+        font.pixelSize: LanguageManager.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 16 : 14
         color: pRgb(171, 206, 213)
         anchors.verticalCenter: im1.verticalCenter
         anchors.left: im1.right
@@ -161,7 +161,7 @@ Rectangle {
         text: GlobalLanguageDefine.strAmplitude
         font.family: GlobalSystemDefine.fontBold
         font.bold: true
-        font.pixelSize: LanguageManger.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 16 : 14
+        font.pixelSize: LanguageManager.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 16 : 14
         color: pRgb(171, 206, 213)
         anchors.verticalCenter: im2.verticalCenter
         anchors.left: im2.right
@@ -173,7 +173,7 @@ Rectangle {
         text: GlobalLanguageDefine.strWeldPressure
         font.family: GlobalSystemDefine.fontBold
         font.bold: true
-        font.pixelSize: LanguageManger.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 16 : 14
+        font.pixelSize: LanguageManager.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 16 : 14
         color: pRgb(171, 206, 213)
         anchors.verticalCenter: im3.verticalCenter
         anchors.left: im3.right
@@ -185,7 +185,7 @@ Rectangle {
         text: GlobalLanguageDefine.strPreWeldHeight
         font.family: GlobalSystemDefine.fontBold
         font.bold: true
-        font.pixelSize: LanguageManger.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 16 : 14
+        font.pixelSize: LanguageManager.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 16 : 14
         color: pRgb(171, 206, 213)
         anchors.verticalCenter: im4.verticalCenter
         anchors.left: im4.right
@@ -198,7 +198,7 @@ Rectangle {
         text: GlobalLanguageDefine.strPostWeldHeight
         font.family: GlobalSystemDefine.fontBold
         font.bold: true
-        font.pixelSize: LanguageManger.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 16 : 14
+        font.pixelSize: LanguageManager.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 16 : 14
         color: pRgb(171, 206, 213)
         anchors.verticalCenter: im5.verticalCenter
         anchors.left: im5.right

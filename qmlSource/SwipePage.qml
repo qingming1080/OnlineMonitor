@@ -46,7 +46,7 @@ Rectangle {
         color: "#0c5696"
         eqText1:{
             if(DeviceManager.deviceList[swipeCurrIndex]){
-                return DeviceManager.deviceList[swipeCurrIndex].pDeviceInformation.name
+                return DeviceManager.deviceList[swipeCurrIndex].DevInfoObject.name
             }
             else{
                 return ""
@@ -54,7 +54,7 @@ Rectangle {
         }
         eqText2:{
             if(DeviceManager.deviceList[swipeCurrIndex]){
-                return DeviceManager.deviceList[swipeCurrIndex].pDeviceInformation.model
+                return DeviceManager.deviceList[swipeCurrIndex].DevInfoObject.model
             }
             else{
                 return ""
@@ -62,7 +62,7 @@ Rectangle {
         }
         eqText3:{
             if(DeviceManager.deviceList[swipeCurrIndex]){
-                return DeviceManager.deviceList[swipeCurrIndex].pDeviceInformation.connectType === 1
+                return DeviceManager.deviceList[swipeCurrIndex].DevInfoObject.connectType === 1
                         ? "RS232" : "TCP/IP"
             }
             else{
@@ -71,7 +71,7 @@ Rectangle {
         }
         eqText4:{
             if(DeviceManager.deviceList[swipeCurrIndex]){
-                return DeviceManager.deviceList[swipeCurrIndex].pDeviceInformation.state
+                return DeviceManager.deviceList[swipeCurrIndex].DevInfoObject.state
             }
             else{
                 return ""
@@ -96,7 +96,7 @@ Rectangle {
                 color: "#0c5696"
                 eqText1:{
                     if(DeviceManager.deviceList[swipeCurrIndex]){
-                        return DeviceManager.deviceList[swipeCurrIndex].pDeviceInformation.power
+                        return DeviceManager.deviceList[swipeCurrIndex].DevInfoObject.power
                     }
                     else{
                         return ""
@@ -104,7 +104,7 @@ Rectangle {
                 }
                 eqText2:{
                     if(DeviceManager.deviceList[swipeCurrIndex]){
-                        return DeviceManager.deviceList[swipeCurrIndex].pDeviceInformation.time
+                        return DeviceManager.deviceList[swipeCurrIndex].DevInfoObject.time
                     }
                     else{
                         return ""
@@ -113,7 +113,7 @@ Rectangle {
 
                 eqText3:{
                     if(DeviceManager.deviceList[swipeCurrIndex]){
-                        return DeviceManager.deviceList[swipeCurrIndex].pDeviceInformation.energy
+                        return DeviceManager.deviceList[swipeCurrIndex].DevInfoObject.energy
                     }
                     else{
                         return ""
@@ -121,7 +121,7 @@ Rectangle {
                 }
                 eqText4:{
                     if(DeviceManager.deviceList[swipeCurrIndex]){
-                        return DeviceManager.deviceList[swipeCurrIndex].pDeviceInformation.heightPre
+                        return DeviceManager.deviceList[swipeCurrIndex].DevInfoObject.heightPre
                     }
                     else{
                         return ""
@@ -129,7 +129,7 @@ Rectangle {
                 }
                 eqText5:{
                     if(DeviceManager.deviceList[swipeCurrIndex]){
-                        return DeviceManager.deviceList[swipeCurrIndex].pDeviceInformation.heightPost
+                        return DeviceManager.deviceList[swipeCurrIndex].DevInfoObject.heightPost
                     }
                     else{
                         return ""
@@ -201,7 +201,7 @@ Rectangle {
             // else if(mt1.text === qsTr("创建模型"))
             else if(mt1.text === GlobalLanguageDefine.strCreateModel)
             {
-                if(DeviceManager.deviceList[swipeCurrIndex].pDeviceInformation.sample <= listSize){
+                if(DeviceManager.deviceList[swipeCurrIndex].DevInfoObject.sample <= listSize){
                     loader.sourceComponent = mode1
                     loader1.sourceComponent = weld1
                     Manual.save()
@@ -273,7 +273,7 @@ Rectangle {
                 }
                 eqText1:{
                     if(DeviceManager.deviceList[swipeCurrIndex]){
-                        return DeviceManager.deviceList[swipeCurrIndex].pDeviceInformation.goodCycles
+                        return DeviceManager.deviceList[swipeCurrIndex].DevInfoObject.goodCycles
                     }
                     else{
                         return ""
@@ -281,7 +281,7 @@ Rectangle {
                 }
                 eqText2:{
                     if(DeviceManager.deviceList[swipeCurrIndex]){
-                        return DeviceManager.deviceList[swipeCurrIndex].pDeviceInformation.suspectCycles
+                        return DeviceManager.deviceList[swipeCurrIndex].DevInfoObject.suspectCycles
                     }
                     else{
                         return ""
@@ -289,7 +289,7 @@ Rectangle {
                 }
                 eqText3:{
                     if(DeviceManager.deviceList[swipeCurrIndex]){
-                        return DeviceManager.deviceList[swipeCurrIndex].pDeviceInformation.notDefinite
+                        return DeviceManager.deviceList[swipeCurrIndex].DevInfoObject.notDefinite
                     }
                     else{
                         return ""
@@ -297,9 +297,9 @@ Rectangle {
                 }
                 eqText4:{
                     if(DeviceManager.deviceList[swipeCurrIndex]){
-                        return DeviceManager.deviceList[swipeCurrIndex].pDeviceInformation.goodCycles
-                                + DeviceManager.deviceList[swipeCurrIndex].pDeviceInformation.notDefinite
-                                +DeviceManager.deviceList[swipeCurrIndex].pDeviceInformation.suspectCycles
+                        return DeviceManager.deviceList[swipeCurrIndex].DevInfoObject.goodCycles
+                                + DeviceManager.deviceList[swipeCurrIndex].DevInfoObject.notDefinite
+                                +DeviceManager.deviceList[swipeCurrIndex].DevInfoObject.suspectCycles
                     }
                     else{
                         return ""
@@ -307,7 +307,7 @@ Rectangle {
                 }
                 eqText5:{
                     if(DeviceManager.deviceList[swipeCurrIndex]){
-                        return DeviceManager.deviceList[swipeCurrIndex].pDeviceInformation.goodRate
+                        return DeviceManager.deviceList[swipeCurrIndex].DevInfoObject.goodRate
                     }
                     else{
                         return ""

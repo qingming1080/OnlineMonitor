@@ -13,7 +13,7 @@ class DeviceManager : public QObject
 {
     Q_OBJECT
     // 设备指针列表
-    Q_PROPERTY(QList<Device *> deviceList READ deviceList  NOTIFY deviceListChanged)
+    Q_PROPERTY(QList<Device*> deviceList READ deviceList  NOTIFY deviceListChanged)
     // 设备数量
     Q_PROPERTY(int deviceNum READ deviceNum  NOTIFY deviceNumChanged)
 

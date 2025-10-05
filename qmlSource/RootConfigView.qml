@@ -16,7 +16,7 @@ Rectangle {
         y:25
         name: {
             if(DeviceManager.deviceList[0]){
-                return DeviceManager.deviceList[0].pDeviceInformation.name
+                return DeviceManager.deviceList[0].DevInfoObject.name
             }
             else{
                 return ""
@@ -24,7 +24,7 @@ Rectangle {
         }
         model: {
             if(DeviceManager.deviceList[0]){
-                return DeviceManager.deviceList[0].pDeviceInformation.model
+                return DeviceManager.deviceList[0].DevInfoObject.model
             }
             else{
                 return ""
@@ -72,7 +72,7 @@ Rectangle {
         y:25
         name: {
             if(DeviceManager.deviceList[1]){
-                return DeviceManager.deviceList[1].pDeviceInformation.name
+                return DeviceManager.deviceList[1].DevInfoObject.name
             }
             else{
                 return ""
@@ -80,7 +80,7 @@ Rectangle {
         }
         model: {
             if(DeviceManager.deviceList[1]){
-                return DeviceManager.deviceList[1].pDeviceInformation.model
+                return DeviceManager.deviceList[1].DevInfoObject.model
             }
             else{
                 return ""
@@ -128,7 +128,7 @@ Rectangle {
         y:25
         name: {
             if(DeviceManager.deviceList[2]){
-                return DeviceManager.deviceList[2].pDeviceInformation.name
+                return DeviceManager.deviceList[2].DevInfoObject.name
             }
             else{
                 return ""
@@ -136,7 +136,7 @@ Rectangle {
         }
         model: {
             if(DeviceManager.deviceList[2]){
-                return DeviceManager.deviceList[2].pDeviceInformation.model
+                return DeviceManager.deviceList[2].DevInfoObject.model
             }
             else{
                 return ""
@@ -184,7 +184,7 @@ Rectangle {
         y:25
         name: {
             if(DeviceManager.deviceList[3]){
-                return DeviceManager.deviceList[3].pDeviceInformation.name
+                return DeviceManager.deviceList[3].DevInfoObject.name
             }
             else{
                 return ""
@@ -192,7 +192,7 @@ Rectangle {
         }
         model: {
             if(DeviceManager.deviceList[3]){
-                return DeviceManager.deviceList[3].pDeviceInformation.model
+                return DeviceManager.deviceList[3].DevInfoObject.model
             }
             else{
                 return ""

@@ -386,14 +386,14 @@ void HBModbusClient::dispatchInputsOnCycleCountChanged()
             lastCycleCount[i] = cycleCount;
             QVector<quint16> inputs = getDeviceInputs(i+1);
             Device* dev = (i < devList.size()) ? devList.at(i) : nullptr;
-            if (dev && dev->pDeviceInformation() && inputs.size() >= DEV_INPUT_REGISTERS_COUNT)
+            if (dev && dev->getDevInfoObject() && inputs.size() >= DEV_INPUT_REGISTERS_COUNT)
             {
-                // dev->pDeviceInformation()->setCycleCount(cycleCount);
-                dev->pDeviceInformation()->setPower(inputs[DEV_POWER]);
-                dev->pDeviceInformation()->setTime(inputs[DEV_TIME]);
-                dev->pDeviceInformation()->setEnergy(inputs[DEV_ENERGY]);
-                dev->pDeviceInformation()->setHeightPre(inputs[DEV_PRE_HEIGHT]);
-                dev->pDeviceInformation()->setHeightPost(inputs[DEV_POST_HEIGHT]);
+                // dev->DevInfoObject()->setCycleCount(cycleCount);
+                dev->getDevInfoObject()->setPower(inputs[DEV_POWER]);
+                dev->getDevInfoObject()->setTime(inputs[DEV_TIME]);
+                dev->getDevInfoObject()->setEnergy(inputs[DEV_ENERGY]);
+                dev->getDevInfoObject()->setHeightPre(inputs[DEV_PRE_HEIGHT]);
+                dev->getDevInfoObject()->setHeightPost(inputs[DEV_POST_HEIGHT]);
 
                 updateDeviceTrend(dev, inputs[DEV_POWER], inputs[DEV_TIME], inputs[DEV_PRE_HEIGHT], inputs[DEV_POST_HEIGHT]);
 

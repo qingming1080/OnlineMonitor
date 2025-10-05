@@ -61,7 +61,7 @@ Rectangle {
     }
     property bool altitudMode:{
         if(DeviceManager.deviceList[currentConfigId-1]){
-            return DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.heightOption
+            return DeviceManager.deviceList[currentConfigId-1].DevInfoObject.heightOption
                     === 1 ? true:false
         }
         else {
@@ -272,7 +272,7 @@ Rectangle {
                         // if(equipmentCount === 1){
                         if(equipmentCount === 0){
                             if(DeviceManager.deviceList[0]){
-                                DeviceManager.deviceList[0].pDeviceInformation.maxBacth
+                                DeviceManager.deviceList[0].DevInfoObject.maxBacth
                             }
                             else{
                                 return 20000
@@ -280,7 +280,7 @@ Rectangle {
                         }
                         else{
                             if(DeviceManager.deviceList[currentConfigId-1]){
-                                DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.maxBacth
+                                DeviceManager.deviceList[currentConfigId-1].DevInfoObject.maxBacth
                             }
                             else{
                                 return 20000
@@ -338,7 +338,7 @@ Rectangle {
                         // if(equipmentCount === 1){
                         if(equipmentCount === 0){
                             if(DeviceManager.deviceList[0]){
-                                DeviceManager.deviceList[0].pDeviceInformation.sample
+                                DeviceManager.deviceList[0].DevInfoObject.sample
                             }
                             else{
                                 return 20
@@ -346,7 +346,7 @@ Rectangle {
                         }
                         else{
                             if(DeviceManager.deviceList[currentConfigId-1]){
-                                DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.sample
+                                DeviceManager.deviceList[currentConfigId-1].DevInfoObject.sample
                             }
                             else{
                                 return 20
@@ -396,7 +396,7 @@ Rectangle {
                         // if(equipmentCount === 1){
                         if(equipmentCount === 0){
                             if(DeviceManager.deviceList[0]){
-                                DeviceManager.deviceList[0].pDeviceInformation.lowerLimit
+                                DeviceManager.deviceList[0].DevInfoObject.lowerLimit
                             }
                             else{
                                 return 99
@@ -404,7 +404,7 @@ Rectangle {
                         }
                         else{
                             if(DeviceManager.deviceList[currentConfigId-1]){
-                                DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.lowerLimit
+                                DeviceManager.deviceList[currentConfigId-1].DevInfoObject.lowerLimit
                             }
                             else{
                                 return 99
@@ -455,7 +455,7 @@ Rectangle {
                        // if(equipmentCount === 1){
                         if(equipmentCount === 0){
                             if(DeviceManager.deviceList[0]){
-                                DeviceManager.deviceList[0].pDeviceInformation.lowerLimit
+                                DeviceManager.deviceList[0].DevInfoObject.lowerLimit
                             }
                             else{
                                 return ""
@@ -463,7 +463,7 @@ Rectangle {
                         }
                         else{
                             if(DeviceManager.deviceList[currentConfigId-1]){
-                                DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.lowerLimit
+                                DeviceManager.deviceList[currentConfigId-1].DevInfoObject.lowerLimit
                             }
                             else{
                                 return ""
@@ -514,7 +514,7 @@ Rectangle {
                         // if(equipmentCount === 1){
                         if(equipmentCount === 0){
                             if(DeviceManager.deviceList[0]){
-                                DeviceManager.deviceList[0].pDeviceInformation.lowerLimit
+                                DeviceManager.deviceList[0].DevInfoObject.lowerLimit
                             }
                             else{
                                 return ""
@@ -522,7 +522,7 @@ Rectangle {
                         }
                         else{
                             if(DeviceManager.deviceList[currentConfigId-1]){
-                                DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.lowerLimit
+                                DeviceManager.deviceList[currentConfigId-1].DevInfoObject.lowerLimit
                             }
                             else{
                                 return ""
@@ -574,7 +574,7 @@ Rectangle {
                         // if(equipmentCount === 1){
                         if(equipmentCount === 0){
                             if(DeviceManager.deviceList[0]){
-                                DeviceManager.deviceList[0].pDeviceInformation.lowerLimit
+                                DeviceManager.deviceList[0].DevInfoObject.lowerLimit
                             }
                             else{
                                 return ""
@@ -582,7 +582,7 @@ Rectangle {
                         }
                         else{
                             if(DeviceManager.deviceList[currentConfigId-1]){
-                                DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.lowerLimit
+                                DeviceManager.deviceList[currentConfigId-1].DevInfoObject.lowerLimit
                             }
                             else{
                                 return ""
@@ -643,10 +643,10 @@ Rectangle {
                         }
                         // else if(equipmentCount === 1){
                         else if(equipmentCount === 0){
-                            DeviceManager.deviceList[0].pDeviceInformation.setHeightOption(1)
+                            DeviceManager.deviceList[0].DevInfoObject.setHeightOption(1)
                         }
                         else{
-                            DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.setHeightOption(1)
+                            DeviceManager.deviceList[currentConfigId-1].DevInfoObject.setHeightOption(1)
                         }
                     }
                 }
@@ -685,10 +685,10 @@ Rectangle {
                         }
                         // else if(equipmentCount === 1){
                         else if(equipmentCount === 0){
-                            DeviceManager.deviceList[0].pDeviceInformation.setHeightOption(0)
+                            DeviceManager.deviceList[0].DevInfoObject.setHeightOption(0)
                         }
                         else{
-                            DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.setHeightOption(0)
+                            DeviceManager.deviceList[currentConfigId-1].DevInfoObject.setHeightOption(0)
                         }
                     }
                 }
@@ -741,7 +741,7 @@ Rectangle {
                         // if(equipmentCount === 1){
                         if(equipmentCount === 0){
                             if(DeviceManager.deviceList[0]){
-                                return DeviceManager.deviceList[0].pDeviceInformation.name
+                                return DeviceManager.deviceList[0].DevInfoObject.name
                             }
                             else{
                                 return ""
@@ -749,7 +749,7 @@ Rectangle {
                         }
                         else{
                             if(DeviceManager.deviceList[currentConfigId-1]){
-                                return DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.name
+                                return DeviceManager.deviceList[currentConfigId-1].DevInfoObject.name
                             }
                             else{
                                 return ""
@@ -786,7 +786,7 @@ Rectangle {
                         else if(equipmentCount === 0){
                             if(DeviceManager.deviceList[0]){
                                  DeviceManager.deviceListChanged()
-                                return DeviceManager.deviceList[0].pDeviceInformation.model
+                                return DeviceManager.deviceList[0].DevInfoObject.model
                             }
                             else{
                                 return ""
@@ -795,7 +795,7 @@ Rectangle {
                         else{
                             if(DeviceManager.deviceList[currentConfigId-1]){
                                  DeviceManager.deviceListChanged()
-                                return DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.model
+                                return DeviceManager.deviceList[currentConfigId-1].DevInfoObject.model
                             }
                             else{
                                 return ""
@@ -810,11 +810,11 @@ Rectangle {
                         //else if(equipmentCount === 1){
                         else if(equipmentCount === 0){
                              DeviceManager.deviceListChanged()
-                            DeviceManager.deviceList[0].pDeviceInformation.setModel(com1.currentText)
+                            DeviceManager.deviceList[0].DevInfoObject.setModel(com1.currentText)
                         }
                         else{
                              DeviceManager.deviceListChanged()
-                            DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.setModel(com1.currentText)
+                            DeviceManager.deviceList[currentConfigId-1].DevInfoObject.setModel(com1.currentText)
                         }
 
                     }
@@ -833,18 +833,18 @@ Rectangle {
                        // if(equipmentCount === 1){
                         if(equipmentCount === 0){
                             if(ctl1.checked){
-                                DeviceManager.deviceList[0].pDeviceInformation.setConnectType(1)
+                                DeviceManager.deviceList[0].DevInfoObject.setConnectType(1)
                             }
                             else{
-                                DeviceManager.deviceList[0].pDeviceInformation.setConnectType(0)
+                                DeviceManager.deviceList[0].DevInfoObject.setConnectType(0)
                             }
                         }
                         else{
                             if(ctl1.checked){
-                                DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.setConnectType(1)
+                                DeviceManager.deviceList[currentConfigId-1].DevInfoObject.setConnectType(1)
                             }
                             else{
-                                DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.setConnectType(0)
+                                DeviceManager.deviceList[currentConfigId-1].DevInfoObject.setConnectType(0)
                             }
                         }
                     }
@@ -877,10 +877,10 @@ Rectangle {
                                     }
                                     //else if(equipmentCount === 1){
                                     else if(equipmentCount === 0){
-                                        return DeviceManager.deviceList[0].pDeviceInformation.connectType !== 0? true : false
+                                        return DeviceManager.deviceList[0].DevInfoObject.connectType !== 0? true : false
                                     }
                                     else{
-                                        return DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.connectType !== 0? true : false
+                                        return DeviceManager.deviceList[currentConfigId-1].DevInfoObject.connectType !== 0? true : false
                                     }
                                 }
                                 duration: 0
@@ -893,10 +893,10 @@ Rectangle {
                                     }
                                     // else if(equipmentCount === 1){
                                     else if(equipmentCount === 0){
-                                        return DeviceManager.deviceList[0].pDeviceInformation.connectType !== 0? false : true
+                                        return DeviceManager.deviceList[0].DevInfoObject.connectType !== 0? false : true
                                     }
                                     else{
-                                        return DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.connectType !== 0? false : true
+                                        return DeviceManager.deviceList[currentConfigId-1].DevInfoObject.connectType !== 0? false : true
                                     }
                                 }
                                 duration: 0
@@ -906,7 +906,7 @@ Rectangle {
                             anchors.left: parent.left
                             anchors.top: parent.top
                             anchors.topMargin: 9
-                            anchors.leftMargin: LanguageManger.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 63 : 50
+                            anchors.leftMargin: LanguageManager.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 63 : 50
                             // text: qsTr("网络")
                             text: "TCP/IP"
                             color: {
@@ -915,10 +915,10 @@ Rectangle {
                                 }
                                 // else if(equipmentCount === 1){
                                 else if(equipmentCount === 0){
-                                    return DeviceManager.deviceList[0].pDeviceInformation.connectType !== 0 ? pRgb(43, 112, 173) : "#e5e6e7"
+                                    return DeviceManager.deviceList[0].DevInfoObject.connectType !== 0 ? pRgb(43, 112, 173) : "#e5e6e7"
                                 }
                                 else{
-                                    return DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.connectType !== 0 ? pRgb(43, 112, 173) : "#e5e6e7"
+                                    return DeviceManager.deviceList[currentConfigId-1].DevInfoObject.connectType !== 0 ? pRgb(43, 112, 173) : "#e5e6e7"
                                 }
                             }
                             font.family: GlobalSystemDefine.fontBold
@@ -937,10 +937,10 @@ Rectangle {
                                 }
                                 // else if(equipmentCount === 1){
                                 else if(equipmentCount === 0){
-                                    return DeviceManager.deviceList[0].pDeviceInformation.connectType !== 0? "#e5e6e7" : pRgb(43, 112, 173)
+                                    return DeviceManager.deviceList[0].DevInfoObject.connectType !== 0? "#e5e6e7" : pRgb(43, 112, 173)
                                 }
                                 else{
-                                    return DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.connectType !== 0? "#e5e6e7" : pRgb(43, 112, 173)
+                                    return DeviceManager.deviceList[currentConfigId-1].DevInfoObject.connectType !== 0? "#e5e6e7" : pRgb(43, 112, 173)
                                 }
                             }
                             font.family: GlobalSystemDefine.fontBold
@@ -960,11 +960,11 @@ Rectangle {
                         // else if(equipmentCount === 1){
                         else if(equipmentCount === 0){
                             DeviceManager.deviceListChanged()
-                            return DeviceManager.deviceList[0].pDeviceInformation.connectType === 0 ? rect1 : rect2
+                            return DeviceManager.deviceList[0].DevInfoObject.connectType === 0 ? rect1 : rect2
                         }
                         else{
                             DeviceManager.deviceListChanged()
-                            return DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.connectType === 0 ? rect1 : rect2
+                            return DeviceManager.deviceList[currentConfigId-1].DevInfoObject.connectType === 0 ? rect1 : rect2
                         }
 
                     }
@@ -1051,32 +1051,32 @@ Rectangle {
                                 // else if(equipmentCount === 1){
                                 else if(equipmentCount === 0){
                                      console.log("currentText: ",currentText,"equipmentCount<0:",equipmentCount, "networkId:", networkId,"currentConfigId:",currentConfigId)
-                                    if(DeviceManager.deviceList[0].pDeviceInformation.connectID === 1){
+                                    if(DeviceManager.deviceList[0].DevInfoObject.connectID === 1){
                                         return "ETH1"
                                     }
-                                    else if(DeviceManager.deviceList[0].pDeviceInformation.connectID === 2){
+                                    else if(DeviceManager.deviceList[0].DevInfoObject.connectID === 2){
                                         return "ETH2"
                                     }
-                                    else if(DeviceManager.deviceList[0].pDeviceInformation.connectID === 3){
+                                    else if(DeviceManager.deviceList[0].DevInfoObject.connectID === 3){
                                         return "ETH3"
                                     }
-                                    else if(DeviceManager.deviceList[0].pDeviceInformation.connectID === 4){
+                                    else if(DeviceManager.deviceList[0].DevInfoObject.connectID === 4){
                                         return "ETH4"
                                     }
 
                                 }
                                 else{
                                      console.log("currentText: ",currentText,"equipmentCount>>0:",equipmentCount, "networkId:", networkId,"currentConfigId:",currentConfigId)
-                                    if(DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.connectID === 1){
+                                    if(DeviceManager.deviceList[currentConfigId-1].DevInfoObject.connectID === 1){
                                         return "ETH1"
                                     }
-                                    else if(DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.connectID === 2){
+                                    else if(DeviceManager.deviceList[currentConfigId-1].DevInfoObject.connectID === 2){
                                         return "ETH2"
                                     }
-                                    else if(DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.connectID === 3){
+                                    else if(DeviceManager.deviceList[currentConfigId-1].DevInfoObject.connectID === 3){
                                         return "ETH3"
                                     }
-                                    else if(DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.connectID === 4){
+                                    else if(DeviceManager.deviceList[currentConfigId-1].DevInfoObject.connectID === 4){
                                         return "ETH4"
                                     }
 
@@ -1086,10 +1086,10 @@ Rectangle {
                                 // if(equipmentCount === 1){
                                  console.log("currentText: ",currentText,"equipmentCount>>0:",equipmentCount, "networkId:", networkId,"currentConfigId:",currentConfigId)
                                 if(equipmentCount === 0){
-                                    DeviceManager.deviceList[0].pDeviceInformation.setConnectID(com2.currentIndex+1)
+                                    DeviceManager.deviceList[0].DevInfoObject.setConnectID(com2.currentIndex+1)
                                 }
                                 else{
-                                    DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.setConnectID(com2.currentIndex+1)
+                                    DeviceManager.deviceList[currentConfigId-1].DevInfoObject.setConnectID(com2.currentIndex+1)
                                 }
                                  DeviceManager.deviceListChanged()
 
@@ -1369,19 +1369,19 @@ Rectangle {
                                 }
                                 // else if(equipmentCount === 1){
                                 else if(equipmentCount === 0){
-                                    if(DeviceManager.deviceList[0].pDeviceInformation.connectID === 1){
+                                    if(DeviceManager.deviceList[0].DevInfoObject.connectID === 1){
                                         return "COM1"
                                     }
-                                    else if(DeviceManager.deviceList[0].pDeviceInformation.connectID === 2){
+                                    else if(DeviceManager.deviceList[0].DevInfoObject.connectID === 2){
                                         return "COM2"
                                     }
 
                                 }
                                 else{
-                                    if(DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.connectID === 1){
+                                    if(DeviceManager.deviceList[currentConfigId-1].DevInfoObject.connectID === 1){
                                         return "COM1"
                                     }
-                                    else if(DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.connectID === 2){
+                                    else if(DeviceManager.deviceList[currentConfigId-1].DevInfoObject.connectID === 2){
                                         return "COM2"
                                     }
 
@@ -1391,11 +1391,11 @@ Rectangle {
                                 // if(equipmentCount === 1){
                                     if(equipmentCount === 0){
                                      console.log("rs232-onDataAlter-currentText: ",currentText,"equipmentCount:",equipmentCount)
-                                    DeviceManager.deviceList[0].pDeviceInformation.setConnectID(com3.currentIndex+1)
+                                    DeviceManager.deviceList[0].DevInfoObject.setConnectID(com3.currentIndex+1)
                                 }
                                 else{
                                     console.log("rs232-onDataAlter-currentText2: ",currentText,"equipmentCount:",equipmentCount)
-                                    DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.setConnectID(com3.currentIndex+1)
+                                    DeviceManager.deviceList[currentConfigId-1].DevInfoObject.setConnectID(com3.currentIndex+1)
                                 }
                                     DeviceManager.deviceListChanged()
 
@@ -1623,20 +1623,20 @@ Rectangle {
                                 }
                                 //if(full.visible){//设置多设备时配置存储
                                 if(equipmentCount > 1){//设置多设备时配置存储
-                                    DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.setMaxBacth(t1.text)
-                                    DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.setSample(t2.text)
-                                    DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.setLowerLimit(t3.text)
-                                    DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.setName(t4.text)
+                                    DeviceManager.deviceList[currentConfigId-1].DevInfoObject.setMaxBacth(t1.text)
+                                    DeviceManager.deviceList[currentConfigId-1].DevInfoObject.setSample(t2.text)
+                                    DeviceManager.deviceList[currentConfigId-1].DevInfoObject.setLowerLimit(t3.text)
+                                    DeviceManager.deviceList[currentConfigId-1].DevInfoObject.setName(t4.text)
                                 }
                                 else{
-                                    // DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.setMaxBacth(t1.text)
-                                    // DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.setSample(t2.text)
-                                    // DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.setLowerLimit(t3.text)
-                                    // DeviceManager.deviceList[currentConfigId-1].pDeviceInformation.setName(t4.text)
-                                    DeviceManager.deviceList[0].pDeviceInformation.setMaxBacth(t1.text)
-                                    DeviceManager.deviceList[0].pDeviceInformation.setSample(t2.text)
-                                    DeviceManager.deviceList[0].pDeviceInformation.setLowerLimit(t3.text)
-                                    DeviceManager.deviceList[0].pDeviceInformation.setName(t4.text)
+                                    // DeviceManager.deviceList[currentConfigId-1].DevInfoObject.setMaxBacth(t1.text)
+                                    // DeviceManager.deviceList[currentConfigId-1].DevInfoObject.setSample(t2.text)
+                                    // DeviceManager.deviceList[currentConfigId-1].DevInfoObject.setLowerLimit(t3.text)
+                                    // DeviceManager.deviceList[currentConfigId-1].DevInfoObject.setName(t4.text)
+                                    DeviceManager.deviceList[0].DevInfoObject.setMaxBacth(t1.text)
+                                    DeviceManager.deviceList[0].DevInfoObject.setSample(t2.text)
+                                    DeviceManager.deviceList[0].DevInfoObject.setLowerLimit(t3.text)
+                                    DeviceManager.deviceList[0].DevInfoObject.setName(t4.text)
                                 }
                                 loadViewsys(2,musys)
                             }
@@ -1663,11 +1663,11 @@ Rectangle {
                 id:s1
                 x:41
                 y:68
-                sysCurrIndex:DeviceManager.deviceList[0].pDeviceInformation.id
+                sysCurrIndex:DeviceManager.deviceList[0].DevInfoObject.id
                 sysCurrIndex1:1
                 heightOpation:{
                     if(DeviceManager.deviceList[0]){
-                        return DeviceManager.deviceList[0].pDeviceInformation.heightOption
+                        return DeviceManager.deviceList[0].DevInfoObject.heightOption
                                 === 1 ? true:false
                     }
                     else{
@@ -1677,7 +1677,7 @@ Rectangle {
                 visible: musysTmp1
                 eqText1:{
                     if(DeviceManager.deviceList[0]){
-                        DeviceManager.deviceList[0].pDeviceInformation.name
+                        DeviceManager.deviceList[0].DevInfoObject.name
                     }
                     else{
                         return ""
@@ -1685,7 +1685,7 @@ Rectangle {
                 }
                 eqText2:{
                     if(DeviceManager.deviceList[0]){
-                        DeviceManager.deviceList[0].pDeviceInformation.model
+                        DeviceManager.deviceList[0].DevInfoObject.model
                     }
                     else{
                         return ""
@@ -1693,7 +1693,7 @@ Rectangle {
                 }
                 eqText3:{
                     if(DeviceManager.deviceList[0]){
-                        DeviceManager.deviceList[0].pDeviceInformation.connectType === 0  ? "TCP/IP" : "RS232"
+                        DeviceManager.deviceList[0].DevInfoObject.connectType === 0  ? "TCP/IP" : "RS232"
                     }
                     else{
                         return ""
@@ -1701,7 +1701,7 @@ Rectangle {
                 }
                 eqText4:{
                     if(DeviceManager.deviceList[0]){
-                        DeviceManager.deviceList[0].pDeviceInformation.state
+                        DeviceManager.deviceList[0].DevInfoObject.state
                     }
                     else{
                         return ""
@@ -1717,11 +1717,11 @@ Rectangle {
                 id:s2
                 x:347
                 y:68
-                sysCurrIndex:DeviceManager.deviceList[1].pDeviceInformation.id
+                sysCurrIndex:DeviceManager.deviceList[1].DevInfoObject.id
                 sysCurrIndex1:2
                 heightOpation:{
                     if(DeviceManager.deviceList[1]){
-                        return DeviceManager.deviceList[1].pDeviceInformation.heightOption
+                        return DeviceManager.deviceList[1].DevInfoObject.heightOption
                                 === 1 ? true:false
                     }
                     else{
@@ -1731,7 +1731,7 @@ Rectangle {
                 visible: musysTmp2
                 eqText1:{
                     if(DeviceManager.deviceList[1]){
-                        DeviceManager.deviceList[1].pDeviceInformation.name
+                        DeviceManager.deviceList[1].DevInfoObject.name
                     }
                     else{
                         return ""
@@ -1739,7 +1739,7 @@ Rectangle {
                 }
                 eqText2:{
                     if(DeviceManager.deviceList[1]){
-                        DeviceManager.deviceList[1].pDeviceInformation.model
+                        DeviceManager.deviceList[1].DevInfoObject.model
                     }
                     else{
                         return ""
@@ -1747,7 +1747,7 @@ Rectangle {
                 }
                 eqText3:{
                     if(DeviceManager.deviceList[1]){
-                        DeviceManager.deviceList[1].pDeviceInformation.connectType === 0 ? "TCP/IP" : "RS232"
+                        DeviceManager.deviceList[1].DevInfoObject.connectType === 0 ? "TCP/IP" : "RS232"
                     }
                     else{
                         return ""
@@ -1755,7 +1755,7 @@ Rectangle {
                 }
                 eqText4:{
                     if(DeviceManager.deviceList[1]){
-                        DeviceManager.deviceList[1].pDeviceInformation.state
+                        DeviceManager.deviceList[1].DevInfoObject.state
                     }
                     else{
                         return ""
@@ -1772,15 +1772,15 @@ Rectangle {
                 id:s3
                 x:654
                 y:68
-                sysCurrIndex:DeviceManager.deviceList[2].pDeviceInformation.id
+                sysCurrIndex:DeviceManager.deviceList[2].DevInfoObject.id
                 sysCurrIndex1:3
                 heightOpation:{
                     if(DeviceManager.deviceList[2]){
-                        return DeviceManager.deviceList[2].pDeviceInformation.heightOption
+                        return DeviceManager.deviceList[2].DevInfoObject.heightOption
                                 === 1 ? true:false
                     }
                     else if(DeviceManager.deviceList[3]){
-                        return DeviceManager.deviceList[3].pDeviceInformation.heightOption
+                        return DeviceManager.deviceList[3].DevInfoObject.heightOption
                                 === 1 ? true:false
                     }
                     else{
@@ -1790,10 +1790,10 @@ Rectangle {
                 visible: musysTmp3
                 eqText1:{
                     if(DeviceManager.deviceList[2]){
-                        DeviceManager.deviceList[2].pDeviceInformation.name
+                        DeviceManager.deviceList[2].DevInfoObject.name
                     }
                     else if(DeviceManager.deviceList[3]){
-                        DeviceManager.deviceList[3].pDeviceInformation.name
+                        DeviceManager.deviceList[3].DevInfoObject.name
                     }
                     else{
                         return ""
@@ -1801,10 +1801,10 @@ Rectangle {
                 }
                 eqText2:{
                     if(DeviceManager.deviceList[2]){
-                        DeviceManager.deviceList[2].pDeviceInformation.model
+                        DeviceManager.deviceList[2].DevInfoObject.model
                     }
                     else if(DeviceManager.deviceList[3]){
-                        DeviceManager.deviceList[3].pDeviceInformation.model
+                        DeviceManager.deviceList[3].DevInfoObject.model
                     }
                     else{
                         return ""
@@ -1812,10 +1812,10 @@ Rectangle {
                 }
                 eqText3:{
                     if(DeviceManager.deviceList[2]){
-                        DeviceManager.deviceList[2].pDeviceInformation.connectType === 0  ? "TCP/IP" : "RS232"
+                        DeviceManager.deviceList[2].DevInfoObject.connectType === 0  ? "TCP/IP" : "RS232"
                     }
                     else if(DeviceManager.deviceList[3]){
-                        DeviceManager.deviceList[3].pDeviceInformation.connectType === 0  ? "TCP/IP" : "RS232"
+                        DeviceManager.deviceList[3].DevInfoObject.connectType === 0  ? "TCP/IP" : "RS232"
                     }
                     else{
                         return ""
@@ -1823,10 +1823,10 @@ Rectangle {
                 }
                 eqText4:{
                     if(DeviceManager.deviceList[2]){
-                        DeviceManager.deviceList[2].pDeviceInformation.state
+                        DeviceManager.deviceList[2].DevInfoObject.state
                     }
                     else if(DeviceManager.deviceList[3]){
-                        DeviceManager.deviceList[3].pDeviceInformation.state
+                        DeviceManager.deviceList[3].DevInfoObject.state
                     }
                     else{
                         return ""
@@ -1842,16 +1842,16 @@ Rectangle {
                 id:s4
                 x:961
                 y:68
-                sysCurrIndex:DeviceManager.deviceList[3].pDeviceInformation.id
+                sysCurrIndex:DeviceManager.deviceList[3].DevInfoObject.id
                 sysCurrIndex1:4
                 visible: musysTmp4
                 heightOpation:{
                     if(DeviceManager.deviceList[3]){
-                        return DeviceManager.deviceList[3].pDeviceInformation.heightOption
+                        return DeviceManager.deviceList[3].DevInfoObject.heightOption
                                 === 1 ? true:false
                     }
                     else if(DeviceManager.deviceList[2]){
-                        return DeviceManager.deviceList[2].pDeviceInformation.heightOption
+                        return DeviceManager.deviceList[2].DevInfoObject.heightOption
                                 === 1 ? true:false
                     }
                     else{
@@ -1860,10 +1860,10 @@ Rectangle {
                 }
                 eqText1:{
                     if(DeviceManager.deviceList[3]){
-                        DeviceManager.deviceList[3].pDeviceInformation.name
+                        DeviceManager.deviceList[3].DevInfoObject.name
                     }
                     else if(DeviceManager.deviceList[2]){
-                        DeviceManager.deviceList[2].pDeviceInformation.name
+                        DeviceManager.deviceList[2].DevInfoObject.name
                     }
                     else{
                         return ""
@@ -1871,10 +1871,10 @@ Rectangle {
                 }
                 eqText2:{
                     if(DeviceManager.deviceList[3]){
-                        DeviceManager.deviceList[3].pDeviceInformation.model
+                        DeviceManager.deviceList[3].DevInfoObject.model
                     }
                     else if(DeviceManager.deviceList[2]){
-                        DeviceManager.deviceList[2].pDeviceInformation.model
+                        DeviceManager.deviceList[2].DevInfoObject.model
                     }
                     else{
                         return ""
@@ -1882,10 +1882,10 @@ Rectangle {
                 }
                 eqText3:{
                     if(DeviceManager.deviceList[3]){
-                        DeviceManager.deviceList[3].pDeviceInformation.connectType === 0  ? "TCP/IP" : "RS232"
+                        DeviceManager.deviceList[3].DevInfoObject.connectType === 0  ? "TCP/IP" : "RS232"
                     }
                     else if(DeviceManager.deviceList[2]){
-                        DeviceManager.deviceList[2].pDeviceInformation.connectType === 0  ? "TCP/IP" : "RS232"
+                        DeviceManager.deviceList[2].DevInfoObject.connectType === 0  ? "TCP/IP" : "RS232"
                     }
                     else{
                         return ""
@@ -1893,10 +1893,10 @@ Rectangle {
                 }
                 eqText4:{
                     if(DeviceManager.deviceList[3]){
-                        DeviceManager.deviceList[3].pDeviceInformation.state
+                        DeviceManager.deviceList[3].DevInfoObject.state
                     }
                     else if(DeviceManager.deviceList[2]){
-                        DeviceManager.deviceList[2].pDeviceInformation.state
+                        DeviceManager.deviceList[2].DevInfoObject.state
                     }
                     else{
                         return ""

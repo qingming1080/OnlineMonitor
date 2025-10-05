@@ -172,7 +172,7 @@ Rectangle {
         onPressed: {
             sigAltitudeModel(true)
             sigUpdateUI(sysCurrIndex1)
-            DeviceManager.deviceList[sysCurrIndex1-1].pDeviceInformation.setHeightOption(1)
+            DeviceManager.deviceList[sysCurrIndex1-1].DevInfoObject.setHeightOption(1)
         }
     }
     Text {
@@ -207,7 +207,7 @@ Rectangle {
         onPressed: {
             sigAltitudeModel(false)
             sigUpdateUI(sysCurrIndex1)
-            DeviceManager.deviceList[sysCurrIndex1-1].pDeviceInformation.setHeightOption(0)
+            DeviceManager.deviceList[sysCurrIndex1-1].DevInfoObject.setHeightOption(0)
         }
     }
     Text {

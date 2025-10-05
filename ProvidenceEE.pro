@@ -19,7 +19,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
         DataBase/databasemanager.cpp \
         DataHandler/timehandler.cpp \
-        LanguageManger/languageManager.cpp \
+        LanguageManager/languageManager.cpp \
         devicemanager.cpp \
         fileobject.cpp \
         log/localrecord.cpp \
@@ -60,7 +60,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 HEADERS += \
     DataBase/databasemanager.h \
     DataHandler/timehandler.h \
-    LanguageManger/languageManager.h \
+    LanguageManager/languageManager.h \
     define.h \
     devicemanager.h \
     fileobject.h \
@@ -83,7 +83,8 @@ HEADERS += \
     tools/utilityapplauncher.h
 
 TRANSLATIONS += \
-        SimplifiedChinese.ts
+        SimplifiedChinese.ts \
+        English.ts
 
 DISTFILES +=
 

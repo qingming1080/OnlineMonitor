@@ -124,7 +124,7 @@ Rectangle {
             color: "#0c5596"
             eqText1:{
                 if(DeviceManager.deviceList[0]){
-                    return DeviceManager.deviceList[0].pDeviceInformation.name
+                    return DeviceManager.deviceList[0].DevInfoObject.name
                 }
                 else{
                     return ""
@@ -132,7 +132,7 @@ Rectangle {
             }
             eqText2:{
                 if(DeviceManager.deviceList[0]){
-                    return DeviceManager.deviceList[0].pDeviceInformation.model
+                    return DeviceManager.deviceList[0].DevInfoObject.model
                 }
                 else{
                     return ""
@@ -140,7 +140,7 @@ Rectangle {
             }
             eqText3:{
                 if(DeviceManager.deviceList[0]){
-                    return DeviceManager.deviceList[0].pDeviceInformation.connectType === 1
+                    return DeviceManager.deviceList[0].DevInfoObject.connectType === 1
                             ? "RS232" : "TCP/IP"
                 }
                 else{
@@ -149,7 +149,7 @@ Rectangle {
             }
             eqText4:{
                 if(DeviceManager.deviceList[0]){
-                    return DeviceManager.deviceList[0].pDeviceInformation.state
+                    return DeviceManager.deviceList[0].DevInfoObject.state
                 }
                 else{
                     return ""
@@ -174,7 +174,7 @@ Rectangle {
             }
             eqText1:{
                 if(DeviceManager.deviceList[0]){
-                    return DeviceManager.deviceList[0].pDeviceInformation.goodCycles
+                    return DeviceManager.deviceList[0].DevInfoObject.goodCycles
                 }
                 else{
                     return ""
@@ -182,7 +182,7 @@ Rectangle {
             }
             eqText2:{
                 if(DeviceManager.deviceList[0]){
-                    return DeviceManager.deviceList[0].pDeviceInformation.suspectCycles
+                    return DeviceManager.deviceList[0].DevInfoObject.suspectCycles
                 }
                 else{
                     return ""
@@ -190,7 +190,7 @@ Rectangle {
             }
             eqText3:{
                 if(DeviceManager.deviceList[0]){
-                    return DeviceManager.deviceList[0].pDeviceInformation.notDefinite
+                    return DeviceManager.deviceList[0].DevInfoObject.notDefinite
                 }
                 else{
                     return ""
@@ -198,9 +198,9 @@ Rectangle {
             }
             eqText4:{
                 if(DeviceManager.deviceList[0]){
-                    return DeviceManager.deviceList[0].pDeviceInformation.goodCycles
-                            + DeviceManager.deviceList[0].pDeviceInformation.notDefinite
-                            +DeviceManager.deviceList[0].pDeviceInformation.suspectCycles
+                    return DeviceManager.deviceList[0].DevInfoObject.goodCycles
+                            + DeviceManager.deviceList[0].DevInfoObject.notDefinite
+                            +DeviceManager.deviceList[0].DevInfoObject.suspectCycles
                 }
                 else{
                     return ""
@@ -208,7 +208,7 @@ Rectangle {
             }
             eqText5:{
                 if(DeviceManager.deviceList[0]){
-                    return DeviceManager.deviceList[0].pDeviceInformation.goodRate
+                    return DeviceManager.deviceList[0].DevInfoObject.goodRate
                 }
                 else{
                     return ""
@@ -273,7 +273,7 @@ Rectangle {
             eqText1:{
                 if(DeviceManager.deviceList[1])
                 {
-                    return DeviceManager.deviceList[1].pDeviceInformation.name
+                    return DeviceManager.deviceList[1].DevInfoObject.name
                 }
                 else
                 {
@@ -283,7 +283,7 @@ Rectangle {
             eqText2:{
                 if(DeviceManager.deviceList[1])
                 {
-                    return DeviceManager.deviceList[1].pDeviceInformation.model
+                    return DeviceManager.deviceList[1].DevInfoObject.model
                 }
                 else
                 {
@@ -292,7 +292,7 @@ Rectangle {
             }
             eqText3:{
                 if(DeviceManager.deviceList[1]){
-                    return DeviceManager.deviceList[1].pDeviceInformation.connectType === 1
+                    return DeviceManager.deviceList[1].DevInfoObject.connectType === 1
                             ? "RS232" : "TCP/IP"
                 }
                 else{
@@ -301,7 +301,7 @@ Rectangle {
             }
             eqText4:{
                 if(DeviceManager.deviceList[1]){
-                    return DeviceManager.deviceList[1].pDeviceInformation.state
+                    return DeviceManager.deviceList[1].DevInfoObject.state
                 }
                 else{
                     return ""
@@ -326,7 +326,7 @@ Rectangle {
             }
             eqText1:{
                 if(DeviceManager.deviceList[1]){
-                    return DeviceManager.deviceList[1].pDeviceInformation.goodCycles
+                    return DeviceManager.deviceList[1].DevInfoObject.goodCycles
                 }
                 else{
                     return ""
@@ -334,7 +334,7 @@ Rectangle {
             }
             eqText2:{
                 if(DeviceManager.deviceList[1]){
-                    return DeviceManager.deviceList[1].pDeviceInformation.suspectCycles
+                    return DeviceManager.deviceList[1].DevInfoObject.suspectCycles
                 }
                 else{
                     return ""
@@ -342,7 +342,7 @@ Rectangle {
             }
             eqText3:{
                 if(DeviceManager.deviceList[1]){
-                    return DeviceManager.deviceList[1].pDeviceInformation.notDefinite
+                    return DeviceManager.deviceList[1].DevInfoObject.notDefinite
                 }
                 else{
                     return ""
@@ -350,9 +350,9 @@ Rectangle {
             }
             eqText4:{
                 if(DeviceManager.deviceList[1]){
-                    return DeviceManager.deviceList[1].pDeviceInformation.goodCycles
-                            + DeviceManager.deviceList[1].pDeviceInformation.notDefinite
-                            +DeviceManager.deviceList[1].pDeviceInformation.suspectCycles
+                    return DeviceManager.deviceList[1].DevInfoObject.goodCycles
+                            + DeviceManager.deviceList[1].DevInfoObject.notDefinite
+                            +DeviceManager.deviceList[1].DevInfoObject.suspectCycles
                 }
                 else{
                     return ""
@@ -360,7 +360,7 @@ Rectangle {
             }
             eqText5:{
                 if(DeviceManager.deviceList[1]){
-                    return DeviceManager.deviceList[1].pDeviceInformation.goodRate
+                    return DeviceManager.deviceList[1].DevInfoObject.goodRate
                 }
                 else{
                     return ""
@@ -425,10 +425,10 @@ Rectangle {
             color: "#0c5596"
             eqText1:{
                 if(DeviceManager.deviceList[2]){
-                    return DeviceManager.deviceList[2].pDeviceInformation.name
+                    return DeviceManager.deviceList[2].DevInfoObject.name
                 }
                 else if(DeviceManager.deviceList[3]){
-                    return DeviceManager.deviceList[3].pDeviceInformation.name
+                    return DeviceManager.deviceList[3].DevInfoObject.name
                 }
                 else{
                     return ""
@@ -436,10 +436,10 @@ Rectangle {
             }
             eqText2:{
                 if(DeviceManager.deviceList[2]){
-                    return DeviceManager.deviceList[2].pDeviceInformation.model
+                    return DeviceManager.deviceList[2].DevInfoObject.model
                 }
                 else if(DeviceManager.deviceList[3]){
-                    return DeviceManager.deviceList[3].pDeviceInformation.model
+                    return DeviceManager.deviceList[3].DevInfoObject.model
                 }
                 else{
                     return ""
@@ -447,11 +447,11 @@ Rectangle {
             }
             eqText3:{
                 if(DeviceManager.deviceList[2]){
-                    return DeviceManager.deviceList[2].pDeviceInformation.connectType === 1
+                    return DeviceManager.deviceList[2].DevInfoObject.connectType === 1
                             ? "RS232" : "TCP/IP"
                 }
                 else if(DeviceManager.deviceList[3]){
-                    return DeviceManager.deviceList[3].pDeviceInformation.connectType === 1
+                    return DeviceManager.deviceList[3].DevInfoObject.connectType === 1
                             ? "RS232" : "TCP/IP"
                 }
                 else{
@@ -460,10 +460,10 @@ Rectangle {
             }
             eqText4:{
                 if(DeviceManager.deviceList[2]){
-                    return DeviceManager.deviceList[2].pDeviceInformation.state
+                    return DeviceManager.deviceList[2].DevInfoObject.state
                 }
                 else if(DeviceManager.deviceList[3]){
-                    return DeviceManager.deviceList[3].pDeviceInformation.state
+                    return DeviceManager.deviceList[3].DevInfoObject.state
                 }
                 else{
                     return ""
@@ -491,10 +491,10 @@ Rectangle {
             }
             eqText1:{
                 if(DeviceManager.deviceList[2]){
-                    return DeviceManager.deviceList[2].pDeviceInformation.goodCycles
+                    return DeviceManager.deviceList[2].DevInfoObject.goodCycles
                 }
                 else if(DeviceManager.deviceList[3]){
-                    return DeviceManager.deviceList[3].pDeviceInformation.goodCycles
+                    return DeviceManager.deviceList[3].DevInfoObject.goodCycles
                 }
                 else{
                     return ""
@@ -502,10 +502,10 @@ Rectangle {
             }
             eqText2:{
                 if(DeviceManager.deviceList[2]){
-                    return DeviceManager.deviceList[2].pDeviceInformation.suspectCycles
+                    return DeviceManager.deviceList[2].DevInfoObject.suspectCycles
                 }
                 else if(DeviceManager.deviceList[3]){
-                    return DeviceManager.deviceList[3].pDeviceInformation.suspectCycles
+                    return DeviceManager.deviceList[3].DevInfoObject.suspectCycles
                 }
                 else{
                     return ""
@@ -513,10 +513,10 @@ Rectangle {
             }
             eqText3:{
                 if(DeviceManager.deviceList[2]){
-                    return DeviceManager.deviceList[2].pDeviceInformation.notDefinite
+                    return DeviceManager.deviceList[2].DevInfoObject.notDefinite
                 }
                 else if(DeviceManager.deviceList[3]){
-                    return DeviceManager.deviceList[3].pDeviceInformation.notDefinite
+                    return DeviceManager.deviceList[3].DevInfoObject.notDefinite
                 }
                 else{
                     return ""
@@ -524,14 +524,14 @@ Rectangle {
             }
             eqText4:{
                 if(DeviceManager.deviceList[2]){
-                    return DeviceManager.deviceList[2].pDeviceInformation.goodCycles
-                            + DeviceManager.deviceList[2].pDeviceInformation.notDefinite
-                            +DeviceManager.deviceList[2].pDeviceInformation.suspectCycles
+                    return DeviceManager.deviceList[2].DevInfoObject.goodCycles
+                            + DeviceManager.deviceList[2].DevInfoObject.notDefinite
+                            +DeviceManager.deviceList[2].DevInfoObject.suspectCycles
                 }
                 else if(DeviceManager.deviceList[3]){
-                    return DeviceManager.deviceList[3].pDeviceInformation.goodCycles
-                            + DeviceManager.deviceList[3].pDeviceInformation.notDefinite
-                            +DeviceManager.deviceList[3].pDeviceInformation.suspectCycles
+                    return DeviceManager.deviceList[3].DevInfoObject.goodCycles
+                            + DeviceManager.deviceList[3].DevInfoObject.notDefinite
+                            +DeviceManager.deviceList[3].DevInfoObject.suspectCycles
                 }
                 else{
                     return ""
@@ -539,10 +539,10 @@ Rectangle {
             }
             eqText5:{
                 if(DeviceManager.deviceList[2]){
-                    return DeviceManager.deviceList[2].pDeviceInformation.goodRate
+                    return DeviceManager.deviceList[2].DevInfoObject.goodRate
                 }
                 else if(DeviceManager.deviceList[3]){
-                    return DeviceManager.deviceList[3].pDeviceInformation.goodRate
+                    return DeviceManager.deviceList[3].DevInfoObject.goodRate
                 }
                 else{
                     return ""
@@ -596,10 +596,10 @@ Rectangle {
             color: "#0c5596"
             eqText1:{
                 if(DeviceManager.deviceList[3]){
-                    return DeviceManager.deviceList[3].pDeviceInformation.name
+                    return DeviceManager.deviceList[3].DevInfoObject.name
                 }
                 else if(DeviceManager.deviceList[2]){
-                    return DeviceManager.deviceList[2].pDeviceInformation.name
+                    return DeviceManager.deviceList[2].DevInfoObject.name
                 }
                 else{
                     return ""
@@ -607,10 +607,10 @@ Rectangle {
             }
             eqText2:{
                 if(DeviceManager.deviceList[3]){
-                    return DeviceManager.deviceList[3].pDeviceInformation.model
+                    return DeviceManager.deviceList[3].DevInfoObject.model
                 }
                 else if(DeviceManager.deviceList[2]){
-                    return DeviceManager.deviceList[2].pDeviceInformation.model
+                    return DeviceManager.deviceList[2].DevInfoObject.model
                 }
                 else{
                     return ""
@@ -618,11 +618,11 @@ Rectangle {
             }
             eqText3:{
                 if(DeviceManager.deviceList[3]){
-                    return DeviceManager.deviceList[3].pDeviceInformation.connectType === 1
+                    return DeviceManager.deviceList[3].DevInfoObject.connectType === 1
                             ? "RS232" : "TCP/IP"
                 }
                 else if(DeviceManager.deviceList[2]){
-                    return DeviceManager.deviceList[2].pDeviceInformation.connectType === 1
+                    return DeviceManager.deviceList[2].DevInfoObject.connectType === 1
                             ? "RS232" : "TCP/IP"
                 }
                 else{
@@ -631,10 +631,10 @@ Rectangle {
             }
             eqText4:{
                 if(DeviceManager.deviceList[3]){
-                    return DeviceManager.deviceList[3].pDeviceInformation.state
+                    return DeviceManager.deviceList[3].DevInfoObject.state
                 }
                 else if(DeviceManager.deviceList[2]){
-                    return DeviceManager.deviceList[2].pDeviceInformation.state
+                    return DeviceManager.deviceList[2].DevInfoObject.state
                 }
                 else{
                     return ""
@@ -662,10 +662,10 @@ Rectangle {
             }
             eqText1:{
                 if(DeviceManager.deviceList[3]){
-                    return DeviceManager.deviceList[3].pDeviceInformation.goodCycles
+                    return DeviceManager.deviceList[3].DevInfoObject.goodCycles
                 }
                 else if(DeviceManager.deviceList[2]){
-                    return DeviceManager.deviceList[2].pDeviceInformation.goodCycles
+                    return DeviceManager.deviceList[2].DevInfoObject.goodCycles
                 }
                 else{
                     return ""
@@ -673,10 +673,10 @@ Rectangle {
             }
             eqText2:{
                 if(DeviceManager.deviceList[3]){
-                    return DeviceManager.deviceList[3].pDeviceInformation.suspectCycles
+                    return DeviceManager.deviceList[3].DevInfoObject.suspectCycles
                 }
                 else if(DeviceManager.deviceList[2]){
-                    return DeviceManager.deviceList[2].pDeviceInformation.suspectCycles
+                    return DeviceManager.deviceList[2].DevInfoObject.suspectCycles
                 }
                 else{
                     return ""
@@ -684,10 +684,10 @@ Rectangle {
             }
             eqText3:{
                 if(DeviceManager.deviceList[3]){
-                    return DeviceManager.deviceList[3].pDeviceInformation.notDefinite
+                    return DeviceManager.deviceList[3].DevInfoObject.notDefinite
                 }
                 else if(DeviceManager.deviceList[2]){
-                    return DeviceManager.deviceList[2].pDeviceInformation.notDefinite
+                    return DeviceManager.deviceList[2].DevInfoObject.notDefinite
                 }
                 else{
                     return ""
@@ -695,14 +695,14 @@ Rectangle {
             }
             eqText4:{
                 if(DeviceManager.deviceList[3]){
-                    return DeviceManager.deviceList[3].pDeviceInformation.goodCycles
-                            + DeviceManager.deviceList[3].pDeviceInformation.notDefinite
-                            +DeviceManager.deviceList[3].pDeviceInformation.suspectCycles
+                    return DeviceManager.deviceList[3].DevInfoObject.goodCycles
+                            + DeviceManager.deviceList[3].DevInfoObject.notDefinite
+                            +DeviceManager.deviceList[3].DevInfoObject.suspectCycles
                 }
                 else if(DeviceManager.deviceList[2]){
-                    return DeviceManager.deviceList[2].pDeviceInformation.goodCycles
-                            + DeviceManager.deviceList[2].pDeviceInformation.notDefinite
-                            +DeviceManager.deviceList[2].pDeviceInformation.suspectCycles
+                    return DeviceManager.deviceList[2].DevInfoObject.goodCycles
+                            + DeviceManager.deviceList[2].DevInfoObject.notDefinite
+                            +DeviceManager.deviceList[2].DevInfoObject.suspectCycles
                 }
                 else{
                     return ""
@@ -710,10 +710,10 @@ Rectangle {
             }
             eqText5:{
                 if(DeviceManager.deviceList[3]){
-                    return DeviceManager.deviceList[3].pDeviceInformation.goodRate
+                    return DeviceManager.deviceList[3].DevInfoObject.goodRate
                 }
                 else if(DeviceManager.deviceList[2]){
-                    return DeviceManager.deviceList[2].pDeviceInformation.goodRate
+                    return DeviceManager.deviceList[2].DevInfoObject.goodRate
                 }
                 else{
                     return ""

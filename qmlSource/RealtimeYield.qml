@@ -41,7 +41,7 @@ Rectangle {
         text: GlobalLanguageDefine.strRealtimeYield
         font.family: GlobalSystemDefine.fontBold
         font.bold: true
-        font.pixelSize: LanguageManger.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 20 : 18
+        font.pixelSize: LanguageManager.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 20 : 18
         color: pRgb(153, 204, 255)
         x:17
         y:9
@@ -54,7 +54,7 @@ Rectangle {
         text: GlobalLanguageDefine.strQualified + ": " + eqText1
         font.family: GlobalSystemDefine.fontBold
         font.bold: true
-        font.pixelSize: LanguageManger.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 16 : 14
+        font.pixelSize: LanguageManager.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 16 : 14
         color: pRgb(171, 206, 213)
     }
     Text {
@@ -63,7 +63,7 @@ Rectangle {
         text: GlobalLanguageDefine.strSuspicious + ": " + eqText2
         font.family: GlobalSystemDefine.fontBold
         font.bold: true
-        font.pixelSize: LanguageManger.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 16 : 14
+        font.pixelSize: LanguageManager.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 16 : 14
         color: pRgb(171, 206, 213)
         anchors.left: t1.left
         anchors.top: t1.bottom
@@ -76,7 +76,7 @@ Rectangle {
         text: GlobalLanguageDefine.strDefective + ": " + eqText3
         font.family: GlobalSystemDefine.fontBold
         font.bold: true
-        font.pixelSize: LanguageManger.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 16 : 14
+        font.pixelSize: LanguageManager.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 16 : 14
         color: pRgb(171, 206, 213)
         anchors.left: revealing === false ? t1.left : t2.left
         anchors.top: revealing === false ? t1.bottom : t2.bottom
@@ -88,7 +88,7 @@ Rectangle {
         text: GlobalLanguageDefine.strTotal + ": " + eqText4
         font.family: GlobalSystemDefine.fontBold
         font.bold: true
-        font.pixelSize: LanguageManger.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 16 : 14
+        font.pixelSize: LanguageManager.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 16 : 14
         color: pRgb(171, 206, 213)
         anchors.left: t3.left
         anchors.top: t3.bottom

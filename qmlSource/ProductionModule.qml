@@ -120,11 +120,11 @@ Rectangle {
                 width: mode == 1 ? 208 : 243
                 height: mode == 1 ? 203 : 258
                 color: mode == 1 ? "#0c5696" : pRgb(43, 112, 173)
-                eqText1:DeviceManager.deviceList[0].pDeviceInformation.name
-                eqText2:DeviceManager.deviceList[0].pDeviceInformation.model
-                eqText3:DeviceManager.deviceList[0].pDeviceInformation.connectType === 1
+                eqText1:DeviceManager.deviceList[0].DevInfoObject.name
+                eqText2:DeviceManager.deviceList[0].DevInfoObject.model
+                eqText3:DeviceManager.deviceList[0].DevInfoObject.connectType === 1
                         ? "RS232" : "TCP/IP"
-                eqText4:DeviceManager.deviceList[0].pDeviceInformation.state
+                eqText4:DeviceManager.deviceList[0].DevInfoObject.state
             }
 
             Loader{
@@ -143,7 +143,7 @@ Rectangle {
                         color: mode == 1 ? "#0c5696" : pRgb(43, 112, 173)
                         eqText1:{
                             if(DeviceManager.deviceList[0]){
-                                return DeviceManager.deviceList[0].pDeviceInformation.power
+                                return DeviceManager.deviceList[0].DevInfoObject.power
                             }
                             else{
                                 return ""
@@ -151,7 +151,7 @@ Rectangle {
                         }
                         eqText2:{
                             if(DeviceManager.deviceList[0]){
-                                return DeviceManager.deviceList[0].pDeviceInformation.time
+                                return DeviceManager.deviceList[0].DevInfoObject.time
                             }
                             else{
                                 return ""
@@ -160,7 +160,7 @@ Rectangle {
 
                         eqText3:{
                             if(DeviceManager.deviceList[0]){
-                                return DeviceManager.deviceList[0].pDeviceInformation.energy
+                                return DeviceManager.deviceList[0].DevInfoObject.energy
                             }
                             else{
                                 return ""
@@ -168,7 +168,7 @@ Rectangle {
                         }
                         eqText4:{
                             if(DeviceManager.deviceList[0]){
-                                return DeviceManager.deviceList[0].pDeviceInformation.heightPre
+                                return DeviceManager.deviceList[0].DevInfoObject.heightPre
                             }
                             else{
                                 return ""
@@ -176,7 +176,7 @@ Rectangle {
                         }
                         eqText5:{
                             if(DeviceManager.deviceList[0]){
-                                return DeviceManager.deviceList[0].pDeviceInformation.heightPost
+                                return DeviceManager.deviceList[0].DevInfoObject.heightPost
                             }
                             else{
                                 return ""
@@ -197,7 +197,7 @@ Rectangle {
                         color: mode == 1 ? "#0c5696" : pRgb(43, 112, 173)
                         altitudeMode:{
                             if(equipmentCount === 1){
-                                return DeviceManager.deviceList[0].pDeviceInformation.heightOption
+                                return DeviceManager.deviceList[0].DevInfoObject.heightOption
                                         === 1 ? true : false
                             }
                         }
@@ -241,7 +241,7 @@ Rectangle {
                     // else if(mt1.text === "创建模型")
                     else if(mt1.text === GlobalLanguageDefine.strCreateModel)
                     {
-                        if(DeviceManager.deviceList[0].pDeviceInformation.sample <= listSize)
+                        if(DeviceManager.deviceList[0].DevInfoObject.sample <= listSize)
                         {
                             loader.sourceComponent = mode1
                             loader1.sourceComponent = weld1
@@ -317,7 +317,7 @@ Rectangle {
                         }
                         eqText1:{
                             if(DeviceManager.deviceList[0]){
-                                return DeviceManager.deviceList[0].pDeviceInformation.goodCycles
+                                return DeviceManager.deviceList[0].DevInfoObject.goodCycles
                             }
                             else{
                                 return ""
@@ -325,7 +325,7 @@ Rectangle {
                         }
                         eqText2:{
                             if(DeviceManager.deviceList[0]){
-                                return DeviceManager.deviceList[0].pDeviceInformation.suspectCycles
+                                return DeviceManager.deviceList[0].DevInfoObject.suspectCycles
                             }
                             else{
                                 return ""
@@ -333,7 +333,7 @@ Rectangle {
                         }
                         eqText3:{
                             if(DeviceManager.deviceList[0]){
-                                return DeviceManager.deviceList[0].pDeviceInformation.notDefinite
+                                return DeviceManager.deviceList[0].DevInfoObject.notDefinite
                             }
                             else{
                                 return ""
@@ -341,9 +341,9 @@ Rectangle {
                         }
                         eqText4:{
                             if(DeviceManager.deviceList[0]){
-                                return DeviceManager.deviceList[0].pDeviceInformation.goodCycles
-                                        + DeviceManager.deviceList[0].pDeviceInformation.notDefinite
-                                        +DeviceManager.deviceList[0].pDeviceInformation.suspectCycles
+                                return DeviceManager.deviceList[0].DevInfoObject.goodCycles
+                                        + DeviceManager.deviceList[0].DevInfoObject.notDefinite
+                                        +DeviceManager.deviceList[0].DevInfoObject.suspectCycles
                             }
                             else{
                                 return ""
@@ -351,7 +351,7 @@ Rectangle {
                         }
                         eqText5:{
                             if(DeviceManager.deviceList[0]){
-                                return DeviceManager.deviceList[0].pDeviceInformation.goodRate
+                                return DeviceManager.deviceList[0].DevInfoObject.goodRate
                             }
                             else{
                                 return ""

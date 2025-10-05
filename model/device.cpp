@@ -23,11 +23,11 @@ Device::Device(int welderID, QObject *parent)
     QElapsedTimer timer;
     timer.start();
 
-    m_pDeviceInformation  = new DeviceInformation(m_welderID);
-    m_pIO                 = new IO(m_welderID);
-    m_pManual             = new Manual(m_welderID);
-    m_pSystem             = new System(m_welderID);
-    m_pTrend              = new Trend(m_welderID);
+    m_ptrDevInfo    = new DeviceInformation(m_welderID);
+    m_pIO           = new IO(m_welderID);
+    m_pManual       = new Manual(m_welderID);
+    m_pSystem       = new System(m_welderID);
+    m_pTrend        = new Trend(m_welderID);
 
     QString text = QString("%1号设备_Device_初始化共耗时:%2ms").arg(welderID).arg(timer.elapsed());
                        emit SignalManager::getInstance()->signalAddRecord(QDateTime::currentDateTime(), text);
@@ -35,17 +35,17 @@ Device::Device(int welderID, QObject *parent)
 
 Device::~Device()
 {
-    delete m_pDeviceInformation;
+    delete m_ptrDevInfo;
     delete m_pIO;
     delete m_pManual;
     delete m_pSystem;
     delete m_pTrend;
 }
 
-DeviceInformation *Device::pDeviceInformation() const
+DeviceInformation* Device::getDevInfoObject() const
 {
-    return m_pDeviceInformation;
-}
+    return m_ptrDevInfo;
+}  
 
 System *Device::pSystem() const
 {
@@ -69,10 +69,10 @@ Trend *Device::pTrend() const
 //     int keyiNum   = qrand() % 100;
 //     int cipingNum = qrand() % 100;
 
-//     this->pDeviceInformation()->setGoodCycles(hegeNum);
-//     this->pDeviceInformation()->setSuspectCycles(keyiNum);
-//     this->pDeviceInformation()->setNotDefinite(cipingNum);
-//     this->pDeviceInformation()->setGoodRate((double)hegeNum/(hegeNum+keyiNum+cipingNum)*100);
+//     this->DevInfoObject()->setGoodCycles(hegeNum);
+//     this->DevInfoObject()->setSuspectCycles(keyiNum);
+//     this->DevInfoObject()->setNotDefinite(cipingNum);
+//     this->DevInfoObject()->setGoodRate((double)hegeNum/(hegeNum+keyiNum+cipingNum)*100);
 //     qDebug() << QString("I_WANT_TEST 实时良率修改  合格产品：%1  可疑产品：%2  次品：%3").arg(hegeNum).arg(keyiNum).arg(cipingNum);
 
 //                 /// 焊接结果
@@ -82,11 +82,11 @@ Trend *Device::pTrend() const
 //     int heightPre    = qrand() % 100;
 //     int heightPost   = qrand() % 100;
 
-//     this->pDeviceInformation()->setPower(power);
-//     this->pDeviceInformation()->setTime(time);
-//     this->pDeviceInformation()->setEnergy(energy);
-//     this->pDeviceInformation()->setHeightPre(heightPre);
-//     this->pDeviceInformation()->setHeightPost(heightPost);
+//     this->DevInfoObject()->setPower(power);
+//     this->DevInfoObject()->setTime(time);
+//     this->DevInfoObject()->setEnergy(energy);
+//     this->DevInfoObject()->setHeightPre(heightPre);
+//     this->DevInfoObject()->setHeightPost(heightPost);
 //     //    qDebug() << QString("I_WANT_TEST 焊接结果修改  功率:%1  时间:%2  能量:%3  焊前高度:%1  焊后高度:%2").arg(power).arg(time).arg(energy).arg(heightPre).arg(heightPost);
 
 //     /// 系统消息

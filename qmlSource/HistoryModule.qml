@@ -109,7 +109,7 @@ Rectangle {
             color: pRgb(177, 213, 219)
             font.family: GlobalSystemDefine.fontBold
             font.bold: true
-            font.pixelSize: LanguageManger.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 20 : 16
+            font.pixelSize: LanguageManager.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 20 : 16
         }
 
         RadioButton{
@@ -143,7 +143,7 @@ Rectangle {
             color: pRgb(177, 213, 219)
             font.family: GlobalSystemDefine.fontBold
             font.bold: true
-            font.pixelSize: LanguageManger.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 20 : 16
+            font.pixelSize: LanguageManager.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 20 : 16
         }
 
         RadioButton{
@@ -185,7 +185,7 @@ Rectangle {
             color: pRgb(177, 213, 219)
             font.family: GlobalSystemDefine.fontBold
             font.bold: true
-            font.pixelSize: LanguageManger.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 20 : 16
+            font.pixelSize: LanguageManager.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 20 : 16
             visible: bt3.visible
         }
 
@@ -228,7 +228,7 @@ Rectangle {
             color: pRgb(177, 213, 219)
             font.family: GlobalSystemDefine.fontBold
             font.bold: true
-            font.pixelSize: LanguageManger.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 20 : 16
+            font.pixelSize: LanguageManager.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 20 : 16
             visible: bt4.visible
         }
 
@@ -271,7 +271,7 @@ Rectangle {
             color: pRgb(177, 213, 219)
             font.family: GlobalSystemDefine.fontBold
             font.bold: true
-            font.pixelSize: LanguageManger.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 20 : 16
+            font.pixelSize: LanguageManager.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 20 : 16
             visible: bt5.visible
         }
 
@@ -319,7 +319,7 @@ Rectangle {
             color: pRgb(177, 213, 219)
             font.family: GlobalSystemDefine.fontBold
             font.bold: true
-            font.pixelSize: LanguageManger.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 20 : 16
+            font.pixelSize: LanguageManager.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 20 : 16
         }
         RadioButton{
             id:bt9
@@ -352,7 +352,7 @@ Rectangle {
             color: pRgb(177, 213, 219)
             font.family: GlobalSystemDefine.fontBold
             font.bold: true
-            font.pixelSize: LanguageManger.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 20 : 16
+            font.pixelSize: LanguageManager.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 20 : 16
         }
         RadioButton{
             id:bt11
@@ -385,7 +385,7 @@ Rectangle {
             color: pRgb(177, 213, 219)
             font.family: GlobalSystemDefine.fontBold
             font.bold: true
-            font.pixelSize: LanguageManger.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 20 : 16
+            font.pixelSize: LanguageManager.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 20 : 16
         }
         RadioButton{
             id:bt10
@@ -418,7 +418,7 @@ Rectangle {
             color: pRgb(177, 213, 219)
             font.family: GlobalSystemDefine.fontBold
             font.bold: true
-            font.pixelSize: LanguageManger.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 20 : 16
+            font.pixelSize: LanguageManager.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 20 : 16
         }
     }
     Rectangle{
