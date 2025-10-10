@@ -55,6 +55,10 @@ public:
 
     Q_INVOKABLE void handleDeviceCoilStatus(int devId, int value); // Updated to handle resetIdx logic
 
+    void updateDeviceConnectionStates();
+
+    void updateDeviceConnectionStates(const QVector<int>& result);
+
 public:
 
     static constexpr int DEV_HOLDING_REGISTERS_COUNT = 30;
@@ -216,6 +220,7 @@ public slots:
 
 private:
     static unsigned char    m_Coils[SYS_COILS_REGISTERS_COUNT + DEV_COILS_REGISTERS_COUNT * DEV_COUNT];
+    static unsigned char    m_LastDiscreteds[DEV_DISCRETE_REGISTERS_COUNT * DEV_COUNT];
     static unsigned char    m_Discreteds[DEV_DISCRETE_REGISTERS_COUNT * DEV_COUNT];
     static unsigned short   m_Holdings[SYS_HOLDING_REGISTERS_COUNT + DEV_HOLDING_REGISTERS_COUNT * DEV_COUNT];
     static unsigned short   m_Inputs[DEV_INPUT_REGISTERS_COUNT * DEV_COUNT];
