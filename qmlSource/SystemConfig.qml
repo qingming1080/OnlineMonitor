@@ -1597,7 +1597,7 @@ Rectangle {
                 }
                 contentItem: Text {
                     // text: qsTr("设备保存")
-                    text: GlobalLanguageDefine.DeviceSave
+                    text: GlobalLanguageDefine.strDeviceSave
                     font.pixelSize: 20
                     color: pRgb(153, 204, 255)
                     anchors.centerIn: parent  // 确保文本在按钮内居中对齐
