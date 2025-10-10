@@ -221,7 +221,7 @@
     <message>
         <location filename="qmlSource/GlobalLanguageDefine.qml" line="63"/>
         <source>全选</source>
-        <translation>Select All</translation>
+        <translation>All</translation>
     </message>
     <message>
         <location filename="qmlSource/GlobalLanguageDefine.qml" line="64"/>
@@ -326,17 +326,17 @@
     <message>
         <location filename="qmlSource/GlobalLanguageDefine.qml" line="86"/>
         <source>良品</source>
-        <translation>Good</translation>
+        <translation>OK</translation>
     </message>
     <message>
         <location filename="qmlSource/GlobalLanguageDefine.qml" line="87"/>
         <source>可疑</source>
-        <translation>Suspicious</translation>
+        <translation>SUS</translation>
     </message>
     <message>
         <location filename="qmlSource/GlobalLanguageDefine.qml" line="88"/>
         <source>次品</source>
-        <translation>Defective</translation>
+        <translation>NG</translation>
     </message>
     <message>
         <location filename="qmlSource/GlobalLanguageDefine.qml" line="89"/>
