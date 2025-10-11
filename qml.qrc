@@ -18,7 +18,7 @@
         <file>qmlSource/SwipePage.qml</file>
         <file>qmlSource/SwipeProductionModule.qml</file>
         <file>qmlSource/SystemConfig.qml</file>
-        <file>qmlSource/TopModule.qml</file>
+        <file>qmlSource/Header.qml</file>
         <file>qmlSource/WeldingParameter.qml</file>
         <file>qmlSource/WeldingResult.qml</file>
         <file>qmlSource/WeldingTrend.qml</file>

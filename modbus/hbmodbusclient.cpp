@@ -579,13 +579,16 @@ void HBModbusClient::updateDeviceConnectionStates()
         int base = i * DEV_DISCRETE_REGISTERS_COUNT;
         // 设备连接状态通常在 DEV_STATUE 偏移位置
         int idx = base + DEV_STATUE;
-        QString state = "未连接";
-        if (idx >= 0 && idx < DEV_DISCRETE_REGISTERS_COUNT * DEV_COUNT) {
-            state = (m_Discreteds[idx] == 1) ? QStringLiteral("已连接") : QStringLiteral("未连接");
+        int state = DeviceInfoEnum::DISCONNECTED;
+        if (idx >= 0 && idx < DEV_DISCRETE_REGISTERS_COUNT * DEV_COUNT)
+        {
+            if(m_Discreteds[idx] == 1)
+                state = DeviceInfoEnum::CONNECTED;
         }
         Device* dev = devList.at(i);
-        if (dev && dev->getDevInfoObject()) {
-            dev->getDevInfoObject()->setState(state);
+        if (dev && dev->getDevInfoObject())
+        {
+            dev->getDevInfoObject()->setConnectState(state);
             qDebug() << "Device ID:" << dev->getDevInfoObject()->id() << "state:" << state;
         }
     }
