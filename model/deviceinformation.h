@@ -12,8 +12,8 @@ class DeviceInfoEnum : public QObject
 public:
     enum CONNECT_STATE
     {
-        DISCONNECTED    = -1,    // 未连接
-        CONNECTED       = 0,     // 已连接
+        DISCONNECTED    = 0,    // 未连接
+        CONNECTED       = 1,     // 已连接
     };
     Q_ENUM(CONNECT_STATE)
 

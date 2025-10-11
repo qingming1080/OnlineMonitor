@@ -108,7 +108,7 @@ Rectangle {
         font.bold: true
         font.pixelSize: 16
         color: pRgb(171, 206, 213)
-        anchors.top:t3.bottom
+        anchors.top: t3.bottom
         anchors.left: t3.left
         anchors.topMargin: 24
     }
@@ -302,101 +302,162 @@ Rectangle {
         }
     }
     Text {
-        id: s8
-        text: sysCurrIndex1 === 1 ? "PIN1" : sysCurrIndex1 === 2 ? "PIN4" :
-                                                                   sysCurrIndex1 === 3 ? "PIN7" : sysCurrIndex1 === 4 ? "PIN10" : ""
+        id: pinAlarmTitle
+        text:{
+            var pinName = ""
+            switch(sysCurrIndex1)
+            {
+            case 1:
+                pinName = "PIN1"
+                break;
+            case 2:
+                pinName = "PIN4"
+                break;
+            case 3:
+                pinName = "PIN7"
+                break;
+            case 4:
+                pinName = "PIN10"
+                break;
+            default:
+                break;
+            }
+            return pinName
+        }
         color: pRgb(177, 213, 219)
         font.family: GlobalSystemDefine.fontBold
         font.bold: true
         font.pixelSize: 16
-        x:18
-        y:380
+        verticalAlignment: Text.AlignVCenter
+        anchors.left: parent.left
+        anchors.leftMargin: 18
+        anchors.top: parent.top
+        anchors.topMargin: 380
     }
     Text {
-        id: s9
-        text: sysCurrIndex1 === 1 ? "PIN2" : sysCurrIndex1 === 2 ? "PIN5" :
-                                                                   sysCurrIndex1 === 3 ? "PIN8" : sysCurrIndex1 === 4 ? "PIN11" : ""
+        id: pinResetTitle
+        text: {
+            var pinName = ""
+            switch(sysCurrIndex1)
+            {
+            case 1:
+                pinName = "PIN2"
+                break;
+            case 2:
+                pinName = "PIN5"
+                break;
+            case 3:
+                pinName = "PIN8"
+                break;
+            case 4:
+                pinName = "PIN11"
+                break;
+            default:
+                break;
+            }
+            return pinName
+        }
         color: pRgb(177, 213, 219)
         font.family: GlobalSystemDefine.fontBold
         font.bold: true
         font.pixelSize: 16
-        anchors.left: s8.left
-        anchors.top: s8.bottom
+        verticalAlignment: Text.AlignVCenter
+        anchors.left: pinAlarmTitle.left
+        anchors.top: pinAlarmTitle.bottom
         anchors.topMargin: 15
     }
     Text {
-        id: s10
-        text: sysCurrIndex1 === 1 ? "PIN3" : sysCurrIndex1 === 2 ? "PIN6" :
-                                                                   sysCurrIndex1 === 3 ? "PIN9" : sysCurrIndex1 === 4 ? "PIN12" : ""
+        id: pinSuspectTitle
+        text: {
+            var pinName = ""
+            switch(sysCurrIndex1)
+            {
+            case 1:
+                pinName = "PIN3"
+                break;
+            case 2:
+                pinName = "PIN6"
+                break;
+            case 3:
+                pinName = "PIN9"
+                break;
+            case 4:
+                pinName = "PIN12"
+                break;
+            default:
+                break;
+            }
+            return pinName
+        }
         color: pRgb(177, 213, 219)
         font.family: GlobalSystemDefine.fontBold
         font.bold: true
         font.pixelSize: 16
-        anchors.left: s9.left
-        anchors.top: s9.bottom
+        verticalAlignment: Text.AlignVCenter
+        anchors.left: pinResetTitle.left
+        anchors.top: pinResetTitle.bottom
         anchors.topMargin: 15
     }
     Image {
-        id: im1
+        id: pinAlarmIcon
         source: "qrc:/images/icon_io_alarm"
-        x:93
-        y:379
+        anchors.left: pinAlarmTitle.right
+        anchors.leftMargin: 50
+        anchors.verticalCenter: pinAlarmTitle.verticalCenter
         width: 22
         height: 22
     }
     Image {
-        id: im2
+        id: pinResetIcon
         source: "qrc:/images/icon_io_reset.png"
-        anchors.left: im1.left
-        anchors.top: im1.bottom
-        anchors.topMargin: 10
+        anchors.left: pinAlarmIcon.left
+        anchors.verticalCenter: pinResetTitle.verticalCenter
         width: 22
         height: 22
     }
     Image {
-        id: im3
+        id: pinSuspectIcon
         source: undetermined ? "qrc:/images/icon_io_suspicious_on.png" : "qrc:/images/icon_io_suspicious_off.png"
-        anchors.left: im2.left
-        anchors.top: im2.bottom
-        anchors.topMargin: 10
+        anchors.left: pinAlarmIcon.left
+        anchors.verticalCenter: pinSuspectTitle.verticalCenter
         width: 22
         height: 22
     }
     Text {
-        id: s11
+        id: pinAlarmName
         // text: qsTr("报警")
         text: GlobalLanguageDefine.strAlarm
         color: pRgb(177, 213, 219)
         font.family: GlobalSystemDefine.fontBold
         font.bold: true
         font.pixelSize: 16
-        anchors.top: s8.top
-        anchors.left: s8.right
-        anchors.leftMargin: 109
+        verticalAlignment: Text.AlignVCenter
+        anchors.top: pinAlarmTitle.top
+        anchors.left: pinAlarmIcon.right
+        anchors.leftMargin: 50
     }
     Text {
-        id: s12
+        id: pinResetName
         // text: qsTr("复位")
         text: GlobalLanguageDefine.strReset
         color: pRgb(177, 213, 219)
         font.family: GlobalSystemDefine.fontBold
         font.bold: true
         font.pixelSize: 16
-        anchors.top: s9.top
-        anchors.left: s9.right
-        anchors.leftMargin: 109
+        verticalAlignment: Text.AlignVCenter
+        anchors.top: pinResetTitle.top
+        anchors.left: pinAlarmName.left
     }
     Text {
-        id: s13
+        id: pinSuspectName
         // text: qsTr("待定")
         text: GlobalLanguageDefine.strPending
         color: pRgb(177, 213, 219)
         font.family: GlobalSystemDefine.fontBold
         font.bold: true
         font.pixelSize: 16
-        anchors.top: s10.top
-        anchors.topMargin: 3
-        anchors.left: s10.right
-        anchors.leftMargin: 109
+        verticalAlignment: Text.AlignVCenter
+        anchors.top: pinSuspectTitle.top
+        anchors.left: pinAlarmName.left
     }
 }

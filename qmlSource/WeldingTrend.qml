@@ -84,22 +84,22 @@ Rectangle {
         }
 
         Component.onDestruction: {
-            DeviceManager.deviceList[0].pTrend.setFrontSeries(null)
-            DeviceManager.deviceList[0].pTrend.setBackSeries(null)
-            DeviceManager.deviceList[0].pTrend.setTimeSeries(null)
-            DeviceManager.deviceList[0].pTrend.setPowerSeries(null)
-            DeviceManager.deviceList[1].pTrend.setFrontSeries(null)
-            DeviceManager.deviceList[1].pTrend.setBackSeries(null)
-            DeviceManager.deviceList[1].pTrend.setTimeSeries(null)
-            DeviceManager.deviceList[1].pTrend.setPowerSeries(null)
-            DeviceManager.deviceList[2].pTrend.setFrontSeries(null)
-            DeviceManager.deviceList[2].pTrend.setBackSeries(null)
-            DeviceManager.deviceList[2].pTrend.setTimeSeries(null)
-            DeviceManager.deviceList[2].pTrend.setPowerSeries(null)
-            DeviceManager.deviceList[3].pTrend.setFrontSeries(null)
-            DeviceManager.deviceList[3].pTrend.setBackSeries(null)
-            DeviceManager.deviceList[3].pTrend.setTimeSeries(null)
-            DeviceManager.deviceList[3].pTrend.setPowerSeries(null)
+            // DeviceManager.deviceList[0].pTrend.setFrontSeries(null)
+            // DeviceManager.deviceList[0].pTrend.setBackSeries(null)
+            // DeviceManager.deviceList[0].pTrend.setTimeSeries(null)
+            // DeviceManager.deviceList[0].pTrend.setPowerSeries(null)
+            // DeviceManager.deviceList[1].pTrend.setFrontSeries(null)
+            // DeviceManager.deviceList[1].pTrend.setBackSeries(null)
+            // DeviceManager.deviceList[1].pTrend.setTimeSeries(null)
+            // DeviceManager.deviceList[1].pTrend.setPowerSeries(null)
+            // DeviceManager.deviceList[2].pTrend.setFrontSeries(null)
+            // DeviceManager.deviceList[2].pTrend.setBackSeries(null)
+            // DeviceManager.deviceList[2].pTrend.setTimeSeries(null)
+            // DeviceManager.deviceList[2].pTrend.setPowerSeries(null)
+            // DeviceManager.deviceList[3].pTrend.setFrontSeries(null)
+            // DeviceManager.deviceList[3].pTrend.setBackSeries(null)
+            // DeviceManager.deviceList[3].pTrend.setTimeSeries(null)
+            // DeviceManager.deviceList[3].pTrend.setPowerSeries(null)
         }
 
         ValueAxis {

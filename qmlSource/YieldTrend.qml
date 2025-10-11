@@ -498,10 +498,10 @@ Rectangle {
             chartUpdata()
         }
         Component.onDestruction: {
-            DeviceManager.deviceList[0].pTrend.setYieldSeries(null)
-            DeviceManager.deviceList[1].pTrend.setYieldSeries(null)
-            DeviceManager.deviceList[2].pTrend.setYieldSeries(null)
-            DeviceManager.deviceList[3].pTrend.setYieldSeries(null)
+            // DeviceManager.deviceList[0].pTrend.setYieldSeries(null)
+            // DeviceManager.deviceList[1].pTrend.setYieldSeries(null)
+            // DeviceManager.deviceList[2].pTrend.setYieldSeries(null)
+            // DeviceManager.deviceList[3].pTrend.setYieldSeries(null)
         }
 
         DateTimeAxis {

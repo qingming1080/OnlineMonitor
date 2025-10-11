@@ -64,8 +64,6 @@ void DeviceManager::init()
     QList<QString> names;
     m_deviceNum = list.size();
 
-
-
     for(int i = 0; i < list.size(); ++i)
     {
         m_deviceList.push_back(new Device(list.at(i)));

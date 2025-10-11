@@ -9,20 +9,30 @@ Rectangle {
         target: window
         function onSigPassError()
         {
-            if(bt1.tmp === true){
+            if(bt1.tmp === true)
+            {
                 bt1Check()
             }
-            else if(bt2.tmp === true){
+            else if(bt2.tmp === true)
+            {
                 bt2Check()
             }
-            else if(bt3.tmp === true && bt4.tmp === true){
-                if(equipmentCurrentIndex === 3){
+            else if(bt3.tmp === true && bt4.tmp === true)
+            {
+                if(equipmentCurrentIndex === 3)
+                {
                     bt3Check()
                 }
-                else if(equipmentCurrentIndex === 4){
+                else if(equipmentCurrentIndex === 4)
+                {
                     bt4Check()
                 }
             }
+        }
+
+        function onSigSysConfig()
+        {
+            bt3Check()
         }
     }
 

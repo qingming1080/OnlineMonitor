@@ -106,10 +106,10 @@ Rectangle {
 
     function configCheck(){
         if(isAdd){
-            loadViewsys(1,syscfg)
+            loadViewsys(1, syscfg)
         }
         else{
-            loadViewsys(2,musys)
+            loadViewsys(2, musys)
             // currIndex = 0
         }
     }
@@ -192,7 +192,7 @@ Rectangle {
     }
 
     Component{
-        id:syscfg
+        id: syscfg
         Item {
             Connections{
                 target: sysUI
@@ -878,11 +878,11 @@ Rectangle {
                                         return ctl1.checked
                                     }
                                     //else if(equipmentCount === 1){
-                                    else if(equipmentCount === 0){
+                                    else if(equipmentCount === 1){
                                         return DeviceManager.deviceList[0].DevInfoObject.ConnectType !== 0? true : false
                                     }
                                     else{
-                                        return DeviceManager.deviceList[currentConfigId-1].DevInfoObject.ConnectType !== 0? true : false
+                                        return DeviceManager.deviceList[currentConfigId - 1].DevInfoObject.ConnectType !== 0? true : false
                                     }
                                 }
                                 duration: 0
@@ -894,12 +894,10 @@ Rectangle {
                                         return !ctl1.checked
                                     }
                                     // else if(equipmentCount === 1){
-                                    else if(equipmentCount === 0){
+                                    else if(equipmentCount === 1){
                                         return DeviceManager.deviceList[0].DevInfoObject.ConnectType !== 0? false : true
                                     }
                                     else{
-                                        if(currentConfigId < 0)
-                                            return
                                         return DeviceManager.deviceList[currentConfigId - 1].DevInfoObject.ConnectType !== 0? false : true
                                     }
                                 }
@@ -918,11 +916,11 @@ Rectangle {
                                     return ctl1.checked ? pRgb(43, 112, 173) : "#e5e6e7"
                                 }
                                 // else if(equipmentCount === 1){
-                                else if(equipmentCount === 0){
+                                else if(equipmentCount === 1){
                                     return DeviceManager.deviceList[0].DevInfoObject.ConnectType !== 0 ? pRgb(43, 112, 173) : "#e5e6e7"
                                 }
                                 else{
-                                    return DeviceManager.deviceList[currentConfigId-1].DevInfoObject.ConnectType !== 0 ? pRgb(43, 112, 173) : "#e5e6e7"
+                                    return DeviceManager.deviceList[currentConfigId - 1].DevInfoObject.ConnectType !== 0 ? pRgb(43, 112, 173) : "#e5e6e7"
                                 }
                             }
                             font.family: GlobalSystemDefine.fontBold
@@ -940,11 +938,11 @@ Rectangle {
                                     return !ctl1.checked ? pRgb(43, 112, 173) : "#e5e6e7"
                                 }
                                 // else if(equipmentCount === 1){
-                                else if(equipmentCount === 0){
+                                else if(equipmentCount === 1){
                                     return DeviceManager.deviceList[0].DevInfoObject.ConnectType !== 0? "#e5e6e7" : pRgb(43, 112, 173)
                                 }
                                 else{
-                                    return DeviceManager.deviceList[currentConfigId-1].DevInfoObject.ConnectType !== 0? "#e5e6e7" : pRgb(43, 112, 173)
+                                    return DeviceManager.deviceList[currentConfigId - 1].DevInfoObject.ConnectType !== 0? "#e5e6e7" : pRgb(43, 112, 173)
                                 }
                             }
                             font.family: GlobalSystemDefine.fontBold
@@ -962,13 +960,13 @@ Rectangle {
                             return ctl1.checked ? rect2 : rect1
                         }
                         // else if(equipmentCount === 1){
-                        else if(equipmentCount === 0){
+                        else if(equipmentCount === 1){
                             DeviceManager.deviceListChanged()
                             return DeviceManager.deviceList[0].DevInfoObject.ConnectType === 0 ? rect1 : rect2
                         }
                         else{
                             DeviceManager.deviceListChanged()
-                            return DeviceManager.deviceList[currentConfigId-1].DevInfoObject.ConnectType === 0 ? rect1 : rect2
+                            return DeviceManager.deviceList[currentConfigId - 1].DevInfoObject.ConnectType === 0 ? rect1 : rect2
                         }
 
                     }
@@ -1588,7 +1586,6 @@ Rectangle {
                     popup.openPop(10)
                 }
             }
-
             Button{
                 id:bt3
                 x:766
@@ -1659,8 +1656,9 @@ Rectangle {
             }
         }
     }
+
     Component{
-        id:musys
+        id: musys
         //TODO
         Item{
             MultideviceSystemConfig{
@@ -1775,13 +1773,12 @@ Rectangle {
                     }
                 }
             }
-
             MultideviceSystemConfig{
                 id:s3
                 x:654
                 y:68
-                sysCurrIndex:DeviceManager.deviceList[2].DevInfoObject.id
-                sysCurrIndex1:3
+                sysCurrIndex: DeviceManager.deviceList[2].DevInfoObject.id
+                sysCurrIndex1: 3
                 heightOpation:{
                     if(DeviceManager.deviceList[2]){
                         return DeviceManager.deviceList[2].DevInfoObject.heightOption
@@ -1789,7 +1786,7 @@ Rectangle {
                     }
                     else if(DeviceManager.deviceList[3]){
                         return DeviceManager.deviceList[3].DevInfoObject.heightOption
-                                === 1 ? true:false
+                                === 1 ? true : false
                     }
                     else{
                         return false
@@ -2126,7 +2123,7 @@ Rectangle {
                 }
                 onPressed: {
                     if (equipmentCount > 0) {
-                        currentConfigId = equipmentCount-1;
+                        currentConfigId = equipmentCount - 1;
                     }
                     popup.openPop(9)
                 }
@@ -2159,7 +2156,6 @@ Rectangle {
             }
         }
     }
-
 
     Text {
         id: version
@@ -2200,7 +2196,7 @@ Rectangle {
         MouseArea {
             anchors.fill: parent
             cursorShape: Qt.PointingHandCursor
-            drag.target: timeDissalog
+            // drag.target: timeDissalog
             onClicked: {
                 timeDialog.open()  // 点击时弹出对话框
             }
