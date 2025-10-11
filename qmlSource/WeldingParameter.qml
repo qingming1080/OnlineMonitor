@@ -3,7 +3,6 @@ import QtQuick.Controls 2.15
 import GlobalLanguageDefine 1.0
 import GlobalSystemDefine 1.0
 import LanguageEnum         1.0
-import "TimeUtils.js" as TimeUtils
 //焊接参数
 
 Rectangle {

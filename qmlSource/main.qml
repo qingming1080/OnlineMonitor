@@ -9,7 +9,6 @@ import "."
 import Device 1.0
 import DeviceInformation 1.0
 import QtQml 2.15
-import "TimeUtils.js" as TimeUtils
 
 
 Window {
