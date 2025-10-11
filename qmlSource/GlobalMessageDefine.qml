@@ -18,7 +18,7 @@ QtObject
             str += GlobalLanguageDefine.strDefectiveAppeared;
             break;
         case QmlEnum.MESSAGE_noConnect:
-            str += GlobalLanguageDefine.strNotConnected;
+            str += GlobalLanguageDefine.strDisConnected;
             break;
         case QmlEnum.MESSAGE_lowerValue:
             str += GlobalLanguageDefine.strYieldDropToLimit;

@@ -177,12 +177,17 @@ Window {
         anchors.fill: parent
         Header{
             id: header
+            anchors.top: parent.top
+            anchors.left: parent.left
             width: showWidth
             height: 60
         }
         StackView{
             id: stackView
             anchors.top: header.bottom
+            anchors.bottom: parent.bottom
+            anchors.left: parent.left
+            width: showWidth
             Component.onCompleted:
             {
                 loadView(1, pro)

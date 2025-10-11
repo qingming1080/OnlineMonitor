@@ -20,7 +20,6 @@ QtObject
     // 异常信息相关
     readonly property string strSuspiciousAppeared:     qsTr("出现可疑品")
     readonly property string strDefectiveAppeared:      qsTr("出现次品")
-    readonly property string strNotConnected:           qsTr("未连接")
     readonly property string strYieldDropToLimit:       qsTr("良率下降至下限值")
     readonly property string strFrequentDefective:      qsTr("频繁出现次品")
     readonly property string strFrequentSuspicious:     qsTr("频繁出现可疑品")
