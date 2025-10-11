@@ -18,7 +18,6 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
         DataBase/databasemanager.cpp \
-        DataHandler/timehandler.cpp \
         LanguageManager/languageManager.cpp \
         devicemanager.cpp \
         fileobject.cpp \
@@ -59,7 +58,6 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 HEADERS += \
     DataBase/databasemanager.h \
-    DataHandler/timehandler.h \
     LanguageManager/languageManager.h \
     define.h \
     devicemanager.h \
