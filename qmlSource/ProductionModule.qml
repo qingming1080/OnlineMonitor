@@ -6,6 +6,8 @@ import DeviceInformation 1.0
 import QmlEnum 1.0
 import GlobalLanguageDefine 1.0
 import GlobalSystemDefine 1.0
+import GlobalMessageDefine 1.0
+import DeviceInfoEnum 1.0
 import "TimeUtils.js" as TimeUtils
 
 Rectangle {
@@ -122,9 +124,12 @@ Rectangle {
                 color: mode == 1 ? "#0c5696" : pRgb(43, 112, 173)
                 eqText1:DeviceManager.deviceList[0].DevInfoObject.name
                 eqText2:DeviceManager.deviceList[0].DevInfoObject.model
-                eqText3:DeviceManager.deviceList[0].DevInfoObject.connectType === 1
+                eqText3:DeviceManager.deviceList[0].DevInfoObject.ConnectType === 1
                         ? "RS232" : "TCP/IP"
-                eqText4:DeviceManager.deviceList[0].DevInfoObject.state
+                eqText4:{
+                    var connectState = DeviceManager.deviceList[0].DevInfoObject.ConnectState
+                    return GlobalMessageDefine.getConnectState(connectState)
+                }
             }
 
             Loader{

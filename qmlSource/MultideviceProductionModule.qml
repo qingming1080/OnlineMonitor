@@ -4,6 +4,8 @@ import QtQuick.Controls 2.15
 import Device 1.0
 import DeviceInformation 1.0
 import GlobalLanguageDefine 1.0
+import GlobalMessageDefine 1.0
+import DeviceInfoEnum 1.0
 import "TimeUtils.js" as TimeUtils
 
 //多设备生产界面
@@ -140,7 +142,7 @@ Rectangle {
             }
             eqText3:{
                 if(DeviceManager.deviceList[0]){
-                    return DeviceManager.deviceList[0].DevInfoObject.connectType === 1
+                    return DeviceManager.deviceList[0].DevInfoObject.ConnectType === 1
                             ? "RS232" : "TCP/IP"
                 }
                 else{
@@ -148,12 +150,14 @@ Rectangle {
                 }
             }
             eqText4:{
-                if(DeviceManager.deviceList[0]){
-                    return DeviceManager.deviceList[0].DevInfoObject.state
+                if(DeviceManager.deviceList[0])
+                {
+                    var connectState = DeviceManager.deviceList[0].DevInfoObject.ConnectState
+                    return GlobalMessageDefine.getConnectState(connectState)
                 }
-                else{
+                else
                     return ""
-                }
+
             }
         }
         RealtimeYield{
@@ -292,7 +296,7 @@ Rectangle {
             }
             eqText3:{
                 if(DeviceManager.deviceList[1]){
-                    return DeviceManager.deviceList[1].DevInfoObject.connectType === 1
+                    return DeviceManager.deviceList[1].DevInfoObject.ConnectType === 1
                             ? "RS232" : "TCP/IP"
                 }
                 else{
@@ -300,12 +304,13 @@ Rectangle {
                 }
             }
             eqText4:{
-                if(DeviceManager.deviceList[1]){
-                    return DeviceManager.deviceList[1].DevInfoObject.state
+                if(DeviceManager.deviceList[1])
+                {
+                    var connectState = DeviceManager.deviceList[1].DevInfoObject.ConnectState
+                    return GlobalMessageDefine.getConnectState(connectState)
                 }
-                else{
+                else
                     return ""
-                }
             }
         }
         RealtimeYield{
@@ -447,11 +452,11 @@ Rectangle {
             }
             eqText3:{
                 if(DeviceManager.deviceList[2]){
-                    return DeviceManager.deviceList[2].DevInfoObject.connectType === 1
+                    return DeviceManager.deviceList[2].DevInfoObject.ConnectType === 1
                             ? "RS232" : "TCP/IP"
                 }
                 else if(DeviceManager.deviceList[3]){
-                    return DeviceManager.deviceList[3].DevInfoObject.connectType === 1
+                    return DeviceManager.deviceList[3].DevInfoObject.ConnectType === 1
                             ? "RS232" : "TCP/IP"
                 }
                 else{
@@ -459,13 +464,19 @@ Rectangle {
                 }
             }
             eqText4:{
-                if(DeviceManager.deviceList[2]){
-                    return DeviceManager.deviceList[2].DevInfoObject.state
+                var connectState = 0
+                if(DeviceManager.deviceList[2])
+                {
+                    connectState = DeviceManager.deviceList[2].DevInfoObject.ConnectState
+                    return GlobalMessageDefine.getConnectState(connectState)
                 }
-                else if(DeviceManager.deviceList[3]){
-                    return DeviceManager.deviceList[3].DevInfoObject.state
+                else if(DeviceManager.deviceList[3])
+                {
+                    connectState = DeviceManager.deviceList[3].DevInfoObject.ConnectState
+                    return GlobalMessageDefine.getConnectState(connectState)
                 }
-                else{
+                else
+                {
                     return ""
                 }
             }
@@ -618,11 +629,11 @@ Rectangle {
             }
             eqText3:{
                 if(DeviceManager.deviceList[3]){
-                    return DeviceManager.deviceList[3].DevInfoObject.connectType === 1
+                    return DeviceManager.deviceList[3].DevInfoObject.ConnectType === 1
                             ? "RS232" : "TCP/IP"
                 }
                 else if(DeviceManager.deviceList[2]){
-                    return DeviceManager.deviceList[2].DevInfoObject.connectType === 1
+                    return DeviceManager.deviceList[2].DevInfoObject.ConnectType === 1
                             ? "RS232" : "TCP/IP"
                 }
                 else{
@@ -630,13 +641,19 @@ Rectangle {
                 }
             }
             eqText4:{
-                if(DeviceManager.deviceList[3]){
-                    return DeviceManager.deviceList[3].DevInfoObject.state
+                var connectState = 0
+                if(DeviceManager.deviceList[3])
+                {
+                    connectState = DeviceManager.deviceList[3].DevInfoObject.ConnectState
+                    return GlobalMessageDefine.getConnectState(connectState)
                 }
-                else if(DeviceManager.deviceList[2]){
-                    return DeviceManager.deviceList[2].DevInfoObject.state
+                else if(DeviceManager.deviceList[2])
+                {
+                    connectState = DeviceManager.deviceList[2].DevInfoObject.ConnectState
+                    return GlobalMessageDefine.getConnectState(connectState)
                 }
-                else{
+                else
+                {
                     return ""
                 }
             }

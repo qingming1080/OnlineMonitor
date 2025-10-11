@@ -18,7 +18,9 @@ Window {
     visible: true
     width: 1280
     height: 800
-    x:0
+    x: 0
+    property int showWidth: 1280
+    property int showHeight: 800
     property int mode: 0
     property int equipmentCount: DeviceManager.deviceNum
     property int equipmentCurrentIndex: 0
@@ -79,6 +81,7 @@ Window {
        disableConsoleLog();
     }
 
+    //TODO Need to remove later
     Timer {
         id: startTimer
         interval: 1000  // 延时1秒
@@ -103,98 +106,100 @@ Window {
     signal sigDelDevice()
     signal sigRecover()
     signal sigSwipeCurrIndex(var swipeCurrIndex)
-    function switchUI(id){
+    function switchUI(id)
+    {
         equipmentCurrentIndex = id
         sigSwitch(id)
         sigUpdateUI(swipeCurrIndex)
     }
 
-    StackView{
-        id:stackView
-        initialItem: loadUI
+    //Only one time running
+    function releaseWelcomeScreen()
+    {
+        welcomeScreen.source = ""
     }
-    Component{
-        id: homeComponent
-        Item{
-            TopModule{
-                id:p1
-                width: 1280
-                height: 60
-            }
-            StackView{
-                id:stackView1
-                anchors.top: p1.bottom
-                Component.onCompleted: {
-                    loadView(1,pro)
-                    sigUpdateUI(0)
-                }
-            }
-            Connections{
-                target: window
-                function onSigSwitch(id){
-                    stackView1.pop()
-                    interFaceId = id
-                    if(id === 1){
-                        loadView(id,pro)
-                        p1.bt1Check()
-                        isAdd = false
-                    }
-                    else if(id === 2){
-                        loadView(id,his)
-                        p1.bt2Check()
-                        isAdd = false
-                    }
-                    else if(id === 3){
-                        isAdd = false
-                        sigSysConfig()
-                        Qt.callLater(sigSysConfig)//立即执行
-                        loadView(id,sys)
-                        sigStatusReset()
-                        p1.bt3Check()
-                    }
-                    else if(id === 4){
-                        isAdd = false
-                        loadView(id,rootview)
-                    }
-                }
-            }
 
-            // 动态加载和缓存视图
-            function loadView(viewName, component) {
-                //                var startTime = new Date();
-
-                if (cachedViews[viewName]) {
-                    // 如果视图已缓存，直接显示
-                    stackView1.push(cachedViews[viewName]);
-                } else {
-                    // 创建视图并缓存
-                    var newItem = component.createObject(stackView1);
-                    cachedViews[viewName] = newItem;
-                    stackView1.push(newItem);
-                }
-
-                //                var endTime = new Date();
-                //                var loadTime = endTime - startTime;
-                //                console.log("I WANT main.qml 加载时间:", loadTime, "毫秒");
-            }
+    // 动态加载和缓存视图
+    function loadView(viewName, component)
+    {
+        if (cachedViews[viewName])
+        {
+            // 如果视图已缓存，直接显示
+            stackView.push(cachedViews[viewName]);
+        }
+        else
+        {
+            // 创建视图并缓存
+            var newItem = component.createObject(stackView);
+            cachedViews[viewName] = newItem;
+            stackView.push(newItem);
         }
     }
-    Timer {
-        id:loadtime
-        interval: 2000
-        running : true
-        onTriggered:{
+
+    Connections
+    {
+        target: window
+        function onSigSwitch(id)
+        {
             stackView.pop()
-            stackView.push(homeComponent)
+            interFaceId = id
+            switch(id)
+            {
+            case 1:
+                loadView(id, pro)
+                p1.bt1Check()
+                isAdd = false
+                break;
+            case 2:
+                loadView(id, his)
+                p1.bt2Check()
+                isAdd = false
+                break;
+            case 3:
+                isAdd = false
+                sigSysConfig()
+                Qt.callLater(sigSysConfig)//立即执行
+                loadView(id, sys)
+                sigStatusReset()
+                p1.bt3Check()
+                break;
+            case 4:
+                isAdd = false
+                loadView(id, rootview)
+                break;
+            default:
+                break;
+            }
         }
     }
-    Component{
-        id:loadUI
-        Load{
-            width: 1280
-            height: 800
+
+    Item{
+        anchors.fill: parent
+        Header{
+            id: header
+            width: showWidth
+            height: 60
+        }
+        StackView{
+            id: stackView
+            anchors.top: header.bottom
+            Component.onCompleted:
+            {
+                loadView(1, pro)
+                sigUpdateUI(0)
+            }
         }
     }
+
+    Loader{
+        id: welcomeScreen
+        visible: true
+        anchors.fill: parent
+        width: showWidth
+        height: showHeight
+        source: "qrc:/qmlSource/Welcome.qml"
+    }
+
     Component{
         id:pro
         ProductionModule{
@@ -203,6 +208,7 @@ Window {
             height: 740
         }
     }
+
     Component{
         id:his
         HistoryModule{
@@ -211,6 +217,7 @@ Window {
             height: 740
         }
     }
+
     Component{
         id:sys
         SystemConfig{
@@ -227,6 +234,7 @@ Window {
             height: 740
         }
     }
+
     CustomDialog{
         id:popup
         width: 567
@@ -234,11 +242,13 @@ Window {
         x:window.width/2 - 567/2
         y:window.height/2 - 271
     }
+
     Binding {
         id:bin
         target: inputPannelID.keyboard.style
         property: 'keyboardDesignWidth'
     }
+
     InputPanel
     {
         id: inputPannelID

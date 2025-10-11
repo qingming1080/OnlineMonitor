@@ -21,7 +21,7 @@ DeviceInformation::DeviceInformation(int welderID, QObject *parent)
     m_sample    = data.model_sample;
     m_lowerLimit = data.lower_limit;
     m_heightOption = data.height_option;
-    m_connectType = static_cast<QmlEnum::CONNECTTYPE>(data.connect_type);
+    m_iConnectType = static_cast<DeviceInfoEnum::CONNECT_TYPE>(data.connect_type);
     m_connectID = data.connect_id;
     m_mesPort = data.mes_port;
     m_mesIP = data.mes_ip;
@@ -70,19 +70,19 @@ void DeviceInformation::setModel(const QString &newModel)
     DataBaseManager::getInstance()->setConfigurationData(m_id, QmlEnum::CONFIGURATION_welder_type, m_model);
 }
 
-QmlEnum::CONNECTTYPE DeviceInformation::connectType() const
+int DeviceInformation::getConnectType() const
 {
-    return m_connectType;
+    return m_iConnectType;
 }
 
-void DeviceInformation::setConnectType(const QmlEnum::CONNECTTYPE &newconnectType)
+void DeviceInformation::setConnectType(const int &type)
 {
-    if (m_connectType == newconnectType)
+    if (m_iConnectType == type)
         return;
-    m_connectType = newconnectType;
-    emit connectTypeChanged();
+    m_iConnectType = static_cast<DeviceInfoEnum::CONNECT_TYPE>(type);
+    emit notifyConnectTypeChanged();
 
-    DataBaseManager::getInstance()->setConfigurationData(m_id, QmlEnum::CONFIGURATION_connect_type, m_connectType);
+    DataBaseManager::getInstance()->setConfigurationData(m_id, QmlEnum::CONFIGURATION_connect_type, m_iConnectType);
 }
 
 int DeviceInformation::id() const
@@ -173,17 +173,17 @@ void DeviceInformation::setConnectID(int newConnectID)
     DataBaseManager::getInstance()->setConfigurationData(m_id, QmlEnum::CONFIGURATION_connect_id, m_connectID);
 }
 
-QString DeviceInformation::state() const
+int DeviceInformation::getConnectState() const
 {
-    return m_state;
+    return m_iConnectState;
 }
 
-void DeviceInformation::setState(const QString &newState)
+void DeviceInformation::setConnectState(const int &state)
 {
-    if (m_state == newState)
+    if (m_iConnectState == state)
         return;
-    m_state = newState;
-    emit stateChanged();
+    m_iConnectState = static_cast<DeviceInfoEnum::CONNECT_STATE>(state);
+    emit notifyConnectStateChanged();
 }
 
 int DeviceInformation::goodRate() const

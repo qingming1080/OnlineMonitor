@@ -69,19 +69,12 @@ int main(int argc, char *argv[])
     UtilityAppLauncher::getInstance()->startUtilityApp();
 
     LanguageManager LanguageManager;
-    // QTranslator translator;
-    // // 默认加载英文
-    // translator.load(":/translations/en.ts");
-    // app.installTranslator(&translator);
-
     Manual* manual = new Manual();
 
     QQmlApplicationEngine engine;
     QQmlContext* pQmlContext = engine.rootContext();
 
-    // pQmlContext->setContextProperty("QTranslator", &translator);
     pQmlContext->setContextProperty("LanguageManager", &LanguageManager);
-
     pQmlContext->setContextProperty("DeviceManager", DeviceManager::getInstance());
     pQmlContext->setContextProperty("History", History::getInstance());
     pQmlContext->setContextProperty("Message", Message::getInstance());
@@ -93,13 +86,14 @@ int main(int argc, char *argv[])
     pQmlContext->setContextProperty("Manual", manual);
     pQmlContext->setContextProperty("ModbusClient", HBModbusClient::getInstance());
 
-    qmlRegisterType<Device>("Device",1,0,"Device");
-    qmlRegisterType<IO>("IO",1,0,"IO");
-    qmlRegisterType<DeviceInformation>("DeviceInformation",1,0,"DeviceInformation");
+    qmlRegisterType<Device>("Device", 1, 0, "Device");
+    qmlRegisterType<IO>("IO", 1, 0, "IO");
+    qmlRegisterType<DeviceInformation>("DeviceInformation", 1, 0, "DeviceInformation");
     qmlRegisterType<Trend>("Trend",1,0,"Trend");
     qmlRegisterType<System>("System",1,0,"System");
     qmlRegisterType<QmlEnum>("QmlEnum",1,0,"QmlEnum");
     qmlRegisterType<LanguageEnum>("LanguageEnum", 1, 0, "LanguageEnum");
+    qmlRegisterType<DeviceInfoEnum>("DeviceInfoEnum", 1, 0, "DeviceInfoEnum");
 //    qmlRegisterType<LineChartItem>("CustomChart", 1, 0, "CustomChart");
 //    qmlRegisterType<TimeChartItem>("CustomTimeChart", 1, 0, "CustomTimeChart");
 
@@ -109,13 +103,13 @@ int main(int argc, char *argv[])
 
     const QUrl url(QStringLiteral("qrc:/qmlSource/main.qml"));
 
-    QObject::connect(&LanguageManager,&LanguageManager::notifyLanguageIndexChanged,[&](){
-
+    QObject::connect(&LanguageManager, &LanguageManager::notifyLanguageIndexChanged,[&]()
+    {
         engine.retranslate();
     });
 
-    QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,
-                     &app, [url](QObject *obj, const QUrl &objUrl) {
+    QObject::connect(&engine, &QQmlApplicationEngine::objectCreated, &app, [url](QObject *obj, const QUrl &objUrl)
+    {
         if (!obj && url == objUrl)
             QCoreApplication::exit(-1);
     }, Qt::QueuedConnection);

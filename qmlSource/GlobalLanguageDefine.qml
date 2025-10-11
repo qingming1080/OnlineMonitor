@@ -162,4 +162,11 @@ QtObject
     readonly property string strHours_Unit:             qsTr("小时")
     readonly property string strDay_Unit:               qsTr("天")
     readonly property string strDays_Unit:              qsTr("天")
+
+    //连接状态
+    readonly property string strConnectFailed:          qsTr("连接失败")
+    readonly property string strDisconnected:           qsTr("未连接")
+    readonly property string strConnecting:             qsTr("连接中")
+    readonly property string strConnected:              qsTr("已连接")
+
 }

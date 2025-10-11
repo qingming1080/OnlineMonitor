@@ -2,11 +2,35 @@
 #define DEVICEINFORMATION_H
 
 #include <QObject>
-#include "qmlenum.h"
-
 ///
 /// \brief The DeviceInformation class : 设备信息:对应表格Configuration
 ///
+
+class DeviceInfoEnum : public QObject
+{
+    Q_OBJECT
+public:
+    enum CONNECT_STATE
+    {
+        FAILED          = -1,   // 连接失败
+        DISCONNECTED    = 0,    // 未连接
+        CONNECTING,             // 连接中
+        CONNECTED,              // 已连接
+    };
+    Q_ENUM(CONNECT_STATE)
+
+    // 设备连接方式
+    enum CONNECT_TYPE
+    {
+        TCP_IP  = 0,    // 网络连接
+        RS232   = 1,    // RS232
+    };
+    Q_ENUM(CONNECT_TYPE)
+
+public:
+    explicit DeviceInfoEnum(QObject *parent = nullptr){Q_UNUSED(parent);}
+};
+
 class DeviceInformation : public QObject
 {
     Q_OBJECT
@@ -26,7 +50,7 @@ class DeviceInformation : public QObject
     Q_PROPERTY(int heightOption                     READ heightOption  WRITE setHeightOption    NOTIFY heightOptionChanged)
 
     // 连接方式
-    Q_PROPERTY(QmlEnum::CONNECTTYPE connectType    READ connectType   WRITE setConnectType     NOTIFY connectTypeChanged)
+    Q_PROPERTY(int ConnectType                      READ getConnectType WRITE setConnectType     NOTIFY notifyConnectTypeChanged)
     // 连接方式ID
     Q_PROPERTY(int connectID                        READ connectID     WRITE setConnectID       NOTIFY connectIDChanged)
 
@@ -62,8 +86,10 @@ class DeviceInformation : public QObject
 
     /// 2024/04/07 设备状态 暴露
     // 设备状态(生产中，待机等)
-    Q_PROPERTY(QString state                        READ state          WRITE setState          NOTIFY stateChanged)
+    Q_PROPERTY(int ConnectState                     READ getConnectState WRITE setConnectState  NOTIFY notifyConnectStateChanged)
 public:
+
+
     explicit DeviceInformation(int welderID = 0, QObject *parent = nullptr);
 
     Q_INVOKABLE QString name() const;
@@ -72,8 +98,11 @@ public:
     Q_INVOKABLE QString model() const;
     Q_INVOKABLE void setModel(const QString &newModel);
 
-    Q_INVOKABLE QmlEnum::CONNECTTYPE connectType() const;
-    Q_INVOKABLE void setConnectType(const QmlEnum::CONNECTTYPE &newconnectType);
+    int getConnectType() const;
+    void setConnectType(const int &type);
+
+    int getConnectState() const;
+    void setConnectState(const int &state);
 
     Q_INVOKABLE int id() const;
 //    Q_INVOKABLE void setId(int newId);
@@ -92,9 +121,6 @@ public:
 
     Q_INVOKABLE int connectID() const;
     Q_INVOKABLE void setConnectID(int newConnectID);
-
-    Q_INVOKABLE QString state() const;
-    Q_INVOKABLE void setState(const QString &newState);
 
     Q_INVOKABLE int goodRate() const;
     Q_INVOKABLE void setGoodRate(int newGoodRate);
@@ -136,8 +162,8 @@ signals:
 
     void nameChanged();
     void modelChanged();
-    void connectTypeChanged();
-    void stateChanged();
+    void notifyConnectTypeChanged();
+    void notifyConnectStateChanged();
 
     void idChanged();
 
@@ -177,13 +203,12 @@ signals:
 
 private:
     const int m_id;
-    QString m_name{};
-    QString m_model{};
+    QString m_name;
+    QString m_model;
     int m_maxBacth;
     int m_sample;
     int m_lowerLimit;
     int m_heightOption;
-    QmlEnum::CONNECTTYPE m_connectType;
     int m_connectID;
 
     int m_goodRate{95};
@@ -200,11 +225,11 @@ private:
     double m_heightPost{0};
 
     int m_mesPort{0};
-    QString m_mesIP{};
-    QString m_deviceIP{};
+    QString m_mesIP;
+    QString m_deviceIP;
 
-    QString m_state{"未连接"};
-    //QString m_state{};
+    DeviceInfoEnum::CONNECT_TYPE    m_iConnectType;
+    DeviceInfoEnum::CONNECT_STATE   m_iConnectState;
 };
 
-#endif // DEVICEINFORMATION:H
+#endif // DEVICEINFORMATION_H

@@ -38,7 +38,7 @@ Device *DeviceManager::getDeviceByNetworkID(int networkID)
 {
     for(int i = 0; i < m_deviceList.size(); ++i)
     {
-        if(m_deviceList.at(i)->getDevInfoObject()->connectType() == QmlEnum::CONNECTTYPE_Network
+        if(m_deviceList.at(i)->getDevInfoObject()->getConnectType() == DeviceInfoEnum::TCP_IP
             && m_deviceList.at(i)->getDevInfoObject()->connectID() == networkID)
             return m_deviceList.at(i);
     }
@@ -50,7 +50,7 @@ Device *DeviceManager::getDeviceByRs232ID(int rs232ID)
 {
     for(int i = 0; i < m_deviceList.size(); ++i)
     {
-        if(m_deviceList.at(i)->getDevInfoObject()->connectType() == QmlEnum::CONNECTTYPE_RS232
+        if(m_deviceList.at(i)->getDevInfoObject()->getConnectType() == DeviceInfoEnum::RS232
             && m_deviceList.at(i)->getDevInfoObject()->connectID() == rs232ID)
             return m_deviceList.at(i);
     }

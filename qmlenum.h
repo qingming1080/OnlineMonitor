@@ -144,15 +144,6 @@ public:
     };
     Q_ENUM(IO_COLUMN)
 
-
-    // 设备连接方式
-    enum CONNECTTYPE
-    {
-        CONNECTTYPE_Network    = 0,    // 网络连接
-        CONNECTTYPE_RS232      = 1,    // RS232
-    };
-    Q_ENUM(CONNECTTYPE)
-
     enum SIGNAL
     {
         SIGNAL_alarm = 0,

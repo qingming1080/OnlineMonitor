@@ -48,14 +48,17 @@ Rectangle {
         height: 70
     }
     Timer {
-        interval: 500
+        interval: 1000
         running: true
-        repeat:true
+        repeat: true
         onTriggered:{
-            if(loading.length === 3){
+            if(loading.length >= 3)
+            {
                 stop()
+                window.releaseWelcomeScreen()
             }
-            loading += "."
+            else
+                loading += "."
         }
     }
 }

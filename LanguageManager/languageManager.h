@@ -16,7 +16,7 @@ public:
     Q_ENUM(LANGUAGE_INDEX)
 
 public:
-    explicit LanguageEnum(QObject *parent = nullptr){}
+    explicit LanguageEnum(QObject *parent = nullptr){Q_UNUSED(parent)}
 };
 
 class LanguageManager : public QObject

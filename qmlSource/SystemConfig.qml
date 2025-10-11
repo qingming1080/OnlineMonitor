@@ -7,7 +7,9 @@ import IO 1.0
 import QmlEnum 1.0
 import GlobalLanguageDefine 1.0
 import GlobalSystemDefine   1.0
+import GlobalMessageDefine  1.0
 import LanguageEnum         1.0
+import DeviceInfoEnum       1.0
 import "TimeUtils.js" as TimeUtils
 //系统配置
 Rectangle {
@@ -833,18 +835,18 @@ Rectangle {
                        // if(equipmentCount === 1){
                         if(equipmentCount === 0){
                             if(ctl1.checked){
-                                DeviceManager.deviceList[0].DevInfoObject.setConnectType(1)
+                                DeviceManager.deviceList[0].DevInfoObject.ConnectType = 1
                             }
                             else{
-                                DeviceManager.deviceList[0].DevInfoObject.setConnectType(0)
+                                DeviceManager.deviceList[0].DevInfoObject.ConnectType = 0
                             }
                         }
                         else{
                             if(ctl1.checked){
-                                DeviceManager.deviceList[currentConfigId-1].DevInfoObject.setConnectType(1)
+                                DeviceManager.deviceList[currentConfigId-1].DevInfoObject.ConnectType = 1
                             }
                             else{
-                                DeviceManager.deviceList[currentConfigId-1].DevInfoObject.setConnectType(0)
+                                DeviceManager.deviceList[currentConfigId-1].DevInfoObject.ConnectType = 0
                             }
                         }
                     }
@@ -877,10 +879,10 @@ Rectangle {
                                     }
                                     //else if(equipmentCount === 1){
                                     else if(equipmentCount === 0){
-                                        return DeviceManager.deviceList[0].DevInfoObject.connectType !== 0? true : false
+                                        return DeviceManager.deviceList[0].DevInfoObject.ConnectType !== 0? true : false
                                     }
                                     else{
-                                        return DeviceManager.deviceList[currentConfigId-1].DevInfoObject.connectType !== 0? true : false
+                                        return DeviceManager.deviceList[currentConfigId-1].DevInfoObject.ConnectType !== 0? true : false
                                     }
                                 }
                                 duration: 0
@@ -893,10 +895,12 @@ Rectangle {
                                     }
                                     // else if(equipmentCount === 1){
                                     else if(equipmentCount === 0){
-                                        return DeviceManager.deviceList[0].DevInfoObject.connectType !== 0? false : true
+                                        return DeviceManager.deviceList[0].DevInfoObject.ConnectType !== 0? false : true
                                     }
                                     else{
-                                        return DeviceManager.deviceList[currentConfigId-1].DevInfoObject.connectType !== 0? false : true
+                                        if(currentConfigId < 0)
+                                            return
+                                        return DeviceManager.deviceList[currentConfigId - 1].DevInfoObject.ConnectType !== 0? false : true
                                     }
                                 }
                                 duration: 0
@@ -915,10 +919,10 @@ Rectangle {
                                 }
                                 // else if(equipmentCount === 1){
                                 else if(equipmentCount === 0){
-                                    return DeviceManager.deviceList[0].DevInfoObject.connectType !== 0 ? pRgb(43, 112, 173) : "#e5e6e7"
+                                    return DeviceManager.deviceList[0].DevInfoObject.ConnectType !== 0 ? pRgb(43, 112, 173) : "#e5e6e7"
                                 }
                                 else{
-                                    return DeviceManager.deviceList[currentConfigId-1].DevInfoObject.connectType !== 0 ? pRgb(43, 112, 173) : "#e5e6e7"
+                                    return DeviceManager.deviceList[currentConfigId-1].DevInfoObject.ConnectType !== 0 ? pRgb(43, 112, 173) : "#e5e6e7"
                                 }
                             }
                             font.family: GlobalSystemDefine.fontBold
@@ -937,10 +941,10 @@ Rectangle {
                                 }
                                 // else if(equipmentCount === 1){
                                 else if(equipmentCount === 0){
-                                    return DeviceManager.deviceList[0].DevInfoObject.connectType !== 0? "#e5e6e7" : pRgb(43, 112, 173)
+                                    return DeviceManager.deviceList[0].DevInfoObject.ConnectType !== 0? "#e5e6e7" : pRgb(43, 112, 173)
                                 }
                                 else{
-                                    return DeviceManager.deviceList[currentConfigId-1].DevInfoObject.connectType !== 0? "#e5e6e7" : pRgb(43, 112, 173)
+                                    return DeviceManager.deviceList[currentConfigId-1].DevInfoObject.ConnectType !== 0? "#e5e6e7" : pRgb(43, 112, 173)
                                 }
                             }
                             font.family: GlobalSystemDefine.fontBold
@@ -960,11 +964,11 @@ Rectangle {
                         // else if(equipmentCount === 1){
                         else if(equipmentCount === 0){
                             DeviceManager.deviceListChanged()
-                            return DeviceManager.deviceList[0].DevInfoObject.connectType === 0 ? rect1 : rect2
+                            return DeviceManager.deviceList[0].DevInfoObject.ConnectType === 0 ? rect1 : rect2
                         }
                         else{
                             DeviceManager.deviceListChanged()
-                            return DeviceManager.deviceList[currentConfigId-1].DevInfoObject.connectType === 0 ? rect1 : rect2
+                            return DeviceManager.deviceList[currentConfigId-1].DevInfoObject.ConnectType === 0 ? rect1 : rect2
                         }
 
                     }
@@ -1597,7 +1601,7 @@ Rectangle {
                 }
                 contentItem: Text {
                     // text: qsTr("设备保存")
-                    text: GlobalLanguageDefine.DeviceSave
+                    text: GlobalLanguageDefine.strDeviceSave
                     font.pixelSize: 20
                     color: pRgb(153, 204, 255)
                     anchors.centerIn: parent  // 确保文本在按钮内居中对齐
@@ -1693,15 +1697,17 @@ Rectangle {
                 }
                 eqText3:{
                     if(DeviceManager.deviceList[0]){
-                        DeviceManager.deviceList[0].DevInfoObject.connectType === 0  ? "TCP/IP" : "RS232"
+                        DeviceManager.deviceList[0].DevInfoObject.ConnectType === 0  ? "TCP/IP" : "RS232"
                     }
                     else{
                         return ""
                     }
                 }
                 eqText4:{
-                    if(DeviceManager.deviceList[0]){
-                        DeviceManager.deviceList[0].DevInfoObject.state
+                    if(DeviceManager.deviceList[0])
+                    {
+                        var connectState = DeviceManager.deviceList[0].DevInfoObject.ConnectState
+                        return GlobalMessageDefine.getConnectState(connectState)
                     }
                     else{
                         return ""
@@ -1747,15 +1753,17 @@ Rectangle {
                 }
                 eqText3:{
                     if(DeviceManager.deviceList[1]){
-                        DeviceManager.deviceList[1].DevInfoObject.connectType === 0 ? "TCP/IP" : "RS232"
+                        DeviceManager.deviceList[1].DevInfoObject.ConnectType === 0 ? "TCP/IP" : "RS232"
                     }
                     else{
                         return ""
                     }
                 }
                 eqText4:{
-                    if(DeviceManager.deviceList[1]){
-                        DeviceManager.deviceList[1].DevInfoObject.state
+                    if(DeviceManager.deviceList[1])
+                    {
+                        var connectState = DeviceManager.deviceList[1].DevInfoObject.ConnectState
+                        return GlobalMessageDefine.getConnectState(connectState)
                     }
                     else{
                         return ""
@@ -1812,21 +1820,26 @@ Rectangle {
                 }
                 eqText3:{
                     if(DeviceManager.deviceList[2]){
-                        DeviceManager.deviceList[2].DevInfoObject.connectType === 0  ? "TCP/IP" : "RS232"
+                        DeviceManager.deviceList[2].DevInfoObject.ConnectType === 0  ? "TCP/IP" : "RS232"
                     }
                     else if(DeviceManager.deviceList[3]){
-                        DeviceManager.deviceList[3].DevInfoObject.connectType === 0  ? "TCP/IP" : "RS232"
+                        DeviceManager.deviceList[3].DevInfoObject.ConnectType === 0  ? "TCP/IP" : "RS232"
                     }
                     else{
                         return ""
                     }
                 }
                 eqText4:{
-                    if(DeviceManager.deviceList[2]){
-                        DeviceManager.deviceList[2].DevInfoObject.state
+                    var connectState = 0
+                    if(DeviceManager.deviceList[2])
+                    {
+                        connectState = DeviceManager.deviceList[2].DevInfoObject.ConnectState
+                        return GlobalMessageDefine.getConnectState(connectState)
                     }
-                    else if(DeviceManager.deviceList[3]){
-                        DeviceManager.deviceList[3].DevInfoObject.state
+                    else if(DeviceManager.deviceList[3])
+                    {
+                        connectState = DeviceManager.deviceList[3].DevInfoObject.ConnectState
+                        return GlobalMessageDefine.getConnectState(connectState)
                     }
                     else{
                         return ""
@@ -1882,21 +1895,26 @@ Rectangle {
                 }
                 eqText3:{
                     if(DeviceManager.deviceList[3]){
-                        DeviceManager.deviceList[3].DevInfoObject.connectType === 0  ? "TCP/IP" : "RS232"
+                        DeviceManager.deviceList[3].DevInfoObject.ConnectType === 0  ? "TCP/IP" : "RS232"
                     }
                     else if(DeviceManager.deviceList[2]){
-                        DeviceManager.deviceList[2].DevInfoObject.connectType === 0  ? "TCP/IP" : "RS232"
+                        DeviceManager.deviceList[2].DevInfoObject.ConnectType === 0  ? "TCP/IP" : "RS232"
                     }
                     else{
                         return ""
                     }
                 }
                 eqText4:{
-                    if(DeviceManager.deviceList[3]){
-                        DeviceManager.deviceList[3].DevInfoObject.state
+                    var connectState = 0
+                    if(DeviceManager.deviceList[3])
+                    {
+                        connectState = DeviceManager.deviceList[3].DevInfoObject.ConnectState
+                        return GlobalMessageDefine.getConnectState(connectState)
                     }
-                    else if(DeviceManager.deviceList[2]){
-                        DeviceManager.deviceList[2].DevInfoObject.state
+                    else if(DeviceManager.deviceList[2])
+                    {
+                        connectState = DeviceManager.deviceList[2].DevInfoObject.ConnectState
+                        return GlobalMessageDefine.getConnectState(connectState)
                     }
                     else{
                         return ""

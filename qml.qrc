@@ -7,7 +7,7 @@
         <file>qmlSource/CustomRipple.qml</file>
         <file>qmlSource/EquipmentInfor.qml</file>
         <file>qmlSource/HistoryModule.qml</file>
-        <file>qmlSource/Load.qml</file>
+        <file>qmlSource/Welcome.qml</file>
         <file>qmlSource/main.qml</file>
         <file>qmlSource/MultideviceProductionModule.qml</file>
         <file>qmlSource/MultideviceSystemConfig.qml</file>

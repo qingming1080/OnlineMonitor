@@ -152,7 +152,7 @@ void HBModbusClient::pollRegisters(QModbusDataUnit::RegisterType type, int count
         connect(reply, &QModbusReply::finished, this, [this, reply, setter, errMsg]() {
             if (reply->error() == QModbusDevice::NoError) {
                 const QModbusDataUnit u = reply->result();
-                for (int i = 0; i < u.valueCount(); ++i) {
+                for (unsigned int i = 0; i < u.valueCount(); ++i) {
                     setter(i, u.value(i));
                 }
             } else {

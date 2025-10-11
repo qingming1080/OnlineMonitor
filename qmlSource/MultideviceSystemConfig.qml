@@ -127,13 +127,13 @@ Rectangle {
         onPressed: {
             loadViewsys(1,syscfg)
             currentConfigId = sysCurrIndex1
-            sigUpdateUI(sysCurrIndex-1)
+            sigUpdateUI(sysCurrIndex - 1)
         }
     }
     Text {
         id: s4
         // text: qsTr("高度模式")
-        text: GlobalLanguageDefine.strHeightMode
+        text: GlobalLanguageDefine.strHeightMode + ": "
         color: pRgb(177, 213, 219)
         font.family: GlobalSystemDefine.fontBold
         font.bold: true

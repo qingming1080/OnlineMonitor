@@ -5,6 +5,8 @@ import QtQml.Models 2.15
 import Device 1.0
 import DeviceInformation 1.0
 import QmlEnum 1.0
+import GlobalMessageDefine 1.0
+import DeviceInfoEnum 1.0
 // import Manual 1.0
 
 Rectangle {
@@ -62,7 +64,7 @@ Rectangle {
         }
         eqText3:{
             if(DeviceManager.deviceList[swipeCurrIndex]){
-                return DeviceManager.deviceList[swipeCurrIndex].DevInfoObject.connectType === 1
+                return DeviceManager.deviceList[swipeCurrIndex].DevInfoObject.ConnectType === 1
                         ? "RS232" : "TCP/IP"
             }
             else{
@@ -70,10 +72,13 @@ Rectangle {
             }
         }
         eqText4:{
-            if(DeviceManager.deviceList[swipeCurrIndex]){
-                return DeviceManager.deviceList[swipeCurrIndex].DevInfoObject.state
+            if(DeviceManager.deviceList[swipeCurrIndex])
+            {
+                var connectState = DeviceManager.deviceList[swipeCurrIndex].DevInfoObject.ConnectState
+                return GlobalMessageDefine.getConnectState(connectState)
             }
-            else{
+            else
+            {
                 return ""
             }
         }

@@ -83,8 +83,8 @@ HEADERS += \
     tools/utilityapplauncher.h
 
 TRANSLATIONS += \
-        SimplifiedChinese.ts \
-        English.ts
+        languageTranslation/SimplifiedChinese.ts \
+        languageTranslation/English.ts
 
 DISTFILES +=
 

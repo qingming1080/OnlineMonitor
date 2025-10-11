@@ -1,6 +1,7 @@
 pragma Singleton //we indicate that this QML Type is a singleton
 import QtQuick 2.12
 import QmlEnum 1.0
+import DeviceInfoEnum 1.0
 QtObject
 {
     id: globalMessageDefine
@@ -46,5 +47,29 @@ QtObject
             break;
         }
         return str;
+    }
+
+    function getConnectState(state)
+    {
+        var strState = GlobalLanguageDefine.strDisconnected
+        switch(state)
+        {
+        case DeviceInfoEnum.FAILED:
+            strState = GlobalLanguageDefine.strConnectFailed
+            break;
+        case DeviceInfoEnum.DISCONNECTED:
+            strState = GlobalLanguageDefine.strDisconnected
+            break;
+        case DeviceInfoEnum.CONNECTING:
+            strState = GlobalLanguageDefine.strConnecting
+            break;
+        case DeviceInfoEnum.CONNECTED:
+            strState = GlobalLanguageDefine.strConnected
+            break;
+        default:
+            strState = GlobalLanguageDefine.strDisconnected
+            break;
+        }
+        return strState
     }
 }
