@@ -72,4 +72,37 @@ QtObject
         }
         return strState
     }
+
+
+    function getCurrentTime()
+    {
+        var date = new Date();
+        var year = date.getFullYear();
+        var month = date.getMonth() + 1; // 月份从0开始，需要加1
+        var day = date.getDate();
+        var hours = date.getHours();
+        var minutes = date.getMinutes();
+        var seconds = date.getSeconds();
+        var dayOfWeek = date.getDay();
+
+        // 星期数组
+        var daysOfWeek = [GlobalLanguageDefine.strSunday,
+                          GlobalLanguageDefine.strMonday,
+                          GlobalLanguageDefine.strTuesday,
+                          GlobalLanguageDefine.strWednesday,
+                          GlobalLanguageDefine.strThursday,
+                          GlobalLanguageDefine.strFriday,
+                          GlobalLanguageDefine.strSaturday];
+
+        // 格式化时间字符串
+        return year + "-" + formatTimeComponent(month) + "-" + formatTimeComponent(day) + " " +
+               formatTimeComponent(hours) + ":" + formatTimeComponent(minutes) + ":" + formatTimeComponent(seconds) + " " +
+               daysOfWeek[dayOfWeek];
+    }
+
+    // 格式化时间组件为两位数字
+    function formatTimeComponent(component) {
+        return component < 10 ? "0" + component : component;
+    }
+
 }

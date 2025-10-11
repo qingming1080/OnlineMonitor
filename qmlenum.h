@@ -166,6 +166,11 @@ public:
     };
     Q_ENUM(MESSAGE)
 
+    enum SCREEN_INDEX{
+
+    };
+    Q_ENUM(SCREEN_INDEX)
+
 public:
     explicit QmlEnum(QObject *parent = nullptr){}
 

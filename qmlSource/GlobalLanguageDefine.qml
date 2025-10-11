@@ -168,4 +168,13 @@ QtObject
     readonly property string strConnecting:             qsTr("连接中")
     readonly property string strConnected:              qsTr("已连接")
 
+    //Week
+    readonly property string strSunday:                 qsTr("星期日")
+    readonly property string strMonday:                 qsTr("星期一")
+    readonly property string strTuesday:                qsTr("星期二")
+    readonly property string strWednesday:              qsTr("星期三")
+    readonly property string strThursday:               qsTr("星期四")
+    readonly property string strFriday:                 qsTr("星期五")
+    readonly property string strSaturday:               qsTr("星期六")
+
 }

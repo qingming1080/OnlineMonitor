@@ -21,7 +21,7 @@ Rectangle {
         y: 254
         color: pRgb(43, 112, 173)
         font.family: GlobalSystemDefine.fontBold
-        font.pixelSize: LanguageManager.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 64 : 40
+        font.pixelSize: LanguageManager.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 64 : 60
         width: 384
         height: 92
     }

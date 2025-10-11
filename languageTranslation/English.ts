@@ -665,5 +665,40 @@
         <source>已连接</source>
         <translation>Connected</translation>
     </message>
+    <message>
+        <location filename="../qmlSource/GlobalLanguageDefine.qml" line="172"/>
+        <source>星期日</source>
+        <translation>Sun</translation>
+    </message>
+    <message>
+        <location filename="../qmlSource/GlobalLanguageDefine.qml" line="173"/>
+        <source>星期一</source>
+        <translation>Mon</translation>
+    </message>
+    <message>
+        <location filename="../qmlSource/GlobalLanguageDefine.qml" line="174"/>
+        <source>星期二</source>
+        <translation>Tue</translation>
+    </message>
+    <message>
+        <location filename="../qmlSource/GlobalLanguageDefine.qml" line="175"/>
+        <source>星期三</source>
+        <translation>Wed</translation>
+    </message>
+    <message>
+        <location filename="../qmlSource/GlobalLanguageDefine.qml" line="176"/>
+        <source>星期四</source>
+        <translation>Thur</translation>
+    </message>
+    <message>
+        <location filename="../qmlSource/GlobalLanguageDefine.qml" line="177"/>
+        <source>星期五</source>
+        <translation>Fri</translation>
+    </message>
+    <message>
+        <location filename="../qmlSource/GlobalLanguageDefine.qml" line="178"/>
+        <source>星期六</source>
+        <translation>Sat</translation>
+    </message>
 </context>
 </TS>

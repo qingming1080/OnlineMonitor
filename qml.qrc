@@ -24,7 +24,6 @@
         <file>qmlSource/WeldingTrend.qml</file>
         <file>qmlSource/YieldTrend.qml</file>
         <file>qmlSource/TimeSettingDialog.qml</file>
-        <file>qmlSource/TimeUtils.js</file>
         <file>qmlSource/ParameterSettingDialog.qml</file>
         <file>qmlSource/GlobalSystemDefine.qml</file>
         <file>qmlSource/GlobalLanguageDefine.qml</file>

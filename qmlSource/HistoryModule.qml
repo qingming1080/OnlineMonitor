@@ -6,8 +6,8 @@ import Qt.labs.qmlmodels 1.0
 import QtQuick.Controls.Styles 1.4
 import GlobalLanguageDefine 1.0
 import GlobalSystemDefine 1.0
+import GlobalMessageDefine 1.0
 import LanguageEnum 1.0
-import "TimeUtils.js" as TimeUtils
 Rectangle {
     property int itemCount: equipmentCount
     color: pRgb(153, 204, 255)
@@ -584,7 +584,7 @@ Rectangle {
         font.family: GlobalSystemDefine.fontBold
         font.bold: true
         color: "#639ed6"
-        text: TimeUtils.getCurrentTime()
+        text: GlobalMessageDefine.getCurrentTime()
 
         // 定时器每秒更新一次
         Timer {
@@ -592,14 +592,14 @@ Rectangle {
             repeat: true
             running: true
             onTriggered: {
-                timeText.text = TimeUtils.getCurrentTime()
+                timeText.text = GlobalMessageDefine.getCurrentTime()
             }
         }
 
         MouseArea {
             anchors.fill: parent
             cursorShape: Qt.PointingHandCursor
-            drag.target: timeDialog
+            // drag.target: timeDialog
             onClicked: {
                 timeDialog.open()  // 点击时弹出对话框
             }

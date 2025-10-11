@@ -1365,7 +1365,7 @@ void DataBaseManager::init()
     }
     m_database = QSqlDatabase::addDatabase("QSQLITE");
     m_database.setDatabaseName(dbPath);
-    qDebug() << "I_WANT_TEST" << dbPath;
+    // qDebug() << "I_WANT_TEST" << dbPath;
     if (!m_database.open())
     {
         qDebug() << "Database Open Fail ";

@@ -180,7 +180,7 @@ void Trend::setYieldTrendData()
     if(m_pYieldSeries)
     {
         m_pYieldSeries->replace(m_yieldData.points);
-        qDebug() << "I_WANT_TEST 刷新折线" << m_pYieldSeries << m_yieldData.points.count() << m_startTime << m_endTime;
+        // qDebug() << "I_WANT_TEST 刷新折线" << m_pYieldSeries << m_yieldData.points.count() << m_startTime << m_endTime;
     }
 }
 
@@ -202,7 +202,7 @@ void Trend::setYieldSeries(QAbstractSeries *series)
     m_pYieldSeries = static_cast<QXYSeries*>(series);
     setYieldTrendData();
 
-    qDebug() << QString("I_WANT_TEST 设备%1 设置折线").arg(m_welderID) << m_pYieldSeries;
+    // qDebug() << QString("I_WANT_TEST 设备%1 设置折线").arg(m_welderID) << m_pYieldSeries;
 }
 
 void Trend::setFrontSeries(QAbstractSeries *series)
@@ -210,7 +210,7 @@ void Trend::setFrontSeries(QAbstractSeries *series)
     m_pFrontSeries = static_cast<QXYSeries*>(series);
     if(m_pFrontSeries)
         m_pFrontSeries->replace(m_frontData);
-    qDebug() << QString("I_WANT_TEST 设备%1 焊前高度").arg(m_welderID) << m_pFrontSeries;
+    // qDebug() << QString("I_WANT_TEST 设备%1 焊前高度").arg(m_welderID) << m_pFrontSeries;
 }
 
 void Trend::setBackSeries(QAbstractSeries *series)

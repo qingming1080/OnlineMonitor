@@ -7,7 +7,8 @@ Rectangle {
 
     Connections{
         target: window
-        function onSigPassError(){
+        function onSigPassError()
+        {
             if(bt1.tmp === true){
                 bt1Check()
             }
@@ -25,7 +26,8 @@ Rectangle {
         }
     }
 
-    function bt1Check(){
+    function bt1Check()
+    {
         bt2.tmp = false
         bt3.tmp = false
         bt4.tmp = false
@@ -37,7 +39,9 @@ Rectangle {
         bt3.btnCheck.visible = false
         bt4.visible = false
     }
-    function bt2Check(){
+
+    function bt2Check()
+    {
         bt1.tmp = false
         bt3.tmp = false
         bt4.tmp = false
@@ -49,7 +53,9 @@ Rectangle {
         bt3.btnCheck.visible = false
         bt4.visible = false
     }
-    function bt3Check(){
+
+    function bt3Check()
+    {
         bt2.tmp = false
         bt1.tmp = false
         bt4.tmp = false
@@ -76,11 +82,14 @@ Rectangle {
         bt4.visible = true
     }
     Button{
-        x:20
-        y:12
+        id: languageLogo
+        anchors.left: parent.left
+        anchors.leftMargin: 20
+        anchors.verticalCenter: parent.verticalCenter
         width: 64
         height: 36
-        background: Image {
+        background: Image
+        {
             source: "qrc:/images/logo_hb.png"  // 替换为你的图像路径
             fillMode: Image.PreserveAspectCrop  // 调整图片填充模式
         }
@@ -89,26 +98,30 @@ Rectangle {
         }
     }
     Text {
-        x:94
-        y:15
+        id: titleSystem
+        anchors.left: parent.left
+        anchors.leftMargin: 90
+        anchors.verticalCenter: languageLogo.verticalCenter
         width: 180
         height: 44
+        verticalAlignment: Text.AlignVCenter
         // text: qsTr("全视之眼系统")
         text: GlobalLanguageDefine.strSystemName
         color: pRgb(153, 204, 255)
         font.family: GlobalSystemDefine.fontBold
         font.bold: true
-        font.pixelSize: 30
+        font.pixelSize: 40
     }
+
     CustomBtn{
-        id:bt1
-        x:810
-        tmp:true
+        id: bt1
+        x: 810
+        tmp: true
         width: 157
         height: 60
         // btnText:qsTr("生产界面")
         btnText: GlobalLanguageDefine.strProductionInterface
-        index:1
+        index: 1
         Connections{
             target: bt1
             function onSigBtnSwitch(index){
@@ -120,7 +133,7 @@ Rectangle {
         }
     }
     CustomBtn{
-        id:bt2
+        id: bt2
         anchors.left: bt1.right
         width: 157
         height: 60

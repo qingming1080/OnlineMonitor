@@ -8,7 +8,6 @@ import GlobalLanguageDefine 1.0
 import GlobalSystemDefine 1.0
 import GlobalMessageDefine 1.0
 import DeviceInfoEnum 1.0
-import "TimeUtils.js" as TimeUtils
 
 Rectangle {
     id:mpro
@@ -98,7 +97,7 @@ Rectangle {
     }
 
     StackView{
-        id:prostack
+        id: prostack
     }
     Component{
         id:autopro
@@ -779,13 +778,13 @@ Rectangle {
         font.bold: true
         font.pixelSize: 14
         // text: qsTr("系统版本号") + ": " + "v2.0.1"
-        text: GlobalLanguageDefine.strSystemVersion + GlobalSystemDefine.strVersionNumber
+        text: GlobalLanguageDefine.strSystemVersion + ": " + GlobalSystemDefine.strVersionNumber
     }
 
     // 显示时间的文本
     Text {
         id: timeText
-        y:718
+        y: 718
         anchors.right: parent.right
         anchors.bottom: parent.bottom
         anchors.rightMargin: 10
@@ -794,7 +793,7 @@ Rectangle {
         font.family: GlobalSystemDefine.fontBold
         font.bold: true
         color: "#639ed6"
-        text: TimeUtils.getCurrentTime()
+        text: GlobalMessageDefine.getCurrentTime()
 
         // 定时器每秒更新一次
         Timer {
@@ -802,13 +801,13 @@ Rectangle {
             repeat: true
             running: true
             onTriggered: {
-                timeText.text = TimeUtils.getCurrentTime()
+                timeText.text = GlobalMessageDefine.getCurrentTime()
             }
         }
         MouseArea {
             anchors.fill: parent
             cursorShape: Qt.PointingHandCursor
-            drag.target: timeDialog
+            // drag.target: timeDialog
             onClicked: {
                 timeDialog.open()  // 点击时弹出对话框
             }

@@ -4,7 +4,7 @@ import Device 1.0
 import System 1.0
 import GlobalLanguageDefine 1.0
 import GlobalSystemDefine 1.0
-import "TimeUtils.js" as TimeUtils
+import GlobalMessageDefine 1.0
 Rectangle {
     radius: 5
     color: pRgb(153, 204, 255)
@@ -360,7 +360,7 @@ Rectangle {
         font.family: GlobalSystemDefine.fontBold
         font.bold: true
         color: "#639ed6"
-        text: TimeUtils.getCurrentTime()
+        text: GlobalMessageDefine.getCurrentTime()
 
         // 定时器每秒更新一次
         Timer {
@@ -368,7 +368,7 @@ Rectangle {
             repeat: true
             running: true
             onTriggered: {
-                timeText.text = TimeUtils.getCurrentTime()
+                timeText.text = GlobalMessageDefine.getCurrentTime()
             }
         }
     }

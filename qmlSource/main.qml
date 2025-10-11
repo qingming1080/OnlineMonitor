@@ -141,18 +141,18 @@ Window {
         target: window
         function onSigSwitch(id)
         {
-            stackView.pop()
+            stackView.clear()
             interFaceId = id
             switch(id)
             {
             case 1:
                 loadView(id, pro)
-                p1.bt1Check()
+                // p1.bt1Check()
                 isAdd = false
                 break;
             case 2:
                 loadView(id, his)
-                p1.bt2Check()
+                // p1.bt2Check()
                 isAdd = false
                 break;
             case 3:
@@ -161,7 +161,7 @@ Window {
                 Qt.callLater(sigSysConfig)//立即执行
                 loadView(id, sys)
                 sigStatusReset()
-                p1.bt3Check()
+                // p1.bt3Check()
                 break;
             case 4:
                 isAdd = false
@@ -241,11 +241,10 @@ Window {
     }
 
     CustomDialog{
-        id:popup
+        id: popup
         width: 567
         height: 271
-        x:window.width/2 - 567/2
-        y:window.height/2 - 271
+        anchors.centerIn: parent
     }
 
     Binding {

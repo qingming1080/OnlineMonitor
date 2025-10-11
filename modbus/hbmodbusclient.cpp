@@ -61,30 +61,40 @@ void HBModbusClient::Init()
     m_reconnectTimer = new QTimer(this);
     m_reconnectTimer->setInterval(2000);
     m_reconnectTimer->setSingleShot(false);
-    connect(m_reconnectTimer, &QTimer::timeout, this, [this]() {
-        if (modbusClient->state() != QModbusDevice::ConnectedState) {
-            qDebug() << "自动重连Modbus服务器...";
+    connect(m_reconnectTimer, &QTimer::timeout, this, [this]()
+    {
+        if (modbusClient->state() != QModbusDevice::ConnectedState)
+        {
+            // qDebug() << "自动重连Modbus服务器...";
             modbusClient->connectDevice();
-        } else {
+        }
+        else
+        {
             m_reconnectTimer->stop();
         }
     });
-    connect(modbusClient, &QModbusTcpClient::stateChanged, this, [this](QModbusDevice::State state){
-        if(state == QModbusDevice::ConnectedState) {
-            qDebug() << "Modbus已连接";
+    connect(modbusClient, &QModbusTcpClient::stateChanged, this, [this](QModbusDevice::State state)
+    {
+        if(state == QModbusDevice::ConnectedState)
+        {
+            // qDebug() << "Modbus已连接";
             emit connectedChanged(true);
             m_timer->start();
             if (m_reconnectTimer->isActive()) m_reconnectTimer->stop();
-        } else if(state == QModbusDevice::UnconnectedState) {
-            qDebug() << "Modbus已断开";
+        }
+        else if(state == QModbusDevice::UnconnectedState)
+        {
+            // qDebug() << "Modbus已断开";
             emit connectedChanged(false);
             m_timer->stop();
-            if (!m_reconnectTimer->isActive()) m_reconnectTimer->start();
+            if (!m_reconnectTimer->isActive())
+                m_reconnectTimer->start();
         }
     });
-    connect(modbusClient, &QModbusTcpClient::errorOccurred, this, [this](QModbusDevice::Error err){
-        if(err != QModbusDevice::NoError)
-            qWarning() << "Modbus错误:" << modbusClient->errorString();
+    connect(modbusClient, &QModbusTcpClient::errorOccurred, this, [this](QModbusDevice::Error err)
+    {
+        // if(err != QModbusDevice::NoError)
+            // qWarning() << "Modbus错误:" << modbusClient->errorString();
     });
 
 }
