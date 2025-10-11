@@ -388,7 +388,7 @@ Rectangle {
                 id:t1
                 anchors.centerIn: parent
                 // text: "1" + qsTr("小时")
-                text: "1" + GlobalLanguageDefine.strHour
+                text: "1" + GlobalLanguageDefine.strHour_Unit
                 font.pixelSize: 16
                 color: pRgb(153, 204, 255)
                 horizontalAlignment: Text.AlignHCenter
@@ -414,7 +414,7 @@ Rectangle {
                 id:t2
                 anchors.centerIn: parent
                 // text: "24" + qsTr("小时")
-                text: "24" + GlobalLanguageDefine.strHours
+                text: "24" + GlobalLanguageDefine.strHour_Unit
                 font.pixelSize: 16
                 color: pRgb(153, 204, 255)
                 horizontalAlignment: Text.AlignHCenter
@@ -440,7 +440,7 @@ Rectangle {
                 id:t3
                 anchors.centerIn: parent
                 // text: "7" + qsTr("天")
-                text: "7" + GlobalLanguageDefine.strDays
+                text: "7" + GlobalLanguageDefine.strDay_Unit
                 font.pixelSize: 16
                 color: pRgb(153, 204, 255)
                 horizontalAlignment: Text.AlignHCenter
@@ -466,7 +466,7 @@ Rectangle {
                 id:t4
                 anchors.centerIn: parent
                 // text: "30" + qsTr("天")
-                text: "30" + GlobalLanguageDefine.strDays
+                text: "30" + GlobalLanguageDefine.strDay_Unit
                 font.pixelSize: 16
                 color: pRgb(153, 204, 255)
                 horizontalAlignment: Text.AlignHCenter

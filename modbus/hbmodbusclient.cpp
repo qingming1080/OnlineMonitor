@@ -15,6 +15,7 @@ constexpr char HBModbusClient::LOCAL_IP[13];
 constexpr int HBModbusClient::SERVER_PORT;
 unsigned char HBModbusClient::m_Coils[SYS_COILS_REGISTERS_COUNT + DEV_COILS_REGISTERS_COUNT * DEV_COUNT] = {0};
 unsigned char HBModbusClient::m_Discreteds[DEV_DISCRETE_REGISTERS_COUNT * DEV_COUNT] = {0};
+unsigned char  HBModbusClient::m_LastDiscreteds[DEV_DISCRETE_REGISTERS_COUNT * DEV_COUNT];
 unsigned short HBModbusClient::m_Holdings[SYS_HOLDING_REGISTERS_COUNT + DEV_HOLDING_REGISTERS_COUNT * DEV_COUNT] = {0};
 unsigned short HBModbusClient::m_Inputs[DEV_INPUT_REGISTERS_COUNT * DEV_COUNT] = {0};
 HBModbusClient* HBModbusClient::m_instance = nullptr;
@@ -352,19 +353,22 @@ void HBModbusClient::processRegister(QModbusDataUnit::RegisterType type, int add
             break;
         }
         break;
-    case QModbusDataUnit::DiscreteInputs:
-        // 处理离散输入
-        switch(address)
-        {
-        case DEV_STATUE:
-            // 处理状态
-            qDebug() << "DiscreteInputs" << "DEV_STATUE" << value;
-            break;
-        // ... 其他case ...
-        default:
-            break;
+    case QModbusDataUnit::DiscreteInputs: {
+        int idx = address;
+        if (idx >= 0 && idx < DEV_DISCRETE_REGISTERS_COUNT * DEV_COUNT) {
+            unsigned char newVal = static_cast<unsigned char>(value);
+            unsigned char prev = m_LastDiscreteds[idx];
+            m_Discreteds[idx] = newVal;
+            if (prev != newVal) {
+                qDebug() << "DiscreteInputs index" << idx << "changed from" << prev << "to" << newVal;
+                m_LastDiscreteds[idx] = newVal;
+                if ((idx % DEV_DISCRETE_REGISTERS_COUNT) == DEV_STATUE) {
+                    updateDeviceConnectionStates();
+                }
+            }
         }
         break;
+    }
     default:
         break;
     }
@@ -567,6 +571,36 @@ void HBModbusClient::clearRejectAndSuspectForDevice(int devId) {
     updateSysLedStatus();
 }
 
+void HBModbusClient::updateDeviceConnectionStates()
+{
+    const QList<Device*>& devList = DeviceManager::getInstance()->deviceList();
+    // 每个设备占用 DEV_DISCRETE_REGISTERS_COUNT 个离散输入
+    for (int i = 0; i < DEV_COUNT && i < devList.size(); ++i) {
+        int base = i * DEV_DISCRETE_REGISTERS_COUNT;
+        // 设备连接状态通常在 DEV_STATUE 偏移位置
+        int idx = base + DEV_STATUE;
+        QString state = "未连接";
+        if (idx >= 0 && idx < DEV_DISCRETE_REGISTERS_COUNT * DEV_COUNT) {
+            state = (m_Discreteds[idx] == 1) ? QStringLiteral("已连接") : QStringLiteral("未连接");
+        }
+        Device* dev = devList.at(i);
+        if (dev && dev->getDevInfoObject()) {
+            dev->getDevInfoObject()->setState(state);
+            qDebug() << "Device ID:" << dev->getDevInfoObject()->id() << "state:" << state;
+        }
+    }
+}
 
+// 使用读取到的离散输入向量来更新缓存并更新设备状态（更通用）
+void HBModbusClient::updateDeviceConnectionStates(const QVector<int>& result)
+{
+    // 更新本地缓存
+    int max = qMin(result.size(), DEV_DISCRETE_REGISTERS_COUNT * DEV_COUNT);
+    for (int i = 0; i < max; ++i)
+        m_Discreteds[i] = static_cast<unsigned char>(result.at(i));
+
+    // 调用不带参数的版本来更新设备对象
+    updateDeviceConnectionStates();
+}
 
 

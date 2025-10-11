@@ -7,8 +7,8 @@ Dialog {
     modal: true
     x:400
     y:65
-    width: 567
-    height: 236
+    width: 700
+    height: 300
     font.pixelSize: 18
     font.family: "Arial"
 
@@ -17,8 +17,9 @@ Dialog {
         radius: 6
 
         Rectangle{
-            width: 567
-            height:29
+            id: setTimeRectangle
+            width: parent.width
+            height: 30
             color: "#004b8d"
             Text {
                 //anchors.horizontalCenter: parent.horizontalCenter
@@ -26,7 +27,7 @@ Dialog {
                 // text: qsTr("设置时间")
                 text: GlobalLanguageDefine.strTimeSettings
                 font.pixelSize: 18
-                color: pRgb(153, 204, 255)
+                color: "#99CCFF"
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
                 font.family: GlobalSystemDefine.fontBold
@@ -68,218 +69,202 @@ Dialog {
         verticalAlignment: Text.AlignVCenter
         anchors.horizontalCenter: parent.horizontalCenter
         // x:200
-        y:30
+        y:40
+
     }
 
+    Column {
+        spacing: 20
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.top: parent.top
+        anchors.topMargin: 80
 
-    contentItem: Flickable {
-        width: parent.width
-        height: parent.height
-        contentHeight: column.height  // 自动调整高度
+        Grid {
+            columns: 6
+            rowSpacing: 15
+            columnSpacing: 15
 
-
-        Rectangle{
-              x:260
-              y:60
-            Column {
-                id: column
-                spacing: 30
-                anchors.horizontalCenter: parent.horizontalCenter
-
-                Row {
-                    spacing: 15
-                    anchors.horizontalCenter: parent.horizontalCenter
-
-                    Label {
-                        // text: qsTr("年") + ":"
-                        text: GlobalLanguageDefine.strYear + ":"
-                        font.pixelSize: 20
-                        font.family: "Arial"
-                        anchors.verticalCenter: parent.verticalCenter
-                        color:"#004b8d"
-                        font.bold: true
-                    }
-
-                    TextField {
-                        id: yearField
-                        text: "2025"
-                        inputMethodHints: Qt.ImhFormattedNumbersOnly
-                        color: "#004b8d"
-                        horizontalAlignment: TextInput.AlignHCenter
-                        verticalAlignment: TextInput.AlignVCenter
-                        font.family: "Arial"
-                        font.bold: true
-                        width: 100
-                        height: 35
-                        font.pixelSize: 17
-                        background: Rectangle{
-                            radius: 6
-                            border.width: 2
-                            border.color: "#004b8d"
-                        }
-                    }
-
-
-                    Label {
-                        // text: qsTr("月") + ":"
-                        text: GlobalLanguageDefine.Month + ":"
-                        font.pixelSize: 20
-                        font.family: "Arial"
-                        anchors.verticalCenter: parent.verticalCenter
-                        color:"#004b8d"
-                        font.bold: true
-                    }
-
-
-                    TextField {
-                        id: monthField
-                        text: "1"
-                        inputMethodHints: Qt.ImhFormattedNumbersOnly
-                        color: "#004b8d"
-                        horizontalAlignment: TextInput.AlignHCenter
-                        verticalAlignment: TextInput.AlignVCenter
-                        font.family: "Arial"
-                        font.bold: true
-                        width: 100
-                        height: 35
-                        font.pixelSize: 17
-                        background: Rectangle{
-                            radius: 6
-                            border.width: 2
-                            border.color: "#004b8d"
-                        }
-                    }
-
-                    Label {
-                        // text: qsTr("日") + ":"
-                        text: GlobalLanguageDefine.strDay + ":"
-                        font.pixelSize: 20
-                        font.family: "Arial"
-                        anchors.verticalCenter: parent.verticalCenter
-                        color:"#004b8d"
-                        font.bold: true
-                    }
-
-                    TextField {
-                        id: dayField
-                        text: "1"
-                        inputMethodHints: Qt.ImhFormattedNumbersOnly
-                        color: "#004b8d"
-                        horizontalAlignment: TextInput.AlignHCenter
-                        verticalAlignment: TextInput.AlignVCenter
-                        font.family: "Arial"
-                        font.bold: true
-                        width: 100
-                        height: 35
-                        font.pixelSize: 17
-
-                        background: Rectangle{
-                            radius: 6
-                            border.width: 2
-                            border.color: "#004b8d"
-                        }
-                    }
-                }
-
-                // 时间选择
-                Row {
-                    spacing: 15
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    Label {
-                        // text: qsTr("时") + ":" ;
-                        text: GlobalLanguageDefine.strHour + ":"
-                        font.pixelSize: 20;
-                        font.family: "Arial" ;
-                        anchors.verticalCenter: parent.verticalCenter;
-                        color:"#004b8d";
-                        font.bold: true
-                    }
-
-                    TextField {
-                        id: hourField
-                        text: "0"
-                        inputMethodHints: Qt.ImhFormattedNumbersOnly
-                        color: "#004b8d"
-                        horizontalAlignment: TextInput.AlignHCenter
-                        verticalAlignment: TextInput.AlignVCenter
-                        font.family: "Arial"
-                        font.bold: true
-                        width: 100
-                        height: 35
-                        font.pixelSize: 17
-
-                        background: Rectangle{
-                            radius: 6
-                            border.width: 2
-                            border.color: "#004b8d"
-                        }
-                    }
-
-                    Label {
-                        // text: qsTr("分") + ":" ;
-                        text: GlobalLanguageDefine.strMinute + ":"
-                        font.pixelSize: 20;
-                        font.family: "Arial" ;
-                        anchors.verticalCenter: parent.verticalCenter;
-                        color:"#004b8d";
-                        font.bold: true
-                    }
-
-                    TextField {
-                        id: minuteField
-                        text: "0"
-                        inputMethodHints: Qt.ImhFormattedNumbersOnly
-                        color: "#004b8d"
-                        horizontalAlignment: TextInput.AlignHCenter
-                        verticalAlignment: TextInput.AlignVCenter
-                        font.family: "Arial"
-                        font.bold: true
-                        width: 100
-                        height: 35
-                        font.pixelSize: 17
-
-                        background: Rectangle{
-                            radius: 6
-                            border.width: 2
-                            border.color: "#004b8d"
-                        }
-                    }
-
-                    Label {
-                        // text: qsTr("秒") + ":" ;
-                        text: GlobalLanguageDefine.strSecond + ":"
-                        font.pixelSize: 20;
-                        font.family: "Arial" ;
-                        anchors.verticalCenter: parent.verticalCenter;
-                        color:"#004b8d";
-                        font.bold: true
-                    }
-                    TextField {
-                        id: secondField
-                        text: "0"
-                        inputMethodHints: Qt.ImhFormattedNumbersOnly
-                        color: "#004b8d"
-                        horizontalAlignment: TextInput.AlignHCenter
-                        verticalAlignment: TextInput.AlignVCenter
-                        font.family: "Arial"
-                        font.bold: true
-                        width: 100
-                        height: 35
-                        font.pixelSize: 17
-                        background: Rectangle{
-                            radius: 6
-                            border.width: 2
-                            border.color: "#004b8d"
-                        }
-                    }
-                }
-
+            Label {
+                text: GlobalLanguageDefine.strYear + ":"
+                font.pixelSize: 20
+                font.family: GlobalSystemDefine.fontBold
+                color:"#004b8d"
+                font.bold: true
             }
-        }
 
+            TextField {
+                id: yearField
+                text: "2025"
+                inputMethodHints: Qt.ImhFormattedNumbersOnly
+                color: "#004b8d"
+                horizontalAlignment: TextInput.AlignHCenter
+                verticalAlignment: TextInput.AlignVCenter
+                font.family:GlobalSystemDefine.fontBold
+                font.bold: true
+                width: 100
+                height: 35
+                font.pixelSize: 17
+                background: Rectangle{
+                    radius: 6
+                    border.width: 2
+                    border.color: "#004b8d"
+                }
+            }
+
+
+            Label {
+                // text: qsTr("月") + ":"
+                text: GlobalLanguageDefine.strMonth + ":"
+                font.pixelSize: 20
+                font.family: GlobalSystemDefine.fontBold
+                color:"#004b8d"
+                font.bold: true
+            }
+
+
+            TextField {
+                id: monthField
+                text: "1"
+                inputMethodHints: Qt.ImhFormattedNumbersOnly
+                color: "#004b8d"
+                horizontalAlignment: TextInput.AlignHCenter
+                verticalAlignment: TextInput.AlignVCenter
+                font.family: GlobalSystemDefine.fontBold
+                font.bold: true
+                width: 100
+                height: 35
+                font.pixelSize: 17
+                background: Rectangle{
+                    radius: 6
+                    border.width: 2
+                    border.color: "#004b8d"
+                }
+            }
+
+            Label {
+                // text: qsTr("日") + ":"
+                text: GlobalLanguageDefine.strDay + ":"
+                font.pixelSize: 20
+                font.family: GlobalSystemDefine.fontBold
+                color:"#004b8d"
+                font.bold: true
+            }
+
+            TextField {
+                id: dayField
+                text: "1"
+                inputMethodHints: Qt.ImhFormattedNumbersOnly
+                color: "#004b8d"
+                horizontalAlignment: TextInput.AlignHCenter
+                verticalAlignment: TextInput.AlignVCenter
+                font.family: GlobalSystemDefine.fontBold
+                font.bold: true
+                width: 100
+                height: 35
+                font.pixelSize: 17
+
+                background: Rectangle{
+                    radius: 6
+                    border.width: 2
+                    border.color: "#004b8d"
+                }
+            }
+
+            Label {
+                // text: qsTr("时") + ":" ;
+                text: GlobalLanguageDefine.strHour + ":"
+                font.pixelSize: 20;
+                font.family: GlobalSystemDefine.fontBold
+                color:"#004b8d";
+                font.bold: true
+            }
+
+            TextField {
+                id: hourField
+                text: "0"
+                inputMethodHints: Qt.ImhFormattedNumbersOnly
+                color: "#004b8d"
+                horizontalAlignment: TextInput.AlignHCenter
+                verticalAlignment: TextInput.AlignVCenter
+                font.family: GlobalSystemDefine.fontBold
+                font.bold: true
+                width: 100
+                height: 35
+                font.pixelSize: 17
+
+                background: Rectangle{
+                    radius: 6
+                    border.width: 2
+                    border.color: "#004b8d"
+                }
+            }
+
+            Label {
+                // text: qsTr("分") + ":" ;
+                text: GlobalLanguageDefine.strMinute + ":"
+                font.pixelSize: 20;
+                font.family: GlobalSystemDefine.fontBold
+                color:"#004b8d";
+                font.bold: true
+            }
+
+            TextField {
+                id: minuteField
+                text: "0"
+                inputMethodHints: Qt.ImhFormattedNumbersOnly
+                color: "#004b8d"
+                horizontalAlignment: TextInput.AlignHCenter
+                verticalAlignment: TextInput.AlignVCenter
+                font.family: GlobalSystemDefine.fontBold
+                font.bold: true
+                width: 100
+                height: 35
+                font.pixelSize: 17
+
+                background: Rectangle{
+                    radius: 6
+                    border.width: 2
+                    border.color: "#004b8d"
+                }
+            }
+
+            Label {
+                // text: qsTr("秒") + ":" ;
+                text: GlobalLanguageDefine.strSecond + ":"
+                font.pixelSize: 20;
+                font.family: GlobalSystemDefine.fontBold
+                color:"#004b8d";
+                font.bold: true
+            }
+            TextField {
+                id: secondField
+                text: "0"
+                inputMethodHints: Qt.ImhFormattedNumbersOnly
+                color: "#004b8d"
+                horizontalAlignment: TextInput.AlignHCenter
+                verticalAlignment: TextInput.AlignVCenter
+                font.family: GlobalSystemDefine.fontBold
+                font.bold: true
+                width: 100
+                height: 35
+                font.pixelSize: 17
+                background: Rectangle{
+                    radius: 6
+                    border.width: 2
+                    border.color: "#004b8d"
+                }
+            }
+
+        }
+    }
+
+    Row{
+        spacing: 60
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.top: parent.bottom
+        anchors.topMargin: -50
         Button {
-            x:120
-            y:180
+
             width: 120
             height: 36
             background: Rectangle{
@@ -372,8 +357,6 @@ Dialog {
         }
 
         Button{
-            x:280
-            y:180
             width:  120
             height: 36
             background: Rectangle{
