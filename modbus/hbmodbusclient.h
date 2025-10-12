@@ -51,13 +51,13 @@ public:
 
     Q_INVOKABLE void setSysLedStatus(bool condition);
 
-    // Q_INVOKABLE void updateSysLedStatus();
-
     Q_INVOKABLE void handleDeviceCoilStatus(int devId, int value); // Updated to handle resetIdx logic
 
     void updateDeviceConnectionStates();
 
     void updateDeviceConnectionStates(const QVector<int>& result);
+
+
 
 public:
 

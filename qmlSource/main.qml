@@ -80,17 +80,6 @@ Window {
        disableConsoleLog();
     }
 
-    //TODO Need to remove later
-    Timer {
-        id: startTimer
-        interval: 1000  // 延时1秒
-        running: true
-        repeat: false
-        onTriggered: {
-               ModbusClient.setSysLedStatus(true)
-        }
-    }
-
     // 缓存已加载的视图
     property var cachedViews: []
     signal sigSwitch(var id)
