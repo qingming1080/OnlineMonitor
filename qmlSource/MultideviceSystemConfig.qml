@@ -214,7 +214,7 @@ Rectangle {
         id: s7
         // text: qsTr("是否开启待定")
         text: GlobalLanguageDefine.strOpenPending
-        color: "#99ccff"
+        color: "#b1d5db"
         font.family: GlobalSystemDefine.fontBold
         font.bold: true
         font.pixelSize: 17
