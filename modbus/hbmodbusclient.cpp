@@ -383,7 +383,7 @@ void HBModbusClient::dispatchInputsOnCycleCountChanged()
         quint16 high = m_Inputs[base + DEV_CYCLE_COUNT_H];
         quint16 low  = m_Inputs[base + DEV_CYCLE_COUNT_L];
         quint32 cycleCount = (quint32(high) << 16) | quint32(low);
-        if (lastCycleCount[i] != cycleCount)
+        if (lastCycleCount[i] != cycleCount && cycleCount > 0)
         {
             lastCycleCount[i] = cycleCount;
             QVector<quint16> inputs = getDeviceInputs(i+1);
@@ -398,9 +398,10 @@ void HBModbusClient::dispatchInputsOnCycleCountChanged()
 
                 updateDeviceTrend(device, inputs[DEV_POWER], inputs[DEV_TIME], inputs[DEV_PRE_HEIGHT], inputs[DEV_POST_HEIGHT]);
                 DataBaseManager::getInstance()->saveProductionDataofModbus(device,inputs,cycleCount);
+
             }
              //TODO
-            //Input写入数据库（production/mannul）
+            //Input写入数据库（/mannul）
         }
     }
 }

@@ -1202,7 +1202,6 @@ bool DataBaseManager::saveProductionDataofModbus(Device *device, const QVector<q
         if (!device) return false;
 
         int deviceId = device->getDevInfoObject()->id();
-        int base = (deviceId - 1) * HBModbusClient::DEV_INPUT_REGISTERS_COUNT;
 
         _Production_Data record;
 
@@ -1216,13 +1215,14 @@ bool DataBaseManager::saveProductionDataofModbus(Device *device, const QVector<q
         else if (modelStr == "L20-TS") record.model_id = 2;
         else record.model_id = 0;
 
-        record.energy                               = inputs[base + HBModbusClient::DEV_ENERGY];
-        record.amplitude                            = inputs[base + HBModbusClient::DEV_AMPLITUDE];
-        record.pressure                             = inputs[base + HBModbusClient::DEV_WP];         //welde pressure
-        record.power                                = inputs[base + HBModbusClient::DEV_POWER];
-        record.time                                 = inputs[base + HBModbusClient::DEV_TIME];
-        record.pre_height                           = inputs[base + HBModbusClient::DEV_PRE_HEIGHT];
-        record.post_height                          = inputs[base + HBModbusClient::DEV_POST_HEIGHT];
+        record.energy                               = inputs[HBModbusClient::DEV_ENERGY];
+        record.amplitude                            = inputs[HBModbusClient::DEV_AMPLITUDE];
+        record.pressure                             = inputs[HBModbusClient::DEV_WP];         //welde pressure
+        record.power                                = inputs[HBModbusClient::DEV_POWER];
+        int seconds                                 = inputs[HBModbusClient::DEV_TIME];
+        record.time                                 = QString::number(seconds);
+        record.pre_height                           = inputs[HBModbusClient::DEV_PRE_HEIGHT];
+        record.post_height                          = inputs[HBModbusClient::DEV_POST_HEIGHT];
         record.force                                = 100;                          //TODO
         record.residual                             = 100;                          //TODO
         record.good_rate                            = 88;                           //TODO
