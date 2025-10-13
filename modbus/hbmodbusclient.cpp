@@ -610,4 +610,24 @@ void HBModbusClient::updateDeviceConnectionStates(const QVector<int>& result)
     updateDeviceConnectionStates();
 }
 
+void HBModbusClient::writeDeviceConfig(int deviceId, const DeviceModbusMapper::DeviceRegisterData &data)
+{
+    if (deviceId <= 0) {
+        qWarning() << "writeDeviceConfig: invalid deviceId" << deviceId;
+        return;
+    }
+
+    int index = deviceId - 1;
+    if (index < 0 || index >= DEV_COUNT) {
+
+        qWarning() << "writeDeviceConfig: deviceId out of range" << deviceId;
+        return;
+    }
+
+    int start = DEV_TYPE + index * DEV_HOLDING_REGISTERS_COUNT;
+
+    QVector<quint16> devcieRegs = DeviceModbusMapper::toRegisterVector(data);
+
+    writeHoldingRegisters(start, devcieRegs);
+}
 

@@ -59,6 +59,8 @@ public:
     Q_INVOKABLE void stopManualMode();              // 关闭手动模式
     QList<QString> manualDataList() const;          // 获取手动模式数据
 
+    void syncDevicesToModbus();
+
 
 signals:
     void deviceNumChanged();

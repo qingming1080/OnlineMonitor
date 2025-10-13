@@ -25,6 +25,12 @@ public:
     };
     Q_ENUM(CONNECT_TYPE)
 
+    enum WLED_TYPE
+    {
+        L20_VG  = 0,
+        L20_TS  = 1,
+    };Q_ENUM(WLED_TYPE)
+
 public:
     explicit DeviceInfoEnum(QObject *parent = nullptr){Q_UNUSED(parent);}
 };

@@ -9,7 +9,6 @@ class IO;
 class IOModel;
 class Manual;
 class System;
-
 class Trend;
 
 ///

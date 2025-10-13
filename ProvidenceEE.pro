@@ -1,4 +1,4 @@
-QT += widgets quick virtualkeyboard charts serialport sql qml xml serialbus core
+QT += widgets quick virtualkeyboard charts serialport sql qml xml serialbus
 CONFIG += c++11
 CONFIG += C++11UTF8
 msvc {
@@ -37,6 +37,7 @@ SOURCES += \
         model/system.cpp \
         model/trend.cpp \
         signalmanager.cpp \
+        tools/devicemodbusmapper.cpp \
         tools/utilityapplauncher.cpp
 
 RESOURCES += qml.qrc \
@@ -78,6 +79,7 @@ HEADERS += \
     model/trend.h \
     qmlenum.h \
     signalmanager.h \
+    tools/devicemodbusmapper.h \
     tools/utilityapplauncher.h
 
 TRANSLATIONS += \

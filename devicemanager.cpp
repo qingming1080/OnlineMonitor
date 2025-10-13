@@ -4,13 +4,11 @@
 #include "define.h"
 #include <qdebug.h>
 #include "model/deviceinformation.h"
-
+#include "modbus/hbmodbusclient.h"
 #include "signalmanager.h"
 #include <QElapsedTimer>
-#include "log/localrecord.h"
-#include "model/networkmodel.h"
-#include "model/rs232model.h"
 #include "model/devicenames.h"
+#include "tools/devicemodbusmapper.h"
 
 DeviceManager* DeviceManager::s_pInstance = nullptr;
 
@@ -167,9 +165,8 @@ void DeviceManager::addDevice(const int &maxBacth, const int &sample, const int 
         }
     }
 
-
-
     emit deviceListChanged();
+    syncDevicesToModbus();
 
     QList<QString> names;
     for(int i = 0; i < m_deviceList.size(); ++i)
@@ -179,10 +176,6 @@ void DeviceManager::addDevice(const int &maxBacth, const int &sample, const int 
 
     DeviceNames::getInstance()->setNames(names);
 }
-
-
-
-
 
 void DeviceManager::removeDevice(int welderID)
 {
@@ -201,6 +194,7 @@ void DeviceManager::removeDevice(int welderID)
             DataBaseManager::getInstance()->removeConfigurationDevice(welderID);
             emit deviceNumChanged();
             emit deviceListChanged();
+            syncDevicesToModbus();
             return;
         }
     }
@@ -231,4 +225,22 @@ void DeviceManager::stopManualMode() {
 
 QList<QString> DeviceManager::manualDataList() const {
     return m_manualDataList;
+}
+
+void DeviceManager::syncDevicesToModbus()
+{
+    for (Device* device : m_deviceList)
+    {
+        if (!device)
+        {
+            DeviceModbusMapper::DeviceRegisterData emptyData;
+            emptyData.DEV_AVAILABLE = 0;
+            qWarning() << "syncDevicesToModbus: null device slot, skipped";
+            continue;
+        }
+
+        auto deviceData = DeviceModbusMapper::generateRegisterData(device);
+        HBModbusClient::getInstance()->writeDeviceConfig(deviceData.deviceID,deviceData);
+
+    }
 }

@@ -8,6 +8,7 @@
 #include <QVector>
 #include <QMutex>
 #include "model/device.h"
+#include "tools/devicemodbusmapper.h"
 
 class HBModbusClient : public QObject
 {
@@ -56,6 +57,8 @@ public:
     void updateDeviceConnectionStates();
 
     void updateDeviceConnectionStates(const QVector<int>& result);
+
+    void writeDeviceConfig(int deviceId, const DeviceModbusMapper::DeviceRegisterData &data);
 
 
 
