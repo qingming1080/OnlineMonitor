@@ -59,6 +59,7 @@ public:
     Q_INVOKABLE void stopManualMode();              // 关闭手动模式
     QList<QString> manualDataList() const;          // 获取手动模式数据
 
+    void syncDevicesToModbus();
 
 signals:
     void deviceNumChanged();
@@ -83,7 +84,6 @@ private:
     int m_deviceNum;
 
     QList<Device*> m_deviceList;
-
 
     int m_manualModeDeviceID = -1;  // 当前处于手动模式的设备 ID（-1 表示未开启）
     QList<QString> m_manualDataList;  // 存储手动模式下的数据

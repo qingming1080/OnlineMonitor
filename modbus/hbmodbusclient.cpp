@@ -64,15 +64,11 @@ void HBModbusClient::Init()
     connect(m_reconnectTimer, &QTimer::timeout, this, [this]()
     {
         if (modbusClient->state() != QModbusDevice::ConnectedState)
-        {
-            // qDebug() << "自动重连Modbus服务器...";
             modbusClient->connectDevice();
-        }
         else
-        {
             m_reconnectTimer->stop();
-        }
     });
+
     connect(modbusClient, &QModbusTcpClient::stateChanged, this, [this](QModbusDevice::State state)
     {
         if(state == QModbusDevice::ConnectedState)
@@ -80,6 +76,8 @@ void HBModbusClient::Init()
             // qDebug() << "Modbus已连接";
             emit connectedChanged(true);
             m_timer->start();
+            updateSysLedStatus();
+            DeviceManager::getInstance()->syncDevicesToModbus();
             if (m_reconnectTimer->isActive()) m_reconnectTimer->stop();
         }
         else if(state == QModbusDevice::UnconnectedState)
@@ -91,6 +89,7 @@ void HBModbusClient::Init()
                 m_reconnectTimer->start();
         }
     });
+
     connect(modbusClient, &QModbusTcpClient::errorOccurred, this, [this](QModbusDevice::Error err)
     {
         // if(err != QModbusDevice::NoError)
@@ -294,14 +293,9 @@ void HBModbusClient::processRegister(QModbusDataUnit::RegisterType type, int add
         switch(address)
         {
         case SYS_RTC_YY:
-            // 处理年
-            qDebug() << "SYS_RTC_YY" << value;
             break;
         case SYS_RTC_YY_MM:
-            // 处理月
-            qDebug() << "SYS_RTC_YY_MM" << value;
             break;
-        // ... 其他case ...
         default:
             break;
         }
@@ -468,6 +462,7 @@ Q_INVOKABLE void HBModbusClient::setSysLedStatus(bool condition) {
     }
     writeCoils(SYS_LED_L_BIT0, values);
 }
+
 void HBModbusClient::updateSysLedStatus()
 {
     bool allNormal = true;
@@ -616,4 +611,24 @@ void HBModbusClient::updateDeviceConnectionStates(const QVector<int>& result)
     updateDeviceConnectionStates();
 }
 
+void HBModbusClient::writeDeviceConfig(int deviceId, const DeviceModbusMapper::DeviceRegisterData &data)
+{
+    if (deviceId <= 0) {
+        qWarning() << "writeDeviceConfig: invalid deviceId" << deviceId;
+        return;
+    }
+
+    int index = deviceId - 1;
+    if (index < 0 || index >= DEV_COUNT) {
+
+        qWarning() << "writeDeviceConfig: deviceId out of range" << deviceId;
+        return;
+    }
+
+    int start = DEV_TYPE + index * DEV_HOLDING_REGISTERS_COUNT;
+
+    QVector<quint16> devcieRegs = DeviceModbusMapper::toRegisterVector(data);
+
+    writeHoldingRegisters(start, devcieRegs);
+}
 

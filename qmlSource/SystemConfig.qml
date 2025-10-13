@@ -241,7 +241,7 @@ Rectangle {
                     x:35
                     y:75
                     // text: qsTr("最大生产批量")
-                    text: GlobalLanguageDefine.strMaxProduction
+                    text: GlobalLanguageDefine.strMaxProduction + ": "
                     color: pRgb(177, 213, 219)
                     font.family: GlobalSystemDefine.fontBold
                     font.bold: true
@@ -301,14 +301,14 @@ Rectangle {
                 Text {
                     id: s2
                     // text: qsTr("学习样本数")
-                    text: GlobalLanguageDefine.strLearningSamples
+                    text: GlobalLanguageDefine.strLearningSamples + ": "
                     color: pRgb(177, 213, 219)
                     font.family: GlobalSystemDefine.fontBold
                     font.bold: true
                     font.pixelSize: 18
                     anchors.left: s1.left
                     anchors.top: s1.bottom
-                    anchors.topMargin: 51
+                    anchors.topMargin: 41
                 }
                 TextField{
                     id:t2
@@ -359,14 +359,14 @@ Rectangle {
                 Text {
                     id: s3
                     // text: qsTr("良率下限")
-                    text: GlobalLanguageDefine.strYieldLowerLimit
+                    text: GlobalLanguageDefine.strYieldLowerLimit + ": "
                     color: pRgb(177, 213, 219)
                     font.family: GlobalSystemDefine.fontBold
                     font.bold: true
                     font.pixelSize: 18
                     anchors.left: s2.left
                     anchors.top: s2.bottom
-                    anchors.topMargin: 51
+                    anchors.topMargin: 45
                 }
                 TextField{
                     id:t3
@@ -418,14 +418,14 @@ Rectangle {
                 Text {
                     id: s7
                     // text: qsTr("端口")
-                    text: GlobalLanguageDefine.strPort
+                    text: GlobalLanguageDefine.strPort + ": "
                     color: pRgb(177, 213, 219)
                     font.family: GlobalSystemDefine.fontBold
                     font.bold: true
                     font.pixelSize: 18
                     anchors.left: s3.left
                     anchors.top: s3.bottom
-                    anchors.topMargin: 51
+                    anchors.topMargin: 45
                 }
                 TextField{
                     id:t7
@@ -477,14 +477,14 @@ Rectangle {
                 Text {
                     id: s8
                     // text: qsTr("远程端") + "IP"
-                    text: GlobalLanguageDefine.strRemoteEnd + "IP"
+                    text: GlobalLanguageDefine.strRemoteEnd + "IP" + ": "
                     color: pRgb(177, 213, 219)
                     font.family: GlobalSystemDefine.fontBold
                     font.bold: true
                     font.pixelSize: 18
                     anchors.left: s7.left
-                    anchors.top: s7.bottom
-                    anchors.topMargin: 51
+                    anchors.top: t8.top
+                    anchors.topMargin: 10
                 }
                 TextField{
                     id:t8
@@ -537,14 +537,14 @@ Rectangle {
                 Text {
                     id: s9
                     // text: qsTr("客户端") + "IP"
-                    text: GlobalLanguageDefine.strClient + "IP"
+                    text: GlobalLanguageDefine.strClient + "IP" + ": "
                     color: pRgb(177, 213, 219)
                     font.family: GlobalSystemDefine.fontBold
                     font.bold: true
                     font.pixelSize: 18
                     anchors.left: s8.left
-                    anchors.top: s8.bottom
-                    anchors.topMargin: 51
+                    anchors.top: t9.top
+                    anchors.topMargin: 10
                 }
                 TextField{
                     id:t9
@@ -597,35 +597,35 @@ Rectangle {
                 Text {
                     id: s4
                     // text: qsTr("高度模式")
-                    text: GlobalLanguageDefine.strHeightMode
+                    text: GlobalLanguageDefine.strHeightMode + ": "
                     color: pRgb(177, 213, 219)
                     font.family: GlobalSystemDefine.fontBold
                     font.bold: true
                     font.pixelSize: 18
                     anchors.left: s9.left
-                    anchors.top: s9.bottom
+                    anchors.top: s9.top
                     anchors.topMargin: 80
                 }
                 Text {
                     id: s5
                     // text: qsTr("启动")
-                    text: GlobalLanguageDefine.strStart
+                    text: GlobalLanguageDefine.strStart + ": "
                     color: pRgb(177, 213, 219)
                     font.family: GlobalSystemDefine.fontBold
                     font.bold: true
                     font.pixelSize: 18
-                    anchors.verticalCenter: bt1.verticalCenter
-                    anchors.left: bt1.right
-                    anchors.leftMargin: 10
+                    anchors.verticalCenter: s4.verticalCenter
+                    anchors.left: t9.left
+
                 }
                 RadioButton{
                     id:bt1
                     width: 34
                     height: 34
-                    anchors.left: parent.left
-                    anchors.top: parent.top
-                    anchors.leftMargin: 180
-                    anchors.topMargin: 518
+                    anchors.left: s5.right
+                    anchors.verticalCenter: s4.verticalCenter
+                    anchors.leftMargin: 10
+
                     checked: altitudMode
                     indicator: Rectangle
                     {
@@ -655,14 +655,14 @@ Rectangle {
                 Text {
                     id: s6
                     // text: qsTr("关闭")
-                    text: GlobalLanguageDefine.strClose
+                    text: GlobalLanguageDefine.strClose + ": "
                     color: pRgb(177, 213, 219)
                     font.family: GlobalSystemDefine.fontBold
                     font.bold: true
                     font.pixelSize: 18
                     anchors.top: s5.top
                     anchors.left: s5.right
-                    anchors.leftMargin: 92
+                    anchors.leftMargin: 55
                 }
                 RadioButton{
                     id:bt2
@@ -670,7 +670,7 @@ Rectangle {
                     height: 34
                     anchors.left: bt1.right
                     anchors.top: bt1.top
-                    anchors.leftMargin: 90
+                    anchors.leftMargin: 65
                     checked: !altitudMode
                     indicator: Rectangle
                     {
@@ -707,7 +707,7 @@ Rectangle {
                     x:23
                     y:74
                     // text: qsTr("设备名称")
-                    text: GlobalLanguageDefine.strDeviceName
+                    text: GlobalLanguageDefine.strDeviceName + ": "
                     color: pRgb(177, 213, 219)
                     font.family: GlobalSystemDefine.fontBold
                     font.bold: true
@@ -762,7 +762,7 @@ Rectangle {
                 Text {
                     id: s15
                     // text: qsTr("设备型号")
-                    text: GlobalLanguageDefine.strDeviceModel
+                    text: GlobalLanguageDefine.strDeviceModel + ": "
                     color: pRgb(177, 213, 219)
                     font.family: GlobalSystemDefine.fontBold
                     font.bold: true
@@ -984,7 +984,7 @@ Rectangle {
                         Text {
                             id: s16
                             // text: qsTr("网络端口")
-                            text: GlobalLanguageDefine.strNetworkPort
+                            text: GlobalLanguageDefine.strNetworkPort + ": "
                             color: pRgb(43, 112, 173)
                             font.family: GlobalSystemDefine.fontBold
                             font.bold: true
@@ -995,7 +995,7 @@ Rectangle {
                         Text {
                             id: s17
                             // text: qsTr("服务器端口")
-                            text: GlobalLanguageDefine.strServerPort
+                            text: GlobalLanguageDefine.strServerPort + ": "
                             color: pRgb(43, 112, 173)
                             font.family: GlobalSystemDefine.fontBold
                             font.bold: true
@@ -1007,7 +1007,7 @@ Rectangle {
                         Text {
                             id: s18
                             // text: qsTr("设备") + "IP" + qsTr("地址")
-                            text: GlobalLanguageDefine.strDevice + "IP" + GlobalLanguageDefine.strAddress
+                            text: GlobalLanguageDefine.strDevice + "IP" + GlobalLanguageDefine.strAddress + ": "
                             color: pRgb(43, 112, 173)
                             font.family: GlobalSystemDefine.fontBold
                             font.bold: true
@@ -1019,7 +1019,7 @@ Rectangle {
                         Text {
                             id: s19
                             // text: qsTr("本地") + "IP" + qsTr("地址")
-                            text: GlobalLanguageDefine.strLocal + "IP" + GlobalLanguageDefine.strAddress
+                            text: GlobalLanguageDefine.strLocal + "IP" + GlobalLanguageDefine.strAddress + ": "
                             color: pRgb(43, 112, 173)
                             font.family: GlobalSystemDefine.fontBold
                             font.bold: true
@@ -1298,7 +1298,7 @@ Rectangle {
                         Text {
                             id: s20
                             // text: qsTr("端口")
-                            text: GlobalLanguageDefine.strPort
+                            text: GlobalLanguageDefine.strPort + ": "
                             color: pRgb(43, 112, 173)
                             font.family: GlobalSystemDefine.fontBold
                             font.bold: true
@@ -1309,7 +1309,7 @@ Rectangle {
                         Text {
                             id: s21
                             // text: qsTr("波特率")
-                            text: GlobalLanguageDefine.strBaudRate
+                            text: GlobalLanguageDefine.strBaudRate + ": "
                             color: pRgb(43, 112, 173)
                             font.family: GlobalSystemDefine.fontBold
                             font.bold: true
@@ -1320,7 +1320,7 @@ Rectangle {
                         Text {
                             id: s22
                             // text: qsTr("数据位")
-                            text: GlobalLanguageDefine.strDataBits
+                            text: GlobalLanguageDefine.strDataBits + ": "
                             color: pRgb(43, 112, 173)
                             font.family: GlobalSystemDefine.fontBold
                             font.bold: true
@@ -1331,7 +1331,7 @@ Rectangle {
                         Text {
                             id: s23
                             // text: qsTr("奇偶校验位")
-                            text: GlobalLanguageDefine.strParity
+                            text: GlobalLanguageDefine.strParity + ": "
                             color: pRgb(43, 112, 173)
                             font.family: GlobalSystemDefine.fontBold
                             font.bold: true
@@ -1342,7 +1342,7 @@ Rectangle {
                         Text {
                             id: s24
                             // text: qsTr("停止位")
-                            text: GlobalLanguageDefine.strStopBits
+                            text: GlobalLanguageDefine.strStopBits + ": "
                             color: pRgb(43, 112, 173)
                             font.family: GlobalSystemDefine.fontBold
                             font.bold: true

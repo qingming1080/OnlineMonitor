@@ -8,6 +8,7 @@
 #include <QVector>
 #include <QMutex>
 #include "model/device.h"
+#include "tools/devicemodbusmapper.h"
 
 class HBModbusClient : public QObject
 {
@@ -51,13 +52,13 @@ public:
 
     Q_INVOKABLE void setSysLedStatus(bool condition);
 
-    // Q_INVOKABLE void updateSysLedStatus();
-
     Q_INVOKABLE void handleDeviceCoilStatus(int devId, int value); // Updated to handle resetIdx logic
 
     void updateDeviceConnectionStates();
 
     void updateDeviceConnectionStates(const QVector<int>& result);
+
+    void writeDeviceConfig(int deviceId, const DeviceModbusMapper::DeviceRegisterData &data);
 
 public:
 
