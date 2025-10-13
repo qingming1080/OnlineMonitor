@@ -694,7 +694,7 @@ Rectangle {
                                         anchors.fill: parent
                                         onPressed: {
                                             textField.forceActiveFocus()
-                                            keyboardYype = 0
+                                            keyboardType = 0
                                         }
                                     }
                                 }
@@ -736,7 +736,7 @@ Rectangle {
                                         anchors.fill: parent
                                         onPressed: {
                                             textField1.forceActiveFocus()
-                                            keyboardYype = 0
+                                            keyboardType = 0
                                         }
                                     }
                                 }

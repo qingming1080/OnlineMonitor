@@ -130,7 +130,7 @@ Popup {
                 }
                 onFocusChanged: {
                     if(focus){
-                        keyboardYype = 1
+                        keyboardType = 1
                     }
                 }
             }
@@ -275,7 +275,7 @@ Popup {
                 }
                 onFocusChanged: {
                     if(focus){
-                        keyboardYype = 1
+                        keyboardType = 1
                     }
                 }
             }

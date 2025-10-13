@@ -83,7 +83,7 @@ Rectangle {
             anchors.fill: parent
             onPressed: {
                 t1.forceActiveFocus()
-                keyboardYype = 0
+                keyboardType = 0
             }
         }
     }
@@ -120,7 +120,7 @@ Rectangle {
             anchors.fill: parent
             onPressed: {
                 t2.forceActiveFocus()
-                keyboardYype = 0
+                keyboardType = 0
             }
         }
     }
@@ -157,7 +157,7 @@ Rectangle {
             anchors.fill: parent
             onPressed: {
                 t3.forceActiveFocus()
-                keyboardYype = 0
+                keyboardType = 0
             }
         }
     }
@@ -194,7 +194,7 @@ Rectangle {
             anchors.fill: parent
             onPressed: {
                 t4.forceActiveFocus()
-                keyboardYype = 0
+                keyboardType = 0
             }
         }
     }

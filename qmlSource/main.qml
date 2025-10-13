@@ -25,7 +25,7 @@ Window {
     property int equipmentCurrentIndex: 0
     property int swipeCurrIndex: 0
     property int interFaceId: 0
-    property var keyboardYype: 0
+    property int keyboardType: 0
     property bool createModel: false
     property bool swipevis: false
 
@@ -258,7 +258,7 @@ Window {
         z: 99
         x: window.width/2-inputPannelID.width/2
         y: window.height      // 默认让其处于窗口最下方,貌似隐藏一样
-        width: /*keyboardYype === 0 ? 400 :*/ window.width
+        width: /*keyboardType === 0 ? 400 :*/ window.width
         visible: true       // 一直显示
         states: State
         {
