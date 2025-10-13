@@ -90,14 +90,6 @@ int DeviceInformation::id() const
     return m_id;
 }
 
-//void DeviceInformation::setId(int newId)
-//{
-//    if (m_id == newId)
-//        return;
-//    m_id = newId;
-//    emit idChanged();
-//}
-
 int DeviceInformation::maxBacth() const
 {
     return m_maxBacth;

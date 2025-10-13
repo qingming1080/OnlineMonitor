@@ -86,86 +86,84 @@ void Trend::setWeldTrendData(_Weld_TrendData result)
     emit powerMinYChanged();
 }
 
-void Trend::appendWeldPoint(quint16 power, quint16 time, quint16 preHeight, quint16 postHeight )
+void Trend::appendWeldPoint(quint16 power, quint16 time, quint16 preHeight, quint16 postHeight)
 {
-    const int AxisMAX = 150;
+    constexpr int kAxisMax = 150;
 
-    // 转换成 double
     double preHeightDouble  = preHeight / 100.0;
     double postHeightDouble = postHeight / 100.0;
     double timeDouble       = time / 100.0;
     double powerDouble      = static_cast<double>(power);
 
-    // 计算X轴范围
-    int AxisMIN = (m_plotIndex >= AxisMAX) ? m_plotIndex - AxisMAX + 1 : 0;
-    int AxisMaxActual = (m_plotIndex >= AxisMAX) ? m_plotIndex : AxisMAX;
-    setIdMaxX(AxisMaxActual);
-    setIdMinX(AxisMIN);
+    int xMin = (m_plotIndex >= kAxisMax) ? (m_plotIndex - kAxisMax + 1) : 0;
+    int xMax = (m_plotIndex >= kAxisMax) ? (m_plotIndex) : kAxisMax;
 
-    // ---- 维护数据缓存 ----
-    m_frontData.append(QPointF(m_plotIndex, preHeightDouble));
-    m_backData.append(QPointF(m_plotIndex, postHeightDouble));
-    m_timeData.append(QPointF(m_plotIndex, timeDouble));
-    m_powerData.append(QPointF(m_plotIndex, powerDouble));
+    setIdMinX(xMin);
+    setIdMaxX(xMax);
 
-    if (m_frontData.size() > AxisMAX) {
-        m_frontData.removeFirst();
-        m_backData.removeFirst();
-        m_timeData.removeFirst();
-        m_powerData.removeFirst();
-    }
+    auto appendWithLimit = [&](QVector<QPointF>& vec, double yValue) {
+        vec.append(QPointF(m_plotIndex, yValue));
+        if (vec.size() > kAxisMax)
+            vec.removeFirst();
+    };
 
-    // ---- 增量更新 QXYSeries ----
-    if (m_pFrontSeries) {
-        m_pFrontSeries->append(m_plotIndex, preHeightDouble);
-        if (m_pFrontSeries->count() > AxisMAX) m_pFrontSeries->remove(0);
-    }
-    if (m_pBackSeries) {
-        m_pBackSeries->append(m_plotIndex, postHeightDouble);
-        if (m_pBackSeries->count() > AxisMAX) m_pBackSeries->remove(0);
-    }
-    if (m_pTimeSeries) {
-        m_pTimeSeries->append(m_plotIndex, timeDouble);
-        if (m_pTimeSeries->count() > AxisMAX) m_pTimeSeries->remove(0);
-    }
-    if (m_pPowerSeries) {
-        m_pPowerSeries->append(m_plotIndex, powerDouble);
-        if (m_pPowerSeries->count() > AxisMAX) m_pPowerSeries->remove(0);
-    }
+    appendWithLimit(m_frontData, preHeightDouble);
+    appendWithLimit(m_backData, postHeightDouble);
+    appendWithLimit(m_timeData, timeDouble);
+    appendWithLimit(m_powerData, powerDouble);
 
-    // ---- 计算四个Y轴范围 ----
-    auto calcRange = [](const QVector<QPointF> &data, double &minVal, double &maxVal) {
+    auto updateSeries = [&](QXYSeries* series, double yValue)
+    {
+        if (series)
+        {
+            series->append(m_plotIndex, yValue);
+            if (series->count() > kAxisMax)
+                series->remove(0);
+        }
+    };
+
+    updateSeries(m_pFrontSeries, preHeightDouble);
+    updateSeries(m_pBackSeries,  postHeightDouble);
+    updateSeries(m_pTimeSeries,  timeDouble);
+    updateSeries(m_pPowerSeries, powerDouble);
+
+    updateYAxisRanges();
+    ++m_plotIndex;
+}
+
+void Trend::updateYAxisRanges()
+{
+    auto calcRange = [](const QVector<QPointF>& data, double& minVal, double& maxVal) {
         if (data.isEmpty()) return;
         minVal = maxVal = data.first().y();
-        for (const QPointF &p : data) {
+        for (const QPointF& p : data)
+        {
             minVal = qMin(minVal, p.y());
             maxVal = qMax(maxVal, p.y());
         }
     };
 
     double beforeMinY, beforeMaxY;
-    double afterMinY, afterMaxY;
-    double timeMinY, timeMaxY;
-    double powerMinY, powerMaxY;
+    double afterMinY,  afterMaxY;
+    double timeMinY,   timeMaxY;
+    double powerMinY,  powerMaxY;
 
     calcRange(m_frontData, beforeMinY, beforeMaxY);
-    calcRange(m_backData, afterMinY, afterMaxY);
-    calcRange(m_timeData, timeMinY, timeMaxY);
-    calcRange(m_powerData, powerMinY, powerMaxY);
+    calcRange(m_backData,  afterMinY,  afterMaxY);
+    calcRange(m_timeData,  timeMinY,   timeMaxY);
+    calcRange(m_powerData, powerMinY,  powerMaxY);
 
-    // ---- 设置带 padding 的范围 ----
     setBeforeMaxY(beforeMaxY + 2);
     setBeforeMinY(qMax(0.0, beforeMinY - 2));
+
     setAfterMaxY(afterMaxY + 2);
     setAfterMinY(qMax(0.0, afterMinY - 2));
+
     setTimeMaxY(timeMaxY + 0.5);
     setTimeMinY(qMax(0.0, timeMinY - 0.5));
+
     setPowerMaxY(powerMaxY + 10);
     setPowerMinY(qMax(0.0, powerMinY - 10));
-
-    // ---- 更新索引 ----
-    m_plotIndex++;
-
 }
 
 void Trend::setYieldTrendData()

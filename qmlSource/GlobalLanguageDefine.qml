@@ -26,6 +26,7 @@ QtObject
     readonly property string strAutoLearnExceedLimit:   qsTr("自动学习次数超过上限值")
     readonly property string strAutoLearnCompleted:     qsTr("自动学习已完成")
     readonly property string strModelCreationCompleted: qsTr("创建模型已完成")
+    readonly property string strSetupComplete:          qsTr("配置成功已连接")
     
     // 参数配置相关
     readonly property string strMaxProductionLimit:     qsTr("最大生产批量上下限（2w-100w）")

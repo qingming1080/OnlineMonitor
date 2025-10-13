@@ -34,6 +34,7 @@ public:
     explicit Trend(int welderID=0, QObject *parent = nullptr);
 
     void appendWeldPoint(quint16 power, quint16 time, quint16 preHeight, quint16 postHeight);
+    void updateYAxisRanges();
 
 
     // 更新良率趋势

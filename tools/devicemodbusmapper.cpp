@@ -2,6 +2,7 @@
 #include "DataBase/databasemanager.h"
 #include "model/deviceinformation.h"
 #include <QDebug>
+#include "model/message.h"
 
 DeviceModbusMapper::ComPort DeviceModbusMapper::mapComPort(int comNum)
 {
@@ -125,6 +126,7 @@ DeviceModbusMapper::DeviceRegisterData DeviceModbusMapper::generateRegisterData(
     deviceInfodata.DEV_AVAILABLE = 1;
     int state = DeviceInfoEnum::CONNECTED;
     deviceInfo->setConnectState(state);
+    Message::getInstance()->addMessage(deviceId,QmlEnum::MESSAGE_setupComplete);
 
     qDebug() << "DeviceID:" << deviceInfodata.deviceID
              << "DEV_TYPE:" << static_cast<int>(deviceInfodata.DEV_TYPE)

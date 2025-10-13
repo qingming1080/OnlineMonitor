@@ -5,6 +5,7 @@
 #include <QSqlDatabase>
 #include "qmlenum.h"
 #include "define.h"
+#include "model/device.h"
 
 #define CONFIGURATION_TABLENAME     QString("configuration")
 #define NETWORK_TABLENAME           QString("connection_network")
@@ -240,6 +241,8 @@ public:
     /// \return : 插入结果
     ///
     bool insertProductionRow(_Production_Data data);
+
+    bool saveProductionDataofModbus(Device* device, const QVector<quint16>& inputs, quint32 cycleCount);
 
 /////////////////////////system////////////////////////////////
 /// root界面

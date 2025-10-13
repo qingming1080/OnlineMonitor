@@ -6,6 +6,8 @@
 #include <QSqlDriver>
 #include <QApplication>
 #include <QFile>
+#include "modbus/HBModbusClient.h"
+#include "model/deviceinformation.h"
 
 DataBaseManager* DataBaseManager::s_pDataBaseManager = nullptr;
 
@@ -1119,62 +1121,6 @@ bool DataBaseManager::clearProduction()
     return query.exec(execStr);
 }
 
-// bool DataBaseManager::insertProductionRow(_Production_Data data)
-// {
-//     QSqlQuery query;
-//     // %1_表格名称
-//     QString execStr = QString("INSERT INTO %1 values("
-//                               ":id"
-//                               ", :welder_id"
-//                               ", :model_id"
-//                               ", :create_time"
-//                               ", :serial_number"
-//                               ", :cycle_count"
-//                               ", :batch_count"
-//                               ", :energy"
-//                               ", :amplitude"
-//                               ", :pressure"
-//                               ", :time"
-//                               ", :power"
-//                               ", :pre_height"
-//                               ", :post_height"
-//                               ", :force"
-//                               ", :residual"
-//                               ", :good_rate"
-//                               ", :good_subtotal_cycles"
-//                               ", :suspect_subtotal_cycles"
-//                               ", :not_definite_cycles"
-//                               ", :final_result")
-//                           .arg(PRODUCTION_TABLENAME);
-
-//     // 绑定属性
-//     query.prepare(execStr);
-//     query.bindValue(":id", data.id);
-//     query.bindValue(":welder_id", data.welder_id);
-//     query.bindValue(":model_id", data.model_id);
-//     query.bindValue(":create_time", data.create_time);
-//     query.bindValue(":serial_number", data.serial_number);
-//     query.bindValue(":cycle_count", data.cycle_count);
-//     query.bindValue(":batch_count", data.batch_count);
-//     query.bindValue(":energy", data.energy);
-//     query.bindValue(":amplitude", data.amplitude);
-//     query.bindValue(":pressure", data.pressure);
-//     query.bindValue(":time", data.time);
-//     query.bindValue(":power", data.power);
-//     query.bindValue(":pre_height", data.pre_height);
-//     query.bindValue(":post_height", data.post_height);
-//     query.bindValue(":force", data.force);
-//     query.bindValue(":residual", data.residual);
-//     query.bindValue(":good_rate", data.good_rate);
-//     query.bindValue(":good_subtotal_cycles", data.good_subtotal_cycles);
-//     query.bindValue(":suspect_subtotal_cycles", data.suspect_subtotal_cycles);
-//     query.bindValue(":not_definite_cycles", data.not_definite_cycles);
-//     query.bindValue(":final_result", data.final_result);
-
-
-//     return query.exec();
-// }
-
 bool DataBaseManager::insertProductionRow(_Production_Data data)
 {
     QSqlQuery query;
@@ -1251,7 +1197,42 @@ bool DataBaseManager::insertProductionRow(_Production_Data data)
     return true;
 }
 
+bool DataBaseManager::saveProductionDataofModbus(Device *device, const QVector<quint16> &inputs, quint32 cycleCount)
+{
+        if (!device) return false;
 
+        int deviceId = device->getDevInfoObject()->id();
+        int base = (deviceId - 1) * HBModbusClient::DEV_INPUT_REGISTERS_COUNT;
+
+        _Production_Data record;
+
+        record.welder_id                            = deviceId;
+        record.create_time                          = QDateTime::currentDateTime().toString("yyyy-MM-dd HH:mm:ss");
+        record.cycle_count                          = cycleCount;
+        record.serial_number                        = cycleCount;                                   //循环值
+        record.batch_count                          = cycleCount;                                   //生产值
+        QString modelStr = device->getDevInfoObject()->model();
+        if (modelStr == "L20-VG") record.model_id = 1;
+        else if (modelStr == "L20-TS") record.model_id = 2;
+        else record.model_id = 0;
+
+        record.energy                               = inputs[base + HBModbusClient::DEV_ENERGY];
+        record.amplitude                            = inputs[base + HBModbusClient::DEV_AMPLITUDE];
+        record.pressure                             = inputs[base + HBModbusClient::DEV_WP];         //welde pressure
+        record.power                                = inputs[base + HBModbusClient::DEV_POWER];
+        record.time                                 = inputs[base + HBModbusClient::DEV_TIME];
+        record.pre_height                           = inputs[base + HBModbusClient::DEV_PRE_HEIGHT];
+        record.post_height                          = inputs[base + HBModbusClient::DEV_POST_HEIGHT];
+        record.force                                = 100;                          //TODO
+        record.residual                             = 100;                          //TODO
+        record.good_rate                            = 88;                           //TODO
+        record.good_subtotal_cycles                 = 88;                           //TODO
+        record.suspect_subtotal_cycles              = 88;                           //TODO
+        record.not_definite_cycles                  = 88;                           //TODO
+        record.final_result                         = 88;                           //TODO
+
+        return insertProductionRow(record);
+}
 
 QList<_System_Data> DataBaseManager::getSystemData(int welderID)
 {

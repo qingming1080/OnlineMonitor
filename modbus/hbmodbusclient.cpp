@@ -9,6 +9,7 @@
 #include "DataBase/databasemanager.h"
 #include "model/message.h"
 #include "devicemanager.h"
+#include "qmlenum.h"
 
 
 constexpr char HBModbusClient::LOCAL_IP[13];
@@ -289,7 +290,6 @@ void HBModbusClient::processRegister(QModbusDataUnit::RegisterType type, int add
 {
     switch(type) {
     case QModbusDataUnit::HoldingRegisters:
-        // 处理保持寄存器
         switch(address)
         {
         case SYS_RTC_YY:
@@ -307,11 +307,10 @@ void HBModbusClient::processRegister(QModbusDataUnit::RegisterType type, int add
         }
         break;
     case QModbusDataUnit::Coils:
-        // 处理线圈
+
         switch(address)
         {
         case SYS_LED_L_BIT0:
-            // 处理LED并写入Modbus
             m_Coils[SYS_LED_L_BIT0] = static_cast<unsigned char>(value);
             break;
         case SYS_LED_P_BIT1:
@@ -331,28 +330,23 @@ void HBModbusClient::processRegister(QModbusDataUnit::RegisterType type, int add
 
         case DEV_RESET_BIT2:
             m_Coils[DEV_RESET_BIT2] = static_cast<unsigned char>(value);
-            qDebug() << "DEV_RESET_BIT2" << value;
             if (value == 1)  clearRejectAndSuspectForDevice(1);
             break;
 
         case DEV_RESET_BIT2 + DEV_COILS_REGISTERS_COUNT:
             m_Coils[DEV_RESET_BIT2 + DEV_COILS_REGISTERS_COUNT] = static_cast<unsigned char>(value);
-            qDebug() << "DEV_RESET_BIT2 + DEV_COILS_REGISTERS_COUNT" << value;
             if (value == 1)  clearRejectAndSuspectForDevice(2);
             break;
 
         case DEV_RESET_BIT2 + DEV_COILS_REGISTERS_COUNT * 2:
             m_Coils[DEV_RESET_BIT2 + DEV_COILS_REGISTERS_COUNT * 2] = static_cast<unsigned char>(value);
-            qDebug() << "DEV_RESET_BIT2 + DEV_COILS_REGISTERS_COUNT * 2" << value;
             if (value == 1)  clearRejectAndSuspectForDevice(3);
             break;
 
         case DEV_RESET_BIT2 + DEV_COILS_REGISTERS_COUNT * 3:
             m_Coils[DEV_RESET_BIT2 + DEV_COILS_REGISTERS_COUNT * 3] = static_cast<unsigned char>(value);
-            qDebug() << "DEV_RESET_BIT2 + DEV_COILS_REGISTERS_COUNT * 3" << value;
             if (value == 1)  clearRejectAndSuspectForDevice(4);
             break;
-        // ... 其他case ...
         default:
             break;
         }
@@ -393,18 +387,17 @@ void HBModbusClient::dispatchInputsOnCycleCountChanged()
         {
             lastCycleCount[i] = cycleCount;
             QVector<quint16> inputs = getDeviceInputs(i+1);
-            Device* dev = (i < devList.size()) ? devList.at(i) : nullptr;
-            if (dev && dev->getDevInfoObject() && inputs.size() >= DEV_INPUT_REGISTERS_COUNT)
+            Device* device = (i < devList.size()) ? devList.at(i) : nullptr;
+            if (device && device->getDevInfoObject() && inputs.size() >= DEV_INPUT_REGISTERS_COUNT)
             {
-                // dev->DevInfoObject()->setCycleCount(cycleCount);
-                dev->getDevInfoObject()->setPower(inputs[DEV_POWER]);
-                dev->getDevInfoObject()->setTime(inputs[DEV_TIME]);
-                dev->getDevInfoObject()->setEnergy(inputs[DEV_ENERGY]);
-                dev->getDevInfoObject()->setHeightPre(inputs[DEV_PRE_HEIGHT]);
-                dev->getDevInfoObject()->setHeightPost(inputs[DEV_POST_HEIGHT]);
+                device->getDevInfoObject()->setPower(inputs[DEV_POWER]);
+                device->getDevInfoObject()->setTime(inputs[DEV_TIME]);
+                device->getDevInfoObject()->setEnergy(inputs[DEV_ENERGY]);
+                device->getDevInfoObject()->setHeightPre(inputs[DEV_PRE_HEIGHT]);
+                device->getDevInfoObject()->setHeightPost(inputs[DEV_POST_HEIGHT]);
 
-                updateDeviceTrend(dev, inputs[DEV_POWER], inputs[DEV_TIME], inputs[DEV_PRE_HEIGHT], inputs[DEV_POST_HEIGHT]);
-
+                updateDeviceTrend(device, inputs[DEV_POWER], inputs[DEV_TIME], inputs[DEV_PRE_HEIGHT], inputs[DEV_POST_HEIGHT]);
+                DataBaseManager::getInstance()->saveProductionDataofModbus(device,inputs,cycleCount);
             }
              //TODO
             //Input写入数据库（production/mannul）
@@ -511,9 +504,11 @@ Q_INVOKABLE void HBModbusClient::handleDeviceCoilStatus(int devId, int value) {
         if (value == 1) {
             m_Coils[rejectIdx] = 1;
             writeCoils(rejectIdx, {1});
+            Message::getInstance()->addMessage(devId,QmlEnum::MESSAGE_defective);
         } else if (value == 2) {
             m_Coils[suspectIdx] = 1;
             writeCoils(suspectIdx, {1});
+            Message::getInstance()->addMessage(devId,QmlEnum::MESSAGE_suspicious);
         }
     }
 
