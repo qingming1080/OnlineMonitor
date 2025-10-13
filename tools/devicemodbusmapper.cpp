@@ -10,8 +10,14 @@ DeviceModbusMapper::ComPort DeviceModbusMapper::mapComPort(int comNum)
 
 DeviceModbusMapper::EthPort DeviceModbusMapper::mapEthPort(int ethPort)
 {
-    if(ethPort < 0 || ethPort >3) return EthPort::ETH1;
-    return static_cast<EthPort>(ethPort);
+    switch (ethPort) {
+    case 1: return EthPort::ETH0;
+    case 2: return EthPort::ETH1;
+    case 3: return EthPort::ETH2;
+    case 4: return EthPort::ETH3;
+    case 5: return EthPort::ETH4;
+    default: return EthPort::ETH0;
+    }
 }
 
 DeviceModbusMapper::BaudRate DeviceModbusMapper::mapBaudRate(int baud)
@@ -59,14 +65,6 @@ DeviceModbusMapper::DeviceRegisterData DeviceModbusMapper::generateRegisterData(
 
     int deviceId = device->getDevInfoObject()->id();
     deviceInfodata.deviceID = deviceId;
-
-    // if (!DataBaseManager::getInstance()->deviceExists(deviceId))
-    // {
-    //     deviceInfodata.DEV_AVAILABLE = 0;
-    //     return deviceInfodata;
-    // }
-
-
     DeviceInformation* deviceInfo = device->getDevInfoObject();
 
     //protocol type
@@ -81,7 +79,7 @@ DeviceModbusMapper::DeviceRegisterData DeviceModbusMapper::generateRegisterData(
 
     if(isTcp)
     {
-        QStringList network = DataBaseManager::getInstance()->getNetworkInfoById(deviceInfo->connectID());
+        QStringList network = DataBaseManager::getInstance()->getNetworkInfoById(deviceInfo->connectID() + 1);
         if(network.size() == 3)
         {
             QStringList serverIp = network.at(0).split(".");
@@ -125,6 +123,9 @@ DeviceModbusMapper::DeviceRegisterData DeviceModbusMapper::generateRegisterData(
     }
 
     deviceInfodata.DEV_AVAILABLE = 1;
+    int state = DeviceInfoEnum::CONNECTED;
+    deviceInfo->setConnectState(state);
+
     qDebug() << "DeviceID:" << deviceInfodata.deviceID
              << "DEV_TYPE:" << static_cast<int>(deviceInfodata.DEV_TYPE)
              << "DEV_PROTOCOL_TYPE:" << static_cast<int>(deviceInfodata.DEV_PROTOCOL_TYPE)
@@ -156,7 +157,6 @@ QVector<quint16> DeviceModbusMapper::toRegisterVector(const DeviceRegisterData &
     devVector << static_cast<quint16>(deviceInfodata.DEV_TYPE);
     devVector << static_cast<quint16>(deviceInfodata.DEV_PROTOCOL_TYPE);
     devVector << static_cast<quint16>(deviceInfodata.DEV_AVAILABLE);
-
 
     for (int i = 0; i < 4; ++i) devVector << static_cast<quint16>(deviceInfodata.DEV_SERVER_IP.value(i, 0));
 

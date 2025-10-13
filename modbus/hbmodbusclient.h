@@ -60,8 +60,6 @@ public:
 
     void writeDeviceConfig(int deviceId, const DeviceModbusMapper::DeviceRegisterData &data);
 
-
-
 public:
 
     static constexpr int DEV_HOLDING_REGISTERS_COUNT = 30;

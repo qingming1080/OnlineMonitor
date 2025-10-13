@@ -77,6 +77,7 @@ void HBModbusClient::Init()
             emit connectedChanged(true);
             m_timer->start();
             updateSysLedStatus();
+            DeviceManager::getInstance()->syncDevicesToModbus();
             if (m_reconnectTimer->isActive()) m_reconnectTimer->stop();
         }
         else if(state == QModbusDevice::UnconnectedState)

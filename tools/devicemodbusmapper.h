@@ -28,10 +28,12 @@ public:
     };
 
     enum class EthPort : int
-    {   ETH1 = 1,
-        ETH2 = 2,
-        ETH3 = 3,
-        ETH4 = 4
+    {
+        ETH0 = 1,
+        ETH1 = 2,
+        ETH2 = 3,
+        ETH3 = 4,
+        ETH4 = 5
     };
 
     enum class BaudRate : int

@@ -232,7 +232,7 @@ Rectangle {
     Text {
         id:t2
         // text: qsTr("时间") + ": " + eqText2/100.0 + "S"
-        text: GlobalLanguageDefine.strTime + ": " + eqText1/100.0 + "S"
+        text: GlobalLanguageDefine.strTime + ": " + eqText1 + "S"
         font.family: GlobalSystemDefine.fontBold
         font.bold: true
         font.pixelSize:/*mode === 1 ? 14: */16
@@ -256,7 +256,7 @@ Rectangle {
     Text {
         id:t4
         // text: qsTr("焊前高度") + ": " + eqText4/100.0 + "mm"
-        text: GlobalLanguageDefine.strPreWeldHeight + ": " + eqText4/100.0 + "mm"
+        text: GlobalLanguageDefine.strPreWeldHeight + ": " + eqText4 + "mm"
         font.family: GlobalSystemDefine.fontBold
         font.bold: true
         font.pixelSize: /*mode === 1 ? 14:*/16
@@ -270,7 +270,7 @@ Rectangle {
     Text {
         id:t5
         // text: qsTr("焊后高度") + ": " + eqText5/100.0 + "mm"
-        text: GlobalLanguageDefine.strPostWeldHeight + ": " + eqText5/100.0 + "mm"
+        text: GlobalLanguageDefine.strPostWeldHeight + ": " + eqText5 + "mm"
         font.family: GlobalSystemDefine.fontBold
         font.bold: true
         font.pixelSize: /*mode === 1 ? 14:*/16
