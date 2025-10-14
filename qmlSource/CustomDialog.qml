@@ -5,6 +5,7 @@ import QmlEnum 1.0
 import GlobalLanguageDefine 1.0
 import GlobalSystemDefine 1.0
 import LanguageEnum 1.0
+
 Popup {
     id:customPopup
     width: 567
@@ -17,7 +18,7 @@ Popup {
     function openPop(index){//1输入密码(配置) 2输入密码(新建模型) 3输入密码(新建模型单设备)
         //4语言 5采样 6系统消息 7修改密码 8新增设备 9删除设备 10系统保存 11输入范围
         id = index
-        if(index === 1 || index === 2 || index === 3 || index === 8 || index === 9){
+        if(index === 1 || index === 2 || index === 3 || index === 8 ){
             sigDataClear()
             popload.sourceComponent = inputpass
             open()
@@ -44,6 +45,12 @@ Popup {
         }
         else if(index === 11){
             popload.sourceComponent = scope
+            open()
+        }        else if(index === 11){
+            popload.sourceComponent = scope
+            open()
+        }        else if(index === 12){
+            popload.sourceComponent = deleteDevice
             open()
         }
     }
@@ -182,7 +189,7 @@ Popup {
                             isAdd = true
                             sigSysConfig()
                         }
-                        else if(id === 9){
+                        else if(id === 12){
                             sigDelDevice()
                         }
                         close()
@@ -609,6 +616,55 @@ Popup {
                 }
                 onPressed: {
                     close()
+                }
+            }
+        }
+    }
+
+    Component{
+        id:deleteDevice
+        Rectangle{
+            y:33
+            width: 567
+            height: 236
+            color: "#b1d5db"
+            Text {
+                x:223
+                y:49
+                // text: qsTr("系统配置成功!")
+                text: GlobalLanguageDefine.strRomveDevice
+                font.pixelSize: 20
+                color: "#004b8d"
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
+                font.family: GlobalSystemDefine.fontBold
+                font.bold: true
+            }
+            Button{
+                id:s4
+                x:170
+                y:165
+                width: 243
+                height: 52
+                background: Rectangle{
+                    radius: 6
+                    color: pRgb(43, 112, 173)
+                }
+                contentItem: Text {
+                    id: mt1
+                    // text: qsTr("确认")
+                    text: GlobalLanguageDefine.strOK
+                    font.pixelSize: mode == 1 ? 17:20
+                    color: pRgb(153, 204, 255)
+                    anchors.centerIn: parent  // 确保文本在按钮内居中对齐
+                    horizontalAlignment: Text.AlignHCenter
+                    verticalAlignment: Text.AlignVCenter
+                    font.family: GlobalSystemDefine.fontBold
+                    font.bold: true
+                }
+                onPressed: {
+                    close()
+                    sigDelDevice()
                 }
             }
         }

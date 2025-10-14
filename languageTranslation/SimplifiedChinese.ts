@@ -176,7 +176,7 @@
     <message>
         <location filename="../qmlSource/GlobalLanguageDefine.qml" line="52"/>
         <source>全视之眼系统</source>
-        <translation>全视之眼系统</translation>
+        <translation>ProvidenceEE</translation>
     </message>
     <message>
         <location filename="../qmlSource/GlobalLanguageDefine.qml" line="53"/>

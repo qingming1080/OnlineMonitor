@@ -2094,7 +2094,10 @@ Rectangle {
                     if (equipmentCount >= 0 && equipmentCount <= 3) {
                         currentConfigId = equipmentCount + 1;
                     }
-                    popup.openPop(8)
+                    // popup.openPop(8)
+                    switchUI(3)
+                    isAdd = true
+                    sigSysConfig()
                 }
             }
             Button{
@@ -2125,7 +2128,7 @@ Rectangle {
                     if (equipmentCount > 0) {
                         currentConfigId = equipmentCount - 1;
                     }
-                    popup.openPop(9)
+                     popup.openPop(12)
                 }
             }
             Button{
