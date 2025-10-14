@@ -6,6 +6,7 @@
 #include "qmlenum.h"
 #include "define.h"
 #include "model/device.h"
+#include "modbus/HBModbusClient.h"
 
 #define CONFIGURATION_TABLENAME     QString("configuration")
 #define NETWORK_TABLENAME           QString("connection_network")
@@ -242,7 +243,7 @@ public:
     ///
     bool insertProductionRow(_Production_Data data);
 
-    bool saveProductionDataofModbus(Device* device, const QVector<quint16>& inputs, quint32 cycleCount);
+    bool saveProductionDataofModbus(Device* device, const QVector<quint16>& inputs, quint32 cycleCount, DateTimeData date);
 
 /////////////////////////system////////////////////////////////
 /// root界面

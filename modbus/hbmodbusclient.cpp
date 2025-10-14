@@ -10,6 +10,7 @@
 #include "model/message.h"
 #include "devicemanager.h"
 #include "qmlenum.h"
+#include <QtConcurrent/QtConcurrent>
 
 
 constexpr char HBModbusClient::LOCAL_IP[13];
@@ -119,7 +120,7 @@ void HBModbusClient::reconnectToServer()
         return;
 
     modbusClient->disconnectDevice();
-    QThread::msleep(200);
+    QThread::msleep(1000);
     modbusClient->connectDevice();
     qDebug() << "尝试重新连接Modbus服务器...";
 }
@@ -375,11 +376,16 @@ void HBModbusClient::processRegister(QModbusDataUnit::RegisterType type, int add
 
 void HBModbusClient::dispatchInputsOnCycleCountChanged()
 {
-    static QVector<quint32> lastCycleCount(DEV_COUNT, 0xFFFFFFFF);
+    // static QVector<quint32> lastCycleCount(DEV_COUNT, 0xFFFFFFFF);
+    static QVector<quint32> lastCycleCount;
+    // QMutexLocker locker(&m_mutex);
+    if (lastCycleCount.isEmpty())
+        lastCycleCount.fill(0xFFFFFFFF, DEV_COUNT);
     const QList<Device*>& devList = DeviceManager::getInstance()->deviceList();
     for (int i = 0; i < DEV_COUNT && i < devList.size(); ++i)
     {
         int base = i * DEV_INPUT_REGISTERS_COUNT;
+
         quint16 high = m_Inputs[base + DEV_CYCLE_COUNT_H];
         quint16 low  = m_Inputs[base + DEV_CYCLE_COUNT_L];
         quint32 cycleCount = (quint32(high) << 16) | quint32(low);
@@ -390,18 +396,29 @@ void HBModbusClient::dispatchInputsOnCycleCountChanged()
             Device* device = (i < devList.size()) ? devList.at(i) : nullptr;
             if (device && device->getDevInfoObject() && inputs.size() >= DEV_INPUT_REGISTERS_COUNT)
             {
+                QMetaObject::invokeMethod(device->getDevInfoObject(), [device, inputs](){
                 device->getDevInfoObject()->setPower(inputs[DEV_POWER]);
                 device->getDevInfoObject()->setTime(inputs[DEV_TIME]);
                 device->getDevInfoObject()->setEnergy(inputs[DEV_ENERGY]);
                 device->getDevInfoObject()->setHeightPre(inputs[DEV_PRE_HEIGHT]);
                 device->getDevInfoObject()->setHeightPost(inputs[DEV_POST_HEIGHT]);
+                }, Qt::QueuedConnection);
+                DateTimeData date;
+                date.year               = inputs[DEV_YY];
+                date.month              = inputs[DEV_YY_MM];
+                date.day                = inputs[DEV_DD];
+                date.hour               = inputs[DEV_HH];
+                date.minute             = inputs[DEV_MM];
+                date.second             = inputs[DEV_SS];
 
-                updateDeviceTrend(device, inputs[DEV_POWER], inputs[DEV_TIME], inputs[DEV_PRE_HEIGHT], inputs[DEV_POST_HEIGHT]);
-                DataBaseManager::getInstance()->saveProductionDataofModbus(device,inputs,cycleCount);
+                // updateDeviceTrend(device, inputs[DEV_POWER], inputs[DEV_TIME], inputs[DEV_PRE_HEIGHT], inputs[DEV_POST_HEIGHT]);
+                DataBaseManager::getInstance()->saveProductionDataofModbus(device,inputs,cycleCount,date);
+                emit newInputData(i+1, inputs,cycleCount,date);
 
             }
-             //TODO
-            //Input写入数据库（/mannul）
+            //  TODO
+            // Input写入数据库（/mannul）
+
         }
     }
 }

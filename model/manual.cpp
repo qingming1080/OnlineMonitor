@@ -1,6 +1,6 @@
 #include "manual.h"
 #include "DataBase/databasemanager.h"
-
+#include  "tools/utilityfunction.h"
 #include "signalmanager.h"
 #include <QDebug>
 #include <QElapsedTimer>
@@ -12,12 +12,9 @@ Manual::Manual(int welderID,QObject *parent)
     : QAbstractListModel{parent}, m_welderID(welderID)
 {
 
-    // QElapsedTimer timer;
-    // timer.start();
+    m_modbusClient = HBModbusClient::getInstance();
 
     m_data = DataBaseManager::getInstance()->getManualData(m_welderID);
-    // QString text = QString("%1号设备_Manual_初始化耗时:%2ms").arg(welderID).arg(timer.elapsed());
-    // emit SignalManager::getInstance()->signalAddRecord(QDateTime::currentDateTime(), text);
 
     connect(&m_flushTimer, &QTimer::timeout, this, &Manual::flushPendingData);
     m_flushTimer.start(1000);
@@ -208,18 +205,10 @@ bool Manual::setData(const QModelIndex &index, const QVariant &value, int role)
 
 void Manual::save()
 {
-
-    QSqlDatabase db = QSqlDatabase::database();
-    db.transaction();  // 开启事务
-
-    DataBaseManager::getInstance()->removeManualDevice(m_welderID);
-
     for(int i = 0; i < m_data.size(); ++i)
     {
         DataBaseManager::getInstance()->insertManualRow(m_data.at(i));
     }
-
-     db.commit();  // 提交事务
 }
 
 
@@ -227,6 +216,7 @@ void Manual::clearData()
 {
     beginResetModel();
     m_data.clear();
+    DataBaseManager::getInstance()->removeManualDevice(m_welderID);
     endResetModel();
 }
 
@@ -241,33 +231,41 @@ void Manual::loadData()
 
 void Manual::startReading()
 {
-    // connect(m_modbusClient, &HBModbusClient::signalNewManualData,
-    //         this, &Manual::onNewManualData);
+    connect(m_modbusClient, &HBModbusClient::newInputData, this, &Manual::onNewManualData);
+
     qDebug() << "Manual 开始接收 Modbus 数据";
 }
 
 void Manual::stopReading()
 {
-    // disconnect(m_modbusClient, &HBModbusClient::signalNewManualData,
-    //            this, &Manual::onNewManualData);
+    disconnect(m_modbusClient, &HBModbusClient::newInputData, this, &Manual::onNewManualData);
+
     qDebug() << "Manual 停止接收 Modbus 数据";
 }
 
-
-void Manual::onNewManualData(const _Manual_Data& data)
+void Manual::onNewManualData(int welderID, const QVector<quint16> &inputs, quint32 cycleCount, DateTimeData date)
 {
-    if (data.welder_id != m_welderID)
-        return;
+    _Manual_Data data;
+    data.welder_id     = welderID;
+    data.cycle_count   = cycleCount;
+    data.energy        = inputs[HBModbusClient::DEV_ENERGY];
+    data.amplitude     = inputs[HBModbusClient::DEV_AMPLITUDE];
+    data.pressure      = inputs[HBModbusClient::DEV_WP];
+    data.time          = inputs[HBModbusClient::DEV_TIME];
+    data.power         = inputs[HBModbusClient::DEV_POWER];
+    data.pre_height    = inputs[HBModbusClient::DEV_PRE_HEIGHT];
+    data.post_height   = inputs[HBModbusClient::DEV_POST_HEIGHT];
+    data.actual_force  = 0;
+    data.actual_degree = 0;
+    data.create_time   = UtilityFunction::buildDateTimeString(date);
+    data.serial_number = cycleCount;
+    data.selected      = false;
 
-    auto it = std::find_if(m_data.begin(), m_data.end(), [&](const _Manual_Data& d) {
-        return d.serial_number == data.serial_number;
-    });
-
-    if (it != m_data.end())
-        return;
-
-    m_pendingData.append(data);
+    beginInsertRows(QModelIndex(), 0, 0);
+    m_data.prepend(data);
+    endInsertRows();
 }
+
 
 void Manual::flushPendingData()
 {

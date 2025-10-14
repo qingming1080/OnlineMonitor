@@ -6,8 +6,8 @@
 #include <QSqlDriver>
 #include <QApplication>
 #include <QFile>
-#include "modbus/HBModbusClient.h"
 #include "model/deviceinformation.h"
+#include "tools/utilityfunction.h"
 
 DataBaseManager* DataBaseManager::s_pDataBaseManager = nullptr;
 
@@ -1197,7 +1197,7 @@ bool DataBaseManager::insertProductionRow(_Production_Data data)
     return true;
 }
 
-bool DataBaseManager::saveProductionDataofModbus(Device *device, const QVector<quint16> &inputs, quint32 cycleCount)
+bool DataBaseManager::saveProductionDataofModbus(Device *device, const QVector<quint16> &inputs, quint32 cycleCount, DateTimeData date)
 {
         if (!device) return false;
 
@@ -1206,7 +1206,7 @@ bool DataBaseManager::saveProductionDataofModbus(Device *device, const QVector<q
         _Production_Data record;
 
         record.welder_id                            = deviceId;
-        record.create_time                          = QDateTime::currentDateTime().toString("yyyy-MM-dd HH:mm:ss");
+        record.create_time                          = UtilityFunction::buildDateTimeString(date);
         record.cycle_count                          = cycleCount;
         record.serial_number                        = cycleCount;                                   //循环值
         record.batch_count                          = cycleCount;                                   //生产值

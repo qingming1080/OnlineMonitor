@@ -177,7 +177,7 @@ void Trend::setYieldTrendData()
 
     if(m_pYieldSeries)
     {
-        m_pYieldSeries->replace(m_yieldData.points);
+        // m_pYieldSeries->replace(m_yieldData.points);
         // qDebug() << "I_WANT_TEST 刷新折线" << m_pYieldSeries << m_yieldData.points.count() << m_startTime << m_endTime;
     }
 }

@@ -99,47 +99,58 @@ Rectangle {
                 x:42
                 y:314
                 color: "#0c5696"
-                eqText1:{
-                    if(DeviceManager.deviceList[swipeCurrIndex]){
-                        return DeviceManager.deviceList[swipeCurrIndex].DevInfoObject.power
-                    }
-                    else{
-                        return ""
-                    }
-                }
-                eqText2:{
-                    if(DeviceManager.deviceList[swipeCurrIndex]){
-                        return DeviceManager.deviceList[swipeCurrIndex].DevInfoObject.time
-                    }
-                    else{
-                        return ""
-                    }
-                }
+                // eqText1:{
+                //     if(DeviceManager.deviceList[swipeCurrIndex]){
+                //         return DeviceManager.deviceList[swipeCurrIndex].DevInfoObject.power
+                //     }
+                //     else{
+                //         return ""
+                //     }
+                // }
+                // eqText2:{
+                //     if(DeviceManager.deviceList[swipeCurrIndex]){
+                //         return DeviceManager.deviceList[swipeCurrIndex].DevInfoObject.time
+                //     }
+                //     else{
+                //         return ""
+                //     }
+                // }
 
-                eqText3:{
-                    if(DeviceManager.deviceList[swipeCurrIndex]){
-                        return DeviceManager.deviceList[swipeCurrIndex].DevInfoObject.energy
-                    }
-                    else{
-                        return ""
-                    }
-                }
-                eqText4:{
-                    if(DeviceManager.deviceList[swipeCurrIndex]){
-                        return DeviceManager.deviceList[swipeCurrIndex].DevInfoObject.heightPre
-                    }
-                    else{
-                        return ""
-                    }
-                }
-                eqText5:{
-                    if(DeviceManager.deviceList[swipeCurrIndex]){
-                        return DeviceManager.deviceList[swipeCurrIndex].DevInfoObject.heightPost
-                    }
-                    else{
-                        return ""
-                    }
-                }
+                // eqText3:{
+                //     if(DeviceManager.deviceList[swipeCurrIndex]){
+                //         return DeviceManager.deviceList[swipeCurrIndex].DevInfoObject.energy
+                //     }
+                //     else{
+                //         return ""
+                //     }
+                // }
+                // eqText4:{
+                //     if(DeviceManager.deviceList[swipeCurrIndex]){
+                //         return DeviceManager.deviceList[swipeCurrIndex].DevInfoObject.heightPre
+                //     }
+                //     else{
+                //         return ""
+                //     }
+                // }
+                // eqText5:{
+                //     if(DeviceManager.deviceList[swipeCurrIndex]){
+                //         return DeviceManager.deviceList[swipeCurrIndex].DevInfoObject.heightPost
+                //     }
+                //     else{
+                //         return ""
+                //     }
+                // }
+
+                eqText1: DeviceManager.deviceList[swipeCurrIndex] ? DeviceManager.deviceList[swipeCurrIndex].DevInfoObject.power : ""
+
+                eqText2: DeviceManager.deviceList[swipeCurrIndex] ? DeviceManager.deviceList[swipeCurrIndex].DevInfoObject.time  : ""
+
+                eqText3: DeviceManager.deviceList[swipeCurrIndex] ? DeviceManager.deviceList[swipeCurrIndex].DevInfoObject.energy  : ""
+
+                eqText4: DeviceManager.deviceList[swipeCurrIndex]  ? DeviceManager.deviceList[swipeCurrIndex].DevInfoObject.heightPre : ""
+
+                eqText5: DeviceManager.deviceList[swipeCurrIndex]   ? DeviceManager.deviceList[swipeCurrIndex].DevInfoObject.heightPost : ""
+
             }
         }
     }

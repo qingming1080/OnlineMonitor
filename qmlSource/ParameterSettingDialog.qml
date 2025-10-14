@@ -564,25 +564,25 @@ Dialog {
             }
         }
 
-        Connections {
-               target: HBModbusClient  // 指定信号来源对象
+        // Connections {
+        //        target: HBModbusClient  // 指定信号来源对象
 
-               onParameterdata: {  // 连接到 parameterdata 信号
-                   console.log("Received parameter data:", result);
-                   energy_set.text = result[0].toString()
-                   amplitude_set.text = result[1].toString()
-                   tp_set.text = result[2].toString()
-                   wp_set.text = result[3].toString()
-                   time_max_set.text = result[4].toString()
-                   time_min_set.text = result[5].toString()
-                   power_min_set.text = result[6].toString()
-                   power_max_set.text = result[7].toString()
-                   pre_hehigtmin_set.text = result[8].toString()
-                   pre_hehigtmax_set.text = result[9].toString()
-                   post_hehigtmin_set.text = result[10].toString()
-                   post_hehigtmax_set.text = result[11].toString()
-               }
-           }
+        //        onParameterdata: {  // 连接到 parameterdata 信号
+        //            // console.log("Received parameter data:", result);
+        //            // energy_set.text = result[0].toString()
+        //            // amplitude_set.text = result[1].toString()
+        //            // tp_set.text = result[2].toString()
+        //            // wp_set.text = result[3].toString()
+        //            // time_max_set.text = result[4].toString()
+        //            // time_min_set.text = result[5].toString()
+        //            // power_min_set.text = result[6].toString()
+        //            // power_max_set.text = result[7].toString()
+        //            // pre_hehigtmin_set.text = result[8].toString()
+        //            // pre_hehigtmax_set.text = result[9].toString()
+        //            // post_hehigtmin_set.text = result[10].toString()
+        //            // post_hehigtmax_set.text = result[11].toString()
+        //        }
+        //    }
     }
 
 }
