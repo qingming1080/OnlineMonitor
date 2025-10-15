@@ -52,6 +52,9 @@ private:
 
     HBModbusClient *m_modbusClient = nullptr;
 
+    int m_nextSerial = 1;
+    QMap<int, int> m_rowSerialMap;
+
 };
 
 #endif // MANUAL_H

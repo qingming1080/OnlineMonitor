@@ -16,6 +16,10 @@ Manual::Manual(int welderID,QObject *parent)
 
     m_data = DataBaseManager::getInstance()->getManualData(m_welderID);
 
+    for(int i = 0; i < m_data.size(); ++i) {
+        m_data[i].serial_number = m_nextSerial++;
+    }
+
     connect(&m_flushTimer, &QTimer::timeout, this, &Manual::flushPendingData);
     m_flushTimer.start(1000);
 
@@ -62,8 +66,8 @@ QVariant Manual::data(const QModelIndex &index, int role) const
     case QmlEnum::MANUAL_COLUMN::MANUAL_create_time:
         return data.create_time;
     case QmlEnum::MANUAL_COLUMN::MANUAL_serial_number:
-        // return data.serial_number;
-        return row + 1;
+        return data.serial_number;
+        // return row + 1;
     case QmlEnum::MANUAL_COLUMN::MANUAL_cycle_count:
         return data.cycle_count;
     case QmlEnum::MANUAL_COLUMN::MANUAL_energy:
@@ -137,11 +141,12 @@ bool Manual::setData(const QModelIndex &index, const QVariant &value, int role)
         m_data[row].create_time = value.toInt();
         return true;
     }
-    case QmlEnum::MANUAL_COLUMN::MANUAL_serial_number:
-    {
-        m_data[row].serial_number = value.toInt();
-        return true;
-    }
+    // case QmlEnum::MANUAL_COLUMN::MANUAL_serial_number:
+    // {
+    //     // m_data[row].serial_number = value.toInt();
+    //     m_rowSerialMap.value(index.row());
+    //     return true;
+    // }
     case QmlEnum::MANUAL_COLUMN::MANUAL_cycle_count:
     {
         m_data[row].cycle_count = value.toInt();
@@ -218,12 +223,17 @@ void Manual::clearData()
     m_data.clear();
     DataBaseManager::getInstance()->removeManualDevice(m_welderID);
     endResetModel();
+    m_nextSerial = 1;
 }
 
 void Manual::loadData()
 {
     beginResetModel();  // 通知 QML 模型发生变化
     m_data = DataBaseManager::getInstance()->getManualData(m_welderID); // 重新加载数据
+    m_nextSerial = 1;
+    for(int i = 0; i < m_data.size(); ++i) {
+        m_data[i].serial_number = m_nextSerial++;
+    }
 
     endResetModel();
 }
@@ -251,14 +261,15 @@ void Manual::onNewManualData(int welderID, const QVector<quint16> &inputs, quint
     data.energy        = inputs[HBModbusClient::DEV_ENERGY];
     data.amplitude     = inputs[HBModbusClient::DEV_AMPLITUDE];
     data.pressure      = inputs[HBModbusClient::DEV_WP];
-    data.time          = inputs[HBModbusClient::DEV_TIME];
+    // data.time          = inputs[HBModbusClient::DEV_TIME];
+    data.time          = QString::number(inputs[HBModbusClient::DEV_TIME]);
     data.power         = inputs[HBModbusClient::DEV_POWER];
     data.pre_height    = inputs[HBModbusClient::DEV_PRE_HEIGHT];
     data.post_height   = inputs[HBModbusClient::DEV_POST_HEIGHT];
     data.actual_force  = 0;
     data.actual_degree = 0;
     data.create_time   = UtilityFunction::buildDateTimeString(date).left(10);;
-    data.serial_number = cycleCount;
+    data.serial_number = m_nextSerial++;
     data.selected      = false;
 
     beginInsertRows(QModelIndex(), 0, 0);

@@ -609,27 +609,18 @@ bool DataBaseManager::removeManualDevice(int deviceID)
 
 bool DataBaseManager::insertManualRow(_Manual_Data data)
 {
-    QSqlQuery query;
-    // %1_表格名称
-    QString execStr = QString("INSERT INTO %1 values("
-                              ":id"
-                              ", :welder_id"
-                              ", :create_time"
-                              ", :serial_number"
-                              ", :cycle_count"
-                              ", :energy"
-                              ", :amplitude"
-                              ", :pressure"
-                              ", :time"
-                              ", :power"
-                              ", :pre_height"
-                              ", :post_height"
-                              ", :actual_force"
-                              ", :actual_degree)").arg(MANUAL_TABLENAME);
+    QSqlQuery query(m_database);
+    QString execStr = QString(
+                          "INSERT INTO %1 (welder_id, create_time, serial_number, cycle_count, "
+                          "energy, amplitude, pressure, time, power, pre_height, post_height, "
+                          "actual_force, actual_degree) "
+                          "VALUES (:welder_id, :create_time, :serial_number, :cycle_count, "
+                          ":energy, :amplitude, :pressure, :time, :power, :pre_height, :post_height, "
+                          ":actual_force, :actual_degree)"
+                          ).arg(MANUAL_TABLENAME);
 
-    // 绑定属性
     query.prepare(execStr);
-    query.bindValue(":id", data.id);
+
     query.bindValue(":welder_id", data.welder_id);
     query.bindValue(":create_time", data.create_time);
     query.bindValue(":serial_number", data.serial_number);
@@ -644,8 +635,26 @@ bool DataBaseManager::insertManualRow(_Manual_Data data)
     query.bindValue(":actual_force", data.actual_force);
     query.bindValue(":actual_degree", data.actual_degree);
 
-    return query.exec();
+    if (!m_database.transaction()) {
+        qDebug() << "Failed to start transaction:" << m_database.lastError().text();
+        return false;
+    }
+
+    if (!query.exec()) {
+        qDebug() << "Insert failed:" << query.lastError().text();
+        m_database.rollback();
+        return false;
+    }
+
+    if (!m_database.commit()) {
+        qDebug() << "Failed to commit transaction:" << m_database.lastError().text();
+        return false;
+    }
+
+    qDebug() << "Insert success for serial_number:" << data.serial_number;
+    return true;
 }
+
 
 QList<_Model_Data> DataBaseManager::getModelData()
 {
