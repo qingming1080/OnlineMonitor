@@ -414,8 +414,8 @@ Rectangle {
                     x:840/8 + 840/8/2-width/2
                     y:11
                     font.pixelSize: 16
-                    // text: qsTr("振幅")
-                    text: GlobalLanguageDefine.strAmplitude
+                    // text: qsTr("序号")
+                    text: GlobalLanguageDefine.strSerialNumber
                     font.family: GlobalSystemDefine.fontBold
                     color: pRgb(171, 206, 213)
                 }
@@ -563,7 +563,7 @@ Rectangle {
                             x:840/8*1 + 840/8/2-width/2
                             anchors.verticalCenter: parent.verticalCenter
                             font.pixelSize: 16
-                            text: amplitude
+                            text: serial_number
                             font.family: GlobalSystemDefine.fontBold
                             color: index % 2 !== 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
                         }

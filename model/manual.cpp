@@ -257,7 +257,7 @@ void Manual::onNewManualData(int welderID, const QVector<quint16> &inputs, quint
     data.post_height   = inputs[HBModbusClient::DEV_POST_HEIGHT];
     data.actual_force  = 0;
     data.actual_degree = 0;
-    data.create_time   = UtilityFunction::buildDateTimeString(date);
+    data.create_time   = UtilityFunction::buildDateTimeString(date).left(10);;
     data.serial_number = cycleCount;
     data.selected      = false;
 
