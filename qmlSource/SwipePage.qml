@@ -204,7 +204,6 @@ Rectangle {
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
             font.family: GlobalSystemDefine.fontBold
-            font.bold: true
         }
         onPressed: {
             // if(mt1.text === qsTr("新建模型"))
@@ -256,7 +255,6 @@ Rectangle {
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
             font.family: GlobalSystemDefine.fontBold
-            font.bold: true
         }
         onPressed: {
             Manual.clearData()
@@ -383,7 +381,6 @@ Rectangle {
                     // text: qsTr("全选")
                     text: GlobalLanguageDefine.strSelectAll
                     font.family: GlobalSystemDefine.fontBold
-                    font.bold: true
                     color: pRgb(153, 204, 255)
                 }
                 Button{
@@ -417,10 +414,9 @@ Rectangle {
                     x:840/8 + 840/8/2-width/2
                     y:11
                     font.pixelSize: 16
-                    // text: qsTr("序号")
-                    text: GlobalLanguageDefine.strSerialNumber
+                    // text: qsTr("振幅")
+                    text: GlobalLanguageDefine.strAmplitude
                     font.family: GlobalSystemDefine.fontBold
-                    font.bold: true
                     color: pRgb(171, 206, 213)
                 }
                 Text{
@@ -431,7 +427,6 @@ Rectangle {
                     // text: qsTr("焊接时间")
                     text: GlobalLanguageDefine.strWeldingTime
                     font.family: GlobalSystemDefine.fontBold
-                    font.bold: true
                     color: pRgb(171, 206, 213)
                 }
                 Text{
@@ -442,7 +437,6 @@ Rectangle {
                     // text: qsTr("功率")
                     text: GlobalLanguageDefine.strPower
                     font.family: GlobalSystemDefine.fontBold
-                    font.bold: true
                     color: pRgb(171, 206, 213)
                 }
                 Text{
@@ -453,7 +447,6 @@ Rectangle {
                     // text: qsTr("能量")
                     text: GlobalLanguageDefine.strEnergy
                     font.family: GlobalSystemDefine.fontBold
-                    font.bold: true
                     color: pRgb(171, 206, 213)
                 }
                 Text{
@@ -464,7 +457,6 @@ Rectangle {
                     // text: qsTr("日期")
                     text: GlobalLanguageDefine.strDate
                     font.family: GlobalSystemDefine.fontBold
-                    font.bold: true
                     color: pRgb(171, 206, 213)
                 }
                 Text{
@@ -475,7 +467,6 @@ Rectangle {
                     // text: qsTr("拉力")
                     text: GlobalLanguageDefine.strTensile
                     font.family: GlobalSystemDefine.fontBold
-                    font.bold: true
                     color: pRgb(171, 206, 213)
                 }
                 Text{
@@ -486,7 +477,6 @@ Rectangle {
                     // text: qsTr("残留度")
                     text: GlobalLanguageDefine.strResidual
                     font.family: GlobalSystemDefine.fontBold
-                    font.bold: true
                     color: pRgb(171, 206, 213)
                 }
                 ListView{
@@ -573,9 +563,8 @@ Rectangle {
                             x:840/8*1 + 840/8/2-width/2
                             anchors.verticalCenter: parent.verticalCenter
                             font.pixelSize: 16
-                            text: serial_number
+                            text: amplitude
                             font.family: GlobalSystemDefine.fontBold
-                            font.bold: true
                             color: index % 2 !== 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
                         }
                         Text{
@@ -584,7 +573,6 @@ Rectangle {
                             font.pixelSize: 16
                             text: time
                             font.family: GlobalSystemDefine.fontBold
-                            font.bold: true
                             color: index % 2 !== 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
                         }
                         Text{
@@ -592,8 +580,7 @@ Rectangle {
                             x:840/8*3 + 840/8/2-width/2
                             font.pixelSize: 16
                             text: power
-                            font.family: fontBold
-                            font.bold: true
+                            font.family: GlobalSystemDefine.fontBold
                             color: index % 2 !== 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
                         }
                         Text{
@@ -601,8 +588,7 @@ Rectangle {
                             x:840/8*4 + 840/8/2-width/2
                             font.pixelSize: 16
                             text: energy
-                            font.family: fontBold
-                            font.bold: true
+                            font.family: GlobalSystemDefine.fontBold
                             color: index % 2 !== 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
                         }
                         Text{
@@ -610,8 +596,7 @@ Rectangle {
                             x:840/8*5 + 840/8/2-width/2
                             font.pixelSize: 16
                             text: create_time
-                            font.family: fontBold
-                            font.bold: true
+                            font.family: GlobalSystemDefine.fontBold
                             color: index % 2 !== 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
                         }
                         TextField{
@@ -624,8 +609,7 @@ Rectangle {
                             verticalAlignment: TextInput.AlignVCenter
                             //color: index % 2 === 0 ? pRgb(175, 195, 216) : "#014c8d"
                             color: index % 2 === 0 ? "#014c8d" : pRgb(175, 195, 216)
-                            font.family: fontBold
-                            font.bold: true
+                            font.family: GlobalSystemDefine.fontBold
                             font.pixelSize: 16
                             text:actual_force
                             inputMethodHints: Qt.ImhDigitsOnly
@@ -666,8 +650,7 @@ Rectangle {
                             verticalAlignment: TextInput.AlignVCenter
                             // color: index % 2 === 0 ? pRgb(175, 195, 216) : "#014c8d"
                             color: index % 2 === 0 ? "#014c8d" : pRgb(175, 195, 216)
-                            font.family: fontBold
-                            font.bold: true
+                            font.family: GlobalSystemDefine.fontBold
                             font.pixelSize: 16
                             text:actual_degree
                             inputMethodHints: Qt.ImhDigitsOnly
