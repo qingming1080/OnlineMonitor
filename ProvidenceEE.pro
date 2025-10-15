@@ -38,7 +38,8 @@ SOURCES += \
         model/trend.cpp \
         signalmanager.cpp \
         tools/devicemodbusmapper.cpp \
-        tools/utilityapplauncher.cpp
+        tools/utilityapplauncher.cpp \
+        tools/utilityfunction.cpp
 
 RESOURCES += qml.qrc \
     databaseSource.qrc \
@@ -80,7 +81,8 @@ HEADERS += \
     qmlenum.h \
     signalmanager.h \
     tools/devicemodbusmapper.h \
-    tools/utilityapplauncher.h
+    tools/utilityapplauncher.h \
+    tools/utilityfunction.h
 
 TRANSLATIONS += \
         languageTranslation/SimplifiedChinese.ts \

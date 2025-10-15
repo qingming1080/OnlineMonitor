@@ -59,24 +59,6 @@ int History::deviceID() const
     return m_deviceID;
 }
 
-// void History::setDeviceID(int newDeviceID)
-// {
-//     QElapsedTimer timer;
-//     timer.start();
-
-//     if (m_deviceID == newDeviceID)
-//         return;
-
-//     m_deviceID = newDeviceID;
-//     emit beginResetModel();
-//     m_data = DataBaseManager::getInstance()->getProductionData(m_deviceID, m_finalResult);
-//     emit endResetModel();
-//     emit deviceIDChanged();
-
-//     QString text = QString("History_修改筛选设备耗时:%1ms").arg(timer.elapsed());
-//     emit SignalManager::getInstance()->signalAddRecord(QDateTime::currentDateTime(), text);
-// }
-
 void History::setDeviceID(int newDeviceID)
 {
     QElapsedTimer timer;

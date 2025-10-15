@@ -28,6 +28,5 @@
         <file>qmlSource/GlobalSystemDefine.qml</file>
         <file>qmlSource/GlobalLanguageDefine.qml</file>
         <file>qmlSource/GlobalMessageDefine.qml</file>
-        <file>qmlSource/SystemDialog.qml</file>
     </qresource>
 </RCC>

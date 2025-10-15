@@ -430,50 +430,88 @@ Rectangle {
         color: "#004b8d"
         Text{
             id:t1
-            x:1220/5/2-width/2
-            y:5
+            anchors.left: parent.left
+            anchors.leftMargin: 20
+            anchors.top: parent.top
+            anchors.topMargin: 7
             font.pixelSize: 16
-            // text: "设备名称"
             text: GlobalLanguageDefine.strDeviceName
             font.family: GlobalSystemDefine.fontBold
             font.bold: true
             color: pRgb(153, 204, 255)
         }
         Text{
-            x:1220/5*1 + 1220/5/2-width/2
-            y:5
+            id: historyDateText
+            anchors.top: t1.top
+            anchors.left: t1.right
+            anchors.leftMargin: 150
             font.pixelSize: 16
-            // text: "日期"
             text: GlobalLanguageDefine.strDate
             font.family: GlobalSystemDefine.fontBold
             font.bold: true
             color: pRgb(153, 204, 255)
         }
         Text{
-            x:1220/5*2 + 1220/5/2-width/2
-            y:5
+            id: historyEnergyeText
+            anchors.top: historyDateText.top
+            anchors.left: historyDateText.right
+            anchors.leftMargin: 150
             font.pixelSize: 16
-            // text: "能量"
             text: GlobalLanguageDefine.strEnergy
             font.family: GlobalSystemDefine.fontBold
             font.bold: true
             color: pRgb(153, 204, 255)
         }
         Text{
-            x:1220/5*3 + 1220/5/2-width/2
-            y:5
+            id: historyAmplitudeText
+            anchors.top: historyEnergyeText.top
+            anchors.left: historyEnergyeText.right
+            anchors.leftMargin: 100
             font.pixelSize: 16
-            // text: "功率"
+            text: GlobalLanguageDefine.strAmplitude
+            font.family: GlobalSystemDefine.fontBold
+            font.bold: true
+            color: pRgb(153, 204, 255)
+        }
+        Text{
+            id: historyPowerText
+            anchors.top: historyAmplitudeText.top
+            anchors.left: historyAmplitudeText.right
+            anchors.leftMargin: 100
+            font.pixelSize: 16
             text: GlobalLanguageDefine.strPower
             font.family: GlobalSystemDefine.fontBold
             font.bold: true
             color: pRgb(153, 204, 255)
         }
         Text{
-            x:1220/5*4 + 1220/5/2-width/2
-            y:5
+            id: historyWeldTimeText
+            anchors.top: historyPowerText.top
+            anchors.left: historyPowerText.right
+            anchors.leftMargin: 100
             font.pixelSize: 16
-            // text: "结果"
+            text: GlobalLanguageDefine.strTime
+            font.family: GlobalSystemDefine.fontBold
+            font.bold: true
+            color: pRgb(153, 204, 255)
+        }
+        Text{
+            id: historyWeldPressureText
+            anchors.top: historyWeldTimeText.top
+            anchors.left: historyWeldTimeText.right
+            anchors.leftMargin: 100
+            font.pixelSize: 16
+            text: GlobalLanguageDefine.strPressure
+            font.family: GlobalSystemDefine.fontBold
+            font.bold: true
+            color: pRgb(153, 204, 255)
+        }
+        Text{
+            id: historyWeldResultText
+            anchors.top: historyWeldPressureText.top
+            anchors.left: historyWeldPressureText.right
+            anchors.leftMargin: 100
+            font.pixelSize: 16
             text: GlobalLanguageDefine.strResult
             font.family: GlobalSystemDefine.fontBold
             font.bold: true
@@ -492,7 +530,9 @@ Rectangle {
                 width: 1220
                 color: index % 2 === 0 ? "#2d71ae" : "#b1d5db"
                 Text{
-                    x:1220/5/2-width/2
+                    id:historyDeviceNameValueText
+                    anchors.left: parent.left
+                    anchors.leftMargin: 30
                     anchors.verticalCenter: parent.verticalCenter
                     font.pixelSize: 16
                     text: DeviceManager.getHistoryName(welder_id)
@@ -500,9 +540,11 @@ Rectangle {
                     font.bold: true
                     color: index % 2 === 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
                 }
-                Text{
+               Text{
+                    id: historyDateValueText
                     anchors.verticalCenter: parent.verticalCenter
-                    x:1220/5*1 + 1220/5/2-width/2
+                    anchors.left: parent.left
+                    anchors.leftMargin: 170
                     font.pixelSize: 16
                     text: create_time
                     font.family: GlobalSystemDefine.fontBold
@@ -510,8 +552,10 @@ Rectangle {
                     color: index % 2 === 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
                 }
                 Text{
+                    id: historyEnergyValueText
                     anchors.verticalCenter: parent.verticalCenter
-                    x:1220/5*2 + 1220/5/2-width/2
+                    anchors.left: parent.left
+                    anchors.leftMargin: 417
                     font.pixelSize: 16
                     text: energy
                     font.family: GlobalSystemDefine.fontBold
@@ -519,8 +563,21 @@ Rectangle {
                     color: index % 2 === 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
                 }
                 Text{
+                    id: historyAmplitudeValueText
                     anchors.verticalCenter: parent.verticalCenter
-                    x:1220/5*3 + 1220/5/2-width/2
+                    anchors.left: parent.left
+                    anchors.leftMargin: 550
+                    font.pixelSize: 16
+                    text: amplitude
+                    font.family: GlobalSystemDefine.fontBold
+                    font.bold: true
+                    color: index % 2 === 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
+                }
+                Text{
+                    id: historyPowerValueText
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.left: parent.left
+                    anchors.leftMargin: 679
                     font.pixelSize: 16
                     text: power
                     font.family: GlobalSystemDefine.fontBold
@@ -528,8 +585,33 @@ Rectangle {
                     color: index % 2 === 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
                 }
                 Text{
+                    id: historyTimeValueText
                     anchors.verticalCenter: parent.verticalCenter
-                    x:1220/5*4 + 1220/5/2-width/2
+                    anchors.left: parent.left
+                    anchors.leftMargin: 810
+                    font.pixelSize: 16
+                    text: time
+                    font.family: GlobalSystemDefine.fontBold
+                    font.bold: true
+                    color: index % 2 === 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
+                }
+                Text{
+                    id: historyPressureValueText
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.left: parent.left
+                    anchors.leftMargin: 945
+                    font.pixelSize: 16
+                    text: pressure
+                    font.family: GlobalSystemDefine.fontBold
+                    font.bold: true
+                    color: index % 2 === 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
+                }
+
+
+                Text{
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.left: parent.left
+                    anchors.leftMargin: 1076
                     font.pixelSize: 16
                     text: {
                         // var strResult = qsTr("可疑")
