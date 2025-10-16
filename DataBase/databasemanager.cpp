@@ -552,6 +552,19 @@ bool DataBaseManager::insertIORow(_IO_Data data)
     return query.exec();
 }
 
+bool DataBaseManager::existsManualRowByCycle(int cycleCount)
+{
+    QSqlQuery query(m_database);
+    query.prepare(QString("SELECT COUNT(*) FROM %1 WHERE cycle_count = :cycle_count")
+                      .arg(MANUAL_TABLENAME));
+    query.bindValue(":cycle_count", cycleCount);
+
+    if (query.exec() && query.next()) {
+        return query.value(0).toInt() > 0;   // >0 表示存在
+    }
+    return false;
+}
+
 QList<_Manual_Data> DataBaseManager::getManualData(int welderID)
 {
     QList<_Manual_Data> list;
@@ -609,6 +622,11 @@ bool DataBaseManager::removeManualDevice(int deviceID)
 
 bool DataBaseManager::insertManualRow(_Manual_Data data)
 {
+
+    if (existsManualRowByCycle(data.cycle_count)) {
+        qDebug() << "Skip duplicate cycle_count:" << data.cycle_count;
+        return false;
+    }
     QSqlQuery query(m_database);
     QString execStr = QString(
                           "INSERT INTO %1 (welder_id, create_time, serial_number, cycle_count, "
@@ -724,6 +742,7 @@ bool DataBaseManager::clearModel()
 
 bool DataBaseManager::insertModelRow(_Model_Data data)
 {
+
     QSqlQuery query;
     // %1_表格名称
     QString execStr = QString("INSERT INTO %1 values("

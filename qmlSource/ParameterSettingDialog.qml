@@ -8,18 +8,14 @@ Dialog {
     modal: true
     x:400
     y:-200
-    // anchors.centerIn: parent
     width: 567
     height: 360
-    // font.pixelSize: 18
-    // font.family: "Arial"
-
-    readonly property int labelWidth: 100
-    readonly property int textFieldWidth: 70
+    readonly property int labelWidth: 65
+    readonly property int textFieldWidth: 80
     readonly property int rowHeight: 30
-    readonly property int rowSpacing: 15
-    readonly property int columnSpacing: 200
-    readonly property int elementSpacing: 30
+    readonly property int rowSpacing: 10
+    readonly property int columnSpacing: 20
+    readonly property int elementSpacing: 25
 
     background: Rectangle {
         color: "#b1d5db"
@@ -73,14 +69,16 @@ Dialog {
     contentItem: Rectangle {
         height: 360 - 30
         width: 567
+        color: "transparent"
 
         Grid {
             id: grid
             rowSpacing: elementSpacing
-            columnSpacing: columnSpacing
+            anchors.centerIn: parent
+            anchors.top:  parent.top
+            columnSpacing: 40
             columns: 3
             rows: 4
-            anchors.centerIn: parent
             width: parent.width
             height: rowHeight * 4 + elementSpacing * 3
 
@@ -88,12 +86,13 @@ Dialog {
                 id: energeSetting
                 spacing: rowSpacing
                 height: rowHeight
-                width: labelWidth + rowSpacing + textFieldWidth
                 Label {
                     // text: "能        量:"
                     text: GlobalLanguageDefine.strEnergy + ": "
                     font.pixelSize: 14
                     font.family: GlobalSystemDefine.fontNormal
+                    horizontalAlignment: TextInput.AlignHCenter
+                    verticalAlignment: TextInput.AlignVCenter
                     anchors.verticalCenter: parent.verticalCenter
                     color: "#004b8d"
                     width: labelWidth
@@ -104,8 +103,8 @@ Dialog {
                     text: "0"
                     inputMethodHints: Qt.ImhFormattedNumbersOnly
                     color: "#004b8d"
-                    // horizontalAlignment: TextInput.AlignHCenter
-                    // verticalAlignment: TextInput.AlignVCenter
+                    horizontalAlignment: TextInput.AlignHCenter
+                    verticalAlignment: TextInput.AlignVCenter
                     font.family: GlobalSystemDefine.fontNormal
                     width: textFieldWidth
                     height: parent.height
@@ -122,7 +121,6 @@ Dialog {
                 id: amplitudeSetting
                 spacing: rowSpacing
                 height: rowHeight
-                width: labelWidth + rowSpacing + textFieldWidth
                 Label {
                     // text: "振        幅:"
                     text: GlobalLanguageDefine.strAmplitude + ": "
@@ -138,8 +136,8 @@ Dialog {
                     text: "0"
                     inputMethodHints: Qt.ImhFormattedNumbersOnly
                     color: "#004b8d"
-                    // horizontalAlignment: TextInput.AlignHCenter
-                    // verticalAlignment: TextInput.AlignVCenter
+                    horizontalAlignment: TextInput.AlignHCenter
+                    verticalAlignment: TextInput.AlignVCenter
                     font.family: GlobalSystemDefine.fontNormal
                     width: textFieldWidth
                     height: parent.height
@@ -156,7 +154,6 @@ Dialog {
                 id: weldPressureSetting
                 spacing: rowSpacing
                 height: rowHeight
-                width: labelWidth + rowSpacing + textFieldWidth
                 Label {
                     // text: "焊接压力:"
                     text: GlobalLanguageDefine.strWeldPressure + ": "
@@ -172,8 +169,8 @@ Dialog {
                     text: "0"
                     inputMethodHints: Qt.ImhFormattedNumbersOnly
                     color: "#004b8d"
-                    // horizontalAlignment: TextInput.AlignHCenter
-                    // verticalAlignment: TextInput.AlignVCenter
+                    horizontalAlignment: TextInput.AlignHCenter
+                    verticalAlignment: TextInput.AlignVCenter
                     font.family: GlobalSystemDefine.fontNormal
                     width: textFieldWidth
                     height: parent.height
@@ -190,7 +187,6 @@ Dialog {
                 id: triggerPressureSetting
                 spacing: rowSpacing
                 height: rowHeight
-                width: labelWidth + rowSpacing + textFieldWidth
                 Label {
                     // text: "触发压力:" ;
                     text: GlobalLanguageDefine.strTriggerPressure + ": "
@@ -224,7 +220,6 @@ Dialog {
                 id: timeUpperSetting
                 spacing: rowSpacing
                 height: rowHeight
-                width: labelWidth + rowSpacing + textFieldWidth
                 Label {
                     // text: "时间上限:" ;
                     text: GlobalLanguageDefine.strTimeUpper + ": "
@@ -258,7 +253,6 @@ Dialog {
                 id: timeLowerSetting
                 spacing: rowSpacing
                 height: rowHeight
-                width: labelWidth + rowSpacing + textFieldWidth
                 Label {
                     // text: "时间下限:" ;
                     text: GlobalLanguageDefine.strTimeLower + ": "
@@ -293,7 +287,6 @@ Dialog {
                 id: powerLowerSetting
                 spacing: rowSpacing
                 height: rowHeight
-                width: labelWidth + rowSpacing + textFieldWidth
                 Label {
                     // text: "功率下限:" ;
                     text: GlobalLanguageDefine.strPowerLower + ": "
@@ -327,7 +320,6 @@ Dialog {
                 id: powerUpperSetting
                 spacing: rowSpacing
                 height: rowHeight
-                width: labelWidth + rowSpacing + textFieldWidth
                 Label {
                     // text: "功率上限:" ;
                     text: GlobalLanguageDefine.strPowerUpper + ": "
@@ -361,7 +353,6 @@ Dialog {
                 id: preheightLower
                 spacing: rowSpacing
                 height: rowHeight
-                width: labelWidth + rowSpacing + textFieldWidth
                 Label {
                     // text: "预焊下限:" ;
                     text: GlobalLanguageDefine.strPreheightLower + ": "
@@ -395,7 +386,6 @@ Dialog {
                 id: preheightUpperSetting
                 spacing: rowSpacing
                 height: rowHeight
-                width: labelWidth + rowSpacing + textFieldWidth
                 Label {
                     // text: "预焊上限:" ;
                     text: GlobalLanguageDefine.strPreheightUpper + ": "
@@ -430,7 +420,6 @@ Dialog {
                 id: postHeightLowerSetting
                 spacing: rowSpacing
                 height: rowHeight
-                width: labelWidth + rowSpacing + textFieldWidth
                 Label {
                     // text: "终焊下限:" ;
                     text: GlobalLanguageDefine.strPostHeightLower + ": "
@@ -449,9 +438,8 @@ Dialog {
                     horizontalAlignment: TextInput.AlignHCenter
                     verticalAlignment: TextInput.AlignVCenter
                     font.family: GlobalSystemDefine.fontNormal
-                    // font.bold: true
-                    width: 70
-                    height: 30
+                    width: textFieldWidth
+                    height: parent.height
                     font.pixelSize: 14
 
                     background: Rectangle{
@@ -466,7 +454,6 @@ Dialog {
                 id: postHeightUpperSetting
                 spacing: rowSpacing
                 height: rowHeight
-                width: labelWidth + rowSpacing + textFieldWidth
                 Label {
                     // text: "终焊上限:" ;
                     text: GlobalLanguageDefine.strPostHeightUpper + ": "
@@ -485,9 +472,8 @@ Dialog {
                     horizontalAlignment: TextInput.AlignHCenter
                     verticalAlignment: TextInput.AlignVCenter
                     font.family: GlobalSystemDefine.fontNormal
-                    // font.bold: true
-                    width: 70
-                    height: 30
+                    width: textFieldWidth
+                    height: parent.height
                     font.pixelSize: 14
 
                     background: Rectangle{
@@ -500,8 +486,9 @@ Dialog {
         }
 
         Button {
-            x:120
-            y:290
+            anchors.bottom: parent.bottom
+            anchors.left: parent.left
+            anchors.leftMargin: 130
             width: 120
             height: 36
             background: Rectangle{
@@ -523,33 +510,33 @@ Dialog {
                 console.log("deviceIDPARMSEdIOLOG:",deviceID)
 
                 // 从 TextField 获取用户输入的数据
-                var energyValue = energy_set.text
-                var amplitudeValue = amplitude_set.text
-                var tpValue = tp_set.text
-                var wpValue = wp_set.text
-                var timeMaxValue = time_max_set.text
-                var timeMinValue = time_min_set.text
-                var powerMinValue = power_min_set.text
-                var powerMaxValue = power_max_set.text
-                var preHeightMinValue = pre_hehigtmin_set.text
-                var preHeightMaxValue = pre_hehigtmax_set.text
-                var postHeightMinValue = post_hehigtmin_set.text
-                var postHeightMaxValue = post_hehigtmax_set.text
+                // var energyValue = energy_set.text
+                // var amplitudeValue = amplitude_set.text
+                // var tpValue = tp_set.text
+                // var wpValue = wp_set.text
+                // var timeMaxValue = time_max_set.text
+                // var timeMinValue = time_min_set.text
+                // var powerMinValue = power_min_set.text
+                // var powerMaxValue = power_max_set.text
+                // var preHeightMinValue = pre_hehigtmin_set.text
+                // var preHeightMaxValue = pre_hehigtmax_set.text
+                // var postHeightMinValue = post_hehigtmin_set.text
+                // var postHeightMaxValue = post_hehigtmax_set.text
 
                 // 校验函数：检查输入值是否为有效数字
-                    function isValidNumber(value) {
-                        return !isNaN(value) && value.trim() !== "" && value !== null;
-                    }
+                    // function isValidNumber(value) {
+                    //     return !isNaN(value) && value.trim() !== "" && value !== null;
+                    // }
 
-                    // 校验所有输入值
-                    if (!isValidNumber(energyValue) || !isValidNumber(amplitudeValue) || !isValidNumber(tpValue) ||
-                        !isValidNumber(wpValue) || !isValidNumber(timeMaxValue) || !isValidNumber(timeMinValue) ||
-                        !isValidNumber(powerMinValue) || !isValidNumber(powerMaxValue) || !isValidNumber(preHeightMinValue) ||
-                        !isValidNumber(preHeightMaxValue) || !isValidNumber(postHeightMinValue) || !isValidNumber(postHeightMaxValue)) {
+                    // // 校验所有输入值
+                    // if (!isValidNumber(energyValue) || !isValidNumber(amplitudeValue) || !isValidNumber(tpValue) ||
+                    //     !isValidNumber(wpValue) || !isValidNumber(timeMaxValue) || !isValidNumber(timeMinValue) ||
+                    //     !isValidNumber(powerMinValue) || !isValidNumber(powerMaxValue) || !isValidNumber(preHeightMinValue) ||
+                    //     !isValidNumber(preHeightMaxValue) || !isValidNumber(postHeightMinValue) || !isValidNumber(postHeightMaxValue)) {
 
-                        console.log("请输入有效的数字！");
-                        return;  // 退出操作，不发送数据
-                    }
+                    //     console.log("请输入有效的数字！");
+                    //     return;  // 退出操作，不发送数据
+                    // }
 
                 // 转换为整数数组传递给 C++ 层
                 // HBModbusClient.writeParameterSetting(
@@ -576,8 +563,9 @@ Dialog {
         }
 
         Button{
-            x:280
-            y:290
+            anchors.bottom: parent.bottom
+            anchors.right: parent.right
+            anchors.rightMargin: 130
             width:  120
             height: 36
             background: Rectangle{

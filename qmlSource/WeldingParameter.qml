@@ -199,8 +199,8 @@ Rectangle {
         font.pixelSize: LanguageManager.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 16 : 14
         color: pRgb(171, 206, 213)
         verticalAlignment: Text.AlignVCenter
-        anchors.verticalCenter: imageWeldPressure.verticalCenter
-        anchors.left: imageWeldPressure.right
+        anchors.verticalCenter: imagePreheight.verticalCenter
+        anchors.left: imagePreheight.right
         anchors.leftMargin: 10
         visible: altitudeMode
     }
@@ -239,7 +239,7 @@ Rectangle {
             border.width: 2
             border.color: "#99ccff"
         }
-        text: eqText1
+        text: eqText1 + "J"
         MouseArea {
             anchors.fill: parent
             onPressed: {
@@ -267,7 +267,7 @@ Rectangle {
             border.width: 2
             border.color: "#99ccff"
         }
-        text:eqText2
+        text:eqText2 + "μm"
         MouseArea {
             anchors.fill: parent
             onPressed: {
@@ -295,7 +295,7 @@ Rectangle {
             border.width: 2
             border.color: "#99ccff"
         }
-        text:eqText3
+        text:eqText3 + "Psi"
         MouseArea {
             anchors.fill: parent
             onPressed: {
@@ -323,7 +323,7 @@ Rectangle {
             border.width: 2
             border.color: "#99ccff"
         }
-        text:eqText4
+        text:eqText4 + "mm"
         visible: altitudeMode
         MouseArea {
             anchors.fill: parent
@@ -352,7 +352,7 @@ Rectangle {
             border.width: 2
             border.color: "#99ccff"
         }
-        text:eqText5
+        text:eqText5 + "mm"
         visible: altitudeMode
         MouseArea {
             anchors.fill: parent

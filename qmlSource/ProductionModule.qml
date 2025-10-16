@@ -145,47 +145,7 @@ Rectangle {
                         x: mode == 1 ? 50 : 29
                         y: mode == 1 ? 248 : 289
                         color: mode == 1 ? "#0c5696" : pRgb(43, 112, 173)
-                        // eqText1:{
-                        //     if(DeviceManager.deviceList[0]){
-                        //         return DeviceManager.deviceList[0].DevInfoObject.power
-                        //     }
-                        //     else{
-                        //         return ""
-                        //     }
-                        // }
-                        // eqText2:{
-                        //     if(DeviceManager.deviceList[0]){
-                        //         return DeviceManager.deviceList[0].DevInfoObject.time
-                        //     }
-                        //     else{
-                        //         return ""
-                        //     }
-                        // }
 
-                        // eqText3:{
-                        //     if(DeviceManager.deviceList[0]){
-                        //         return DeviceManager.deviceList[0].DevInfoObject.energy
-                        //     }
-                        //     else{
-                        //         return ""
-                        //     }
-                        // }
-                        // eqText4:{
-                        //     if(DeviceManager.deviceList[0]){
-                        //         return DeviceManager.deviceList[0].DevInfoObject.heightPre
-                        //     }
-                        //     else{
-                        //         return ""
-                        //     }
-                        // }
-                        // eqText5:{
-                        //     if(DeviceManager.deviceList[0]){
-                        //         return DeviceManager.deviceList[0].DevInfoObject.heightPost
-                        //     }
-                        //     else{
-                        //         return ""
-                        //     }
-                        // }
                         eqText1: DeviceManager.deviceList[0] ? DeviceManager.deviceList[0].DevInfoObject.power : ""
 
 
@@ -262,8 +222,9 @@ Rectangle {
                         {
                             loader.sourceComponent = mode1
                             loader1.sourceComponent = weld1
-                            Manual.stopReading()
                             Manual.save()
+                            Manual.stopReading() 
+                            console.log("Pressed, mt1.text:", mt1.text)
                             // mt1.text = "新建模型"
                             mt1.text = GlobalLanguageDefine.strNewModel
                             // mt2.text = "新增设备"
@@ -304,6 +265,10 @@ Rectangle {
                     if(mt2.text === GlobalLanguageDefine.strAddDevice)
                     {
                         popup.openPop(8)
+                    }
+                    else if(mt2.text === GlobalLanguageDefine.strClearData)
+                    {
+                        Manual.clearData()
                     }
                 }
             }

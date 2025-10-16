@@ -11,7 +11,7 @@
 #include "devicemanager.h"
 #include "qmlenum.h"
 #include <QtConcurrent/QtConcurrent>
-
+#include "tools/datavalidator.h"
 
 constexpr char HBModbusClient::LOCAL_IP[13];
 constexpr int HBModbusClient::SERVER_PORT;
@@ -57,7 +57,7 @@ HBModbusClient::~HBModbusClient()
 void HBModbusClient::Init()
 {
     m_timer = new QTimer(this);
-    m_timer->setInterval(1000);
+    m_timer->setInterval(300);
     connect(m_timer, &QTimer::timeout, this, &HBModbusClient::onPollTimeout);
 
     m_reconnectTimer = new QTimer(this);
@@ -393,6 +393,7 @@ void HBModbusClient::dispatchInputsOnCycleCountChanged()
         {
             lastCycleCount[i] = cycleCount;
             QVector<quint16> inputs = getDeviceInputs(i+1);
+            DataValidator::isValidForDatabase(inputs);
             Device* device = (i < devList.size()) ? devList.at(i) : nullptr;
             if (device && device->getDevInfoObject() && inputs.size() >= DEV_INPUT_REGISTERS_COUNT)
             {

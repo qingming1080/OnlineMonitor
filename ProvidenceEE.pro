@@ -37,6 +37,7 @@ SOURCES += \
         model/system.cpp \
         model/trend.cpp \
         signalmanager.cpp \
+        tools/datavalidator.cpp \
         tools/devicemodbusmapper.cpp \
         tools/utilityapplauncher.cpp \
         tools/utilityfunction.cpp
@@ -80,6 +81,7 @@ HEADERS += \
     model/trend.h \
     qmlenum.h \
     signalmanager.h \
+    tools/datavalidator.h \
     tools/devicemodbusmapper.h \
     tools/utilityapplauncher.h \
     tools/utilityfunction.h

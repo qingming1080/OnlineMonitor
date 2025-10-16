@@ -203,6 +203,8 @@ public:
     ///
     bool insertModelRow(_Model_Data data);
 
+    bool existsManualRowByCycle(int cycleCount);
+
 /////////////////////////production////////////////////////////////
     ///
     /// \brief getWeldTrendData : 获取历史记录，取最新五百个
