@@ -13,9 +13,9 @@ Dialog {
     readonly property int labelWidth: 65
     readonly property int textFieldWidth: 80
     readonly property int rowHeight: 30
-    readonly property int rowSpacing: 10
-    readonly property int columnSpacing: 20
-    readonly property int elementSpacing: 25
+    readonly property int rowWidth: 10
+    readonly property int columnWidth: 40
+    readonly property int elementWidth: 25
 
     background: Rectangle {
         color: "#b1d5db"
@@ -73,25 +73,26 @@ Dialog {
 
         Grid {
             id: grid
-            rowSpacing: elementSpacing
-            anchors.centerIn: parent
+            rowSpacing: elementWidth
+            // anchors.centerIn: parent
             anchors.top:  parent.top
-            columnSpacing: 40
+            anchors.topMargin: 30
+            columnSpacing: columnWidth
             columns: 3
             rows: 4
             width: parent.width
-            height: rowHeight * 4 + elementSpacing * 3
+            height: rowHeight * 4 + elementWidth * 3
 
             Row{
                 id: energeSetting
-                spacing: rowSpacing
+                spacing: rowWidth
                 height: rowHeight
-                Label {
+                Text{
+                    id: titleEnergy
                     // text: "能        量:"
                     text: GlobalLanguageDefine.strEnergy + ": "
                     font.pixelSize: 14
                     font.family: GlobalSystemDefine.fontNormal
-                    horizontalAlignment: TextInput.AlignHCenter
                     verticalAlignment: TextInput.AlignVCenter
                     anchors.verticalCenter: parent.verticalCenter
                     color: "#004b8d"
@@ -109,6 +110,7 @@ Dialog {
                     width: textFieldWidth
                     height: parent.height
                     font.pixelSize: 14
+                    anchors.verticalCenter: parent.verticalCenter
                     background: Rectangle{
                         radius: 6
                         border.width: 2
@@ -119,13 +121,14 @@ Dialog {
 
             Row{
                 id: amplitudeSetting
-                spacing: rowSpacing
+                spacing: rowWidth
                 height: rowHeight
                 Label {
                     // text: "振        幅:"
                     text: GlobalLanguageDefine.strAmplitude + ": "
                     font.pixelSize: 14
                     font.family: GlobalSystemDefine.fontNormal
+                    verticalAlignment: TextInput.AlignVCenter
                     anchors.verticalCenter: parent.verticalCenter
                     color:"#004b8d"
                     width: labelWidth
@@ -142,6 +145,7 @@ Dialog {
                     width: textFieldWidth
                     height: parent.height
                     font.pixelSize: 14
+                    anchors.verticalCenter: parent.verticalCenter
                     background: Rectangle{
                         radius: 6
                         border.width: 2
@@ -152,13 +156,14 @@ Dialog {
 
             Row{
                 id: weldPressureSetting
-                spacing: rowSpacing
+                spacing: rowWidth
                 height: rowHeight
                 Label {
                     // text: "焊接压力:"
                     text: GlobalLanguageDefine.strWeldPressure + ": "
                     font.pixelSize: 14
                     font.family: GlobalSystemDefine.fontNormal
+                    verticalAlignment: TextInput.AlignVCenter
                     anchors.verticalCenter: parent.verticalCenter
                     color:"#004b8d"
                     width: labelWidth
@@ -175,6 +180,7 @@ Dialog {
                     width: textFieldWidth
                     height: parent.height
                     font.pixelSize: 14
+                    anchors.verticalCenter: parent.verticalCenter
                     background: Rectangle{
                         radius: 6
                         border.width: 2
@@ -185,13 +191,14 @@ Dialog {
 
             Row{
                 id: triggerPressureSetting
-                spacing: rowSpacing
+                spacing: rowWidth
                 height: rowHeight
                 Label {
                     // text: "触发压力:" ;
                     text: GlobalLanguageDefine.strTriggerPressure + ": "
                     font.pixelSize: 14;
                     font.family: GlobalSystemDefine.fontNormal
+                    verticalAlignment: TextInput.AlignVCenter
                     anchors.verticalCenter: parent.verticalCenter;
                     color:"#004b8d";
                     width: labelWidth
@@ -208,6 +215,7 @@ Dialog {
                     width: textFieldWidth
                     height: parent.height
                     font.pixelSize: 14
+                    anchors.verticalCenter: parent.verticalCenter
                     background: Rectangle{
                         radius: 6
                         border.width: 2
@@ -218,13 +226,14 @@ Dialog {
 
             Row{
                 id: timeUpperSetting
-                spacing: rowSpacing
+                spacing: rowWidth
                 height: rowHeight
                 Label {
                     // text: "时间上限:" ;
                     text: GlobalLanguageDefine.strTimeUpper + ": "
                     font.pixelSize: 14;
                     font.family: GlobalSystemDefine.fontNormal
+                    verticalAlignment: TextInput.AlignVCenter
                     anchors.verticalCenter: parent.verticalCenter;
                     color: "#004b8d";
                     width: labelWidth
@@ -241,6 +250,7 @@ Dialog {
                     width: textFieldWidth
                     height: parent.height
                     font.pixelSize: 14
+                    anchors.verticalCenter: parent.verticalCenter
                     background: Rectangle{
                         radius: 6
                         border.width: 2
@@ -251,13 +261,14 @@ Dialog {
 
             Row{
                 id: timeLowerSetting
-                spacing: rowSpacing
+                spacing: rowWidth
                 height: rowHeight
                 Label {
                     // text: "时间下限:" ;
                     text: GlobalLanguageDefine.strTimeLower + ": "
                     font.pixelSize: 14;
                     font.family: GlobalSystemDefine.fontNormal
+                    verticalAlignment: TextInput.AlignVCenter
                     anchors.verticalCenter: parent.verticalCenter;
                     color:"#004b8d";
                     width: labelWidth
@@ -275,6 +286,7 @@ Dialog {
                     width: textFieldWidth
                     height: parent.height
                     font.pixelSize: 14
+                    anchors.verticalCenter: parent.verticalCenter
                     background: Rectangle{
                         radius: 6
                         border.width: 2
@@ -285,13 +297,14 @@ Dialog {
 
             Row{
                 id: powerLowerSetting
-                spacing: rowSpacing
+                spacing: rowWidth
                 height: rowHeight
                 Label {
                     // text: "功率下限:" ;
                     text: GlobalLanguageDefine.strPowerLower + ": "
                     font.pixelSize: 14;
                     font.family: GlobalSystemDefine.fontNormal
+                    verticalAlignment: TextInput.AlignVCenter
                     anchors.verticalCenter: parent.verticalCenter;
                     color:"#004b8d";
                     width: labelWidth
@@ -308,6 +321,7 @@ Dialog {
                     width: textFieldWidth
                     height: parent.height
                     font.pixelSize: 14
+                    anchors.verticalCenter: parent.verticalCenter
                     background: Rectangle{
                         radius: 6
                         border.width: 2
@@ -318,13 +332,14 @@ Dialog {
 
             Row{
                 id: powerUpperSetting
-                spacing: rowSpacing
+                spacing: rowWidth
                 height: rowHeight
                 Label {
                     // text: "功率上限:" ;
                     text: GlobalLanguageDefine.strPowerUpper + ": "
                     font.pixelSize: 14;
                     font.family: GlobalSystemDefine.fontNormal
+                    verticalAlignment: TextInput.AlignVCenter
                     anchors.verticalCenter: parent.verticalCenter;
                     color:"#004b8d";
                     width: labelWidth
@@ -341,6 +356,7 @@ Dialog {
                     width: textFieldWidth
                     height: parent.height
                     font.pixelSize: 14
+                    anchors.verticalCenter: parent.verticalCenter
                     background: Rectangle{
                         radius: 6
                         border.width: 2
@@ -351,13 +367,14 @@ Dialog {
 
             Row{
                 id: preheightLower
-                spacing: rowSpacing
+                spacing: rowWidth
                 height: rowHeight
                 Label {
                     // text: "预焊下限:" ;
                     text: GlobalLanguageDefine.strPreheightLower + ": "
                     font.pixelSize: 14;
                     font.family: GlobalSystemDefine.fontNormal
+                    verticalAlignment: TextInput.AlignVCenter
                     anchors.verticalCenter: parent.verticalCenter;
                     color:"#004b8d";
                     width: labelWidth
@@ -374,6 +391,7 @@ Dialog {
                     width: textFieldWidth
                     height: parent.height
                     font.pixelSize: 14
+                    anchors.verticalCenter: parent.verticalCenter
                     background: Rectangle{
                         radius: 6
                         border.width: 2
@@ -384,13 +402,14 @@ Dialog {
 
             Row{
                 id: preheightUpperSetting
-                spacing: rowSpacing
+                spacing: rowWidth
                 height: rowHeight
                 Label {
                     // text: "预焊上限:" ;
                     text: GlobalLanguageDefine.strPreheightUpper + ": "
                     font.pixelSize: 14;
                     font.family: GlobalSystemDefine.fontNormal
+                    verticalAlignment: TextInput.AlignVCenter
                     anchors.verticalCenter: parent.verticalCenter;
                     color:"#004b8d";
                     width: labelWidth
@@ -407,7 +426,7 @@ Dialog {
                     width: textFieldWidth
                     height: parent.height
                     font.pixelSize: 14
-
+                    anchors.verticalCenter: parent.verticalCenter
                     background: Rectangle{
                         radius: 6
                         border.width: 2
@@ -418,13 +437,14 @@ Dialog {
 
             Row{
                 id: postHeightLowerSetting
-                spacing: rowSpacing
+                spacing: rowWidth
                 height: rowHeight
                 Label {
                     // text: "终焊下限:" ;
                     text: GlobalLanguageDefine.strPostHeightLower + ": "
                     font.pixelSize: 14;
                     font.family: GlobalSystemDefine.fontNormal
+                    verticalAlignment: TextInput.AlignVCenter
                     anchors.verticalCenter: parent.verticalCenter;
                     color:"#004b8d";
                     width: labelWidth
@@ -441,7 +461,7 @@ Dialog {
                     width: textFieldWidth
                     height: parent.height
                     font.pixelSize: 14
-
+                    anchors.verticalCenter: parent.verticalCenter
                     background: Rectangle{
                         radius: 6
                         border.width: 2
@@ -452,13 +472,14 @@ Dialog {
 
             Row{
                 id: postHeightUpperSetting
-                spacing: rowSpacing
+                spacing: rowWidth
                 height: rowHeight
                 Label {
                     // text: "终焊上限:" ;
                     text: GlobalLanguageDefine.strPostHeightUpper + ": "
                     font.pixelSize: 14;
                     font.family: GlobalSystemDefine.fontNormal
+                    verticalAlignment: TextInput.AlignVCenter
                     anchors.verticalCenter: parent.verticalCenter;
                     color:"#004b8d";
                     width: labelWidth
@@ -475,7 +496,7 @@ Dialog {
                     width: textFieldWidth
                     height: parent.height
                     font.pixelSize: 14
-
+                    anchors.verticalCenter: parent.verticalCenter
                     background: Rectangle{
                         radius: 6
                         border.width: 2
