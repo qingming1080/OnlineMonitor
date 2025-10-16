@@ -205,4 +205,15 @@ struct _Yield_TrendData
 };
 
 
+struct DateTimeData
+{
+    int year;
+    int month;
+    int day;
+    int hour;
+    int minute;
+    int second;
+};
+
+
 #endif // DEFINE_H

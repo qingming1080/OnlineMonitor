@@ -32,7 +32,7 @@ public:
     Q_INVOKABLE void stopReading();
 
 private slots:
-    void onNewManualData(const _Manual_Data& data);
+    void onNewManualData(int welderID, const QVector<quint16> &inputs, quint32 cycleCount, DateTimeData date);
     void flushPendingData();
 
 
@@ -49,6 +49,11 @@ private:
     QList<_Manual_Data> m_pendingData;
 
     QTimer m_flushTimer;
+
+    HBModbusClient *m_modbusClient = nullptr;
+
+    int m_nextSerial = 1;
+    QMap<int, int> m_rowSerialMap;
 
 };
 

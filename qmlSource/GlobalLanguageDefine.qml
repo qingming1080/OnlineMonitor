@@ -16,6 +16,7 @@ QtObject
     readonly property string strInputRangeError:        qsTr("输入范围错误请重新输入!")
     readonly property string strSystemConfigSuccess:    qsTr("系统配置成功!")
     readonly property string strLoading:                qsTr("载入中")
+    readonly property string strRomveDevice:           qsTr("是否删除当前设备")
     
     // 异常信息相关
     readonly property string strSuspiciousAppeared:     qsTr("出现可疑品")
@@ -26,6 +27,7 @@ QtObject
     readonly property string strAutoLearnExceedLimit:   qsTr("自动学习次数超过上限值")
     readonly property string strAutoLearnCompleted:     qsTr("自动学习已完成")
     readonly property string strModelCreationCompleted: qsTr("创建模型已完成")
+    readonly property string strSetupComplete:          qsTr("配置成功已连接")
     
     // 参数配置相关
     readonly property string strMaxProductionLimit:     qsTr("最大生产批量上下限（2w-100w）")
@@ -49,7 +51,7 @@ QtObject
     readonly property string strCustomized:             qsTr("自定义")
     
     // 系统界面
-    readonly property string strSystemName:             qsTr("全视之眼系统")
+    readonly property string strSystemName:             qsTr("ProvidenceEE")
     readonly property string strProductionInterface:    qsTr("生产界面")
     readonly property string strHistoryRecord:          qsTr("历史记录")
     readonly property string strSystemConfig:           qsTr("系统配置")

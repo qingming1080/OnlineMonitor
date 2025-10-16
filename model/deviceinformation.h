@@ -70,15 +70,15 @@ class DeviceInformation : public QObject
 
     /// 2024/04/07  焊接结果暴露
     // 焊接结果:功率
-    Q_PROPERTY(int power                            READ power          WRITE setPower          NOTIFY powerChanged)
+    Q_PROPERTY(int  power                            READ power          WRITE setPower          NOTIFY powerChanged)
     // 焊接结果:时间
-    Q_PROPERTY(int time                             READ time           WRITE setTime           NOTIFY timeChanged)
+    Q_PROPERTY(int  time                             READ time           WRITE setTime           NOTIFY timeChanged)
     // 焊接结果:能量
-    Q_PROPERTY(int energy                           READ energy         WRITE setEnergy         NOTIFY energyChanged)
+    Q_PROPERTY(int  energy                           READ energy         WRITE setEnergy         NOTIFY energyChanged)
     // 焊接结果:焊前高度
-    Q_PROPERTY(int heightPre                        READ heightPre      WRITE setHeightPre      NOTIFY heightPreChanged)
+    Q_PROPERTY(int  heightPre                        READ heightPre      WRITE setHeightPre      NOTIFY heightPreChanged)
     // 焊接结果:焊后高度
-    Q_PROPERTY(int heightPost                       READ heightPost     WRITE setHeightPost     NOTIFY heightPostChanged)
+    Q_PROPERTY(int  heightPost                       READ heightPost     WRITE setHeightPost     NOTIFY heightPostChanged)
 
     /// 2024/08/01 IP与端口 暴露
     // 远程端口
@@ -138,20 +138,20 @@ public:
     Q_INVOKABLE int notDefinite() const;
     Q_INVOKABLE void setNotDefinite(int newNotDefinite);
 
-    Q_INVOKABLE int power() const;
-    Q_INVOKABLE void setPower(int newPower);
+    Q_INVOKABLE int  power() const;
+    Q_INVOKABLE void setPower(int  newPower);
 
-    Q_INVOKABLE int time() const;
-    Q_INVOKABLE void setTime(int newTime);
+    Q_INVOKABLE int  time() const;
+    Q_INVOKABLE void setTime(int  newTime);
 
-    Q_INVOKABLE int energy() const;
-    Q_INVOKABLE void setEnergy(int newEnergy);
+    Q_INVOKABLE int  energy() const;
+    Q_INVOKABLE void setEnergy(int  newEnergy);
 
-    Q_INVOKABLE int heightPre() const;
-    Q_INVOKABLE void setHeightPre(int newHeightPre);
+    Q_INVOKABLE int  heightPre() const;
+    Q_INVOKABLE void setHeightPre(int  newHeightPre);
 
-    Q_INVOKABLE int heightPost() const;
-    Q_INVOKABLE void setHeightPost(int newHeightPost);
+    Q_INVOKABLE int  heightPost() const;
+    Q_INVOKABLE void setHeightPost(int  newHeightPost);
 
     QString mesIP() const;
     void setMesIP(const QString &newMesIP);
@@ -220,13 +220,13 @@ private:
     int m_suspectCycles{13};
     int m_notDefinite{14};
 
-    int m_power{0};
-    int m_time{0};
-    int m_energy{0};
+    int  m_power{0};
+    int  m_time{0};
+    int  m_energy{0};
     // int m_heightPre{0};
     // int m_heightPost{0};
-    double m_heightPre{0};
-    double m_heightPost{0};
+    int  m_heightPre{0};
+    int  m_heightPost{0};
 
     int m_mesPort{0};
     QString m_mesIP;

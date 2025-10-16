@@ -145,47 +145,61 @@ Rectangle {
                         x: mode == 1 ? 50 : 29
                         y: mode == 1 ? 248 : 289
                         color: mode == 1 ? "#0c5696" : pRgb(43, 112, 173)
-                        eqText1:{
-                            if(DeviceManager.deviceList[0]){
-                                return DeviceManager.deviceList[0].DevInfoObject.power
-                            }
-                            else{
-                                return ""
-                            }
-                        }
-                        eqText2:{
-                            if(DeviceManager.deviceList[0]){
-                                return DeviceManager.deviceList[0].DevInfoObject.time
-                            }
-                            else{
-                                return ""
-                            }
-                        }
+                        // eqText1:{
+                        //     if(DeviceManager.deviceList[0]){
+                        //         return DeviceManager.deviceList[0].DevInfoObject.power
+                        //     }
+                        //     else{
+                        //         return ""
+                        //     }
+                        // }
+                        // eqText2:{
+                        //     if(DeviceManager.deviceList[0]){
+                        //         return DeviceManager.deviceList[0].DevInfoObject.time
+                        //     }
+                        //     else{
+                        //         return ""
+                        //     }
+                        // }
 
-                        eqText3:{
-                            if(DeviceManager.deviceList[0]){
-                                return DeviceManager.deviceList[0].DevInfoObject.energy
-                            }
-                            else{
-                                return ""
-                            }
-                        }
-                        eqText4:{
-                            if(DeviceManager.deviceList[0]){
-                                return DeviceManager.deviceList[0].DevInfoObject.heightPre
-                            }
-                            else{
-                                return ""
-                            }
-                        }
-                        eqText5:{
-                            if(DeviceManager.deviceList[0]){
-                                return DeviceManager.deviceList[0].DevInfoObject.heightPost
-                            }
-                            else{
-                                return ""
-                            }
-                        }
+                        // eqText3:{
+                        //     if(DeviceManager.deviceList[0]){
+                        //         return DeviceManager.deviceList[0].DevInfoObject.energy
+                        //     }
+                        //     else{
+                        //         return ""
+                        //     }
+                        // }
+                        // eqText4:{
+                        //     if(DeviceManager.deviceList[0]){
+                        //         return DeviceManager.deviceList[0].DevInfoObject.heightPre
+                        //     }
+                        //     else{
+                        //         return ""
+                        //     }
+                        // }
+                        // eqText5:{
+                        //     if(DeviceManager.deviceList[0]){
+                        //         return DeviceManager.deviceList[0].DevInfoObject.heightPost
+                        //     }
+                        //     else{
+                        //         return ""
+                        //     }
+                        // }
+                        eqText1: DeviceManager.deviceList[0] ? DeviceManager.deviceList[0].DevInfoObject.power : ""
+
+
+                        eqText2: DeviceManager.deviceList[0] ? DeviceManager.deviceList[0].DevInfoObject.time : ""
+
+
+                        eqText3: DeviceManager.deviceList[0] ? DeviceManager.deviceList[0].DevInfoObject.energy : ""
+
+
+                        eqText4: DeviceManager.deviceList[0] ? DeviceManager.deviceList[0].DevInfoObject.heightPre : ""
+
+
+                        eqText5: DeviceManager.deviceList[0] ? DeviceManager.deviceList[0].DevInfoObject.heightPost : ""
+
                     }
                 }
             }
@@ -233,7 +247,6 @@ Rectangle {
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
                     font.family: GlobalSystemDefine.fontBold
-                    font.bold: true
                 }
                 onPressed: {
                     // if(mt1.text === "新建模型")
@@ -285,7 +298,6 @@ Rectangle {
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
                     font.family: GlobalSystemDefine.fontBold
-                    font.bold: true
                 }
                 onPressed: {
                     // if(mt2.text == "新增设备")
@@ -416,7 +428,6 @@ Rectangle {
                             // text: qsTr("全选")
                             text: GlobalLanguageDefine.strSelectAll
                             font.family: GlobalSystemDefine.fontBold
-                            font.bold: true
                             color: pRgb(153, 204, 255)
                         }
                         Button{
@@ -453,7 +464,6 @@ Rectangle {
                             // text: qsTr("序号")
                             text: GlobalLanguageDefine.strSerialNumber
                             font.family: GlobalSystemDefine.fontBold
-                            font.bold: true
                             color: pRgb(171, 206, 213)
                         }
                         Text{
@@ -464,7 +474,6 @@ Rectangle {
                             // text: qsTr("焊接时间")
                             text: GlobalLanguageDefine.strWeldingTime
                             font.family: GlobalSystemDefine.fontBold
-                            font.bold: true
                             color: pRgb(171, 206, 213)
                         }
                         Text{
@@ -475,7 +484,6 @@ Rectangle {
                             // text: qsTr("功率")
                             text: GlobalLanguageDefine.strPower
                             font.family: GlobalSystemDefine.fontBold
-                            font.bold: true
                             color: pRgb(171, 206, 213)
                         }
                         Text{
@@ -486,7 +494,6 @@ Rectangle {
                             // text: qsTr("能量")
                             text: GlobalLanguageDefine.strEnergy
                             font.family: GlobalSystemDefine.fontBold
-                            font.bold: true
                             color: pRgb(171, 206, 213)
                         }
                         Text{
@@ -497,7 +504,6 @@ Rectangle {
                             // text: qsTr("日期")
                             text: GlobalLanguageDefine.strDate
                             font.family: GlobalSystemDefine.fontBold
-                            font.bold: true
                             color: pRgb(171, 206, 213)
                         }
                         Text{
@@ -508,7 +514,6 @@ Rectangle {
                             // text: qsTr("拉力")
                             text: GlobalLanguageDefine.strTensile
                             font.family: GlobalSystemDefine.fontBold
-                            font.bold: true
                             color: pRgb(171, 206, 213)
                         }
                         Text{
@@ -519,7 +524,6 @@ Rectangle {
                             // text: qsTr("残留度")
                             text: GlobalLanguageDefine.strResidual
                             font.family: GlobalSystemDefine.fontBold
-                            font.bold: true
                             color: pRgb(171, 206, 213)
                         }
 
@@ -617,7 +621,6 @@ Rectangle {
                                     font.pixelSize: 16
                                     text:serial_number
                                     font.family: GlobalSystemDefine.fontBold
-                                    font.bold: true
                                     color: index % 2 !== 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
                                 }
                                 Text{
@@ -626,7 +629,6 @@ Rectangle {
                                     font.pixelSize: 16
                                     text: time
                                     font.family: GlobalSystemDefine.fontBold
-                                    font.bold: true
                                     color: index % 2 !== 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
                                 }
                                 Text{
@@ -635,7 +637,6 @@ Rectangle {
                                     font.pixelSize: 16
                                     text: power
                                     font.family: GlobalSystemDefine.fontBold
-                                    font.bold: true
                                     color: index % 2 !== 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
                                 }
                                 Text{
@@ -644,7 +645,6 @@ Rectangle {
                                     font.pixelSize: 16
                                     text: energy
                                     font.family: GlobalSystemDefine.fontBold
-                                    font.bold: true
                                     color: index % 2 !== 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
                                 }
                                 Text{
@@ -653,7 +653,6 @@ Rectangle {
                                     font.pixelSize: 16
                                     text: create_time
                                     font.family: GlobalSystemDefine.fontBold
-                                    font.bold: true
                                     color: index % 2 !== 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
                                 }
                                 TextField{
@@ -667,7 +666,6 @@ Rectangle {
                                     //color: index % 2 === 0 ? pRgb(175, 195, 216) : "#014c8d"
                                     color: index % 2 === 0 ? "#014c8d" : pRgb(175, 195, 216)
                                     font.family: GlobalSystemDefine.fontBold
-                                    font.bold: true
                                     font.pixelSize: 16
                                     text:actual_force
                                     inputMethodHints: Qt.ImhDigitsOnly
@@ -709,7 +707,6 @@ Rectangle {
                                     //color: index % 2 === 0 ? pRgb(175, 195, 216) : "#014c8d"
                                     color: index % 2 === 0 ? "#014c8d" : pRgb(175, 195, 216)
                                     font.family: GlobalSystemDefine.fontBold
-                                    font.bold: true
                                     font.pixelSize: 16
                                     text:actual_degree
                                     inputMethodHints: Qt.ImhDigitsOnly

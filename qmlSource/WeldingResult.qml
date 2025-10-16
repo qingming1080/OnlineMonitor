@@ -232,7 +232,7 @@ Rectangle {
     Text {
         id:t2
         // text: qsTr("时间") + ": " + eqText2/100.0 + "S"
-        text: GlobalLanguageDefine.strTime + ": " + eqText1 + "S"
+        text: GlobalLanguageDefine.strTime + ": " + eqText2 + "S"
         font.family: GlobalSystemDefine.fontBold
         font.bold: true
         font.pixelSize:/*mode === 1 ? 14: */16

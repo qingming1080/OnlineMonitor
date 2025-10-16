@@ -41,7 +41,7 @@ QtObject
             str += GlobalLanguageDefine.strModelCreationCompleted;
             break;
         case QmlEnum.MESSAGE_setupComplete:
-            str += GlobalLanguageDefine.strModelCreationCompleted;
+            str += GlobalLanguageDefine.strSetupComplete;
             break;
         default:
             break;

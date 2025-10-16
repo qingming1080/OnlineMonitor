@@ -9,6 +9,7 @@
 #include <QMutex>
 #include "model/device.h"
 #include "tools/devicemodbusmapper.h"
+#include "define.h"
 
 class HBModbusClient : public QObject
 {
@@ -215,6 +216,8 @@ signals:
 
     void connectedChanged(bool connected);
 
+    void newInputData(int devId, const QVector<quint16> &inputs, quint32 cycleCoun, DateTimeData date);
+
 public slots:
 
     void onPollTimeout();
@@ -233,7 +236,7 @@ private:
 
     QTimer* m_reconnectTimer;
 
-    QMutex m_mutex;
+    mutable QMutex m_mutex;
 
     bool m_updateLedStatus = false; // 标志位：是否需要更新LED状态
 };

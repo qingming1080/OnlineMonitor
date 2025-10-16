@@ -90,14 +90,6 @@ int DeviceInformation::id() const
     return m_id;
 }
 
-//void DeviceInformation::setId(int newId)
-//{
-//    if (m_id == newId)
-//        return;
-//    m_id = newId;
-//    emit idChanged();
-//}
-
 int DeviceInformation::maxBacth() const
 {
     return m_maxBacth;
@@ -238,64 +230,58 @@ void DeviceInformation::setNotDefinite(int newNotDefinite)
     emit notDefiniteChanged();
 }
 
-int DeviceInformation::power() const
+int  DeviceInformation::power() const
 {
     return m_power;
 }
 
-void DeviceInformation::setPower(int newPower)
+void DeviceInformation::setPower(int  newPower)
 {
-    if (m_power == newPower)
-        return;
-    m_power = newPower;
-    emit powerChanged();
+     m_power = newPower;
+     emit powerChanged();
 }
 
-int DeviceInformation::time() const
+int  DeviceInformation::time() const
 {
     return m_time;
 }
 
-void DeviceInformation::setTime(int newTime)
+void DeviceInformation::setTime(int  newTime)
 {
-    if (m_time == newTime)
-        return;
     m_time = newTime;
     emit timeChanged();
 }
 
-int DeviceInformation::energy() const
+int  DeviceInformation::energy() const
 {
     return m_energy;
 }
 
-void DeviceInformation::setEnergy(int newEnergy)
+void DeviceInformation::setEnergy(int  newEnergy)
 {
-    if (m_energy == newEnergy)
-        return;
     m_energy = newEnergy;
     emit energyChanged();
+
 }
 
-int DeviceInformation::heightPre() const
+int  DeviceInformation::heightPre() const
 {
     return m_heightPre;
 }
 
-void DeviceInformation::setHeightPre(int newHeightPre)
+void DeviceInformation::setHeightPre(int  newHeightPre)
 {
-    if (m_heightPre == newHeightPre)
-        return;
     m_heightPre = newHeightPre;
     emit heightPreChanged();
+
 }
 
-int DeviceInformation::heightPost() const
+int  DeviceInformation::heightPost() const
 {
     return m_heightPost;
 }
 
-void DeviceInformation::setHeightPost(int newHeightPost)
+void DeviceInformation::setHeightPost(int  newHeightPost)
 {
     if (m_heightPost == newHeightPost)
         return;
