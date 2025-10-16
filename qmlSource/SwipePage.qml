@@ -6,6 +6,7 @@ import Device 1.0
 import DeviceInformation 1.0
 import QmlEnum 1.0
 import GlobalMessageDefine 1.0
+import GlobalSystemDefine 1.0
 import DeviceInfoEnum 1.0
 // import Manual 1.0
 
@@ -581,7 +582,7 @@ Rectangle {
                             x:840/8*3 + 840/8/2-width/2
                             font.pixelSize: 16
                             text: power
-                            font.family: fontBold
+                            font.family: GlobalSystemDefine.fontBold
                             font.bold: true
                             color: index % 2 !== 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
                         }
@@ -590,7 +591,7 @@ Rectangle {
                             x:840/8*4 + 840/8/2-width/2
                             font.pixelSize: 16
                             text: energy
-                            font.family: fontBold
+                            font.family: GlobalSystemDefine.fontBold
                             font.bold: true
                             color: index % 2 !== 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
                         }
@@ -599,7 +600,7 @@ Rectangle {
                             x:840/8*5 + 840/8/2-width/2
                             font.pixelSize: 16
                             text: create_time
-                            font.family: fontBold
+                            font.family: GlobalSystemDefine.fontBold
                             font.bold: true
                             color: index % 2 !== 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
                         }
@@ -613,7 +614,7 @@ Rectangle {
                             verticalAlignment: TextInput.AlignVCenter
                             //color: index % 2 === 0 ? pRgb(175, 195, 216) : "#014c8d"
                             color: index % 2 === 0 ? "#014c8d" : pRgb(175, 195, 216)
-                            font.family: fontBold
+                            font.family: GlobalSystemDefine.fontBold
                             font.bold: true
                             font.pixelSize: 16
                             text:actual_force
@@ -655,7 +656,7 @@ Rectangle {
                             verticalAlignment: TextInput.AlignVCenter
                             // color: index % 2 === 0 ? pRgb(175, 195, 216) : "#014c8d"
                             color: index % 2 === 0 ? "#014c8d" : pRgb(175, 195, 216)
-                            font.family: fontBold
+                            font.family: GlobalSystemDefine.fontBold
                             font.bold: true
                             font.pixelSize: 16
                             text:actual_degree

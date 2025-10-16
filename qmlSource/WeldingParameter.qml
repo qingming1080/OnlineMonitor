@@ -79,25 +79,26 @@ Rectangle {
                    selectedTab = 1
                    parameterSetting.open()
                    console.log("deviceID: ", DeviceManager.deviceList[swipeCurrIndex].DevInfoObject.id)
-                   HBModbusClient.readParameterSetting(deviceID)
-                   console.log("energy_set: ",result[0].toString())
-                   console.log("amplitude_set: ",result[1].toString())
-                   console.log("tp_set: ",result[2].toString())
-                   console.log("wp_set: ",result[3].toString())
-                   console.log("time_max_set: ",result[4].toString())
-                   console.log("time_min_set: ",result[5].toString())
-                   console.log("power_min_set: ",result[6].toString())
-                   console.log("power_max_set: ",result[7].toString())
-                   console.log("pre_hehigtmin_set: ",result[8].toString())
-                   console.log("pre_hehigtmax_set: ",result[9].toString())
-                   console.log("post_hehigtmin_set: ",result[10].toString())
-                   console.log("post_hehigtmax_set: ",result[11].toString())
+                   //TODO need to double check
+                   // ModbusClient.readParameterSetting(deviceID)
+                   // console.log("energy_set: ",result[0].toString())
+                   // console.log("amplitude_set: ",result[1].toString())
+                   // console.log("tp_set: ",result[2].toString())
+                   // console.log("wp_set: ",result[3].toString())
+                   // console.log("time_max_set: ",result[4].toString())
+                   // console.log("time_min_set: ",result[5].toString())
+                   // console.log("power_min_set: ",result[6].toString())
+                   // console.log("power_max_set: ",result[7].toString())
+                   // console.log("pre_hehigtmin_set: ",result[8].toString())
+                   // console.log("pre_hehigtmax_set: ",result[9].toString())
+                   // console.log("post_hehigtmin_set: ",result[10].toString())
+                   // console.log("post_hehigtmax_set: ",result[11].toString())
                }
            }
    }
 
     Image {
-        id: im1
+        id: imageEnergy
         source: "qrc:/images/icon_energy.png"
         x:altitudeMode ? 17:30
         y:altitudeMode ? 50:58
@@ -105,118 +106,133 @@ Rectangle {
         height: altitudeMode ? 25:30
     }
     Image {
-        id: im2
+        id: imageAmplitude
         source: "qrc:/images/icon_amplitude.png"
-        anchors.top: im1.bottom
-        anchors.left: im1.left
+        anchors.top: imageEnergy.bottom
+        anchors.left: imageEnergy.left
         anchors.topMargin: altitudeMode ? 12 :22
         width: altitudeMode ? 25:30
         height: altitudeMode ? 25:30
     }
     Image {
-        id: im3
+        id: imageWeldPressure
         source: "qrc:/images/icon_wp.png"
-        anchors.top: im2.bottom
-        anchors.left: im2.left
+        anchors.top: imageAmplitude.bottom
+        anchors.left: imageAmplitude.left
         anchors.topMargin: altitudeMode ? 12 :22
         width: altitudeMode ? 25:30
         height: altitudeMode ? 25:30
     }
     Image {
-        id: im4
+        id: imagePreheight
         source: "qrc:/images/icon_preheight.png"
-        anchors.top: im3.bottom
-        anchors.left: im3.left
+        anchors.top: imageWeldPressure.bottom
+        anchors.left: imageWeldPressure.left
         anchors.topMargin: altitudeMode ? 12 :22
         visible: altitudeMode
         width: altitudeMode ? 25:30
         height: altitudeMode ? 25:30
     }
     Image {
-        id: im5
+        id: imagePostHeight
         source: "qrc:/images/icon_preheight.png"
-        anchors.top: im4.bottom
-        anchors.left: im4.left
+        anchors.top: imagePreheight.bottom
+        anchors.left: imagePreheight.left
         anchors.topMargin: altitudeMode ? 12 :22
         visible: altitudeMode
         width: altitudeMode ? 25:30
         height: altitudeMode ? 25:30
     }
     Text {
-        id: t1
+        id: titleEnergy
         // text: qsTr("能量")
-        text: GlobalLanguageDefine.strEnergy
+        text: GlobalLanguageDefine.strEnergy + ": "
+        height: altitudeMode ? 25:30
+        width: 50
         font.family: GlobalSystemDefine.fontBold
-        font.bold: true
+        // font.bold: true
         font.pixelSize: LanguageManager.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 16 : 14
         color: pRgb(171, 206, 213)
-        anchors.verticalCenter: im1.verticalCenter
-        anchors.left: im1.right
+        verticalAlignment: Text.AlignVCenter
+        anchors.verticalCenter: imageEnergy.verticalCenter
+        anchors.left: imageEnergy.right
         anchors.leftMargin: 10
     }
     Text {
-        id: t2
+        id: titleAmplitude
         // text: qsTr("振幅")
-        text: GlobalLanguageDefine.strAmplitude
+        text: GlobalLanguageDefine.strAmplitude + ": "
+        height: altitudeMode ? 25:30
+        width: 50
         font.family: GlobalSystemDefine.fontBold
-        font.bold: true
+        // font.bold: true
         font.pixelSize: LanguageManager.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 16 : 14
         color: pRgb(171, 206, 213)
-        anchors.verticalCenter: im2.verticalCenter
-        anchors.left: im2.right
+        verticalAlignment: Text.AlignVCenter
+        anchors.verticalCenter: imageAmplitude.verticalCenter
+        anchors.left: imageAmplitude.right
         anchors.leftMargin: 10
     }
     Text {
-        id: t3
+        id: titleWeldPressure
         // text: qsTr("压力")
-        text: GlobalLanguageDefine.strWeldPressure
+        text: GlobalLanguageDefine.strWeldPressure + ": "
+        height: altitudeMode ? 25:30
+        width: 50
         font.family: GlobalSystemDefine.fontBold
-        font.bold: true
+        // font.bold: true
         font.pixelSize: LanguageManager.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 16 : 14
         color: pRgb(171, 206, 213)
-        anchors.verticalCenter: im3.verticalCenter
-        anchors.left: im3.right
+        verticalAlignment: Text.AlignVCenter
+        anchors.verticalCenter: imageWeldPressure.verticalCenter
+        anchors.left: imageWeldPressure.right
         anchors.leftMargin: 10
     }
     Text {
-        id: t4
+        id: titlePreheight
         // text: qsTr("焊前高度")
-        text: GlobalLanguageDefine.strPreWeldHeight
+        text: GlobalLanguageDefine.strPreWeldHeight + ": "
+        height: altitudeMode ? 25:30
+        width: 50
         font.family: GlobalSystemDefine.fontBold
-        font.bold: true
+        // font.bold: true
         font.pixelSize: LanguageManager.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 16 : 14
         color: pRgb(171, 206, 213)
-        anchors.verticalCenter: im4.verticalCenter
-        anchors.left: im4.right
+        verticalAlignment: Text.AlignVCenter
+        anchors.verticalCenter: imageWeldPressure.verticalCenter
+        anchors.left: imageWeldPressure.right
         anchors.leftMargin: 10
         visible: altitudeMode
     }
     Text {
-        id: t5
+        id: titlePostHeight
         // text: qsTr("焊后高度")
-        text: GlobalLanguageDefine.strPostWeldHeight
+        text: GlobalLanguageDefine.strPostWeldHeight + ": "
+        height: altitudeMode ? 25:30
+        width: 50
         font.family: GlobalSystemDefine.fontBold
-        font.bold: true
+        // font.bold: true
         font.pixelSize: LanguageManager.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 16 : 14
         color: pRgb(171, 206, 213)
-        anchors.verticalCenter: im5.verticalCenter
-        anchors.left: im5.right
+        verticalAlignment: Text.AlignVCenter
+        anchors.verticalCenter: imagePostHeight.verticalCenter
+        anchors.left: imagePostHeight.right
         anchors.leftMargin: 10
         visible: altitudeMode
     }
     TextField{
-        id:f1
+        id: fieldEnergy
         width: /*mode === 1 ? 75:*/98
         height: altitudeMode ? 28 :30
-        anchors.left: t1.right
+        anchors.left: titleEnergy.right
         anchors.leftMargin: altitudeMode ? 38:25
-        anchors.verticalCenter: t1.verticalCenter
+        anchors.verticalCenter: titleEnergy.verticalCenter
         horizontalAlignment: TextInput.AlignHCenter
-        verticalAlignment: TextInput.AlignVCenter
+        // verticalAlignment: TextInput.AlignBottom
         color: pRgb(43, 112, 173)
         font.family: GlobalSystemDefine.fontBold
         font.bold: true
-        font.pixelSize: 18
+        font.pixelSize: 16
         inputMethodHints: Qt.ImhDigitsOnly
         background: Rectangle{
             radius: 6
@@ -227,25 +243,24 @@ Rectangle {
         MouseArea {
             anchors.fill: parent
             onPressed: {
-                f1.forceActiveFocus()
+                fieldEnergy.forceActiveFocus()
                 keyboardType = 0
             }
         }
     }
     TextField{
-        id:f2
+        id: fieldAmplitude
         width: /*mode === 1 ? 75:*/98
         height: altitudeMode ? 28 :30
-        anchors.horizontalCenter: f1.horizontalCenter
-        anchors.top: f1.bottom
-        anchors.topMargin: !altitudeMode ? 23 : 10
-        anchors.right:  f1.right
+        anchors.left: titleAmplitude.right
+        anchors.leftMargin: altitudeMode ? 38:25
+        anchors.verticalCenter: titleAmplitude.verticalCenter
         horizontalAlignment: TextInput.AlignHCenter
-        verticalAlignment: TextInput.AlignVCenter
+        // verticalAlignment: TextInput.AlignVCenter
         color: pRgb(43, 112, 173)
         font.family: GlobalSystemDefine.fontBold
         font.bold: true
-        font.pixelSize: 18
+        font.pixelSize: 16
         inputMethodHints: Qt.ImhDigitsOnly
         background: Rectangle{
             radius: 6
@@ -256,25 +271,24 @@ Rectangle {
         MouseArea {
             anchors.fill: parent
             onPressed: {
-                f2.forceActiveFocus()
+                fieldAmplitude.forceActiveFocus()
                 keyboardType = 0
             }
         }
     }
     TextField{
-        id:f3
+        id: fieldWeldPressure
         width: /*mode === 1 ? 75:*/98
         height: altitudeMode ? 28 :30
-        anchors.horizontalCenter: f2.horizontalCenter
-        anchors.top: f2.bottom
-        anchors.topMargin: !altitudeMode ? 23 : 10
-        anchors.right:  f2.right
+        anchors.left: titleWeldPressure.right
+        anchors.leftMargin: altitudeMode ? 38:25
+        anchors.verticalCenter: titleWeldPressure.verticalCenter
         horizontalAlignment: TextInput.AlignHCenter
-        verticalAlignment: TextInput.AlignVCenter
+        // verticalAlignment: TextInput.AlignVCenter
         color: pRgb(43, 112, 173)
         font.family: GlobalSystemDefine.fontBold
         font.bold: true
-        font.pixelSize: 18
+        font.pixelSize: 16
         inputMethodHints: Qt.ImhDigitsOnly
         background: Rectangle{
             radius: 6
@@ -285,25 +299,24 @@ Rectangle {
         MouseArea {
             anchors.fill: parent
             onPressed: {
-                f3.forceActiveFocus()
+                fieldWeldPressure.forceActiveFocus()
                 keyboardType = 0
             }
         }
     }
     TextField{
-        id:f4
+        id: fieldPreheight
         width: /*mode === 1 ? 75:*/98
         height: altitudeMode ? 28 :30
-        anchors.horizontalCenter: f3.horizontalCenter
-        anchors.top: f3.bottom
-        anchors.topMargin: 10
-        anchors.right:  f3.right
+        anchors.left: titlePreheight.right
+        anchors.leftMargin: altitudeMode ? 38:25
+        anchors.verticalCenter: titlePreheight.verticalCenter
         horizontalAlignment: TextInput.AlignHCenter
-        verticalAlignment: TextInput.AlignVCenter
+        // verticalAlignment: TextInput.AlignVCenter
         color: pRgb(43, 112, 173)
         font.family: GlobalSystemDefine.fontBold
         font.bold: true
-        font.pixelSize: 18
+        font.pixelSize: 16
         inputMethodHints: Qt.ImhDigitsOnly
         background: Rectangle{
             radius: 6
@@ -315,25 +328,24 @@ Rectangle {
         MouseArea {
             anchors.fill: parent
             onPressed: {
-                f4.forceActiveFocus()
+                fieldPreheight.forceActiveFocus()
                 keyboardType = 0
             }
         }
     }
     TextField{
-        id:f5
+        id: fieldPostHeight
         width: /*mode === 1 ? 75:*/98
         height: altitudeMode ? 28 :30
-        anchors.horizontalCenter: f4.horizontalCenter
-        anchors.top: f4.bottom
-        anchors.topMargin: 10
-        anchors.right:  f4.right
+        anchors.left: titlePostHeight.right
+        anchors.leftMargin: altitudeMode ? 38:25
+        anchors.verticalCenter: titlePostHeight.verticalCenter
         horizontalAlignment: TextInput.AlignHCenter
-        verticalAlignment: TextInput.AlignVCenter
+        // verticalAlignment: TextInput.AlignVCenter
         color: pRgb(43, 112, 173)
         font.family: GlobalSystemDefine.fontBold
         font.bold: true
-        font.pixelSize: 18
+        font.pixelSize: 16
         inputMethodHints: Qt.ImhDigitsOnly
         background: Rectangle{
             radius: 6
@@ -345,7 +357,7 @@ Rectangle {
         MouseArea {
             anchors.fill: parent
             onPressed: {
-                f5.forceActiveFocus()
+                fieldPostHeight.forceActiveFocus()
                 keyboardType = 0
             }
         }

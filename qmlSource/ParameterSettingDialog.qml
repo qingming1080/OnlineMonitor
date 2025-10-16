@@ -11,31 +11,20 @@ Dialog {
     // anchors.centerIn: parent
     width: 567
     height: 360
-    font.pixelSize: 18
-    font.family: "Arial"
+    // font.pixelSize: 18
+    // font.family: "Arial"
+
+    readonly property int labelWidth: 100
+    readonly property int textFieldWidth: 70
+    readonly property int rowHeight: 30
+    readonly property int rowSpacing: 15
+    readonly property int columnSpacing: 200
+    readonly property int elementSpacing: 30
 
     background: Rectangle {
         color: "#b1d5db"
         radius: 6
-
-        Rectangle{
-            width: 567
-            height:30
-            color: "#004b8d"
-            Text {
-                //anchors.horizontalCenter: parent.horizontalCenter
-                anchors.centerIn: parent
-                // text: qsTr("设置参数")
-                text: GlobalLanguageDefine.strSetParameters
-                font.pixelSize: 18
-                color: pRgb(153, 204, 255)
-                horizontalAlignment: Text.AlignHCenter
-                verticalAlignment: Text.AlignVCenter
-                font.family: GlobalSystemDefine.fontBold
-                font.bold: true
-            }
-        }
-
+        anchors.fill: parent
         MouseArea {
             id: dragArea
             anchors.fill: parent
@@ -62,405 +51,454 @@ Dialog {
         }
     }
 
- 
+    header:Rectangle{
+        width: 567
+        height: 30
+        color: "#004b8d"
+        Text {
+            anchors.centerIn: parent
+            // text: qsTr("设置参数")
+            text: GlobalLanguageDefine.strSetParameters
+            font.pixelSize: 18
+            color: pRgb(153, 204, 255)
+            horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignVCenter
+            font.family: GlobalSystemDefine.fontBold
+            font.bold: true
+        }
+    }
+    contentHeight: 360 - 30
+    contentWidth: 567
 
+    contentItem: Rectangle {
+        height: 360 - 30
+        width: 567
 
-    contentItem: Flickable {
-        width: parent.width
-        height: parent.height
-        contentHeight: column.height  // 自动调整高度
+        Grid {
+            id: grid
+            rowSpacing: elementSpacing
+            columnSpacing: columnSpacing
+            columns: 3
+            rows: 4
+            anchors.centerIn: parent
+            width: parent.width
+            height: rowHeight * 4 + elementSpacing * 3
 
-
-        Rectangle{
-            x:260
-            y:45
-
-            Column {
-                id: column
-                spacing: 30
-                anchors.horizontalCenter: parent.horizontalCenter
-
-                Row {
-                    spacing: 15
-                    anchors.horizontalCenter: parent.horizontalCenter
-
-                    Label {
-                        // text: "能        量:"
-                        text: GlobalLanguageDefine.strEnergy + ": "
-                        font.pixelSize: 14
-                        font.family: "Arial"
-                        anchors.verticalCenter: parent.verticalCenter
-                        color:"#004b8d"
-                        font.bold: true
-                    }
-
-                    TextField {
-                        id: energy_set
-                        text: "0"
-                        inputMethodHints: Qt.ImhFormattedNumbersOnly
-                        color: "#004b8d"
-                        horizontalAlignment: TextInput.AlignHCenter
-                        verticalAlignment: TextInput.AlignVCenter
-                        font.family: "Arial"
-                        font.bold: true
-                        width: 70
-                        height: 30
-                        font.pixelSize: 14
-                        background: Rectangle{
-                            radius: 6
-                            border.width: 2
-                            border.color: "#004b8d"
-                        }
-                    }
-
-
-                    Label {
-                        // text: "振        幅:"
-                        text: GlobalLanguageDefine.strAmplitude + ": "
-                        font.pixelSize: 14
-                        font.family: "Arial"
-                        anchors.verticalCenter: parent.verticalCenter
-                        color:"#004b8d"
-                        font.bold: true
-                    }
-
-
-                    TextField {
-                        id: amplitude_set
-                        text: "0"
-                        inputMethodHints: Qt.ImhFormattedNumbersOnly
-                        color: "#004b8d"
-                        horizontalAlignment: TextInput.AlignHCenter
-                        verticalAlignment: TextInput.AlignVCenter
-                        font.family: "Arial"
-                        font.bold: true
-                        width: 70
-                        height: 30
-                        font.pixelSize: 14
-                        background: Rectangle{
-                            radius: 6
-                            border.width: 2
-                            border.color: "#004b8d"
-                        }
-                    }
-
-
-                    Label {
-                        // text: "焊接压力:"
-                        text: GlobalLanguageDefine.strWeldPressure + ": "
-                        font.pixelSize: 14
-                        font.family: "Arial"
-                        anchors.verticalCenter: parent.verticalCenter
-                        color:"#004b8d"
-                        font.bold: true
-                    }
-
-                    TextField {
-                        id: wp_set
-                        text: "0"
-                        inputMethodHints: Qt.ImhFormattedNumbersOnly
-                        color: "#004b8d"
-                        horizontalAlignment: TextInput.AlignHCenter
-                        verticalAlignment: TextInput.AlignVCenter
-                        font.family: "Arial"
-                        font.bold: true
-                        width: 70
-                        height: 30
-                        font.pixelSize: 14
-
-                        background: Rectangle{
-                            radius: 6
-                            border.width: 2
-                            border.color: "#004b8d"
-                        }
+            Row{
+                id: energeSetting
+                spacing: rowSpacing
+                height: rowHeight
+                width: labelWidth + rowSpacing + textFieldWidth
+                Label {
+                    // text: "能        量:"
+                    text: GlobalLanguageDefine.strEnergy + ": "
+                    font.pixelSize: 14
+                    font.family: GlobalSystemDefine.fontNormal
+                    anchors.verticalCenter: parent.verticalCenter
+                    color: "#004b8d"
+                    width: labelWidth
+                    height: parent.height
+                }
+                TextField {
+                    id: energy_set
+                    text: "0"
+                    inputMethodHints: Qt.ImhFormattedNumbersOnly
+                    color: "#004b8d"
+                    // horizontalAlignment: TextInput.AlignHCenter
+                    // verticalAlignment: TextInput.AlignVCenter
+                    font.family: GlobalSystemDefine.fontNormal
+                    width: textFieldWidth
+                    height: parent.height
+                    font.pixelSize: 14
+                    background: Rectangle{
+                        radius: 6
+                        border.width: 2
+                        border.color: "#004b8d"
                     }
                 }
+            }
 
-
-                Row {
-                    spacing: 15
-                    anchors.horizontalCenter: parent.horizontalCenter
-
-                    Label {
-                        // text: "触发压力:" ;
-                        text: GlobalLanguageDefine.strTriggerPressure + ": "
-                        font.pixelSize: 14;
-                        font.family: "Arial" ;
-                        anchors.verticalCenter: parent.verticalCenter;
-                        color:"#004b8d";
-                        font.bold: true
-                    }
-
-                    TextField {
-                        id: tp_set
-                        text: "0"
-                        inputMethodHints: Qt.ImhFormattedNumbersOnly
-                        color: "#004b8d"
-                        horizontalAlignment: TextInput.AlignHCenter
-                        verticalAlignment: TextInput.AlignVCenter
-                        font.family: "Arial"
-                        font.bold: true
-                        width:70
-                        height: 30
-                        font.pixelSize: 14
-
-                        background: Rectangle{
-                            radius: 6
-                            border.width: 2
-                            border.color: "#004b8d"
-                        }
-                    }
-
-                    Label {
-                        // text: "时间上限:" ;
-                        text: GlobalLanguageDefine.strTimeUpper + ": "
-                        font.pixelSize: 14;
-                        font.family: "Arial" ;
-                        anchors.verticalCenter: parent.verticalCenter;
-                        color:"#004b8d";
-                        font.bold: true
-                    }
-
-                    TextField {
-                        id: time_max_set
-                        text: "0"
-                        inputMethodHints: Qt.ImhFormattedNumbersOnly
-                        color: "#004b8d"
-                        horizontalAlignment: TextInput.AlignHCenter
-                        verticalAlignment: TextInput.AlignVCenter
-                        font.family: "Arial"
-                        font.bold: true
-                        width: 70
-                        height: 30
-                        font.pixelSize: 14
-
-                        background: Rectangle{
-                            radius: 6
-                            border.width: 2
-                            border.color: "#004b8d"
-                        }
-                    }
-
-                    Label {
-                        // text: "时间下限:" ;
-                        text: GlobalLanguageDefine.strTimeLower + ": "
-                        font.pixelSize: 14;
-                        font.family: "Arial" ;
-                        anchors.verticalCenter: parent.verticalCenter;
-                        color:"#004b8d";
-                        font.bold: true
-                    }
-
-                    TextField {
-                        id: time_min_set
-                        text: "0"
-                        inputMethodHints: Qt.ImhFormattedNumbersOnly
-                        color: "#004b8d"
-                        horizontalAlignment: TextInput.AlignHCenter
-                        verticalAlignment: TextInput.AlignVCenter
-                        font.family: "Arial"
-                        font.bold: true
-                        width: 70
-                        height: 30
-                        font.pixelSize: 14
-
-                        background: Rectangle{
-                            radius: 6
-                            border.width: 2
-                            border.color: "#004b8d"
-                        }
+            Row{
+                id: amplitudeSetting
+                spacing: rowSpacing
+                height: rowHeight
+                width: labelWidth + rowSpacing + textFieldWidth
+                Label {
+                    // text: "振        幅:"
+                    text: GlobalLanguageDefine.strAmplitude + ": "
+                    font.pixelSize: 14
+                    font.family: GlobalSystemDefine.fontNormal
+                    anchors.verticalCenter: parent.verticalCenter
+                    color:"#004b8d"
+                    width: labelWidth
+                    height: parent.height
+                }
+                TextField {
+                    id: amplitude_set
+                    text: "0"
+                    inputMethodHints: Qt.ImhFormattedNumbersOnly
+                    color: "#004b8d"
+                    // horizontalAlignment: TextInput.AlignHCenter
+                    // verticalAlignment: TextInput.AlignVCenter
+                    font.family: GlobalSystemDefine.fontNormal
+                    width: textFieldWidth
+                    height: parent.height
+                    font.pixelSize: 14
+                    background: Rectangle{
+                        radius: 6
+                        border.width: 2
+                        border.color: "#004b8d"
                     }
                 }
+            }
 
-                Row {
-                    spacing: 15
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    Label {
-                        // text: "功率下限:" ;
-                        text: GlobalLanguageDefine.strPowerLower + ": "
-                        font.pixelSize: 14;
-                        font.family: "Arial" ;
-                        anchors.verticalCenter: parent.verticalCenter;
-                        color:"#004b8d";
-                        font.bold: true
-                    }
-
-                    TextField {
-                        id: power_min_set
-                        text: "0"
-                        inputMethodHints: Qt.ImhFormattedNumbersOnly
-                        color: "#004b8d"
-                        horizontalAlignment: TextInput.AlignHCenter
-                        verticalAlignment: TextInput.AlignVCenter
-                        font.family: "Arial"
-                        font.bold: true
-                        width: 70
-                        height: 30
-                        font.pixelSize: 14
-
-                        background: Rectangle{
-                            radius: 6
-                            border.width: 2
-                            border.color: "#004b8d"
-                        }
-                    }
-
-                    Label {
-                        // text: "功率上限:" ;
-                        text: GlobalLanguageDefine.strPowerUpper + ": "
-                        font.pixelSize: 14;
-                        font.family: "Arial" ;
-                        anchors.verticalCenter: parent.verticalCenter;
-                        color:"#004b8d";
-                        font.bold: true
-                    }
-
-                    TextField {
-                        id: power_max_set
-                        text: "0"
-                        inputMethodHints: Qt.ImhFormattedNumbersOnly
-                        color: "#004b8d"
-                        horizontalAlignment: TextInput.AlignHCenter
-                        verticalAlignment: TextInput.AlignVCenter
-                        font.family: "Arial"
-                        font.bold: true
-                        width: 70
-                        height: 30
-                        font.pixelSize: 14
-
-                        background: Rectangle{
-                            radius: 6
-                            border.width: 2
-                            border.color: "#004b8d"
-                        }
-                    }
-                    Label {
-                        // text: "预焊下限:" ;
-                        text: GlobalLanguageDefine.strPreheightLower + ": "
-                        font.pixelSize: 14;
-                        font.family: "Arial" ;
-                        anchors.verticalCenter: parent.verticalCenter;
-                        color:"#004b8d";
-                        font.bold: true
-                    }
-
-                    TextField {
-                        id: pre_hehigtmin_set
-                        text: "0"
-                        inputMethodHints: Qt.ImhFormattedNumbersOnly
-                        color: "#004b8d"
-                        horizontalAlignment: TextInput.AlignHCenter
-                        verticalAlignment: TextInput.AlignVCenter
-                        font.family: "Arial"
-                        font.bold: true
-                        width: 70
-                        height: 30
-                        font.pixelSize: 14
-
-                        background: Rectangle{
-                            radius: 6
-                            border.width: 2
-                            border.color: "#004b8d"
-                        }
+            Row{
+                id: weldPressureSetting
+                spacing: rowSpacing
+                height: rowHeight
+                width: labelWidth + rowSpacing + textFieldWidth
+                Label {
+                    // text: "焊接压力:"
+                    text: GlobalLanguageDefine.strWeldPressure + ": "
+                    font.pixelSize: 14
+                    font.family: GlobalSystemDefine.fontNormal
+                    anchors.verticalCenter: parent.verticalCenter
+                    color:"#004b8d"
+                    width: labelWidth
+                    height: parent.height
+                }
+                TextField {
+                    id: wp_set
+                    text: "0"
+                    inputMethodHints: Qt.ImhFormattedNumbersOnly
+                    color: "#004b8d"
+                    // horizontalAlignment: TextInput.AlignHCenter
+                    // verticalAlignment: TextInput.AlignVCenter
+                    font.family: GlobalSystemDefine.fontNormal
+                    width: textFieldWidth
+                    height: parent.height
+                    font.pixelSize: 14
+                    background: Rectangle{
+                        radius: 6
+                        border.width: 2
+                        border.color: "#004b8d"
                     }
                 }
-                Row {
-                    spacing: 15
-                    anchors.horizontalCenter: parent.horizontalCenter
+            }
 
-                    Label {
-                        // text: "预焊上限:" ;
-                        text: GlobalLanguageDefine.strPreheightUpper + ": "
-                        font.pixelSize: 14;
-                        font.family: "Arial" ;
-                        anchors.verticalCenter: parent.verticalCenter;
-                        color:"#004b8d";
-                        font.bold: true
+            Row{
+                id: triggerPressureSetting
+                spacing: rowSpacing
+                height: rowHeight
+                width: labelWidth + rowSpacing + textFieldWidth
+                Label {
+                    // text: "触发压力:" ;
+                    text: GlobalLanguageDefine.strTriggerPressure + ": "
+                    font.pixelSize: 14;
+                    font.family: GlobalSystemDefine.fontNormal
+                    anchors.verticalCenter: parent.verticalCenter;
+                    color:"#004b8d";
+                    width: labelWidth
+                    height: parent.height
+                }
+                TextField {
+                    id: tp_set
+                    text: "0"
+                    inputMethodHints: Qt.ImhFormattedNumbersOnly
+                    color: "#004b8d"
+                    horizontalAlignment: TextInput.AlignHCenter
+                    verticalAlignment: TextInput.AlignVCenter
+                    font.family: GlobalSystemDefine.fontNormal
+                    width: textFieldWidth
+                    height: parent.height
+                    font.pixelSize: 14
+                    background: Rectangle{
+                        radius: 6
+                        border.width: 2
+                        border.color: "#004b8d"
                     }
+                }
+            }
 
-                    TextField {
-                        id: pre_hehigtmax_set
-                        text: "0"
-                        inputMethodHints: Qt.ImhFormattedNumbersOnly
-                        color: "#004b8d"
-                        horizontalAlignment: TextInput.AlignHCenter
-                        verticalAlignment: TextInput.AlignVCenter
-                        font.family: "Arial"
-                        font.bold: true
-                        width: 70
-                        height: 30
-                        font.pixelSize: 14
-
-                        background: Rectangle{
-                            radius: 6
-                            border.width: 2
-                            border.color: "#004b8d"
-                        }
+            Row{
+                id: timeUpperSetting
+                spacing: rowSpacing
+                height: rowHeight
+                width: labelWidth + rowSpacing + textFieldWidth
+                Label {
+                    // text: "时间上限:" ;
+                    text: GlobalLanguageDefine.strTimeUpper + ": "
+                    font.pixelSize: 14;
+                    font.family: GlobalSystemDefine.fontNormal
+                    anchors.verticalCenter: parent.verticalCenter;
+                    color: "#004b8d";
+                    width: labelWidth
+                    height: parent.height
+                }
+                TextField {
+                    id: time_max_set
+                    text: "0"
+                    inputMethodHints: Qt.ImhFormattedNumbersOnly
+                    color: "#004b8d"
+                    horizontalAlignment: TextInput.AlignHCenter
+                    verticalAlignment: TextInput.AlignVCenter
+                    font.family: GlobalSystemDefine.fontNormal
+                    width: textFieldWidth
+                    height: parent.height
+                    font.pixelSize: 14
+                    background: Rectangle{
+                        radius: 6
+                        border.width: 2
+                        border.color: "#004b8d"
                     }
+                }
+            }
 
-                    Label {
-                        // text: "终焊下限:" ;
-                        text: GlobalLanguageDefine.strPostHeightLower + ": "
-                        font.pixelSize: 14;
-                        font.family: "Arial" ;
-                        anchors.verticalCenter: parent.verticalCenter;
-                        color:"#004b8d";
-                        font.bold: true
+            Row{
+                id: timeLowerSetting
+                spacing: rowSpacing
+                height: rowHeight
+                width: labelWidth + rowSpacing + textFieldWidth
+                Label {
+                    // text: "时间下限:" ;
+                    text: GlobalLanguageDefine.strTimeLower + ": "
+                    font.pixelSize: 14;
+                    font.family: GlobalSystemDefine.fontNormal
+                    anchors.verticalCenter: parent.verticalCenter;
+                    color:"#004b8d";
+                    width: labelWidth
+                    height: parent.height
+                }
+                TextField {
+                    id: time_min_set
+                    text: "0"
+                    inputMethodHints: Qt.ImhFormattedNumbersOnly
+                    color: "#004b8d"
+                    horizontalAlignment: TextInput.AlignHCenter
+                    verticalAlignment: TextInput.AlignVCenter
+                    font.family: GlobalSystemDefine.fontNormal
+                    // font.bold: true
+                    width: textFieldWidth
+                    height: parent.height
+                    font.pixelSize: 14
+                    background: Rectangle{
+                        radius: 6
+                        border.width: 2
+                        border.color: "#004b8d"
                     }
+                }
+            }
 
-                    TextField {
-                        id: post_hehigtmin_set
-                        text: "0"
-                        inputMethodHints: Qt.ImhFormattedNumbersOnly
-                        color: "#004b8d"
-                        horizontalAlignment: TextInput.AlignHCenter
-                        verticalAlignment: TextInput.AlignVCenter
-                        font.family: "Arial"
-                        font.bold: true
-                        width: 70
-                        height: 30
-                        font.pixelSize: 14
-
-                        background: Rectangle{
-                            radius: 6
-                            border.width: 2
-                            border.color: "#004b8d"
-                        }
+            Row{
+                id: powerLowerSetting
+                spacing: rowSpacing
+                height: rowHeight
+                width: labelWidth + rowSpacing + textFieldWidth
+                Label {
+                    // text: "功率下限:" ;
+                    text: GlobalLanguageDefine.strPowerLower + ": "
+                    font.pixelSize: 14;
+                    font.family: GlobalSystemDefine.fontNormal
+                    anchors.verticalCenter: parent.verticalCenter;
+                    color:"#004b8d";
+                    width: labelWidth
+                    height: parent.height
+                }
+                TextField {
+                    id: power_min_set
+                    text: "0"
+                    inputMethodHints: Qt.ImhFormattedNumbersOnly
+                    color: "#004b8d"
+                    horizontalAlignment: TextInput.AlignHCenter
+                    verticalAlignment: TextInput.AlignVCenter
+                    font.family: GlobalSystemDefine.fontNormal
+                    width: textFieldWidth
+                    height: parent.height
+                    font.pixelSize: 14
+                    background: Rectangle{
+                        radius: 6
+                        border.width: 2
+                        border.color: "#004b8d"
                     }
+                }
+            }
 
-                    Label {
-                        // text: "终焊上限:" ;
-                        text: GlobalLanguageDefine.strPostHeightUpper + ": "
-                        font.pixelSize: 14;
-                        font.family: "Arial" ;
-                        anchors.verticalCenter: parent.verticalCenter;
-                        color:"#004b8d";
-                        font.bold: true
+            Row{
+                id: powerUpperSetting
+                spacing: rowSpacing
+                height: rowHeight
+                width: labelWidth + rowSpacing + textFieldWidth
+                Label {
+                    // text: "功率上限:" ;
+                    text: GlobalLanguageDefine.strPowerUpper + ": "
+                    font.pixelSize: 14;
+                    font.family: GlobalSystemDefine.fontNormal
+                    anchors.verticalCenter: parent.verticalCenter;
+                    color:"#004b8d";
+                    width: labelWidth
+                    height: parent.height
+                }
+                TextField {
+                    id: power_max_set
+                    text: "0"
+                    inputMethodHints: Qt.ImhFormattedNumbersOnly
+                    color: "#004b8d"
+                    horizontalAlignment: TextInput.AlignHCenter
+                    verticalAlignment: TextInput.AlignVCenter
+                    font.family: GlobalSystemDefine.fontNormal
+                    width: textFieldWidth
+                    height: parent.height
+                    font.pixelSize: 14
+                    background: Rectangle{
+                        radius: 6
+                        border.width: 2
+                        border.color: "#004b8d"
                     }
+                }
+            }
 
-                    TextField {
-                        id: post_hehigtmax_set
-                        text: "0"
-                        inputMethodHints: Qt.ImhFormattedNumbersOnly
-                        color: "#004b8d"
-                        horizontalAlignment: TextInput.AlignHCenter
-                        verticalAlignment: TextInput.AlignVCenter
-                        font.family: "Arial"
-                        font.bold: true
-                        width: 70
-                        height: 30
-                        font.pixelSize: 14
-
-                        background: Rectangle{
-                            radius: 6
-                            border.width: 2
-                            border.color: "#004b8d"
-                        }
+            Row{
+                id: preheightLower
+                spacing: rowSpacing
+                height: rowHeight
+                width: labelWidth + rowSpacing + textFieldWidth
+                Label {
+                    // text: "预焊下限:" ;
+                    text: GlobalLanguageDefine.strPreheightLower + ": "
+                    font.pixelSize: 14;
+                    font.family: GlobalSystemDefine.fontNormal
+                    anchors.verticalCenter: parent.verticalCenter;
+                    color:"#004b8d";
+                    width: labelWidth
+                    height: parent.height
+                }
+                TextField {
+                    id: pre_heightmin_set
+                    text: "0"
+                    inputMethodHints: Qt.ImhFormattedNumbersOnly
+                    color: "#004b8d"
+                    horizontalAlignment: TextInput.AlignHCenter
+                    verticalAlignment: TextInput.AlignVCenter
+                    font.family: GlobalSystemDefine.fontNormal
+                    width: textFieldWidth
+                    height: parent.height
+                    font.pixelSize: 14
+                    background: Rectangle{
+                        radius: 6
+                        border.width: 2
+                        border.color: "#004b8d"
                     }
+                }
+            }
 
+            Row{
+                id: preheightUpperSetting
+                spacing: rowSpacing
+                height: rowHeight
+                width: labelWidth + rowSpacing + textFieldWidth
+                Label {
+                    // text: "预焊上限:" ;
+                    text: GlobalLanguageDefine.strPreheightUpper + ": "
+                    font.pixelSize: 14;
+                    font.family: GlobalSystemDefine.fontNormal
+                    anchors.verticalCenter: parent.verticalCenter;
+                    color:"#004b8d";
+                    width: labelWidth
+                    height: parent.height
+                }
+                TextField {
+                    id: pre_heightmax_set
+                    text: "0"
+                    inputMethodHints: Qt.ImhFormattedNumbersOnly
+                    color: "#004b8d"
+                    horizontalAlignment: TextInput.AlignHCenter
+                    verticalAlignment: TextInput.AlignVCenter
+                    font.family: GlobalSystemDefine.fontNormal
+                    width: textFieldWidth
+                    height: parent.height
+                    font.pixelSize: 14
+
+                    background: Rectangle{
+                        radius: 6
+                        border.width: 2
+                        border.color: "#004b8d"
+                    }
+                }
+            }
+
+            Row{
+                id: postHeightLowerSetting
+                spacing: rowSpacing
+                height: rowHeight
+                width: labelWidth + rowSpacing + textFieldWidth
+                Label {
+                    // text: "终焊下限:" ;
+                    text: GlobalLanguageDefine.strPostHeightLower + ": "
+                    font.pixelSize: 14;
+                    font.family: GlobalSystemDefine.fontNormal
+                    anchors.verticalCenter: parent.verticalCenter;
+                    color:"#004b8d";
+                    width: labelWidth
+                    height: parent.height
+                }
+                TextField {
+                    id: post_hehigtmin_set
+                    text: "0"
+                    inputMethodHints: Qt.ImhFormattedNumbersOnly
+                    color: "#004b8d"
+                    horizontalAlignment: TextInput.AlignHCenter
+                    verticalAlignment: TextInput.AlignVCenter
+                    font.family: GlobalSystemDefine.fontNormal
+                    // font.bold: true
+                    width: 70
+                    height: 30
+                    font.pixelSize: 14
+
+                    background: Rectangle{
+                        radius: 6
+                        border.width: 2
+                        border.color: "#004b8d"
+                    }
+                }
+            }
+
+            Row{
+                id: postHeightUpperSetting
+                spacing: rowSpacing
+                height: rowHeight
+                width: labelWidth + rowSpacing + textFieldWidth
+                Label {
+                    // text: "终焊上限:" ;
+                    text: GlobalLanguageDefine.strPostHeightUpper + ": "
+                    font.pixelSize: 14;
+                    font.family: GlobalSystemDefine.fontNormal
+                    anchors.verticalCenter: parent.verticalCenter;
+                    color:"#004b8d";
+                    width: labelWidth
+                    height: parent.height
+                }
+                TextField {
+                    id: post_hehigtmax_set
+                    text: "0"
+                    inputMethodHints: Qt.ImhFormattedNumbersOnly
+                    color: "#004b8d"
+                    horizontalAlignment: TextInput.AlignHCenter
+                    verticalAlignment: TextInput.AlignVCenter
+                    font.family: GlobalSystemDefine.fontNormal
+                    // font.bold: true
+                    width: 70
+                    height: 30
+                    font.pixelSize: 14
+
+                    background: Rectangle{
+                        radius: 6
+                        border.width: 2
+                        border.color: "#004b8d"
+                    }
                 }
             }
         }
+
         Button {
             x:120
             y:290
@@ -565,23 +603,24 @@ Dialog {
         }
 
         Connections {
-               target: HBModbusClient  // 指定信号来源对象
+            //TODO Need to do something
+           //     target: ModbusClient  // 指定信号来源对象
 
-               onParameterdata: {  // 连接到 parameterdata 信号
-                   console.log("Received parameter data:", result);
-                   energy_set.text = result[0].toString()
-                   amplitude_set.text = result[1].toString()
-                   tp_set.text = result[2].toString()
-                   wp_set.text = result[3].toString()
-                   time_max_set.text = result[4].toString()
-                   time_min_set.text = result[5].toString()
-                   power_min_set.text = result[6].toString()
-                   power_max_set.text = result[7].toString()
-                   pre_hehigtmin_set.text = result[8].toString()
-                   pre_hehigtmax_set.text = result[9].toString()
-                   post_hehigtmin_set.text = result[10].toString()
-                   post_hehigtmax_set.text = result[11].toString()
-               }
+           //     onParameterdata: {  // 连接到 parameterdata 信号
+           //         console.log("Received parameter data:", result);
+           //         energy_set.text = result[0].toString()
+           //         amplitude_set.text = result[1].toString()
+           //         tp_set.text = result[2].toString()
+           //         wp_set.text = result[3].toString()
+           //         time_max_set.text = result[4].toString()
+           //         time_min_set.text = result[5].toString()
+           //         power_min_set.text = result[6].toString()
+           //         power_max_set.text = result[7].toString()
+           //         pre_hehigtmin_set.text = result[8].toString()
+           //         pre_hehigtmax_set.text = result[9].toString()
+           //         post_hehigtmin_set.text = result[10].toString()
+           //         post_hehigtmax_set.text = result[11].toString()
+           //     }
            }
     }
 
