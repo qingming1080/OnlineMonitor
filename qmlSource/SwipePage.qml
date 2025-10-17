@@ -217,7 +217,8 @@ Rectangle {
             // else if(mt1.text === qsTr("创建模型"))
             else if(mt1.text === GlobalLanguageDefine.strCreateModel)
             {
-                if(DeviceManager.deviceList[swipeCurrIndex].DevInfoObject.sample <= listSize){
+                if(DeviceManager.deviceList[swipeCurrIndex].DevInfoObject.sample <= listSize)
+                {
                     loader.sourceComponent = mode1
                     loader1.sourceComponent = weld1
                     Manual.save()

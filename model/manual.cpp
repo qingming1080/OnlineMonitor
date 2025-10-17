@@ -255,6 +255,7 @@ void Manual::stopReading()
 
 void Manual::onNewManualData(int welderID, const QVector<quint16> &inputs, quint32 cycleCount, DateTimeData date)
 {
+    beginInsertRows(QModelIndex(), 0, 0);
     _Manual_Data data;
     data.welder_id     = welderID;
     data.cycle_count   = cycleCount;
@@ -271,8 +272,6 @@ void Manual::onNewManualData(int welderID, const QVector<quint16> &inputs, quint
     data.create_time   = UtilityFunction::buildDateTimeString(date).left(10);;
     data.serial_number = m_nextSerial++;
     data.selected      = false;
-
-    beginInsertRows(QModelIndex(), 0, 0);
     m_data.prepend(data);
     endInsertRows();
 }
