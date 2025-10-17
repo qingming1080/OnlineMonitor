@@ -101,7 +101,7 @@ Dialog {
                 }
                 TextField {
                     id: energy_set
-                    text: "0"
+                    text: DeviceManager.deviceList[swipeCurrIndex].DevInfoObject.preEnegy + GlobalLanguageDefine.strEnergyUnit
                     inputMethodHints: Qt.ImhFormattedNumbersOnly
                     color: "#004b8d"
                     horizontalAlignment: TextInput.AlignHCenter
@@ -136,7 +136,7 @@ Dialog {
                 }
                 TextField {
                     id: amplitude_set
-                    text: "0"
+                    text: DeviceManager.deviceList[swipeCurrIndex].DevInfoObject.preAmplitude + GlobalLanguageDefine.strAmplitudeUnit
                     inputMethodHints: Qt.ImhFormattedNumbersOnly
                     color: "#004b8d"
                     horizontalAlignment: TextInput.AlignHCenter
@@ -171,7 +171,7 @@ Dialog {
                 }
                 TextField {
                     id: wp_set
-                    text: "0"
+                    text: DeviceManager.deviceList[swipeCurrIndex].DevInfoObject.preWP + GlobalLanguageDefine.strPressureUnit
                     inputMethodHints: Qt.ImhFormattedNumbersOnly
                     color: "#004b8d"
                     horizontalAlignment: TextInput.AlignHCenter
@@ -206,7 +206,7 @@ Dialog {
                 }
                 TextField {
                     id: tp_set
-                    text: "0"
+                    text: DeviceManager.deviceList[swipeCurrIndex].DevInfoObject.preTP + GlobalLanguageDefine.strPressureUnit
                     inputMethodHints: Qt.ImhFormattedNumbersOnly
                     color: "#004b8d"
                     horizontalAlignment: TextInput.AlignHCenter
@@ -241,7 +241,7 @@ Dialog {
                 }
                 TextField {
                     id: time_max_set
-                    text: "0"
+                    text: DeviceManager.deviceList[swipeCurrIndex].DevInfoObject.preTimeMax + GlobalLanguageDefine.strWeldTimeUnit
                     inputMethodHints: Qt.ImhFormattedNumbersOnly
                     color: "#004b8d"
                     horizontalAlignment: TextInput.AlignHCenter
@@ -276,7 +276,7 @@ Dialog {
                 }
                 TextField {
                     id: time_min_set
-                    text: "0"
+                    text: DeviceManager.deviceList[swipeCurrIndex].DevInfoObject.preTimeMin + GlobalLanguageDefine.strWeldTimeUnit
                     inputMethodHints: Qt.ImhFormattedNumbersOnly
                     color: "#004b8d"
                     horizontalAlignment: TextInput.AlignHCenter
@@ -312,7 +312,7 @@ Dialog {
                 }
                 TextField {
                     id: power_min_set
-                    text: "0"
+                    text: DeviceManager.deviceList[swipeCurrIndex].DevInfoObject.prePowerMin + GlobalLanguageDefine.strPowerUnit
                     inputMethodHints: Qt.ImhFormattedNumbersOnly
                     color: "#004b8d"
                     horizontalAlignment: TextInput.AlignHCenter
@@ -347,7 +347,7 @@ Dialog {
                 }
                 TextField {
                     id: power_max_set
-                    text: "0"
+                    text: DeviceManager.deviceList[swipeCurrIndex].DevInfoObject.prePowerMax + GlobalLanguageDefine.strPowerUnit
                     inputMethodHints: Qt.ImhFormattedNumbersOnly
                     color: "#004b8d"
                     horizontalAlignment: TextInput.AlignHCenter
@@ -382,7 +382,7 @@ Dialog {
                 }
                 TextField {
                     id: pre_heightmin_set
-                    text: "0"
+                    text: DeviceManager.deviceList[swipeCurrIndex].DevInfoObject.preHeightMin + GlobalLanguageDefine.strHeightUnit
                     inputMethodHints: Qt.ImhFormattedNumbersOnly
                     color: "#004b8d"
                     horizontalAlignment: TextInput.AlignHCenter
@@ -417,7 +417,7 @@ Dialog {
                 }
                 TextField {
                     id: pre_heightmax_set
-                    text: "0"
+                    text: DeviceManager.deviceList[swipeCurrIndex].DevInfoObject.preHeightMax + GlobalLanguageDefine.strHeightUnit
                     inputMethodHints: Qt.ImhFormattedNumbersOnly
                     color: "#004b8d"
                     horizontalAlignment: TextInput.AlignHCenter
@@ -452,7 +452,7 @@ Dialog {
                 }
                 TextField {
                     id: post_hehigtmin_set
-                    text: "0"
+                    text: DeviceManager.deviceList[swipeCurrIndex].DevInfoObject.postHeightMin + GlobalLanguageDefine.strHeightUnit
                     inputMethodHints: Qt.ImhFormattedNumbersOnly
                     color: "#004b8d"
                     horizontalAlignment: TextInput.AlignHCenter
@@ -487,7 +487,7 @@ Dialog {
                 }
                 TextField {
                     id: post_hehigtmax_set
-                    text: "0"
+                    text: DeviceManager.deviceList[swipeCurrIndex].DevInfoObject.postHeightMax + GlobalLanguageDefine.strHeightUnit
                     inputMethodHints: Qt.ImhFormattedNumbersOnly
                     color: "#004b8d"
                     horizontalAlignment: TextInput.AlignHCenter
@@ -529,55 +529,6 @@ Dialog {
             }
             onClicked: {
                 console.log("deviceIDPARMSEdIOLOG:",deviceID)
-
-                // 从 TextField 获取用户输入的数据
-                // var energyValue = energy_set.text
-                // var amplitudeValue = amplitude_set.text
-                // var tpValue = tp_set.text
-                // var wpValue = wp_set.text
-                // var timeMaxValue = time_max_set.text
-                // var timeMinValue = time_min_set.text
-                // var powerMinValue = power_min_set.text
-                // var powerMaxValue = power_max_set.text
-                // var preHeightMinValue = pre_hehigtmin_set.text
-                // var preHeightMaxValue = pre_hehigtmax_set.text
-                // var postHeightMinValue = post_hehigtmin_set.text
-                // var postHeightMaxValue = post_hehigtmax_set.text
-
-                // 校验函数：检查输入值是否为有效数字
-                    // function isValidNumber(value) {
-                    //     return !isNaN(value) && value.trim() !== "" && value !== null;
-                    // }
-
-                    // // 校验所有输入值
-                    // if (!isValidNumber(energyValue) || !isValidNumber(amplitudeValue) || !isValidNumber(tpValue) ||
-                    //     !isValidNumber(wpValue) || !isValidNumber(timeMaxValue) || !isValidNumber(timeMinValue) ||
-                    //     !isValidNumber(powerMinValue) || !isValidNumber(powerMaxValue) || !isValidNumber(preHeightMinValue) ||
-                    //     !isValidNumber(preHeightMaxValue) || !isValidNumber(postHeightMinValue) || !isValidNumber(postHeightMaxValue)) {
-
-                    //     console.log("请输入有效的数字！");
-                    //     return;  // 退出操作，不发送数据
-                    // }
-
-                // 转换为整数数组传递给 C++ 层
-                // HBModbusClient.writeParameterSetting(
-                //             deviceID,
-                //             [
-                //                 parseInt(energyValue),
-                //                 parseInt(amplitudeValue),
-                //                 parseInt(tpValue),
-                //                 parseInt(wpValue),
-                //                 parseInt(timeMaxValue),
-                //                 parseInt(timeMinValue),
-                //                 parseInt(powerMinValue),
-                //                 parseInt(powerMaxValue),
-                //                 parseInt(preHeightMinValue),
-                //                 parseInt(preHeightMaxValue),
-                //                 parseInt(postHeightMinValue),
-                //                 parseInt(postHeightMaxValue)
-                //             ]
-                //             );
-
                 parameterSetting.close()
 
             }

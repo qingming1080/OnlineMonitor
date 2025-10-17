@@ -57,7 +57,7 @@ HBModbusClient::~HBModbusClient()
 void HBModbusClient::Init()
 {
     m_timer = new QTimer(this);
-    m_timer->setInterval(300);
+    m_timer->setInterval(1000);
     connect(m_timer, &QTimer::timeout, this, &HBModbusClient::onPollTimeout);
 
     m_reconnectTimer = new QTimer(this);
@@ -291,15 +291,16 @@ void HBModbusClient::processRegister(QModbusDataUnit::RegisterType type, int add
 {
     switch(type) {
     case QModbusDataUnit::HoldingRegisters:
-        switch(address)
-        {
-        case SYS_RTC_YY:
-            break;
-        case SYS_RTC_YY_MM:
-            break;
-        default:
-            break;
-        }
+        // switch(address)
+        // {
+        // case SYS_RTC_YY:
+        //     break;
+        // case SYS_RTC_YY_MM:
+        //     break;
+        // default:
+        //     break;
+        // }
+        m_Holdings[address] = value;
         break;
     case QModbusDataUnit::InputRegisters:
         if (address % DEV_INPUT_REGISTERS_COUNT == DEV_CYCLE_COUNT_H || address % DEV_INPUT_REGISTERS_COUNT == DEV_CYCLE_COUNT_L)
@@ -394,6 +395,11 @@ void HBModbusClient::dispatchInputsOnCycleCountChanged()
             lastCycleCount[i] = cycleCount;
             QVector<quint16> inputs = getDeviceInputs(i+1);
             DataValidator::isValidForDatabase(inputs);
+            if (!DataValidator::isValidForDatabase(inputs))
+            {
+                qDebug() << "设备" << i+1 << "输入数据异常，丢弃该条数据";
+                continue;
+            }
             Device* device = (i < devList.size()) ? devList.at(i) : nullptr;
             if (device && device->getDevInfoObject() && inputs.size() >= DEV_INPUT_REGISTERS_COUNT)
             {
@@ -646,3 +652,89 @@ void HBModbusClient::writeDeviceConfig(int deviceId, const DeviceModbusMapper::D
     writeHoldingRegisters(start, devcieRegs);
 }
 
+void HBModbusClient::dispatchHoldingRegisters()
+{
+    const QList<Device*>& devList = DeviceManager::getInstance()->deviceList();
+
+    for (int i = 0; i < DEV_COUNT && i < devList.size(); ++i)
+    {
+        Device* device = devList.at(i);
+        DeviceInformation* deviceInfo = device->getDevInfoObject();
+        QVector<quint16> holdings = getDeviceHoldings(i + 1);
+
+        QMetaObject::invokeMethod(deviceInfo, [holdings, deviceInfo]() {
+            int index = 0;
+            deviceInfo->setPreEnegyRaw(holdings[index++]);
+            deviceInfo->setPreAmplitudeRaw(holdings[index++]);
+            deviceInfo->setPreTPRaw(holdings[index++]);
+            deviceInfo->setPreWPRaw(holdings[index++]);
+            deviceInfo->setPreTimeMinRaw(holdings[index++]);
+            deviceInfo->setPreTimeMaxRaw(holdings[index++]);
+            deviceInfo->setPrePowerMinRaw(holdings[index++]);
+            deviceInfo->setPrePowerMaxRaw(holdings[index++]);
+            deviceInfo->setPreHeightMinRaw(holdings[index++]);
+            deviceInfo->setPreHeightMaxRaw(holdings[index++]);
+            deviceInfo->setPostHeightMinRaw(holdings[index++]);
+            deviceInfo->setPostHeightMaxRaw(holdings[index++]);
+        }, Qt::QueuedConnection);
+    }
+}
+
+QVector<quint16> HBModbusClient::getDeviceHoldings(int devId) const
+{
+    if (devId < 1 || devId > DEV_COUNT)
+        return {};
+
+    QVector<quint16> holdings;
+    holdings.reserve(12);
+
+    int baseIndex = SYS_HOLDING_REGISTERS_COUNT + (devId - 1) * DEV_HOLDING_REGISTERS_COUNT;
+
+    holdings.append(m_Holdings[baseIndex + DEV_ENERGY_SET]);
+    holdings.append(m_Holdings[baseIndex + DEV_AMPLITUDE_SET]);
+    holdings.append(m_Holdings[baseIndex + DEV_TP_SET]);
+    holdings.append(m_Holdings[baseIndex + DEV_WP_SET]);
+    holdings.append(m_Holdings[baseIndex + DEV_TIME_MIN]);
+    holdings.append(m_Holdings[baseIndex + DEV_TIME_MAX]);
+    holdings.append(m_Holdings[baseIndex + DEV_POWER_MIN]);
+    holdings.append(m_Holdings[baseIndex + DEV_POWER_MAX]);
+    holdings.append(m_Holdings[baseIndex + DEV_PRE_HEIGHT_MIN]);
+    holdings.append(m_Holdings[baseIndex + DEV_PRE_HEIGHT_MAX]);
+    holdings.append(m_Holdings[baseIndex + DEV_POST_HEIGHT_MIN]);
+    holdings.append(m_Holdings[baseIndex + DEV_POST_HEIGHT_MAX]);
+
+    return holdings;
+}
+
+void HBModbusClient::writeDeviceHoldings(int devId, const QVector<quint16>& holdings)
+{
+    if (devId < 1 || devId > DEV_COUNT || holdings.size() < 12)
+    {
+        qWarning() << "writeDeviceHoldings: invalid devId or holdings size";
+        return;
+    }
+
+    int baseIndex = SYS_HOLDING_REGISTERS_COUNT + (devId - 1) * DEV_HOLDING_REGISTERS_COUNT;
+
+    QVector<quint16> valuesToWrite;
+    valuesToWrite.reserve(12);
+
+    int index = 0;
+    valuesToWrite.append(holdings[index++]);
+    valuesToWrite.append(holdings[index++]);
+    valuesToWrite.append(holdings[index++]);
+    valuesToWrite.append(holdings[index++]);
+    valuesToWrite.append(holdings[index++]);
+    valuesToWrite.append(holdings[index++]);
+    valuesToWrite.append(holdings[index++]);
+    valuesToWrite.append(holdings[index++]);
+    valuesToWrite.append(holdings[index++]);
+    valuesToWrite.append(holdings[index++]);
+    valuesToWrite.append(holdings[index++]);
+    valuesToWrite.append(holdings[index++]);
+
+    writeHoldingRegisters(baseIndex + DEV_ENERGY_SET, valuesToWrite);
+
+    for (int i = 0; i < 12; ++i)
+        m_Holdings[baseIndex + DEV_ENERGY_SET + i] = valuesToWrite[i];
+}

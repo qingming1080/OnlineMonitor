@@ -212,7 +212,10 @@ void Manual::save()
 {
     for(int i = 0; i < m_data.size(); ++i)
     {
+        if (m_data[i].selected)
         DataBaseManager::getInstance()->insertManualRow(m_data.at(i));
+        QModelIndex idx = index(i);
+        emit dataChanged(idx, idx, {QmlEnum::MANUAL_COLUMN::MANUAL_selected});
     }
 }
 
@@ -259,14 +262,13 @@ void Manual::onNewManualData(int welderID, const QVector<quint16> &inputs, quint
     _Manual_Data data;
     data.welder_id     = welderID;
     data.cycle_count   = cycleCount;
-    data.energy        = inputs[HBModbusClient::DEV_ENERGY];
-    data.amplitude     = inputs[HBModbusClient::DEV_AMPLITUDE];
-    data.pressure      = inputs[HBModbusClient::DEV_WP];
-    // data.time          = inputs[HBModbusClient::DEV_TIME];
-    data.time          = QString::number(inputs[HBModbusClient::DEV_TIME]);
-    data.power         = inputs[HBModbusClient::DEV_POWER];
-    data.pre_height    = inputs[HBModbusClient::DEV_PRE_HEIGHT];
-    data.post_height   = inputs[HBModbusClient::DEV_POST_HEIGHT];
+    data.energy        = inputs[DEV_ENERGY];
+    data.amplitude     = inputs[DEV_AMPLITUDE];
+    data.pressure      = inputs[DEV_WP];
+    data.time          = QString::number(inputs[DEV_TIME]);
+    data.power         = inputs[DEV_POWER];
+    data.pre_height    = inputs[DEV_PRE_HEIGHT];
+    data.post_height   = inputs[DEV_POST_HEIGHT];
     data.actual_force  = 0;
     data.actual_degree = 0;
     data.create_time   = UtilityFunction::buildDateTimeString(date).left(10);;

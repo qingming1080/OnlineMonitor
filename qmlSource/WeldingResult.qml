@@ -225,7 +225,7 @@ Rectangle {
         // y: powerY
         anchors.verticalCenter: imagePower.verticalCenter
         // text: qsTr("功率") + ": " + eqText1 + "W"
-        text: GlobalLanguageDefine.strPower + ": " + eqText1 + "W"
+        text: GlobalLanguageDefine.strPower + ": " + eqText1 + GlobalLanguageDefine.strPowerUnit
         font.family: GlobalSystemDefine.fontBold
         font.bold: true
         font.pixelSize:/*mode === 1 ? 14:*/ 16
@@ -234,7 +234,7 @@ Rectangle {
     Text {
         id: titleWeldTime
         // text: qsTr("时间") + ": " + eqText2/100.0 + "S"
-        text: GlobalLanguageDefine.strTime + ": " + eqText2 + "S"
+        text: GlobalLanguageDefine.strTime + ": " + eqText2 + GlobalLanguageDefine.strWeldTimeUnit
         font.family: GlobalSystemDefine.fontBold
         font.bold: true
         font.pixelSize:/*mode === 1 ? 14: */16
@@ -245,7 +245,7 @@ Rectangle {
     Text {
         id: titleEnergy
         // text: qsTr("能量") + ": " + eqText3 + "J"
-        text: GlobalLanguageDefine.strEnergy + ": " + eqText3 + "J"
+        text: GlobalLanguageDefine.strEnergy + ": " + eqText3 + GlobalLanguageDefine.strEnergyUnit
         font.family: GlobalSystemDefine.fontBold
         font.bold: true
         font.pixelSize:/*mode === 1 ? 14:*/ 16
@@ -257,7 +257,7 @@ Rectangle {
     Text {
         id: titlePreheight
         // text: qsTr("焊前高度") + ": " + eqText4/100.0 + "mm"
-        text: GlobalLanguageDefine.strPreWeldHeight + ": " + eqText4 + "mm"
+        text: GlobalLanguageDefine.strPreWeldHeight + ": " + eqText4 + GlobalLanguageDefine.strHeightUnit
         font.family: GlobalSystemDefine.fontBold
         font.bold: true
         font.pixelSize: /*mode === 1 ? 14:*/16
@@ -270,7 +270,7 @@ Rectangle {
     Text {
         id: titlePostHeight
         // text: qsTr("焊后高度") + ": " + eqText5/100.0 + "mm"
-        text: GlobalLanguageDefine.strPostWeldHeight + ": " + eqText5 + "mm"
+        text: GlobalLanguageDefine.strPostWeldHeight + ": " + eqText5 + GlobalLanguageDefine.strHeightUnit
         font.family: GlobalSystemDefine.fontBold
         font.bold: true
         font.pixelSize: /*mode === 1 ? 14:*/16

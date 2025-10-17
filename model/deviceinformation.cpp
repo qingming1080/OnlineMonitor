@@ -6,6 +6,7 @@
 #include <QDebug>
 #include <QElapsedTimer>
 #include "log/localrecord.h"
+#include "tools/utilityfunction.h"
 
 DeviceInformation::DeviceInformation(int welderID, QObject *parent)
     : QObject{parent}, m_id(welderID)
@@ -327,3 +328,278 @@ void DeviceInformation::setMesPort(int newMesPort)
     m_mesPort = newMesPort;
     emit mesPortChanged();
 }
+
+
+QString DeviceInformation::getPreEnegy() const
+{
+    return UtilityFunction::displayValue(m_preEnegy);
+}
+QString DeviceInformation::getPreAmplitude() const
+{
+    return UtilityFunction::displayValue(m_preAmplitude);
+}
+QString DeviceInformation::getPreTP() const
+{
+    return UtilityFunction::displayValue(m_preTP,10,1);
+}
+QString DeviceInformation::getPreWP() const
+{
+    return UtilityFunction::displayValue(m_preWP,10,1);
+}
+QString DeviceInformation::getPreTimeMin() const
+{
+    return UtilityFunction::displayValue(m_preTimeMin,100,2);
+}
+QString DeviceInformation::getPreTimeMax() const
+{
+    return UtilityFunction::displayValue(m_preTimeMax,100,2);
+}
+QString DeviceInformation::getPrePowerMin() const
+{
+    return UtilityFunction::displayValue(m_prePowerMin);
+}
+QString DeviceInformation::getPrePowerMax() const
+{
+    return UtilityFunction::displayValue(m_prePowerMax);
+}
+QString DeviceInformation::getPreHeightMin() const
+{
+    return UtilityFunction::displayValue(m_preHeightMin, 100, 2);
+}
+QString DeviceInformation::getPreHeightMax() const
+{
+    return UtilityFunction::displayValue(m_preHeightMax, 100, 2);
+}
+QString DeviceInformation::getPostHeightMin() const
+{
+    return UtilityFunction::displayValue(m_postHeightMin, 100, 2);
+}
+QString DeviceInformation::getPostHeightMax() const
+{
+    return UtilityFunction::displayValue(m_postHeightMax, 100, 2);
+}
+
+void DeviceInformation::setPreEnegy(const QString &value)
+{
+    bool ok;
+    double numericValue = value.toDouble(&ok);
+    if(ok)
+    {
+        m_preEnegy = static_cast<int>(numericValue);
+        emit preEnegyChanged();
+    }
+}
+
+void DeviceInformation::setPreAmplitude(const QString &value)
+{
+    bool ok;
+    double numericValue = value.toDouble(&ok);
+    if(ok)
+    {
+        m_preAmplitude = static_cast<int>(numericValue);
+        emit preAmplitudeChanged();
+    }
+}
+
+void DeviceInformation::setPreTP(const QString &value)
+{
+    bool ok;
+    double numericValue = value.toDouble(&ok);
+    if(ok)
+    {
+        m_preTP = static_cast<int>(numericValue * 1.0);
+        emit preTPChanged();
+    }
+}
+
+void DeviceInformation::setPreWP(const QString &value)
+{
+    bool ok;
+    double numericValue = value.toDouble(&ok);
+    if(ok)
+    {
+        m_preWP = static_cast<int>(numericValue * 1.0);
+        emit preWPChanged();
+    }
+}
+
+void DeviceInformation::setPreTimeMin(const QString &value)
+{
+    bool ok;
+    double numericValue = value.toDouble(&ok);
+    if(ok)
+    {
+        m_preTimeMin = static_cast<int>(numericValue * 100);
+        emit preTimeMinChanged();
+    }
+}
+
+void DeviceInformation::setPreTimeMax(const QString &value)
+{
+    bool ok;
+    double numericValue = value.toDouble(&ok);
+    if(ok)
+    {
+        m_preTimeMax = static_cast<int>(numericValue * 100);
+        emit preTimeMaxChanged();
+    }
+}
+
+void DeviceInformation::setPrePowerMin(const QString &value)
+{
+    bool ok;
+    double numericValue = value.toDouble(&ok);
+    if(ok)
+    {
+        m_prePowerMin = static_cast<int>(numericValue);
+        emit prePowerMinChanged();
+    }
+}
+
+void DeviceInformation::setPrePowerMax(const QString &value)
+{
+    bool ok;
+    double numericValue = value.toDouble(&ok);
+    if(ok)
+    {
+        m_prePowerMax = static_cast<int>(numericValue);
+        emit prePowerMaxChanged();
+    }
+}
+
+void DeviceInformation::setPreHeightMin(const QString &value)
+{
+    bool ok;
+    double numericValue = value.toDouble(&ok);
+    if(ok)
+    {
+        m_preHeightMin = static_cast<int>(numericValue * 100);
+        emit preHeightMinChanged();
+    }
+}
+
+void DeviceInformation::setPreHeightMax(const QString &value)
+{
+    bool ok;
+    double numericValue = value.toDouble(&ok);
+    if(ok)
+    {
+        m_preHeightMax = static_cast<int>(numericValue * 100);
+        emit preHeightMaxChanged();
+    }
+}
+
+void DeviceInformation::setPostHeightMin(const QString &value)
+{
+    bool ok;
+    double numericValue = value.toDouble(&ok);
+    if(ok)
+    {
+        m_postHeightMin = static_cast<int>(numericValue * 100);
+        emit postHeightMinChanged();
+    }
+}
+
+void DeviceInformation::setPostHeightMax(const QString &value)
+{
+    bool ok;
+    double numericValue = value.toDouble(&ok);
+    if(ok)
+    {
+        m_postHeightMax = static_cast<int>(numericValue * 100);
+        emit postHeightMaxChanged();
+    }
+}
+void DeviceInformation::setPreEnegyRaw(int value)
+{
+    if(m_preEnegy != value)
+    {
+        m_preEnegy = value; emit preEnegyChanged();
+    }
+}
+void DeviceInformation::setPreAmplitudeRaw(int value)
+{
+    if(m_preAmplitude != value)
+    {
+        m_preAmplitude = value; emit preAmplitudeChanged();
+    }
+}
+void DeviceInformation::setPreTPRaw(int value)
+{
+    if(m_preTP != value)
+    {
+        m_preTP = value; emit preTPChanged();
+    }
+}
+void DeviceInformation::setPreWPRaw(int value)
+{
+    if(m_preWP != value)
+    {
+        m_preWP = value; emit preWPChanged();
+    }
+}
+void DeviceInformation::setPreTimeMinRaw(int value)
+{
+    if(m_preTimeMin != value)
+    {
+        m_preTimeMin = value;
+        emit preTimeMinChanged();
+    }
+}
+void DeviceInformation::setPreTimeMaxRaw(int value)
+{
+    if(m_preTimeMax != value)
+    {
+        m_preTimeMax = value;
+        emit preTimeMaxChanged();
+    }
+}
+void DeviceInformation::setPrePowerMinRaw(int value)
+{
+    if(m_prePowerMin != value)
+    {
+        m_prePowerMin = value;
+        emit prePowerMinChanged();
+    }
+}
+void DeviceInformation::setPrePowerMaxRaw(int value)
+{
+    if(m_prePowerMax != value)
+    {
+        m_prePowerMax = value;
+        emit prePowerMaxChanged();
+    }
+}
+void DeviceInformation::setPreHeightMinRaw(int value)
+{
+    if(m_preHeightMin != value)
+    {
+        m_preHeightMin = value;
+        emit preHeightMinChanged();
+    }
+}
+void DeviceInformation::setPreHeightMaxRaw(int value)
+{
+    if(m_preHeightMax != value)
+    {
+        m_preHeightMax = value;
+        emit preHeightMaxChanged();
+    }
+}
+void DeviceInformation::setPostHeightMinRaw(int value)
+{
+    if(m_postHeightMin != value)
+    {
+        m_postHeightMin = value;
+        emit postHeightMinChanged();
+    }
+}
+void DeviceInformation::setPostHeightMaxRaw(int value)
+{
+    if(m_postHeightMax != value)
+    {
+        m_postHeightMax = value;
+        emit postHeightMaxChanged();
+    }
+}
+

@@ -46,6 +46,7 @@ Rectangle {
                    selectedTab = 0  // 设置选中标签为焊接参数
                    console.log("焊接参数点击了！")
                    // 在这里执行相应的操作
+
                }
            }
        }
@@ -79,20 +80,7 @@ Rectangle {
                    selectedTab = 1
                    parameterSetting.open()
                    console.log("deviceID: ", DeviceManager.deviceList[swipeCurrIndex].DevInfoObject.id)
-                   //TODO need to double check
-                   // ModbusClient.readParameterSetting(deviceID)
-                   // console.log("energy_set: ",result[0].toString())
-                   // console.log("amplitude_set: ",result[1].toString())
-                   // console.log("tp_set: ",result[2].toString())
-                   // console.log("wp_set: ",result[3].toString())
-                   // console.log("time_max_set: ",result[4].toString())
-                   // console.log("time_min_set: ",result[5].toString())
-                   // console.log("power_min_set: ",result[6].toString())
-                   // console.log("power_max_set: ",result[7].toString())
-                   // console.log("pre_hehigtmin_set: ",result[8].toString())
-                   // console.log("pre_hehigtmax_set: ",result[9].toString())
-                   // console.log("post_hehigtmin_set: ",result[10].toString())
-                   // console.log("post_hehigtmax_set: ",result[11].toString())
+                ModbusClient.dispatchHoldingRegisters()
                }
            }
    }
@@ -239,7 +227,7 @@ Rectangle {
             border.width: 2
             border.color: "#99ccff"
         }
-        text: eqText1 + "J"
+        text: eqText1 + GlobalLanguageDefine.strEnergyUnit
         MouseArea {
             anchors.fill: parent
             onPressed: {
@@ -267,7 +255,7 @@ Rectangle {
             border.width: 2
             border.color: "#99ccff"
         }
-        text:eqText2 + "μm"
+        text:eqText2 + GlobalLanguageDefine.strAmplitudeUnit
         MouseArea {
             anchors.fill: parent
             onPressed: {
@@ -295,7 +283,7 @@ Rectangle {
             border.width: 2
             border.color: "#99ccff"
         }
-        text:eqText3 + "Psi"
+        text:eqText3 + GlobalLanguageDefine.strPressureUnit
         MouseArea {
             anchors.fill: parent
             onPressed: {
@@ -323,7 +311,7 @@ Rectangle {
             border.width: 2
             border.color: "#99ccff"
         }
-        text:eqText4 + "mm"
+        text:eqText4 + GlobalLanguageDefine.strHeightUnit
         visible: altitudeMode
         MouseArea {
             anchors.fill: parent
@@ -352,7 +340,7 @@ Rectangle {
             border.width: 2
             border.color: "#99ccff"
         }
-        text:eqText5 + "mm"
+        text:eqText5 + GlobalLanguageDefine.strHeightUnit
         visible: altitudeMode
         MouseArea {
             anchors.fill: parent
