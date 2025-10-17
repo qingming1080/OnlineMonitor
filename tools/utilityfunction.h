@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include "define.h"
+#include <QString>
 
 class UtilityFunction : public QObject
 {
@@ -12,6 +13,8 @@ public:
 
     static QDateTime buildDateTime(const DateTimeData &data);
     static QString buildDateTimeString(const DateTimeData &data);
+
+    static QString displayValue(int rawValue, double scale = 1.0, int decimals = 0);
 
 signals:
 };

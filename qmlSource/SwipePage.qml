@@ -8,6 +8,7 @@ import QmlEnum 1.0
 import GlobalMessageDefine 1.0
 import GlobalSystemDefine 1.0
 import DeviceInfoEnum 1.0
+import GlobalLanguageDefine 1.0
 // import Manual 1.0
 
 Rectangle {
@@ -525,18 +526,24 @@ Rectangle {
                             }
 
                             onPressed: {
+                                var isSelect = false
                                 if(im1.source == "qrc:/images/btn_unlock_double_line.png"){
                                     im1.source = "qrc:/images/btn_lock_double_line.png"
+                                    isSelect = true
                                 }
                                 else if(im1.source == "qrc:/images/btn_lock_double_line.png"){
                                     im1.source = "qrc:/images/btn_unlock_double_line.png"
+                                    isSelect = false
                                 }
                                 else if(im1.source == "qrc:/images/btn_lock_single_line.png"){
                                     im1.source = "qrc:/images/btn_unlock_single_line.png"
+                                    isSelect = false
                                 }
                                 else if(im1.source == "qrc:/images/btn_unlock_single_line.png"){
                                     im1.source = "qrc:/images/btn_lock_single_line.png"
+                                    isSelect = true
                                 }
+                                Manual.setData(Manual.index(index, 0), isSelect, QmlEnum.MANUAL_COLUMN.MANUAL_selected)
                             }
                         }
                         Connections{
@@ -572,7 +579,7 @@ Rectangle {
                             anchors.verticalCenter: parent.verticalCenter
                             x:840/8*2 + 840/8/2-width/2
                             font.pixelSize: 16
-                            text: time
+                            text: time + GlobalLanguageDefine.strWeldTimeUnit
                             font.family: GlobalSystemDefine.fontBold
                             color: index % 2 !== 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
                         }
@@ -580,7 +587,7 @@ Rectangle {
                             anchors.verticalCenter: parent.verticalCenter
                             x:840/8*3 + 840/8/2-width/2
                             font.pixelSize: 16
-                            text: power
+                            text: power + GlobalLanguageDefine.strPowerUnit
                             font.family: GlobalSystemDefine.fontBold
                             color: index % 2 !== 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
                         }
@@ -588,7 +595,7 @@ Rectangle {
                             anchors.verticalCenter: parent.verticalCenter
                             x:840/8*4 + 840/8/2-width/2
                             font.pixelSize: 16
-                            text: energy
+                            text: energy + GlobalLanguageDefine.strEnergyUnit
                             font.family: GlobalSystemDefine.fontBold
                             color: index % 2 !== 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
                         }

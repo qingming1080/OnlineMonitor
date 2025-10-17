@@ -179,4 +179,13 @@ QtObject
     readonly property string strFriday:                 qsTr("星期五")
     readonly property string strSaturday:               qsTr("星期六")
 
+    //preset Unit
+
+    readonly property string strEnergyUnit:             qsTr("J")
+    readonly property string strAmplitudeUnit:          qsTr("μm")
+    readonly property string strPressureUnit:           qsTr("Psi")
+    readonly property string strPowerUnit:              qsTr("W")
+    readonly property string strHeightUnit:             qsTr("mm")
+    readonly property string strWeldTimeUnit:           qsTr("S")
+
 }

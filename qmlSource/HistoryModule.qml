@@ -566,7 +566,7 @@ Rectangle {
                     anchors.left: parent.left
                     anchors.leftMargin: 417
                     font.pixelSize: 16
-                    text: energy
+                    text: energy +  GlobalLanguageDefine.strEnergyUnit
                     font.family: GlobalSystemDefine.fontBold
                     font.bold: true
                     color: index % 2 === 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
@@ -577,7 +577,7 @@ Rectangle {
                     anchors.left: parent.left
                     anchors.leftMargin: 550
                     font.pixelSize: 16
-                    text: amplitude
+                    text: amplitude + GlobalLanguageDefine.strAmplitudeUnit
                     font.family: GlobalSystemDefine.fontBold
                     font.bold: true
                     color: index % 2 === 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
@@ -588,7 +588,7 @@ Rectangle {
                     anchors.left: parent.left
                     anchors.leftMargin: 679
                     font.pixelSize: 16
-                    text: power
+                    text: power + GlobalLanguageDefine.strPowerUnit
                     font.family: GlobalSystemDefine.fontBold
                     font.bold: true
                     color: index % 2 === 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
@@ -599,7 +599,7 @@ Rectangle {
                     anchors.left: parent.left
                     anchors.leftMargin: 810
                     font.pixelSize: 16
-                    text: time
+                    text: time + GlobalLanguageDefine.strWeldTimeUnit
                     font.family: GlobalSystemDefine.fontBold
                     font.bold: true
                     color: index % 2 === 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
@@ -610,7 +610,7 @@ Rectangle {
                     anchors.left: parent.left
                     anchors.leftMargin: 945
                     font.pixelSize: 16
-                    text: pressure
+                    text: pressure + GlobalLanguageDefine.strPressureUnit
                     font.family: GlobalSystemDefine.fontBold
                     font.bold: true
                     color: index % 2 === 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)

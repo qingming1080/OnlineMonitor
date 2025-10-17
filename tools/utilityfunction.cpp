@@ -24,3 +24,7 @@ QString UtilityFunction::buildDateTimeString(const DateTimeData &data)
 {
     return buildDateTime(data).toString("yyyy-MM-dd HH:mm:ss");
 }
+
+QString UtilityFunction::displayValue(int rawValue, double scale, int decimals){
+    return QString::number(rawValue / scale, 'f', decimals);
+}

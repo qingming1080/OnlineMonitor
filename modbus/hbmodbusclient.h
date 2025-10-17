@@ -61,6 +61,12 @@ public:
 
     void writeDeviceConfig(int deviceId, const DeviceModbusMapper::DeviceRegisterData &data);
 
+    Q_INVOKABLE void dispatchHoldingRegisters();
+
+    Q_INVOKABLE void writeDeviceHoldings(int devId, const QVector<quint16>& holdings);
+
+    QVector<quint16> getDeviceHoldings(int devId) const;
+
 public:
 
     static constexpr int DEV_HOLDING_REGISTERS_COUNT = 30;
