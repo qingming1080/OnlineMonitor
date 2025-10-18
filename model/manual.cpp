@@ -20,8 +20,9 @@ Manual::Manual(int welderID,QObject *parent)
         m_data[i].serial_number = m_nextSerial++;
     }
 
-    connect(&m_flushTimer, &QTimer::timeout, this, &Manual::flushPendingData);
-    m_flushTimer.start(1000);
+    // TODO Need to be removed
+    // connect(&m_flushTimer, &QTimer::timeout, this, &Manual::flushPendingData);
+    // m_flushTimer.start(1000);
 
 }
 
@@ -210,13 +211,13 @@ bool Manual::setData(const QModelIndex &index, const QVariant &value, int role)
 
 void Manual::save()
 {
-    for(int i = 0; i < m_data.size(); ++i)
-    {
-        if (m_data[i].selected)
-        DataBaseManager::getInstance()->insertManualRow(m_data.at(i));
-        QModelIndex idx = index(i);
-        emit dataChanged(idx, idx, {QmlEnum::MANUAL_COLUMN::MANUAL_selected});
-    }
+    // for(int i = 0; i < m_data.size(); ++i)
+    // {
+    //     if (m_data[i].selected)
+    //     DataBaseManager::getInstance()->insertManualRow(m_data.at(i));
+    //     QModelIndex idx = index(i);
+    //     emit dataChanged(idx, idx, {QmlEnum::MANUAL_COLUMN::MANUAL_selected});
+    // }
 }
 
 
@@ -237,7 +238,6 @@ void Manual::loadData()
     for(int i = 0; i < m_data.size(); ++i) {
         m_data[i].serial_number = m_nextSerial++;
     }
-
     endResetModel();
 }
 
@@ -252,8 +252,12 @@ void Manual::startReading()
 void Manual::stopReading()
 {
     disconnect(m_modbusClient, &HBModbusClient::newInputData, this, &Manual::onNewManualData);
-
     qDebug() << "Manual 停止接收 Modbus 数据";
+}
+
+void Manual::calibrateModel()
+{
+
 }
 
 void Manual::onNewManualData(int welderID, const QVector<quint16> &inputs, quint32 cycleCount, DateTimeData date)
@@ -262,13 +266,13 @@ void Manual::onNewManualData(int welderID, const QVector<quint16> &inputs, quint
     _Manual_Data data;
     data.welder_id     = welderID;
     data.cycle_count   = cycleCount;
-    data.energy        = inputs[DEV_ENERGY];
-    data.amplitude     = inputs[DEV_AMPLITUDE];
-    data.pressure      = inputs[DEV_WP];
-    data.time          = QString::number(inputs[DEV_TIME]);
-    data.power         = inputs[DEV_POWER];
-    data.pre_height    = inputs[DEV_PRE_HEIGHT];
-    data.post_height   = inputs[DEV_POST_HEIGHT];
+    data.energy        = inputs[HBModbusClient::DEV_ENERGY];
+    data.amplitude     = inputs[HBModbusClient::DEV_AMPLITUDE];
+    data.pressure      = inputs[HBModbusClient::DEV_WP];
+    data.time          = QString::number(inputs[HBModbusClient::DEV_TIME]);
+    data.power         = inputs[HBModbusClient::DEV_POWER];
+    data.pre_height    = inputs[HBModbusClient::DEV_PRE_HEIGHT];
+    data.post_height   = inputs[HBModbusClient::DEV_POST_HEIGHT];
     data.actual_force  = 0;
     data.actual_degree = 0;
     data.create_time   = UtilityFunction::buildDateTimeString(date).left(10);;
@@ -278,7 +282,7 @@ void Manual::onNewManualData(int welderID, const QVector<quint16> &inputs, quint
     endInsertRows();
 }
 
-
+//TODO Need to be removed
 void Manual::flushPendingData()
 {
     if (m_pendingData.isEmpty())

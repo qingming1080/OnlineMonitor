@@ -211,24 +211,27 @@ Rectangle {
             // if(mt1.text === qsTr("新建模型"))
             if(mt1.text === GlobalLanguageDefine.strNewModel)
             {
-                Manual.setWelderID(swipeCurrIndex+1)
+                Manual.setWelderID(swipeCurrIndex + 1)
                 Manual.startReading()
                 popup.openPop(2)
             }
             // else if(mt1.text === qsTr("创建模型"))
             else if(mt1.text === GlobalLanguageDefine.strCreateModel)
             {
-                if(DeviceManager.deviceList[swipeCurrIndex].DevInfoObject.sample <= listSize)
+                console.debug("rowCount: ", Manual.rowCount())
+                console.debug("CurrentIndex: ", swipeCurrIndex)
+                if(DeviceManager.deviceList[swipeCurrIndex].DevInfoObject.sample <= Manual.rowCount())
                 {
                     loader.sourceComponent = mode1
                     loader1.sourceComponent = weld1
-                    Manual.save()
+                //     Manual.save()
                     Manual.stopReading()
                     sigUpdateUI(0)
                     sigRecover()
                     createModel = false
                 }
-                else{
+                else
+                {
                     popup.openPop(5)
                 }
             }
@@ -270,7 +273,7 @@ Rectangle {
     }
 
     Component{
-        id:mode1
+        id: mode1
         Item {
             x:0
             RealtimeYield{
