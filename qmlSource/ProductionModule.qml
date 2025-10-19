@@ -592,7 +592,7 @@ Rectangle {
                                     anchors.verticalCenter: parent.verticalCenter
                                     x: 960/8*2 + 960/8/2-width/2
                                     font.pixelSize: 16
-                                    text: time + strWeldTimeUnit
+                                    text: time + GlobalLanguageDefine.strWeldTimeUnit
                                     font.family: GlobalSystemDefine.fontBold
                                     color: index % 2 !== 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
                                 }
@@ -600,7 +600,7 @@ Rectangle {
                                     anchors.verticalCenter: parent.verticalCenter
                                     x: 960/8*3 + 960/8/2-width/2
                                     font.pixelSize: 16
-                                    text: power + strPowerUnit
+                                    text: power + GlobalLanguageDefine.strPowerUnit
                                     font.family: GlobalSystemDefine.fontBold
                                     color: index % 2 !== 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
                                 }
