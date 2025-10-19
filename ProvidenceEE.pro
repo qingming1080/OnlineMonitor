@@ -36,6 +36,7 @@ SOURCES += \
         model/rs232model.cpp \
         model/system.cpp \
         model/trend.cpp \
+        provienceEE/providenceEE.cpp \
         signalmanager.cpp \
         tools/datavalidator.cpp \
         tools/devicemodbusmapper.cpp \
@@ -79,12 +80,14 @@ HEADERS += \
     model/rs232model.h \
     model/system.h \
     model/trend.h \
+    provienceEE/providenceEE.h \
     qmlenum.h \
     signalmanager.h \
     tools/datavalidator.h \
     tools/devicemodbusmapper.h \
     tools/utilityapplauncher.h \
-    tools/utilityfunction.h
+    tools/utilityfunction.h \
+    tools/GenericLearning.h
 
 TRANSLATIONS += \
         languageTranslation/SimplifiedChinese.ts \
@@ -94,3 +97,19 @@ DISTFILES +=
 
 INCLUDEPATH += $$PWD/LIB
 DEPENDPATH += $$PWD/LIB
+
+contains(DEFINES, RASPBERRY){
+   LIBS += -L$$PWD/./RASPBERRY_LIB/ -lalgorithm
+   INCLUDEPATH += $$PWD/./RASPBERRY_LIB
+   DEPENDPATH += $$PWD/./RASPBERRY_LIB
+   PRE_TARGETDEPS += $$PWD/./RASPBERRY_LIB/libalgorithm.a
+}
+else
+{
+    contains(DEFINES, linux){
+        LIBS += -L$$PWD/./PC_LIB/ -lalgorithm
+        INCLUDEPATH += $$PWD/./PC_LIB
+        DEPENDPATH += $$PWD/./PC_LIB
+        PRE_TARGETDEPS += $$PWD/./PC_LIB/libalgorithm.a
+    }
+}

@@ -23,6 +23,7 @@
 
 //modbus
 #include "modbus/hbmodbusclient.h"
+#include "tools/GenericLearning.h"
 
 
 

@@ -144,13 +144,13 @@ public:
     };
     Q_ENUM(IO_COLUMN)
 
-    enum SIGNAL
+    enum SIGNAL_IO
     {
         SIGNAL_alarm = 0,
         SIGNAL_reset = 1,
         SIGNAL_noDefinite = 2,
     };
-    Q_ENUM(SIGNAL)
+    Q_ENUM(SIGNAL_IO)
 
     enum MESSAGE{
         MESSAGE_suspicious = 0,         // 出现可疑品
@@ -172,7 +172,7 @@ public:
     Q_ENUM(SCREEN_INDEX)
 
 public:
-    explicit QmlEnum(QObject *parent = nullptr){}
+    explicit QmlEnum(QObject *parent = nullptr){Q_UNUSED(parent)}
 
 signals:
 

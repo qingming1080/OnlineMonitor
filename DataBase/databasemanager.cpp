@@ -565,9 +565,9 @@ bool DataBaseManager::existsManualRowByCycle(int cycleCount)
     return false;
 }
 
-QList<_Manual_Data> DataBaseManager::getManualData(int welderID)
+QList<MANUAL_DATA> DataBaseManager::getManualData(int welderID)
 {
-    QList<_Manual_Data> list;
+    QList<MANUAL_DATA> list;
 
     QSqlQuery query;
     // %1_表格名称
@@ -583,21 +583,21 @@ QList<_Manual_Data> DataBaseManager::getManualData(int welderID)
 
     while(query.next())
     {
-        _Manual_Data data;
-        data.id              = query.value(QmlEnum::MANUAL_id).toInt();
-        data.welder_id       = query.value(QmlEnum::MANUAL_welder_id).toInt();
-        data.create_time     = query.value(QmlEnum::MANUAL_create_time).toString();
+        MANUAL_DATA data;
+        // data.id              = query.value(QmlEnum::MANUAL_id).toInt();
+        data.WelderId       = query.value(QmlEnum::MANUAL_welder_id).toInt();
+        data.CreateTime     = query.value(QmlEnum::MANUAL_create_time).toString();
         data.serial_number   = query.value(QmlEnum::MANUAL_serial_number).toInt();
-        data.cycle_count     = query.value(QmlEnum::MANUAL_cycle_count).toInt();
-        data.energy          = query.value(QmlEnum::MANUAL_energy).toInt();
-        data.amplitude       = query.value(QmlEnum::MANUAL_amplitude).toInt();
-        data.pressure        = query.value(QmlEnum::MANUAL_pressure).toInt();
-        data.time            = query.value(QmlEnum::MANUAL_time).toString();
-        data.power           = query.value(QmlEnum::MANUAL_power).toInt();
-        data.pre_height      = query.value(QmlEnum::MANUAL_pre_height).toInt();
-        data.post_height     = query.value(QmlEnum::MANUAL_post_height).toInt();
-        data.actual_force    = query.value(QmlEnum::MANUAL_actual_force).toInt();
-        data.actual_degree   = query.value(QmlEnum::MANUAL_actual_degree).toInt();
+        data.CycleCount     = query.value(QmlEnum::MANUAL_cycle_count).toInt();
+        data.Energy          = query.value(QmlEnum::MANUAL_energy).toInt();
+        data.Amplitude       = query.value(QmlEnum::MANUAL_amplitude).toInt();
+        data.WeldPressure        = query.value(QmlEnum::MANUAL_pressure).toInt();
+        data.WeldTime            = query.value(QmlEnum::MANUAL_time).toInt();
+        data.PeakPower           = query.value(QmlEnum::MANUAL_power).toInt();
+        data.Preheight      = query.value(QmlEnum::MANUAL_pre_height).toInt();
+        data.PostHeight     = query.value(QmlEnum::MANUAL_post_height).toInt();
+        data.ActualForce    = query.value(QmlEnum::MANUAL_actual_force).toInt();
+        data.ActualResidual   = query.value(QmlEnum::MANUAL_actual_degree).toInt();
 
         list.push_back(data);
     }
@@ -620,11 +620,12 @@ bool DataBaseManager::removeManualDevice(int deviceID)
     return query.exec();
 }
 
-bool DataBaseManager::insertManualRow(_Manual_Data data)
+bool DataBaseManager::insertManualRow(MANUAL_DATA data)
 {
 
-    if (existsManualRowByCycle(data.cycle_count)) {
-        qDebug() << "Skip duplicate cycle_count:" << data.cycle_count;
+    if (existsManualRowByCycle(data.CycleCount))
+    {
+        qDebug() << "Skip duplicate cycle_count:" << data.CycleCount;
         return false;
     }
     QSqlQuery query(m_database);
@@ -639,19 +640,19 @@ bool DataBaseManager::insertManualRow(_Manual_Data data)
 
     query.prepare(execStr);
 
-    query.bindValue(":welder_id", data.welder_id);
-    query.bindValue(":create_time", data.create_time);
+    query.bindValue(":welder_id", data.WelderId);
+    query.bindValue(":create_time", data.CreateTime);
     query.bindValue(":serial_number", data.serial_number);
-    query.bindValue(":cycle_count", data.cycle_count);
-    query.bindValue(":energy", data.energy);
-    query.bindValue(":amplitude", data.amplitude);
-    query.bindValue(":pressure", data.pressure);
-    query.bindValue(":time", data.time);
-    query.bindValue(":power", data.power);
-    query.bindValue(":pre_height", data.pre_height);
-    query.bindValue(":post_height", data.post_height);
-    query.bindValue(":actual_force", data.actual_force);
-    query.bindValue(":actual_degree", data.actual_degree);
+    query.bindValue(":cycle_count", data.CycleCount);
+    query.bindValue(":energy", data.Energy);
+    query.bindValue(":amplitude", data.Amplitude);
+    query.bindValue(":pressure", data.WeldPressure);
+    query.bindValue(":time", data.WeldTime);
+    query.bindValue(":power", data.PeakPower);
+    query.bindValue(":pre_height", data.Preheight);
+    query.bindValue(":post_height", data.PostHeight);
+    query.bindValue(":actual_force", data.ActualForce);
+    query.bindValue(":actual_degree", data.ActualResidual);
 
     if (!m_database.transaction()) {
         qDebug() << "Failed to start transaction:" << m_database.lastError().text();

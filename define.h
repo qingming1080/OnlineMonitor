@@ -76,23 +76,22 @@ struct _IO_Data
 
 
 
-struct _Manual_Data
+struct MANUAL_DATA
 {
-    int id;                   // Manual_ ID
-    int welder_id;            // 焊机ID
-    QString create_time;      // 创建时间
-    int serial_number;        // 序号
-    int cycle_count;          // 循环总计
-    int energy;               // 能量
-    int amplitude;            // 振幅
-    int pressure;             // 压力
-    QString time;             // 焊接时间
-    int power;                // 功率
-    int pre_height;           // 焊前高度
-    int post_height;          // 焊后高度
-    int actual_force;         // 撕拉力
-    int actual_degree;        // 残留度
-    bool selected = false;
+    int WelderId;       // 焊机ID
+    QString CreateTime; // 创建时间
+    int serial_number;  // 序号
+    int CycleCount;     // 循环总计
+    int Energy;         // 能量
+    int Amplitude;      // 振幅
+    int WeldPressure;   // 压力
+    int WeldTime;       // 焊接时间
+    int PeakPower;      // 功率
+    int Preheight;      // 焊前高度
+    int PostHeight;     // 焊后高度
+    int ActualForce;    // 撕拉力
+    int ActualResidual; // 残留度
+    bool Selected = false;
 
 };
 

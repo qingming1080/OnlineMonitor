@@ -30,12 +30,10 @@ public:
 
     Q_INVOKABLE void startReading();
     Q_INVOKABLE void stopReading();
-    Q_INVOKABLE void calibrateModel();
+    Q_INVOKABLE bool calibrateModel();
 
 private slots:
-    void onNewManualData(int welderID, const QVector<quint16> &inputs, quint32 cycleCount, DateTimeData date);
-    void flushPendingData();
-
+    void onNewManualData(int welderId, const QVector<quint16> &inputs, quint32 cycleCount, DateTimeData date);
 
 signals:
     void welderIDChanged();
@@ -43,19 +41,12 @@ signals:
 private:
     int m_welderID;
 
-    QList<_Manual_Data> m_data;
-
-    //TODO need to be removed
-    QList<_Manual_Data> m_pendingData;
-
-    //TODO need to be removed
-    QTimer m_flushTimer;
-
+    QList<MANUAL_DATA> m_listRawData;
+    QList<MANUAL_DATA> m_listManualData;
     HBModbusClient *m_modbusClient = nullptr;
 
     //TODO need to be removed
     int m_nextSerial = 1;
-    // QMap<int, int> m_rowSerialMap;
 
 };
 

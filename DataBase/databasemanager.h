@@ -174,11 +174,11 @@ public:
     /// \brief getManualData : 获取manual表格数据
     /// \return : 数据
     ///
-    QList<_Manual_Data> getManualData(int welderID);
+    QList<MANUAL_DATA> getManualData(int welderID);
 
     bool removeManualDevice(int deviceID);
 
-    bool insertManualRow(_Manual_Data data);
+    bool insertManualRow(MANUAL_DATA data);
 
 /////////////////////////model////////////////////////////////
     ///
