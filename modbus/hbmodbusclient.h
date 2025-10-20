@@ -222,7 +222,7 @@ signals:
 
     void connectedChanged(bool connected);
 
-    void newInputData(int devId, const QVector<quint16> &inputs, quint32 cycleCoun, DateTimeData date);
+    void newInputData(int devId, const QVector<quint16> &inputs, quint32 cycleCoun, DateTimeData date,const QVector<quint16> &holdings);
 
 public slots:
 
@@ -239,8 +239,6 @@ private:
     QModbusTcpClient *modbusClient;
 
     QTimer *m_timer;
-
-    QTimer* m_reconnectTimer;
 
     mutable QMutex m_mutex;
 

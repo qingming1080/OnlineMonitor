@@ -20,6 +20,7 @@
 #include "model/devicenames.h"
 #include "LanguageManager/languageManager.h"
 #include "tools/utilityapplauncher.h"
+#include "tools/utilityfunction.h"
 
 //modbus
 #include "modbus/hbmodbusclient.h"
@@ -85,6 +86,7 @@ int main(int argc, char *argv[])
 
     pQmlContext->setContextProperty("Manual", manual);
     pQmlContext->setContextProperty("ModbusClient", HBModbusClient::getInstance());
+    pQmlContext->setContextProperty("UtilityFunction", UtilityFunction::getInstance());
 
     qmlRegisterType<Device>("Device", 1, 0, "Device");
     qmlRegisterType<IO>("IO", 1, 0, "IO");

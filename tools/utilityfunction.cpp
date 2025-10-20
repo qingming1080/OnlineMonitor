@@ -28,3 +28,10 @@ QString UtilityFunction::buildDateTimeString(const DateTimeData &data)
 QString UtilityFunction::displayValue(int rawValue, double scale, int decimals){
     return QString::number(rawValue / scale, 'f', decimals);
 }
+
+
+UtilityFunction* UtilityFunction::getInstance()
+{
+    static UtilityFunction singleton;
+    return &singleton;
+}
