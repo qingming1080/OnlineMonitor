@@ -12,6 +12,7 @@ DeviceNames *DeviceNames::getInstance()
 
 int DeviceNames::rowCount(const QModelIndex &parent) const
 {
+    Q_UNUSED(parent);
     return m_names.size();
 }
 

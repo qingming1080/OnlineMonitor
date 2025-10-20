@@ -7,6 +7,7 @@
 #include "define.h"
 #include "model/device.h"
 #include "modbus/HBModbusClient.h"
+#include "model/manual.h"
 
 #define CONFIGURATION_TABLENAME     QString("configuration")
 #define NETWORK_TABLENAME           QString("connection_network")
@@ -174,18 +175,18 @@ public:
     /// \brief getManualData : 获取manual表格数据
     /// \return : 数据
     ///
-    QList<MANUAL_DATA> getManualData(int welderID);
+    QList<Manual::MANUAL_DATA> getManualData(int welderID);
 
     bool removeManualDevice(int deviceID);
 
-    bool insertManualRow(MANUAL_DATA data);
+    bool insertManualRow(Manual::MANUAL_DATA data);
 
 /////////////////////////model////////////////////////////////
     ///
     /// \brief getModelData : 获取model表格数据
     /// \return : 数据
     ///
-    QList<_Model_Data> getModelData();
+    QList<MODEL_DATA> getModelData();
 
     ///
     /// \brief removeModelRow : 删除model表格一行数据
@@ -201,7 +202,7 @@ public:
     /// \param data : 数据
     /// \return : 插入结果
     ///
-    bool insertModelRow(_Model_Data data);
+    bool insertModelRow(MODEL_DATA data);
 
     bool existsManualRowByCycle(int cycleCount);
 

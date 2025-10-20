@@ -224,7 +224,7 @@ Rectangle {
                 {
                     loader.sourceComponent = mode1
                     loader1.sourceComponent = weld1
-                //     Manual.save()
+                    Manual.save()
                     Manual.stopReading()
                     sigUpdateUI(0)
                     sigRecover()

@@ -565,9 +565,9 @@ bool DataBaseManager::existsManualRowByCycle(int cycleCount)
     return false;
 }
 
-QList<MANUAL_DATA> DataBaseManager::getManualData(int welderID)
+QList<Manual::MANUAL_DATA> DataBaseManager::getManualData(int welderID)
 {
-    QList<MANUAL_DATA> list;
+    QList<Manual::MANUAL_DATA> list;
 
     QSqlQuery query;
     // %1_表格名称
@@ -583,25 +583,24 @@ QList<MANUAL_DATA> DataBaseManager::getManualData(int welderID)
 
     while(query.next())
     {
-        MANUAL_DATA data;
+        Manual::MANUAL_DATA data;
         // data.id              = query.value(QmlEnum::MANUAL_id).toInt();
         data.WelderId       = query.value(QmlEnum::MANUAL_welder_id).toInt();
         data.CreateTime     = query.value(QmlEnum::MANUAL_create_time).toString();
-        data.serial_number   = query.value(QmlEnum::MANUAL_serial_number).toInt();
+        data.serial_number  = query.value(QmlEnum::MANUAL_serial_number).toInt();
         data.CycleCount     = query.value(QmlEnum::MANUAL_cycle_count).toInt();
-        data.Energy          = query.value(QmlEnum::MANUAL_energy).toInt();
-        data.Amplitude       = query.value(QmlEnum::MANUAL_amplitude).toInt();
-        data.WeldPressure        = query.value(QmlEnum::MANUAL_pressure).toInt();
-        data.WeldTime            = query.value(QmlEnum::MANUAL_time).toInt();
-        data.PeakPower           = query.value(QmlEnum::MANUAL_power).toInt();
+        data.Energy         = query.value(QmlEnum::MANUAL_energy).toInt();
+        data.Amplitude      = query.value(QmlEnum::MANUAL_amplitude).toInt();
+        data.WeldPressure   = query.value(QmlEnum::MANUAL_pressure).toInt();
+        data.WeldTime       = query.value(QmlEnum::MANUAL_time).toInt();
+        data.PeakPower      = query.value(QmlEnum::MANUAL_power).toInt();
         data.Preheight      = query.value(QmlEnum::MANUAL_pre_height).toInt();
         data.PostHeight     = query.value(QmlEnum::MANUAL_post_height).toInt();
         data.ActualForce    = query.value(QmlEnum::MANUAL_actual_force).toInt();
-        data.ActualResidual   = query.value(QmlEnum::MANUAL_actual_degree).toInt();
-
+        data.ActualResidual = query.value(QmlEnum::MANUAL_actual_degree).toInt();
+        data.IsNewComming   = false;
         list.push_back(data);
     }
-
     return list;
 }
 
@@ -620,7 +619,7 @@ bool DataBaseManager::removeManualDevice(int deviceID)
     return query.exec();
 }
 
-bool DataBaseManager::insertManualRow(MANUAL_DATA data)
+bool DataBaseManager::insertManualRow(Manual::MANUAL_DATA data)
 {
 
     if (existsManualRowByCycle(data.CycleCount))
@@ -675,9 +674,9 @@ bool DataBaseManager::insertManualRow(MANUAL_DATA data)
 }
 
 
-QList<_Model_Data> DataBaseManager::getModelData()
+QList<MODEL_DATA> DataBaseManager::getModelData()
 {
-    QList<_Model_Data> list;
+    QList<MODEL_DATA> list;
 
     QSqlQuery query;
     // %1_表格名称
@@ -689,28 +688,28 @@ QList<_Model_Data> DataBaseManager::getModelData()
 
     while(query.next())
     {
-        _Model_Data data;
-        data.id                    = query.value(QmlEnum::MODEL_id).toInt();
-        data.welder_id             = query.value(QmlEnum::MODEL_welder_id).toInt();
-        data.create_time           = query.value(QmlEnum::MODEL_create_time).toString();
-        data.energy                = query.value(QmlEnum::MODEL_energy).toInt();
-        data.amplitude             = query.value(QmlEnum::MODEL_amplitude).toInt();
-        // data.pressure              = query.value(QmlEnum::MODEL_pressure).toInt();
-        data.tp                    = query.value(QmlEnum::MODEL_tp).toInt();
-        data.wp                    = query.value(QmlEnum::MODEL_wp).toInt();
-        data.time_alpha            = query.value(QmlEnum::MODEL_time_alpha).toString();
-        data.time_beta             = query.value(QmlEnum::MODEL_time_beta).toString();
-        data.power_alpha           = query.value(QmlEnum::MODEL_power_alpha).toInt();
-        data.power_beta            = query.value(QmlEnum::MODEL_power_beta).toInt();
-        data.pre_height_alpha      = query.value(QmlEnum::MODEL_pre_height_alpha).toInt();
-        data.pre_height_beta       = query.value(QmlEnum::MODEL_pre_height_beta).toInt();
-        data.post_height_alpha     = query.value(QmlEnum::MODEL_post_height_alpha).toInt();
-        data.post_height_beta      = query.value(QmlEnum::MODEL_post_height_beta).toInt();
-        data.force_alpha           = query.value(QmlEnum::MODEL_force_alpha).toInt();
-        data.force_beta            = query.value(QmlEnum::MODEL_force_beta).toInt();
-        data.residual_alpha        = query.value(QmlEnum::MODEL_residual_alpha).toInt();
-        data.residual_beta         = query.value(QmlEnum::MODEL_residual_beta).toInt();
-        data.current_sample_count  = query.value(QmlEnum::MODEL_current_sample_count).toInt();
+        MODEL_DATA data;
+        data.id                 = query.value(QmlEnum::MODEL_id).toInt();
+        data.WelderId          = query.value(QmlEnum::MODEL_welder_id).toInt();
+        data.CreateTime        = query.value(QmlEnum::MODEL_create_time).toString();
+        data.Energy             = query.value(QmlEnum::MODEL_energy).toInt();
+        data.Amplitude          = query.value(QmlEnum::MODEL_amplitude).toInt();
+        // data.pressure        = query.value(QmlEnum::MODEL_pressure).toInt();
+        data.TriggerPressure                 = query.value(QmlEnum::MODEL_tp).toInt();
+        data.WeldPressure                 = query.value(QmlEnum::MODEL_wp).toInt();
+        data.WeldTime.Alpha      = query.value(QmlEnum::MODEL_time_alpha).toInt();
+        data.WeldTime.Beta             = query.value(QmlEnum::MODEL_time_beta).toInt();
+        data.PeakPower.Alpha           = query.value(QmlEnum::MODEL_power_alpha).toInt();
+        data.PeakPower.Beta            = query.value(QmlEnum::MODEL_power_beta).toInt();
+        data.Preheight.Alpha      = query.value(QmlEnum::MODEL_pre_height_alpha).toInt();
+        data.Preheight.Beta       = query.value(QmlEnum::MODEL_pre_height_beta).toInt();
+        data.PostHeight.Alpha     = query.value(QmlEnum::MODEL_post_height_alpha).toInt();
+        data.PostHeight.Beta      = query.value(QmlEnum::MODEL_post_height_beta).toInt();
+        // data.force_alpha           = query.value(QmlEnum::MODEL_force_alpha).toInt();
+        // data.force_beta            = query.value(QmlEnum::MODEL_force_beta).toInt();
+        // data.residual_alpha        = query.value(QmlEnum::MODEL_residual_alpha).toInt();
+        // data.residual_beta         = query.value(QmlEnum::MODEL_residual_beta).toInt();
+        data.SampleCount  = query.value(QmlEnum::MODEL_current_sample_count).toInt();
 
         list.push_back(data);
     }
@@ -741,7 +740,7 @@ bool DataBaseManager::clearModel()
     return query.exec(execStr);
 }
 
-bool DataBaseManager::insertModelRow(_Model_Data data)
+bool DataBaseManager::insertModelRow(MODEL_DATA data)
 {
 
     QSqlQuery query;
@@ -773,26 +772,26 @@ bool DataBaseManager::insertModelRow(_Model_Data data)
     // 绑定属性
     query.prepare(execStr);
     query.bindValue(":id", data.id);
-    query.bindValue(":welder_id", data.welder_id);
-    query.bindValue(":create_time", data.create_time);
-    query.bindValue(":energy", data.energy);
-    query.bindValue(":amplitude", data.amplitude);
+    query.bindValue(":welder_id", data.WelderId);
+    query.bindValue(":create_time", data.CreateTime);
+    query.bindValue(":energy", data.Energy);
+    query.bindValue(":amplitude", data.Amplitude);
     // query.bindValue(":pressure", data.pressure);
-    query.bindValue(":pressure", data.tp);
-    query.bindValue(":pressure", data.wp);
-    query.bindValue(":time_alpha", data.time_alpha);
-    query.bindValue(":time_beta", data.time_beta);
-    query.bindValue(":power_alpha", data.power_alpha);
-    query.bindValue(":power_beta", data.power_beta);
-    query.bindValue(":pre_height_alpha", data.pre_height_alpha);
-    query.bindValue(":pre_height_beta", data.pre_height_beta);
-    query.bindValue(":post_height_alpha", data.post_height_alpha);
-    query.bindValue(":post_height_beta", data.post_height_beta);
-    query.bindValue(":force_alpha", data.force_alpha);
-    query.bindValue(":force_beta", data.force_beta);
-    query.bindValue(":residual_alpha", data.residual_alpha);
-    query.bindValue(":residual_beta", data.residual_beta);
-    query.bindValue(":current_sample_count", data.current_sample_count);
+    query.bindValue(":pressure", data.TriggerPressure);
+    query.bindValue(":pressure", data.WeldPressure);
+    query.bindValue(":time_alpha", data.WeldTime.Alpha);
+    query.bindValue(":time_beta", data.WeldTime.Beta);
+    query.bindValue(":power_alpha", data.PeakPower.Alpha);
+    query.bindValue(":power_beta", data.PeakPower.Beta);
+    query.bindValue(":pre_height_alpha", data.Preheight.Alpha);
+    query.bindValue(":pre_height_beta", data.Preheight.Beta);
+    query.bindValue(":post_height_alpha", data.PostHeight.Alpha);
+    query.bindValue(":post_height_beta", data.PostHeight.Beta);
+    // query.bindValue(":force_alpha", data.force_alpha);
+    // query.bindValue(":force_beta", data.force_beta);
+    // query.bindValue(":residual_alpha", data.residual_alpha);
+    // query.bindValue(":residual_beta", data.residual_beta);
+    query.bindValue(":current_sample_count", data.SampleCount);
 
     return query.exec();
 }

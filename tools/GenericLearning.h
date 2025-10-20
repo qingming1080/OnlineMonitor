@@ -1,12 +1,12 @@
 #ifndef GL_H_
 #define GL_H_
-#ifndef __VXWORKS__
-enum RESULT
-{
-	ERROR = -1,
-	OK = 0
-};
-#endif
+// #ifndef __VXWORKS__
+// enum RESULT
+// {
+// 	ERROR = -1,
+// 	OK = 0
+// };
+// #endif
 class GenericLearning
 {
 public:

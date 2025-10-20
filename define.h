@@ -73,52 +73,50 @@ struct _IO_Data
     int available;  // 有效的  0:off  1:on
     int signal;     // 信号    0:alarm  1:reset 2:not_definite
 };
-
-
-
-struct MANUAL_DATA
+struct ALPHA_BETA
 {
-    int WelderId;       // 焊机ID
-    QString CreateTime; // 创建时间
-    int serial_number;  // 序号
-    int CycleCount;     // 循环总计
-    int Energy;         // 能量
-    int Amplitude;      // 振幅
-    int WeldPressure;   // 压力
-    int WeldTime;       // 焊接时间
-    int PeakPower;      // 功率
-    int Preheight;      // 焊前高度
-    int PostHeight;     // 焊后高度
-    int ActualForce;    // 撕拉力
-    int ActualResidual; // 残留度
-    bool Selected = false;
-
+    double Alpha;
+    double Beta;
 };
 
-
-struct _Model_Data
+struct POLYNOMIAL_COEFFICIENT
 {
-    int id;                            // 模型id
-    int welder_id;                     // 焊机id
-    QString create_time;               // 创建时间
-    int energy;                        // 能量
-    int amplitude;                     // 振幅
-    // int pressure;                      // 压力
-    int tp;                            //焊接压力
-    int wp;                            // 触发压力
-    QString time_alpha;                // 焊机时间Alpha
-    QString time_beta;                 // 焊机时间Beta
-    int power_alpha;                   // 功率Alpha
-    int power_beta;                    // 功率Beta
-    int pre_height_alpha;              // 焊前高度Alpha
-    int pre_height_beta;               // 焊前高度Beta
-    int post_height_alpha;             // 焊后高度Alpha
-    int post_height_beta;              // 焊后高度Beta
-    int force_alpha;                   // 撕拉力Alpha
-    int force_beta;                    // 撕拉力Beta
-    int residual_alpha;                // 残留度Alpha
-    int residual_beta;                 // 残留度Beta
-    int current_sample_count;          // 当前样本数
+    double P00;
+    double P10;
+    double P01;
+    double P20;
+    double P11;
+    double P02;
+};
+
+struct CENTRALIZED_PROPERTY
+{
+    double TimeMean;
+    double TimeStd;
+    double PowerMean;
+    double PowrStd;
+    double ForceMean;
+    double ResidualMean;
+};
+
+struct MODEL_DATA
+{
+    int id;                             // 模型id
+    int WelderId;                       // 焊机id
+    QString CreateTime;                 // 创建时间
+    int Energy;                         // 能量
+    int Amplitude;                      // 振幅
+    // int pressure;                    // 压力
+    int TriggerPressure;                // 焊接压力
+    int WeldPressure;                   // 触发压力
+    ALPHA_BETA WeldTime;                // 焊机时间Alpha&Beta
+    ALPHA_BETA PeakPower;               // 功率Alpha&Beta
+    ALPHA_BETA Preheight;               // 焊前高度Alpha&Beta
+    ALPHA_BETA PostHeight;              // 焊后高度Alpha&Beta
+    POLYNOMIAL_COEFFICIENT PeelForce;   // 撕拉力
+    POLYNOMIAL_COEFFICIENT Residual;    // 残留度
+    CENTRALIZED_PROPERTY Centralized;
+    int SampleCount;                    // 当前样本数
 };
 
 

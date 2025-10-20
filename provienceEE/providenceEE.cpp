@@ -53,7 +53,7 @@ void ProvidenceEE::SetProcess(const bool isTrained)
 #endif
 }
 
-void ProvidenceEE::CalibrateSPCProcess(const QList<MANUAL_DATA>& sourceList)
+void ProvidenceEE::CalibrateSPCProcess(const QList<Manual::MANUAL_DATA>& sourceList)
 {
 #if RASPBERRY
     GenericLearning::ResetProcessParam();
@@ -79,7 +79,7 @@ void ProvidenceEE::CalibrateSPCProcess(const QList<MANUAL_DATA>& sourceList)
 #endif
 }
 
-void ProvidenceEE::CalibrateAIProcess(const QList<MANUAL_DATA> &sourceList)
+void ProvidenceEE::CalibrateAIProcess(const QList<Manual::MANUAL_DATA> &sourceList)
 {
 #if RASPBERRY
     GenericLearning::ResetAIModel();

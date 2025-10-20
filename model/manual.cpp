@@ -87,7 +87,7 @@ QVariant Manual::data(const QModelIndex &index, int role) const
     case QmlEnum::MANUAL_COLUMN::MANUAL_actual_degree:
         return data.ActualResidual;
     case QmlEnum::MANUAL_COLUMN::MANUAL_selected:
-        return data.Selected;
+        return data.IsSelected;
     default:
         return QVariant();
     }
@@ -173,7 +173,7 @@ bool Manual::setData(const QModelIndex &index, const QVariant &value, int role)
         m_listRawData[row].ActualResidual = value.toInt();
         break;
     case QmlEnum::MANUAL_COLUMN::MANUAL_selected:
-        m_listRawData[row].Selected = value.toBool();
+        m_listRawData[row].IsSelected = value.toBool();
         emit dataChanged(index, index, {role});
         break;
     default:
@@ -184,6 +184,7 @@ bool Manual::setData(const QModelIndex &index, const QVariant &value, int role)
 
 void Manual::save()
 {
+    CalibrateModel();
     // for(int i = 0; i < m_data.size(); ++i)
     // {
     //     if (m_data[i].selected)
@@ -228,12 +229,12 @@ void Manual::stopReading()
     qDebug() << "Manual 停止接收 Modbus 数据";
 }
 
-bool Manual::calibrateModel()
+bool Manual::CalibrateModel()
 {
     m_listManualData.clear();
     for(int i = 0; i < m_listRawData.size(); i++)
     {
-        if(m_listRawData[i].Selected == true)
+        if(m_listRawData[i].IsSelected == true)
         {
             if(m_listRawData[i].ActualForce != 0 && m_listRawData[i].ActualResidual != 0)
             {
@@ -247,7 +248,49 @@ bool Manual::calibrateModel()
     ProvidenceEE::GetInstance()->ResetProcess();
     ProvidenceEE::GetInstance()->CalibrateSPCProcess(m_listManualData);
     ProvidenceEE::GetInstance()->CalibrateAIProcess(m_listManualData);
+
+    GenericLearning::PROCESS_PARAM param[GenericLearning::TOTALPARA];
+    GenericLearning::AI_POLYNOMIAL_COEFFICIENT coefficient[GenericLearning::STRENGTH_MAX];
+    GenericLearning::CENTRALIZED_PROPERTY centralized;
+
+    ProvidenceEE::GetInstance()->GetSPCProcess(param);
+    ProvidenceEE::GetInstance()->GetAIProcess(&centralized, coefficient);
+
+    qDebug() << "Time.Alpha: " << param[GenericLearning::TIME].Alpha;
+    qDebug() << "Time.Beta: " << param[GenericLearning::TIME].Beta;
+    qDebug() << "Time.SampleCount: " << param[GenericLearning::TIME].SampleCount;
+    qDebug() << "Power.Alpha: " << param[GenericLearning::POWER].Alpha;
+    qDebug() << "Power.Beta: " << param[GenericLearning::POWER].Beta;
+    qDebug() << "Power.SampleCount: " << param[GenericLearning::POWER].SampleCount;
+    qDebug() << "Preheight.Alpha: " << param[GenericLearning::PREHEIGHT].Alpha;
+    qDebug() << "Preheight.Beta: " << param[GenericLearning::PREHEIGHT].Beta;
+    qDebug() << "Preheight.SampleCount: " << param[GenericLearning::PREHEIGHT].SampleCount;
+    qDebug() << "Postheight.Alpha: " << param[GenericLearning::POSTHEIGHT].Alpha;
+    qDebug() << "Postheight.Beta: " << param[GenericLearning::POSTHEIGHT].Beta;
+    qDebug() << "Postheight.SampleCount: " << param[GenericLearning::POSTHEIGHT].SampleCount;
+
+    qDebug() << "Centralized.ForceMean: " << centralized.ForceMean;
+    qDebug() << "Centralized.ResidualMean: " << centralized.ResidualMean;
+    qDebug() << "Centralized.PowerMean: " << centralized.PowerMean;
+    qDebug() << "Centralized.PowrStd: " << centralized.PowrStd;
+    qDebug() << "Centralized.TimeMean: " << centralized.TimeMean;
+    qDebug() << "Centralized.TimeStd: " << centralized.TimeStd;
+
+    qDebug() << "Strength0.P00: " << coefficient[GenericLearning::STRENGTH0].P00;
+    qDebug() << "Strength0.P01: " << coefficient[GenericLearning::STRENGTH0].P01;
+    qDebug() << "Strength0.P02: " << coefficient[GenericLearning::STRENGTH0].P02;
+    qDebug() << "Strength0.P10: " << coefficient[GenericLearning::STRENGTH0].P10;
+    qDebug() << "Strength0.P11: " << coefficient[GenericLearning::STRENGTH0].P11;
+    qDebug() << "Strength0.P20: " << coefficient[GenericLearning::STRENGTH0].P20;
+
+    qDebug() << "Strength1.P00: " << coefficient[GenericLearning::STRENGTH1].P00;
+    qDebug() << "Strength1.P01: " << coefficient[GenericLearning::STRENGTH1].P01;
+    qDebug() << "Strength1.P02: " << coefficient[GenericLearning::STRENGTH1].P02;
+    qDebug() << "Strength1.P10: " << coefficient[GenericLearning::STRENGTH1].P10;
+    qDebug() << "Strength1.P11: " << coefficient[GenericLearning::STRENGTH1].P11;
+    qDebug() << "Strength1.P20: " << coefficient[GenericLearning::STRENGTH1].P20;
 #endif
+    //TODO handle with Database
     return true;
 }
 
@@ -256,19 +299,20 @@ void Manual::onNewManualData(int welderId, const QVector<quint16> &inputs, quint
     beginInsertRows(QModelIndex(), 0, 0);
     MANUAL_DATA data;
     data.WelderId       = welderId;
-    data.CycleCount   = cycleCount;
-    data.Energy        = inputs[HBModbusClient::DEV_ENERGY];
-    data.Amplitude     = inputs[HBModbusClient::DEV_AMPLITUDE];
-    data.WeldPressure      = inputs[HBModbusClient::DEV_WP];
-    data.WeldTime          = inputs[HBModbusClient::DEV_TIME];
-    data.PeakPower         = inputs[HBModbusClient::DEV_POWER];
-    data.Preheight    = inputs[HBModbusClient::DEV_PRE_HEIGHT];
-    data.PostHeight   = inputs[HBModbusClient::DEV_POST_HEIGHT];
-    data.ActualForce  = 0;
+    data.CycleCount     = cycleCount;
+    data.Energy         = inputs[HBModbusClient::DEV_ENERGY];
+    data.Amplitude      = inputs[HBModbusClient::DEV_AMPLITUDE];
+    data.WeldPressure   = inputs[HBModbusClient::DEV_WP];
+    data.WeldTime       = inputs[HBModbusClient::DEV_TIME];
+    data.PeakPower      = inputs[HBModbusClient::DEV_POWER];
+    data.Preheight      = inputs[HBModbusClient::DEV_PRE_HEIGHT];
+    data.PostHeight     = inputs[HBModbusClient::DEV_POST_HEIGHT];
+    data.ActualForce    = 0;
     data.ActualResidual = 0;
-    data.CreateTime   = UtilityFunction::buildDateTimeString(date).left(10);;
-    data.serial_number = m_nextSerial++;
-    data.Selected      = false;
+    data.CreateTime     = UtilityFunction::buildDateTimeString(date).left(10);;
+    data.serial_number  = m_nextSerial++;
+    data.IsSelected     = false;
+    data.IsNewComming   = true;
     m_listRawData.prepend(data);
     endInsertRows();
 }

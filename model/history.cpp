@@ -68,7 +68,7 @@ void History::setDeviceID(int newDeviceID)
         return;
 
     m_deviceID = newDeviceID;
-    emit beginResetModel();
+    beginResetModel();
 
     // 根据新的设备ID加载数据
     if (newDeviceID == 0) {
@@ -82,7 +82,7 @@ void History::setDeviceID(int newDeviceID)
         return a.create_time > b.create_time;  // 降序排序，最新记录在前
     });
 
-    emit endResetModel();
+    endResetModel();
     emit deviceIDChanged();
 
     QString text = QString("History_修改筛选设备耗时:%1ms").arg(timer.elapsed());
@@ -92,6 +92,7 @@ void History::setDeviceID(int newDeviceID)
 
 int History::rowCount(const QModelIndex &parent) const
 {
+    Q_UNUSED(parent);
     return m_data.size();
 }
 
