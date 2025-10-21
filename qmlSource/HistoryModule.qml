@@ -10,6 +10,7 @@ import GlobalMessageDefine 1.0
 import LanguageEnum 1.0
 Rectangle {
     property int itemCount: equipmentCount
+    property string buttonColor: "#0d988c"
     color: pRgb(153, 204, 255)
     Component.onCompleted: {
         bt1.checkable = true
@@ -89,7 +90,7 @@ Rectangle {
                 width: 40
                 height: 40
                 radius: 20
-                color: bt1.checked ? "#0068a7" : "#e8e8e8"
+                color: bt1.checked ? buttonColor : "#e8e8e8"
                 border.color: bt1.checked ? "#afc3d8" : "#0068a8"
                 border.width: 2
             }
@@ -125,7 +126,7 @@ Rectangle {
                 width: 40
                 height: 40
                 radius: 20
-                color: bt2.checked ? "#0068a7" : "#e8e8e8"
+                color: bt2.checked ? buttonColor : "#e8e8e8"
                 border.color: bt2.checked ? "#afc3d8" : "#0068a8"
                 border.width: 2
             }
@@ -161,7 +162,7 @@ Rectangle {
                 width: 40
                 height: 40
                 radius: 20
-                color: bt3.checked ? "#0068a7" : "#e8e8e8"
+                color: bt3.checked ? buttonColor : "#e8e8e8"
                 border.color: bt3.checked ? "#afc3d8" : "#0068a8"
                 border.width: 2
             }
@@ -206,7 +207,7 @@ Rectangle {
                 width: 40
                 height: 40
                 radius: 20
-                color: bt4.checked ? "#0068a7" : "#e8e8e8"
+                color: bt4.checked ? buttonColor : "#e8e8e8"
                 border.color: bt4.checked ? "#afc3d8" : "#0068a8"
                 border.width: 2
             }
@@ -251,7 +252,7 @@ Rectangle {
                 width: 40
                 height: 40
                 radius: 20
-                color: bt5.checked ? "#0068a7" : "#e8e8e8"
+                color: bt5.checked ? buttonColor : "#e8e8e8"
                 border.color: bt5.checked ? "#afc3d8" : "#0068a8"
                 border.width: 2
             }
@@ -309,7 +310,7 @@ Rectangle {
                 width: 40
                 height: 40
                 radius: 20
-                color: bt8.checked ? "#0068a7" : "#e8e8e8"
+                color: bt8.checked ? buttonColor : "#e8e8e8"
                 border.color: bt8.checked ? "#afc3d8" : "#0068a8"
                 border.width: 2
             }
@@ -342,7 +343,7 @@ Rectangle {
                 width: 40
                 height: 40
                 radius: 20
-                color: bt9.checked ? "#0068a7" : "#e8e8e8"
+                color: bt9.checked ? buttonColor : "#e8e8e8"
                 border.color: bt9.checked ? "#afc3d8" : "#0068a8"
                 border.width: 2
             }
@@ -375,7 +376,7 @@ Rectangle {
                 width: 40
                 height: 40
                 radius: 20
-                color: bt11.checked ? "#0068a7" : "#e8e8e8"
+                color: bt11.checked ? buttonColor : "#e8e8e8"
                 border.color: bt11.checked ? "#afc3d8" : "#0068a8"
                 border.width: 2
             }
@@ -409,7 +410,7 @@ Rectangle {
                 width: 40
                 height: 40
                 radius: 20
-                color: bt10.checked ? "#0068a7" : "#e8e8e8"
+                color: bt10.checked ? buttonColor : "#e8e8e8"
                 border.color: bt10.checked ? "#afc3d8" : "#0068a8"
                 border.width: 2
             }

@@ -239,7 +239,7 @@ void Manual::loadData()
 
 void Manual::startReading()
 {
-    connect(m_modbusClient, &HBModbusClient::newInputData, this, &Manual::onNewManualData);
+    connect(m_modbusClient, &HBModbusClient::newInputData, this, &Manual::onNewManualData, Qt::UniqueConnection);
 
     qDebug() << "Manual 开始接收 Modbus 数据";
 }
