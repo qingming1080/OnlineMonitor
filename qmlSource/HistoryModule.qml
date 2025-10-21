@@ -588,9 +588,9 @@ Rectangle {
                     id: historyEnergyValueText
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.left: parent.left
-                    anchors.leftMargin: 442
+                    anchors.leftMargin: 447
                     font.pixelSize: 16
-                    text: energy +  GlobalLanguageDefine.strEnergyUnit
+                    text: UtilityFunction.displayValue(energy) +  GlobalLanguageDefine.strEnergyUnit
                     font.family: GlobalSystemDefine.fontBold
                     font.bold: true
                     color: index % 2 === 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
@@ -599,9 +599,9 @@ Rectangle {
                     id: historyAmplitudeValueText
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.left: parent.left
-                    anchors.leftMargin: 575
+                    anchors.leftMargin: 580
                     font.pixelSize: 16
-                    text: amplitude + GlobalLanguageDefine.strAmplitudeUnit
+                    text: UtilityFunction.displayValue(amplitude) + GlobalLanguageDefine.strAmplitudeUnit
                     font.family: GlobalSystemDefine.fontBold
                     font.bold: true
                     color: index % 2 === 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
@@ -610,9 +610,9 @@ Rectangle {
                     id: historyPowerValueText
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.left: parent.left
-                    anchors.leftMargin: 699
+                    anchors.leftMargin: 709
                     font.pixelSize: 16
-                    text: power + GlobalLanguageDefine.strPowerUnit
+                    text: UtilityFunction.displayValue(power) + GlobalLanguageDefine.strPowerUnit
                     font.family: GlobalSystemDefine.fontBold
                     font.bold: true
                     color: index % 2 === 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
@@ -621,7 +621,7 @@ Rectangle {
                     id: historyTimeValueText
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.left: parent.left
-                    anchors.leftMargin: 835
+                    anchors.leftMargin: 840
                     font.pixelSize: 16
                     text: UtilityFunction.displayValue(time,100,2) + GlobalLanguageDefine.strWeldTimeUnit
                     font.family: GlobalSystemDefine.fontBold
@@ -632,7 +632,7 @@ Rectangle {
                     id: historyPressureValueText
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.left: parent.left
-                    anchors.leftMargin: 985
+                    anchors.leftMargin: 975
                     font.pixelSize: 16
                     text: UtilityFunction.displayValue(pressure,10,1) + GlobalLanguageDefine.strPressureUnit
                     font.family: GlobalSystemDefine.fontBold
