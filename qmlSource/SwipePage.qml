@@ -20,6 +20,7 @@ Rectangle {
     property int parameter3: 0
     property int parameter4: 0
     property int parameter5: 0
+     property bool altitudeMode:DeviceManager.deviceList[swipeCurrIndex].DevInfoObject.heightOption === 1 ? true:false
     function newModel(){
         loader.sourceComponent = mode2
         loader1.sourceComponent = weld2
@@ -375,9 +376,10 @@ Rectangle {
                     }
                 }
                 Text{
-                    id:t2
-                    x:840/8 + 840/8/2-width/2
-                    y:11
+                    id: swipeSerialNumberText
+                    anchors.left: parent.left
+                    anchors.leftMargin: altitudeMode ? 110 : 150
+                    anchors.top: t1.top
                     font.pixelSize: 16
                     // text: qsTr("序号")
                     text: GlobalLanguageDefine.strSerialNumber
@@ -385,9 +387,10 @@ Rectangle {
                     color: pRgb(171, 206, 213)
                 }
                 Text{
-                    id:t3
-                    x:840/8*2 + 840/8/2-width/2
-                    y:11
+                    id: swipeWeldingTimeText
+                    anchors.top: t1.top
+                    anchors.left: parent.left
+                    anchors.leftMargin: altitudeMode ? 170 : 270
                     font.pixelSize: 16
                     // text: qsTr("焊接时间")
                     text: GlobalLanguageDefine.strWeldingTime
@@ -395,9 +398,10 @@ Rectangle {
                     color: pRgb(171, 206, 213)
                 }
                 Text{
-                    id:t4
-                    x:840/8*3 + 840/8/2-width/2
-                    y:11
+                    id: swipePowerText
+                    anchors.top: t1.top
+                    anchors.left: parent.left
+                    anchors.leftMargin:  altitudeMode ? 270 : 420
                     font.pixelSize: 16
                     // text: qsTr("功率")
                     text: GlobalLanguageDefine.strPower
@@ -405,14 +409,26 @@ Rectangle {
                     color: pRgb(171, 206, 213)
                 }
                 Text{
-                    id:t5
-                    x:840/8*4 + 840/8/2-width/2
-                    y:11
+                    id: swipePreHeightText
+                    anchors.top: t1.top
+                    anchors.left: parent.left
+                    anchors.leftMargin: 350
                     font.pixelSize: 16
-                    // text: qsTr("能量")
-                    text: GlobalLanguageDefine.strEnergy
+                    text: GlobalLanguageDefine.strPreWeldHeight
                     font.family: GlobalSystemDefine.fontBold
                     color: pRgb(171, 206, 213)
+                    visible: altitudeMode
+                }
+                Text{
+                    id:swipePostHeightText
+                    anchors.top: t1.top
+                    anchors.left: parent.left
+                    anchors.leftMargin: 450
+                    font.pixelSize: 16
+                    text: GlobalLanguageDefine.strPostWeldHeight
+                    font.family: GlobalSystemDefine.fontBold
+                    color: pRgb(171, 206, 213)
+                    visible: altitudeMode
                 }
                 Text{
                     id:t6
@@ -525,7 +541,8 @@ Rectangle {
                             }
                         }
                         Text{
-                            x:840/8*1 + 840/8/2-width/2
+                            anchors.left: parent.left
+                            anchors.leftMargin: altitudeMode ? 115 : 160
                             anchors.verticalCenter: parent.verticalCenter
                             font.pixelSize: 16
                             text: serial_number
@@ -533,28 +550,42 @@ Rectangle {
                             color: index % 2 !== 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
                         }
                         Text{
+                            anchors.left: parent.left
+                            anchors.leftMargin: altitudeMode ? 170 : 280
                             anchors.verticalCenter: parent.verticalCenter
-                            x:840/8*2 + 840/8/2-width/2
                             font.pixelSize: 16
                             text: UtilityFunction.displayValue(time,100,2) + GlobalLanguageDefine.strWeldTimeUnit
                             font.family: GlobalSystemDefine.fontBold
                             color: index % 2 !== 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
                         }
                         Text{
+                            anchors.left: parent.left
+                            anchors.leftMargin: altitudeMode ? 270 : 420
                             anchors.verticalCenter: parent.verticalCenter
-                            x:840/8*3 + 840/8/2-width/2
                             font.pixelSize: 16
                             text: UtilityFunction.displayValue(power) + GlobalLanguageDefine.strPowerUnit
                             font.family: GlobalSystemDefine.fontBold
                             color: index % 2 !== 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
                         }
                         Text{
+                            anchors.left: parent.left
+                            anchors.leftMargin: 350
                             anchors.verticalCenter: parent.verticalCenter
-                            x:840/8*4 + 840/8/2-width/2
                             font.pixelSize: 16
-                            text: UtilityFunction.displayValue(energy) + GlobalLanguageDefine.strEnergyUnit
+                            text: UtilityFunction.displayValue(preheight,100,2) + GlobalLanguageDefine.strHeightUnit
                             font.family: GlobalSystemDefine.fontBold
                             color: index % 2 !== 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
+                            visible: altitudeMode
+                        }
+                        Text{
+                            anchors.left: parent.left
+                            anchors.leftMargin: 450
+                            anchors.verticalCenter: parent.verticalCenter
+                            font.pixelSize: 16
+                            text: UtilityFunction.displayValue(postheight,100,2) + GlobalLanguageDefine.strHeightUnit
+                            font.family: GlobalSystemDefine.fontBold
+                            color: index % 2 !== 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
+                            visible: altitudeMode
                         }
                         Text{
                             anchors.verticalCenter: parent.verticalCenter

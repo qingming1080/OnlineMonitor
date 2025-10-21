@@ -115,8 +115,8 @@ QHash<int, QByteArray> Manual::roleNames() const
     roles[QmlEnum::MANUAL_COLUMN::MANUAL_pressure]         = "pressure";
     roles[QmlEnum::MANUAL_COLUMN::MANUAL_time]             = "time";
     roles[QmlEnum::MANUAL_COLUMN::MANUAL_power]            = "power";
-    roles[QmlEnum::MANUAL_COLUMN::MANUAL_pre_height]       = "pre_height";
-    roles[QmlEnum::MANUAL_COLUMN::MANUAL_post_height]      = "post_height";
+    roles[QmlEnum::MANUAL_COLUMN::MANUAL_pre_height]       = "preheight";
+    roles[QmlEnum::MANUAL_COLUMN::MANUAL_post_height]      = "postheight";
     roles[QmlEnum::MANUAL_COLUMN::MANUAL_actual_force]     = "actual_force";
     roles[QmlEnum::MANUAL_COLUMN::MANUAL_actual_degree]    = "actual_degree";
     roles[QmlEnum::MANUAL_COLUMN::MANUAL_isSelected]       = "selected";
