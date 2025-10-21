@@ -147,6 +147,8 @@ QVariant History::data(const QModelIndex &index, int role) const
         return data.not_definite_cycles;
     case QmlEnum::PRODUCTION_COLUMN::PRODUCTION_final_result:
         return data.final_result;
+    case QmlEnum::PRODUCTION_COLUMN::PRODUCTION_row_number:
+        return row + 1;
     default:
         return QVariant();
     }
@@ -178,6 +180,7 @@ QHash<int, QByteArray> History::roleNames() const
     roles[QmlEnum::PRODUCTION_COLUMN::PRODUCTION_suspect_subtotal_cycles]  = "suspect_subtotal_cycles";
     roles[QmlEnum::PRODUCTION_COLUMN::PRODUCTION_not_definite_cycles]      = "not_definite_cycles";
     roles[QmlEnum::PRODUCTION_COLUMN::PRODUCTION_final_result]             = "final_result";
+    roles[QmlEnum::PRODUCTION_COLUMN::PRODUCTION_row_number]               = "row_number";
 
     return roles;
 }

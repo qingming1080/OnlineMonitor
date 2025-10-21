@@ -87,6 +87,7 @@ public:
         PRODUCTION_suspect_subtotal_cycles = 18,   // 次品
         PRODUCTION_not_definite_cycles     = 19,   // 可疑
         PRODUCTION_final_result            = 20,   // 产品状态 0_合格 1_次品 2_可疑
+        PRODUCTION_row_number,
     };
     Q_ENUM(PRODUCTION_COLUMN)
 

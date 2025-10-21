@@ -451,10 +451,22 @@ Rectangle {
             color: pRgb(153, 204, 255)
         }
         Text{
+            id: serialNumberText
+            anchors.left: parent.left
+            anchors.leftMargin: 120
+            anchors.top: parent.top
+            anchors.topMargin: 7
+            font.pixelSize: 16
+            text: GlobalLanguageDefine.strSerialNumber
+            font.family: GlobalSystemDefine.fontBold
+            font.bold: true
+            color: pRgb(153, 204, 255)
+        }
+        Text{
             id: historyDateText
             anchors.top: t1.top
             anchors.left: t1.right
-            anchors.leftMargin: 150
+            anchors.leftMargin: 180
             font.pixelSize: 16
             text: GlobalLanguageDefine.strDate
             font.family: GlobalSystemDefine.fontBold
@@ -550,11 +562,22 @@ Rectangle {
                     font.bold: true
                     color: index % 2 === 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
                 }
+                Text{
+                     id: rowNumberText
+                     anchors.verticalCenter: parent.verticalCenter
+                     anchors.left: parent.left
+                     anchors.leftMargin: 120
+                     font.pixelSize: 16
+                     text: row_number
+                     font.family: GlobalSystemDefine.fontBold
+                     font.bold: true
+                     color: index % 2 === 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
+                 }
                Text{
                     id: historyDateValueText
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.left: parent.left
-                    anchors.leftMargin: 170
+                    anchors.leftMargin: 200
                     font.pixelSize: 16
                     text: create_time
                     font.family: GlobalSystemDefine.fontBold
@@ -565,7 +588,7 @@ Rectangle {
                     id: historyEnergyValueText
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.left: parent.left
-                    anchors.leftMargin: 417
+                    anchors.leftMargin: 442
                     font.pixelSize: 16
                     text: energy +  GlobalLanguageDefine.strEnergyUnit
                     font.family: GlobalSystemDefine.fontBold
@@ -576,7 +599,7 @@ Rectangle {
                     id: historyAmplitudeValueText
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.left: parent.left
-                    anchors.leftMargin: 550
+                    anchors.leftMargin: 575
                     font.pixelSize: 16
                     text: amplitude + GlobalLanguageDefine.strAmplitudeUnit
                     font.family: GlobalSystemDefine.fontBold
@@ -587,7 +610,7 @@ Rectangle {
                     id: historyPowerValueText
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.left: parent.left
-                    anchors.leftMargin: 679
+                    anchors.leftMargin: 699
                     font.pixelSize: 16
                     text: power + GlobalLanguageDefine.strPowerUnit
                     font.family: GlobalSystemDefine.fontBold
@@ -598,9 +621,9 @@ Rectangle {
                     id: historyTimeValueText
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.left: parent.left
-                    anchors.leftMargin: 810
+                    anchors.leftMargin: 835
                     font.pixelSize: 16
-                    text: time + GlobalLanguageDefine.strWeldTimeUnit
+                    text: UtilityFunction.displayValue(time,100,2) + GlobalLanguageDefine.strWeldTimeUnit
                     font.family: GlobalSystemDefine.fontBold
                     font.bold: true
                     color: index % 2 === 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
@@ -609,9 +632,9 @@ Rectangle {
                     id: historyPressureValueText
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.left: parent.left
-                    anchors.leftMargin: 945
+                    anchors.leftMargin: 985
                     font.pixelSize: 16
-                    text: pressure + GlobalLanguageDefine.strPressureUnit
+                    text: UtilityFunction.displayValue(pressure,10,1) + GlobalLanguageDefine.strPressureUnit
                     font.family: GlobalSystemDefine.fontBold
                     font.bold: true
                     color: index % 2 === 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
@@ -621,7 +644,7 @@ Rectangle {
                 Text{
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.left: parent.left
-                    anchors.leftMargin: 1076
+                    anchors.leftMargin: 1136
                     font.pixelSize: 16
                     text: {
                         // var strResult = qsTr("可疑")
