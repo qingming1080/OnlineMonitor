@@ -97,7 +97,8 @@ QtObject
     readonly property string strWeldingTrend:           qsTr("焊接趋势")
     readonly property string strYieldTrend:             qsTr("良率趋势")
     readonly property string strAmplitude:              qsTr("振幅")
-    readonly property string strPressure:               qsTr("压力")
+    readonly property string strPressure:               qsTr("焊接压力")
+    readonly property string strTP:                     qsTr("触发压力")
     readonly property string strPreWeldHeight:          qsTr("焊前高度")
     readonly property string strPostWeldHeight:         qsTr("焊后高度")
     readonly property string strParameterSetting:       qsTr("参数设置")
@@ -187,5 +188,7 @@ QtObject
     readonly property string strPowerUnit:              qsTr("W")
     readonly property string strHeightUnit:             qsTr("mm")
     readonly property string strWeldTimeUnit:           qsTr("S")
+    readonly property string strActualDegreeUnit:       qsTr("%")
+    readonly property string strActualForceUnit:        qsTr("N")
 
 }

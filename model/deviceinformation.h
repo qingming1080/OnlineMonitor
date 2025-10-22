@@ -80,31 +80,6 @@ class DeviceInformation : public QObject
     // 焊接结果:焊后高度
     Q_PROPERTY(int              heightPost                  READ heightPost          WRITE setHeightPost          NOTIFY heightPostChanged)
 
-    /// preset
-    Q_PROPERTY(QString          preEnegy                    READ getPreEnegy         WRITE setPreEnegy            NOTIFY preEnegyChanged)
-
-    Q_PROPERTY(QString          preAmplitude                READ getPreAmplitude     WRITE setPreAmplitude        NOTIFY preAmplitudeChanged)
-
-    Q_PROPERTY(QString          preTP                       READ getPreTP            WRITE setPreTP               NOTIFY preTPChanged)
-
-    Q_PROPERTY(QString          preWP                       READ getPreWP            WRITE setPreWP               NOTIFY preWPChanged)
-
-    Q_PROPERTY(QString          preTimeMin                  READ getPreTimeMin       WRITE setPreTimeMin          NOTIFY preTimeMinChanged)
-
-    Q_PROPERTY(QString          preTimeMax                  READ getPreTimeMax       WRITE setPreTimeMax          NOTIFY preTimeMaxChanged)
-
-    Q_PROPERTY(QString          prePowerMin                 READ getPrePowerMin      WRITE setPrePowerMin         NOTIFY prePowerMinChanged)
-
-    Q_PROPERTY(QString          prePowerMax                 READ getPrePowerMax      WRITE setPrePowerMax         NOTIFY prePowerMaxChanged)
-
-    Q_PROPERTY(QString          preHeightMin                READ getPreHeightMin     WRITE setPreHeightMin        NOTIFY preHeightMinChanged)
-
-    Q_PROPERTY(QString          preHeightMax                READ getPreHeightMax     WRITE setPreHeightMax        NOTIFY preHeightMaxChanged)
-
-    Q_PROPERTY(QString          postHeightMin               READ getPostHeightMin    WRITE setPostHeightMin       NOTIFY postHeightMinChanged)
-
-    Q_PROPERTY(QString          postHeightMax               READ getPostHeightMax    WRITE setPostHeightMax       NOTIFY postHeightMaxChanged)
-
     /// 2024/08/01 IP与端口 暴露
     // 远程端口
     Q_PROPERTY(QString          mesIP                       READ mesIP               WRITE setMesIP               NOTIFY mesIPChanged)
@@ -187,47 +162,6 @@ public:
     int mesPort() const;
     void setMesPort(int newMesPort);
 
-    //qml
-    Q_INVOKABLE void setPreEnegy(const QString &value);
-    Q_INVOKABLE void setPreAmplitude(const QString &value);
-    Q_INVOKABLE void setPreTP(const QString &value);
-    Q_INVOKABLE void setPreWP(const QString &value);
-    Q_INVOKABLE void setPreTimeMin(const QString &value);
-    Q_INVOKABLE void setPreTimeMax(const QString &value);
-    Q_INVOKABLE void setPrePowerMin(const QString &value);
-    Q_INVOKABLE void setPrePowerMax(const QString &value);
-    Q_INVOKABLE void setPreHeightMin(const QString &value);
-    Q_INVOKABLE void setPreHeightMax(const QString &value);
-    Q_INVOKABLE void setPostHeightMin(const QString &value);
-    Q_INVOKABLE void setPostHeightMax(const QString &value);
-
-    QString getPreEnegy() const;
-    QString getPreAmplitude() const;
-    QString getPreTP() const;
-    QString getPreWP() const;
-    QString getPreTimeMin() const;
-    QString getPreTimeMax() const;
-    QString getPrePowerMin() const;
-    QString getPrePowerMax() const;
-    QString getPreHeightMin() const;
-    QString getPreHeightMax() const;
-    QString getPostHeightMin() const;
-    QString getPostHeightMax() const;
-
-    //modbus
-    void setPreEnegyRaw(int value);
-    void setPreAmplitudeRaw(int value);
-    void setPreTPRaw(int value);
-    void setPreWPRaw(int value);
-    void setPreTimeMinRaw(int value);
-    void setPreTimeMaxRaw(int value);
-    void setPrePowerMinRaw(int value);
-    void setPrePowerMaxRaw(int value);
-    void setPreHeightMinRaw(int value);
-    void setPreHeightMaxRaw(int value);
-    void setPostHeightMinRaw(int value);
-    void setPostHeightMaxRaw(int value);
-
 signals:
 
     void nameChanged();
@@ -271,19 +205,6 @@ signals:
 
     void mesPortChanged();
 
-    void preEnegyChanged();
-    void preAmplitudeChanged();
-    void preTPChanged();
-    void preWPChanged();
-    void preTimeMinChanged();
-    void preTimeMaxChanged();
-    void prePowerMinChanged();
-    void prePowerMaxChanged();
-    void preHeightMinChanged();
-    void preHeightMaxChanged();
-    void postHeightMinChanged();
-    void postHeightMaxChanged();
-
 private:
     const int m_id;
     QString m_name;
@@ -314,19 +235,6 @@ private:
     DeviceInfoEnum::CONNECT_TYPE    m_iConnectType;
     DeviceInfoEnum::CONNECT_STATE   m_iConnectState;
 
-
-    int m_preEnegy{0};
-    int m_preAmplitude{0};
-    int m_preTP{10};
-    int m_preWP{150};
-    int m_preTimeMin{110};
-    int m_preTimeMax{120};
-    int m_prePowerMin{0};
-    int m_prePowerMax{0};
-    int m_preHeightMin{120};
-    int m_preHeightMax{340};
-    int m_postHeightMin{0};
-    int m_postHeightMax{0};
 };
 
 #endif // DEVICEINFORMATION_H

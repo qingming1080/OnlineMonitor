@@ -857,27 +857,14 @@ QList<_Production_Data> DataBaseManager::getProductionData(int welderID, int fin
         data.serial_number            = query.value(QmlEnum::PRODUCTION_serial_number).toInt();
         data.cycle_count              = query.value(QmlEnum::PRODUCTION_cycle_count).toInt();
         data.batch_count              = query.value(QmlEnum::PRODUCTION_batch_count).toInt();
-
-        // 能量 ***J -> ***
-        QString energyStr = query.value(QmlEnum::PRODUCTION_energy).toString();
-        data.energy = energyStr.leftRef(energyStr.length()-1).toInt();
+        data.energy                   = query.value(QmlEnum::PRODUCTION_energy).toInt();
 
         data.amplitude                = query.value(QmlEnum::PRODUCTION_amplitude).toInt();
         data.pressure                 = query.value(QmlEnum::PRODUCTION_pressure).toInt();
-
-        // 时间 *.**s - > *.**
-        data.time                     = query.value(QmlEnum::PRODUCTION_time).toString();
-        data.time = data.time.left(data.time.length()-1);
-
-        // 功率 ***W -> ***
-        QString powerStr = query.value(QmlEnum::PRODUCTION_power).toString();
-        data.power = powerStr.leftRef(powerStr.length()-1).toInt();
-
-        // 高度 *.**mm -> *.**
-        QString pre_heightStr = query.value(QmlEnum::PRODUCTION_pre_height).toString();
-        data.pre_height = pre_heightStr.leftRef(pre_heightStr.length()-2).toDouble();
-        QString post_heightStr = query.value(QmlEnum::PRODUCTION_post_height).toString();
-        data.post_height = post_heightStr.leftRef(post_heightStr.length()-2).toDouble();
+        data.time                     = query.value(QmlEnum::PRODUCTION_time).toInt();
+        data.power                    = query.value(QmlEnum::PRODUCTION_power).toInt();
+        data.pre_height               = query.value(QmlEnum::PRODUCTION_pre_height).toInt();
+        data.post_height              = query.value(QmlEnum::PRODUCTION_post_height).toInt();
 
         data.force                    = query.value(QmlEnum::PRODUCTION_force).toInt();
         data.residual                 = query.value(QmlEnum::PRODUCTION_residual).toInt();
@@ -893,127 +880,6 @@ QList<_Production_Data> DataBaseManager::getProductionData(int welderID, int fin
 
     return list;
 }
-
-//_Weld_TrendData DataBaseManager::getWeldTrendData(int welderID)
-//{
-//    _Weld_TrendData result;
-
-//    QSqlQuery query;
-//    if(welderID != 0)
-//    {
-//        // %1_表格名称
-//        QString execStr = QString("SELECT * FROM %1 WHERE %2 = :welderID ORDER BY %3 DESC LIMIT 150")
-//                              .arg(PRODUCTION_TABLENAME
-//                                   , getProduction_ColumnName(QmlEnum::PRODUCTION_welder_id)
-//                                   , getProduction_ColumnName(QmlEnum::PRODUCTION_create_time));
-
-//        query.prepare(execStr);
-//        query.bindValue(":welderID", welderID);
-//    }
-//    else
-//    {
-//        // %1_表格名称
-//        QString execStr = QString("SELECT * FROM %1 ORDER BY %2 DESC LIMIT 150")
-//                              .arg(PRODUCTION_TABLENAME
-//                                   , getProduction_ColumnName(QmlEnum::PRODUCTION_create_time));
-//        qDebug() << execStr;
-//        query.prepare(execStr);
-//    }
-
-//    if (!query.exec())
-//    {
-//        qDebug() << "Production查询失败: " << query.lastError();
-//    }
-
-//    bool isFirst = true;
-//    while(query.next())
-//    {
-//        _Production_Data data;
-//        data.id                       = query.value(QmlEnum::PRODUCTION_id).toInt();
-//        data.welder_id                = query.value(QmlEnum::PRODUCTION_welder_id).toInt();
-//        data.model_id                 = query.value(QmlEnum::PRODUCTION_model_id).toInt();
-//        data.create_time              = query.value(QmlEnum::PRODUCTION_create_time).toString();
-//        data.serial_number            = query.value(QmlEnum::PRODUCTION_serial_number).toInt();
-//        data.cycle_count              = query.value(QmlEnum::PRODUCTION_cycle_count).toInt();
-//        data.batch_count              = query.value(QmlEnum::PRODUCTION_batch_count).toInt();
-
-//        // 能量 ***J -> ***
-//        QString energyStr = query.value(QmlEnum::PRODUCTION_energy).toString();
-//        data.energy = energyStr.leftRef(energyStr.length()-1).toInt();
-
-//        data.amplitude                = query.value(QmlEnum::PRODUCTION_amplitude).toInt();
-//        data.pressure                 = query.value(QmlEnum::PRODUCTION_pressure).toInt();
-
-//        // 时间 *.**s - > *.**
-//        data.time                     = query.value(QmlEnum::PRODUCTION_time).toString();
-//        data.time = data.time.left(data.time.length()-1);
-
-//        // 功率 ***W -> ***
-//        QString powerStr = query.value(QmlEnum::PRODUCTION_power).toString();
-//        data.power = powerStr.leftRef(powerStr.length()-1).toInt();
-
-//        // 高度 *.**mm -> *.**
-//        QString pre_heightStr = query.value(QmlEnum::PRODUCTION_pre_height).toString();
-//        data.pre_height = pre_heightStr.leftRef(pre_heightStr.length()-2).toDouble();
-//        QString post_heightStr = query.value(QmlEnum::PRODUCTION_post_height).toString();
-//        data.post_height = post_heightStr.leftRef(post_heightStr.length()-2).toDouble();
-
-//        data.force                    = query.value(QmlEnum::PRODUCTION_force).toInt();
-//        data.residual                 = query.value(QmlEnum::PRODUCTION_residual).toInt();
-//        data.good_rate                = query.value(QmlEnum::PRODUCTION_good_rate).toInt();
-//        data.good_subtotal_cycles     = query.value(QmlEnum::PRODUCTION_good_subtotal_cycles).toInt();
-//        data.suspect_subtotal_cycles  = query.value(QmlEnum::PRODUCTION_suspect_subtotal_cycles).toInt();
-//        data.not_definite_cycles      = query.value(QmlEnum::PRODUCTION_not_definite_cycles).toInt();
-//        data.final_result             = query.value(QmlEnum::PRODUCTION_final_result).toInt();
-
-//        // 计入首次大小
-//        if(isFirst)
-//        {
-//            isFirst = false;
-
-//            result.id_X_Min = data.id;
-//            result.id_X_Max = data.id;
-//            result.before_Y_Min = data.pre_height;
-//            result.before_Y_Max = data.pre_height;
-//            result.after_Y_Min = data.post_height;
-//            result.after_Y_Max = data.post_height;
-//            result.time_Y_Min = data.time;
-//            result.time_Y_Max = data.time;
-//            result.power_Y_Min = data.power;
-//            result.power_Y_Max = data.power;
-//        }
-
-//        // 确定X轴大小
-//        if(data.id < result.id_X_Min)
-//            result.id_X_Min = data.id;
-//        if(data.id > result.id_X_Max)
-//            result.id_X_Max = data.id;
-//        // 焊前高度 Y轴
-//        if(data.pre_height < result.before_Y_Min)
-//            result.before_Y_Min = data.pre_height;
-//        if(data.pre_height > result.before_Y_Max)
-//            result.before_Y_Max = data.pre_height;
-//        // 焊后高度 Y轴
-//        if(data.post_height < result.after_Y_Min)
-//            result.after_Y_Min = data.post_height;
-//        if(data.post_height > result.after_Y_Max)
-//            result.after_Y_Max = data.post_height;
-//        // 时间 Y轴
-//        if(data.time.toDouble() < result.time_Y_Min.toDouble())
-//            result.time_Y_Min = data.time;
-//        if(data.time.toDouble() > result.time_Y_Max.toDouble())
-//            result.time_Y_Max = data.time;
-//        // 功率
-//        if(data.power < result.power_Y_Min)
-//            result.power_Y_Min = data.power;
-//        if(data.power > result.power_Y_Max)
-//            result.power_Y_Max = data.power;
-
-//        result.data.push_back(data);
-//    }
-
-//    return result;
-//}
 
 _Yield_TrendData DataBaseManager::getYieldTrendData(int interVal, int welderID)
 {
@@ -1247,8 +1113,7 @@ bool DataBaseManager::saveProductionDataofModbus(Device *device, const QVector<q
         record.amplitude                            = inputs[HBModbusClient::DEV_AMPLITUDE];
         record.pressure                             = inputs[HBModbusClient::DEV_WP];         //welde pressure
         record.power                                = inputs[HBModbusClient::DEV_POWER];
-        int seconds                                 = inputs[HBModbusClient::DEV_TIME];
-        record.time                                 = QString::number(seconds);
+        record.time                                 = inputs[HBModbusClient::DEV_TIME];
         record.pre_height                           = inputs[HBModbusClient::DEV_PRE_HEIGHT];
         record.post_height                          = inputs[HBModbusClient::DEV_POST_HEIGHT];
         record.force                                = 100;                          //TODO

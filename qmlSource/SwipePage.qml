@@ -20,6 +20,7 @@ Rectangle {
     property int parameter3: 0
     property int parameter4: 0
     property int parameter5: 0
+     property bool altitudeMode:DeviceManager.deviceList[swipeCurrIndex].DevInfoObject.heightOption === 1 ? true:false
     function newModel(){
         loader.sourceComponent = mode2
         loader1.sourceComponent = weld2
@@ -101,47 +102,6 @@ Rectangle {
                 x:42
                 y:314
                 color: "#0c5696"
-                // eqText1:{
-                //     if(DeviceManager.deviceList[swipeCurrIndex]){
-                //         return DeviceManager.deviceList[swipeCurrIndex].DevInfoObject.power
-                //     }
-                //     else{
-                //         return ""
-                //     }
-                // }
-                // eqText2:{
-                //     if(DeviceManager.deviceList[swipeCurrIndex]){
-                //         return DeviceManager.deviceList[swipeCurrIndex].DevInfoObject.time
-                //     }
-                //     else{
-                //         return ""
-                //     }
-                // }
-
-                // eqText3:{
-                //     if(DeviceManager.deviceList[swipeCurrIndex]){
-                //         return DeviceManager.deviceList[swipeCurrIndex].DevInfoObject.energy
-                //     }
-                //     else{
-                //         return ""
-                //     }
-                // }
-                // eqText4:{
-                //     if(DeviceManager.deviceList[swipeCurrIndex]){
-                //         return DeviceManager.deviceList[swipeCurrIndex].DevInfoObject.heightPre
-                //     }
-                //     else{
-                //         return ""
-                //     }
-                // }
-                // eqText5:{
-                //     if(DeviceManager.deviceList[swipeCurrIndex]){
-                //         return DeviceManager.deviceList[swipeCurrIndex].DevInfoObject.heightPost
-                //     }
-                //     else{
-                //         return ""
-                //     }
-                // }
 
                 eqText1: DeviceManager.deviceList[swipeCurrIndex] ? DeviceManager.deviceList[swipeCurrIndex].DevInfoObject.power : ""
 
@@ -416,9 +376,10 @@ Rectangle {
                     }
                 }
                 Text{
-                    id:t2
-                    x:840/8 + 840/8/2-width/2
-                    y:11
+                    id: swipeSerialNumberText
+                    anchors.left: parent.left
+                    anchors.leftMargin: altitudeMode ? 110 : 150
+                    anchors.top: t1.top
                     font.pixelSize: 16
                     // text: qsTr("序号")
                     text: GlobalLanguageDefine.strSerialNumber
@@ -426,9 +387,10 @@ Rectangle {
                     color: pRgb(171, 206, 213)
                 }
                 Text{
-                    id:t3
-                    x:840/8*2 + 840/8/2-width/2
-                    y:11
+                    id: swipeWeldingTimeText
+                    anchors.top: t1.top
+                    anchors.left: parent.left
+                    anchors.leftMargin: altitudeMode ? 170 : 270
                     font.pixelSize: 16
                     // text: qsTr("焊接时间")
                     text: GlobalLanguageDefine.strWeldingTime
@@ -436,9 +398,10 @@ Rectangle {
                     color: pRgb(171, 206, 213)
                 }
                 Text{
-                    id:t4
-                    x:840/8*3 + 840/8/2-width/2
-                    y:11
+                    id: swipePowerText
+                    anchors.top: t1.top
+                    anchors.left: parent.left
+                    anchors.leftMargin:  altitudeMode ? 270 : 420
                     font.pixelSize: 16
                     // text: qsTr("功率")
                     text: GlobalLanguageDefine.strPower
@@ -446,14 +409,26 @@ Rectangle {
                     color: pRgb(171, 206, 213)
                 }
                 Text{
-                    id:t5
-                    x:840/8*4 + 840/8/2-width/2
-                    y:11
+                    id: swipePreHeightText
+                    anchors.top: t1.top
+                    anchors.left: parent.left
+                    anchors.leftMargin: 350
                     font.pixelSize: 16
-                    // text: qsTr("能量")
-                    text: GlobalLanguageDefine.strEnergy
+                    text: GlobalLanguageDefine.strPreWeldHeight
                     font.family: GlobalSystemDefine.fontBold
                     color: pRgb(171, 206, 213)
+                    visible: altitudeMode
+                }
+                Text{
+                    id:swipePostHeightText
+                    anchors.top: t1.top
+                    anchors.left: parent.left
+                    anchors.leftMargin: 450
+                    font.pixelSize: 16
+                    text: GlobalLanguageDefine.strPostWeldHeight
+                    font.family: GlobalSystemDefine.fontBold
+                    color: pRgb(171, 206, 213)
+                    visible: altitudeMode
                 }
                 Text{
                     id:t6
@@ -505,11 +480,10 @@ Rectangle {
                             anchors.fill: parent
                             onPressed: {
                                 taskplanView.currentIndex = index
-                                parameter1 = Manual.data(Manual.index(index,0),QmlEnum.MANUAL_energy)
-                                parameter2 = Manual.data(Manual.index(index,0),QmlEnum.MANUAL_amplitude)
-                                parameter3 = Manual.data(Manual.index(index,0),QmlEnum.MANUAL_pressure)
-                                parameter4 = Manual.data(Manual.index(index,0),QmlEnum.MANUAL_pre_height)
-                                parameter5 = Manual.data(Manual.index(index,0),QmlEnum.MANUAL_post_height)
+                                parameter1 = Manual.data(Manual.index(index,0),QmlEnum.MANUAL_preEnergy)
+                                parameter2 = Manual.data(Manual.index(index,0),QmlEnum.MANUAL_preAmplitude)
+                                parameter3 = Manual.data(Manual.index(index,0),QmlEnum.MANUAL_preWP)
+                                parameter4 = Manual.data(Manual.index(index,0),QmlEnum.MANUAL_preTP)
                             }
                         }
                         Button{
@@ -530,22 +504,17 @@ Rectangle {
                             }
 
                             onPressed: {
-                                var isSelect = false
                                 if(im1.source == "qrc:/images/btn_unlock_double_line.png"){
                                     im1.source = "qrc:/images/btn_lock_double_line.png"
-                                    isSelect = true
                                 }
                                 else if(im1.source == "qrc:/images/btn_lock_double_line.png"){
                                     im1.source = "qrc:/images/btn_unlock_double_line.png"
-                                    isSelect = false
                                 }
                                 else if(im1.source == "qrc:/images/btn_lock_single_line.png"){
                                     im1.source = "qrc:/images/btn_unlock_single_line.png"
-                                    isSelect = false
                                 }
                                 else if(im1.source == "qrc:/images/btn_unlock_single_line.png"){
                                     im1.source = "qrc:/images/btn_lock_single_line.png"
-                                    isSelect = true
                                 }
                                 Manual.setData(Manual.index(index, 0), isSelect, QmlEnum.MANUAL_COLUMN.MANUAL_selected)
                             }
@@ -572,7 +541,8 @@ Rectangle {
                             }
                         }
                         Text{
-                            x:840/8*1 + 840/8/2-width/2
+                            anchors.left: parent.left
+                            anchors.leftMargin: altitudeMode ? 115 : 160
                             anchors.verticalCenter: parent.verticalCenter
                             font.pixelSize: 16
                             text: serial_number
@@ -580,28 +550,42 @@ Rectangle {
                             color: index % 2 !== 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
                         }
                         Text{
+                            anchors.left: parent.left
+                            anchors.leftMargin: altitudeMode ? 170 : 280
                             anchors.verticalCenter: parent.verticalCenter
-                            x:840/8*2 + 840/8/2-width/2
                             font.pixelSize: 16
-                            text: time + GlobalLanguageDefine.strWeldTimeUnit
+                            text: UtilityFunction.displayValue(time,100,2) + GlobalLanguageDefine.strWeldTimeUnit
                             font.family: GlobalSystemDefine.fontBold
                             color: index % 2 !== 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
                         }
                         Text{
+                            anchors.left: parent.left
+                            anchors.leftMargin: altitudeMode ? 270 : 420
                             anchors.verticalCenter: parent.verticalCenter
-                            x:840/8*3 + 840/8/2-width/2
                             font.pixelSize: 16
-                            text: power + GlobalLanguageDefine.strPowerUnit
+                            text: UtilityFunction.displayValue(power) + GlobalLanguageDefine.strPowerUnit
                             font.family: GlobalSystemDefine.fontBold
                             color: index % 2 !== 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
                         }
                         Text{
+                            anchors.left: parent.left
+                            anchors.leftMargin: 350
                             anchors.verticalCenter: parent.verticalCenter
-                            x:840/8*4 + 840/8/2-width/2
                             font.pixelSize: 16
-                            text: energy + GlobalLanguageDefine.strEnergyUnit
+                            text: UtilityFunction.displayValue(preheight,100,2) + GlobalLanguageDefine.strHeightUnit
                             font.family: GlobalSystemDefine.fontBold
                             color: index % 2 !== 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
+                            visible: altitudeMode
+                        }
+                        Text{
+                            anchors.left: parent.left
+                            anchors.leftMargin: 450
+                            anchors.verticalCenter: parent.verticalCenter
+                            font.pixelSize: 16
+                            text: UtilityFunction.displayValue(postheight,100,2) + GlobalLanguageDefine.strHeightUnit
+                            font.family: GlobalSystemDefine.fontBold
+                            color: index % 2 !== 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
+                            visible: altitudeMode
                         }
                         Text{
                             anchors.verticalCenter: parent.verticalCenter
@@ -623,8 +607,9 @@ Rectangle {
                             color: index % 2 === 0 ? "#014c8d" : pRgb(175, 195, 216)
                             font.family: GlobalSystemDefine.fontBold
                             font.pixelSize: 16
-                            text:actual_force
+                            text:actual_force + GlobalLanguageDefine.strActualForceUnit
                             inputMethodHints: Qt.ImhDigitsOnly
+                            validator: RegExpValidator {regExp: /^[0-9]+$/}
                             background: Rectangle{
                                 radius: 3
                                 border.width: 2
@@ -664,8 +649,9 @@ Rectangle {
                             color: index % 2 === 0 ? "#014c8d" : pRgb(175, 195, 216)
                             font.family: GlobalSystemDefine.fontBold
                             font.pixelSize: 16
-                            text:actual_degree
+                            text:actual_degree + GlobalLanguageDefine.strActualDegreeUnit
                             inputMethodHints: Qt.ImhDigitsOnly
+                            validator: RegExpValidator {regExp: /^[0-9]+$/}
                             background: Rectangle{
                                 radius: 3
                                 border.width: 2

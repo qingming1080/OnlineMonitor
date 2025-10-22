@@ -29,8 +29,21 @@ public:
         int ActualResidual; // 残留度
         bool IsSelected;
         bool IsNewComming;
-
+        //preset
+        int PreEnergy;
+        int PreAmplitude;
+        int PreWP;
+        int PreTP;
     };
+
+    enum PRESET
+    {
+        PREENERGY,
+        PREAMPLITUDE,
+        PRETP,
+        PREWP,
+    };
+
 public:
 
     explicit Manual(int welderID = 0, QObject *parent = nullptr);
@@ -52,7 +65,7 @@ public:
     Q_INVOKABLE void stopReading();
 
 private slots:
-    void onNewManualData(int welderId, const QVector<quint16> &inputs, quint32 cycleCount, DateTimeData date);
+    void onNewManualData(int welderId, const QVector<quint16> &inputs, quint32 cycleCount, DateTimeData date, QVector<quint16> holdings);
 
 signals:
     void welderIDChanged();

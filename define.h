@@ -132,10 +132,10 @@ struct _Production_Data
     int energy;                            // 能量
     int amplitude;                         // 振幅
     int pressure;                          // 压力
-    QString time;                          // 焊接时间
+    int time;                          // 焊接时间
     int power;                             // 功率
-    double pre_height;                        // 焊前高度
-    double post_height;                       // 焊后高度
+    int pre_height;                        // 焊前高度
+    int post_height;                       // 焊后高度
     int force;                             // 撕拉力
     int residual;                          // 残留度
     int good_rate;                         // 良率

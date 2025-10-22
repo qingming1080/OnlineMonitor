@@ -48,55 +48,33 @@ HBModbusClient::~HBModbusClient()
         delete modbusClient;
     }
 
-    if (m_timer) {
-        m_timer->stop();
-        delete m_timer;
-    }
+    // if (m_timer) {
+    //     m_timer->stop();
+    //     delete m_timer;
+    // }
 }
 
 void HBModbusClient::Init()
 {
     m_timer = new QTimer(this);
     m_timer->setInterval(1000);
-    connect(m_timer, &QTimer::timeout, this, &HBModbusClient::onPollTimeout);
-
-    m_reconnectTimer = new QTimer(this);
-    m_reconnectTimer->setInterval(2000);
-    m_reconnectTimer->setSingleShot(false);
-    connect(m_reconnectTimer, &QTimer::timeout, this, [this]()
-    {
-        if (modbusClient->state() != QModbusDevice::ConnectedState)
+    connect(m_timer, &QTimer::timeout, this, [this]() {
+        if (modbusClient->state() == QModbusDevice::ConnectedState) {
+            onPollTimeout();
+        } else {
             modbusClient->connectDevice();
-        else
-            m_reconnectTimer->stop();
+        }
     });
 
-    connect(modbusClient, &QModbusTcpClient::stateChanged, this, [this](QModbusDevice::State state)
-    {
-        if(state == QModbusDevice::ConnectedState)
-        {
-            // qDebug() << "Modbus已连接";
-            emit connectedChanged(true);
-            m_timer->start();
+    connect(modbusClient, &QModbusTcpClient::stateChanged, this, [this](QModbusDevice::State state){
+        emit connectedChanged(state == QModbusDevice::ConnectedState);
+        if(state == QModbusDevice::ConnectedState) {
             updateSysLedStatus();
             DeviceManager::getInstance()->syncDevicesToModbus();
-            if (m_reconnectTimer->isActive()) m_reconnectTimer->stop();
-        }
-        else if(state == QModbusDevice::UnconnectedState)
-        {
-            // qDebug() << "Modbus已断开";
-            emit connectedChanged(false);
-            m_timer->stop();
-            if (!m_reconnectTimer->isActive())
-                m_reconnectTimer->start();
         }
     });
 
-    connect(modbusClient, &QModbusTcpClient::errorOccurred, this, [this](QModbusDevice::Error err)
-    {
-        // if(err != QModbusDevice::NoError)
-            // qWarning() << "Modbus错误:" << modbusClient->errorString();
-    });
+    m_timer->start();
 
 }
 
@@ -130,7 +108,6 @@ void HBModbusClient::onPollTimeout()
 
     if(modbusClient->state() != QModbusDevice::ConnectedState)
         return;
-
     pollHoldings(0, SYS_HOLDING_REGISTERS_COUNT, "Modbus系统保持寄存器读取失败:");
     pollHoldings(HOLDING_REGISTERS_ADDRESS_BASE, END_OF_DEV_HOLDING_REGISTER - HOLDING_REGISTERS_ADDRESS_BASE, "Modbus设备保持寄存器读取失败:");
     pollAllRegisters(QModbusDataUnit::InputRegisters, DEV_INPUT_REGISTERS_COUNT * DEV_COUNT, "Modbus输入寄存器读取失败:");
@@ -220,10 +197,10 @@ QVector<T> HBModbusClient::readRegisters(QModbusDataUnit::RegisterType type, int
         break;
     default:
         break;
-    if (m_reconnectTimer)
+    if (m_timer)
         {
-          m_reconnectTimer->stop();
-          delete m_reconnectTimer;
+          m_timer->stop();
+          delete m_timer;
         }
     }
     return result;
@@ -303,11 +280,10 @@ void HBModbusClient::processRegister(QModbusDataUnit::RegisterType type, int add
         m_Holdings[address] = value;
         break;
     case QModbusDataUnit::InputRegisters:
-        if (address % DEV_INPUT_REGISTERS_COUNT == DEV_CYCLE_COUNT_H || address % DEV_INPUT_REGISTERS_COUNT == DEV_CYCLE_COUNT_L)
-        {
-            dispatchInputsOnCycleCountChanged();
-        }
+
+        dispatchInputsOnCycleCountChanged();
         break;
+
     case QModbusDataUnit::Coils:
 
         switch(address)
@@ -394,7 +370,7 @@ void HBModbusClient::dispatchInputsOnCycleCountChanged()
         {
             lastCycleCount[i] = cycleCount;
             QVector<quint16> inputs = getDeviceInputs(i+1);
-            DataValidator::isValidForDatabase(inputs);
+            QVector<quint16> holdings = getDeviceHoldings(i+1);
             if (!DataValidator::isValidForDatabase(inputs))
             {
                 qDebug() << "设备" << i+1 << "输入数据异常，丢弃该条数据";
@@ -417,10 +393,16 @@ void HBModbusClient::dispatchInputsOnCycleCountChanged()
                 date.hour               = inputs[DEV_HH];
                 date.minute             = inputs[DEV_MM];
                 date.second             = inputs[DEV_SS];
+                // qDebug() << "设备" << i+1 ;
+                // qDebug() << "inputs, DEV_POWER" << inputs[DEV_POWER] ;
+                // qDebug() << "inputs, DEV_TIME" << inputs[DEV_TIME] ;
+                // qDebug() << "inputs, DEV_ENERGY" << inputs[DEV_ENERGY] ;
 
                 // updateDeviceTrend(device, inputs[DEV_POWER], inputs[DEV_TIME], inputs[DEV_PRE_HEIGHT], inputs[DEV_POST_HEIGHT]);
                 DataBaseManager::getInstance()->saveProductionDataofModbus(device,inputs,cycleCount,date);
-                emit newInputData(i+1, inputs,cycleCount,date);
+
+
+                emit newInputData(i+1, inputs,cycleCount,date,holdings);
 
             }
             //  TODO
@@ -440,7 +422,8 @@ void HBModbusClient::updateDeviceTrend(Device* dev, quint16 power, quint16 time,
 
 // 获取指定设备的某个输入寄存器值
 quint16 HBModbusClient::getInputRegister(int devId, int regEnum) const
-{
+{   int i = 0;
+    qDebug()<<"收到数据" << i;
     int index = (devId - 1) * DEV_INPUT_REGISTERS_COUNT + regEnum;
     if (index >= 0 && index < DEV_INPUT_REGISTERS_COUNT * DEV_COUNT)
         return m_Inputs[index];
@@ -664,18 +647,18 @@ void HBModbusClient::dispatchHoldingRegisters()
 
         QMetaObject::invokeMethod(deviceInfo, [holdings, deviceInfo]() {
             int index = 0;
-            deviceInfo->setPreEnegyRaw(holdings[index++]);
-            deviceInfo->setPreAmplitudeRaw(holdings[index++]);
-            deviceInfo->setPreTPRaw(holdings[index++]);
-            deviceInfo->setPreWPRaw(holdings[index++]);
-            deviceInfo->setPreTimeMinRaw(holdings[index++]);
-            deviceInfo->setPreTimeMaxRaw(holdings[index++]);
-            deviceInfo->setPrePowerMinRaw(holdings[index++]);
-            deviceInfo->setPrePowerMaxRaw(holdings[index++]);
-            deviceInfo->setPreHeightMinRaw(holdings[index++]);
-            deviceInfo->setPreHeightMaxRaw(holdings[index++]);
-            deviceInfo->setPostHeightMinRaw(holdings[index++]);
-            deviceInfo->setPostHeightMaxRaw(holdings[index++]);
+            // deviceInfo->setPreEnegyRaw(holdings[index++]);
+            // deviceInfo->setPreAmplitudeRaw(holdings[index++]);
+            // deviceInfo->setPreTPRaw(holdings[index++]);
+            // deviceInfo->setPreWPRaw(holdings[index++]);
+            // deviceInfo->setPreTimeMinRaw(holdings[index++]);
+            // deviceInfo->setPreTimeMaxRaw(holdings[index++]);
+            // deviceInfo->setPrePowerMinRaw(holdings[index++]);
+            // deviceInfo->setPrePowerMaxRaw(holdings[index++]);
+            // deviceInfo->setPreHeightMinRaw(holdings[index++]);
+            // deviceInfo->setPreHeightMaxRaw(holdings[index++]);
+            // deviceInfo->setPostHeightMinRaw(holdings[index++]);
+            // deviceInfo->setPostHeightMaxRaw(holdings[index++]);
         }, Qt::QueuedConnection);
     }
 }

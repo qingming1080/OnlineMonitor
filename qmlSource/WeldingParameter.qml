@@ -12,130 +12,83 @@ Rectangle {
     property string eqText3: ""
     property string eqText4: ""
     property string eqText5: ""
-    property bool altitudeMode:DeviceManager.deviceList[swipeCurrIndex].DevInfoObject.heightOption
-                               === 1 ? true:false
+    property bool altitudeMode:DeviceManager.deviceList[swipeCurrIndex].DevInfoObject.heightOption === 1 ? true:false
 
-    property int selectedTab: 0  // 0: 焊接参数, 1: 参数设置
     property int deviceID: DeviceManager.deviceList[swipeCurrIndex].DevInfoObject.id
 
     radius: 3
     Rectangle {
            width:  equipmentCount == 1 ? 117 : 129
            height: 35
-           //border.color: selectedTab === 0 ? pRgb(43, 112, 173) :  pRgb(232, 232, 232) // 选中时边框颜色
-           border.color: selectedTab === 0 ? pRgb(232, 232, 232) : pRgb(43, 112, 173) // 选中时边框颜色
-           border.width: 1  // 设置边框宽度
            radius: 1
-           color: selectedTab === 0 ? pRgb(232, 232, 232) : pRgb(43, 112, 173) // 选中时背景颜色
            anchors.left: parent.left
            anchors.top: parent.top
+           color: "transparent"
 
            Text {
                // text: qsTr("焊接参数")
+               id: weldingParameterText
                text: GlobalLanguageDefine.strWeldingParameter
                font.family: GlobalSystemDefine.fontBold
                font.bold: true
                font.pixelSize: LanguageManager.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 20 : 18
-               color: selectedTab === 0 ? pRgb(43, 112, 173) : pRgb(153, 204, 255)  // 选中时文字颜色
-               anchors.centerIn: parent  // 使文字居中
+               color: pRgb(153, 204, 255)
+               anchors.left: parent.left
+               anchors.leftMargin: 17
+               anchors.top: parent.top
+               anchors.topMargin: 10
            }
 
-           MouseArea {
-               anchors.fill: parent
-               onClicked: {
-                   selectedTab = 0  // 设置选中标签为焊接参数
-                   console.log("焊接参数点击了！")
-                   // 在这里执行相应的操作
-
-               }
+           Rectangle{
+               anchors.top: weldingParameterText.bottom
+               anchors.topMargin: 5
+               height: 1
+               width: 97
+               color: pRgb(174, 210, 216)
            }
        }
-
-       // 参数设置标签
-       Rectangle {
-           width: equipmentCount == 1 ? 116 : 129
-           height: 35
-          // border.color: selectedTab === 1 ? pRgb(43, 112, 173) :  pRgb(232, 232, 232) // 选中时边框颜色
-           border.color: selectedTab === 1 ?  pRgb(232, 232, 232): pRgb(43, 112, 173) // 选中时边框颜色
-           border.width: 0.5 // 设置边框宽度
-           color: selectedTab === 1 ?  pRgb(232, 232, 232) : pRgb(43, 112, 173)   // 选中时背景颜色
-           radius: 1
-           anchors.left: parent.left
-           anchors.top: parent.top
-           anchors.leftMargin: 129  // 设置距离焊接参数标签的间隔
-
-           Text {
-               // text: qsTr("参数设置")
-               text: GlobalLanguageDefine.strParameterSetting
-               font.family: GlobalSystemDefine.fontBold
-               font.bold: true
-               font.pixelSize: LanguageManager.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 20 : 18
-               color: selectedTab === 1 ? pRgb(43, 112, 173) : pRgb(153, 204, 255)   // 选中时文字颜色
-               anchors.centerIn: parent  // 使文字居中
-           }
-
-           MouseArea {
-               anchors.fill: parent
-               onClicked: {
-                   selectedTab = 1
-                   parameterSetting.open()
-                   console.log("deviceID: ", DeviceManager.deviceList[swipeCurrIndex].DevInfoObject.id)
-                ModbusClient.dispatchHoldingRegisters()
-               }
-           }
-   }
 
     Image {
         id: imageEnergy
         source: "qrc:/images/icon_energy.png"
-        x:altitudeMode ? 17:30
-        y:altitudeMode ? 50:58
-        width: altitudeMode ? 25:30
-        height: altitudeMode ? 25:30
+        x: 17
+        y: 70
+        width: 25
+        height: 25
     }
     Image {
         id: imageAmplitude
         source: "qrc:/images/icon_amplitude.png"
         anchors.top: imageEnergy.bottom
         anchors.left: imageEnergy.left
-        anchors.topMargin: altitudeMode ? 12 :22
-        width: altitudeMode ? 25:30
-        height: altitudeMode ? 25:30
+        anchors.topMargin: 12
+        width: 25
+        height: 25
     }
     Image {
         id: imageWeldPressure
         source: "qrc:/images/icon_wp.png"
         anchors.top: imageAmplitude.bottom
         anchors.left: imageAmplitude.left
-        anchors.topMargin: altitudeMode ? 12 :22
-        width: altitudeMode ? 25:30
-        height: altitudeMode ? 25:30
+        anchors.topMargin: 12
+        width: 25
+        height: 25
     }
     Image {
-        id: imagePreheight
-        source: "qrc:/images/icon_preheight.png"
+        id: imageTP
+        source: "qrc:/images/icon_tp.png"
         anchors.top: imageWeldPressure.bottom
         anchors.left: imageWeldPressure.left
-        anchors.topMargin: altitudeMode ? 12 :22
-        visible: altitudeMode
-        width: altitudeMode ? 25:30
-        height: altitudeMode ? 25:30
+        anchors.topMargin: 12
+        width: 25
+        height: 25
     }
-    Image {
-        id: imagePostHeight
-        source: "qrc:/images/icon_preheight.png"
-        anchors.top: imagePreheight.bottom
-        anchors.left: imagePreheight.left
-        anchors.topMargin: altitudeMode ? 12 :22
-        visible: altitudeMode
-        width: altitudeMode ? 25:30
-        height: altitudeMode ? 25:30
-    }
+
     Text {
         id: titleEnergy
         // text: qsTr("能量")
         text: GlobalLanguageDefine.strEnergy + ": "
-        height: altitudeMode ? 25:30
+        height: 25
         width: 50
         font.family: GlobalSystemDefine.fontBold
         // font.bold: true
@@ -150,7 +103,7 @@ Rectangle {
         id: titleAmplitude
         // text: qsTr("振幅")
         text: GlobalLanguageDefine.strAmplitude + ": "
-        height: altitudeMode ? 25:30
+        height: 25
         width: 50
         font.family: GlobalSystemDefine.fontBold
         // font.bold: true
@@ -165,7 +118,7 @@ Rectangle {
         id: titleWeldPressure
         // text: qsTr("压力")
         text: GlobalLanguageDefine.strWeldPressure + ": "
-        height: altitudeMode ? 25:30
+        height: 25
         width: 50
         font.family: GlobalSystemDefine.fontBold
         // font.bold: true
@@ -177,57 +130,39 @@ Rectangle {
         anchors.leftMargin: 10
     }
     Text {
-        id: titlePreheight
-        // text: qsTr("焊前高度")
-        text: GlobalLanguageDefine.strPreWeldHeight + ": "
-        height: altitudeMode ? 25:30
+        id: titleTP
+        text: GlobalLanguageDefine.strTP + ": "
+        height: 25
         width: 50
         font.family: GlobalSystemDefine.fontBold
         // font.bold: true
         font.pixelSize: LanguageManager.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 16 : 14
         color: pRgb(171, 206, 213)
         verticalAlignment: Text.AlignVCenter
-        anchors.verticalCenter: imagePreheight.verticalCenter
-        anchors.left: imagePreheight.right
+        anchors.verticalCenter: imageTP.verticalCenter
+        anchors.left: imageTP.right
         anchors.leftMargin: 10
-        visible: altitudeMode
-    }
-    Text {
-        id: titlePostHeight
-        // text: qsTr("焊后高度")
-        text: GlobalLanguageDefine.strPostWeldHeight + ": "
-        height: altitudeMode ? 25:30
-        width: 50
-        font.family: GlobalSystemDefine.fontBold
-        // font.bold: true
-        font.pixelSize: LanguageManager.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 16 : 14
-        color: pRgb(171, 206, 213)
-        verticalAlignment: Text.AlignVCenter
-        anchors.verticalCenter: imagePostHeight.verticalCenter
-        anchors.left: imagePostHeight.right
-        anchors.leftMargin: 10
-        visible: altitudeMode
     }
     TextField{
         id: fieldEnergy
-        width: /*mode === 1 ? 75:*/98
-        height: altitudeMode ? 28 :30
+        width: 98
+        height: 28
         anchors.left: titleEnergy.right
-        anchors.leftMargin: altitudeMode ? 38:25
+        anchors.leftMargin:  38
         anchors.verticalCenter: titleEnergy.verticalCenter
         horizontalAlignment: TextInput.AlignHCenter
-        // verticalAlignment: TextInput.AlignBottom
         color: pRgb(43, 112, 173)
         font.family: GlobalSystemDefine.fontBold
         font.bold: true
         font.pixelSize: 16
         inputMethodHints: Qt.ImhDigitsOnly
+        validator: RegExpValidator { regExp: /^[0-9]+$/}
         background: Rectangle{
             radius: 6
             border.width: 2
             border.color: "#99ccff"
         }
-        text: eqText1 + GlobalLanguageDefine.strEnergyUnit
+        text: UtilityFunction.displayValue(eqText1) + GlobalLanguageDefine.strEnergyUnit
         MouseArea {
             anchors.fill: parent
             onPressed: {
@@ -238,24 +173,24 @@ Rectangle {
     }
     TextField{
         id: fieldAmplitude
-        width: /*mode === 1 ? 75:*/98
-        height: altitudeMode ? 28 :30
+        width: 98
+        height: 28
         anchors.left: titleAmplitude.right
-        anchors.leftMargin: altitudeMode ? 38:25
+        anchors.leftMargin:  38
         anchors.verticalCenter: titleAmplitude.verticalCenter
         horizontalAlignment: TextInput.AlignHCenter
-        // verticalAlignment: TextInput.AlignVCenter
         color: pRgb(43, 112, 173)
         font.family: GlobalSystemDefine.fontBold
         font.bold: true
         font.pixelSize: 16
         inputMethodHints: Qt.ImhDigitsOnly
+        validator: RegExpValidator { regExp: /^[0-9]+$/}
         background: Rectangle{
             radius: 6
             border.width: 2
             border.color: "#99ccff"
         }
-        text:eqText2 + GlobalLanguageDefine.strAmplitudeUnit
+        text:UtilityFunction.displayValue(eqText2) + GlobalLanguageDefine.strAmplitudeUnit
         MouseArea {
             anchors.fill: parent
             onPressed: {
@@ -266,24 +201,24 @@ Rectangle {
     }
     TextField{
         id: fieldWeldPressure
-        width: /*mode === 1 ? 75:*/98
-        height: altitudeMode ? 28 :30
+        width: 98
+        height:  28
         anchors.left: titleWeldPressure.right
-        anchors.leftMargin: altitudeMode ? 38:25
+        anchors.leftMargin: 38
         anchors.verticalCenter: titleWeldPressure.verticalCenter
         horizontalAlignment: TextInput.AlignHCenter
-        // verticalAlignment: TextInput.AlignVCenter
         color: pRgb(43, 112, 173)
         font.family: GlobalSystemDefine.fontBold
         font.bold: true
         font.pixelSize: 16
         inputMethodHints: Qt.ImhDigitsOnly
+        validator: RegExpValidator { regExp: /^[0-9]+$/}
         background: Rectangle{
             radius: 6
             border.width: 2
             border.color: "#99ccff"
         }
-        text:eqText3 + GlobalLanguageDefine.strPressureUnit
+        text: UtilityFunction.displayValue(eqText3,10,1) + GlobalLanguageDefine.strPressureUnit
         MouseArea {
             anchors.fill: parent
             onPressed: {
@@ -293,59 +228,29 @@ Rectangle {
         }
     }
     TextField{
-        id: fieldPreheight
+        id: fieldTP
         width: /*mode === 1 ? 75:*/98
-        height: altitudeMode ? 28 :30
-        anchors.left: titlePreheight.right
-        anchors.leftMargin: altitudeMode ? 38:25
-        anchors.verticalCenter: titlePreheight.verticalCenter
+        height: 28
+        anchors.left: titleTP.right
+        anchors.leftMargin: 38
+        anchors.verticalCenter: titleTP.verticalCenter
         horizontalAlignment: TextInput.AlignHCenter
-        // verticalAlignment: TextInput.AlignVCenter
         color: pRgb(43, 112, 173)
         font.family: GlobalSystemDefine.fontBold
         font.bold: true
         font.pixelSize: 16
         inputMethodHints: Qt.ImhDigitsOnly
+        validator: RegExpValidator { regExp: /^[0-9]+$/}
         background: Rectangle{
             radius: 6
             border.width: 2
             border.color: "#99ccff"
         }
-        text:eqText4 + GlobalLanguageDefine.strHeightUnit
-        visible: altitudeMode
+        text: UtilityFunction.displayValue(eqText4,10,1) + GlobalLanguageDefine.strPressureUnit
         MouseArea {
             anchors.fill: parent
             onPressed: {
-                fieldPreheight.forceActiveFocus()
-                keyboardType = 0
-            }
-        }
-    }
-    TextField{
-        id: fieldPostHeight
-        width: /*mode === 1 ? 75:*/98
-        height: altitudeMode ? 28 :30
-        anchors.left: titlePostHeight.right
-        anchors.leftMargin: altitudeMode ? 38:25
-        anchors.verticalCenter: titlePostHeight.verticalCenter
-        horizontalAlignment: TextInput.AlignHCenter
-        // verticalAlignment: TextInput.AlignVCenter
-        color: pRgb(43, 112, 173)
-        font.family: GlobalSystemDefine.fontBold
-        font.bold: true
-        font.pixelSize: 16
-        inputMethodHints: Qt.ImhDigitsOnly
-        background: Rectangle{
-            radius: 6
-            border.width: 2
-            border.color: "#99ccff"
-        }
-        text:eqText5 + GlobalLanguageDefine.strHeightUnit
-        visible: altitudeMode
-        MouseArea {
-            anchors.fill: parent
-            onPressed: {
-                fieldPostHeight.forceActiveFocus()
+                fieldTP.forceActiveFocus()
                 keyboardType = 0
             }
         }

@@ -23,6 +23,7 @@ Rectangle {
     property int parameter4: 0
     property int parameter5: 0
     property int listSize: 0
+    property bool altitudeMode:DeviceManager.deviceList[0].DevInfoObject.heightOption === 1 ? true:false
     property bool switchingEquipment: false
     signal sigBtnSynchronization(var index,var time)
     signal sigSwipeCurrIndex(var index)
@@ -176,7 +177,7 @@ Rectangle {
                         eqText2:parameter2
                         eqText3:parameter3
                         eqText4:parameter4
-                        eqText5:parameter5
+                        // eqText5:parameter5
                     }
                 }
             }
@@ -415,9 +416,10 @@ Rectangle {
                             }
                         }
                         Text{
-                            id:t2
-                            x:960/8 + 960/8/2-width/2
-                            y:11
+                            id: titleSerialNumberText
+                            anchors.top: t1.top
+                            anchors.left: t1.right
+                            anchors.leftMargin: altitudeMode ? 50 : 100
                             font.pixelSize: 16
                             // text: qsTr("序号")
                             text: GlobalLanguageDefine.strSerialNumber
@@ -425,9 +427,10 @@ Rectangle {
                             color: pRgb(171, 206, 213)
                         }
                         Text{
-                            id:t3
-                            x:960/8*2 + 960/8/2-width/2
-                            y:11
+                            id: titleWeldTimeText
+                            anchors.top: t1.top
+                            anchors.left: titleSerialNumberText.right
+                            anchors.leftMargin: altitudeMode? 50 : 100
                             font.pixelSize: 16
                             // text: qsTr("焊接时间")
                             text: GlobalLanguageDefine.strWeldingTime
@@ -435,29 +438,44 @@ Rectangle {
                             color: pRgb(171, 206, 213)
                         }
                         Text{
-                            id:t4
-                            x:960/8*3 + 960/8/2-width/2
-                            y:11
+                            id: titlePowerText
+                            anchors.top: t1.top
+                            anchors.left: titleWeldTimeText.right
+                            anchors.leftMargin:  altitudeMode? 50 : 120
                             font.pixelSize: 16
                             // text: qsTr("功率")
                             text: GlobalLanguageDefine.strPower
                             font.family: GlobalSystemDefine.fontBold
                             color: pRgb(171, 206, 213)
                         }
+                        // TODO   当时高度模式开启时显示高度结果
                         Text{
-                            id:t5
-                            x:960/8*4 + 960/8/2-width/2
-                            y:11
+                            id: titlePreheightText
+                            anchors.top: t1.top
+                            anchors.left: titlePowerText.right
+                            anchors.leftMargin:  altitudeMode ? 50 : 0
                             font.pixelSize: 16
-                            // text: qsTr("能量")
-                            text: GlobalLanguageDefine.strEnergy
+                            text: GlobalLanguageDefine.strPreWeldHeight
                             font.family: GlobalSystemDefine.fontBold
                             color: pRgb(171, 206, 213)
+                            visible: altitudeMode ? 1 : 0
                         }
                         Text{
-                            id:t6
-                            x:960/8*5 + 960/8/2-width/2
-                            y:11
+                            id: titlePostheightText
+                            anchors.top: t1.top
+                            anchors.left: titlePreheightText.right
+                            anchors.leftMargin: altitudeMode ? 50 : 0
+                            font.pixelSize: 16
+                            text: GlobalLanguageDefine.strPostWeldHeight
+                            font.family: GlobalSystemDefine.fontBold
+                            color: pRgb(171, 206, 213)
+                            visible: altitudeMode ? 1 : 0
+                        }
+                        Text{
+                            id: titleDateText
+                            anchors.top: t1.top
+                            anchors.left: titlePostheightText.right
+                            anchors.leftMargin: altitudeMode ? 65 : 0
                             font.pixelSize: 16
                             // text: qsTr("日期")
                             text: GlobalLanguageDefine.strDate
@@ -465,9 +483,10 @@ Rectangle {
                             color: pRgb(171, 206, 213)
                         }
                         Text{
-                            id:t7
-                            x:960/8*6 + 960/8/2-width/2
-                            y:11
+                            id: titleTensileText
+                            anchors.top: t1.top
+                            anchors.left: titleDateText.right
+                            anchors.leftMargin: altitudeMode ? 85 :75
                             font.pixelSize: 16
                             // text: qsTr("拉力")
                             text: GlobalLanguageDefine.strTensile
@@ -475,9 +494,10 @@ Rectangle {
                             color: pRgb(171, 206, 213)
                         }
                         Text{
-                            id:t8
-                            x:960/8*7 + 960/8/2-width/2
-                            y:11
+                            id: residualText
+                            anchors.top: t1.top
+                            anchors.left: titleTensileText.right
+                            anchors.leftMargin: altitudeMode ? 70 : 70
                             font.pixelSize: 16
                             // text: qsTr("残留度")
                             text: GlobalLanguageDefine.strResidual
@@ -505,11 +525,10 @@ Rectangle {
                                     anchors.fill: parent
                                     onPressed: {
                                         taskplanView.currentIndex = index
-                                        parameter1 = Manual.data(Manual.index(index,0),QmlEnum.MANUAL_energy)
-                                        parameter2 = Manual.data(Manual.index(index,0),QmlEnum.MANUAL_amplitude)
-                                        parameter3 = Manual.data(Manual.index(index,0),QmlEnum.MANUAL_pressure)
-                                        parameter4 = Manual.data(Manual.index(index,0),QmlEnum.MANUAL_pre_height)
-                                        parameter5 = Manual.data(Manual.index(index,0),QmlEnum.MANUAL_post_height)
+                                        parameter1 = Manual.data(Manual.index(index,0),QmlEnum.MANUAL_preEnergy)
+                                        parameter2 = Manual.data(Manual.index(index,0),QmlEnum.MANUAL_preAmplitude)
+                                        parameter3 = Manual.data(Manual.index(index,0),QmlEnum.MANUAL_preWP)
+                                        parameter4 = Manual.data(Manual.index(index,0),QmlEnum.MANUAL_preTP)
                                     }
                                 }
                                 Button{
@@ -529,26 +548,19 @@ Rectangle {
                                         }
                                     }
                                     onPressed: {
-                                        var newSelected = false
 
                                         if(im1.source == "qrc:/images/btn_unlock_double_line.png"){
                                             im1.source = "qrc:/images/btn_lock_double_line.png"
-                                            newSelected = true
                                         }
                                         else if(im1.source == "qrc:/images/btn_lock_double_line.png"){
                                             im1.source = "qrc:/images/btn_unlock_double_line.png"
-                                             newSelected = false
                                         }
                                         else if(im1.source == "qrc:/images/btn_lock_single_line.png"){
                                             im1.source = "qrc:/images/btn_unlock_single_line.png"
-                                            newSelected = false
                                         }
                                         else if(im1.source == "qrc:/images/btn_unlock_single_line.png"){
                                             im1.source = "qrc:/images/btn_lock_single_line.png"
-                                            newSelected = true
                                         }
-
-                                        Manual.setData(Manual.index(index, 0),newSelected,QmlEnum.MANUAL_selected)
 
                                     }
                                 }
@@ -574,7 +586,8 @@ Rectangle {
                                     }
                                 }
                                 Text{
-                                    x: 960/8*1 + 960/8/2-width/2
+                                    anchors.left: parent.left
+                                    anchors.leftMargin: altitudeMode ? 140 : 180
                                     anchors.verticalCenter: parent.verticalCenter
                                     font.pixelSize: 16
                                     text:serial_number
@@ -582,29 +595,45 @@ Rectangle {
                                     color: index % 2 !== 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
                                 }
                                 Text{
+                                    anchors.left: parent.left
+                                    anchors.leftMargin: altitudeMode ? 220 : 320
                                     anchors.verticalCenter: parent.verticalCenter
-                                    x: 960/8*2 + 960/8/2-width/2
                                     font.pixelSize: 16
-                                    text: time + GlobalLanguageDefine.strWeldTimeUnit
+                                    text: UtilityFunction.displayValue(time,100,2) + GlobalLanguageDefine.strWeldTimeUnit
                                     font.family: GlobalSystemDefine.fontBold
                                     color: index % 2 !== 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
                                 }
                                 Text{
+                                    anchors.left: parent.left
+                                    anchors.leftMargin: altitudeMode ? 320 : 485
                                     anchors.verticalCenter: parent.verticalCenter
-                                    x: 960/8*3 + 960/8/2-width/2
                                     font.pixelSize: 16
-                                    text: power + GlobalLanguageDefine.strPowerUnit
+                                    text: UtilityFunction.displayValue(power) + GlobalLanguageDefine.strPowerUnit
                                     font.family: GlobalSystemDefine.fontBold
                                     color: index % 2 !== 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
+                                }
+                                //TODO preheight postheight
+                                Text{
+                                    anchors.left: parent.left
+                                    anchors.leftMargin: 410
+                                    anchors.verticalCenter: parent.verticalCenter
+                                    font.pixelSize: 16
+                                    text: UtilityFunction.displayValue(preheight,100,2) +  GlobalLanguageDefine.strHeightUnit
+                                    font.family: GlobalSystemDefine.fontBold
+                                    color: index % 2 !== 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
+                                    visible: altitudeMode ? 1 : 0
                                 }
                                 Text{
+                                    anchors.left: parent.left
+                                    anchors.leftMargin: 520
                                     anchors.verticalCenter: parent.verticalCenter
-                                    x: 960/8*4 + 960/8/2-width/2
                                     font.pixelSize: 16
-                                    text: energy +  GlobalLanguageDefine.strEnergyUnit
+                                    text: UtilityFunction.displayValue(postheight,100,2) +  GlobalLanguageDefine.strHeightUnit
                                     font.family: GlobalSystemDefine.fontBold
                                     color: index % 2 !== 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
+                                    visible: altitudeMode ? 1 : 0
                                 }
+
                                 Text{
                                     anchors.verticalCenter: parent.verticalCenter
                                     x: 960/8*5 + 960/8/2-width/2
@@ -625,8 +654,9 @@ Rectangle {
                                     color: index % 2 === 0 ? "#014c8d" : pRgb(175, 195, 216)
                                     font.family: GlobalSystemDefine.fontBold
                                     font.pixelSize: 16
-                                    text:actual_force
+                                    text:actual_force + GlobalLanguageDefine.strActualForceUnit
                                     inputMethodHints: Qt.ImhDigitsOnly
+                                    validator: RegExpValidator { regExp: /^[0-9]+$/}
                                     background: Rectangle{
                                         radius: 3
                                         border.width: 2
@@ -666,8 +696,9 @@ Rectangle {
                                     color: index % 2 === 0 ? "#014c8d" : pRgb(175, 195, 216)
                                     font.family: GlobalSystemDefine.fontBold
                                     font.pixelSize: 16
-                                    text:actual_degree
+                                    text:actual_degree + GlobalLanguageDefine.strActualDegreeUnit
                                     inputMethodHints: Qt.ImhDigitsOnly
+                                    validator: RegExpValidator { regExp: /^[0-9]+$/}
                                     background: Rectangle{
                                         radius: 6
                                         border.width: 3

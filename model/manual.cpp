@@ -86,8 +86,16 @@ QVariant Manual::data(const QModelIndex &index, int role) const
         return data.ActualForce;
     case QmlEnum::MANUAL_COLUMN::MANUAL_actual_degree:
         return data.ActualResidual;
-    case QmlEnum::MANUAL_COLUMN::MANUAL_selected:
+    case QmlEnum::MANUAL_COLUMN::MANUAL_isSelected:
         return data.IsSelected;
+    case QmlEnum::MANUAL_COLUMN::MANUAL_preEnergy:
+        return data.PreEnergy;
+    case QmlEnum::MANUAL_COLUMN::MANUAL_preAmplitude:
+        return data.PreAmplitude;
+    case QmlEnum::MANUAL_COLUMN::MANUAL_preTP:
+        return data.PreTP;
+    case QmlEnum::MANUAL_COLUMN::MANUAL_preWP:
+        return data.PreWP;
     default:
         return QVariant();
     }
@@ -107,11 +115,16 @@ QHash<int, QByteArray> Manual::roleNames() const
     roles[QmlEnum::MANUAL_COLUMN::MANUAL_pressure]         = "pressure";
     roles[QmlEnum::MANUAL_COLUMN::MANUAL_time]             = "time";
     roles[QmlEnum::MANUAL_COLUMN::MANUAL_power]            = "power";
-    roles[QmlEnum::MANUAL_COLUMN::MANUAL_pre_height]       = "pre_height";
-    roles[QmlEnum::MANUAL_COLUMN::MANUAL_post_height]      = "post_height";
+    roles[QmlEnum::MANUAL_COLUMN::MANUAL_pre_height]       = "preheight";
+    roles[QmlEnum::MANUAL_COLUMN::MANUAL_post_height]      = "postheight";
     roles[QmlEnum::MANUAL_COLUMN::MANUAL_actual_force]     = "actual_force";
     roles[QmlEnum::MANUAL_COLUMN::MANUAL_actual_degree]    = "actual_degree";
-    roles[QmlEnum::MANUAL_COLUMN::MANUAL_selected]         = "selected";
+    roles[QmlEnum::MANUAL_COLUMN::MANUAL_isSelected]       = "selected";
+    roles[QmlEnum::MANUAL_COLUMN::MANUAL_isNewComming]     = "isNewComming";
+    roles[QmlEnum::MANUAL_COLUMN::MANUAL_preEnergy]        = "preEnergy";
+    roles[QmlEnum::MANUAL_COLUMN::MANUAL_preAmplitude]     = "preAmplitude";
+    roles[QmlEnum::MANUAL_COLUMN::MANUAL_preTP]            = "preTP";
+    roles[QmlEnum::MANUAL_COLUMN::MANUAL_preWP]            = "preWP";
 
     return roles;
 }
@@ -172,7 +185,15 @@ bool Manual::setData(const QModelIndex &index, const QVariant &value, int role)
     case QmlEnum::MANUAL_COLUMN::MANUAL_actual_degree:
         m_listRawData[row].ActualResidual = value.toInt();
         break;
-    case QmlEnum::MANUAL_COLUMN::MANUAL_selected:
+    case QmlEnum::MANUAL_COLUMN::MANUAL_preEnergy:
+        m_listRawData[row].PreEnergy =  value.toInt();
+    case QmlEnum::MANUAL_COLUMN::MANUAL_preAmplitude:
+        m_listRawData[row].PreAmplitude =  value.toInt();
+    case QmlEnum::MANUAL_COLUMN::MANUAL_preTP:
+        m_listRawData[row].PreTP =  value.toInt();
+    case QmlEnum::MANUAL_COLUMN::MANUAL_preWP:
+        m_listRawData[row].PreWP =  value.toInt();
+    case QmlEnum::MANUAL_COLUMN::MANUAL_isSelected:
         m_listRawData[row].IsSelected = value.toBool();
         emit dataChanged(index, index, {role});
         break;
@@ -185,13 +206,13 @@ bool Manual::setData(const QModelIndex &index, const QVariant &value, int role)
 void Manual::save()
 {
     CalibrateModel();
-    // for(int i = 0; i < m_data.size(); ++i)
-    // {
-    //     if (m_data[i].selected)
-    //     DataBaseManager::getInstance()->insertManualRow(m_data.at(i));
-    //     QModelIndex idx = index(i);
-    //     emit dataChanged(idx, idx, {QmlEnum::MANUAL_COLUMN::MANUAL_selected});
-    // }
+    for(int i = 0; i < m_listRawData.size(); ++i)
+    {
+        if (m_listRawData[i].IsSelected)
+        DataBaseManager::getInstance()->insertManualRow(m_listRawData.at(i));
+        QModelIndex idx = index(i);
+        emit dataChanged(idx, idx, {QmlEnum::MANUAL_COLUMN::MANUAL_isSelected});
+    }
 }
 
 
@@ -218,7 +239,7 @@ void Manual::loadData()
 
 void Manual::startReading()
 {
-    connect(m_modbusClient, &HBModbusClient::newInputData, this, &Manual::onNewManualData);
+    connect(m_modbusClient, &HBModbusClient::newInputData, this, &Manual::onNewManualData, Qt::UniqueConnection);
 
     qDebug() << "Manual 开始接收 Modbus 数据";
 }
@@ -231,16 +252,18 @@ void Manual::stopReading()
 
 bool Manual::CalibrateModel()
 {
+    qDebug()<< "111111111";
     m_listManualData.clear();
     for(int i = 0; i < m_listRawData.size(); i++)
-    {
-        if(m_listRawData[i].IsSelected == true)
-        {
-            if(m_listRawData[i].ActualForce != 0 && m_listRawData[i].ActualResidual != 0)
-            {
+    { qDebug()<< "222222";
+        // if(m_listRawData[i].IsSelected == true)
+        // {
+            qDebug()<< "333333";
+            // if(m_listRawData[i].ActualForce != 0 && m_listRawData[i].ActualResidual != 0)
+            // {
                 m_listManualData.append(m_listRawData[i]);
-            }
-        }
+            // }
+        // }
     }
     if(m_listManualData.size() == 0)
         return false;
@@ -289,13 +312,18 @@ bool Manual::CalibrateModel()
     qDebug() << "Strength1.P10: " << coefficient[GenericLearning::STRENGTH1].P10;
     qDebug() << "Strength1.P11: " << coefficient[GenericLearning::STRENGTH1].P11;
     qDebug() << "Strength1.P20: " << coefficient[GenericLearning::STRENGTH1].P20;
+    qDebug()<< "444444444444444444";
 #endif
     //TODO handle with Database
     return true;
 }
 
-void Manual::onNewManualData(int welderId, const QVector<quint16> &inputs, quint32 cycleCount, DateTimeData date)
+void Manual::onNewManualData(int welderId, const QVector<quint16> &inputs, quint32 cycleCount, DateTimeData date, QVector<quint16> holdings)
 {
+    if (welderId != m_welderID)
+    {
+        return;
+    }
     beginInsertRows(QModelIndex(), 0, 0);
     MANUAL_DATA data;
     data.WelderId       = welderId;
@@ -307,12 +335,16 @@ void Manual::onNewManualData(int welderId, const QVector<quint16> &inputs, quint
     data.PeakPower      = inputs[HBModbusClient::DEV_POWER];
     data.Preheight      = inputs[HBModbusClient::DEV_PRE_HEIGHT];
     data.PostHeight     = inputs[HBModbusClient::DEV_POST_HEIGHT];
-    data.ActualForce    = 0;
-    data.ActualResidual = 0;
+    data.ActualForce    = 10;
+    data.ActualResidual = 10;
     data.CreateTime     = UtilityFunction::buildDateTimeString(date).left(10);;
     data.serial_number  = m_nextSerial++;
     data.IsSelected     = false;
     data.IsNewComming   = true;
+    data.PreEnergy      = holdings[PREENERGY];
+    data.PreAmplitude   = holdings[PREAMPLITUDE];
+    data.PreTP          = holdings[PRETP];
+    data.PreWP          = holdings[PREWP];
     m_listRawData.prepend(data);
     endInsertRows();
 }

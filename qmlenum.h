@@ -54,7 +54,13 @@ public:
         MANUAL_post_height     = 11,   // 焊后高度
         MANUAL_actual_force    = 12,   // 撕拉力
         MANUAL_actual_degree   = 13,   // 残留度
-        MANUAL_selected,
+        MANUAL_isSelected,
+        MANUAL_isNewComming,
+        MANUAL_preEnergy,
+        MANUAL_preAmplitude,
+        MANUAL_preWP,
+        MANUAL_preTP,
+
     };
     Q_ENUM(MANUAL_COLUMN)
 
@@ -81,6 +87,7 @@ public:
         PRODUCTION_suspect_subtotal_cycles = 18,   // 次品
         PRODUCTION_not_definite_cycles     = 19,   // 可疑
         PRODUCTION_final_result            = 20,   // 产品状态 0_合格 1_次品 2_可疑
+        PRODUCTION_row_number,
     };
     Q_ENUM(PRODUCTION_COLUMN)
 
