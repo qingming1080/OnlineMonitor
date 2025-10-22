@@ -23,11 +23,7 @@
 
 //modbus
 #include "modbus/hbmodbusclient.h"
-#include "tools/GenericLearning.h"
 
-
-
-#include <iostream>
 // 自定义消息处理程序
 void myMessageHandler(QtMsgType type, const QMessageLogContext &context, const QString &msg)
 {

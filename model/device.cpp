@@ -25,8 +25,8 @@ Device::Device(int welderID, QObject *parent)
 
     m_ptrDevInfo    = new DeviceInformation(m_welderID);
     m_pIO           = new IO(m_welderID);
-    m_pManual       = new Manual(m_welderID);
-    m_pSystem       = new System(m_welderID);
+    // m_pManual       = new Manual(m_welderID);
+    // m_pSystem       = new System(m_welderID);
     m_pTrend        = new Trend(m_welderID);
 
     QString text = QString("%1号设备_Device_初始化共耗时:%2ms").arg(welderID).arg(timer.elapsed());
@@ -37,20 +37,20 @@ Device::~Device()
 {
     delete m_ptrDevInfo;
     delete m_pIO;
-    delete m_pManual;
-    delete m_pSystem;
+    // delete m_pManual;
+    // delete m_pSystem;
     delete m_pTrend;
 }
 
 DeviceInformation* Device::getDevInfoObject() const
 {
     return m_ptrDevInfo;
-}  
-
-System *Device::pSystem() const
-{
-    return m_pSystem;
 }
+
+// System *Device::pSystem() const
+// {
+//     return m_pSystem;
+// }
 
 IO *Device::pIO() const
 {
@@ -169,7 +169,7 @@ void Device::incrementPlotIndex() {
     plotIndex++;
 }
 
-Manual *Device::pManual() const
-{
-    return m_pManual;
-}
+// Manual *Device::pManual() const
+// {
+//     return m_pManual;
+// }

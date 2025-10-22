@@ -4,7 +4,7 @@
 #include <QObject>
 #include <QMap>
 #include "model/device.h"
-#include "qmlenum.h"
+// #include "qmlenum.h"
 
 ///
 /// \brief The DeviceManager class : 设备管理
@@ -17,7 +17,7 @@ class DeviceManager : public QObject
     // 设备数量
     Q_PROPERTY(int deviceNum READ deviceNum  NOTIFY deviceNumChanged)
 
-    Q_PROPERTY(QList<QString> manualDataList READ manualDataList NOTIFY manualDataListChanged)
+    // Q_PROPERTY(QList<QString> manualDataList READ manualDataList NOTIFY manualDataListChanged)
 
 
 public:
@@ -55,9 +55,9 @@ public:
 
 
     //manual
-    Q_INVOKABLE void startManualMode(int deviceID);  // 开启手动模式
-    Q_INVOKABLE void stopManualMode();              // 关闭手动模式
-    QList<QString> manualDataList() const;          // 获取手动模式数据
+    // Q_INVOKABLE void startManualMode(int deviceID);  // 开启手动模式
+    // Q_INVOKABLE void stopManualMode();              // 关闭手动模式
+    // QList<QString> manualDataList() const;          // 获取手动模式数据
 
     void syncDevicesToModbus();
 
@@ -69,7 +69,7 @@ signals:
 
     Q_INVOKABLE void upDateBtns();
 
-    void manualDataListChanged();  // 用于通知 UI 数据更新
+    // void manualDataListChanged();  // 用于通知 UI 数据更新
 
 
 
@@ -79,16 +79,14 @@ private:
     void init();
 
 private:
-    static DeviceManager* s_pInstance;
+    static DeviceManager* m_ptrInstance;
 
     int m_deviceNum;
 
     QList<Device*> m_deviceList;
 
-    int m_manualModeDeviceID = -1;  // 当前处于手动模式的设备 ID（-1 表示未开启）
-    QList<QString> m_manualDataList;  // 存储手动模式下的数据
-
-
+    // int m_manualModeDeviceID = -1;  // 当前处于手动模式的设备 ID（-1 表示未开启）
+    // QList<QString> m_manualDataList;  // 存储手动模式下的数据
 };
 
 #endif // DEVICEMANAGER_H

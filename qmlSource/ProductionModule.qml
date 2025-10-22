@@ -37,19 +37,8 @@ Rectangle {
         sigSwipeCurrIndex(swipeIndex)
     }
 
-    Component.onCompleted: {
-        loadViewpro(3,swipe)
-        if(equipmentCount > 1){
-            mode = 1
-            loadViewpro(2,multipro)
-        }
-        else{
-            mode = 0
-            loadViewpro(1,autopro)
-        }
-    }
-    function loadViewpro(viewName, component) {
-        //        var startTime = new Date();
+    function loadViewpro(viewName, component)
+    {
         if(viewName === 3){
             switchingEquipment = true
         }
@@ -67,29 +56,33 @@ Rectangle {
             proViews[viewName] = newItem;
             prostack.push(newItem);
         }
-
-        //        var endTime = new Date();
-        //        var loadTime = endTime - startTime;
-        //        console.log("I WANT ProductionModule.qml 加载时间:", loadTime, "毫秒");
-    }
-    function buttonSynchronization(index,time){
-        if(index === 1){
-            rect1 = time
-        }
-        else if(index === 2){
-            rect2 = time
-        }
     }
 
+    Component.onCompleted: {
+        loadViewpro(3, swipe)
+        if(equipmentCount > 1)
+        {
+            mode = 1
+            loadViewpro(2, multipro)
+        }
+        else
+        {
+            mode = 0
+            loadViewpro(1, autopro)
+        }
+    }
 
     Connections{
         target: window
-        function onEquipmentCountChanged(){
-            if(equipmentCount > 1){
+        function onEquipmentCountChanged()
+        {
+            if(equipmentCount > 1)
+            {
                 mode = 1
-                loadViewpro(2,multipro)
+                loadViewpro(2, multipro)
             }
-            else{
+            else
+            {
                 mode = 0
                 loadViewpro(1,autopro)
             }
@@ -115,15 +108,15 @@ Rectangle {
             }
 
             EquipmentInfor{
-                id:s1
-                x:mode == 1 ? 52 : 29
-                y:mode == 1 ? 35 : 20
+                id: s1
+                x: mode == 1 ? 52 : 29
+                y: mode == 1 ? 35 : 20
                 width: mode == 1 ? 208 : 243
                 height: mode == 1 ? 203 : 258
                 color: mode == 1 ? "#0c5696" : pRgb(43, 112, 173)
-                eqText1:DeviceManager.deviceList[0].DevInfoObject.name
-                eqText2:DeviceManager.deviceList[0].DevInfoObject.model
-                eqText3:DeviceManager.deviceList[0].DevInfoObject.ConnectType === 1
+                eqText1: DeviceManager.deviceList[0].DevInfoObject.name
+                eqText2: DeviceManager.deviceList[0].DevInfoObject.model
+                eqText3: DeviceManager.deviceList[0].DevInfoObject.ConnectType === 1
                         ? "RS232" : "TCP/IP"
                 eqText4:{
                     var connectState = DeviceManager.deviceList[0].DevInfoObject.ConnectState
@@ -498,7 +491,7 @@ Rectangle {
                             height: 615
                             y:40
                             clip: true
-                            model:Manual
+                            model: Manual
                             onCountChanged:{
                                 listSize = taskplanView.count
                             }
@@ -710,9 +703,8 @@ Rectangle {
         }
     }
 
-
     Component{
-        id:multipro
+        id: multipro
         MultideviceProductionModule{
             id:mupMode
             width: 1280

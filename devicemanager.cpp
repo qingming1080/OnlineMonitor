@@ -10,15 +10,12 @@
 #include "model/devicenames.h"
 #include "tools/devicemodbusmapper.h"
 
-DeviceManager* DeviceManager::s_pInstance = nullptr;
-
-
+DeviceManager* DeviceManager::m_ptrInstance = nullptr;
 DeviceManager *DeviceManager::getInstance()
 {
-    if(s_pInstance == nullptr)
-        s_pInstance = new DeviceManager();
-
-    return s_pInstance;
+    if(m_ptrInstance == nullptr)
+        m_ptrInstance = new DeviceManager();
+    return m_ptrInstance;
 }
 
 DeviceManager::DeviceManager(QObject *parent)
@@ -213,23 +210,23 @@ void DeviceManager::removeDevice(int welderID)
 }
 
 
-void DeviceManager::startManualMode(int deviceID) {
-    m_manualModeDeviceID = deviceID;
-    m_manualDataList.clear();
-    emit manualDataListChanged();
-    qDebug() << "手动模式已启动, 监听设备ID:" << deviceID;
-}
+// void DeviceManager::startManualMode(int deviceID) {
+//     m_manualModeDeviceID = deviceID;
+//     m_manualDataList.clear();
+//     emit manualDataList();
+//     qDebug() << "手动模式已启动, 监听设备ID:" << deviceID;
+// }
 
-void DeviceManager::stopManualMode() {
-    m_manualModeDeviceID = -1;
-    m_manualDataList.clear();
-    emit manualDataListChanged();
-    qDebug() << "手动模式已停止";
-}
+// void DeviceManager::stopManualMode() {
+//     m_manualModeDeviceID = -1;
+//     m_manualDataList.clear();
+//     emit manualDataListChanged();
+//     qDebug() << "手动模式已停止";
+// }
 
-QList<QString> DeviceManager::manualDataList() const {
-    return m_manualDataList;
-}
+// QList<QString> DeviceManager::manualDataList() const {
+//     return m_manualDataList;
+// }
 
 void DeviceManager::syncDevicesToModbus()
 {
