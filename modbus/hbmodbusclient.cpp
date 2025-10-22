@@ -280,11 +280,10 @@ void HBModbusClient::processRegister(QModbusDataUnit::RegisterType type, int add
         m_Holdings[address] = value;
         break;
     case QModbusDataUnit::InputRegisters:
-        if (address % DEV_INPUT_REGISTERS_COUNT == DEV_CYCLE_COUNT_H || address % DEV_INPUT_REGISTERS_COUNT == DEV_CYCLE_COUNT_L)
-        {
-            dispatchInputsOnCycleCountChanged();
-        }
+
+        dispatchInputsOnCycleCountChanged();
         break;
+
     case QModbusDataUnit::Coils:
 
         switch(address)
@@ -394,6 +393,10 @@ void HBModbusClient::dispatchInputsOnCycleCountChanged()
                 date.hour               = inputs[DEV_HH];
                 date.minute             = inputs[DEV_MM];
                 date.second             = inputs[DEV_SS];
+                // qDebug() << "设备" << i+1 ;
+                // qDebug() << "inputs, DEV_POWER" << inputs[DEV_POWER] ;
+                // qDebug() << "inputs, DEV_TIME" << inputs[DEV_TIME] ;
+                // qDebug() << "inputs, DEV_ENERGY" << inputs[DEV_ENERGY] ;
 
                 // updateDeviceTrend(device, inputs[DEV_POWER], inputs[DEV_TIME], inputs[DEV_PRE_HEIGHT], inputs[DEV_POST_HEIGHT]);
                 DataBaseManager::getInstance()->saveProductionDataofModbus(device,inputs,cycleCount,date);

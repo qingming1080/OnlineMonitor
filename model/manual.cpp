@@ -206,13 +206,13 @@ bool Manual::setData(const QModelIndex &index, const QVariant &value, int role)
 void Manual::save()
 {
     CalibrateModel();
-    // for(int i = 0; i < m_data.size(); ++i)
-    // {
-    //     if (m_data[i].selected)
-    //     DataBaseManager::getInstance()->insertManualRow(m_data.at(i));
-    //     QModelIndex idx = index(i);
-    //     emit dataChanged(idx, idx, {QmlEnum::MANUAL_COLUMN::MANUAL_selected});
-    // }
+    for(int i = 0; i < m_listRawData.size(); ++i)
+    {
+        if (m_listRawData[i].IsSelected)
+        DataBaseManager::getInstance()->insertManualRow(m_listRawData.at(i));
+        QModelIndex idx = index(i);
+        emit dataChanged(idx, idx, {QmlEnum::MANUAL_COLUMN::MANUAL_isSelected});
+    }
 }
 
 
@@ -320,6 +320,10 @@ bool Manual::CalibrateModel()
 
 void Manual::onNewManualData(int welderId, const QVector<quint16> &inputs, quint32 cycleCount, DateTimeData date, QVector<quint16> holdings)
 {
+    if (welderId != m_welderID)
+    {
+        return;
+    }
     beginInsertRows(QModelIndex(), 0, 0);
     MANUAL_DATA data;
     data.WelderId       = welderId;

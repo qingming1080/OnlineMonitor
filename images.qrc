@@ -25,5 +25,6 @@
         <file>images/switch.png</file>
         <file>images/vector.png</file>
         <file>images/icon_tp.png</file>
+        <file>images/icon_weldtime.png</file>
     </qresource>
 </RCC>
