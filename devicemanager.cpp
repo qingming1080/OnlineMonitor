@@ -238,4 +238,3 @@ void DeviceManager::removeDevice(int welderID)
 //     }
 
 // }
-

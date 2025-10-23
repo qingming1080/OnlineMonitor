@@ -36,14 +36,6 @@ public:
         int PreTP;
     };
 
-    enum PRESET
-    {
-        PREENERGY,
-        PREAMPLITUDE,
-        PRETP,
-        PREWP,
-    };
-
 public:
 
     explicit Manual(int welderID = 0, QObject *parent = nullptr);
@@ -65,7 +57,7 @@ public:
     Q_INVOKABLE void stopReading();
 
 private slots:
-    void onNewManualData(int welderId, const QVector<quint16> &inputs, quint32 cycleCount, DateTimeData date, QVector<quint16> holdings);
+    void onNewManualData(int welderId, const RECEIVE_INPUTDATA& input, const RECEIVE_HOLDINGDATA& holding, const RECEIVE_COILSDATA& coil, const RECEIVE_DISCRETE& discrete);
 
 signals:
     void welderIDChanged();

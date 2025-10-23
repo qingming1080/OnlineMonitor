@@ -46,24 +46,13 @@ public:
     // 获取指定设备的全部输入寄存器（返回QVector，便于UI/DeviceManager批量处理）
     QVector<quint16> getDeviceInputs(int devId) const;
 
-    // 刷新指定设备的曲线数据（Power/Time/PreHeight/PostHeight）
-    void updateDeviceTrend(Device* dev, quint16 power, quint16 time, quint16 preHeight, quint16 postHeight);
-
     Q_INVOKABLE void setRTC(int year, int month, int day, int hour, int minute, int second);
 
-    Q_INVOKABLE void setSysLedStatus(bool condition);
+    Q_INVOKABLE void setSysLedStatus(int ledIndex, bool condition);
 
-    Q_INVOKABLE void handleDeviceCoilStatus(int devId, int value); // Updated to handle resetIdx logic
+    Q_INVOKABLE void setDeviceCoilStatus(int devId, int value); // Updated to handle resetIdx logic
 
-    void updateDeviceConnectionStates();
-
-    void updateDeviceConnectionStates(const QVector<int>& result);
-
-    void writeDeviceConfig(int deviceId, const DeviceModbusMapper::DeviceRegisterData &data);
-
-    Q_INVOKABLE void dispatchHoldingRegisters();
-
-    Q_INVOKABLE void writeDeviceHoldings(int devId, const QVector<quint16>& holdings);
+    void setDeviceConfig(int deviceId, const DeviceModbusMapper::DeviceRegisterData &data);
 
     QVector<quint16> getDeviceHoldings(int devId) const;
 
@@ -156,22 +145,22 @@ public:
          DEV_STATUE = 0,
          DEV_DATA_STATUE,
 
-         END_OF_DEV_DISCRETE_REGISTERS = DEV_DISCRETE_REGISTERS_COUNT,
+         END_OF_DEV_DISCRETE_REGISTERS = DEV_DISCRETE_REGISTERS_COUNT * DEV_COUNT,
 
      };
 
      enum COILS_REGISTERS
      {
          SYS_LED_L_BIT0 = 0,
-         SYS_LED_P_BIT1,//
-         SYS_LED_R_BIT2,//准备生产,一电就亮,已报警就灭
-         SYS_LED_A_BIT3,//
-         SYS_BTN_R_BIT4,//王总发
+         SYS_LED_P_BIT1,
+         SYS_LED_R_BIT2,
+         SYS_LED_A_BIT3,
+         SYS_BTN_R_BIT4,
 
          END_OF_SYS_COILS_REGISTERS = SYS_COILS_REGISTERS_COUNT,
-         DEV_REJECT_BIT0, //我来控
-         DEV_SUSPECT_BIT1,//我来
-         DEV_RESET_BIT2,//王总发
+         DEV_REJECT_BIT0,
+         DEV_SUSPECT_BIT1,
+         DEV_RESET_BIT2,
 
          END_OF_DEV_COILS_REGISTERS = (SYS_COILS_REGISTERS_COUNT + DEV_COILS_REGISTERS_COUNT * DEV_COUNT),
 
@@ -216,13 +205,13 @@ private:
     void processSysBtnRBit4();
     void clearRejectAndSuspectForDevice(int devId);
 
-    void updateSysLedStatus(); // Ensure LED status reflects device states
-
 signals:
 
     void connectedChanged(bool connected);
 
-    void newInputData(int devId, const QVector<quint16> &inputs, quint32 cycleCoun, DateTimeData date,const QVector<quint16> &holdings);
+    void newData(int devId, const RECEIVE_INPUTDATA& input, const RECEIVE_HOLDINGDATA& holding, const RECEIVE_COILSDATA& coil, const RECEIVE_DISCRETE& discrete);
+
+    void resetButton(bool resetButton);
 
 public slots:
 
@@ -241,8 +230,6 @@ private:
     QTimer *m_timer;
 
     mutable QMutex m_mutex;
-
-    bool m_updateLedStatus = false; // 标志位：是否需要更新LED状态
 };
 
 #endif // HBMODBUSCLIENT_H
