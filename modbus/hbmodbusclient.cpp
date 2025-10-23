@@ -12,6 +12,7 @@
 #include "qmlenum.h"
 #include <QtConcurrent/QtConcurrent>
 #include "tools/datavalidator.h"
+#include "tools/utilityfunction.h"
 
 constexpr char HBModbusClient::LOCAL_IP[13];
 constexpr int HBModbusClient::SERVER_PORT;
@@ -69,7 +70,6 @@ void HBModbusClient::Init()
     connect(modbusClient, &QModbusTcpClient::stateChanged, this, [this](QModbusDevice::State state){
         emit connectedChanged(state == QModbusDevice::ConnectedState);
         if(state == QModbusDevice::ConnectedState) {
-            updateSysLedStatus();
             DeviceManager::getInstance()->syncDevicesToModbus();
         }
     });
@@ -197,11 +197,6 @@ QVector<T> HBModbusClient::readRegisters(QModbusDataUnit::RegisterType type, int
         break;
     default:
         break;
-    if (m_timer)
-        {
-          m_timer->stop();
-          delete m_timer;
-        }
     }
     return result;
 }
@@ -266,67 +261,29 @@ void HBModbusClient::writeCoils(int start, const QVector<quint8>& values)
 
 void HBModbusClient::processRegister(QModbusDataUnit::RegisterType type, int address, quint16 value)
 {
+    QMutexLocker locker(&m_mutex);
     switch(type) {
     case QModbusDataUnit::HoldingRegisters:
-        // switch(address)
-        // {
-        // case SYS_RTC_YY:
-        //     break;
-        // case SYS_RTC_YY_MM:
-        //     break;
-        // default:
-        //     break;
-        // }
         m_Holdings[address] = value;
         break;
     case QModbusDataUnit::InputRegisters:
-
-        dispatchInputsOnCycleCountChanged();
+        if (address % DEV_INPUT_REGISTERS_COUNT == DEV_CYCLE_COUNT_H || address % DEV_INPUT_REGISTERS_COUNT == DEV_CYCLE_COUNT_L)
+        { qDebug() << "11111111111";
+            dispatchInputsOnCycleCountChanged();
+            qDebug() << "";
+        }
         break;
 
     case QModbusDataUnit::Coils:
 
         switch(address)
         {
-        case SYS_LED_L_BIT0:
-            m_Coils[SYS_LED_L_BIT0] = static_cast<unsigned char>(value);
-            break;
-        case SYS_LED_P_BIT1:
-            m_Coils[SYS_LED_P_BIT1] = static_cast<unsigned char>(value);
-            break;
-        case SYS_LED_R_BIT2:
-            m_Coils[SYS_LED_R_BIT2] = static_cast<unsigned char>(value);
-            break;
-        case SYS_LED_A_BIT3:
-            m_Coils[SYS_LED_A_BIT3] = static_cast<unsigned char>(value);
-            break;
         case SYS_BTN_R_BIT4:
             m_Coils[SYS_BTN_R_BIT4] = static_cast<unsigned char>(value);
             if (value == 1)  processSysBtnRBit4();
             qDebug() << "Coils" << "SYS_LED_L_BIT4" << value;
             break;
 
-        case DEV_RESET_BIT2:
-            m_Coils[DEV_RESET_BIT2] = static_cast<unsigned char>(value);
-            if (value == 1)  clearRejectAndSuspectForDevice(1);
-            break;
-
-        case DEV_RESET_BIT2 + DEV_COILS_REGISTERS_COUNT:
-            m_Coils[DEV_RESET_BIT2 + DEV_COILS_REGISTERS_COUNT] = static_cast<unsigned char>(value);
-            if (value == 1)  clearRejectAndSuspectForDevice(2);
-            break;
-
-        case DEV_RESET_BIT2 + DEV_COILS_REGISTERS_COUNT * 2:
-            m_Coils[DEV_RESET_BIT2 + DEV_COILS_REGISTERS_COUNT * 2] = static_cast<unsigned char>(value);
-            if (value == 1)  clearRejectAndSuspectForDevice(3);
-            break;
-
-        case DEV_RESET_BIT2 + DEV_COILS_REGISTERS_COUNT * 3:
-            m_Coils[DEV_RESET_BIT2 + DEV_COILS_REGISTERS_COUNT * 3] = static_cast<unsigned char>(value);
-            if (value == 1)  clearRejectAndSuspectForDevice(4);
-            break;
-        default:
-            break;
         }
         break;
     case QModbusDataUnit::DiscreteInputs: {
@@ -338,9 +295,6 @@ void HBModbusClient::processRegister(QModbusDataUnit::RegisterType type, int add
             if (prev != newVal) {
                 qDebug() << "DiscreteInputs index" << idx << "changed from" << prev << "to" << newVal;
                 m_LastDiscreteds[idx] = newVal;
-                if ((idx % DEV_DISCRETE_REGISTERS_COUNT) == DEV_STATUE) {
-                    updateDeviceConnectionStates();
-                }
             }
         }
         break;
@@ -348,14 +302,13 @@ void HBModbusClient::processRegister(QModbusDataUnit::RegisterType type, int add
     default:
         break;
     }
+
 }
 
 
 void HBModbusClient::dispatchInputsOnCycleCountChanged()
 {
-    // static QVector<quint32> lastCycleCount(DEV_COUNT, 0xFFFFFFFF);
     static QVector<quint32> lastCycleCount;
-    // QMutexLocker locker(&m_mutex);
     if (lastCycleCount.isEmpty())
         lastCycleCount.fill(0xFFFFFFFF, DEV_COUNT);
     const QList<Device*>& devList = DeviceManager::getInstance()->deviceList();
@@ -376,48 +329,55 @@ void HBModbusClient::dispatchInputsOnCycleCountChanged()
                 qDebug() << "设备" << i+1 << "输入数据异常，丢弃该条数据";
                 continue;
             }
-            Device* device = (i < devList.size()) ? devList.at(i) : nullptr;
-            if (device && device->getDevInfoObject() && inputs.size() >= DEV_INPUT_REGISTERS_COUNT)
-            {
-                QMetaObject::invokeMethod(device->getDevInfoObject(), [device, inputs](){
-                device->getDevInfoObject()->setPower(inputs[DEV_POWER]);
-                device->getDevInfoObject()->setTime(inputs[DEV_TIME]);
-                device->getDevInfoObject()->setEnergy(inputs[DEV_ENERGY]);
-                device->getDevInfoObject()->setHeightPre(inputs[DEV_PRE_HEIGHT]);
-                device->getDevInfoObject()->setHeightPost(inputs[DEV_POST_HEIGHT]);
-                }, Qt::QueuedConnection);
-                DateTimeData date;
-                date.year               = inputs[DEV_YY];
-                date.month              = inputs[DEV_YY_MM];
-                date.day                = inputs[DEV_DD];
-                date.hour               = inputs[DEV_HH];
-                date.minute             = inputs[DEV_MM];
-                date.second             = inputs[DEV_SS];
-                // qDebug() << "设备" << i+1 ;
-                // qDebug() << "inputs, DEV_POWER" << inputs[DEV_POWER] ;
-                // qDebug() << "inputs, DEV_TIME" << inputs[DEV_TIME] ;
-                // qDebug() << "inputs, DEV_ENERGY" << inputs[DEV_ENERGY] ;
+            DateTimeData data;
+            data.year                   = inputs[DEV_YY];
+            data.month                  = inputs[DEV_YY_MM];
+            data.day                    = inputs[DEV_DD];
+            data.hour                   = inputs[DEV_HH];
+            data.minute                 = inputs[DEV_MM];
+            data.second                 = inputs[DEV_SS];
 
-                // updateDeviceTrend(device, inputs[DEV_POWER], inputs[DEV_TIME], inputs[DEV_PRE_HEIGHT], inputs[DEV_POST_HEIGHT]);
-                DataBaseManager::getInstance()->saveProductionDataofModbus(device,inputs,cycleCount,date);
+            RECEIVE_INPUTDATA inputData;
+            inputData.CycleCount       = cycleCount;
+            inputData.Energy           = inputs[DEV_ENERGY];
+            inputData.Amplitude        = inputs[DEV_AMPLITUDE];
+            inputData.TriggerPressure  = inputs[DEV_TP];
+            inputData.WeldingPressure  = inputs[DEV_WP];
+            inputData.WeldTime         = inputs[DEV_TIME];
+            inputData.PeakPower        = inputs[DEV_POWER];
+            inputData.PreHeight        = inputs[DEV_PRE_HEIGHT];
+            inputData.PostHeight       = inputs[DEV_POST_HEIGHT];
+            inputData.WeldAlarm        = inputs[DEV_WELD_ALARM];
+            inputData.DateData         = UtilityFunction::getInstance()->toTimestamp(data.year,data.month,data.day,data.hour,data.minute,data.second);
+            // inputData.DateData         = UtilityFunction::getInstance()->toTimestamp(0,0,0,0,0,0);
+
+            RECEIVE_HOLDINGDATA holdData;
+            int holdindex = 0;
+            holdData.PreEnergy           = holdings[holdindex++];
+            holdData.PreAmplitude        = holdings[holdindex++];
+            holdData.PreTriggerPressure  = holdings[holdindex++];
+            holdData.PreWeldingPressure  = holdings[holdindex++];
 
 
-                emit newInputData(i+1, inputs,cycleCount,date,holdings);
+            RECEIVE_COILSDATA coilData;
+            coilData.Reset = m_Coils[DEV_RESET_BIT2 + i * DEV_COILS_REGISTERS_COUNT];
 
-            }
-            //  TODO
-            // Input写入数据库（/mannul）
+
+            RECEIVE_DISCRETE discrete;
+            int discreteBase = i * DEV_DISCRETE_REGISTERS_COUNT;
+            discrete.DeviceStatue      = m_Discreteds[discreteBase + DEV_STATUE];
+            discrete.DeviceDataStaue   = m_Discreteds[discreteBase + DEV_DATA_STATUE];
+
+            emit newData(i + 1, inputData, holdData, coilData, discrete);
+
+            // bool Resetbutton = m_Coils[SYS_BTN_R_BIT4];
+            // if(Resetbutton){
+            //     emit resetButton(Resetbutton);
+            // }
+
 
         }
     }
-}
-
-void HBModbusClient::updateDeviceTrend(Device* dev, quint16 power, quint16 time, quint16 preHeight, quint16 postHeight)
-{
-    if (!dev || !dev->pTrend())
-        return;
-
-    dev->pTrend()->appendWeldPoint(power, time, preHeight, postHeight);
 }
 
 // 获取指定设备的某个输入寄存器值
@@ -447,50 +407,28 @@ void HBModbusClient::setRTC(int year, int month, int day, int hour, int minute, 
     writeHoldingRegisters(SYS_RTC_YY, rtcValues);
 }
 
-Q_INVOKABLE void HBModbusClient::setSysLedStatus(bool condition) {
-
-    QVector<quint8> values(4, 0);
-    if (condition) {
-        values[SYS_LED_L_BIT0] = 1;
-        values[SYS_LED_P_BIT1] = 1;
-        values[SYS_LED_R_BIT2] = 1;
-        values[SYS_LED_A_BIT3] = 0;
-    } else {
-        values[SYS_LED_L_BIT0] = 0;
-        values[SYS_LED_P_BIT1] = 0;
-        values[SYS_LED_R_BIT2] = 0;
-        values[SYS_LED_A_BIT3] = 1;
-    }
-    writeCoils(SYS_LED_L_BIT0, values);
-}
-
-void HBModbusClient::updateSysLedStatus()
+Q_INVOKABLE void HBModbusClient::setSysLedStatus(int ledIndex, bool condition)
 {
-    bool allNormal = true;
-    for (int devId = 1; devId <= DEV_COUNT; ++devId)
+    // ledIndex: 灯编号（0=L, 1=P, 2=R, 3=A）
+    // condition: true=开, false=关
+
+
+    if (ledIndex < 0 || ledIndex > 3)
     {
-        int base = calculateBaseAddress(devId);
-
-        bool reject  = m_Coils[base + (DEV_REJECT_BIT0  - SYS_COILS_REGISTERS_COUNT)] == 1;
-        bool suspect = m_Coils[base + (DEV_SUSPECT_BIT1 - SYS_COILS_REGISTERS_COUNT)] == 1;
-
-        if (reject || suspect)
-        {
-            allNormal = false;
-            break;
-        }
+        qWarning() << "Invalid LED index:" << ledIndex;
+        return;
     }
 
-    if (allNormal) {
-        setSysLedStatus(true);
-        qDebug() << "All devices normal. LED set to true.";
-    } else {
-        setSysLedStatus(false);
-        qDebug() << "Some devices abnormal. LED set to false.";
-    }
+    int coilAddress = SYS_LED_L_BIT0 + ledIndex;
+
+    QVector<quint8> value(1, condition ? 1 : 0);
+
+    writeCoils(coilAddress, value);
+
+    qDebug() << "Set LED" << ledIndex << "to" << (condition ? "ON" : "OFF");
 }
 
-Q_INVOKABLE void HBModbusClient::handleDeviceCoilStatus(int devId, int value) {
+Q_INVOKABLE void HBModbusClient::setDeviceCoilStatus(int devId, int value) {
     if (devId < 1 || devId > DEV_COUNT) return; // Ensure device ID is valid
 
     int base = calculateBaseAddress(devId);
@@ -519,8 +457,6 @@ Q_INVOKABLE void HBModbusClient::handleDeviceCoilStatus(int devId, int value) {
             Message::getInstance()->addMessage(devId,QmlEnum::MESSAGE_suspicious);
         }
     }
-
-    updateSysLedStatus();
 }
 
 void HBModbusClient::processSysBtnRBit4() {
@@ -539,12 +475,6 @@ void HBModbusClient::processSysBtnRBit4() {
         qDebug() << "Device" << devId
                  << "Reject:" << m_Coils[base + (DEV_REJECT_BIT0 - SYS_COILS_REGISTERS_COUNT)]
                  << "Suspect:" << m_Coils[base + (DEV_SUSPECT_BIT1 - SYS_COILS_REGISTERS_COUNT)];
-    }
-
-    if (m_updateLedStatus)
-    {
-        updateSysLedStatus();
-        m_updateLedStatus = false;
     }
 }
 
@@ -575,46 +505,9 @@ void HBModbusClient::clearRejectAndSuspectForDevice(int devId) {
                    << "RejectIdx:" << rejectIdx
                    << "SuspectIdx:" << suspectIdx;
     }
-
-    updateSysLedStatus();
 }
 
-void HBModbusClient::updateDeviceConnectionStates()
-{
-    const QList<Device*>& devList = DeviceManager::getInstance()->deviceList();
-    // 每个设备占用 DEV_DISCRETE_REGISTERS_COUNT 个离散输入
-    for (int i = 0; i < DEV_COUNT && i < devList.size(); ++i) {
-        int base = i * DEV_DISCRETE_REGISTERS_COUNT;
-        // 设备连接状态通常在 DEV_STATUE 偏移位置
-        int idx = base + DEV_STATUE;
-        int state = DeviceInfoEnum::DISCONNECTED;
-        if (idx >= 0 && idx < DEV_DISCRETE_REGISTERS_COUNT * DEV_COUNT)
-        {
-            if(m_Discreteds[idx] == 1)
-                state = DeviceInfoEnum::CONNECTED;
-        }
-        Device* dev = devList.at(i);
-        if (dev && dev->getDevInfoObject())
-        {
-            dev->getDevInfoObject()->setConnectState(state);
-            qDebug() << "Device ID:" << dev->getDevInfoObject()->id() << "state:" << state;
-        }
-    }
-}
-
-// 使用读取到的离散输入向量来更新缓存并更新设备状态（更通用）
-void HBModbusClient::updateDeviceConnectionStates(const QVector<int>& result)
-{
-    // 更新本地缓存
-    int max = qMin(result.size(), DEV_DISCRETE_REGISTERS_COUNT * DEV_COUNT);
-    for (int i = 0; i < max; ++i)
-        m_Discreteds[i] = static_cast<unsigned char>(result.at(i));
-
-    // 调用不带参数的版本来更新设备对象
-    updateDeviceConnectionStates();
-}
-
-void HBModbusClient::writeDeviceConfig(int deviceId, const DeviceModbusMapper::DeviceRegisterData &data)
+void HBModbusClient::setDeviceConfig(int deviceId, const DeviceModbusMapper::DeviceRegisterData &data)
 {
     if (deviceId <= 0) {
         qWarning() << "writeDeviceConfig: invalid deviceId" << deviceId;
@@ -635,34 +528,6 @@ void HBModbusClient::writeDeviceConfig(int deviceId, const DeviceModbusMapper::D
     writeHoldingRegisters(start, devcieRegs);
 }
 
-void HBModbusClient::dispatchHoldingRegisters()
-{
-    const QList<Device*>& devList = DeviceManager::getInstance()->deviceList();
-
-    for (int i = 0; i < DEV_COUNT && i < devList.size(); ++i)
-    {
-        Device* device = devList.at(i);
-        DeviceInformation* deviceInfo = device->getDevInfoObject();
-        QVector<quint16> holdings = getDeviceHoldings(i + 1);
-
-        QMetaObject::invokeMethod(deviceInfo, [holdings, deviceInfo]() {
-            int index = 0;
-            // deviceInfo->setPreEnegyRaw(holdings[index++]);
-            // deviceInfo->setPreAmplitudeRaw(holdings[index++]);
-            // deviceInfo->setPreTPRaw(holdings[index++]);
-            // deviceInfo->setPreWPRaw(holdings[index++]);
-            // deviceInfo->setPreTimeMinRaw(holdings[index++]);
-            // deviceInfo->setPreTimeMaxRaw(holdings[index++]);
-            // deviceInfo->setPrePowerMinRaw(holdings[index++]);
-            // deviceInfo->setPrePowerMaxRaw(holdings[index++]);
-            // deviceInfo->setPreHeightMinRaw(holdings[index++]);
-            // deviceInfo->setPreHeightMaxRaw(holdings[index++]);
-            // deviceInfo->setPostHeightMinRaw(holdings[index++]);
-            // deviceInfo->setPostHeightMaxRaw(holdings[index++]);
-        }, Qt::QueuedConnection);
-    }
-}
-
 QVector<quint16> HBModbusClient::getDeviceHoldings(int devId) const
 {
     if (devId < 1 || devId > DEV_COUNT)
@@ -670,54 +535,20 @@ QVector<quint16> HBModbusClient::getDeviceHoldings(int devId) const
 
     QVector<quint16> holdings;
     holdings.reserve(12);
-
     int baseIndex = SYS_HOLDING_REGISTERS_COUNT + (devId - 1) * DEV_HOLDING_REGISTERS_COUNT;
 
-    holdings.append(m_Holdings[baseIndex + DEV_ENERGY_SET]);
-    holdings.append(m_Holdings[baseIndex + DEV_AMPLITUDE_SET]);
-    holdings.append(m_Holdings[baseIndex + DEV_TP_SET]);
-    holdings.append(m_Holdings[baseIndex + DEV_WP_SET]);
-    holdings.append(m_Holdings[baseIndex + DEV_TIME_MIN]);
-    holdings.append(m_Holdings[baseIndex + DEV_TIME_MAX]);
-    holdings.append(m_Holdings[baseIndex + DEV_POWER_MIN]);
-    holdings.append(m_Holdings[baseIndex + DEV_POWER_MAX]);
-    holdings.append(m_Holdings[baseIndex + DEV_PRE_HEIGHT_MIN]);
-    holdings.append(m_Holdings[baseIndex + DEV_PRE_HEIGHT_MAX]);
-    holdings.append(m_Holdings[baseIndex + DEV_POST_HEIGHT_MIN]);
-    holdings.append(m_Holdings[baseIndex + DEV_POST_HEIGHT_MAX]);
+    holdings.append(m_Holdings[baseIndex + (DEV_ENERGY_SET - SYS_HOLDING_REGISTERS_COUNT)]);
+    holdings.append(m_Holdings[baseIndex + (DEV_AMPLITUDE_SET - SYS_HOLDING_REGISTERS_COUNT)]);
+    holdings.append(m_Holdings[baseIndex + (DEV_TP_SET - SYS_HOLDING_REGISTERS_COUNT)]);
+    holdings.append(m_Holdings[baseIndex + (DEV_WP_SET - SYS_HOLDING_REGISTERS_COUNT)]);
+    holdings.append(m_Holdings[baseIndex + (DEV_TIME_MIN - SYS_HOLDING_REGISTERS_COUNT)]);
+    holdings.append(m_Holdings[baseIndex + (DEV_TIME_MAX - SYS_HOLDING_REGISTERS_COUNT)]);
+    holdings.append(m_Holdings[baseIndex + (DEV_POWER_MIN - SYS_HOLDING_REGISTERS_COUNT)]);
+    holdings.append(m_Holdings[baseIndex + (DEV_POWER_MAX - SYS_HOLDING_REGISTERS_COUNT)]);
+    holdings.append(m_Holdings[baseIndex + (DEV_PRE_HEIGHT_MIN - SYS_HOLDING_REGISTERS_COUNT)]);
+    holdings.append(m_Holdings[baseIndex + (DEV_PRE_HEIGHT_MAX - SYS_HOLDING_REGISTERS_COUNT)]);
+    holdings.append(m_Holdings[baseIndex + (DEV_POST_HEIGHT_MIN - SYS_HOLDING_REGISTERS_COUNT)]);
+    holdings.append(m_Holdings[baseIndex + (DEV_POST_HEIGHT_MAX - SYS_HOLDING_REGISTERS_COUNT)]);
 
     return holdings;
-}
-
-void HBModbusClient::writeDeviceHoldings(int devId, const QVector<quint16>& holdings)
-{
-    if (devId < 1 || devId > DEV_COUNT || holdings.size() < 12)
-    {
-        qWarning() << "writeDeviceHoldings: invalid devId or holdings size";
-        return;
-    }
-
-    int baseIndex = SYS_HOLDING_REGISTERS_COUNT + (devId - 1) * DEV_HOLDING_REGISTERS_COUNT;
-
-    QVector<quint16> valuesToWrite;
-    valuesToWrite.reserve(12);
-
-    int index = 0;
-    valuesToWrite.append(holdings[index++]);
-    valuesToWrite.append(holdings[index++]);
-    valuesToWrite.append(holdings[index++]);
-    valuesToWrite.append(holdings[index++]);
-    valuesToWrite.append(holdings[index++]);
-    valuesToWrite.append(holdings[index++]);
-    valuesToWrite.append(holdings[index++]);
-    valuesToWrite.append(holdings[index++]);
-    valuesToWrite.append(holdings[index++]);
-    valuesToWrite.append(holdings[index++]);
-    valuesToWrite.append(holdings[index++]);
-    valuesToWrite.append(holdings[index++]);
-
-    writeHoldingRegisters(baseIndex + DEV_ENERGY_SET, valuesToWrite);
-
-    for (int i = 0; i < 12; ++i)
-        m_Holdings[baseIndex + DEV_ENERGY_SET + i] = valuesToWrite[i];
 }

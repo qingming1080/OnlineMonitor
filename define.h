@@ -213,4 +213,45 @@ struct DateTimeData
 };
 
 
+struct RECEIVE_INPUTDATA
+{
+    int     CycleCount;
+    int     Energy;
+    int     Amplitude;
+    int     TriggerPressure;
+    int     WeldingPressure;
+    int     WeldTime;
+    int     PeakPower;
+    int     PreHeight;
+    int     PostHeight;
+    int     WeldAlarm;
+    qint64  DateData;
+};
+
+struct RECEIVE_HOLDINGDATA
+{
+    int     PreEnergy;
+    int     PreAmplitude;
+    int     PreTriggerPressure;
+    int     PreWeldingPressure;
+};
+
+struct RECEIVE_COILSDATA
+{
+    bool Reset;;
+};
+
+struct RECEIVE_SYS_COILSDATA
+{
+    bool BtnR;
+};
+
+struct RECEIVE_DISCRETE
+{
+    bool DeviceStatue;
+    bool DeviceDataStaue;
+};
+
+
+
 #endif // DEFINE_H

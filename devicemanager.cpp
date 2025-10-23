@@ -184,12 +184,6 @@ void DeviceManager::removeDevice(int welderID)
         Device* pDevice = m_deviceList.at(i);
         if(pDevice->getDevInfoObject()->id() == welderID)
         {
-            //TODO  delete device   DEV_AVAILABLE = 0
-            // DeviceModbusMapper::DeviceRegisterData emptyData;
-            // emptyData.deviceID = welderID;
-            // emptyData.DEV_AVAILABLE = 0;
-            // HBModbusClient::getInstance()->writeDeviceConfig(welderID, emptyData);
-
             m_deviceList.removeOne(pDevice);
             delete pDevice;
             m_deviceNum--;
@@ -233,7 +227,7 @@ void DeviceManager::syncDevicesToModbus()
     for (Device* device : m_deviceList)
     {
         auto deviceData = DeviceModbusMapper::generateRegisterData(device);
-        HBModbusClient::getInstance()->writeDeviceConfig(deviceData.deviceID, deviceData);
+        HBModbusClient::getInstance()->setDeviceConfig(deviceData.deviceID, deviceData);
     }
 
 }

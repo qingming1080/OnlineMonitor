@@ -35,3 +35,15 @@ UtilityFunction* UtilityFunction::getInstance()
     static UtilityFunction singleton;
     return &singleton;
 }
+
+qint64 UtilityFunction::toTimestamp(int year, int month, int day, int hour, int minute, int second)
+{
+    QDateTime dt(QDate(year, month, day), QTime(hour, minute, second), Qt::UTC);
+    return dt.toMSecsSinceEpoch();
+}
+
+QString UtilityFunction::timestampToString(qint64 timestamp)
+{
+    QDateTime dt = QDateTime::fromMSecsSinceEpoch(timestamp, Qt::UTC);
+    return dt.toString("yyyy-MM-dd HH:mm:ss");
+}
