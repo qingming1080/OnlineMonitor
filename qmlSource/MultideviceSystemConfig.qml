@@ -13,8 +13,8 @@ Rectangle {
     property int sysCurrIndex: 0
     property int sysCurrIndex1: 0
     property bool undetermined: {
-        if(DeviceManager.deviceList[sysCurrIndex1-1]){
-            return DeviceManager.deviceList[sysCurrIndex1-1].pIO.availabel
+        if(DeviceManager.DeviceList[sysCurrIndex1-1]){
+            return DeviceManager.DeviceList[sysCurrIndex1-1].pIO.availabel
         }
         else{
             false
@@ -172,7 +172,7 @@ Rectangle {
         onPressed: {
             sigAltitudeModel(true)
             sigUpdateUI(sysCurrIndex1)
-            DeviceManager.deviceList[sysCurrIndex1-1].DevInfoObject.setHeightOption(1)
+            DeviceManager.DeviceList[sysCurrIndex1-1].DevInfoObject.setHeightOption(1)
         }
     }
     Text {
@@ -207,7 +207,7 @@ Rectangle {
         onPressed: {
             sigAltitudeModel(false)
             sigUpdateUI(sysCurrIndex1)
-            DeviceManager.deviceList[sysCurrIndex1-1].DevInfoObject.setHeightOption(0)
+            DeviceManager.DeviceList[sysCurrIndex1-1].DevInfoObject.setHeightOption(0)
         }
     }
     Text {
@@ -240,7 +240,7 @@ Rectangle {
                 undetermined4 = !undetermined4
             }
             //            sigUndetermined(sysCurrIndex)
-            DeviceManager.deviceList[sysCurrIndex1-1].pIO.setAvailabel(!ctl.checked)
+            DeviceManager.DeviceList[sysCurrIndex1-1].pIO.setAvailabel(!ctl.checked)
         }
 
         indicator: Rectangle{

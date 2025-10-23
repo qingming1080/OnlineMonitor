@@ -23,7 +23,7 @@ Rectangle {
     property int parameter4: 0
     property int parameter5: 0
     property int listSize: 0
-    property bool altitudeMode:DeviceManager.deviceList[0].DevInfoObject.heightOption === 1 ? true:false
+    property bool altitudeMode:DeviceManager.DeviceList[0].DevInfoObject.heightOption === 1 ? true:false
     property bool switchingEquipment: false
     signal sigBtnSynchronization(var index,var time)
     signal sigSwipeCurrIndex(var index)
@@ -115,12 +115,12 @@ Rectangle {
                 width: mode == 1 ? 208 : 243
                 height: mode == 1 ? 203 : 258
                 color: mode == 1 ? "#0c5696" : pRgb(43, 112, 173)
-                eqText1: DeviceManager.deviceList[0].DevInfoObject.name
-                eqText2: DeviceManager.deviceList[0].DevInfoObject.model
-                eqText3: DeviceManager.deviceList[0].DevInfoObject.ConnectType === 1
+                eqText1: DeviceManager.DeviceList[0].DevInfoObject.name
+                eqText2: DeviceManager.DeviceList[0].DevInfoObject.model
+                eqText3: DeviceManager.DeviceList[0].DevInfoObject.ConnectType === 1
                         ? "RS232" : "TCP/IP"
                 eqText4:{
-                    var connectState = DeviceManager.deviceList[0].DevInfoObject.ConnectState
+                    var connectState = DeviceManager.DeviceList[0].DevInfoObject.ConnectState
                     return GlobalMessageDefine.getConnectState(connectState)
                 }
             }
@@ -140,19 +140,19 @@ Rectangle {
                         y: mode == 1 ? 248 : 289
                         color: mode == 1 ? "#0c5696" : pRgb(43, 112, 173)
 
-                        eqText1: DeviceManager.deviceList[0] ? DeviceManager.deviceList[0].DevInfoObject.power : ""
+                        eqText1: DeviceManager.DeviceList[0] ? DeviceManager.DeviceList[0].DevInfoObject.power : ""
 
 
-                        eqText2: DeviceManager.deviceList[0] ? DeviceManager.deviceList[0].DevInfoObject.time : ""
+                        eqText2: DeviceManager.DeviceList[0] ? DeviceManager.DeviceList[0].DevInfoObject.time : ""
 
 
-                        eqText3: DeviceManager.deviceList[0] ? DeviceManager.deviceList[0].DevInfoObject.energy : ""
+                        eqText3: DeviceManager.DeviceList[0] ? DeviceManager.DeviceList[0].DevInfoObject.energy : ""
 
 
-                        eqText4: DeviceManager.deviceList[0] ? DeviceManager.deviceList[0].DevInfoObject.heightPre : ""
+                        eqText4: DeviceManager.DeviceList[0] ? DeviceManager.DeviceList[0].DevInfoObject.heightPre : ""
 
 
-                        eqText5: DeviceManager.deviceList[0] ? DeviceManager.deviceList[0].DevInfoObject.heightPost : ""
+                        eqText5: DeviceManager.DeviceList[0] ? DeviceManager.DeviceList[0].DevInfoObject.heightPost : ""
 
                     }
                 }
@@ -169,7 +169,7 @@ Rectangle {
                         color: mode == 1 ? "#0c5696" : pRgb(43, 112, 173)
                         altitudeMode:{
                             if(equipmentCount === 1){
-                                return DeviceManager.deviceList[0].DevInfoObject.heightOption
+                                return DeviceManager.DeviceList[0].DevInfoObject.heightOption
                                         === 1 ? true : false
                             }
                         }
@@ -212,7 +212,7 @@ Rectangle {
                     // else if(mt1.text === "创建模型")
                     else if(mt1.text === GlobalLanguageDefine.strCreateModel)
                     {
-                        if(DeviceManager.deviceList[0].DevInfoObject.sample <= listSize)
+                        if(DeviceManager.DeviceList[0].DevInfoObject.sample <= listSize)
                         {
                             loader.sourceComponent = mode1
                             loader1.sourceComponent = weld1
@@ -283,50 +283,50 @@ Rectangle {
                         y:mode === 1 ? 35:20
                         color: mode === 1 ? "#0c5696" : pRgb(43, 112, 173)
                         revealing:{
-                            if(DeviceManager.deviceList[0]){
-                                return DeviceManager.deviceList[0].pIO.availabel
+                            if(DeviceManager.DeviceList[0]){
+                                return DeviceManager.DeviceList[0].pIO.availabel
                             }
                             else{
                                 return true
                             }
                         }
                         eqText1:{
-                            if(DeviceManager.deviceList[0]){
-                                return DeviceManager.deviceList[0].DevInfoObject.goodCycles
+                            if(DeviceManager.DeviceList[0]){
+                                return DeviceManager.DeviceList[0].DevInfoObject.goodCycles
                             }
                             else{
                                 return ""
                             }
                         }
                         eqText2:{
-                            if(DeviceManager.deviceList[0]){
-                                return DeviceManager.deviceList[0].DevInfoObject.suspectCycles
+                            if(DeviceManager.DeviceList[0]){
+                                return DeviceManager.DeviceList[0].DevInfoObject.suspectCycles
                             }
                             else{
                                 return ""
                             }
                         }
                         eqText3:{
-                            if(DeviceManager.deviceList[0]){
-                                return DeviceManager.deviceList[0].DevInfoObject.notDefinite
+                            if(DeviceManager.DeviceList[0]){
+                                return DeviceManager.DeviceList[0].DevInfoObject.notDefinite
                             }
                             else{
                                 return ""
                             }
                         }
                         eqText4:{
-                            if(DeviceManager.deviceList[0]){
-                                return DeviceManager.deviceList[0].DevInfoObject.goodCycles
-                                        + DeviceManager.deviceList[0].DevInfoObject.notDefinite
-                                        +DeviceManager.deviceList[0].DevInfoObject.suspectCycles
+                            if(DeviceManager.DeviceList[0]){
+                                return DeviceManager.DeviceList[0].DevInfoObject.goodCycles
+                                        + DeviceManager.DeviceList[0].DevInfoObject.notDefinite
+                                        +DeviceManager.DeviceList[0].DevInfoObject.suspectCycles
                             }
                             else{
                                 return ""
                             }
                         }
                         eqText5:{
-                            if(DeviceManager.deviceList[0]){
-                                return DeviceManager.deviceList[0].DevInfoObject.goodRate
+                            if(DeviceManager.DeviceList[0]){
+                                return DeviceManager.DeviceList[0].DevInfoObject.goodRate
                             }
                             else{
                                 return ""

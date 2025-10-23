@@ -12,18 +12,18 @@ import LanguageEnum 1.0
 Rectangle {
     property var startTime: {
         if(!swipevis){
-            Date.fromLocaleString(Qt.locale(), DeviceManager.deviceList[equiInforIndex-1].pTrend.startTime, "yyyy-MM-dd hh:mm:ss")
+            Date.fromLocaleString(Qt.locale(), DeviceManager.DeviceList[equiInforIndex-1].pTrend.startTime, "yyyy-MM-dd hh:mm:ss")
         }
         else{
-            Date.fromLocaleString(Qt.locale(), DeviceManager.deviceList[swipeCurrIndex].pTrend.startTime, "yyyy-MM-dd hh:mm:ss")
+            Date.fromLocaleString(Qt.locale(), DeviceManager.DeviceList[swipeCurrIndex].pTrend.startTime, "yyyy-MM-dd hh:mm:ss")
         }
     }
     property var endTime:{
         if(!swipevis){
-            Date.fromLocaleString(Qt.locale(), DeviceManager.deviceList[equiInforIndex-1].pTrend.endTime, "yyyy-MM-dd hh:mm:ss")
+            Date.fromLocaleString(Qt.locale(), DeviceManager.DeviceList[equiInforIndex-1].pTrend.endTime, "yyyy-MM-dd hh:mm:ss")
         }
         else{
-            Date.fromLocaleString(Qt.locale(), DeviceManager.deviceList[swipeCurrIndex].pTrend.endTime, "yyyy-MM-dd hh:mm:ss")
+            Date.fromLocaleString(Qt.locale(), DeviceManager.DeviceList[swipeCurrIndex].pTrend.endTime, "yyyy-MM-dd hh:mm:ss")
         }
     }
     property int equiInforIndex: 0
@@ -45,7 +45,7 @@ Rectangle {
     }
     function updateBtn(){
         if(swipevis){
-            if(DeviceManager.deviceList[swipeCurrIndex].pTrend.yieldType === 0){
+            if(DeviceManager.DeviceList[swipeCurrIndex].pTrend.yieldType === 0){
                 bbbb.border.color = "#007dbc"
                 b.border.color = "#00488d"
                 bb.border.color = "#007dbc"
@@ -59,7 +59,7 @@ Rectangle {
                 bbb.color = "#007dbc"
                 bbbb.color = "#007dbc"
             }
-            else if(DeviceManager.deviceList[swipeCurrIndex].pTrend.yieldType === 1){
+            else if(DeviceManager.DeviceList[swipeCurrIndex].pTrend.yieldType === 1){
                 bbbb.border.color = "#007dbc"
                 b.border.color = "#007dbc"
                 bb.border.color = "#00488d"
@@ -73,7 +73,7 @@ Rectangle {
                 bbb.color = "#007dbc"
                 bbbb.color = "#007dbc"
             }
-            else if(DeviceManager.deviceList[swipeCurrIndex].pTrend.yieldType === 2){
+            else if(DeviceManager.DeviceList[swipeCurrIndex].pTrend.yieldType === 2){
                 bbbb.border.color = "#007dbc"
                 b.border.color = "#007dbc"
                 bb.border.color = "#007dbc"
@@ -87,7 +87,7 @@ Rectangle {
                 bbb.color = pRgb(177, 213, 219)
                 bbbb.color = "#007dbc"
             }
-            else if(DeviceManager.deviceList[swipeCurrIndex].pTrend.yieldType === 3){
+            else if(DeviceManager.DeviceList[swipeCurrIndex].pTrend.yieldType === 3){
                 bbbb.border.color = "#00488d"
                 b.border.color = "#007dbc"
                 bb.border.color = "#007dbc"
@@ -107,7 +107,7 @@ Rectangle {
                 return
             }
             else if(equipmentCount === 1 || equipmentCount === 3){
-                if(DeviceManager.deviceList[0].pTrend.yieldType === 0){
+                if(DeviceManager.DeviceList[0].pTrend.yieldType === 0){
                     bbbb.border.color = "#007dbc"
                     b.border.color = "#00488d"
                     bb.border.color = "#007dbc"
@@ -121,7 +121,7 @@ Rectangle {
                     bbb.color = "#007dbc"
                     bbbb.color = "#007dbc"
                 }
-                else if(DeviceManager.deviceList[0].pTrend.yieldType === 1){
+                else if(DeviceManager.DeviceList[0].pTrend.yieldType === 1){
                     bbbb.border.color = "#007dbc"
                     b.border.color = "#007dbc"
                     bb.border.color = "#00488d"
@@ -135,7 +135,7 @@ Rectangle {
                     bbb.color = "#007dbc"
                     bbbb.color = "#007dbc"
                 }
-                else if(DeviceManager.deviceList[0].pTrend.yieldType === 2){
+                else if(DeviceManager.DeviceList[0].pTrend.yieldType === 2){
                     bbbb.border.color = "#007dbc"
                     b.border.color = "#007dbc"
                     bb.border.color = "#007dbc"
@@ -149,7 +149,7 @@ Rectangle {
                     bbb.color = pRgb(177, 213, 219)
                     bbbb.color = "#007dbc"
                 }
-                else if(DeviceManager.deviceList[0].pTrend.yieldType === 3){
+                else if(DeviceManager.DeviceList[0].pTrend.yieldType === 3){
                     bbbb.border.color = "#00488d"
                     b.border.color = "#007dbc"
                     bb.border.color = "#007dbc"
@@ -166,7 +166,7 @@ Rectangle {
             }
             else if(equipmentCount === 2){
                 if(equiInforIndex === 1){
-                    if(DeviceManager.deviceList[0].pTrend.yieldType === 0){
+                    if(DeviceManager.DeviceList[0].pTrend.yieldType === 0){
                         bbbb.border.color = "#007dbc"
                         b.border.color = "#00488d"
                         bb.border.color = "#007dbc"
@@ -180,7 +180,7 @@ Rectangle {
                         bbb.color = "#007dbc"
                         bbbb.color = "#007dbc"
                     }
-                    else if(DeviceManager.deviceList[0].pTrend.yieldType === 1){
+                    else if(DeviceManager.DeviceList[0].pTrend.yieldType === 1){
                         bbbb.border.color = "#007dbc"
                         b.border.color = "#007dbc"
                         bb.border.color = "#00488d"
@@ -194,7 +194,7 @@ Rectangle {
                         bbb.color = "#007dbc"
                         bbbb.color = "#007dbc"
                     }
-                    else if(DeviceManager.deviceList[0].pTrend.yieldType === 2){
+                    else if(DeviceManager.DeviceList[0].pTrend.yieldType === 2){
                         bbbb.border.color = "#007dbc"
                         b.border.color = "#007dbc"
                         bb.border.color = "#007dbc"
@@ -208,7 +208,7 @@ Rectangle {
                         bbb.color = pRgb(177, 213, 219)
                         bbbb.color = "#007dbc"
                     }
-                    else if(DeviceManager.deviceList[0].pTrend.yieldType === 3){
+                    else if(DeviceManager.DeviceList[0].pTrend.yieldType === 3){
                         bbbb.border.color = "#00488d"
                         b.border.color = "#007dbc"
                         bb.border.color = "#007dbc"
@@ -224,7 +224,7 @@ Rectangle {
                     }
                 }
                 else if(equiInforIndex === 2){
-                    if(DeviceManager.deviceList[1].pTrend.yieldType === 0){
+                    if(DeviceManager.DeviceList[1].pTrend.yieldType === 0){
                         bbbb.border.color = "#007dbc"
                         b.border.color = "#00488d"
                         bb.border.color = "#007dbc"
@@ -238,7 +238,7 @@ Rectangle {
                         bbb.color = "#007dbc"
                         bbbb.color = "#007dbc"
                     }
-                    else if(DeviceManager.deviceList[1].pTrend.yieldType === 1){
+                    else if(DeviceManager.DeviceList[1].pTrend.yieldType === 1){
                         bbbb.border.color = "#007dbc"
                         b.border.color = "#007dbc"
                         bb.border.color = "#00488d"
@@ -252,7 +252,7 @@ Rectangle {
                         bbb.color = "#007dbc"
                         bbbb.color = "#007dbc"
                     }
-                    else if(DeviceManager.deviceList[1].pTrend.yieldType === 2){
+                    else if(DeviceManager.DeviceList[1].pTrend.yieldType === 2){
                         bbbb.border.color = "#007dbc"
                         b.border.color = "#007dbc"
                         bb.border.color = "#007dbc"
@@ -266,7 +266,7 @@ Rectangle {
                         bbb.color = pRgb(177, 213, 219)
                         bbbb.color = "#007dbc"
                     }
-                    else if(DeviceManager.deviceList[1].pTrend.yieldType === 3){
+                    else if(DeviceManager.DeviceList[1].pTrend.yieldType === 3){
                         bbbb.border.color = "#00488d"
                         b.border.color = "#007dbc"
                         bb.border.color = "#007dbc"
@@ -341,18 +341,18 @@ Rectangle {
 
     function switchUpdate(index){
         if(swipevis){
-            DeviceManager.deviceList[swipeCurrIndex].pTrend.setYieldType(index)
+            DeviceManager.DeviceList[swipeCurrIndex].pTrend.setYieldType(index)
         }
         else{
             if(equipmentCount === 1 || equipmentCount === 3){
-                DeviceManager.deviceList[0].pTrend.setYieldType(index)
+                DeviceManager.DeviceList[0].pTrend.setYieldType(index)
             }
             else if(equipmentCount === 2){
                 if(equiInforIndex === 1){
-                    DeviceManager.deviceList[0].pTrend.setYieldType(index)
+                    DeviceManager.DeviceList[0].pTrend.setYieldType(index)
                 }
                 else if(equiInforIndex === 2){
-                    DeviceManager.deviceList[1].pTrend.setYieldType(index)
+                    DeviceManager.DeviceList[1].pTrend.setYieldType(index)
                 }
             }
         }
@@ -498,10 +498,10 @@ Rectangle {
             chartUpdata()
         }
         Component.onDestruction: {
-            // DeviceManager.deviceList[0].pTrend.setYieldSeries(null)
-            // DeviceManager.deviceList[1].pTrend.setYieldSeries(null)
-            // DeviceManager.deviceList[2].pTrend.setYieldSeries(null)
-            // DeviceManager.deviceList[3].pTrend.setYieldSeries(null)
+            // DeviceManager.DeviceList[0].pTrend.setYieldSeries(null)
+            // DeviceManager.DeviceList[1].pTrend.setYieldSeries(null)
+            // DeviceManager.DeviceList[2].pTrend.setYieldSeries(null)
+            // DeviceManager.DeviceList[3].pTrend.setYieldSeries(null)
         }
 
         DateTimeAxis {
@@ -540,93 +540,93 @@ Rectangle {
         Connections
         {
             target: DeviceManager
-            function onDeviceNumChanged(){
+            function onNotifySelectedDeviceIndexChanged(){
                 chartUpdata()
             }
         }
         function chartUpdata(){
             if(equipmentCount === 1){
-                DeviceManager.deviceList[0].pTrend.setYieldSeries((chart.series(lineSeries.name)))
+                DeviceManager.DeviceList[0].pTrend.setYieldSeries((chart.series(lineSeries.name)))
                 return
             }
 
             if(swipevis){
                 if(equipmentCount === 2){
                     if(swipeCurrIndex === 0){
-                        DeviceManager.deviceList[0].pTrend.setYieldSeries((chart.series(lineSeries.name)))
-                        DeviceManager.deviceList[1].pTrend.setYieldSeries(null)
+                        DeviceManager.DeviceList[0].pTrend.setYieldSeries((chart.series(lineSeries.name)))
+                        DeviceManager.DeviceList[1].pTrend.setYieldSeries(null)
                     }
                     else if(swipeCurrIndex === 1){
-                        DeviceManager.deviceList[1].pTrend.setYieldSeries((chart.series(lineSeries.name)))
-                        DeviceManager.deviceList[0].pTrend.setYieldSeries(null)
+                        DeviceManager.DeviceList[1].pTrend.setYieldSeries((chart.series(lineSeries.name)))
+                        DeviceManager.DeviceList[0].pTrend.setYieldSeries(null)
                     }
 
                 }
                 else if(equipmentCount === 3){
                     if(swipeCurrIndex === 0){
-                        DeviceManager.deviceList[0].pTrend.setYieldSeries((chart.series(lineSeries.name)))
-                        DeviceManager.deviceList[1].pTrend.setYieldSeries(null)
-                        DeviceManager.deviceList[2].pTrend.setYieldSeries(null)
+                        DeviceManager.DeviceList[0].pTrend.setYieldSeries((chart.series(lineSeries.name)))
+                        DeviceManager.DeviceList[1].pTrend.setYieldSeries(null)
+                        DeviceManager.DeviceList[2].pTrend.setYieldSeries(null)
                     }
                     else if(swipeCurrIndex === 1){
-                        DeviceManager.deviceList[1].pTrend.setYieldSeries((chart.series(lineSeries.name)))
-                        DeviceManager.deviceList[0].pTrend.setYieldSeries(null)
-                        DeviceManager.deviceList[2].pTrend.setYieldSeries(null)
+                        DeviceManager.DeviceList[1].pTrend.setYieldSeries((chart.series(lineSeries.name)))
+                        DeviceManager.DeviceList[0].pTrend.setYieldSeries(null)
+                        DeviceManager.DeviceList[2].pTrend.setYieldSeries(null)
                     }
                     else if(swipeCurrIndex === 2){
-                        DeviceManager.deviceList[2].pTrend.setYieldSeries((chart.series(lineSeries.name)))
-                        DeviceManager.deviceList[0].pTrend.setYieldSeries(null)
-                        DeviceManager.deviceList[1].pTrend.setYieldSeries(null)
+                        DeviceManager.DeviceList[2].pTrend.setYieldSeries((chart.series(lineSeries.name)))
+                        DeviceManager.DeviceList[0].pTrend.setYieldSeries(null)
+                        DeviceManager.DeviceList[1].pTrend.setYieldSeries(null)
                     }
                 }
                 else if(equipmentCount === 4){
                     if(swipeCurrIndex === 0){
-                        DeviceManager.deviceList[0].pTrend.setYieldSeries((chart.series(lineSeries.name)))
-                        DeviceManager.deviceList[1].pTrend.setYieldSeries(null)
-                        DeviceManager.deviceList[2].pTrend.setYieldSeries(null)
-                        DeviceManager.deviceList[3].pTrend.setYieldSeries(null)
+                        DeviceManager.DeviceList[0].pTrend.setYieldSeries((chart.series(lineSeries.name)))
+                        DeviceManager.DeviceList[1].pTrend.setYieldSeries(null)
+                        DeviceManager.DeviceList[2].pTrend.setYieldSeries(null)
+                        DeviceManager.DeviceList[3].pTrend.setYieldSeries(null)
                     }
                     else if(swipeCurrIndex === 1){
-                        DeviceManager.deviceList[1].pTrend.setYieldSeries((chart.series(lineSeries.name)))
-                        DeviceManager.deviceList[0].pTrend.setYieldSeries(null)
-                        DeviceManager.deviceList[2].pTrend.setYieldSeries(null)
-                        DeviceManager.deviceList[3].pTrend.setYieldSeries(null)
+                        DeviceManager.DeviceList[1].pTrend.setYieldSeries((chart.series(lineSeries.name)))
+                        DeviceManager.DeviceList[0].pTrend.setYieldSeries(null)
+                        DeviceManager.DeviceList[2].pTrend.setYieldSeries(null)
+                        DeviceManager.DeviceList[3].pTrend.setYieldSeries(null)
                     }
                     else if(swipeCurrIndex === 2){
-                        DeviceManager.deviceList[2].pTrend.setYieldSeries((chart.series(lineSeries.name)))
-                        DeviceManager.deviceList[0].pTrend.setYieldSeries(null)
-                        DeviceManager.deviceList[1].pTrend.setYieldSeries(null)
-                        DeviceManager.deviceList[3].pTrend.setYieldSeries(null)
+                        DeviceManager.DeviceList[2].pTrend.setYieldSeries((chart.series(lineSeries.name)))
+                        DeviceManager.DeviceList[0].pTrend.setYieldSeries(null)
+                        DeviceManager.DeviceList[1].pTrend.setYieldSeries(null)
+                        DeviceManager.DeviceList[3].pTrend.setYieldSeries(null)
                     }
                     else if(swipeCurrIndex === 3){
-                        DeviceManager.deviceList[3].pTrend.setYieldSeries((chart.series(lineSeries.name)))
-                        DeviceManager.deviceList[0].pTrend.setYieldSeries(null)
-                        DeviceManager.deviceList[1].pTrend.setYieldSeries(null)
-                        DeviceManager.deviceList[2].pTrend.setYieldSeries(null)
+                        DeviceManager.DeviceList[3].pTrend.setYieldSeries((chart.series(lineSeries.name)))
+                        DeviceManager.DeviceList[0].pTrend.setYieldSeries(null)
+                        DeviceManager.DeviceList[1].pTrend.setYieldSeries(null)
+                        DeviceManager.DeviceList[2].pTrend.setYieldSeries(null)
                     }
                 }
             }
             else{
                 if(equipmentCount === 2){
                     if(equiInforIndex === 1){
-                        DeviceManager.deviceList[0].pTrend.setYieldSeries((chart.series(lineSeries.name)))
+                        DeviceManager.DeviceList[0].pTrend.setYieldSeries((chart.series(lineSeries.name)))
                     }
                     else if(equiInforIndex === 2){
-                        DeviceManager.deviceList[1].pTrend.setYieldSeries((chart.series(lineSeries.name)))
+                        DeviceManager.DeviceList[1].pTrend.setYieldSeries((chart.series(lineSeries.name)))
                     }
                 }
                 else if(equipmentCount === 3){
                     if(equiInforIndex === 1){
-                        DeviceManager.deviceList[0].pTrend.setYieldSeries((chart.series(lineSeries.name)))
+                        DeviceManager.DeviceList[0].pTrend.setYieldSeries((chart.series(lineSeries.name)))
                     }
-                    DeviceManager.deviceList[1].pTrend.setYieldSeries(null)
-                    DeviceManager.deviceList[2].pTrend.setYieldSeries(null)
+                    DeviceManager.DeviceList[1].pTrend.setYieldSeries(null)
+                    DeviceManager.DeviceList[2].pTrend.setYieldSeries(null)
                 }
                 else if(equipmentCount === 4){
-                    DeviceManager.deviceList[0].pTrend.setYieldSeries(null)
-                    DeviceManager.deviceList[1].pTrend.setYieldSeries(null)
-                    DeviceManager.deviceList[1].pTrend.setYieldSeries(null)
-                    DeviceManager.deviceList[3].pTrend.setYieldSeries(null)
+                    DeviceManager.DeviceList[0].pTrend.setYieldSeries(null)
+                    DeviceManager.DeviceList[1].pTrend.setYieldSeries(null)
+                    DeviceManager.DeviceList[1].pTrend.setYieldSeries(null)
+                    DeviceManager.DeviceList[3].pTrend.setYieldSeries(null)
                 }
             }
         }

@@ -21,7 +21,7 @@ Window {
     property int showWidth: 1280
     property int showHeight: 800
     property int mode: 0
-    property int equipmentCount: DeviceManager.deviceNum
+    property int equipmentCount: DeviceManager.DeviceCounter
     property int equipmentCurrentIndex: 0
     property int swipeCurrIndex: 0
     property int interFaceId: 0
@@ -34,32 +34,32 @@ Window {
     }
 
     property bool altitudeModel1: {
-        if(DeviceManager.deviceList[0]){
-            DeviceManager.deviceList[0].DevInfoObject.heightOption === 0 ? false : true
+        if(DeviceManager.DeviceList[0]){
+            DeviceManager.DeviceList[0].DevInfoObject.heightOption === 0 ? false : true
         }
         else{
             return false
         }
     }
     property bool altitudeModel2: {
-        if(DeviceManager.deviceList[1]){
-            DeviceManager.deviceList[1].DevInfoObject.heightOption === 0 ? false : true
+        if(DeviceManager.DeviceList[1]){
+            DeviceManager.DeviceList[1].DevInfoObject.heightOption === 0 ? false : true
         }
         else{
             return false
         }
     }
     property bool altitudeModel3: {
-        if(DeviceManager.deviceList[2]){
-            DeviceManager.deviceList[2].DevInfoObject.heightOption === 0 ? false : true
+        if(DeviceManager.DeviceList[2]){
+            DeviceManager.DeviceList[2].DevInfoObject.heightOption === 0 ? false : true
         }
         else{
             return false
         }
     }
     property bool altitudeModel4: {
-        if(DeviceManager.deviceList[3]){
-            DeviceManager.deviceList[3].DevInfoObject.heightOption === 0 ? false : true
+        if(DeviceManager.DeviceList[3]){
+            DeviceManager.DeviceList[3].DevInfoObject.heightOption === 0 ? false : true
         }
         else{
             return false

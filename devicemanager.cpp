@@ -31,11 +31,11 @@ DeviceManager::DeviceManager(QObject *parent)
 
 Device *DeviceManager::getDeviceByNetworkID(int networkID)
 {
-    for(int i = 0; i < m_deviceList.size(); ++i)
+    for(int i = 0; i < m_listDevices.size(); ++i)
     {
-        if(m_deviceList.at(i)->getDevInfoObject()->getConnectType() == DeviceInfoEnum::TCP_IP
-            && m_deviceList.at(i)->getDevInfoObject()->connectID() == networkID)
-            return m_deviceList.at(i);
+        if(m_listDevices.at(i)->getDevInfoObject()->getConnectType() == DeviceInfoEnum::TCP_IP
+            && m_listDevices.at(i)->getDevInfoObject()->connectID() == networkID)
+            return m_listDevices.at(i);
     }
 
     return nullptr;
@@ -43,11 +43,11 @@ Device *DeviceManager::getDeviceByNetworkID(int networkID)
 
 Device *DeviceManager::getDeviceByRs232ID(int rs232ID)
 {
-    for(int i = 0; i < m_deviceList.size(); ++i)
+    for(int i = 0; i < m_listDevices.size(); ++i)
     {
-        if(m_deviceList.at(i)->getDevInfoObject()->getConnectType() == DeviceInfoEnum::RS232
-            && m_deviceList.at(i)->getDevInfoObject()->connectID() == rs232ID)
-            return m_deviceList.at(i);
+        if(m_listDevices.at(i)->getDevInfoObject()->getConnectType() == DeviceInfoEnum::RS232
+            && m_listDevices.at(i)->getDevInfoObject()->connectID() == rs232ID)
+            return m_listDevices.at(i);
     }
 
     return nullptr;
@@ -57,20 +57,48 @@ void DeviceManager::init()
 {
     QList<int> list = DataBaseManager::getInstance()->getDeviceNums();
     QList<QString> names;
-    m_deviceNum = list.size();
-
+    setDeviceCounter(list.size());
     for(int i = 0; i < list.size(); ++i)
     {
-        m_deviceList.push_back(new Device(list.at(i)));
-        names.push_back(m_deviceList.last()->getDevInfoObject()->name());
+        m_listDevices.push_back(new Device(list.at(i)));
+        names.push_back(m_listDevices.last()->getDevInfoObject()->name());
     }
-
     DeviceNames::getInstance()->setNames(names);
 }
 
-int DeviceManager::deviceNum() const
+int DeviceManager::getSelectedDeviceIndex() const
 {
-    return m_deviceNum;
+    return m_iSelectedDeviceIndex;
+}
+int DeviceManager::getDeviceCounter() const
+{
+    return m_iDeviceCounter;
+}
+QList<Device *> DeviceManager::getDeviceList() const
+{
+    return m_listDevices;
+}
+
+void DeviceManager::setDeviceCounter(int counter)
+{
+    if(m_iDeviceCounter != counter)
+    {
+        m_iDeviceCounter = counter;
+        emit notifyDeviceCounterChanged();
+    }
+}
+void DeviceManager::setSelectedDeviceIndex(const int &index)
+{
+    if(m_iSelectedDeviceIndex != index)
+    {
+        m_iSelectedDeviceIndex = index;
+        emit notifySelectedDeviceIndexChanged();
+    }
+}
+void DeviceManager::setDeviceList(const QList<Device *> &list)
+{
+    m_listDevices = list;
+    emit notifyDeviceListChanged();
 }
 
 int DeviceManager::getPasswordLevel(QString password)
@@ -85,37 +113,29 @@ void DeviceManager::setUserPassword(QString newPassword)
 
 QString DeviceManager::getHistoryName(int welderID)
 {
-    for(int i = 0; i < m_deviceList.size(); ++i)
+    for(int i = 0; i < m_listDevices.size(); ++i)
     {
-        if(m_deviceList.at(i)->getDevInfoObject()->id() == welderID)
-            return m_deviceList.at(i)->getDevInfoObject()->name();
+        if(m_listDevices.at(i)->getDevInfoObject()->id() == welderID)
+            return m_listDevices.at(i)->getDevInfoObject()->name();
     }
 
     return "";
 }
 
 
-QList<Device *> DeviceManager::deviceList() const
-{
-    return m_deviceList;
-}
+
 
 
 void DeviceManager::addDevice(const int &maxBacth, const int &sample, const int &lowerLimit, const int &port, const QString &targetIp, const QString &localIp, const int &heightOption, const QString &name, const QString &model, const int &connectType, const int &id)
 {
-    if(m_deviceList.size() == 4)
+    if(m_listDevices.size() == 4)
         return;
 
     _Configuration_Data data;
 
-     m_deviceNum++;
-    emit deviceNumChanged();
-
-    // bool added = false;
-
     for(int i = 0; i < 4; ++i)
     {
-        if(i == m_deviceList.size())
+        if(i == m_listDevices.size())
         {
             data.welder_id = i + 1;
             data.welder_name = name;
@@ -133,11 +153,11 @@ void DeviceManager::addDevice(const int &maxBacth, const int &sample, const int 
             DataBaseManager::getInstance()->insertConfigurationDevice(data);
 
             Device *d = new Device(i+1);
-            m_deviceList.insert(i, d);
+            m_listDevices.insert(i, d);
             break;
         }
-        if(m_deviceList.at(i) != nullptr){
-            if(m_deviceList.at(i)->getDevInfoObject()->id() != i+1)
+        if(m_listDevices.at(i) != nullptr){
+            if(m_listDevices.at(i)->getDevInfoObject()->id() != i+1)
             {
                 data.welder_id = i + 1;
                 data.welder_name = name;
@@ -155,20 +175,20 @@ void DeviceManager::addDevice(const int &maxBacth, const int &sample, const int 
                 DataBaseManager::getInstance()->insertConfigurationDevice(data);
 
                 Device *d = new Device(i+1);
-                m_deviceList.insert(i, d);
+                m_listDevices.insert(i, d);
 
                 break;
             }
         }
     }
 
-    emit deviceListChanged();
-    syncDevicesToModbus();
+    setDeviceList(m_listDevices);
+    // syncDevicesToModbus();
 
     QList<QString> names;
-    for(int i = 0; i < m_deviceList.size(); ++i)
+    for(int i = 0; i < m_listDevices.size(); ++i)
     {
-        names.push_back(m_deviceList.at(i)->getDevInfoObject()->name());
+        names.push_back(m_listDevices.at(i)->getDevInfoObject()->name());
     }
 
     DeviceNames::getInstance()->setNames(names);
@@ -179,9 +199,9 @@ void DeviceManager::removeDevice(int welderID)
     if(welderID < 1 || welderID > 4)
         return;
 
-    for(int i = 0; i < m_deviceList.size(); ++i)
+    for(int i = 0; i < m_listDevices.size(); ++i)
     {
-        Device* pDevice = m_deviceList.at(i);
+        Device* pDevice = m_listDevices.at(i);
         if(pDevice->getDevInfoObject()->id() == welderID)
         {
             //TODO  delete device   DEV_AVAILABLE = 0
@@ -190,51 +210,32 @@ void DeviceManager::removeDevice(int welderID)
             // emptyData.DEV_AVAILABLE = 0;
             // HBModbusClient::getInstance()->writeDeviceConfig(welderID, emptyData);
 
-            m_deviceList.removeOne(pDevice);
+            m_listDevices.removeOne(pDevice);
             delete pDevice;
-            m_deviceNum--;
-            DataBaseManager::getInstance()->removeConfigurationDevice(welderID);
-            emit deviceNumChanged();
-            emit deviceListChanged();
-            return;
         }
     }
+    setDeviceCounter(m_listDevices.size());
+    DataBaseManager::getInstance()->removeConfigurationDevice(welderID);
+    setDeviceList(m_listDevices);
+    return;
 
     QList<QString> names;
-    for(int i = 0; i < m_deviceList.size(); ++i)
+    for(int i = 0; i < m_listDevices.size(); ++i)
     {
-        names.push_back(m_deviceList.at(i)->getDevInfoObject()->name());
+        names.push_back(m_listDevices.at(i)->getDevInfoObject()->name());
     }
 
     DeviceNames::getInstance()->setNames(names);
 }
 
 
-// void DeviceManager::startManualMode(int deviceID) {
-//     m_manualModeDeviceID = deviceID;
-//     m_manualDataList.clear();
-//     emit manualDataList();
-//     qDebug() << "手动模式已启动, 监听设备ID:" << deviceID;
+// void DeviceManager::syncDevicesToModbus()
+// {
+//     for (Device* device : m_listDevices)
+//     {
+//         auto deviceData = DeviceModbusMapper::generateRegisterData(device);
+//         HBModbusClient::getInstance()->writeDeviceConfig(deviceData.deviceID, deviceData);
+//     }
+
 // }
-
-// void DeviceManager::stopManualMode() {
-//     m_manualModeDeviceID = -1;
-//     m_manualDataList.clear();
-//     emit manualDataListChanged();
-//     qDebug() << "手动模式已停止";
-// }
-
-// QList<QString> DeviceManager::manualDataList() const {
-//     return m_manualDataList;
-// }
-
-void DeviceManager::syncDevicesToModbus()
-{
-    for (Device* device : m_deviceList)
-    {
-        auto deviceData = DeviceModbusMapper::generateRegisterData(device);
-        HBModbusClient::getInstance()->writeDeviceConfig(deviceData.deviceID, deviceData);
-    }
-
-}
 

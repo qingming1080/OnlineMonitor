@@ -13,17 +13,24 @@ class DeviceManager : public QObject
 {
     Q_OBJECT
     // 设备指针列表
-    Q_PROPERTY(QList<Device*> deviceList READ deviceList  NOTIFY deviceListChanged)
+    Q_PROPERTY(QList<Device*> DeviceList READ getDeviceList WRITE setDeviceList NOTIFY notifyDeviceListChanged)
+    // 选中设备索引
+    Q_PROPERTY(int SelectedDeviceIndex READ getSelectedDeviceIndex WRITE setSelectedDeviceIndex  NOTIFY notifySelectedDeviceIndexChanged)
     // 设备数量
-    Q_PROPERTY(int deviceNum READ deviceNum  NOTIFY deviceNumChanged)
-
-    // Q_PROPERTY(QList<QString> manualDataList READ manualDataList NOTIFY manualDataListChanged)
+    Q_PROPERTY(int DeviceCounter READ getDeviceCounter WRITE setDeviceCounter NOTIFY notifyDeviceCounterChanged)
 
 
 public:
     static DeviceManager* getInstance();
 
-    Q_INVOKABLE QList<Device *> deviceList() const;
+    QList<Device *> getDeviceList() const;
+    void setDeviceList(const QList<Device*> &list);
+
+    void setSelectedDeviceIndex(const int &index);
+    int getSelectedDeviceIndex() const;
+
+    int getDeviceCounter() const;
+    void setDeviceCounter(int counter);
 
     //获取指针
     Device* getDeviceByNetworkID(int networkID);
@@ -40,7 +47,7 @@ public:
     ///
     Q_INVOKABLE void removeDevice(int welderID);
 
-    Q_INVOKABLE int deviceNum() const;
+    
 
     ///
     /// \brief getPasswordLevel : 获取密码权能等级
@@ -62,10 +69,10 @@ public:
     void syncDevicesToModbus();
 
 signals:
-    void deviceNumChanged();
+    void notifyDeviceListChanged();
+    void notifySelectedDeviceIndexChanged();
+    void notifyDeviceCounterChanged();
 
-
-    void deviceListChanged();
 
     Q_INVOKABLE void upDateBtns();
 
@@ -80,10 +87,9 @@ private:
 
 private:
     static DeviceManager* m_ptrInstance;
-
-    int m_deviceNum;
-
-    QList<Device*> m_deviceList;
+    int m_iSelectedDeviceIndex;
+    QList<Device*> m_listDevices;
+    int m_iDeviceCounter;
 
     // int m_manualModeDeviceID = -1;  // 当前处于手动模式的设备 ID（-1 表示未开启）
     // QList<QString> m_manualDataList;  // 存储手动模式下的数据

@@ -12,9 +12,9 @@ Rectangle {
     property string eqText3: ""
     property string eqText4: ""
     property string eqText5: ""
-    property bool altitudeMode:DeviceManager.deviceList[swipeCurrIndex].DevInfoObject.heightOption === 1 ? true:false
+    property bool altitudeMode:DeviceManager.DeviceList[swipeCurrIndex].DevInfoObject.heightOption === 1 ? true:false
 
-    property int deviceID: DeviceManager.deviceList[swipeCurrIndex].DevInfoObject.id
+    property int deviceID: DeviceManager.DeviceList[swipeCurrIndex].DevInfoObject.id
 
     radius: 3
     Rectangle {

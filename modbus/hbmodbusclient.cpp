@@ -70,7 +70,7 @@ void HBModbusClient::Init()
         emit connectedChanged(state == QModbusDevice::ConnectedState);
         if(state == QModbusDevice::ConnectedState) {
             updateSysLedStatus();
-            DeviceManager::getInstance()->syncDevicesToModbus();
+            // DeviceManager::getInstance()->syncDevicesToModbus();
         }
     });
 
@@ -358,7 +358,7 @@ void HBModbusClient::dispatchInputsOnCycleCountChanged()
     // QMutexLocker locker(&m_mutex);
     if (lastCycleCount.isEmpty())
         lastCycleCount.fill(0xFFFFFFFF, DEV_COUNT);
-    const QList<Device*>& devList = DeviceManager::getInstance()->deviceList();
+    const QList<Device*>& devList = DeviceManager::getInstance()->getDeviceList();
     for (int i = 0; i < DEV_COUNT && i < devList.size(); ++i)
     {
         int base = i * DEV_INPUT_REGISTERS_COUNT;
@@ -581,7 +581,7 @@ void HBModbusClient::clearRejectAndSuspectForDevice(int devId) {
 
 void HBModbusClient::updateDeviceConnectionStates()
 {
-    const QList<Device*>& devList = DeviceManager::getInstance()->deviceList();
+    const QList<Device*>& devList = DeviceManager::getInstance()->getDeviceList();
     // 每个设备占用 DEV_DISCRETE_REGISTERS_COUNT 个离散输入
     for (int i = 0; i < DEV_COUNT && i < devList.size(); ++i) {
         int base = i * DEV_DISCRETE_REGISTERS_COUNT;
@@ -637,7 +637,7 @@ void HBModbusClient::writeDeviceConfig(int deviceId, const DeviceModbusMapper::D
 
 void HBModbusClient::dispatchHoldingRegisters()
 {
-    const QList<Device*>& devList = DeviceManager::getInstance()->deviceList();
+    const QList<Device*>& devList = DeviceManager::getInstance()->getDeviceList();
 
     for (int i = 0; i < DEV_COUNT && i < devList.size(); ++i)
     {

@@ -124,24 +124,24 @@ Rectangle {
             radius: 3
             color: "#0c5596"
             eqText1:{
-                if(DeviceManager.deviceList[0]){
-                    return DeviceManager.deviceList[0].DevInfoObject.name
+                if(DeviceManager.DeviceList[0]){
+                    return DeviceManager.DeviceList[0].DevInfoObject.name
                 }
                 else{
                     return ""
                 }
             }
             eqText2:{
-                if(DeviceManager.deviceList[0]){
-                    return DeviceManager.deviceList[0].DevInfoObject.model
+                if(DeviceManager.DeviceList[0]){
+                    return DeviceManager.DeviceList[0].DevInfoObject.model
                 }
                 else{
                     return ""
                 }
             }
             eqText3:{
-                if(DeviceManager.deviceList[0]){
-                    return DeviceManager.deviceList[0].DevInfoObject.ConnectType === 1
+                if(DeviceManager.DeviceList[0]){
+                    return DeviceManager.DeviceList[0].DevInfoObject.ConnectType === 1
                             ? "RS232" : "TCP/IP"
                 }
                 else{
@@ -149,9 +149,9 @@ Rectangle {
                 }
             }
             eqText4:{
-                if(DeviceManager.deviceList[0])
+                if(DeviceManager.DeviceList[0])
                 {
-                    var connectState = DeviceManager.deviceList[0].DevInfoObject.ConnectState
+                    var connectState = DeviceManager.DeviceList[0].DevInfoObject.ConnectState
                     return GlobalMessageDefine.getConnectState(connectState)
                 }
                 else
@@ -168,50 +168,50 @@ Rectangle {
             radius: 3
             color: "#0c5596"
             revealing:{
-                if(DeviceManager.deviceList[0]){
-                    return DeviceManager.deviceList[0].pIO.availabel
+                if(DeviceManager.DeviceList[0]){
+                    return DeviceManager.DeviceList[0].pIO.availabel
                 }
                 else{
                     return true
                 }
             }
             eqText1:{
-                if(DeviceManager.deviceList[0]){
-                    return DeviceManager.deviceList[0].DevInfoObject.goodCycles
+                if(DeviceManager.DeviceList[0]){
+                    return DeviceManager.DeviceList[0].DevInfoObject.goodCycles
                 }
                 else{
                     return ""
                 }
             }
             eqText2:{
-                if(DeviceManager.deviceList[0]){
-                    return DeviceManager.deviceList[0].DevInfoObject.suspectCycles
+                if(DeviceManager.DeviceList[0]){
+                    return DeviceManager.DeviceList[0].DevInfoObject.suspectCycles
                 }
                 else{
                     return ""
                 }
             }
             eqText3:{
-                if(DeviceManager.deviceList[0]){
-                    return DeviceManager.deviceList[0].DevInfoObject.notDefinite
+                if(DeviceManager.DeviceList[0]){
+                    return DeviceManager.DeviceList[0].DevInfoObject.notDefinite
                 }
                 else{
                     return ""
                 }
             }
             eqText4:{
-                if(DeviceManager.deviceList[0]){
-                    return DeviceManager.deviceList[0].DevInfoObject.goodCycles
-                            + DeviceManager.deviceList[0].DevInfoObject.notDefinite
-                            +DeviceManager.deviceList[0].DevInfoObject.suspectCycles
+                if(DeviceManager.DeviceList[0]){
+                    return DeviceManager.DeviceList[0].DevInfoObject.goodCycles
+                            + DeviceManager.DeviceList[0].DevInfoObject.notDefinite
+                            +DeviceManager.DeviceList[0].DevInfoObject.suspectCycles
                 }
                 else{
                     return ""
                 }
             }
             eqText5:{
-                if(DeviceManager.deviceList[0]){
-                    return DeviceManager.deviceList[0].DevInfoObject.goodRate
+                if(DeviceManager.DeviceList[0]){
+                    return DeviceManager.DeviceList[0].DevInfoObject.goodRate
                 }
                 else{
                     return ""
@@ -274,9 +274,9 @@ Rectangle {
             radius: 3
             color: "#0c5596"
             eqText1:{
-                if(DeviceManager.deviceList[1])
+                if(DeviceManager.DeviceList[1])
                 {
-                    return DeviceManager.deviceList[1].DevInfoObject.name
+                    return DeviceManager.DeviceList[1].DevInfoObject.name
                 }
                 else
                 {
@@ -284,9 +284,9 @@ Rectangle {
                 }
             }
             eqText2:{
-                if(DeviceManager.deviceList[1])
+                if(DeviceManager.DeviceList[1])
                 {
-                    return DeviceManager.deviceList[1].DevInfoObject.model
+                    return DeviceManager.DeviceList[1].DevInfoObject.model
                 }
                 else
                 {
@@ -294,8 +294,8 @@ Rectangle {
                 }
             }
             eqText3:{
-                if(DeviceManager.deviceList[1]){
-                    return DeviceManager.deviceList[1].DevInfoObject.ConnectType === 1
+                if(DeviceManager.DeviceList[1]){
+                    return DeviceManager.DeviceList[1].DevInfoObject.ConnectType === 1
                             ? "RS232" : "TCP/IP"
                 }
                 else{
@@ -303,9 +303,9 @@ Rectangle {
                 }
             }
             eqText4:{
-                if(DeviceManager.deviceList[1])
+                if(DeviceManager.DeviceList[1])
                 {
-                    var connectState = DeviceManager.deviceList[1].DevInfoObject.ConnectState
+                    var connectState = DeviceManager.DeviceList[1].DevInfoObject.ConnectState
                     return GlobalMessageDefine.getConnectState(connectState)
                 }
                 else
@@ -321,50 +321,50 @@ Rectangle {
             radius: 3
             color: "#0c5596"
             revealing:{
-                if(DeviceManager.deviceList[1]){
-                    return DeviceManager.deviceList[1].pIO.availabel
+                if(DeviceManager.DeviceList[1]){
+                    return DeviceManager.DeviceList[1].pIO.availabel
                 }
                 else{
                     return true
                 }
             }
             eqText1:{
-                if(DeviceManager.deviceList[1]){
-                    return DeviceManager.deviceList[1].DevInfoObject.goodCycles
+                if(DeviceManager.DeviceList[1]){
+                    return DeviceManager.DeviceList[1].DevInfoObject.goodCycles
                 }
                 else{
                     return ""
                 }
             }
             eqText2:{
-                if(DeviceManager.deviceList[1]){
-                    return DeviceManager.deviceList[1].DevInfoObject.suspectCycles
+                if(DeviceManager.DeviceList[1]){
+                    return DeviceManager.DeviceList[1].DevInfoObject.suspectCycles
                 }
                 else{
                     return ""
                 }
             }
             eqText3:{
-                if(DeviceManager.deviceList[1]){
-                    return DeviceManager.deviceList[1].DevInfoObject.notDefinite
+                if(DeviceManager.DeviceList[1]){
+                    return DeviceManager.DeviceList[1].DevInfoObject.notDefinite
                 }
                 else{
                     return ""
                 }
             }
             eqText4:{
-                if(DeviceManager.deviceList[1]){
-                    return DeviceManager.deviceList[1].DevInfoObject.goodCycles
-                            + DeviceManager.deviceList[1].DevInfoObject.notDefinite
-                            +DeviceManager.deviceList[1].DevInfoObject.suspectCycles
+                if(DeviceManager.DeviceList[1]){
+                    return DeviceManager.DeviceList[1].DevInfoObject.goodCycles
+                            + DeviceManager.DeviceList[1].DevInfoObject.notDefinite
+                            +DeviceManager.DeviceList[1].DevInfoObject.suspectCycles
                 }
                 else{
                     return ""
                 }
             }
             eqText5:{
-                if(DeviceManager.deviceList[1]){
-                    return DeviceManager.deviceList[1].DevInfoObject.goodRate
+                if(DeviceManager.DeviceList[1]){
+                    return DeviceManager.DeviceList[1].DevInfoObject.goodRate
                 }
                 else{
                     return ""
@@ -428,34 +428,34 @@ Rectangle {
             radius: 3
             color: "#0c5596"
             eqText1:{
-                if(DeviceManager.deviceList[2]){
-                    return DeviceManager.deviceList[2].DevInfoObject.name
+                if(DeviceManager.DeviceList[2]){
+                    return DeviceManager.DeviceList[2].DevInfoObject.name
                 }
-                else if(DeviceManager.deviceList[3]){
-                    return DeviceManager.deviceList[3].DevInfoObject.name
+                else if(DeviceManager.DeviceList[3]){
+                    return DeviceManager.DeviceList[3].DevInfoObject.name
                 }
                 else{
                     return ""
                 }
             }
             eqText2:{
-                if(DeviceManager.deviceList[2]){
-                    return DeviceManager.deviceList[2].DevInfoObject.model
+                if(DeviceManager.DeviceList[2]){
+                    return DeviceManager.DeviceList[2].DevInfoObject.model
                 }
-                else if(DeviceManager.deviceList[3]){
-                    return DeviceManager.deviceList[3].DevInfoObject.model
+                else if(DeviceManager.DeviceList[3]){
+                    return DeviceManager.DeviceList[3].DevInfoObject.model
                 }
                 else{
                     return ""
                 }
             }
             eqText3:{
-                if(DeviceManager.deviceList[2]){
-                    return DeviceManager.deviceList[2].DevInfoObject.ConnectType === 1
+                if(DeviceManager.DeviceList[2]){
+                    return DeviceManager.DeviceList[2].DevInfoObject.ConnectType === 1
                             ? "RS232" : "TCP/IP"
                 }
-                else if(DeviceManager.deviceList[3]){
-                    return DeviceManager.deviceList[3].DevInfoObject.ConnectType === 1
+                else if(DeviceManager.DeviceList[3]){
+                    return DeviceManager.DeviceList[3].DevInfoObject.ConnectType === 1
                             ? "RS232" : "TCP/IP"
                 }
                 else{
@@ -464,14 +464,14 @@ Rectangle {
             }
             eqText4:{
                 var connectState = 0
-                if(DeviceManager.deviceList[2])
+                if(DeviceManager.DeviceList[2])
                 {
-                    connectState = DeviceManager.deviceList[2].DevInfoObject.ConnectState
+                    connectState = DeviceManager.DeviceList[2].DevInfoObject.ConnectState
                     return GlobalMessageDefine.getConnectState(connectState)
                 }
-                else if(DeviceManager.deviceList[3])
+                else if(DeviceManager.DeviceList[3])
                 {
-                    connectState = DeviceManager.deviceList[3].DevInfoObject.ConnectState
+                    connectState = DeviceManager.DeviceList[3].DevInfoObject.ConnectState
                     return GlobalMessageDefine.getConnectState(connectState)
                 }
                 else
@@ -489,70 +489,70 @@ Rectangle {
             radius: 3
             color: "#0c5596"
             revealing:{
-                if(DeviceManager.deviceList[2]){
-                    return DeviceManager.deviceList[2].pIO.availabel
+                if(DeviceManager.DeviceList[2]){
+                    return DeviceManager.DeviceList[2].pIO.availabel
                 }
-                else if(DeviceManager.deviceList[3]){
-                    return DeviceManager.deviceList[3].pIO.availabel
+                else if(DeviceManager.DeviceList[3]){
+                    return DeviceManager.DeviceList[3].pIO.availabel
                 }
                 else{
                     return true
                 }
             }
             eqText1:{
-                if(DeviceManager.deviceList[2]){
-                    return DeviceManager.deviceList[2].DevInfoObject.goodCycles
+                if(DeviceManager.DeviceList[2]){
+                    return DeviceManager.DeviceList[2].DevInfoObject.goodCycles
                 }
-                else if(DeviceManager.deviceList[3]){
-                    return DeviceManager.deviceList[3].DevInfoObject.goodCycles
+                else if(DeviceManager.DeviceList[3]){
+                    return DeviceManager.DeviceList[3].DevInfoObject.goodCycles
                 }
                 else{
                     return ""
                 }
             }
             eqText2:{
-                if(DeviceManager.deviceList[2]){
-                    return DeviceManager.deviceList[2].DevInfoObject.suspectCycles
+                if(DeviceManager.DeviceList[2]){
+                    return DeviceManager.DeviceList[2].DevInfoObject.suspectCycles
                 }
-                else if(DeviceManager.deviceList[3]){
-                    return DeviceManager.deviceList[3].DevInfoObject.suspectCycles
+                else if(DeviceManager.DeviceList[3]){
+                    return DeviceManager.DeviceList[3].DevInfoObject.suspectCycles
                 }
                 else{
                     return ""
                 }
             }
             eqText3:{
-                if(DeviceManager.deviceList[2]){
-                    return DeviceManager.deviceList[2].DevInfoObject.notDefinite
+                if(DeviceManager.DeviceList[2]){
+                    return DeviceManager.DeviceList[2].DevInfoObject.notDefinite
                 }
-                else if(DeviceManager.deviceList[3]){
-                    return DeviceManager.deviceList[3].DevInfoObject.notDefinite
+                else if(DeviceManager.DeviceList[3]){
+                    return DeviceManager.DeviceList[3].DevInfoObject.notDefinite
                 }
                 else{
                     return ""
                 }
             }
             eqText4:{
-                if(DeviceManager.deviceList[2]){
-                    return DeviceManager.deviceList[2].DevInfoObject.goodCycles
-                            + DeviceManager.deviceList[2].DevInfoObject.notDefinite
-                            +DeviceManager.deviceList[2].DevInfoObject.suspectCycles
+                if(DeviceManager.DeviceList[2]){
+                    return DeviceManager.DeviceList[2].DevInfoObject.goodCycles
+                            + DeviceManager.DeviceList[2].DevInfoObject.notDefinite
+                            +DeviceManager.DeviceList[2].DevInfoObject.suspectCycles
                 }
-                else if(DeviceManager.deviceList[3]){
-                    return DeviceManager.deviceList[3].DevInfoObject.goodCycles
-                            + DeviceManager.deviceList[3].DevInfoObject.notDefinite
-                            +DeviceManager.deviceList[3].DevInfoObject.suspectCycles
+                else if(DeviceManager.DeviceList[3]){
+                    return DeviceManager.DeviceList[3].DevInfoObject.goodCycles
+                            + DeviceManager.DeviceList[3].DevInfoObject.notDefinite
+                            +DeviceManager.DeviceList[3].DevInfoObject.suspectCycles
                 }
                 else{
                     return ""
                 }
             }
             eqText5:{
-                if(DeviceManager.deviceList[2]){
-                    return DeviceManager.deviceList[2].DevInfoObject.goodRate
+                if(DeviceManager.DeviceList[2]){
+                    return DeviceManager.DeviceList[2].DevInfoObject.goodRate
                 }
-                else if(DeviceManager.deviceList[3]){
-                    return DeviceManager.deviceList[3].DevInfoObject.goodRate
+                else if(DeviceManager.DeviceList[3]){
+                    return DeviceManager.DeviceList[3].DevInfoObject.goodRate
                 }
                 else{
                     return ""
@@ -605,34 +605,34 @@ Rectangle {
             radius: 3
             color: "#0c5596"
             eqText1:{
-                if(DeviceManager.deviceList[3]){
-                    return DeviceManager.deviceList[3].DevInfoObject.name
+                if(DeviceManager.DeviceList[3]){
+                    return DeviceManager.DeviceList[3].DevInfoObject.name
                 }
-                else if(DeviceManager.deviceList[2]){
-                    return DeviceManager.deviceList[2].DevInfoObject.name
+                else if(DeviceManager.DeviceList[2]){
+                    return DeviceManager.DeviceList[2].DevInfoObject.name
                 }
                 else{
                     return ""
                 }
             }
             eqText2:{
-                if(DeviceManager.deviceList[3]){
-                    return DeviceManager.deviceList[3].DevInfoObject.model
+                if(DeviceManager.DeviceList[3]){
+                    return DeviceManager.DeviceList[3].DevInfoObject.model
                 }
-                else if(DeviceManager.deviceList[2]){
-                    return DeviceManager.deviceList[2].DevInfoObject.model
+                else if(DeviceManager.DeviceList[2]){
+                    return DeviceManager.DeviceList[2].DevInfoObject.model
                 }
                 else{
                     return ""
                 }
             }
             eqText3:{
-                if(DeviceManager.deviceList[3]){
-                    return DeviceManager.deviceList[3].DevInfoObject.ConnectType === 1
+                if(DeviceManager.DeviceList[3]){
+                    return DeviceManager.DeviceList[3].DevInfoObject.ConnectType === 1
                             ? "RS232" : "TCP/IP"
                 }
-                else if(DeviceManager.deviceList[2]){
-                    return DeviceManager.deviceList[2].DevInfoObject.ConnectType === 1
+                else if(DeviceManager.DeviceList[2]){
+                    return DeviceManager.DeviceList[2].DevInfoObject.ConnectType === 1
                             ? "RS232" : "TCP/IP"
                 }
                 else{
@@ -641,14 +641,14 @@ Rectangle {
             }
             eqText4:{
                 var connectState = 0
-                if(DeviceManager.deviceList[3])
+                if(DeviceManager.DeviceList[3])
                 {
-                    connectState = DeviceManager.deviceList[3].DevInfoObject.ConnectState
+                    connectState = DeviceManager.DeviceList[3].DevInfoObject.ConnectState
                     return GlobalMessageDefine.getConnectState(connectState)
                 }
-                else if(DeviceManager.deviceList[2])
+                else if(DeviceManager.DeviceList[2])
                 {
-                    connectState = DeviceManager.deviceList[2].DevInfoObject.ConnectState
+                    connectState = DeviceManager.DeviceList[2].DevInfoObject.ConnectState
                     return GlobalMessageDefine.getConnectState(connectState)
                 }
                 else
@@ -666,70 +666,70 @@ Rectangle {
             radius: 3
             color: "#0c5596"
             revealing:{
-                if(DeviceManager.deviceList[3]){
-                    return DeviceManager.deviceList[3].pIO.availabel
+                if(DeviceManager.DeviceList[3]){
+                    return DeviceManager.DeviceList[3].pIO.availabel
                 }
-                else if(DeviceManager.deviceList[2]){
-                    return DeviceManager.deviceList[2].pIO.availabel
+                else if(DeviceManager.DeviceList[2]){
+                    return DeviceManager.DeviceList[2].pIO.availabel
                 }
                 else{
                     return true
                 }
             }
             eqText1:{
-                if(DeviceManager.deviceList[3]){
-                    return DeviceManager.deviceList[3].DevInfoObject.goodCycles
+                if(DeviceManager.DeviceList[3]){
+                    return DeviceManager.DeviceList[3].DevInfoObject.goodCycles
                 }
-                else if(DeviceManager.deviceList[2]){
-                    return DeviceManager.deviceList[2].DevInfoObject.goodCycles
+                else if(DeviceManager.DeviceList[2]){
+                    return DeviceManager.DeviceList[2].DevInfoObject.goodCycles
                 }
                 else{
                     return ""
                 }
             }
             eqText2:{
-                if(DeviceManager.deviceList[3]){
-                    return DeviceManager.deviceList[3].DevInfoObject.suspectCycles
+                if(DeviceManager.DeviceList[3]){
+                    return DeviceManager.DeviceList[3].DevInfoObject.suspectCycles
                 }
-                else if(DeviceManager.deviceList[2]){
-                    return DeviceManager.deviceList[2].DevInfoObject.suspectCycles
+                else if(DeviceManager.DeviceList[2]){
+                    return DeviceManager.DeviceList[2].DevInfoObject.suspectCycles
                 }
                 else{
                     return ""
                 }
             }
             eqText3:{
-                if(DeviceManager.deviceList[3]){
-                    return DeviceManager.deviceList[3].DevInfoObject.notDefinite
+                if(DeviceManager.DeviceList[3]){
+                    return DeviceManager.DeviceList[3].DevInfoObject.notDefinite
                 }
-                else if(DeviceManager.deviceList[2]){
-                    return DeviceManager.deviceList[2].DevInfoObject.notDefinite
+                else if(DeviceManager.DeviceList[2]){
+                    return DeviceManager.DeviceList[2].DevInfoObject.notDefinite
                 }
                 else{
                     return ""
                 }
             }
             eqText4:{
-                if(DeviceManager.deviceList[3]){
-                    return DeviceManager.deviceList[3].DevInfoObject.goodCycles
-                            + DeviceManager.deviceList[3].DevInfoObject.notDefinite
-                            +DeviceManager.deviceList[3].DevInfoObject.suspectCycles
+                if(DeviceManager.DeviceList[3]){
+                    return DeviceManager.DeviceList[3].DevInfoObject.goodCycles
+                            + DeviceManager.DeviceList[3].DevInfoObject.notDefinite
+                            +DeviceManager.DeviceList[3].DevInfoObject.suspectCycles
                 }
-                else if(DeviceManager.deviceList[2]){
-                    return DeviceManager.deviceList[2].DevInfoObject.goodCycles
-                            + DeviceManager.deviceList[2].DevInfoObject.notDefinite
-                            +DeviceManager.deviceList[2].DevInfoObject.suspectCycles
+                else if(DeviceManager.DeviceList[2]){
+                    return DeviceManager.DeviceList[2].DevInfoObject.goodCycles
+                            + DeviceManager.DeviceList[2].DevInfoObject.notDefinite
+                            +DeviceManager.DeviceList[2].DevInfoObject.suspectCycles
                 }
                 else{
                     return ""
                 }
             }
             eqText5:{
-                if(DeviceManager.deviceList[3]){
-                    return DeviceManager.deviceList[3].DevInfoObject.goodRate
+                if(DeviceManager.DeviceList[3]){
+                    return DeviceManager.DeviceList[3].DevInfoObject.goodRate
                 }
-                else if(DeviceManager.deviceList[2]){
-                    return DeviceManager.deviceList[2].DevInfoObject.goodRate
+                else if(DeviceManager.DeviceList[2]){
+                    return DeviceManager.DeviceList[2].DevInfoObject.goodRate
                 }
                 else{
                     return ""

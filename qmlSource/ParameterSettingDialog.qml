@@ -101,7 +101,7 @@ Dialog {
                 }
                 TextField {
                     id: energy_set
-                    text: DeviceManager.deviceList[swipeCurrIndex].DevInfoObject.preEnegy + GlobalLanguageDefine.strEnergyUnit
+                    text: DeviceManager.DeviceList[swipeCurrIndex].DevInfoObject.preEnegy + GlobalLanguageDefine.strEnergyUnit
                     inputMethodHints: Qt.ImhFormattedNumbersOnly
                     color: "#004b8d"
                     horizontalAlignment: TextInput.AlignHCenter
@@ -136,7 +136,7 @@ Dialog {
                 }
                 TextField {
                     id: amplitude_set
-                    text: DeviceManager.deviceList[swipeCurrIndex].DevInfoObject.preAmplitude + GlobalLanguageDefine.strAmplitudeUnit
+                    text: DeviceManager.DeviceList[swipeCurrIndex].DevInfoObject.preAmplitude + GlobalLanguageDefine.strAmplitudeUnit
                     inputMethodHints: Qt.ImhFormattedNumbersOnly
                     color: "#004b8d"
                     horizontalAlignment: TextInput.AlignHCenter
@@ -171,7 +171,7 @@ Dialog {
                 }
                 TextField {
                     id: wp_set
-                    text: DeviceManager.deviceList[swipeCurrIndex].DevInfoObject.preWP + GlobalLanguageDefine.strPressureUnit
+                    text: DeviceManager.DeviceList[swipeCurrIndex].DevInfoObject.preWP + GlobalLanguageDefine.strPressureUnit
                     inputMethodHints: Qt.ImhFormattedNumbersOnly
                     color: "#004b8d"
                     horizontalAlignment: TextInput.AlignHCenter
@@ -206,7 +206,7 @@ Dialog {
                 }
                 TextField {
                     id: tp_set
-                    text: DeviceManager.deviceList[swipeCurrIndex].DevInfoObject.preTP + GlobalLanguageDefine.strPressureUnit
+                    text: DeviceManager.DeviceList[swipeCurrIndex].DevInfoObject.preTP + GlobalLanguageDefine.strPressureUnit
                     inputMethodHints: Qt.ImhFormattedNumbersOnly
                     color: "#004b8d"
                     horizontalAlignment: TextInput.AlignHCenter
@@ -241,7 +241,7 @@ Dialog {
                 }
                 TextField {
                     id: time_max_set
-                    text: DeviceManager.deviceList[swipeCurrIndex].DevInfoObject.preTimeMax + GlobalLanguageDefine.strWeldTimeUnit
+                    text: DeviceManager.DeviceList[swipeCurrIndex].DevInfoObject.preTimeMax + GlobalLanguageDefine.strWeldTimeUnit
                     inputMethodHints: Qt.ImhFormattedNumbersOnly
                     color: "#004b8d"
                     horizontalAlignment: TextInput.AlignHCenter
@@ -276,7 +276,7 @@ Dialog {
                 }
                 TextField {
                     id: time_min_set
-                    text: DeviceManager.deviceList[swipeCurrIndex].DevInfoObject.preTimeMin + GlobalLanguageDefine.strWeldTimeUnit
+                    text: DeviceManager.DeviceList[swipeCurrIndex].DevInfoObject.preTimeMin + GlobalLanguageDefine.strWeldTimeUnit
                     inputMethodHints: Qt.ImhFormattedNumbersOnly
                     color: "#004b8d"
                     horizontalAlignment: TextInput.AlignHCenter
@@ -312,7 +312,7 @@ Dialog {
                 }
                 TextField {
                     id: power_min_set
-                    text: DeviceManager.deviceList[swipeCurrIndex].DevInfoObject.prePowerMin + GlobalLanguageDefine.strPowerUnit
+                    text: DeviceManager.DeviceList[swipeCurrIndex].DevInfoObject.prePowerMin + GlobalLanguageDefine.strPowerUnit
                     inputMethodHints: Qt.ImhFormattedNumbersOnly
                     color: "#004b8d"
                     horizontalAlignment: TextInput.AlignHCenter
@@ -347,7 +347,7 @@ Dialog {
                 }
                 TextField {
                     id: power_max_set
-                    text: DeviceManager.deviceList[swipeCurrIndex].DevInfoObject.prePowerMax + GlobalLanguageDefine.strPowerUnit
+                    text: DeviceManager.DeviceList[swipeCurrIndex].DevInfoObject.prePowerMax + GlobalLanguageDefine.strPowerUnit
                     inputMethodHints: Qt.ImhFormattedNumbersOnly
                     color: "#004b8d"
                     horizontalAlignment: TextInput.AlignHCenter
@@ -382,7 +382,7 @@ Dialog {
                 }
                 TextField {
                     id: pre_heightmin_set
-                    text: DeviceManager.deviceList[swipeCurrIndex].DevInfoObject.preHeightMin + GlobalLanguageDefine.strHeightUnit
+                    text: DeviceManager.DeviceList[swipeCurrIndex].DevInfoObject.preHeightMin + GlobalLanguageDefine.strHeightUnit
                     inputMethodHints: Qt.ImhFormattedNumbersOnly
                     color: "#004b8d"
                     horizontalAlignment: TextInput.AlignHCenter
@@ -417,7 +417,7 @@ Dialog {
                 }
                 TextField {
                     id: pre_heightmax_set
-                    text: DeviceManager.deviceList[swipeCurrIndex].DevInfoObject.preHeightMax + GlobalLanguageDefine.strHeightUnit
+                    text: DeviceManager.DeviceList[swipeCurrIndex].DevInfoObject.preHeightMax + GlobalLanguageDefine.strHeightUnit
                     inputMethodHints: Qt.ImhFormattedNumbersOnly
                     color: "#004b8d"
                     horizontalAlignment: TextInput.AlignHCenter
@@ -452,7 +452,7 @@ Dialog {
                 }
                 TextField {
                     id: post_hehigtmin_set
-                    text: DeviceManager.deviceList[swipeCurrIndex].DevInfoObject.postHeightMin + GlobalLanguageDefine.strHeightUnit
+                    text: DeviceManager.DeviceList[swipeCurrIndex].DevInfoObject.postHeightMin + GlobalLanguageDefine.strHeightUnit
                     inputMethodHints: Qt.ImhFormattedNumbersOnly
                     color: "#004b8d"
                     horizontalAlignment: TextInput.AlignHCenter
@@ -487,7 +487,7 @@ Dialog {
                 }
                 TextField {
                     id: post_hehigtmax_set
-                    text: DeviceManager.deviceList[swipeCurrIndex].DevInfoObject.postHeightMax + GlobalLanguageDefine.strHeightUnit
+                    text: DeviceManager.DeviceList[swipeCurrIndex].DevInfoObject.postHeightMax + GlobalLanguageDefine.strHeightUnit
                     inputMethodHints: Qt.ImhFormattedNumbersOnly
                     color: "#004b8d"
                     horizontalAlignment: TextInput.AlignHCenter
