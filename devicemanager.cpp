@@ -8,7 +8,6 @@
 #include "signalmanager.h"
 #include <QElapsedTimer>
 #include "model/devicenames.h"
-#include "tools/devicemodbusmapper.h"
 
 DeviceManager* DeviceManager::m_ptrInstance = nullptr;
 DeviceManager *DeviceManager::getInstance()

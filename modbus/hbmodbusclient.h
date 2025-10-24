@@ -7,8 +7,6 @@
 #include <QTimer>
 #include <QVector>
 #include <QMutex>
-#include "model/device.h"
-#include "tools/devicemodbusmapper.h"
 #include "define.h"
 
 class HBModbusClient : public QObject
@@ -20,41 +18,25 @@ public:
     static HBModbusClient* getInstance();
     ~HBModbusClient();
 
-    void Init();
-
-    int calculateBaseAddress(int devId) const;
-
-    template<typename T>
-    QVector<T> readRegisters(QModbusDataUnit::RegisterType type, int start, int count);
     Q_INVOKABLE void writeHoldingRegisters(int start, const QVector<quint16>& values);
     Q_INVOKABLE void writeCoils(int start, const QVector<quint8>& values);
 
-    template<typename Setter>
-    void pollRegisters(QModbusDataUnit::RegisterType type, int count, Setter setter, const char* errMsg);
+    //LED
+    Q_INVOKABLE void setLearnLedStatus(bool condition);
+    Q_INVOKABLE void setPilotLedStatus(bool condition);
+    Q_INVOKABLE void setReadyLedStatus(bool condition);
+    Q_INVOKABLE void setAlarmLedStatus(bool condition);
 
-    void pollAllRegisters(QModbusDataUnit::RegisterType type, int count, const char* errMsg);
+    //IO
+    Q_INVOKABLE void setDeviceIOStatusReject(int deviceId, bool condition);
+    Q_INVOKABLE void setDeviceIOStatusSuspect(int deviceId, bool condition);
 
-    void pollHoldings(int start, int count, const char* errMsg);
+    //RTC
+    Q_INVOKABLE void setSystemClock(int year, int month, int day, int hour, int minute, int second);
 
-    void processRegister(QModbusDataUnit::RegisterType type, int address, quint16 value);
+    Q_INVOKABLE void setMesConfig(const QVector<quint16> mesHostValues);
 
-    // 只在CycleCount变化时，批量分发所有输入寄存器到UI和数据库
-    void dispatchInputsOnCycleCountChanged();
-    // 获取指定设备的某个输入寄存器值（设备ID: 1~DEV_COUNT，regEnum为INPUT_REGISTERS枚举）
-    quint16 getInputRegister(int devId, int regEnum) const;
-
-    // 获取指定设备的全部输入寄存器（返回QVector，便于UI/DeviceManager批量处理）
-    QVector<quint16> getDeviceInputs(int devId) const;
-
-    Q_INVOKABLE void setRTC(int year, int month, int day, int hour, int minute, int second);
-
-    Q_INVOKABLE void setSysLedStatus(int ledIndex, bool condition);
-
-    Q_INVOKABLE void setDeviceCoilStatus(int devId, int value); // Updated to handle resetIdx logic
-
-    void setDeviceConfig(int deviceId, const DeviceModbusMapper::DeviceRegisterData &data);
-
-    QVector<quint16> getDeviceHoldings(int devId) const;
+    Q_INVOKABLE void setDeviceConfigData(int deviceId, const QVector<quint16> deviceValues);
 
 public:
 
@@ -199,19 +181,38 @@ protected:
 
 private:
     bool connectToServer(const QString &host, int port);
-    void disconnect();
     void reconnectToServer();
 
-    void processSysBtnRBit4();
-    void clearRejectAndSuspectForDevice(int devId);
+    void dispatchInputsOnCycleCountChanged();
+
+    void dispatchDevicePresetData();
+
+    void dispatchDeviceStatus();
+
+    void dispatchResetButton();
+
+    void dispatchDeviceIOResetStatus();
+
+    template<typename Setter>
+    void pollRegisters(QModbusDataUnit::RegisterType type, int count, Setter setter, const char* errMsg);
+
+    void pollAllRegisters(QModbusDataUnit::RegisterType type, int count, const char* errMsg);
+
+    void pollHoldings(int start, int count, const char* errMsg);
+
+    void Init();
 
 signals:
 
-    void connectedChanged(bool connected);
+    void weldResultDataChanged(int deviceId, const WELD_RESULTDATA &data);
 
-    void newData(int devId, const RECEIVE_INPUTDATA& input, const RECEIVE_HOLDINGDATA& holding, const RECEIVE_COILSDATA& coil, const RECEIVE_DISCRETE& discrete);
+    void presetDataChanged(int deviceId, const WELD_PRESETDATA &data);
 
-    void resetButton(bool resetButton);
+    void deviceIOResetChanged(int deviceId, const WELD_IORESTSTATUS &data);
+
+    void deviceStatusChanged(int deviceId, const WELD_STATUS &data);
+
+    void resetButtonChanged(const WELD_IORESTSTATUS &data);
 
 public slots:
 
@@ -225,6 +226,7 @@ private:
     static unsigned short   m_Inputs[DEV_INPUT_REGISTERS_COUNT * DEV_COUNT];
 
     static HBModbusClient* m_instance;
+
     QModbusTcpClient *modbusClient;
 
     QTimer *m_timer;

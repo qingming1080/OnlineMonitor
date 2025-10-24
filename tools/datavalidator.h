@@ -40,6 +40,10 @@ public:
 
     static bool isValidForDatabase(const QVector<quint16> &inputs);
 
+    static void sanitizeInputs(QVector<quint16> &inputs, quint16 maxValue = 10000);
+
+    static quint16 sanitizeValue(quint16 value, quint16 maxValue = 10000);
+
 signals:
 };
 

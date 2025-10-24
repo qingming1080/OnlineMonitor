@@ -239,14 +239,14 @@ void Manual::loadData()
 
 void Manual::startReading()
 {
-    connect(m_modbusClient, &HBModbusClient::newData, this, &Manual::onNewManualData, Qt::UniqueConnection);
+    // connect(m_modbusClient, &HBModbusClient::newData, this, &Manual::onNewManualData, Qt::UniqueConnection);
 
     qDebug() << "Manual 开始接收 Modbus 数据";
 }
 
 void Manual::stopReading()
 {
-    disconnect(m_modbusClient, &HBModbusClient::newData, this, &Manual::onNewManualData);
+    // disconnect(m_modbusClient, &HBModbusClient::newData, this, &Manual::onNewManualData);
     qDebug() << "Manual 停止接收 Modbus 数据";
 }
 
@@ -318,35 +318,35 @@ bool Manual::CalibrateModel()
     return true;
 }
 
-void Manual::onNewManualData(int welderId, const RECEIVE_INPUTDATA& input, const RECEIVE_HOLDINGDATA& holding, const RECEIVE_COILSDATA& coil, const RECEIVE_DISCRETE& discrete)
-{
-    if (welderId != m_welderID)
-    {
-        return;
-    }
-    beginInsertRows(QModelIndex(), 0, 0);
-    MANUAL_DATA data;
-    data.WelderId       = welderId;
-    data.CycleCount     = input.CycleCount;
-    data.Energy         = input.Energy;
-    data.Amplitude      = input.Amplitude;
-    data.WeldPressure   = input.WeldingPressure;
-    data.WeldTime       = input.WeldTime;
-    data.PeakPower      = input.PeakPower;
-    data.Preheight      = input.PreHeight;
-    data.PostHeight     = input.PostHeight;
-    data.ActualForce    = 10;
-    data.ActualResidual = 10;
-    data.CreateTime     = UtilityFunction::getInstance()->timestampToString(input.DateData).left(10);
-    data.serial_number  = m_nextSerial++;
-    data.IsSelected     = false;
-    data.IsNewComming   = true;
-    data.PreEnergy      = holding.PreEnergy;
-    data.PreAmplitude   = holding.PreAmplitude;
-    data.PreTP          = holding.PreTriggerPressure;
-    data.PreWP          = holding.PreWeldingPressure;
+// void Manual::onNewManualData(int welderId, const RECEIVE_INPUTDATA& input, const RECEIVE_HOLDINGDATA& holding, const RECEIVE_COILSDATA& coil, const RECEIVE_DISCRETE& discrete)
+// {
+//     if (welderId != m_welderID)
+//     {
+//         return;
+//     }
+//     beginInsertRows(QModelIndex(), 0, 0);
+//     MANUAL_DATA data;
+//     data.WelderId       = welderId;
+//     data.CycleCount     = input.CycleCount;
+//     data.Energy         = input.Energy;
+//     data.Amplitude      = input.Amplitude;
+//     data.WeldPressure   = input.WeldingPressure;
+//     data.WeldTime       = input.WeldTime;
+//     data.PeakPower      = input.PeakPower;
+//     data.Preheight      = input.PreHeight;
+//     data.PostHeight     = input.PostHeight;
+//     data.ActualForce    = 10;
+//     data.ActualResidual = 10;
+//     data.CreateTime     = UtilityFunction::getInstance()->timestampToString(input.DateData).left(10);
+//     data.serial_number  = m_nextSerial++;
+//     data.IsSelected     = false;
+//     data.IsNewComming   = true;
+//     data.PreEnergy      = holding.PreEnergy;
+//     data.PreAmplitude   = holding.PreAmplitude;
+//     data.PreTP          = holding.PreTriggerPressure;
+//     data.PreWP          = holding.PreWeldingPressure;
 
-    m_listRawData.prepend(data);
-    endInsertRows();
-}
+//     m_listRawData.prepend(data);
+//     endInsertRows();
+// }
 

@@ -22,3 +22,16 @@ bool DataValidator::isValidForDatabase(const QVector<quint16> &inputs)
         return true;
 
 }
+
+
+void DataValidator::sanitizeInputs(QVector<quint16> &inputs, quint16 maxValue) {
+    for (int i = 0; i < inputs.size(); ++i)
+    {
+        inputs[i] = sanitizeValue(inputs[i], maxValue);
+    }
+}
+
+quint16 DataValidator::sanitizeValue(quint16 value, quint16 maxValue) {
+    return (value <= maxValue) ? value : 0;
+}
+
