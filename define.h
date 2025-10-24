@@ -213,7 +213,7 @@ struct DateTimeData
 };
 
 
-struct RECEIVE_INPUTDATA
+struct WELD_RESULTDATA
 {
     int     CycleCount;
     int     Energy;
@@ -228,28 +228,28 @@ struct RECEIVE_INPUTDATA
     qint64  DateData;
 };
 
-struct RECEIVE_HOLDINGDATA
+struct WELD_PRESETDATA
 {
-    int     PreEnergy;
-    int     PreAmplitude;
-    int     PreTriggerPressure;
-    int     PreWeldingPressure;
+    int     EnergyPreset;
+    int     AmplitudePreset;
+    int     TriggerPressurePreset;
+    int     WeldingPressurePreset;
 };
 
-struct RECEIVE_COILSDATA
+struct WELD_IORESTSTATUS
 {
-    bool Reset;;
+    bool    isIOReset;
 };
 
-struct RECEIVE_SYS_COILSDATA
+struct SYSTEM_BUTTONSTATUS
 {
-    bool BtnR;
+    bool    isSystemResetButton;
 };
 
-struct RECEIVE_DISCRETE
+struct WELD_STATUS
 {
-    bool DeviceStatue;
-    bool DeviceDataStaue;
+    bool    isDeviceStatue;
+    bool    isDeviceDataStaue;
 };
 
 

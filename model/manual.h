@@ -57,7 +57,6 @@ public:
     Q_INVOKABLE void stopReading();
 
 private slots:
-    void onNewManualData(int welderId, const RECEIVE_INPUTDATA& input, const RECEIVE_HOLDINGDATA& holding, const RECEIVE_COILSDATA& coil, const RECEIVE_DISCRETE& discrete);
 
 signals:
     void welderIDChanged();

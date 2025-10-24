@@ -4,15 +4,11 @@
 #include <QModbusTcpClient>
 #include <QModbusReply>
 #include <QDebug>
-#include "model/deviceinformation.h"
-#include "model/trend.h"
-#include "DataBase/databasemanager.h"
-#include "model/message.h"
-#include "devicemanager.h"
-#include "qmlenum.h"
 #include <QtConcurrent/QtConcurrent>
 #include "tools/datavalidator.h"
 #include "tools/utilityfunction.h"
+#include "define.h"
+
 
 constexpr char HBModbusClient::LOCAL_IP[13];
 constexpr int HBModbusClient::SERVER_PORT;
@@ -48,11 +44,6 @@ HBModbusClient::~HBModbusClient()
         modbusClient->disconnectDevice();
         delete modbusClient;
     }
-
-    // if (m_timer) {
-    //     m_timer->stop();
-    //     delete m_timer;
-    // }
 }
 
 void HBModbusClient::Init()
@@ -67,15 +58,7 @@ void HBModbusClient::Init()
         }
     });
 
-    connect(modbusClient, &QModbusTcpClient::stateChanged, this, [this](QModbusDevice::State state){
-        emit connectedChanged(state == QModbusDevice::ConnectedState);
-        if(state == QModbusDevice::ConnectedState) {
-            DeviceManager::getInstance()->syncDevicesToModbus();
-        }
-    });
-
     m_timer->start();
-
 }
 
 bool HBModbusClient::connectToServer(const QString &host, int port)
@@ -83,13 +66,6 @@ bool HBModbusClient::connectToServer(const QString &host, int port)
     modbusClient->setConnectionParameter(QModbusTcpClient::NetworkAddressParameter, host);
     modbusClient->setConnectionParameter(QModbusTcpClient::NetworkPortParameter, port);
     return modbusClient->connectDevice();
-}
-
-void HBModbusClient::disconnect()
-{
-    if(modbusClient->state() == QModbusDevice::ConnectedState)
-        modbusClient->disconnectDevice();
-    qDebug() << "断开Modbus服务器";
 }
 
 void HBModbusClient::reconnectToServer()
@@ -105,9 +81,10 @@ void HBModbusClient::reconnectToServer()
 
 void HBModbusClient::onPollTimeout()
 {
-
     if(modbusClient->state() != QModbusDevice::ConnectedState)
         return;
+
+    // 读取各类寄存器数据
     pollHoldings(0, SYS_HOLDING_REGISTERS_COUNT, "Modbus系统保持寄存器读取失败:");
     pollHoldings(HOLDING_REGISTERS_ADDRESS_BASE, END_OF_DEV_HOLDING_REGISTER - HOLDING_REGISTERS_ADDRESS_BASE, "Modbus设备保持寄存器读取失败:");
     pollAllRegisters(QModbusDataUnit::InputRegisters, DEV_INPUT_REGISTERS_COUNT * DEV_COUNT, "Modbus输入寄存器读取失败:");
@@ -127,9 +104,7 @@ void HBModbusClient::pollAllRegisters(QModbusDataUnit::RegisterType type, int co
                       case QModbusDataUnit::DiscreteInputs: m_Discreteds[i] = value; break;
                       default: break;
                     }
-                      processRegister(type, i, value);
-                  },
-                  errMsg);
+                  },errMsg);
 }
 
 template<typename Setter>
@@ -138,11 +113,28 @@ void HBModbusClient::pollRegisters(QModbusDataUnit::RegisterType type, int count
     QModbusDataUnit unit(type, 0, count);
     if (auto *reply = modbusClient->sendReadRequest(unit, 1))
     {
-        connect(reply, &QModbusReply::finished, this, [this, reply, setter, errMsg]() {
+        connect(reply, &QModbusReply::finished, this, [this, reply, setter, errMsg,type]() {
             if (reply->error() == QModbusDevice::NoError) {
                 const QModbusDataUnit u = reply->result();
                 for (unsigned int i = 0; i < u.valueCount(); ++i) {
                     setter(i, u.value(i));
+                }
+                switch(type)
+                {
+                case QModbusDataUnit::InputRegisters:
+                    dispatchInputsOnCycleCountChanged();
+                    break;
+                case QModbusDataUnit::HoldingRegisters:
+                    dispatchDevicePresetData();
+                    break;
+                case QModbusDataUnit::DiscreteInputs:
+                    dispatchDeviceStatus();
+                    break;
+                case QModbusDataUnit::Coils:
+                    dispatchResetButton();
+                    dispatchDeviceIOResetStatus();
+                    break;
+                default: break;
                 }
             } else {
                 qWarning() << errMsg << reply->errorString();
@@ -156,51 +148,13 @@ void HBModbusClient::pollRegisters(QModbusDataUnit::RegisterType type, int count
 void HBModbusClient::pollHoldings(int start, int count, const char* errMsg)
 {
     pollRegisters(QModbusDataUnit::HoldingRegisters, count,
-                  [this, start](int i, quint16 v){
+                  [this, start](int i, quint16 v)
+                  {
                       // QMutexLocker locker(&m_mutex);
                       m_Holdings[start + i] = v;
-                      processRegister(QModbusDataUnit::HoldingRegisters, start + i, v);
                   },
                   errMsg);
 }
-
-
-template<typename T>
-QVector<T> HBModbusClient::readRegisters(QModbusDataUnit::RegisterType type, int start, int count)
-{
-    QVector<T> result;
-    switch(type)
-    {
-    case QModbusDataUnit::HoldingRegisters:
-        for (int i = 0; i < count; ++i)
-        {
-            result.append(static_cast<T>(m_Holdings[start + i]));
-        }
-        break;
-    case QModbusDataUnit::InputRegisters:
-        for (int i = 0; i < count; ++i)
-        {
-            result.append(static_cast<T>(m_Inputs[start + i]));
-        }
-        break;
-    case QModbusDataUnit::Coils:
-        for (int i = 0; i < count; ++i)
-        {
-            result.append(static_cast<T>(m_Coils[start + i]));
-        }
-        break;
-    case QModbusDataUnit::DiscreteInputs:
-        for (int i = 0; i < count; ++i)
-        {
-            result.append(static_cast<T>(m_Discreteds[start + i]));
-        }
-        break;
-    default:
-        break;
-    }
-    return result;
-}
-
 
 void HBModbusClient::writeHoldingRegisters(int start, const QVector<quint16>& values)
 {
@@ -229,14 +183,10 @@ void HBModbusClient::writeHoldingRegisters(int start, const QVector<quint16>& va
 
 void HBModbusClient::writeCoils(int start, const QVector<quint8>& values)
 {
-    // 更新本地缓存
     for (int i = 0; i < values.size(); ++i)
     {
         m_Coils[start + i] = values[i];
-        processRegister(QModbusDataUnit::Coils, start + i, values[i]);
     }
-
-    // 检查Modbus连接状态
     if (modbusClient->state() == QModbusDevice::ConnectedState)
     {
         QModbusDataUnit writeUnit(QModbusDataUnit::Coils, start, values.size());
@@ -259,60 +209,13 @@ void HBModbusClient::writeCoils(int start, const QVector<quint8>& values)
     }
 }
 
-void HBModbusClient::processRegister(QModbusDataUnit::RegisterType type, int address, quint16 value)
-{
-    QMutexLocker locker(&m_mutex);
-    switch(type) {
-    case QModbusDataUnit::HoldingRegisters:
-        m_Holdings[address] = value;
-        break;
-    case QModbusDataUnit::InputRegisters:
-        if (address % DEV_INPUT_REGISTERS_COUNT == DEV_CYCLE_COUNT_H || address % DEV_INPUT_REGISTERS_COUNT == DEV_CYCLE_COUNT_L)
-        { qDebug() << "11111111111";
-            dispatchInputsOnCycleCountChanged();
-            qDebug() << "";
-        }
-        break;
-
-    case QModbusDataUnit::Coils:
-
-        switch(address)
-        {
-        case SYS_BTN_R_BIT4:
-            m_Coils[SYS_BTN_R_BIT4] = static_cast<unsigned char>(value);
-            if (value == 1)  processSysBtnRBit4();
-            qDebug() << "Coils" << "SYS_LED_L_BIT4" << value;
-            break;
-
-        }
-        break;
-    case QModbusDataUnit::DiscreteInputs: {
-        int idx = address;
-        if (idx >= 0 && idx < DEV_DISCRETE_REGISTERS_COUNT * DEV_COUNT) {
-            unsigned char newVal = static_cast<unsigned char>(value);
-            unsigned char prev = m_LastDiscreteds[idx];
-            m_Discreteds[idx] = newVal;
-            if (prev != newVal) {
-                qDebug() << "DiscreteInputs index" << idx << "changed from" << prev << "to" << newVal;
-                m_LastDiscreteds[idx] = newVal;
-            }
-        }
-        break;
-    }
-    default:
-        break;
-    }
-
-}
-
-
 void HBModbusClient::dispatchInputsOnCycleCountChanged()
 {
     static QVector<quint32> lastCycleCount;
-    if (lastCycleCount.isEmpty())
-        lastCycleCount.fill(0xFFFFFFFF, DEV_COUNT);
-    const QList<Device*>& devList = DeviceManager::getInstance()->deviceList();
-    for (int i = 0; i < DEV_COUNT && i < devList.size(); ++i)
+
+    if (lastCycleCount.size() != DEV_COUNT)
+        lastCycleCount.fill(0, DEV_COUNT);
+    for (int i = 0; i < DEV_COUNT ; ++i)
     {
         int base = i * DEV_INPUT_REGISTERS_COUNT;
 
@@ -321,234 +224,144 @@ void HBModbusClient::dispatchInputsOnCycleCountChanged()
         quint32 cycleCount = (quint32(high) << 16) | quint32(low);
         if (lastCycleCount[i] != cycleCount && cycleCount > 0)
         {
+
             lastCycleCount[i] = cycleCount;
-            QVector<quint16> inputs = getDeviceInputs(i+1);
-            QVector<quint16> holdings = getDeviceHoldings(i+1);
-            if (!DataValidator::isValidForDatabase(inputs))
-            {
-                qDebug() << "设备" << i+1 << "输入数据异常，丢弃该条数据";
-                continue;
-            }
-            DateTimeData data;
-            data.year                   = inputs[DEV_YY];
-            data.month                  = inputs[DEV_YY_MM];
-            data.day                    = inputs[DEV_DD];
-            data.hour                   = inputs[DEV_HH];
-            data.minute                 = inputs[DEV_MM];
-            data.second                 = inputs[DEV_SS];
+            WELD_RESULTDATA data;
+            data.CycleCount      = cycleCount;
+            data.Energy          = m_Inputs[base + DEV_ENERGY];
+            data.Amplitude       = m_Inputs[base + DEV_AMPLITUDE];
+            data.TriggerPressure = m_Inputs[base + DEV_TP];
+            data.WeldingPressure = m_Inputs[base + DEV_WP];
+            data.WeldTime        = m_Inputs[base + DEV_TIME];
+            data.PeakPower       = m_Inputs[base + DEV_POWER];
+            data.PreHeight       = m_Inputs[base + DEV_PRE_HEIGHT];
+            data.PostHeight      = m_Inputs[base + DEV_POST_HEIGHT];
+            data.WeldAlarm       = m_Inputs[base + DEV_WELD_ALARM];
 
-            RECEIVE_INPUTDATA inputData;
-            inputData.CycleCount       = cycleCount;
-            inputData.Energy           = inputs[DEV_ENERGY];
-            inputData.Amplitude        = inputs[DEV_AMPLITUDE];
-            inputData.TriggerPressure  = inputs[DEV_TP];
-            inputData.WeldingPressure  = inputs[DEV_WP];
-            inputData.WeldTime         = inputs[DEV_TIME];
-            inputData.PeakPower        = inputs[DEV_POWER];
-            inputData.PreHeight        = inputs[DEV_PRE_HEIGHT];
-            inputData.PostHeight       = inputs[DEV_POST_HEIGHT];
-            inputData.WeldAlarm        = inputs[DEV_WELD_ALARM];
-            inputData.DateData         = UtilityFunction::getInstance()->toTimestamp(data.year,data.month,data.day,data.hour,data.minute,data.second);
-            // inputData.DateData         = UtilityFunction::getInstance()->toTimestamp(0,0,0,0,0,0);
+            int year   = m_Inputs[base + DEV_YY];
+            int month  = m_Inputs[base + DEV_YY_MM];
+            int day    = m_Inputs[base + DEV_DD];
+            int hour   = m_Inputs[base + DEV_HH];
+            int minute = m_Inputs[base + DEV_MM];
+            int second = m_Inputs[base + DEV_SS];
 
-            RECEIVE_HOLDINGDATA holdData;
-            int holdindex = 0;
-            holdData.PreEnergy           = holdings[holdindex++];
-            holdData.PreAmplitude        = holdings[holdindex++];
-            holdData.PreTriggerPressure  = holdings[holdindex++];
-            holdData.PreWeldingPressure  = holdings[holdindex++];
+            data.DateData = UtilityFunction::getInstance()->toTimestamp(year, month, day, hour, minute, second);
 
-
-            RECEIVE_COILSDATA coilData;
-            coilData.Reset = m_Coils[DEV_RESET_BIT2 + i * DEV_COILS_REGISTERS_COUNT];
-
-
-            RECEIVE_DISCRETE discrete;
-            int discreteBase = i * DEV_DISCRETE_REGISTERS_COUNT;
-            discrete.DeviceStatue      = m_Discreteds[discreteBase + DEV_STATUE];
-            discrete.DeviceDataStaue   = m_Discreteds[discreteBase + DEV_DATA_STATUE];
-
-            emit newData(i + 1, inputData, holdData, coilData, discrete);
-
-            // bool Resetbutton = m_Coils[SYS_BTN_R_BIT4];
-            // if(Resetbutton){
-            //     emit resetButton(Resetbutton);
-            // }
-
-
+            emit weldResultDataChanged(i + 1, data);
         }
     }
 }
 
-// 获取指定设备的某个输入寄存器值
-quint16 HBModbusClient::getInputRegister(int devId, int regEnum) const
-{   int i = 0;
-    qDebug()<<"收到数据" << i;
-    int index = (devId - 1) * DEV_INPUT_REGISTERS_COUNT + regEnum;
-    if (index >= 0 && index < DEV_INPUT_REGISTERS_COUNT * DEV_COUNT)
-        return m_Inputs[index];
-    return 0;
+void HBModbusClient::dispatchDevicePresetData()
+{
+    for (int i = 0; i < DEV_COUNT; ++i)
+    {
+        int base = SYS_HOLDING_REGISTERS_COUNT + i * DEV_HOLDING_REGISTERS_COUNT;
+
+        WELD_PRESETDATA weldPreset;
+        weldPreset.EnergyPreset          = m_Holdings[base + (DEV_ENERGY_SET - SYS_HOLDING_REGISTERS_COUNT)];
+        weldPreset.AmplitudePreset       = m_Holdings[base + (DEV_AMPLITUDE_SET - SYS_HOLDING_REGISTERS_COUNT)];
+        weldPreset.TriggerPressurePreset = m_Holdings[base + (DEV_TP_SET - SYS_HOLDING_REGISTERS_COUNT)];
+        weldPreset.WeldingPressurePreset = m_Holdings[base + (DEV_WP_SET - SYS_HOLDING_REGISTERS_COUNT)];
+        emit presetDataChanged(i + 1, weldPreset);
+    }
 }
 
-// 获取指定设备的全部输入寄存器
-QVector<quint16> HBModbusClient::getDeviceInputs(int devId) const
+void HBModbusClient::dispatchDeviceStatus()
 {
-    int base = (devId - 1) * DEV_INPUT_REGISTERS_COUNT;
-    if (base < 0 || base + DEV_INPUT_REGISTERS_COUNT > DEV_INPUT_REGISTERS_COUNT * DEV_COUNT)
-        return {};
-    return QVector<quint16>(m_Inputs + base, m_Inputs + base + DEV_INPUT_REGISTERS_COUNT);
+    for (int i = 0; i < DEV_COUNT; ++i)
+    {
+        int base = i * DEV_DISCRETE_REGISTERS_COUNT;
+        WELD_STATUS weldStatus;
+        weldStatus.isDeviceStatue        = m_Discreteds[base + DEV_STATUE];
+        weldStatus.isDeviceDataStaue     = m_Discreteds[base + DEV_DATA_STATUE];
+        emit deviceStatusChanged(i + 1, weldStatus);
+    }
 }
 
-void HBModbusClient::setRTC(int year, int month, int day, int hour, int minute, int second)
+void HBModbusClient::dispatchResetButton()
 {
-    // QMutexLocker locker(&m_mutex);
+    WELD_IORESTSTATUS resetButtonStatus;
+    resetButtonStatus.isIOReset = m_Coils[SYS_BTN_R_BIT4];
+    emit resetButtonChanged(resetButtonStatus);
+}
+
+void HBModbusClient::dispatchDeviceIOResetStatus()
+{
+    for (int i = 0; i < DEV_COUNT; ++i)
+    {
+        int base = SYS_COILS_REGISTERS_COUNT + i * DEV_COILS_REGISTERS_COUNT;
+        WELD_IORESTSTATUS weldIoResetStatus;
+        weldIoResetStatus.isIOReset = m_Coils[base + DEV_RESET_BIT2 - SYS_COILS_REGISTERS_COUNT];
+        emit deviceIOResetChanged(i + 1, weldIoResetStatus);
+    }
+}
+
+void HBModbusClient::setSystemClock(int year, int month, int day, int hour, int minute, int second)
+{
     QVector<quint16> rtcValues = {quint16(year), quint16(month), quint16(day), quint16(hour), quint16(minute), quint16(second)};
 
     writeHoldingRegisters(SYS_RTC_YY, rtcValues);
 }
 
-Q_INVOKABLE void HBModbusClient::setSysLedStatus(int ledIndex, bool condition)
+Q_INVOKABLE void HBModbusClient::setLearnLedStatus(bool condition)
 {
-    // ledIndex: 灯编号（0=L, 1=P, 2=R, 3=A）
-    // condition: true=开, false=关
-
-
-    if (ledIndex < 0 || ledIndex > 3)
-    {
-        qWarning() << "Invalid LED index:" << ledIndex;
-        return;
-    }
-
-    int coilAddress = SYS_LED_L_BIT0 + ledIndex;
-
     QVector<quint8> value(1, condition ? 1 : 0);
 
-    writeCoils(coilAddress, value);
+    writeCoils(SYS_LED_L_BIT0, value);
 
-    qDebug() << "Set LED" << ledIndex << "to" << (condition ? "ON" : "OFF");
 }
-
-Q_INVOKABLE void HBModbusClient::setDeviceCoilStatus(int devId, int value) {
-    if (devId < 1 || devId > DEV_COUNT) return; // Ensure device ID is valid
-
-    int base = calculateBaseAddress(devId);
-    int rejectIdx = base + DEV_REJECT_BIT0 - SYS_COILS_REGISTERS_COUNT;
-    int suspectIdx = base + DEV_SUSPECT_BIT1 - SYS_COILS_REGISTERS_COUNT;
-    int resetIdx = base + DEV_RESET_BIT2 - SYS_COILS_REGISTERS_COUNT;
-
-    QMutexLocker locker(&m_mutex);
-
-    if (m_Coils[resetIdx] == 1)
-    {
-        m_Coils[rejectIdx] = 0;
-        m_Coils[suspectIdx] = 0;
-        writeCoils(rejectIdx, {0});
-        writeCoils(suspectIdx, {0});
-        qDebug() << "Device" << devId << "reset: cleared reject and suspect.";
-    } else {
-
-        if (value == 1) {
-            m_Coils[rejectIdx] = 1;
-            writeCoils(rejectIdx, {1});
-            Message::getInstance()->addMessage(devId,QmlEnum::MESSAGE_defective);
-        } else if (value == 2) {
-            m_Coils[suspectIdx] = 1;
-            writeCoils(suspectIdx, {1});
-            Message::getInstance()->addMessage(devId,QmlEnum::MESSAGE_suspicious);
-        }
-    }
-}
-
-void HBModbusClient::processSysBtnRBit4() {
-
-    qDebug() << "Processing SYS_BTN_R_BIT4...";
-
-    // 清除所有设备的rejectIdx和suspectIdx
-    for (int devId = 1; devId <= DEV_COUNT; ++devId)
-    {
-        clearRejectAndSuspectForDevice(devId);
-    }
-
-    for (int devId = 1; devId <= DEV_COUNT; ++devId)
-    {
-        int base = calculateBaseAddress(devId);
-        qDebug() << "Device" << devId
-                 << "Reject:" << m_Coils[base + (DEV_REJECT_BIT0 - SYS_COILS_REGISTERS_COUNT)]
-                 << "Suspect:" << m_Coils[base + (DEV_SUSPECT_BIT1 - SYS_COILS_REGISTERS_COUNT)];
-    }
-}
-
-
-int HBModbusClient::calculateBaseAddress(int devId) const {
-    return SYS_COILS_REGISTERS_COUNT + (devId - 1) * DEV_COILS_REGISTERS_COUNT;
-}
-
-void HBModbusClient::clearRejectAndSuspectForDevice(int devId) {
-    int base = calculateBaseAddress(devId);
-    int rejectIdx = base + (DEV_REJECT_BIT0 - SYS_COILS_REGISTERS_COUNT);
-    int suspectIdx = base + (DEV_SUSPECT_BIT1 - SYS_COILS_REGISTERS_COUNT);
-
-
-    if (rejectIdx >= 0 && rejectIdx < sizeof(m_Coils) && suspectIdx >= 0 && suspectIdx < sizeof(m_Coils))
-    {
-        m_Coils[rejectIdx] = 0;
-        m_Coils[suspectIdx] = 0;
-
-        writeCoils(rejectIdx, {0});
-        writeCoils(suspectIdx, {0});
-
-        qDebug() << "Cleared reject and suspect for device" << devId
-                 << "RejectIdx:" << rejectIdx
-                 << "SuspectIdx:" << suspectIdx;
-    } else {
-        qWarning() << "Invalid coil indices for device" << devId
-                   << "RejectIdx:" << rejectIdx
-                   << "SuspectIdx:" << suspectIdx;
-    }
-}
-
-void HBModbusClient::setDeviceConfig(int deviceId, const DeviceModbusMapper::DeviceRegisterData &data)
+Q_INVOKABLE void HBModbusClient::setPilotLedStatus(bool condition)
 {
-    if (deviceId <= 0) {
-        qWarning() << "writeDeviceConfig: invalid deviceId" << deviceId;
+    QVector<quint8> value(1, condition ? 1 : 0);
+    writeCoils(SYS_LED_P_BIT1, value);
+
+}
+Q_INVOKABLE void HBModbusClient::setReadyLedStatus(bool condition)
+{
+    QVector<quint8> value(1, condition ? 1 : 0);
+    writeCoils(SYS_LED_R_BIT2, value);
+
+}
+Q_INVOKABLE void HBModbusClient::setAlarmLedStatus(bool condition)
+{
+    QVector<quint8> value(1, condition ? 1 : 0);
+    writeCoils(SYS_LED_A_BIT3, value);
+}
+
+Q_INVOKABLE void HBModbusClient::setDeviceIOStatusReject(int deviceId, bool condition) {
+
+    if (deviceId < 1 || deviceId > DEV_COUNT) return;
+    int base = SYS_COILS_REGISTERS_COUNT + (deviceId - 1) * DEV_COILS_REGISTERS_COUNT;;
+    int rejectAddress = base + DEV_REJECT_BIT0 - SYS_COILS_REGISTERS_COUNT;
+
+    QVector<quint8> value(1, condition ? 1 : 0);
+    writeCoils(rejectAddress, value);
+}
+
+Q_INVOKABLE void HBModbusClient::setDeviceIOStatusSuspect(int deviceId, bool condition) {
+
+    if (deviceId < 1 || deviceId > DEV_COUNT) return;
+    int base = SYS_COILS_REGISTERS_COUNT + (deviceId - 1) * DEV_COILS_REGISTERS_COUNT;;
+    int suspectAddress = base + DEV_SUSPECT_BIT1 - SYS_COILS_REGISTERS_COUNT;
+
+    QVector<quint8> value(1, condition ? 1 : 0);
+    writeCoils(suspectAddress, value);
+
+}
+
+void HBModbusClient::setMesConfig(const QVector<quint16> mesHostValues)
+{
+    writeHoldingRegisters(SYS_MES_IP1, mesHostValues);
+}
+
+void HBModbusClient::setDeviceConfigData(int deviceId, const QVector<quint16> deviceValues)
+{
+    if (deviceId < 1 || deviceId > DEV_COUNT) {
+        qWarning() << "Device ID does not exist";
         return;
     }
 
-    int index = deviceId - 1;
-    if (index < 0 || index >= DEV_COUNT) {
-
-        qWarning() << "writeDeviceConfig: deviceId out of range" << deviceId;
-        return;
-    }
-
-    int start = DEV_TYPE + index * DEV_HOLDING_REGISTERS_COUNT;
-
-    QVector<quint16> devcieRegs = DeviceModbusMapper::toRegisterVector(data);
-
-    writeHoldingRegisters(start, devcieRegs);
-}
-
-QVector<quint16> HBModbusClient::getDeviceHoldings(int devId) const
-{
-    if (devId < 1 || devId > DEV_COUNT)
-        return {};
-
-    QVector<quint16> holdings;
-    holdings.reserve(12);
-    int baseIndex = SYS_HOLDING_REGISTERS_COUNT + (devId - 1) * DEV_HOLDING_REGISTERS_COUNT;
-
-    holdings.append(m_Holdings[baseIndex + (DEV_ENERGY_SET - SYS_HOLDING_REGISTERS_COUNT)]);
-    holdings.append(m_Holdings[baseIndex + (DEV_AMPLITUDE_SET - SYS_HOLDING_REGISTERS_COUNT)]);
-    holdings.append(m_Holdings[baseIndex + (DEV_TP_SET - SYS_HOLDING_REGISTERS_COUNT)]);
-    holdings.append(m_Holdings[baseIndex + (DEV_WP_SET - SYS_HOLDING_REGISTERS_COUNT)]);
-    holdings.append(m_Holdings[baseIndex + (DEV_TIME_MIN - SYS_HOLDING_REGISTERS_COUNT)]);
-    holdings.append(m_Holdings[baseIndex + (DEV_TIME_MAX - SYS_HOLDING_REGISTERS_COUNT)]);
-    holdings.append(m_Holdings[baseIndex + (DEV_POWER_MIN - SYS_HOLDING_REGISTERS_COUNT)]);
-    holdings.append(m_Holdings[baseIndex + (DEV_POWER_MAX - SYS_HOLDING_REGISTERS_COUNT)]);
-    holdings.append(m_Holdings[baseIndex + (DEV_PRE_HEIGHT_MIN - SYS_HOLDING_REGISTERS_COUNT)]);
-    holdings.append(m_Holdings[baseIndex + (DEV_PRE_HEIGHT_MAX - SYS_HOLDING_REGISTERS_COUNT)]);
-    holdings.append(m_Holdings[baseIndex + (DEV_POST_HEIGHT_MIN - SYS_HOLDING_REGISTERS_COUNT)]);
-    holdings.append(m_Holdings[baseIndex + (DEV_POST_HEIGHT_MAX - SYS_HOLDING_REGISTERS_COUNT)]);
-
-    return holdings;
+    int base = SYS_HOLDING_REGISTERS_COUNT + (deviceId - 1) * DEV_HOLDING_REGISTERS_COUNT;
+    writeHoldingRegisters(base + (DEV_TYPE - SYS_HOLDING_REGISTERS_COUNT), deviceValues);
 }

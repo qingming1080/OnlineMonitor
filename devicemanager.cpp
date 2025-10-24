@@ -8,7 +8,6 @@
 #include "signalmanager.h"
 #include <QElapsedTimer>
 #include "model/devicenames.h"
-#include "tools/devicemodbusmapper.h"
 
 DeviceManager* DeviceManager::m_ptrInstance = nullptr;
 DeviceManager *DeviceManager::getInstance()
@@ -163,7 +162,6 @@ void DeviceManager::addDevice(const int &maxBacth, const int &sample, const int 
     }
 
     emit deviceListChanged();
-    syncDevicesToModbus();
 
     QList<QString> names;
     for(int i = 0; i < m_deviceList.size(); ++i)
@@ -204,31 +202,4 @@ void DeviceManager::removeDevice(int welderID)
 }
 
 
-// void DeviceManager::startManualMode(int deviceID) {
-//     m_manualModeDeviceID = deviceID;
-//     m_manualDataList.clear();
-//     emit manualDataList();
-//     qDebug() << "手动模式已启动, 监听设备ID:" << deviceID;
-// }
-
-// void DeviceManager::stopManualMode() {
-//     m_manualModeDeviceID = -1;
-//     m_manualDataList.clear();
-//     emit manualDataListChanged();
-//     qDebug() << "手动模式已停止";
-// }
-
-// QList<QString> DeviceManager::manualDataList() const {
-//     return m_manualDataList;
-// }
-
-void DeviceManager::syncDevicesToModbus()
-{
-    for (Device* device : m_deviceList)
-    {
-        auto deviceData = DeviceModbusMapper::generateRegisterData(device);
-        HBModbusClient::getInstance()->setDeviceConfig(deviceData.deviceID, deviceData);
-    }
-
-}
 
