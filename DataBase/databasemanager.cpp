@@ -1109,13 +1109,13 @@ bool DataBaseManager::saveProductionDataofModbus(Device *device, const QVector<q
         else if (modelStr == "L20-TS") record.model_id = 2;
         else record.model_id = 0;
 
-        record.energy                               = inputs[HBModbusClient::DEV_ENERGY];
-        record.amplitude                            = inputs[HBModbusClient::DEV_AMPLITUDE];
-        record.pressure                             = inputs[HBModbusClient::DEV_WP];         //welde pressure
-        record.power                                = inputs[HBModbusClient::DEV_POWER];
-        record.time                                 = inputs[HBModbusClient::DEV_TIME];
-        record.pre_height                           = inputs[HBModbusClient::DEV_PRE_HEIGHT];
-        record.post_height                          = inputs[HBModbusClient::DEV_POST_HEIGHT];
+        // record.energy                               = inputs[HBModbusClient::DEV_ENERGY];
+        // record.amplitude                            = inputs[HBModbusClient::DEV_AMPLITUDE];
+        // record.pressure                             = inputs[HBModbusClient::DEV_WP];         //welde pressure
+        // record.power                                = inputs[HBModbusClient::DEV_POWER];
+        // record.time                                 = inputs[HBModbusClient::DEV_TIME];
+        // record.pre_height                           = inputs[HBModbusClient::DEV_PRE_HEIGHT];
+        // record.post_height                          = inputs[HBModbusClient::DEV_POST_HEIGHT];
         record.force                                = 100;                          //TODO
         record.residual                             = 100;                          //TODO
         record.good_rate                            = 88;                           //TODO

@@ -8,38 +8,39 @@
 #include <QVector>
 #include <QMutex>
 #include "define.h"
+#include "model/deviceinformation.h"
 
 class HBModbusClient : public QObject
 {
     Q_OBJECT
-
+    Q_PROPERTY(bool ResetButtonStatus READ getResetButtonStatus WRITE setResetButtonStatus NOTIFY notifyResetButtonStatus FINAL)
 public:
 
     static HBModbusClient* getInstance();
     ~HBModbusClient();
 
-    Q_INVOKABLE void writeHoldingRegisters(int start, const QVector<quint16>& values);
-    Q_INVOKABLE void writeCoils(int start, const QVector<quint8>& values);
-
     //LED
-    Q_INVOKABLE void setLearnLedStatus(bool condition);
-    Q_INVOKABLE void setPilotLedStatus(bool condition);
-    Q_INVOKABLE void setReadyLedStatus(bool condition);
-    Q_INVOKABLE void setAlarmLedStatus(bool condition);
+    Q_INVOKABLE void setLearnLedStatus(const bool condition);
+    Q_INVOKABLE void setPilotLedStatus(const bool condition);
+    Q_INVOKABLE void setReadyLedStatus(const bool condition);
+    Q_INVOKABLE void setAlarmLedStatus(const bool condition);
 
     //IO
-    Q_INVOKABLE void setDeviceIOStatusReject(int deviceId, bool condition);
-    Q_INVOKABLE void setDeviceIOStatusSuspect(int deviceId, bool condition);
+    Q_INVOKABLE void setDeviceIOStatusReject(const int deviceId, const bool condition);
+    Q_INVOKABLE void setDeviceIOStatusSuspect(const int deviceId, const bool condition);
 
     //RTC
-    Q_INVOKABLE void setSystemClock(int year, int month, int day, int hour, int minute, int second);
+    Q_INVOKABLE void setSystemClock(const QDateTime &datetime);
 
+    Q_INVOKABLE void setDeviceConfigure(const int deviceId, const DeviceInformation::DEVICE_CONFIGURE deviceConfig);
+
+    //TODO Need to move others.
     Q_INVOKABLE void setMesConfig(const QVector<quint16> mesHostValues);
 
-    Q_INVOKABLE void setDeviceConfigData(int deviceId, const QVector<quint16> deviceValues);
+    void setResetButtonStatus(const bool status);
+    bool getResetButtonStatus() const;
 
-public:
-
+private:
     static constexpr int DEV_HOLDING_REGISTERS_COUNT = 30;
     static constexpr int DEV_COILS_REGISTERS_COUNT   = 5;
     static constexpr int DEV_DISCRETE_REGISTERS_COUNT = 5;
@@ -55,11 +56,13 @@ public:
 
     static constexpr int SERVER_PORT = 502;
 
-#ifdef RASPBERRY
+#if RASPBERRY
     static constexpr char LOCAL_IP[13] = "192.168.1.38";
 #else
     static constexpr char LOCAL_IP[13] = "127.0.0.1";
 #endif
+
+    static unsigned int m_iPreviousCycleCount[DEV_COUNT];
 
      enum HOLDING_REGISTERS
      {
@@ -174,8 +177,6 @@ public:
          END_OF_DEV_INPUT_REGISTERS = DEV_INPUT_REGISTERS_COUNT * DEV_COUNT,
      };
 
-
-
 protected:
     explicit HBModbusClient(QObject *parent = nullptr);
 
@@ -183,15 +184,18 @@ private:
     bool connectToServer(const QString &host, int port);
     void reconnectToServer();
 
-    void dispatchInputsOnCycleCountChanged();
+    void WriteHoldingRegisters(int startAddress, const QVector<quint16>& values);
+    void WriteCoils(int startAddress, const QVector<quint8>& values);
 
-    void dispatchDevicePresetData();
+    void ParseWeldResult();
 
-    void dispatchDeviceStatus();
+    void ParsePresetSetting();
 
-    void dispatchResetButton();
+    void ParseDeviceStatus();
 
-    void dispatchDeviceIOResetStatus();
+    void ParseResetButton();
+
+    void ParseDeviceIOResetStatus();
 
     template<typename Setter>
     void pollRegisters(QModbusDataUnit::RegisterType type, int count, Setter setter, const char* errMsg);
@@ -200,23 +204,20 @@ private:
 
     void pollHoldings(int start, int count, const char* errMsg);
 
-    void Init();
-
 signals:
 
-    void weldResultDataChanged(int deviceId, const WELD_RESULTDATA &data);
+    void notifyWeldResultComing(int deviceId, const WELD_RESULT& data);
 
-    void presetDataChanged(int deviceId, const WELD_PRESETDATA &data);
+    void notifyPresetSettingChanged(int deviceId, const WELD_PRESET& data);
 
-    void deviceIOResetChanged(int deviceId, const WELD_IORESTSTATUS &data);
+    void notifyDeviceIOStatusChanged(int deviceId, const IO_STATUS &status);
 
-    void deviceStatusChanged(int deviceId, const WELD_STATUS &data);
+    void notifyDeviceStatusChanged(int deviceId, const DEVICE_STATUS &status);
 
-    void resetButtonChanged(const WELD_IORESTSTATUS &data);
+    void notifyResetButtonStatus(const bool& status);
 
 public slots:
-
-    void onPollTimeout();
+    void onPollingTimeoutEvent();
 
 private:
     static unsigned char    m_Coils[SYS_COILS_REGISTERS_COUNT + DEV_COILS_REGISTERS_COUNT * DEV_COUNT];
@@ -232,6 +233,8 @@ private:
     QTimer *m_timer;
 
     mutable QMutex m_mutex;
+
+    bool m_bFrontPanelResetButton;
 };
 
 #endif // HBMODBUSCLIENT_H

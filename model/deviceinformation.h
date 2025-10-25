@@ -2,6 +2,7 @@
 #define DEVICEINFORMATION_H
 
 #include <QObject>
+#include <QSerialPort>
 ///
 /// \brief The DeviceInformation class : 设备信息:对应表格Configuration
 ///
@@ -20,16 +21,24 @@ public:
     // 设备连接方式
     enum CONNECT_TYPE
     {
-        TCP_IP  = 0,    // 网络连接
-        RS232   = 1,    // RS232
+        TCP_IP = 0,    // TCP_CP
+        RS232  = 1,    // RS232
+        ANALOG = 2     //Analog
     };
     Q_ENUM(CONNECT_TYPE)
 
-    enum WLED_TYPE
+    enum WLEDER_TYPE
     {
         L20_VG  = 0,
         L20_TS  = 1,
-    };Q_ENUM(WLED_TYPE)
+        BRANSON_2000XC  = 2
+    };Q_ENUM(WLEDER_TYPE)
+
+    enum NETWORK_TYPE
+    {
+        SERVER = 0,
+        CLIENT = 1
+    };
 
 public:
     explicit DeviceInfoEnum(QObject *parent = nullptr){Q_UNUSED(parent);}
@@ -92,8 +101,31 @@ class DeviceInformation : public QObject
     // 设备状态(生产中，待机等)
     Q_PROPERTY(int              ConnectState                READ getConnectState     WRITE setConnectState        NOTIFY notifyConnectStateChanged)
 public:
+    struct NETWORK_PROPERTIES
+    {
+        QString LocalIP;
+        QString RemoteIP;
+        int     PortNumber;
+    };
 
+    struct SERIAL_PROPERTIES
+    {
+        int ComNumber;
+        QSerialPort::BaudRate BaudRate;
+        QSerialPort::DataBits DataBits;
+        QSerialPort::Parity   ParityBits;
+        QSerialPort::StopBits StopBits;
+    };
 
+    struct DEVICE_CONFIGURE
+    {
+        DeviceInfoEnum::CONNECT_TYPE ConnectType;    // 连接方式     0_RS232  1_Network
+        DeviceInfoEnum::WLEDER_TYPE  ProtocolType;   // 焊机型号
+        DeviceInfoEnum::CONNECT_STATE ConnectState;  // 连接state
+        DeviceInfoEnum::NETWORK_TYPE NetworkType;
+        NETWORK_PROPERTIES NewworkProperties;
+        SERIAL_PROPERTIES SerialProperties;
+    };
     explicit DeviceInformation(int welderID = 0, QObject *parent = nullptr);
 
     Q_INVOKABLE QString name() const;

@@ -29,8 +29,6 @@ public:
     ~Device();
 
     DeviceInformation* getDevInfoObject() const;
-    // Q_INVOKABLE Manual *pManual() const;
-    // Q_INVOKABLE System *pSystem() const;
     Q_INVOKABLE IO *pIO() const;
     Q_INVOKABLE Trend *pTrend() const;
 

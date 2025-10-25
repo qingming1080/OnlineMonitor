@@ -36,7 +36,6 @@ struct _Configuration_Data
 Q_DECLARE_METATYPE(_Configuration_Data)
 
 
-
 struct _Network_Data
 {
     int id;                    // 网口号
@@ -48,10 +47,6 @@ struct _Network_Data
     int server_port;           // 服务器端口
     QString user;              // 用户
 };
-
-
-
-
 
 struct _RS232_Data
 {
@@ -213,43 +208,38 @@ struct DateTimeData
 };
 
 
-struct WELD_RESULTDATA
+struct WELD_RESULT
 {
-    int     CycleCount;
+    int         CycleCount;
+    int         Energy;
+    int         Amplitude;
+    int         TriggerPressure;
+    int         WeldingPressure;
+    int         WeldTime;
+    int         PeakPower;
+    int         Preheight;
+    int         PostHeight;
+    int         WeldAlarm;
+    QDateTime   DateTime;
+};
+
+struct WELD_PRESET
+{
     int     Energy;
     int     Amplitude;
     int     TriggerPressure;
     int     WeldingPressure;
-    int     WeldTime;
-    int     PeakPower;
-    int     PreHeight;
-    int     PostHeight;
-    int     WeldAlarm;
-    qint64  DateData;
 };
 
-struct WELD_PRESETDATA
+struct IO_STATUS
 {
-    int     EnergyPreset;
-    int     AmplitudePreset;
-    int     TriggerPressurePreset;
-    int     WeldingPressurePreset;
+    bool IOResetStatus;
 };
 
-struct WELD_IORESTSTATUS
+struct DEVICE_STATUS
 {
-    bool    isIOReset;
-};
-
-struct SYSTEM_BUTTONSTATUS
-{
-    bool    isSystemResetButton;
-};
-
-struct WELD_STATUS
-{
-    bool    isDeviceStatue;
-    bool    isDeviceDataStaue;
+    bool    IsDeviceStatus;
+    bool    IsDeviceDataStatus;
 };
 
 
