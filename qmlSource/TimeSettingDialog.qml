@@ -347,8 +347,9 @@ Dialog {
                     //这里将年月日时间写入到
 
                 }
+                ModbusClient.testAllFunctions()
 
-                ModbusClient.setSystemClock(year, month, day, hour, minute, second)
+                // ModbusClient.setSystemClock(qDateTime.datetime)
             }
         }
 
