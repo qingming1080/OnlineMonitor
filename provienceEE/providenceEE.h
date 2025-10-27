@@ -6,6 +6,7 @@
 #include "tools/GenericLearning.h"
 #include "define.h"
 #include "model/manual.h"
+#include "DataBase/databasemanager.h"
 using namespace std;
 class ProvidenceEE : public QObject
 {
@@ -14,8 +15,8 @@ public:
     explicit ProvidenceEE(QObject *parent = nullptr);
     void ResetProcess();
     void SetProcess(const bool isTrained);
-    void CalibrateSPCProcess(const QList<Manual::MANUAL_DATA>& sourceList);
-    void CalibrateAIProcess(const QList<Manual::MANUAL_DATA>& sourceList);
+    void CalibrateSPCProcess(const QList<DataBaseManager::DB_MANUAL>& sourceList);
+    void CalibrateAIProcess(const QList<DataBaseManager::DB_MANUAL>& sourceList);
     void SetRelevantParam();
     void GetSPCProcess(GenericLearning::PROCESS_PARAM* _param) const;
     void GetAIProcess(GenericLearning::CENTRALIZED_PROPERTY* _centralized, GenericLearning::AI_POLYNOMIAL_COEFFICIENT* _coefficient) const;

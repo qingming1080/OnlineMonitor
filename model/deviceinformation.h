@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QSerialPort>
+#include "DataBase/databasemanager.h"
 ///
 /// \brief The DeviceInformation class : 设备信息:对应表格Configuration
 ///
@@ -47,59 +48,35 @@ public:
 class DeviceInformation : public QObject
 {
     Q_OBJECT
-    // 焊机ID
-    Q_PROPERTY(int              id                          READ id                  /*WRITE setId */             NOTIFY idChanged)
     // 焊机名称
-    Q_PROPERTY(QString          name                        READ name                WRITE setName                NOTIFY nameChanged)
+    Q_PROPERTY(QString  WelderName           READ getWelderName          WRITE setWelderName             NOTIFY notifyWelderNameChanged FINAL)
     // 焊机型号
-    Q_PROPERTY(QString          model                       READ model               WRITE setModel               NOTIFY modelChanged)
+    Q_PROPERTY(int      WelderType           READ getWelderType          WRITE setWelderType             NOTIFY notifyWelderTypeChanged FINAL)
     // 最大生产批量
-    Q_PROPERTY(int              maxBacth                    READ maxBacth            WRITE setMaxBacth            NOTIFY maxBacthChanged)
+    Q_PROPERTY(QString  ProductionMaxBacth   READ getProductionMaxBacth  WRITE setProductionMaxBacth     NOTIFY notifyProductionMaxBacthChanged)
     // 学习样本数
-    Q_PROPERTY(int              sample                      READ sample              WRITE setSample              NOTIFY sampleChanged)
+    Q_PROPERTY(QString  MaxModelSamples      READ getMaxModelSamples     WRITE setMaxModelSamples        NOTIFY notifyMaxModelSamplesChanged)
     // 良率下限
-    Q_PROPERTY(int              lowerLimit                  READ lowerLimit          WRITE setLowerLimit          NOTIFY lowerLimitChanged)
+    Q_PROPERTY(QString  YieldRateLowerLimit  READ getYieldRateLowerLimit WRITE setYieldRateLowerLimit    NOTIFY notifyYieldRateLowerLimitChanged)
     // 高度模式
-    Q_PROPERTY(int              heightOption                READ heightOption        WRITE setHeightOption        NOTIFY heightOptionChanged)
-
+    Q_PROPERTY(bool     HeightEncoderOption  READ getHeightEncoderOption WRITE setHeightEncoderOption    NOTIFY notifyHeightEncoderOptionChanged)
+    // 可疑模式
+    Q_PROPERTY(bool     SuspiciousOption     READ getSuspiciousOption    WRITE setSuspiciousOption       NOTIFY notifySuspiciousOptionChanged)
     // 连接方式
-    Q_PROPERTY(int              ConnectType                 READ getConnectType      WRITE setConnectType         NOTIFY notifyConnectTypeChanged)
-    // 连接方式ID
-    Q_PROPERTY(int              connectID                   READ connectID           WRITE setConnectID           NOTIFY connectIDChanged)
-
-    /// 2024/04/07  实时良率暴露
-    // 实时良率
-    Q_PROPERTY(int              goodRate                    READ goodRate            WRITE setGoodRate            NOTIFY goodRateChanged)
-    // 合格
-    Q_PROPERTY(int              goodCycles                  READ goodCycles          WRITE setGoodCycles          NOTIFY goodCyclesChanged)
-    // 可疑
-    Q_PROPERTY(int              suspectCycles               READ suspectCycles       WRITE setSuspectCycles       NOTIFY suspectCyclesChanged)
-    // 次品
-    Q_PROPERTY(int              notDefinite                 READ notDefinite         WRITE setNotDefinite         NOTIFY notDefiniteChanged)
-
-    /// 2024/04/07  焊接结果暴露
-    // 焊接结果:功率
-    Q_PROPERTY(int              power                       READ power               WRITE setPower               NOTIFY powerChanged)
-    // 焊接结果:时间
-    Q_PROPERTY(int              time                        READ time                WRITE setTime                NOTIFY timeChanged)
-    // 焊接结果:能量
-    Q_PROPERTY(int              energy                      READ energy              WRITE setEnergy              NOTIFY energyChanged)
-    // 焊接结果:焊前高度
-    Q_PROPERTY(int              heightPre                   READ heightPre           WRITE setHeightPre           NOTIFY heightPreChanged)
-    // 焊接结果:焊后高度
-    Q_PROPERTY(int              heightPost                  READ heightPost          WRITE setHeightPost          NOTIFY heightPostChanged)
+    Q_PROPERTY(int      ConnectType          READ getConnectType         WRITE setConnectType            NOTIFY notifyConnectTypeChanged)
+    /// 2024/04/07 设备状态 暴露
+    // 设备状态(生产中，待机等)
+    Q_PROPERTY(int      ConnectState         READ getConnectState        WRITE setConnectState           NOTIFY notifyConnectStateChanged)
 
     /// 2024/08/01 IP与端口 暴露
     // 远程端口
-    Q_PROPERTY(QString          mesIP                       READ mesIP               WRITE setMesIP               NOTIFY mesIPChanged)
-    // 远程IP
-    Q_PROPERTY(QString          deviceIP                    READ deviceIP            WRITE setDeviceIP            NOTIFY deviceIPChanged)
-    // 客户端IP
-    Q_PROPERTY(int              mesPort                     READ mesPort             WRITE setMesPort             NOTIFY mesPortChanged)
+    // Q_PROPERTY(QString          mesIP                       READ mesIP               WRITE setMesIP               NOTIFY mesIPChanged)
+    // // 远程IP
+    // Q_PROPERTY(QString          deviceIP                    READ deviceIP            WRITE setDeviceIP            NOTIFY deviceIPChanged)
+    // // 客户端IP
+    // Q_PROPERTY(int              mesPort                     READ mesPort             WRITE setMesPort             NOTIFY mesPortChanged)
 
-    /// 2024/04/07 设备状态 暴露
-    // 设备状态(生产中，待机等)
-    Q_PROPERTY(int              ConnectState                READ getConnectState     WRITE setConnectState        NOTIFY notifyConnectStateChanged)
+
 public:
     struct NETWORK_PROPERTIES
     {
@@ -117,7 +94,7 @@ public:
         QSerialPort::StopBits StopBits;
     };
 
-    struct DEVICE_CONFIGURE
+    struct MODBUS_CONFIGURE
     {
         DeviceInfoEnum::CONNECT_TYPE ConnectType;    // 连接方式     0_RS232  1_Network
         DeviceInfoEnum::WLEDER_TYPE  ProtocolType;   // 焊机型号
@@ -126,146 +103,74 @@ public:
         NETWORK_PROPERTIES NewworkProperties;
         SERIAL_PROPERTIES SerialProperties;
     };
+
     explicit DeviceInformation(int welderID = 0, QObject *parent = nullptr);
 
-    Q_INVOKABLE QString name() const;
-    Q_INVOKABLE void setName(const QString &newName);
+    QString getWelderName() const;
+    void setWelderName(const QString &name);
 
-    Q_INVOKABLE QString model() const;
-    Q_INVOKABLE void setModel(const QString &newModel);
+    int getWelderType() const;
+    void setWelderType(const int &type);
+
+    QString getProductionMaxBacth() const;
+    void setProductionMaxBacth(const QString &maxBacth);
+
+    QString getMaxModelSamples() const;
+    void setMaxModelSamples(const QString &samples);
+
+    QString getYieldRateLowerLimit() const;
+    void setYieldRateLowerLimit(const QString &yieldRate);
+
+    bool getHeightEncoderOption() const;
+    void setHeightEncoderOption(const bool &option);
+
+    bool getSuspiciousOption() const;
+    void setSuspiciousOption(const bool &option);
 
     int getConnectType() const;
     void setConnectType(const int &type);
 
+    int getConnectTypeID() const;
+    void setConnectTypeID(const int &typeID);
+
     int getConnectState() const;
     void setConnectState(const int &state);
 
-    Q_INVOKABLE int id() const;
-//    Q_INVOKABLE void setId(int newId);
+    // QString mesIP() const;
+    // void setMesIP(const QString &newMesIP);
 
-    Q_INVOKABLE int maxBacth() const;
-    Q_INVOKABLE void setMaxBacth(int newMaxBacth);
+    // QString deviceIP() const;
+    // void setDeviceIP(const QString &newDeviceIP);
 
-    Q_INVOKABLE int sample() const;
-    Q_INVOKABLE void setSample(int newSample);
-
-    Q_INVOKABLE int heightOption() const;
-    Q_INVOKABLE void setHeightOption(int newHeightOption);
-
-    Q_INVOKABLE int lowerLimit() const;
-    Q_INVOKABLE void setLowerLimit(int newLowerLimit);
-
-    Q_INVOKABLE int connectID() const;
-    Q_INVOKABLE void setConnectID(int newConnectID);
-
-    Q_INVOKABLE int goodRate() const;
-    Q_INVOKABLE void setGoodRate(int newGoodRate);
-
-    Q_INVOKABLE int goodCycles() const;
-    Q_INVOKABLE void setGoodCycles(int newGoodCycles);
-
-    Q_INVOKABLE int suspectCycles() const;
-    Q_INVOKABLE void setSuspectCycles(int newSuspectCycles);
-
-    Q_INVOKABLE int notDefinite() const;
-    Q_INVOKABLE void setNotDefinite(int newNotDefinite);
-
-    Q_INVOKABLE int  power() const;
-    Q_INVOKABLE void setPower(int  newPower);
-
-    Q_INVOKABLE int  time() const;
-    Q_INVOKABLE void setTime(int  newTime);
-
-    Q_INVOKABLE int  energy() const;
-    Q_INVOKABLE void setEnergy(int  newEnergy);
-
-    Q_INVOKABLE int  heightPre() const;
-    Q_INVOKABLE void setHeightPre(int  newHeightPre);
-
-    Q_INVOKABLE int  heightPost() const;
-    Q_INVOKABLE void setHeightPost(int  newHeightPost);
-
-    QString mesIP() const;
-    void setMesIP(const QString &newMesIP);
-
-    QString deviceIP() const;
-    void setDeviceIP(const QString &newDeviceIP);
-
-    int mesPort() const;
-    void setMesPort(int newMesPort);
+    // int mesPort() const;
+    // void setMesPort(int newMesPort);
 
 signals:
-
-    void nameChanged();
-    void modelChanged();
+    void notifyWelderNameChanged();
+    void notifyWelderTypeChanged();
+    void notifyProductionMaxBacthChanged();
+    void notifyMaxModelSamplesChanged();
+    void notifyYieldRateLowerLimitChanged();
+    void notifyHeightEncoderOptionChanged();
+    void notifySuspiciousOptionChanged();
     void notifyConnectTypeChanged();
     void notifyConnectStateChanged();
 
-    void idChanged();
+    // void mesIPChanged();
 
-    void maxBacthChanged();
+    // void deviceIPChanged();
 
-    void sampleChanged();
-
-    void heightOptionChanged();
-
-    void lowerLimitChanged();
-
-    void connectIDChanged();
-
-    void goodRateChanged();
-
-    void goodCyclesChanged();
-
-    void suspectCyclesChanged();
-
-    void notDefiniteChanged();
-
-    void powerChanged();
-
-    void timeChanged();
-
-    void energyChanged();
-
-    void heightPreChanged();
-
-    void heightPostChanged();
-
-    void mesIPChanged();
-
-    void deviceIPChanged();
-
-    void mesPortChanged();
+    // void mesPortChanged();
 
 private:
-    const int m_id;
-    QString m_name;
-    QString m_model;
-    int m_maxBacth;
-    int m_sample;
-    int m_lowerLimit;
-    int m_heightOption;
-    int m_connectID;
-
-    int m_goodRate{0};
-    int m_goodCycles{0};
-    int m_suspectCycles{0};
-    int m_notDefinite{0};
-
-    int  m_power{0};
-    int  m_time{0};
-    int  m_energy{0};
-    // int m_heightPre{0};
-    // int m_heightPost{0};
-    int  m_heightPre{0};
-    int  m_heightPost{0};
-
-    int m_mesPort{0};
-    QString m_mesIP;
-    QString m_deviceIP;
-
+    int m_WelderID;
+    DataBaseManager::DB_CONFIGURE   m_DBConfigure;
     DeviceInfoEnum::CONNECT_TYPE    m_iConnectType;
     DeviceInfoEnum::CONNECT_STATE   m_iConnectState;
+
+    // int m_mesPort{0};
+    // QString m_mesIP;
+    // QString m_deviceIP;
 
 };
 

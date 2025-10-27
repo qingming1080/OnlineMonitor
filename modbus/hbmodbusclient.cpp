@@ -351,7 +351,7 @@ void HBModbusClient::setMesConfig(const QVector<quint16> mesHostValues)
     WriteHoldingRegisters(SYS_MES_IP1, mesHostValues);
 }
 
-void HBModbusClient::setDeviceConfigure(const int deviceId, const DeviceInformation::DEVICE_CONFIGURE deviceConfig)
+void HBModbusClient::setDeviceConfigure(const int deviceId, const DeviceInformation::MODBUS_CONFIGURE deviceConfig)
 {
     if (deviceId < 1 || deviceId > DEV_COUNT) {
         qWarning() << "Device ID does not exist";

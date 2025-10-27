@@ -32,7 +32,7 @@ public:
     //RTC
     Q_INVOKABLE void setSystemClock(const QDateTime &datetime);
 
-    Q_INVOKABLE void setDeviceConfigure(const int deviceId, const DeviceInformation::DEVICE_CONFIGURE deviceConfig);
+    Q_INVOKABLE void setDeviceConfigure(const int deviceId, const DeviceInformation::MODBUS_CONFIGURE deviceConfig);
 
     //TODO Need to move others.
     Q_INVOKABLE void setMesConfig(const QVector<quint16> mesHostValues);

@@ -2,14 +2,19 @@
 #define DEVICE_H
 
 #include <QObject>
+#include "deviceinformation.h"
+#include "io.h"
+#include "trend.h"
+#include "manual.h"
+#include "system.h"
+#include "production.h"
 
-
-class DeviceInformation;
-class IO;
-class IOModel;
-class Manual;
-class System;
-class Trend;
+// class DeviceInformation;
+// class IO;
+// class IOModel;
+// class Manual;
+// class System;
+// class Trend;
 
 ///
 /// \brief The Device class : 单个设备
@@ -18,18 +23,27 @@ class Device : public QObject
 {
     Q_OBJECT
 
-    Q_PROPERTY(DeviceInformation* DevInfoObject READ getDevInfoObject CONSTANT)   // 设备信息
-    Q_PROPERTY(IO *pIO                          READ pIO CONSTANT)                  // IO
-    // Q_PROPERTY(Manual *pManual                  READ pManual CONSTANT)              // Manual表格
-    // Q_PROPERTY(System *pSystem                  READ pSystem CONSTANT)              // System表格
+    Q_PROPERTY(DeviceInformation* DevInfoObject READ getDevInfoObject   WRITE setDevInfoObject  NOTIFY notifyDevInfoObjectChanged FINAL)    // 设备信息
+    Q_PROPERTY(Manual* ManualObj                READ getManualObj       WRITE setManualObj      NOTIFY notifyManualObjChanged FINAL)        // Manual表格
+    Q_PROPERTY(Production* ProductionObj        READ getProductionObj   WRITE setProductionObj  NOTIFY notifyProductionObjChanged FINAL)
+    Q_PROPERTY(System* SystemObj                READ getSystemObj       WRITE setSystemObj      NOTIFY notifySystemObjChanged FINAL)        // System表格
     Q_PROPERTY(Trend *pTrend                    READ pTrend CONSTANT)               // 折线
-
 public:
     explicit Device(int welderID = 0, QObject *parent = nullptr);
     ~Device();
 
     DeviceInformation* getDevInfoObject() const;
-    Q_INVOKABLE IO *pIO() const;
+    void setDevInfoObject(const DeviceInformation* object);
+    Manual* getManualObj() const;
+    void setManualObj(const Manual* object);
+    Production* getProductionObj() const;
+    void setProductionObj(const Production* object);
+    System* getSystemObj() const;
+    void setSystemObj(const System* object);
+    bool SaveDevice();
+    bool UpdateDevice();
+
+    // Q_INVOKABLE IO *pIO() const;
     Q_INVOKABLE Trend *pTrend() const;
 
     // Q_INVOKABLE void test();
@@ -39,26 +53,23 @@ public:
     void incrementPlotIndex();
 
 signals:
-
-    void pProductionChanged();
-
-    void pSystemChanged();
+    void notifyProductionObjChanged();
+    void notifyDevInfoObjectChanged();
+    void notifyManualObjChanged();
+    void notifySystemObjChanged();
 
     void pYieldTrendChanged();
-    void pIOChanged();
 
     void pTrendChanged();
 
 private:
-    const int m_welderID;
+    int m_WelderID;
+    DeviceInformation*m_ptrDevInfo;   // 设备信息
+    Manual* m_ptrManual;
+    Production* m_ptrProduction;
+    System* m_ptrSystem;
 
-    DeviceInformation* m_ptrDevInfo;   // 设备信息
-    IO* m_pIO;
-    Manual* m_pManual;
-    System* m_pSystem;
-
-    Trend* m_pTrend;
-
+    Trend* m_ptrTrend;
     int plotIndex;  // 每个设备独有的 plotIndex
 
 };

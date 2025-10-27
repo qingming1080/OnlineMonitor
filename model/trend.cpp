@@ -273,7 +273,7 @@ void Trend::setYieldType(int newYieldType)
         return;
     m_yieldType = newYieldType;
     emit yieldTypeChanged();
-    emit DeviceManager::getInstance()->upDateBtns();
+    // emit DeviceManager::getInstance()->upDateBtns();
 
     m_endTime = QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss");
     if(m_yieldType == 0){

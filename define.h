@@ -7,35 +7,6 @@
 #include <QDateTime>
 #include <QPointF>
 
-#define CONFIGURATION_TABLENAME     QString("configuration")
-#define NETWORK_TABLENAME           QString("connection_network")
-#define RS232_TABLENAME             QString("connection_rs232")
-#define IO_TABLENAME                QString("io_data")
-#define MODEL_TABLENAME             QString("model")
-#define PRODUCTION_TABLENAME        QString("production")
-#define SYSTEM_TABLENAME            QString("system_conf")
-#define USER_TABLENAME              QString("user")
-
-
-
-struct _Configuration_Data
-{
-    int welder_id{0};           // 焊机ID
-    QString welder_name{""};    // 焊机名称
-    QString welder_type{""};    // 焊机型号
-    int production_bacth{0};    // 最大生产批量
-    int model_sample{0};        // 学习样本数
-    int lower_limit{0};         // 良率下限
-    int height_option{0};       // 高度模式
-    int connect_type{0};        // 连接方式     0_RS232  1_Network
-    int connect_id{0};          // 连接方式ID
-    int mes_port{0};            // 远程端口
-    QString mes_ip{""};         // 远程IP
-    QString device_ip{""};      // 客户端IP
-};
-Q_DECLARE_METATYPE(_Configuration_Data)
-
-
 struct _Network_Data
 {
     int id;                    // 网口号
@@ -68,52 +39,6 @@ struct _IO_Data
     int available;  // 有效的  0:off  1:on
     int signal;     // 信号    0:alarm  1:reset 2:not_definite
 };
-struct ALPHA_BETA
-{
-    double Alpha;
-    double Beta;
-};
-
-struct POLYNOMIAL_COEFFICIENT
-{
-    double P00;
-    double P10;
-    double P01;
-    double P20;
-    double P11;
-    double P02;
-};
-
-struct CENTRALIZED_PROPERTY
-{
-    double TimeMean;
-    double TimeStd;
-    double PowerMean;
-    double PowrStd;
-    double ForceMean;
-    double ResidualMean;
-};
-
-struct MODEL_DATA
-{
-    int id;                             // 模型id
-    int WelderId;                       // 焊机id
-    QString CreateTime;                 // 创建时间
-    int Energy;                         // 能量
-    int Amplitude;                      // 振幅
-    // int pressure;                    // 压力
-    int TriggerPressure;                // 焊接压力
-    int WeldPressure;                   // 触发压力
-    ALPHA_BETA WeldTime;                // 焊机时间Alpha&Beta
-    ALPHA_BETA PeakPower;               // 功率Alpha&Beta
-    ALPHA_BETA Preheight;               // 焊前高度Alpha&Beta
-    ALPHA_BETA PostHeight;              // 焊后高度Alpha&Beta
-    POLYNOMIAL_COEFFICIENT PeelForce;   // 撕拉力
-    POLYNOMIAL_COEFFICIENT Residual;    // 残留度
-    CENTRALIZED_PROPERTY Centralized;
-    int SampleCount;                    // 当前样本数
-};
-
 
 struct _Production_Data
 {

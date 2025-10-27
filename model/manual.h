@@ -4,6 +4,7 @@
 #include <QAbstractListModel>
 #include "define.h"
 #include "modbus/hbmodbusclient.h"
+#include "DataBase/databasemanager.h"
 ///
 /// \brief The Manual class : manual
 /// 暴露添加一行接口，暴露数据库保存接口
@@ -11,30 +12,6 @@ class Manual : public QAbstractListModel
 {
     Q_OBJECT
     Q_PROPERTY(int welderID READ welderID WRITE setWelderID NOTIFY welderIDChanged)
-public:
-    struct MANUAL_DATA
-    {
-        int WelderId;       // 焊机ID
-        QString CreateTime; // 创建时间
-        int serial_number;  // 序号
-        int CycleCount;     // 循环总计
-        int Energy;         // 能量
-        int Amplitude;      // 振幅
-        int WeldPressure;   // 压力
-        int WeldTime;       // 焊接时间
-        int PeakPower;      // 功率
-        int Preheight;      // 焊前高度
-        int PostHeight;     // 焊后高度
-        int ActualForce;    // 撕拉力
-        int ActualResidual; // 残留度
-        bool IsSelected;
-        bool IsNewComming;
-        //preset
-        int PreEnergy;
-        int PreAmplitude;
-        int PreWP;
-        int PreTP;
-    };
 
 public:
 
@@ -64,8 +41,8 @@ signals:
 private:
     int m_welderID;
 
-    QList<MANUAL_DATA> m_listRawData;
-    QList<MANUAL_DATA> m_listManualData;
+    QList<DataBaseManager::DB_MANUAL> m_listRawData;
+    QList<DataBaseManager::DB_MANUAL> m_listManualData;
     HBModbusClient *m_modbusClient = nullptr;
 
     //TODO need to be removed

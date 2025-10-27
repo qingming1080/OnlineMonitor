@@ -8,9 +8,7 @@
 
 class DeviceModbusMapper
 {
-
 public:
-
     enum class DeviceType : int
     {   Ethernet = 0,
         Serial = 1,

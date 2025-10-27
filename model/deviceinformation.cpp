@@ -1,5 +1,4 @@
 ﻿#include "deviceinformation.h"
-#include "DataBase/databasemanager.h"
 #include <QVariant>
 
 #include "signalmanager.h"
@@ -9,324 +8,217 @@
 #include "tools/utilityfunction.h"
 
 DeviceInformation::DeviceInformation(int welderID, QObject *parent)
-    : QObject{parent}, m_id(welderID)
+    : QObject{parent}, m_WelderID(welderID)
 {
-    QElapsedTimer timer;
-    timer.start();
+    // QElapsedTimer timer;
+    // timer.start();
+    if(m_WelderID == -1)
+    {
 
-    _Configuration_Data data = DataBaseManager::getInstance()->getConfigurationData(welderID);
+    }
+    else if(DataBaseManager::getInstance()->getConfigurationData(welderID, m_DBConfigure) == true)
+    {
+        setWelderName(m_DBConfigure.WelderName);
+        setWelderType(m_DBConfigure.WelderType);
+        setProductionMaxBacth(QString::number(m_DBConfigure.ProductionBatch));
+        setMaxModelSamples(QString::number(m_DBConfigure.MaxModelSamples));
+        setYieldRateLowerLimit(QString::number(m_DBConfigure.YieldRateLowerLimit));
+        setHeightEncoderOption(m_DBConfigure.HeightEncoderOption);
+        setSuspiciousOption(m_DBConfigure.SuspiciousOption);
+        setConnectType(m_DBConfigure.ConnectType);
+    }
+    else
+    {
 
-    m_name  = data.welder_name;
-    m_model = data.welder_type;
-    m_maxBacth = data.production_bacth;
-    m_sample    = data.model_sample;
-    m_lowerLimit = data.lower_limit;
-    m_heightOption = data.height_option;
-    m_iConnectType = static_cast<DeviceInfoEnum::CONNECT_TYPE>(data.connect_type);
-    m_connectID = data.connect_id;
-    m_mesPort = data.mes_port;
-    m_mesIP = data.mes_ip;
-    m_deviceIP = data.device_ip;
+    }
 
-    // if(welderID == 1){
-    //     m_goodRate = 22;
-    //     m_power = 12;
-    // }
-    // if(welderID == 4){
-    //     m_power = 16;
-    //     m_goodRate = 30;
-    // }
-
-    QString text = QString("%1号设备_DeviceInformation_初始化耗时:%2ms").arg(welderID).arg(timer.elapsed());
-    emit SignalManager::getInstance()->signalAddRecord(QDateTime::currentDateTime(), text);
+    // QString text = QString("%1号设备_DeviceInformation_初始化耗时:%2ms").arg(welderID).arg(timer.elapsed());
+    // emit SignalManager::getInstance()->signalAddRecord(QDateTime::currentDateTime(), text);
 }
 
-QString DeviceInformation::name() const
+
+QString DeviceInformation::getWelderName() const
 {
-    return m_name;
+    return m_DBConfigure.WelderName;
 }
 
-void DeviceInformation::setName(const QString &newName)
+void DeviceInformation::setWelderName(const QString &name)
 {
-    if (m_name == newName)
-        return;
-    m_name = newName;
-    emit nameChanged();
-
-    DataBaseManager::getInstance()->setConfigurationData(m_id, QmlEnum::CONFIGURATION_welder_name, m_name);
+    if (m_DBConfigure.WelderName != name)
+    {
+        m_DBConfigure.WelderName = name;
+        emit notifyWelderNameChanged();
+    }
 }
 
-QString DeviceInformation::model() const
+int DeviceInformation::getWelderType() const
 {
-    return m_model;
+    return m_DBConfigure.WelderType;
 }
 
-void DeviceInformation::setModel(const QString &newModel)
+void DeviceInformation::setWelderType(const int &type)
 {
-    if (m_model == newModel)
-        return;
-    m_model = newModel;
-    emit modelChanged();
+    if (m_DBConfigure.WelderType != type)
+    {
+        m_DBConfigure.WelderType = type;
+        emit notifyWelderTypeChanged();
+    }
+}
 
-    DataBaseManager::getInstance()->setConfigurationData(m_id, QmlEnum::CONFIGURATION_welder_type, m_model);
+QString DeviceInformation::getProductionMaxBacth() const
+{
+    return QString::number(m_DBConfigure.ProductionBatch);
+}
+
+void DeviceInformation::setProductionMaxBacth(const QString &maxBacth)
+{
+    bool ok;
+    int value = maxBacth.toInt(&ok);
+    if (ok && m_DBConfigure.ProductionBatch != value)
+    {
+        m_DBConfigure.ProductionBatch = value;
+        emit notifyProductionMaxBacthChanged();
+    }
+}
+
+QString DeviceInformation::getMaxModelSamples() const
+{
+    return QString::number(m_DBConfigure.MaxModelSamples);
+}
+
+void DeviceInformation::setMaxModelSamples(const QString &samples)
+{
+    bool ok;
+    int value = samples.toInt(&ok);
+    if (ok && m_DBConfigure.MaxModelSamples != value)
+    {
+        m_DBConfigure.MaxModelSamples = value;
+        emit notifyMaxModelSamplesChanged();
+    }
+}
+
+QString DeviceInformation::getYieldRateLowerLimit() const
+{
+    return QString::number(m_DBConfigure.YieldRateLowerLimit);
+}
+
+void DeviceInformation::setYieldRateLowerLimit(const QString &yieldRate)
+{
+    bool ok;
+    int value = yieldRate.toInt(&ok);
+    if (ok && m_DBConfigure.YieldRateLowerLimit != value)
+    {
+        m_DBConfigure.YieldRateLowerLimit = value;
+        emit notifyYieldRateLowerLimitChanged();
+    }
+}
+
+bool DeviceInformation::getHeightEncoderOption() const
+{
+    return m_DBConfigure.HeightEncoderOption;
+}
+
+void DeviceInformation::setHeightEncoderOption(const bool &option)
+{
+    if (m_DBConfigure.HeightEncoderOption != option)
+    {
+        m_DBConfigure.HeightEncoderOption = option;
+        emit notifyHeightEncoderOptionChanged();
+    }
+}
+
+bool DeviceInformation::getSuspiciousOption() const
+{
+    return m_DBConfigure.SuspiciousOption;
+}
+
+void DeviceInformation::setSuspiciousOption(const bool &option)
+{
+    if (m_DBConfigure.SuspiciousOption != option)
+    {
+        m_DBConfigure.SuspiciousOption = option;
+        emit notifySuspiciousOptionChanged();
+    }
 }
 
 int DeviceInformation::getConnectType() const
 {
-    return m_iConnectType;
+    return m_DBConfigure.ConnectType;
 }
 
 void DeviceInformation::setConnectType(const int &type)
 {
-    if (m_iConnectType == type)
-        return;
-    m_iConnectType = static_cast<DeviceInfoEnum::CONNECT_TYPE>(type);
-    emit notifyConnectTypeChanged();
-
-    DataBaseManager::getInstance()->setConfigurationData(m_id, QmlEnum::CONFIGURATION_connect_type, m_iConnectType);
+    if (m_DBConfigure.ConnectType != type)
+    {
+        m_DBConfigure.ConnectType = static_cast<DeviceInfoEnum::CONNECT_TYPE>(type);
+        emit notifyConnectTypeChanged();
+    }
 }
 
-int DeviceInformation::id() const
+int DeviceInformation::getConnectTypeID() const
 {
-    return m_id;
+    return m_DBConfigure.ConnectTypeId;
 }
 
-int DeviceInformation::maxBacth() const
+void DeviceInformation::setConnectTypeID(const int &typeID)
 {
-    return m_maxBacth;
-}
-
-void DeviceInformation::setMaxBacth(int newMaxBacth)
-{
-    if (m_maxBacth == newMaxBacth)
-        return;
-    m_maxBacth = newMaxBacth;
-    emit maxBacthChanged();
-
-    DataBaseManager::getInstance()->setConfigurationData(m_id, QmlEnum::CONFIGURATION_production_bacth, m_maxBacth);
-}
-
-int DeviceInformation::sample() const
-{
-    return m_sample;
-}
-
-void DeviceInformation::setSample(int newSample)
-{
-    if (m_sample == newSample)
-        return;
-    m_sample = newSample;
-    emit sampleChanged();
-
-    DataBaseManager::getInstance()->setConfigurationData(m_id, QmlEnum::CONFIGURATION_model_sample, m_sample);
-}
-
-int DeviceInformation::heightOption() const
-{
-    return m_heightOption;
-}
-
-void DeviceInformation::setHeightOption(int newHeightOption)
-{
-    if (m_heightOption == newHeightOption)
-        return;
-    m_heightOption = newHeightOption;
-    emit heightOptionChanged();
-    emit SignalManager::getInstance()->showLegend();
-    DataBaseManager::getInstance()->setConfigurationData(m_id, QmlEnum::CONFIGURATION_height_option, m_heightOption);
-}
-
-int DeviceInformation::lowerLimit() const
-{
-    return m_lowerLimit;
-}
-
-void DeviceInformation::setLowerLimit(int newLowerLimit)
-{
-    if (m_lowerLimit == newLowerLimit)
-        return;
-    m_lowerLimit = newLowerLimit;
-    emit lowerLimitChanged();
-
-    DataBaseManager::getInstance()->setConfigurationData(m_id, QmlEnum::CONFIGURATION_lower_limit, m_lowerLimit);
-}
-
-int DeviceInformation::connectID() const
-{
-    return m_connectID;
-}
-
-void DeviceInformation::setConnectID(int newConnectID)
-{
-    if (m_connectID == newConnectID)
-        return;
-    m_connectID = newConnectID;
-    emit connectIDChanged();
-
-    DataBaseManager::getInstance()->setConfigurationData(m_id, QmlEnum::CONFIGURATION_connect_id, m_connectID);
+    if (m_DBConfigure.ConnectTypeId != typeID)
+    {
+        m_DBConfigure.ConnectTypeId = typeID;
+    }
 }
 
 int DeviceInformation::getConnectState() const
 {
-    return m_iConnectState;
+    return static_cast<int>(m_iConnectState);
 }
 
 void DeviceInformation::setConnectState(const int &state)
 {
-    if (m_iConnectState == state)
-        return;
-    m_iConnectState = static_cast<DeviceInfoEnum::CONNECT_STATE>(state);
-    emit notifyConnectStateChanged();
+    if (m_iConnectState != state)
+    {
+        m_iConnectState = static_cast<DeviceInfoEnum::CONNECT_STATE>(state);
+        emit notifyConnectStateChanged();
+    }
 }
 
-int DeviceInformation::goodRate() const
-{
-    return m_goodRate;
-}
+// QString DeviceInformation::mesIP() const
+// {
+//     return m_mesIP;
+// }
 
-void DeviceInformation::setGoodRate(int newGoodRate)
-{
-    if (m_goodRate == newGoodRate)
-        return;
-    m_goodRate = newGoodRate;
-    emit goodRateChanged();
-}
+// void DeviceInformation::setMesIP(const QString &newMesIP)
+// {
+//     if (m_mesIP == newMesIP)
+//         return;
+//     m_mesIP = newMesIP;
+//     emit mesIPChanged();
+// }
 
-int DeviceInformation::goodCycles() const
-{
-    return m_goodCycles;
-}
+// QString DeviceInformation::deviceIP() const
+// {
+//     return m_deviceIP;
+// }
 
-void DeviceInformation::setGoodCycles(int newGoodCycles)
-{
-    if (m_goodCycles == newGoodCycles)
-        return;
-    m_goodCycles = newGoodCycles;
-    emit goodCyclesChanged();
-}
+// void DeviceInformation::setDeviceIP(const QString &newDeviceIP)
+// {
+//     if (m_deviceIP == newDeviceIP)
+//         return;
+//     m_deviceIP = newDeviceIP;
+//     emit deviceIPChanged();
+// }
 
-int DeviceInformation::suspectCycles() const
-{
-    return m_suspectCycles;
-}
+// int DeviceInformation::mesPort() const
+// {
+//     return m_mesPort;
+// }
 
-void DeviceInformation::setSuspectCycles(int newSuspectCycles)
-{
-    if (m_suspectCycles == newSuspectCycles)
-        return;
-    m_suspectCycles = newSuspectCycles;
-    emit suspectCyclesChanged();
-}
-
-int DeviceInformation::notDefinite() const
-{
-    return m_notDefinite;
-}
-
-void DeviceInformation::setNotDefinite(int newNotDefinite)
-{
-    if (m_notDefinite == newNotDefinite)
-        return;
-    m_notDefinite = newNotDefinite;
-    emit notDefiniteChanged();
-}
-
-int  DeviceInformation::power() const
-{
-    return m_power;
-}
-
-void DeviceInformation::setPower(int  newPower)
-{
-     m_power = newPower;
-     emit powerChanged();
-}
-
-int  DeviceInformation::time() const
-{
-    return m_time;
-}
-
-void DeviceInformation::setTime(int  newTime)
-{
-    m_time = newTime;
-    emit timeChanged();
-}
-
-int  DeviceInformation::energy() const
-{
-    return m_energy;
-}
-
-void DeviceInformation::setEnergy(int  newEnergy)
-{
-    m_energy = newEnergy;
-    emit energyChanged();
-
-}
-
-int  DeviceInformation::heightPre() const
-{
-    return m_heightPre;
-}
-
-void DeviceInformation::setHeightPre(int  newHeightPre)
-{
-    m_heightPre = newHeightPre;
-    emit heightPreChanged();
-
-}
-
-int  DeviceInformation::heightPost() const
-{
-    return m_heightPost;
-}
-
-void DeviceInformation::setHeightPost(int  newHeightPost)
-{
-    if (m_heightPost == newHeightPost)
-        return;
-    m_heightPost = newHeightPost;
-    emit heightPostChanged();
-}
-
-QString DeviceInformation::mesIP() const
-{
-    return m_mesIP;
-}
-
-void DeviceInformation::setMesIP(const QString &newMesIP)
-{
-    if (m_mesIP == newMesIP)
-        return;
-    m_mesIP = newMesIP;
-    emit mesIPChanged();
-}
-
-QString DeviceInformation::deviceIP() const
-{
-    return m_deviceIP;
-}
-
-void DeviceInformation::setDeviceIP(const QString &newDeviceIP)
-{
-    if (m_deviceIP == newDeviceIP)
-        return;
-    m_deviceIP = newDeviceIP;
-    emit deviceIPChanged();
-}
-
-int DeviceInformation::mesPort() const
-{
-    return m_mesPort;
-}
-
-void DeviceInformation::setMesPort(int newMesPort)
-{
-    if (m_mesPort == newMesPort)
-        return;
-    m_mesPort = newMesPort;
-    emit mesPortChanged();
-}
+// void DeviceInformation::setMesPort(int newMesPort)
+// {
+//     if (m_mesPort == newMesPort)
+//         return;
+//     m_mesPort = newMesPort;
+//     emit mesPortChanged();
+// }
 
 

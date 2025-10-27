@@ -64,13 +64,14 @@ DeviceModbusMapper::DeviceRegisterData DeviceModbusMapper::generateRegisterData(
 {
     DeviceRegisterData deviceInfodata;
 
-    int deviceId = device->getDevInfoObject()->id();
+    // int deviceId = device->getDevInfoObject()->id();
+    int deviceId = 0;
     deviceInfodata.deviceID = deviceId;
     DeviceInformation* deviceInfo = device->getDevInfoObject();
 
     //protocol type
-    const QString  weldType = deviceInfo->model();
-    if(weldType == "L20-VG")
+    int  weldType = deviceInfo->getWelderType();
+    if(weldType == DeviceInfoEnum::L20_VG)
         deviceInfodata.DEV_PROTOCOL_TYPE = ProtocolType::L20_VG;
     else
         deviceInfodata.DEV_PROTOCOL_TYPE = ProtocolType::L20_TS;
@@ -80,7 +81,7 @@ DeviceModbusMapper::DeviceRegisterData DeviceModbusMapper::generateRegisterData(
 
     if(isTcp)
     {
-        QStringList network = DataBaseManager::getInstance()->getNetworkInfoById(deviceInfo->connectID() + 1);
+        QStringList network = DataBaseManager::getInstance()->getNetworkInfoById(deviceInfo->getConnectTypeID() + 1);
         if(network.size() == 3)
         {
             QStringList serverIp = network.at(0).split(".");
@@ -102,7 +103,7 @@ DeviceModbusMapper::DeviceRegisterData DeviceModbusMapper::generateRegisterData(
     }
     else
     {
-        _RS232_Data rs232 = DataBaseManager::getInstance()->getRS232DataById(deviceInfo->connectID());
+        _RS232_Data rs232 = DataBaseManager::getInstance()->getRS232DataById(deviceInfo->getConnectTypeID());
         qDebug() << "RS232 DATA -> ID:" << rs232.id
                  << "PORT:" << rs232.port
                  << "BAUD:" << rs232.baud_rate

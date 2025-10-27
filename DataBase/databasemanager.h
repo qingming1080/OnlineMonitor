@@ -5,9 +5,9 @@
 #include <QSqlDatabase>
 #include "qmlenum.h"
 #include "define.h"
-#include "model/device.h"
-#include "modbus/HBModbusClient.h"
-#include "model/manual.h"
+// #include "model/device.h"
+// #include "model/manual.h"
+// #include "model/production.h"
 
 #define CONFIGURATION_TABLENAME     QString("configuration")
 #define NETWORK_TABLENAME           QString("connection_network")
@@ -23,6 +23,109 @@ class DataBaseManager : public QObject
 {
     Q_OBJECT
 public:
+    enum CONFIGURATION_COLUMN
+    {
+        WELDER_ID               = 0,    // 焊机ID
+        WELDER_NAME             = 1,    // 焊机名称
+        WELDER_TYPE             = 2,    // 焊机型号
+        PRODUCTION_BATCH        = 3,    // 最大生产批量
+        MAX_MODEL_SAMPLES       = 4,    // 学习样本数
+        YIELD_RATE_LOWER_LIMIT  = 5,    // 良率下限
+        HEIGHT_ENCODER_OPTION   = 6,    // 高度模式
+        CONNECT_TYPE            = 7,    // 连接方式
+        CONNECT_TYPE_ID         = 8,    // 连接方式ID
+        DELECT_TYPE             = 9,    // 是否删除(已无用)
+        MES_PORT                = 10,   // 远程端口
+        MES_IP                  = 11,   // 远程IP
+        DEVICE_IP               = 12,   // 客户端IP
+    };
+
+    struct DB_CONFIGURE
+    {
+        QString                         WelderName;             // 焊机名称
+        int                             WelderType;             // 焊机型号
+        int                             ProductionBatch;        // 最大生产批量
+        int                             MaxModelSamples;        // 学习样本数
+        int                             YieldRateLowerLimit;    // 良率下限
+        bool                            HeightEncoderOption;    // 高度模式
+        bool                            SuspiciousOption;       // 可疑
+        int                             ConnectType;            // 连接方式     0_RS232  1_Network
+        int                             ConnectTypeId;          // 连接方式ID
+        int                             MES_Port;               // 远程端口
+        QString                         MES_IP;                 // 远程IP
+        QString                         Device_IP;              // 客户端IP
+    };
+
+    struct DB_MANUAL
+    {
+        int WelderId;       // 焊机ID
+        QString CreateTime; // 创建时间
+        int serial_number;  // 序号
+        int CycleCount;     // 循环总计
+        int Energy;         // 能量
+        int Amplitude;      // 振幅
+        int WeldPressure;   // 压力
+        int WeldTime;       // 焊接时间
+        int PeakPower;      // 功率
+        int Preheight;      // 焊前高度
+        int PostHeight;     // 焊后高度
+        int ActualForce;    // 撕拉力
+        int ActualResidual; // 残留度
+        bool IsSelected;
+        bool IsNewComming;
+        //preset
+        int EnergySetting;
+        int AmplitudeSetting;
+        int WPressureSetting;
+        int TPressureSetting;
+    };
+
+    struct ALPHA_BETA
+    {
+        double Alpha;
+        double Beta;
+    };
+
+    struct POLYNOMIAL_COEFFICIENT
+    {
+        double P00;
+        double P10;
+        double P01;
+        double P20;
+        double P11;
+        double P02;
+    };
+
+    struct CENTRALIZED_PROPERTY
+    {
+        double TimeMean;
+        double TimeStd;
+        double PowerMean;
+        double PowrStd;
+        double ForceMean;
+        double ResidualMean;
+    };
+
+    struct DB_MODEL
+    {
+        int id;                             // 模型id
+        int WelderId;                       // 焊机id
+        QString CreateTime;                 // 创建时间
+        int Energy;                         // 能量
+        int Amplitude;                      // 振幅
+        // int pressure;                    // 压力
+        int TriggerPressure;                // 焊接压力
+        int WeldPressure;                   // 触发压力
+        ALPHA_BETA WeldTime;                // 焊机时间Alpha&Beta
+        ALPHA_BETA PeakPower;               // 功率Alpha&Beta
+        ALPHA_BETA Preheight;               // 焊前高度Alpha&Beta
+        ALPHA_BETA PostHeight;              // 焊后高度Alpha&Beta
+        POLYNOMIAL_COEFFICIENT PeelForce;   // 撕拉力
+        POLYNOMIAL_COEFFICIENT Residual;    // 残留度
+        CENTRALIZED_PROPERTY Centralized;
+        int SampleCount;                    // 当前样本数
+    };
+public:
     static DataBaseManager* getInstance();
 
     ~DataBaseManager();
@@ -33,13 +136,13 @@ public:
 
 /////////////////////////configuration////////////////////////////////
 
-    QList<int> getDeviceNums();
+    QList<int> getDeviceCount();
 
     ///
     /// \brief getConfigurationData : 获取Configuration表格数据
     /// \return : 数据
     ///
-    _Configuration_Data getConfigurationData(int welderID);
+    bool getConfigurationData(int welderID, DataBaseManager::DB_CONFIGURE& configure);
 
     ///
     /// \brief setConfigurationData : 设置Configuration表格数据
@@ -48,7 +151,7 @@ public:
     /// \param data : 新数据
     /// \return : 设置结果
     ///
-    bool setConfigurationData(int deviceID, QmlEnum::CONFIGURATION_COLUMN column, QVariant data);
+    bool setConfigurationData(int deviceID, CONFIGURATION_COLUMN column, QVariant data);
 
     ///
     /// \brief removeConfigurationDevice : 删除Configuration表格一行数据
@@ -62,14 +165,14 @@ public:
     /// \param data : 数据
     /// \return : 插入结果
     ///
-    bool insertConfigurationDevice(_Configuration_Data data);
+    bool insertConfigurationDevice(DB_CONFIGURE data);
 
     ///
     /// \brief insertConfigurationDevice : 插入Configuration表格一行数据
     /// \param data : 数据
     /// \return : 更新结果
 
-    bool updateConfigurationDevice(_Configuration_Data data);
+    bool updateConfigurationDevice(const int WelderID, DB_CONFIGURE &data);
 
 
 /////////////////////////connection_network////////////////////////////////
@@ -175,18 +278,18 @@ public:
     /// \brief getManualData : 获取manual表格数据
     /// \return : 数据
     ///
-    QList<Manual::MANUAL_DATA> getManualData(int welderID);
+    QList<DB_MANUAL> getManualData(int welderID);
 
     bool removeManualDevice(int deviceID);
 
-    bool insertManualRow(Manual::MANUAL_DATA data);
+    bool insertManualRow(DB_MANUAL data);
 
 /////////////////////////model////////////////////////////////
     ///
     /// \brief getModelData : 获取model表格数据
     /// \return : 数据
     ///
-    QList<MODEL_DATA> getModelData();
+    QList<DB_MODEL> getModelData();
 
     ///
     /// \brief removeModelRow : 删除model表格一行数据
@@ -202,7 +305,7 @@ public:
     /// \param data : 数据
     /// \return : 插入结果
     ///
-    bool insertModelRow(MODEL_DATA data);
+    bool insertModelRow(DB_MODEL model);
 
     bool existsManualRowByCycle(int cycleCount);
 
@@ -246,7 +349,7 @@ public:
     ///
     bool insertProductionRow(_Production_Data data);
 
-    bool saveProductionDataofModbus(Device* device, const QVector<quint16>& inputs, quint32 cycleCount, DateTimeData date);
+    // bool saveProductionDataofModbus(Device* device, const QVector<quint16>& inputs, quint32 cycleCount, DateTimeData date);
 
 /////////////////////////system////////////////////////////////
 /// root界面
@@ -293,7 +396,7 @@ private:
     /// \param column : 列号
     /// \return : 列名
     ///
-    QString getConfiguration_ColumnName(QmlEnum::CONFIGURATION_COLUMN column);
+    QString getConfiguration_ColumnName(CONFIGURATION_COLUMN column);
 
     ///
     /// \brief getNetwork_ColumnName : 通过connection_network列号获取列名

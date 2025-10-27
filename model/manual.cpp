@@ -54,7 +54,7 @@ QVariant Manual::data(const QModelIndex &index, int role) const
         return QVariant();
 
     int row = index.row();
-    MANUAL_DATA data = m_listRawData.at(row);
+    DataBaseManager::DB_MANUAL data = m_listRawData.at(row);
     switch(role)
     {
     // case QmlEnum::MANUAL_COLUMN::MANUAL_id:
@@ -89,13 +89,13 @@ QVariant Manual::data(const QModelIndex &index, int role) const
     case QmlEnum::MANUAL_COLUMN::MANUAL_isSelected:
         return data.IsSelected;
     case QmlEnum::MANUAL_COLUMN::MANUAL_preEnergy:
-        return data.PreEnergy;
+        return data.EnergySetting;
     case QmlEnum::MANUAL_COLUMN::MANUAL_preAmplitude:
-        return data.PreAmplitude;
+        return data.AmplitudeSetting;
     case QmlEnum::MANUAL_COLUMN::MANUAL_preTP:
-        return data.PreTP;
+        return data.TPressureSetting;
     case QmlEnum::MANUAL_COLUMN::MANUAL_preWP:
-        return data.PreWP;
+        return data.WPressureSetting;
     default:
         return QVariant();
     }
@@ -186,19 +186,24 @@ bool Manual::setData(const QModelIndex &index, const QVariant &value, int role)
         m_listRawData[row].ActualResidual = value.toInt();
         break;
     case QmlEnum::MANUAL_COLUMN::MANUAL_preEnergy:
-        m_listRawData[row].PreEnergy =  value.toInt();
+        m_listRawData[row].EnergySetting =  value.toInt();
+        break;
     case QmlEnum::MANUAL_COLUMN::MANUAL_preAmplitude:
-        m_listRawData[row].PreAmplitude =  value.toInt();
+        m_listRawData[row].AmplitudeSetting =  value.toInt();
+        break;
     case QmlEnum::MANUAL_COLUMN::MANUAL_preTP:
-        m_listRawData[row].PreTP =  value.toInt();
+        m_listRawData[row].TPressureSetting =  value.toInt();
+        break;
     case QmlEnum::MANUAL_COLUMN::MANUAL_preWP:
-        m_listRawData[row].PreWP =  value.toInt();
+        m_listRawData[row].WPressureSetting =  value.toInt();
+        break;
     case QmlEnum::MANUAL_COLUMN::MANUAL_isSelected:
         m_listRawData[row].IsSelected = value.toBool();
         emit dataChanged(index, index, {role});
         break;
     default:
         bResult =  false;
+        break;
     }
     return bResult;
 }

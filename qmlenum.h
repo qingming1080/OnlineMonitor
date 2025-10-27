@@ -7,24 +7,6 @@ class QmlEnum : public QObject
 {
     Q_OBJECT
 public:
-    enum CONFIGURATION_COLUMN
-    {
-        CONFIGURATION_welder_id        = 0,    // 焊机ID
-        CONFIGURATION_welder_name      = 1,    // 焊机名称
-        CONFIGURATION_welder_type      = 2,    // 焊机型号
-        CONFIGURATION_production_bacth = 3,    // 最大生产批量
-        CONFIGURATION_model_sample     = 4,    // 学习样本数
-        CONFIGURATION_lower_limit      = 5,    // 良率下限
-        CONFIGURATION_height_option    = 6,    // 高度模式
-        CONFIGURATION_connect_type     = 7,    // 连接方式
-        CONFIGURATION_connect_id       = 8,    // 连接方式ID
-        CONFIGURATION_delete_type      = 9,    // 是否删除(已无用)
-        CONFIGURATION_mes_port         = 10,   // 远程端口
-        CONFIGURATION_mes_ip           = 11,   // 远程IP
-        CONFIGURATION_device_ip        = 12,   // 客户端IP
-    };
-    Q_ENUM(CONFIGURATION_COLUMN)
-
     enum NETWORK_COLUMN
     {
         NETWORK_id          = 0,   // 网口号

@@ -1409,7 +1409,7 @@ Rectangle {
                             height: 40
                             x:233
                             y:97
-                            model: ["2400", "4800", "9600","19200","38400","115200"]
+                            model: ["2400", "4800", "9600", "19200", "38400", "115200"]
                             displayText:{
                                 if(com3.displayText === "COM1"){
                                     return RS232Model.getDataByWelderID(1,QmlEnum.RS232_baud_rate)

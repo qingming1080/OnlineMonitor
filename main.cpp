@@ -4,7 +4,7 @@
 #include <QQmlContext>
 #include <QQmlEngine>
 
-#include "devicemanager.h"
+#include "model/devicemanager.h"
 #include "model/device.h"
 #include "model/deviceinformation.h"
 #include "model/manual.h"

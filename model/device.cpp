@@ -18,148 +18,39 @@
 /// TEST 2024_08_18
 
 Device::Device(int welderID, QObject *parent)
-    : QObject{parent}, m_welderID(welderID),plotIndex(0)
+    : QObject{parent}, m_WelderID(welderID),plotIndex(0)
 {
-    QElapsedTimer timer;
-    timer.start();
+    // QElapsedTimer timer;
+    // timer.start();
 
-    m_ptrDevInfo    = new DeviceInformation(m_welderID);
-    m_pIO           = new IO(m_welderID);
-    // m_pManual       = new Manual(m_welderID);
-    // m_pSystem       = new System(m_welderID);
-    m_pTrend        = new Trend(m_welderID);
+    m_ptrDevInfo    = new DeviceInformation(m_WelderID);
+    m_ptrManual     = new Manual(m_WelderID);
+    m_ptrSystem     = new System(m_WelderID);
+    m_ptrProduction = new Production(m_WelderID);
+    m_ptrTrend      = new Trend(m_WelderID);
 
-    QString text = QString("%1号设备_Device_初始化共耗时:%2ms").arg(welderID).arg(timer.elapsed());
-                       emit SignalManager::getInstance()->signalAddRecord(QDateTime::currentDateTime(), text);
+    // QString text = QString("%1号设备_Device_初始化共耗时:%2ms").arg(welderID).arg(timer.elapsed());
+    //                    emit SignalManager::getInstance()->signalAddRecord(QDateTime::currentDateTime(), text);
 }
 
 Device::~Device()
 {
     delete m_ptrDevInfo;
-    delete m_pIO;
-    // delete m_pManual;
-    // delete m_pSystem;
-    delete m_pTrend;
-}
-
-DeviceInformation* Device::getDevInfoObject() const
-{
-    return m_ptrDevInfo;
-}
-
-// System *Device::pSystem() const
-// {
-//     return m_pSystem;
-// }
-
-IO *Device::pIO() const
-{
-    return m_pIO;
+    m_ptrDevInfo = nullptr;
+    delete m_ptrManual;
+    m_ptrManual = nullptr;
+    delete m_ptrSystem;
+    m_ptrSystem = nullptr;
+    delete m_ptrProduction;
+    m_ptrProduction = nullptr;
+    delete m_ptrTrend;
+    m_ptrTrend = nullptr;
 }
 
 Trend *Device::pTrend() const
 {
-    return m_pTrend;
+    return m_ptrTrend;
 }
-
-// void Device::test()
-// {
-//     /// 实时良率
-//     int hegeNum   = qrand() % 100;
-//     int keyiNum   = qrand() % 100;
-//     int cipingNum = qrand() % 100;
-
-//     this->DevInfoObject()->setGoodCycles(hegeNum);
-//     this->DevInfoObject()->setSuspectCycles(keyiNum);
-//     this->DevInfoObject()->setNotDefinite(cipingNum);
-//     this->DevInfoObject()->setGoodRate((double)hegeNum/(hegeNum+keyiNum+cipingNum)*100);
-//     qDebug() << QString("I_WANT_TEST 实时良率修改  合格产品：%1  可疑产品：%2  次品：%3").arg(hegeNum).arg(keyiNum).arg(cipingNum);
-
-//                 /// 焊接结果
-//                 int power        = qrand() % 100;
-//     int time         = qrand() % 100;
-//     int energy       = qrand() % 100;
-//     int heightPre    = qrand() % 100;
-//     int heightPost   = qrand() % 100;
-
-//     this->DevInfoObject()->setPower(power);
-//     this->DevInfoObject()->setTime(time);
-//     this->DevInfoObject()->setEnergy(energy);
-//     this->DevInfoObject()->setHeightPre(heightPre);
-//     this->DevInfoObject()->setHeightPost(heightPost);
-//     //    qDebug() << QString("I_WANT_TEST 焊接结果修改  功率:%1  时间:%2  能量:%3  焊前高度:%1  焊后高度:%2").arg(power).arg(time).arg(energy).arg(heightPre).arg(heightPost);
-
-//     /// 系统消息
-//     for(int i = 0; i < 10; ++i)
-//     {
-//         QmlEnum::MESSAGE messageType = static_cast<QmlEnum::MESSAGE>(qrand()%9);
-//         Message::getInstance()->addMessage(m_welderID, messageType);
-//         //        qDebug() << QString("I_WANT_TEST 设备警告添加消息 ： %1").arg(messageType);
-//     }
-
-//     /// 良率折线
-//     this->pTrend()->m_yieldData.endTime = QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss");
-//     QDateTime endTime = QDateTime::fromString(this->pTrend()->m_yieldData.endTime, "yyyy-MM-dd hh:mm:ss");
-//     int interVal;
-//     switch(this->pTrend()->yieldType())
-//     {
-//     case 0:
-//         interVal = 0-60*60;
-//         break;
-//     case 1:
-//         interVal = 0-60*60*24;
-//         break;
-//     case 2:
-//         interVal = 0-60*60*24*7;
-//         break;
-//     case 3:
-//         interVal = 0-60*60*24*30;
-//         break;
-//     }
-//     QDateTime startTime = endTime.addSecs(interVal);
-//     this->pTrend()->m_yieldData.startTime = startTime.toString("yyyy-MM-dd hh:mm:ss");
-//     int timeInterVal = -interVal / 60;
-
-//     this->pTrend()->m_yieldData.points.clear();
-//     for(int i = 0; i < 60; ++i)
-//     {
-//         QPointF pos;
-//         pos.rx() = startTime.addSecs(timeInterVal * i).toMSecsSinceEpoch();
-//         pos.ry() = qrand() % 100;
-//         this->pTrend()->m_yieldData.points.push_back(pos);
-//     }
-//     this->pTrend()->setYieldTrendData();
-//     //    qDebug() << QString("I_WANT_TEST 良率折线图刷新");
-
-//     /// 焊接折线
-//     this->pTrend()->setIdMaxX(150);
-//     this->pTrend()->setIdMinX(0);
-//     this->pTrend()->setBeforeMaxY(150);
-//     this->pTrend()->setBeforeMinY(0);
-//     this->pTrend()->setAfterMaxY(150);
-//     this->pTrend()->setAfterMinY(0);
-//     this->pTrend()->setTimeMaxY(150);
-//     this->pTrend()->setTimeMinY(0);
-//     this->pTrend()->setPowerMaxY(150);
-//     this->pTrend()->setPowerMinY(0);
-//     this->pTrend()->m_frontData.clear();
-//     this->pTrend()->m_backData.clear();
-//     this->pTrend()->m_timeData.clear();
-//     this->pTrend()->m_powerData.clear();
-//     for(int i = 0; i < 150; ++i){
-//         QPointF pos;
-//         pos.setX(i+1);
-//         pos.setY(qrand() % 100);
-//         this->pTrend()->m_frontData.push_back(pos);
-//         pos.setY(qrand() % 100);
-//         this->pTrend()->m_backData.push_back(pos);
-//         pos.setY(qrand() % 100);
-//         this->pTrend()->m_timeData.push_back(pos);
-//         pos.setY(qrand() % 100);
-//         this->pTrend()->m_powerData.push_back(pos);
-//     }
-//     this->pTrend()->upWeldData();
-// }
 
 int Device::getPlotIndex() const {
     return plotIndex;
@@ -169,7 +60,64 @@ void Device::incrementPlotIndex() {
     plotIndex++;
 }
 
-// Manual *Device::pManual() const
-// {
-//     return m_pManual;
-// }
+DeviceInformation* Device::getDevInfoObject() const
+{
+    return m_ptrDevInfo;
+}
+
+void Device::setDevInfoObject(const DeviceInformation *object)
+{
+    if (m_ptrDevInfo != object) {
+        m_ptrDevInfo = const_cast<DeviceInformation*>(object);
+        emit notifyDevInfoObjectChanged();
+    }
+}
+
+Manual *Device::getManualObj() const
+{
+    return m_ptrManual;
+}
+
+void Device::setManualObj(const Manual *object)
+{
+    if (m_ptrManual != object) {
+        m_ptrManual = const_cast<Manual*>(object);
+        emit notifyManualObjChanged();
+    }
+}
+
+Production *Device::getProductionObj() const
+{
+    return m_ptrProduction;
+}
+
+void Device::setProductionObj(const Production *object)
+{
+    if (m_ptrProduction != object) {
+        m_ptrProduction = const_cast<Production*>(object);
+        emit notifyProductionObjChanged();
+    }
+}
+
+System *Device::getSystemObj() const
+{
+    return m_ptrSystem;
+}
+
+void Device::setSystemObj(const System *object)
+{
+    if (m_ptrSystem != object) {
+        m_ptrSystem = const_cast<System*>(object);
+        emit notifySystemObjChanged();
+    }
+}
+
+bool Device::SaveDevice()
+{
+    return true;
+}
+
+bool Device::UpdateDevice()
+{
+    return true;
+}

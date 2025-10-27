@@ -19,7 +19,6 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
         DataBase/databasemanager.cpp \
         LanguageManager/languageManager.cpp \
-        devicemanager.cpp \
         fileobject.cpp \
         log/localrecord.cpp \
         main.cpp \
@@ -27,12 +26,14 @@ SOURCES += \
         modbus/hbserver.cpp \
         model/device.cpp \
         model/deviceinformation.cpp \
+        model/devicemanager.cpp \
         model/devicenames.cpp \
         model/history.cpp \
         model/io.cpp \
         model/manual.cpp \
         model/message.cpp \
         model/networkmodel.cpp \
+        model/production.cpp \
         model/rs232model.cpp \
         model/system.cpp \
         model/trend.cpp \
@@ -64,19 +65,20 @@ HEADERS += \
     DataBase/databasemanager.h \
     LanguageManager/languageManager.h \
     define.h \
-    devicemanager.h \
     fileobject.h \
     log/localrecord.h \
     modbus/hbmodbusclient.h \
     modbus/hbserver.h \
     model/device.h \
     model/deviceinformation.h \
+    model/devicemanager.h \
     model/devicenames.h \
     model/history.h \
     model/io.h \
     model/manual.h \
     model/message.h \
     model/networkmodel.h \
+    model/production.h \
     model/rs232model.h \
     model/system.h \
     model/trend.h \
