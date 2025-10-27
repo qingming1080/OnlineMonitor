@@ -33,7 +33,7 @@ public:
     //RTC
     Q_INVOKABLE void setSystemClock(const QDateTime &datetime);
 
-    Q_INVOKABLE void setDeviceConfigure(const int deviceId, const DeviceInformation::MODBUS_CONFIGURE deviceConfig);
+    Q_INVOKABLE void setDeviceConfigure(const int deviceId, const DeviceInformation::DEVICE_CONFIGURE deviceConfig);
 
     //TODO Need to move others.
     Q_INVOKABLE void setMesConfig(const QVector<quint16> mesHostValues);
@@ -229,12 +229,7 @@ private:
 
     void ParseDeviceIOResetStatus();
 
-    template<typename Setter>
-    void pollRegisters(QModbusDataUnit::RegisterType type, int count, Setter setter, const char* errMsg);
-
-    void pollAllRegisters(QModbusDataUnit::RegisterType type, int count, const char* errMsg);
-
-    void pollHoldings(int start, int count, const char* errMsg);
+    void readRegisters(QModbusDataUnit::RegisterType type,int startAddress, int count, const char* errMsg);
 
     //Serial
     BaudRate fromQtBaudRate(QSerialPort::BaudRate baud);
@@ -264,6 +259,7 @@ private:
     static unsigned char    m_Discreteds[DEV_DISCRETE_REGISTERS_COUNT * DEV_COUNT];
     static unsigned short   m_Holdings[SYS_HOLDING_REGISTERS_COUNT + DEV_HOLDING_REGISTERS_COUNT * DEV_COUNT];
     static unsigned short   m_Inputs[DEV_INPUT_REGISTERS_COUNT * DEV_COUNT];
+    static QVector<WELD_PRESET> m_lastPresets;
 
     static HBModbusClient* m_instance;
 
@@ -274,6 +270,9 @@ private:
     mutable QMutex m_mutex;
 
     bool m_bFrontPanelResetButton;
+
+
+    bool m_isFirstPresetParse = true;
 };
 
 #endif // HBMODBUSCLIENT_H

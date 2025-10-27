@@ -98,6 +98,7 @@ int main(int argc, char *argv[])
     qmlRegisterSingletonType(QUrl("qrc:/qmlSource/GlobalLanguageDefine.qml"),   "GlobalLanguageDefine", 1,  0,  "GlobalLanguageDefine");
     qmlRegisterSingletonType(QUrl("qrc:/qmlSource/GlobalSystemDefine.qml"),     "GlobalSystemDefine",   1,  0,  "GlobalSystemDefine");
     qmlRegisterSingletonType(QUrl("qrc:/qmlSource/GlobalMessageDefine.qml"),    "GlobalMessageDefine",  1,  0,  "GlobalMessageDefine");
+    qmlRegisterSingletonType(QUrl("qrc:/qmlSource/HBInputValidationPopup.qml"),    "HBInputValidationPopup",  1,  0,  "HBInputValidationPopup");
 
     const QUrl url(QStringLiteral("qrc:/qmlSource/main.qml"));
 
