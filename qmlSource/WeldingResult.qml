@@ -360,12 +360,13 @@ Rectangle {
         anchors.left: parent.left
         anchors.leftMargin: 45
         source: "qrc:/images/icon_weldtime.png"
+        smooth: false
     }
     Image {
         id: imagePower
         width: 18
         height: 18
-        anchors.top: titleWeldTime.top
+        anchors.top: titlePower.top
         anchors.topMargin: 3
         anchors.left: parent.left
         anchors.leftMargin: 45

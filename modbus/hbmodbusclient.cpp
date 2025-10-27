@@ -150,8 +150,12 @@ void HBModbusClient::pollHoldings(int start, int count, const char* errMsg)
                   errMsg);
 }
 
+
+
 void HBModbusClient::WriteHoldingRegisters(int startAddress, const QVector<quint16>& values)
 {
+     qDebug() << "准备写寄存器, 起始地址:" << startAddress << "值:" << values;
+
     // QMutexLocker locker(&m_mutex);
     for (int i = 0; i < values.size(); ++i)
     {
@@ -162,7 +166,10 @@ void HBModbusClient::WriteHoldingRegisters(int startAddress, const QVector<quint
     {
         QModbusDataUnit writeUnit(QModbusDataUnit::HoldingRegisters, startAddress, values.size());
         for (int i = 0; i < values.size(); ++i)
+        {
             writeUnit.setValue(i, values[i]);
+        }
+
         if (auto *reply = modbusClient->sendWriteRequest(writeUnit, 1))
         {
             connect(reply, &QModbusReply::finished, this, [reply]()
@@ -185,8 +192,10 @@ void HBModbusClient::WriteCoils(int startAddress, const QVector<quint8>& values)
     {
         QModbusDataUnit writeUnit(QModbusDataUnit::Coils, startAddress, values.size());
         for (int i = 0; i < values.size(); ++i)
+        {
+            QMutexLocker locker(&m_mutex);
             writeUnit.setValue(i, values[i]);
-
+        }
         if (auto *reply = modbusClient->sendWriteRequest(writeUnit, 1))
         {
             connect(reply, &QModbusReply::finished, this, [reply]()
@@ -234,6 +243,20 @@ void HBModbusClient::ParseWeldResult()
             QDate date = QDate(year, month, day);
             QTime time = QTime(hour, minute, second);
             data.DateTime = QDateTime(date, time);
+
+            qDebug() << "[ParseWeldResult] Device:" << i
+                     << "CycleCount:" << data.CycleCount
+                     << "Energy:" << data.Energy
+                     << "Amplitude:" << data.Amplitude
+                     << "TriggerPressure:" << data.TriggerPressure
+                     << "WeldingPressure:" << data.WeldingPressure
+                     << "WeldTime:" << data.WeldTime
+                     << "PeakPower:" << data.PeakPower
+                     << "Preheight:" << data.Preheight
+                     << "PostHeight:" << data.PostHeight
+                     << "WeldAlarm:" << data.WeldAlarm
+                     << "DateTime:" << data.DateTime.toString("yyyy-MM-dd HH:mm:ss");
+
             emit notifyWeldResultComing(i, data);
         }
     }
@@ -242,14 +265,23 @@ void HBModbusClient::ParseWeldResult()
 void HBModbusClient::ParsePresetSetting()
 {
     WELD_PRESET weldPreset;
-    int base = 0;
+    // int base = 0;
     for (int i = 0; i < DEV_COUNT; ++i)
     {
-        base = SYS_HOLDING_REGISTERS_COUNT + i * DEV_HOLDING_REGISTERS_COUNT;
+        int base = SYS_HOLDING_REGISTERS_COUNT + i * DEV_HOLDING_REGISTERS_COUNT;;
+
+        qDebug()<< "ParsePresetSetting base" << base;
         weldPreset.Energy          = m_Holdings[base + (DEV_ENERGY_SET - SYS_HOLDING_REGISTERS_COUNT)];
         weldPreset.Amplitude       = m_Holdings[base + (DEV_AMPLITUDE_SET - SYS_HOLDING_REGISTERS_COUNT)];
         weldPreset.TriggerPressure = m_Holdings[base + (DEV_TP_SET - SYS_HOLDING_REGISTERS_COUNT)];
         weldPreset.WeldingPressure = m_Holdings[base + (DEV_WP_SET - SYS_HOLDING_REGISTERS_COUNT)];
+
+        qDebug() << "[ParsePresetSetting] Device:" << i
+                 << "Energy:" << weldPreset.Energy << base + (DEV_ENERGY_SET - SYS_HOLDING_REGISTERS_COUNT)
+                 << "Amplitude:" << weldPreset.Amplitude << base + (DEV_AMPLITUDE_SET - SYS_HOLDING_REGISTERS_COUNT)
+                 << "TriggerPressure:" << weldPreset.TriggerPressure << base + (DEV_TP_SET - SYS_HOLDING_REGISTERS_COUNT)
+                 << "WeldingPressure:" << weldPreset.WeldingPressure << base + (DEV_WP_SET - SYS_HOLDING_REGISTERS_COUNT);
+
         emit notifyPresetSettingChanged(i, weldPreset);
     }
 }
@@ -290,19 +322,25 @@ void HBModbusClient::setSystemClock(const QDateTime &datetime)
     QVector<quint16> rtcValues;
     QDate date = datetime.date();
     QTime time = datetime.time();
+    qDebug() << "设置系统时间:"
+             << date.toString("yyyy-MM-dd")
+             << time.toString("HH:mm:ss");
+
     rtcValues.append(date.year());
     rtcValues.append(date.month());
     rtcValues.append(date.day());
     rtcValues.append(time.hour());
     rtcValues.append(time.minute());
     rtcValues.append(time.second());
+
+        qDebug() << "写入RTC寄存器值:" << rtcValues;
     WriteHoldingRegisters(SYS_RTC_YY, rtcValues);
 }
 
 Q_INVOKABLE void HBModbusClient::setLearnLedStatus(bool condition)
 {
     QVector<quint8> value(1, condition ? 1 : 0);
-
+    qDebug() << "[LED] 设置Learn LED:" << condition << "写入地址:" << SYS_LED_L_BIT0;
     WriteCoils(SYS_LED_L_BIT0, value);
 
 }
@@ -310,18 +348,21 @@ Q_INVOKABLE void HBModbusClient::setLearnLedStatus(bool condition)
 Q_INVOKABLE void HBModbusClient::setPilotLedStatus(bool condition)
 {
     QVector<quint8> value(1, condition ? 1 : 0);
+    qDebug() << "[LED] 设置Learn LED:" << condition << "写入地址:" << SYS_LED_P_BIT1;
     WriteCoils(SYS_LED_P_BIT1, value);
 
 }
 Q_INVOKABLE void HBModbusClient::setReadyLedStatus(bool condition)
 {
     QVector<quint8> value(1, condition ? 1 : 0);
+        qDebug() << "[LED] 设置Learn LED:" << condition << "写入地址:" << SYS_LED_R_BIT2;
     WriteCoils(SYS_LED_R_BIT2, value);
 
 }
 Q_INVOKABLE void HBModbusClient::setAlarmLedStatus(bool condition)
 {
     QVector<quint8> value(1, condition ? 1 : 0);
+    qDebug() << "[LED] 设置Learn LED:" << condition << "写入地址:" << SYS_LED_A_BIT3;
     WriteCoils(SYS_LED_A_BIT3, value);
 }
 
@@ -351,17 +392,6 @@ void HBModbusClient::setMesConfig(const QVector<quint16> mesHostValues)
     WriteHoldingRegisters(SYS_MES_IP1, mesHostValues);
 }
 
-void HBModbusClient::setDeviceConfigure(const int deviceId, const DeviceInformation::MODBUS_CONFIGURE deviceConfig)
-{
-    if (deviceId < 1 || deviceId > DEV_COUNT) {
-        qWarning() << "Device ID does not exist";
-        return;
-    }
-
-    int base = SYS_HOLDING_REGISTERS_COUNT + (deviceId - 1) * DEV_HOLDING_REGISTERS_COUNT;
-    // WriteHoldingRegisters(base + (DEV_TYPE - SYS_HOLDING_REGISTERS_COUNT), deviceValues);
-}
-
 void HBModbusClient::setResetButtonStatus(const bool status)
 {
     if(status != m_bFrontPanelResetButton)
@@ -376,4 +406,177 @@ bool HBModbusClient::getResetButtonStatus() const
     return m_bFrontPanelResetButton;
 }
 
+void HBModbusClient::setDeviceConfigure(const int deviceId, const DeviceInformation::DEVICE_CONFIGURE deviceConfig)
+{
 
+    int base = DEV_TYPE + (deviceId - 1) * DEV_HOLDING_REGISTERS_COUNT;
+     QVector<quint16> deviceConfiginfo;
+
+    deviceConfiginfo.append(deviceConfig.ConnectType);
+    deviceConfiginfo.append(deviceConfig.ProtocolType);
+    deviceConfiginfo.append(deviceConfig.ConnectState);
+
+    if (deviceConfig.ConnectType == DeviceInfoEnum::TCP_IP)
+    {
+        QStringList remote = deviceConfig.NewworkProperties.RemoteIP.split(".");
+        QStringList local  = deviceConfig.NewworkProperties.LocalIP.split(".");
+
+        deviceConfiginfo.append(remote.value(0).toUShort());
+        deviceConfiginfo.append(remote.value(1).toUShort());
+        deviceConfiginfo.append(remote.value(2).toUShort());
+        deviceConfiginfo.append(remote.value(3).toUShort());
+
+        deviceConfiginfo.append(local.value(0).toUShort());
+        deviceConfiginfo.append(local.value(1).toUShort());
+        deviceConfiginfo.append(local.value(2).toUShort());
+        deviceConfiginfo.append(local.value(3).toUShort());
+        deviceConfiginfo.append(deviceConfig.NewworkProperties.PortNumber);
+
+        deviceConfiginfo.append(0);
+        deviceConfiginfo.append(0);
+        deviceConfiginfo.append(0);
+        deviceConfiginfo.append(0);
+        deviceConfiginfo.append(0);
+    }
+    else
+    {
+        for (int i = 0; i < 9; ++i)
+            deviceConfiginfo.append(0);
+        deviceConfiginfo.append(deviceConfig.SerialProperties.ComNumber);
+        deviceConfiginfo.append(fromQtBaudRate(deviceConfig.SerialProperties.BaudRate));
+        deviceConfiginfo.append(fromQtDataBits(deviceConfig.SerialProperties.DataBits));
+        deviceConfiginfo.append(fromQtParity(deviceConfig.SerialProperties.ParityBits));
+        deviceConfiginfo.append(fromQtStopBits(deviceConfig.SerialProperties.StopBits));
+    }
+
+    WriteHoldingRegisters(base, deviceConfiginfo);
+
+}
+
+
+HBModbusClient::BaudRate HBModbusClient:: fromQtBaudRate(QSerialPort::BaudRate baud)
+{
+    switch (baud)
+    {
+    case QSerialPort::Baud2400:
+        return Baud_2400;
+    case QSerialPort::Baud4800:
+        return Baud_4800;
+    case QSerialPort::Baud9600:
+        return Baud_9600;
+    case QSerialPort::Baud19200:
+        return Baud_19200;
+    case QSerialPort::Baud38400:
+        return Baud_38400;
+    case QSerialPort::Baud115200:
+        return Baud_115200;
+    default:
+        return Baud_9600;
+    }
+}
+
+HBModbusClient::StopBit HBModbusClient::fromQtStopBits(QSerialPort::StopBits stop)
+{
+    switch (stop)
+    {
+    case QSerialPort::OneStop:
+        return Bit1;
+    case QSerialPort::OneAndHalfStop:
+        return Bit1_5;
+    case QSerialPort::TwoStop:
+        return Bit2;
+    default:
+        return Bit1;
+    }
+
+}
+
+HBModbusClient::ParityBit HBModbusClient::fromQtParity(QSerialPort::Parity parity)
+{
+    switch (parity)
+    {
+    case QSerialPort::NoParity:
+        return None;
+    case QSerialPort::OddParity:
+        return Odd;
+    case QSerialPort::EvenParity:
+        return Even;
+    default:
+        return None;
+    }
+
+}
+
+HBModbusClient::DataBit HBModbusClient::fromQtDataBits(QSerialPort::DataBits bit)
+{
+    switch (bit)
+    {
+    case QSerialPort::Data7:
+        return Bit7;
+    case QSerialPort::Data8:
+        return Bit8;
+    default:
+        return Bit8;
+    }
+
+}
+
+
+
+void HBModbusClient::testAllFunctions()
+{
+    auto doTest = [this](){
+
+        setLearnLedStatus(true);
+        setPilotLedStatus(true);
+        setReadyLedStatus(true);
+        setAlarmLedStatus(true);
+        qDebug() << "[Test] LED状态已设置为 true";
+
+
+
+        // 2. 测试 IO
+        for(int deviceId = 1; deviceId <= DEV_COUNT; ++deviceId)
+        {
+            setDeviceIOStatusReject(deviceId, true);
+            setDeviceIOStatusSuspect(deviceId, true);
+        }
+        qDebug() << "[Test] IO状态已设置为 true";
+
+        // 3. 测试 RTC
+        QDate date(2025, 10, 25);
+        QTime time(14, 30, 0);
+        QDateTime datetime(date, time);
+        setSystemClock(datetime);
+        qDebug() << "[Test] 系统时间已设置:" << datetime.toString("yyyy-MM-dd HH:mm:ss");
+
+        // 4. 测试 DeviceConfigure
+            DeviceInformation::DEVICE_CONFIGURE config;
+            // 填写示例配置
+            config.ConnectType = DeviceInfoEnum::TCP_IP;
+            config.ProtocolType = DeviceInfoEnum::WLEDER_TYPE::L20_VG;
+            config.ConnectState = DeviceInfoEnum::CONNECT_STATE::CONNECTED;
+            config.NewworkProperties.RemoteIP = "192.168.1.55";
+            config.NewworkProperties.LocalIP  = "192.168.1.100";
+            config.NewworkProperties.PortNumber = 4200;
+            setDeviceConfigure(1, config);
+
+    };
+
+    if(modbusClient->state() == QModbusDevice::ConnectedState)
+    {
+        doTest();
+    }
+    else
+    {
+        qDebug() << "[Test] Modbus未连接，等待连接成功再测试";
+        connect(modbusClient, &QModbusDevice::stateChanged, this, [this, doTest](int state){
+            if(state == QModbusDevice::ConnectedState)
+            {
+                qDebug() << "[Test] Modbus已连接，开始测试所有功能";
+                doTest();
+
+            }
+        });
+    }
+}

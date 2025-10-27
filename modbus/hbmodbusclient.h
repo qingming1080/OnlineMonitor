@@ -9,6 +9,7 @@
 #include <QMutex>
 #include "define.h"
 #include "model/deviceinformation.h"
+#include <QSerialPort>
 
 class HBModbusClient : public QObject
 {
@@ -40,6 +41,8 @@ public:
     void setResetButtonStatus(const bool status);
     bool getResetButtonStatus() const;
 
+    Q_INVOKABLE void testAllFunctions();
+
 private:
     static constexpr int DEV_HOLDING_REGISTERS_COUNT = 30;
     static constexpr int DEV_COILS_REGISTERS_COUNT   = 5;
@@ -56,7 +59,7 @@ private:
 
     static constexpr int SERVER_PORT = 502;
 
-#if RASPBERRY
+#ifdef RASPBERRY
     static constexpr char LOCAL_IP[13] = "192.168.1.38";
 #else
     static constexpr char LOCAL_IP[13] = "127.0.0.1";
@@ -177,6 +180,35 @@ private:
          END_OF_DEV_INPUT_REGISTERS = DEV_INPUT_REGISTERS_COUNT * DEV_COUNT,
      };
 
+
+     enum  BaudRate
+     {
+       Baud_2400 = 0,
+       Baud_4800 = 1,
+       Baud_9600 = 2,
+       Baud_19200 = 3,
+       Baud_38400 = 4,
+       Baud_115200 = 5
+     };
+
+     enum  DataBit
+     {
+        Bit7 = 0,
+        Bit8 = 1
+     };
+     enum  ParityBit
+     {
+       None = 0,
+       Odd = 1,
+       Even = 2
+     };
+     enum  StopBit
+     {
+         Bit1 = 0,
+         Bit1_5 = 1,
+         Bit2 = 2
+     };
+
 protected:
     explicit HBModbusClient(QObject *parent = nullptr);
 
@@ -203,6 +235,13 @@ private:
     void pollAllRegisters(QModbusDataUnit::RegisterType type, int count, const char* errMsg);
 
     void pollHoldings(int start, int count, const char* errMsg);
+
+    //Serial
+    BaudRate fromQtBaudRate(QSerialPort::BaudRate baud);
+    DataBit  fromQtDataBits(QSerialPort::DataBits bit);
+    ParityBit fromQtParity(QSerialPort::Parity parity);
+    StopBit   fromQtStopBits(QSerialPort::StopBits stop);
+
 
 signals:
 
