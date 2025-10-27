@@ -16,7 +16,22 @@ class HBModbusClient : public QObject
     Q_OBJECT
     Q_PROPERTY(bool ResetButtonStatus READ getResetButtonStatus WRITE setResetButtonStatus NOTIFY notifyResetButtonStatus FINAL)
 public:
+    struct MODBUS_WELD_RESULT
+    {
+        int         CycleCount;
+        int         Energy;
+        int         Amplitude;
+        int         TriggerPressure;
+        int         WeldingPressure;
+        int         WeldTime;
+        int         PeakPower;
+        int         Preheight;
+        int         PostHeight;
+        int         WeldAlarm;
+        QDateTime   DateTime;
+    };
 
+public:
     static HBModbusClient* getInstance();
     ~HBModbusClient();
 
@@ -244,8 +259,7 @@ private:
 
 
 signals:
-
-    void notifyWeldResultComing(int deviceId, const WELD_RESULT& data);
+    void notifyWeldResultComing(int deviceId, const MODBUS_WELD_RESULT& data);
 
     void notifyPresetSettingChanged(int deviceId, const WELD_PRESET& data);
 

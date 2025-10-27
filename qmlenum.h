@@ -46,33 +46,6 @@ public:
     };
     Q_ENUM(MANUAL_COLUMN)
 
-    enum PRODUCTION_COLUMN
-    {
-        PRODUCTION_id                      = 0,    // 生产ID
-        PRODUCTION_welder_id               = 1,    // 焊机ID
-        PRODUCTION_model_id                = 2,    // 模型ID
-        PRODUCTION_create_time             = 3,    // 创建时间
-        PRODUCTION_serial_number           = 4,    // 序号Barcode
-        PRODUCTION_cycle_count             = 5,    // 循环值
-        PRODUCTION_batch_count             = 6,    // 生产值
-        PRODUCTION_energy                  = 7,    // 能量
-        PRODUCTION_amplitude               = 8,    // 振幅
-        PRODUCTION_pressure                = 9,    // 压力
-        PRODUCTION_time                    = 10,   // 焊接时间
-        PRODUCTION_power                   = 11,   // 功率
-        PRODUCTION_pre_height              = 12,   // 焊前高度
-        PRODUCTION_post_height             = 13,   // 焊后高度
-        PRODUCTION_force                   = 14,   // 撕拉力
-        PRODUCTION_residual                = 15,   // 残留度
-        PRODUCTION_good_rate               = 16,   // 良率
-        PRODUCTION_good_subtotal_cycles    = 17,   // 合格
-        PRODUCTION_suspect_subtotal_cycles = 18,   // 次品
-        PRODUCTION_not_definite_cycles     = 19,   // 可疑
-        PRODUCTION_final_result            = 20,   // 产品状态 0_合格 1_次品 2_可疑
-        PRODUCTION_row_number,
-    };
-    Q_ENUM(PRODUCTION_COLUMN)
-
     enum SYSTEM_COLUMN
     {
         SYSTEM_id                   = 0,   // id

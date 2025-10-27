@@ -40,6 +40,31 @@ public:
         DEVICE_IP               = 12,   // 客户端IP
     };
 
+    enum PRODUCTION_COLUMN
+    {
+        PRODUCTION_ID           = 0,    // 生产ID
+        PRODUCTION_WELDER_ID    = 1,    // 焊机ID
+        MODEL_ID                = 2,    // 模型ID
+        PRODUCTION_CREATE_TIME  = 3,    // 创建时间
+        SERIAL_NUMBER           = 4,    // 序号Barcode
+        CYCLE_COUNT             = 5,    // 循环值
+        BATCH_COUNT             = 6,    // 生产值
+        ENERGY                  = 7,    // 能量
+        AMPLITUDE               = 8,    // 振幅
+        WELD_PRESSURE           = 9,    // 压力
+        WELD_TIME               = 10,   // 焊接时间
+        PEAK_POWER              = 11,   // 功率
+        PRE_HEIGHT              = 12,   // 焊前高度
+        POST_HEIGHT             = 13,   // 焊后高度
+        FORCE                   = 14,   // 撕拉力
+        RESIDUAL                = 15,   // 残留度
+        GOOD_RATE               = 16,   // 良率
+        GOOD_CYCLE_COUNT        = 17,   // 合格
+        SUSPECT_CYCLE_COUNT     = 18,   // 次品
+        DEFECTIVE_CYCLE_COUNT   = 19,   // 可疑
+        FINAL_RESULT            = 20,   // 产品状态 0_合格 1_次品 2_可疑
+    };
+
     struct DB_CONFIGURE
     {
         QString                         WelderName;             // 焊机名称
@@ -110,7 +135,7 @@ public:
     {
         int id;                             // 模型id
         int WelderId;                       // 焊机id
-        QString CreateTime;                 // 创建时间
+        QDateTime CreateTime;                 // 创建时间
         int Energy;                         // 能量
         int Amplitude;                      // 振幅
         // int pressure;                    // 压力
@@ -125,6 +150,32 @@ public:
         CENTRALIZED_PROPERTY Centralized;
         int SampleCount;                    // 当前样本数
     };
+
+    struct DB_PRODUCTION
+    {
+        int ProductionID;
+        int WelderID;                       //deviceID
+        int ModelID;                        // 模型ID
+        QDateTime CreateTime;               // 创建时间
+        int SerialNumber;                   // 序号Barcode
+        int CycleCount;                     // 循环值
+        int BatchCount;                     // 生产值
+        int Energy;                         // 能量
+        int Amplitude;                      // 振幅
+        int WeldPressure;                   // 压力
+        int WeldTime;                       // 焊接时间
+        int PeakPower;                      // 功率
+        int Preheight;                      // 焊前高度
+        int PostHeight;                     // 焊后高度
+        int Force;                          // 撕拉力
+        int Residual;                       // 残留度
+        int GoodRate;                       // 良率
+        int GoodCycleCount;                 // 合格
+        int DefectiveCycleCount;            // 次品
+        int SuspectCycleCount;              // 可疑
+        int FinalResult;                    // 产品状态 0_合格 1_次品 2_可疑
+    };
+
 public:
     static DataBaseManager* getInstance();
 
@@ -316,7 +367,7 @@ public:
     /// \param finalResult : 生产状态 0_全部 1_合格 2_次品 3_可疑
     /// \return
     ///
-    QList<_Production_Data> getProductionData(int welderID = 0, int finalResult = 0);
+    QList<DB_PRODUCTION> getProductionData(int welderID = 0, int finalResult = 0);
 
     ///
     /// \brief getWeldTrendData : 获取焊接趋势折线图，取最新五百个
@@ -347,7 +398,7 @@ public:
     /// \param data : 数据
     /// \return : 插入结果
     ///
-    bool insertProductionRow(_Production_Data data);
+    bool insertProductionRow(DB_PRODUCTION data);
 
     // bool saveProductionDataofModbus(Device* device, const QVector<quint16>& inputs, quint32 cycleCount, DateTimeData date);
 
@@ -438,7 +489,7 @@ private:
     /// \param column : 列号
     /// \return : 列名
     ///
-    QString getProduction_ColumnName(QmlEnum::PRODUCTION_COLUMN column);
+    QString getProduction_ColumnName(PRODUCTION_COLUMN column);
 
     ///
     /// \brief getSystem_ColumnName : 通过system_conf列号获取列名
@@ -447,7 +498,7 @@ private:
     ///
     QString getSystem_ColumnName(QmlEnum::SYSTEM_COLUMN column);
 
-    QList<_Production_Data> getAllTrendData(int welderID, int interVal, QDateTime startTime, QDateTime endTime);
+    QList<DB_PRODUCTION> getAllTrendData(int welderID, int interVal, QDateTime startTime, QDateTime endTime);
 
     QString getD2eviceInfo();
 

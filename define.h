@@ -6,6 +6,7 @@
 #include <QByteArray>
 #include <QDateTime>
 #include <QPointF>
+// #include <Database/databasemanager.h>
 
 struct _Network_Data
 {
@@ -40,32 +41,6 @@ struct _IO_Data
     int signal;     // 信号    0:alarm  1:reset 2:not_definite
 };
 
-struct _Production_Data
-{
-    int id;                                // 生产ID
-    int welder_id;                         // 焊机ID
-    int model_id;                          // 模型ID
-    QString create_time;                   // 创建时间
-    int serial_number;                     // 序号Barcode
-    int cycle_count;                       // 循环值
-    int batch_count;                       // 生产值
-    int energy;                            // 能量
-    int amplitude;                         // 振幅
-    int pressure;                          // 压力
-    int time;                          // 焊接时间
-    int power;                             // 功率
-    int pre_height;                        // 焊前高度
-    int post_height;                       // 焊后高度
-    int force;                             // 撕拉力
-    int residual;                          // 残留度
-    int good_rate;                         // 良率
-    int good_subtotal_cycles;              // 合格
-    int suspect_subtotal_cycles;           // 次品
-    int not_definite_cycles;               // 可疑
-    int final_result;                      // 产品状态 0_合格 1_次品 2_可疑
-};
-
-
 struct _System_Data
 {
     int id;                     // id
@@ -98,7 +73,7 @@ struct _Weld_TrendData
     int power_Y_Min{0};
 
     // 数据
-    QList<_Production_Data> data;
+    // QList<DB_PRODUCTION> data;
 };
 
 // 良率趋势数据结构
@@ -130,22 +105,6 @@ struct DateTimeData
     int hour;
     int minute;
     int second;
-};
-
-
-struct WELD_RESULT
-{
-    int         CycleCount;
-    int         Energy;
-    int         Amplitude;
-    int         TriggerPressure;
-    int         WeldingPressure;
-    int         WeldTime;
-    int         PeakPower;
-    int         Preheight;
-    int         PostHeight;
-    int         WeldAlarm;
-    QDateTime   DateTime;
 };
 
 struct WELD_PRESET

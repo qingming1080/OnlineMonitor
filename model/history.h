@@ -3,6 +3,7 @@
 
 #include <QAbstractListModel>
 #include "define.h"
+#include "DataBase/databasemanager.h"
 
 class History : public QAbstractListModel
 {
@@ -38,7 +39,7 @@ private:
 private:
     static History* s_pHistory;
 
-    QList<_Production_Data> m_data;
+    QList<DataBaseManager::DB_PRODUCTION> m_data;
 
     // 生产历史设备号 零为全部
     int m_deviceID{0};

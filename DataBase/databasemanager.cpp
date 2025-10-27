@@ -686,7 +686,7 @@ QList<DataBaseManager::DB_MODEL> DataBaseManager::getModelData()
     {
         data.id                 = query.value(QmlEnum::MODEL_id).toInt();
         data.WelderId          = query.value(QmlEnum::MODEL_welder_id).toInt();
-        data.CreateTime        = query.value(QmlEnum::MODEL_create_time).toString();
+        // data.CreateTime        = query.value(QmlEnum::MODEL_create_time).toString();
         data.Energy             = query.value(QmlEnum::MODEL_energy).toInt();
         data.Amplitude          = query.value(QmlEnum::MODEL_amplitude).toInt();
         // data.pressure        = query.value(QmlEnum::MODEL_pressure).toInt();
@@ -791,9 +791,9 @@ bool DataBaseManager::insertModelRow(DB_MODEL model)
     return query.exec();
 }
 
-QList<_Production_Data> DataBaseManager::getProductionData(int welderID, int finalResult)
+QList<DataBaseManager::DB_PRODUCTION> DataBaseManager::getProductionData(int welderID, int finalResult)
 {
-    QList<_Production_Data> list;
+    QList<DB_PRODUCTION> list;
 
     QSqlQuery query;
     if(welderID != 0 && finalResult != 0)
@@ -801,8 +801,8 @@ QList<_Production_Data> DataBaseManager::getProductionData(int welderID, int fin
         // %1_表格名称
         QString execStr = QString("SELECT * FROM %1 WHERE %2 = :welderID AND %3 = :finalResult ORDER BY create_time DESC LIMIT 150")
                               .arg(PRODUCTION_TABLENAME
-                                   , getProduction_ColumnName(QmlEnum::PRODUCTION_welder_id)
-                                   , getProduction_ColumnName(QmlEnum::PRODUCTION_final_result));
+                                   , getProduction_ColumnName(PRODUCTION_WELDER_ID)
+                                   , getProduction_ColumnName(FINAL_RESULT));
 
         query.prepare(execStr);
         query.bindValue(":welderID", welderID);
@@ -813,7 +813,7 @@ QList<_Production_Data> DataBaseManager::getProductionData(int welderID, int fin
         // %1_表格名称
         QString execStr = QString("SELECT * FROM %1 WHERE %2 = :welderID ORDER BY create_time DESC LIMIT 150")
                               .arg(PRODUCTION_TABLENAME
-                                   , getProduction_ColumnName(QmlEnum::PRODUCTION_welder_id));
+                                   , getProduction_ColumnName(PRODUCTION_WELDER_ID));
 
         query.prepare(execStr);
         query.bindValue(":welderID", welderID);
@@ -823,7 +823,7 @@ QList<_Production_Data> DataBaseManager::getProductionData(int welderID, int fin
         // %1_表格名称
         QString execStr = QString("SELECT * FROM %1 WHERE %2 = :finalResult ORDER BY create_time DESC LIMIT 150")
                               .arg(PRODUCTION_TABLENAME
-                                   , getProduction_ColumnName(QmlEnum::PRODUCTION_final_result));
+                                   , getProduction_ColumnName(FINAL_RESULT));
 
         query.prepare(execStr);
         query.bindValue(":finalResult", finalResult-1);
@@ -833,7 +833,7 @@ QList<_Production_Data> DataBaseManager::getProductionData(int welderID, int fin
         // %1_表格名称
         QString execStr = QString("SELECT * FROM %1 ORDER BY %2 DESC LIMIT 150")
                               .arg(PRODUCTION_TABLENAME
-                                   , getProduction_ColumnName(QmlEnum::PRODUCTION_create_time));
+                                   , getProduction_ColumnName(PRODUCTION_CREATE_TIME));
         query.prepare(execStr);
     }
 
@@ -844,30 +844,30 @@ QList<_Production_Data> DataBaseManager::getProductionData(int welderID, int fin
 
     while(query.next())
     {
-        _Production_Data data;
-        data.id                       = query.value(QmlEnum::PRODUCTION_id).toInt();
-        data.welder_id                = query.value(QmlEnum::PRODUCTION_welder_id).toInt();
-        data.model_id                 = query.value(QmlEnum::PRODUCTION_model_id).toInt();
-        data.create_time              = query.value(QmlEnum::PRODUCTION_create_time).toString();
-        data.serial_number            = query.value(QmlEnum::PRODUCTION_serial_number).toInt();
-        data.cycle_count              = query.value(QmlEnum::PRODUCTION_cycle_count).toInt();
-        data.batch_count              = query.value(QmlEnum::PRODUCTION_batch_count).toInt();
-        data.energy                   = query.value(QmlEnum::PRODUCTION_energy).toInt();
+        DB_PRODUCTION data;
+        // data.id                       = query.value(QmlEnum::PRODUCTION_id).toInt();
+        data.WelderID                = query.value(PRODUCTION_WELDER_ID).toInt();
+        data.ModelID                 = query.value(MODEL_ID).toInt();
+        // data.CreateTime              = query.value(CREATE_TIME).toString();
+        data.SerialNumber            = query.value(SERIAL_NUMBER).toInt();
+        data.CycleCount              = query.value(CYCLE_COUNT).toInt();
+        data.BatchCount              = query.value(BATCH_COUNT).toInt();
+        data.Energy                  = query.value(ENERGY).toInt();
 
-        data.amplitude                = query.value(QmlEnum::PRODUCTION_amplitude).toInt();
-        data.pressure                 = query.value(QmlEnum::PRODUCTION_pressure).toInt();
-        data.time                     = query.value(QmlEnum::PRODUCTION_time).toInt();
-        data.power                    = query.value(QmlEnum::PRODUCTION_power).toInt();
-        data.pre_height               = query.value(QmlEnum::PRODUCTION_pre_height).toInt();
-        data.post_height              = query.value(QmlEnum::PRODUCTION_post_height).toInt();
+        data.Amplitude               = query.value(AMPLITUDE).toInt();
+        data.WeldPressure            = query.value(WELD_PRESSURE).toInt();
+        data.WeldTime                = query.value(WELD_TIME).toInt();
+        data.PeakPower               = query.value(PEAK_POWER).toInt();
+        data.Preheight               = query.value(PRE_HEIGHT).toInt();
+        data.PostHeight              = query.value(POST_HEIGHT).toInt();
 
-        data.force                    = query.value(QmlEnum::PRODUCTION_force).toInt();
-        data.residual                 = query.value(QmlEnum::PRODUCTION_residual).toInt();
-        data.good_rate                = query.value(QmlEnum::PRODUCTION_good_rate).toInt();
-        data.good_subtotal_cycles     = query.value(QmlEnum::PRODUCTION_good_subtotal_cycles).toInt();
-        data.suspect_subtotal_cycles  = query.value(QmlEnum::PRODUCTION_suspect_subtotal_cycles).toInt();
-        data.not_definite_cycles      = query.value(QmlEnum::PRODUCTION_not_definite_cycles).toInt();
-        data.final_result             = query.value(QmlEnum::PRODUCTION_final_result).toInt();
+        data.Force                   = query.value(FORCE).toInt();
+        data.Residual                = query.value(RESIDUAL).toInt();
+        data.GoodRate                = query.value(GOOD_RATE).toInt();
+        data.GoodCycleCount          = query.value(GOOD_CYCLE_COUNT).toInt();
+        data.SuspectCycleCount       = query.value(SUSPECT_CYCLE_COUNT).toInt();
+        data.DefectiveCycleCount     = query.value(DEFECTIVE_CYCLE_COUNT).toInt();
+        data.FinalResult             = query.value(FINAL_RESULT).toInt();
 
         // 历史记录，最新的最先显示
         list.push_front(data);
@@ -887,13 +887,13 @@ _Yield_TrendData DataBaseManager::getYieldTrendData(int interVal, int welderID)
         QSqlQuery query;
         QString execStr = QString("SELECT * FROM %1 WHERE %2 = :welderID ORDER BY %3 DESC LIMIT 1")
                               .arg(PRODUCTION_TABLENAME
-                                   , getProduction_ColumnName(QmlEnum::PRODUCTION_welder_id)
-                                   , getProduction_ColumnName(QmlEnum::PRODUCTION_create_time));
+                                   , getProduction_ColumnName(PRODUCTION_WELDER_ID)
+                                   , getProduction_ColumnName(PRODUCTION_CREATE_TIME));
         query.prepare(execStr);
         query.bindValue(":welderID", welderID);
         if(query.exec() && query.next())
         {
-            endTime = query.value(QmlEnum::PRODUCTION_create_time).toDateTime();
+            endTime = query.value(PRODUCTION_CREATE_TIME).toDateTime();
             startTime = endTime.addSecs(interVal);
             result.startTime = startTime.toString("yyyy-MM-dd hh:mm:ss");
             result.endTime   = endTime.toString("yyyy-MM-dd hh:mm:ss");
@@ -943,7 +943,7 @@ _Yield_TrendData DataBaseManager::getYieldTrendData(int interVal, int welderID)
     }
 #endif
     // 缓存数据
-    QList<_Production_Data> list = getAllTrendData(welderID, interVal, startTime, endTime);
+    QList<DB_PRODUCTION> list = getAllTrendData(welderID, interVal, startTime, endTime);
     int timeInterVal = -interVal / 60;
     QList<int> production_num_list;     // 60个时间段每个时间段的生产总数列表
     QList<int> good_num_list;           // 60个时间段每个时间段的良品总数列表
@@ -956,8 +956,8 @@ _Yield_TrendData DataBaseManager::getYieldTrendData(int interVal, int welderID)
     // 开始计算每个时间段的生产总数与良品总数
     for(int i = 0; i < list.size(); ++i)
     {
-        QDateTime creatTime = QDateTime::fromString(list.at(i).create_time, "yyyy-MM-dd hh:mm:ss");
-        int finalResult = list.at(i).final_result;
+        QDateTime creatTime = list.at(i).CreateTime;
+        int finalResult = list.at(i).FinalResult;
 
         int timeslot_index = startTime.secsTo(creatTime)/60;
         if(timeslot_index >= 0 && timeslot_index < 60)
@@ -993,7 +993,7 @@ bool DataBaseManager::removeProductionRow(int id)
 
     // %1_表格名称 %2_ID字段名称
     QString execStr = QString("DELETE FROM %1 WHERE %2=:id")
-                          .arg(PRODUCTION_TABLENAME, getProduction_ColumnName(QmlEnum::PRODUCTION_id));
+                          .arg(PRODUCTION_TABLENAME, getProduction_ColumnName(PRODUCTION_ID));
 
     // 绑定属性
     query.prepare(execStr);
@@ -1010,7 +1010,7 @@ bool DataBaseManager::clearProduction()
     return query.exec(execStr);
 }
 
-bool DataBaseManager::insertProductionRow(_Production_Data data)
+bool DataBaseManager::insertProductionRow(DB_PRODUCTION data)
 {
     QSqlQuery query;
 
@@ -1029,26 +1029,26 @@ bool DataBaseManager::insertProductionRow(_Production_Data data)
     query.prepare(execStr);
 
     // 绑定参数
-    query.bindValue(":welder_id", data.welder_id);
-    query.bindValue(":model_id", data.model_id);
-    query.bindValue(":create_time", data.create_time);
-    //query.bindValue(":serial_number",data.serial_number);
-    query.bindValue(":cycle_count", data.cycle_count);
-    //query.bindValue(":batch_count",data.batch_count);
-    query.bindValue(":energy", data.energy);
-    query.bindValue(":amplitude", data.amplitude);
-    query.bindValue(":pressure", data.pressure);
-    query.bindValue(":time", data.time);
-    query.bindValue(":power", data.power);
-    query.bindValue(":pre_height", data.pre_height);
-    query.bindValue(":post_height", data.post_height);
-    query.bindValue(":force", data.force);
-    query.bindValue(":residual", data.residual);
-    query.bindValue(":good_rate", data.good_rate);
-    query.bindValue(":good_subtotal_cycles", data.good_subtotal_cycles);
-    query.bindValue(":suspect_subtotal_cycles", data.suspect_subtotal_cycles);
-    query.bindValue(":not_definite_cycles", data.not_definite_cycles);
-    query.bindValue(":final_result", data.final_result);
+    query.bindValue(":welder_id", data.WelderID);
+    query.bindValue(":model_id", data.ModelID);
+    // query.bindValue(":create_time", data.CreateTime);
+    query.bindValue(":serial_number",data.SerialNumber);
+    query.bindValue(":cycle_count", data.CycleCount);
+    query.bindValue(":batch_count",data.BatchCount);
+    query.bindValue(":energy", data.Energy);
+    query.bindValue(":amplitude", data.Amplitude);
+    query.bindValue(":pressure", data.WeldPressure);
+    query.bindValue(":time", data.WeldTime);
+    query.bindValue(":power", data.PeakPower);
+    query.bindValue(":pre_height", data.Preheight);
+    query.bindValue(":post_height", data.PostHeight);
+    query.bindValue(":force", data.Force);
+    query.bindValue(":residual", data.Residual);
+    query.bindValue(":good_rate", data.GoodRate);
+    query.bindValue(":good_subtotal_cycles", data.GoodCycleCount);
+    query.bindValue(":suspect_subtotal_cycles", data.SuspectCycleCount);
+    query.bindValue(":not_definite_cycles", data.DefectiveCycleCount);
+    query.bindValue(":final_result", data.FinalResult);
 
     // 调试输出
     qDebug() << "SQL Query:" << execStr;
@@ -1436,51 +1436,51 @@ QString DataBaseManager::getModel_ColumnName(QmlEnum::MODEL_COLUMN column)
     return "";
 }
 
-QString DataBaseManager::getProduction_ColumnName(QmlEnum::PRODUCTION_COLUMN column)
+QString DataBaseManager::getProduction_ColumnName(PRODUCTION_COLUMN column)
 {
     switch(column)
     {
-    case QmlEnum::PRODUCTION_id:
+    case PRODUCTION_ID:
         return "id";
-    case QmlEnum::PRODUCTION_welder_id:
+    case PRODUCTION_WELDER_ID:
         return "welder_id";
-    case QmlEnum::PRODUCTION_model_id:
+    case MODEL_ID:
         return "model_id";
-    case QmlEnum::PRODUCTION_create_time:
+    case PRODUCTION_CREATE_TIME:
         return "create_time";
-    case QmlEnum::PRODUCTION_serial_number:
+    case SERIAL_NUMBER:
         return "serial_number";
-    case QmlEnum::PRODUCTION_cycle_count:
+    case CYCLE_COUNT:
         return "cycle_count";
-    case QmlEnum::PRODUCTION_batch_count:
+    case BATCH_COUNT:
         return "batch_count";
-    case QmlEnum::PRODUCTION_energy:
+    case ENERGY:
         return "energy";
-    case QmlEnum::PRODUCTION_amplitude:
+    case AMPLITUDE:
         return "amplitude";
-    case QmlEnum::PRODUCTION_pressure:
+    case WELD_PRESSURE:
         return "pressure";
-    case QmlEnum::PRODUCTION_time:
+    case WELD_TIME:
         return "time";
-    case QmlEnum::PRODUCTION_power:
+    case PEAK_POWER:
         return "power";
-    case QmlEnum::PRODUCTION_pre_height:
+    case PRE_HEIGHT:
         return "pre_height";
-    case QmlEnum::PRODUCTION_post_height:
+    case POST_HEIGHT:
         return "post_height";
-    case QmlEnum::PRODUCTION_force:
+    case FORCE:
         return "force";
-    case QmlEnum::PRODUCTION_residual:
+    case RESIDUAL:
         return "residual";
-    case QmlEnum::PRODUCTION_good_rate:
+    case GOOD_RATE:
         return "good_rate";
-    case QmlEnum::PRODUCTION_good_subtotal_cycles:
+    case GOOD_CYCLE_COUNT:
         return "good_subtotal_cycles";
-    case QmlEnum::PRODUCTION_suspect_subtotal_cycles:
+    case SUSPECT_CYCLE_COUNT:
         return "suspect_subtotal_cycles";
-    case QmlEnum::PRODUCTION_not_definite_cycles:
+    case DEFECTIVE_CYCLE_COUNT:
         return "not_definite_cycles";
-    case QmlEnum::PRODUCTION_final_result:
+    case FINAL_RESULT:
         return "final_result";
     }
 
@@ -1508,17 +1508,17 @@ QString DataBaseManager::getSystem_ColumnName(QmlEnum::SYSTEM_COLUMN column)
     return "";
 }
 
-QList<_Production_Data> DataBaseManager::getAllTrendData(int welderID, int interVal, QDateTime startTime, QDateTime endTime)
+QList<DataBaseManager::DB_PRODUCTION> DataBaseManager::getAllTrendData(int welderID, int interVal, QDateTime startTime, QDateTime endTime)
 {
-    QList<_Production_Data> list;
+    QList<DB_PRODUCTION> list;
 
     QSqlQuery query;
     QString execStr = QString("SELECT * FROM %1 WHERE %2 BETWEEN '%3' AND '%4' AND %5 = '%6'")
                           .arg(PRODUCTION_TABLENAME
-                               , getProduction_ColumnName(QmlEnum::PRODUCTION_create_time)
+                               , getProduction_ColumnName(PRODUCTION_CREATE_TIME)
                                , startTime.toString("yyyy-MM-dd hh:mm:ss")
                                , endTime.toString("yyyy-MM-dd hh:mm:ss")
-                               , getProduction_ColumnName(QmlEnum::PRODUCTION_welder_id)
+                               , getProduction_ColumnName(PRODUCTION_WELDER_ID)
                                , QString::number(welderID));
 
     if(!query.exec(execStr))
@@ -1528,11 +1528,11 @@ QList<_Production_Data> DataBaseManager::getAllTrendData(int welderID, int inter
 
     while(query.next())
     {
-        _Production_Data data;
+        DB_PRODUCTION data;
         // 生产时间
-        data.create_time  = query.value(QmlEnum::PRODUCTION_create_time).toString();
+        // data.CreateTime  = query.value(QmlEnum::PRODUCTION_create_time).toString();
         // 产品状态
-        data.final_result = query.value(QmlEnum::PRODUCTION_final_result).toInt();
+        data.FinalResult = query.value(FINAL_RESULT).toInt();
 
         list.push_back(data);
     }
