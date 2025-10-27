@@ -244,12 +244,9 @@ private:
 
     void ParseDeviceIOResetStatus();
 
-    template<typename Setter>
-    void pollRegisters(QModbusDataUnit::RegisterType type, int count, Setter setter, const char* errMsg);
+    void updateLedStatus(int ledIndex, bool condition);
 
-    void pollAllRegisters(QModbusDataUnit::RegisterType type, int count, const char* errMsg);
-
-    void pollHoldings(int start, int count, const char* errMsg);
+    void readRegisters(QModbusDataUnit::RegisterType type,int startAddress, int count, const char* errMsg);
 
     //Serial
     BaudRate fromQtBaudRate(QSerialPort::BaudRate baud);
@@ -278,6 +275,7 @@ private:
     static unsigned char    m_Discreteds[DEV_DISCRETE_REGISTERS_COUNT * DEV_COUNT];
     static unsigned short   m_Holdings[SYS_HOLDING_REGISTERS_COUNT + DEV_HOLDING_REGISTERS_COUNT * DEV_COUNT];
     static unsigned short   m_Inputs[DEV_INPUT_REGISTERS_COUNT * DEV_COUNT];
+    static QVector<WELD_PRESET> m_lastPresets;
 
     static HBModbusClient* m_instance;
 
@@ -288,6 +286,9 @@ private:
     mutable QMutex m_mutex;
 
     bool m_bFrontPanelResetButton;
+
+
+    bool m_isFirstPresetParse = true;
 };
 
 #endif // HBMODBUSCLIENT_H

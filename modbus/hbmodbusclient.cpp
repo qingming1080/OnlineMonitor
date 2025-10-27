@@ -20,6 +20,7 @@ unsigned char  HBModbusClient::m_LastDiscreteds[DEV_DISCRETE_REGISTERS_COUNT * D
 unsigned short HBModbusClient::m_Holdings[SYS_HOLDING_REGISTERS_COUNT + DEV_HOLDING_REGISTERS_COUNT * DEV_COUNT] = {0};
 unsigned short HBModbusClient::m_Inputs[DEV_INPUT_REGISTERS_COUNT * DEV_COUNT] = {0};
 unsigned int HBModbusClient::m_iPreviousCycleCount[DEV_COUNT] = {0, 0, 0, 0};
+QVector<WELD_PRESET> HBModbusClient::m_lastPresets(DEV_COUNT);
 HBModbusClient* HBModbusClient::m_instance = nullptr;
 
 HBModbusClient::HBModbusClient( QObject *parent)
@@ -73,12 +74,15 @@ void HBModbusClient::onPollingTimeoutEvent()
 {
     if(modbusClient->state() == QModbusDevice::ConnectedState)
     {
-        // 读取各类寄存器数据
-        pollHoldings(0, SYS_HOLDING_REGISTERS_COUNT, "Modbus系统保持寄存器读取失败:");
-        pollHoldings(HOLDING_REGISTERS_ADDRESS_BASE, END_OF_DEV_HOLDING_REGISTER - HOLDING_REGISTERS_ADDRESS_BASE, "Modbus设备保持寄存器读取失败:");
-        pollAllRegisters(QModbusDataUnit::InputRegisters, DEV_INPUT_REGISTERS_COUNT * DEV_COUNT, "Modbus输入寄存器读取失败:");
-        pollAllRegisters(QModbusDataUnit::Coils, SYS_COILS_REGISTERS_COUNT + DEV_COILS_REGISTERS_COUNT * DEV_COUNT, "Modbus线圈读取失败:");
-        pollAllRegisters(QModbusDataUnit::DiscreteInputs, DEV_DISCRETE_REGISTERS_COUNT * DEV_COUNT, "Modbus离散输入读取失败:");
+        readRegisters(QModbusDataUnit::HoldingRegisters, SYS_RTC_YY, SYS_HOLDING_REGISTERS_COUNT, "Modbus系统保持寄存器读取失败:");
+
+        readRegisters(QModbusDataUnit::HoldingRegisters, HOLDING_REGISTERS_ADDRESS_BASE, DEV_HOLDING_REGISTERS_COUNT * DEV_COUNT, "Modbus设备保持寄存器读取失败:");
+
+        readRegisters(QModbusDataUnit::InputRegisters, DEV_CYCLE_COUNT_H, DEV_INPUT_REGISTERS_COUNT * DEV_COUNT, "Modbus输入寄存器读取失败:");
+
+        readRegisters(QModbusDataUnit::Coils, SYS_LED_L_BIT0, SYS_COILS_REGISTERS_COUNT + DEV_COILS_REGISTERS_COUNT * DEV_COUNT, "Modbus线圈读取失败:");
+
+        readRegisters(QModbusDataUnit::DiscreteInputs, DEV_STATUE, DEV_DISCRETE_REGISTERS_COUNT * DEV_COUNT, "Modbus离散输入读取失败:");
     }
     else
     {
@@ -86,75 +90,76 @@ void HBModbusClient::onPollingTimeoutEvent()
     }
 }
 
-void HBModbusClient::pollAllRegisters(QModbusDataUnit::RegisterType type, int count, const char* errMsg)
+void HBModbusClient::readRegisters(QModbusDataUnit::RegisterType type,int startAddress, int count, const char* errMsg)
 {
-    pollRegisters(type, count,
-                  [this, type](int i, quint16 value) {
-                      switch(type)
-                    {
-                      case QModbusDataUnit::HoldingRegisters: m_Holdings[i] = value; break;
-                      case QModbusDataUnit::InputRegisters: m_Inputs[i] = value; break;
-                      case QModbusDataUnit::Coils: m_Coils[i] = value; break;
-                      case QModbusDataUnit::DiscreteInputs: m_Discreteds[i] = value; break;
-                      default: break;
-                    }
-                  },errMsg);
-}
+    QModbusDataUnit unit(type, startAddress, count);
 
-template<typename Setter>
-void HBModbusClient::pollRegisters(QModbusDataUnit::RegisterType type, int count, Setter setter, const char* errMsg)
-{
-    QModbusDataUnit unit(type, 0, count);
-    if (auto *reply = modbusClient->sendReadRequest(unit, 1))
+    if (auto* reply = modbusClient->sendReadRequest(unit, 1))
     {
-        connect(reply, &QModbusReply::finished, this, [this, reply, setter, errMsg,type]() {
-            if (reply->error() == QModbusDevice::NoError) {
-                const QModbusDataUnit u = reply->result();
-                for (unsigned int i = 0; i < u.valueCount(); ++i) {
-                    setter(i, u.value(i));
-                }
-                switch(type)
+        connect(reply, &QModbusReply::finished, this,[this, reply, errMsg, type, startAddress]()
                 {
-                case QModbusDataUnit::InputRegisters:
-                    ParseWeldResult();
-                    break;
-                case QModbusDataUnit::HoldingRegisters:
-                    ParsePresetSetting();
-                    break;
-                case QModbusDataUnit::DiscreteInputs:
-                    ParseDeviceStatus();
-                    break;
-                case QModbusDataUnit::Coils:
-                    ParseResetButton();
-                    ParseDeviceIOResetStatus();
-                    break;
-                default: break;
-                }
-            } else {
-                qWarning() << errMsg << reply->errorString();
-            }
-            reply->deleteLater();
-        });
+
+                    if (reply->error() == QModbusDevice::NoError)
+                    {
+                        const QModbusDataUnit modbusDataUnit = reply->result();
+
+
+                        for (int i = 0; i < modbusDataUnit.valueCount(); ++i)
+                        {
+                            const quint16 value = modbusDataUnit.value(i);
+                            const int index = startAddress + i;
+
+                            switch (type)
+                            {
+                            case QModbusDataUnit::HoldingRegisters:
+                                m_Holdings[index] = value;
+                                break;
+                            case QModbusDataUnit::InputRegisters:
+                                m_Inputs[index] = value;
+                                break;
+                            case QModbusDataUnit::Coils:
+                                m_Coils[index] = value;
+                                break;
+                            case QModbusDataUnit::DiscreteInputs:
+                                m_Discreteds[index] = value;
+                                break;
+                            default: break;
+                            }
+                        }
+
+                        switch (type)
+                        {
+                        case QModbusDataUnit::HoldingRegisters:
+                            if (startAddress >= HOLDING_REGISTERS_ADDRESS_BASE)
+                                ParsePresetSetting();
+                            break;
+                        case QModbusDataUnit::InputRegisters:
+                            ParseWeldResult();
+                            break;
+                        case QModbusDataUnit::DiscreteInputs:
+                            ParseDeviceStatus();
+                            break;
+                        case QModbusDataUnit::Coils:
+                            ParseResetButton();
+                            ParseDeviceIOResetStatus();
+                            break;
+                        default:
+                            break;
+                        }
+
+                    } else
+                    {
+                        qWarning() << errMsg << reply->errorString();
+                    }
+
+                    reply->deleteLater();
+                });
     }
-
 }
-
-void HBModbusClient::pollHoldings(int start, int count, const char* errMsg)
-{
-    pollRegisters(QModbusDataUnit::HoldingRegisters, count,
-                  [this, start](int i, quint16 v)
-                  {
-                      // QMutexLocker locker(&m_mutex);
-                      m_Holdings[start + i] = v;
-                  },
-                  errMsg);
-}
-
 
 
 void HBModbusClient::WriteHoldingRegisters(int startAddress, const QVector<quint16>& values)
 {
-     qDebug() << "准备写寄存器, 起始地址:" << startAddress << "值:" << values;
 
     // QMutexLocker locker(&m_mutex);
     for (int i = 0; i < values.size(); ++i)
@@ -193,8 +198,8 @@ void HBModbusClient::WriteCoils(int startAddress, const QVector<quint8>& values)
         QModbusDataUnit writeUnit(QModbusDataUnit::Coils, startAddress, values.size());
         for (int i = 0; i < values.size(); ++i)
         {
-            QMutexLocker locker(&m_mutex);
             writeUnit.setValue(i, values[i]);
+            qDebug() << "WriteCoils success, addr:" << startAddress << "values:" << values;
         }
         if (auto *reply = modbusClient->sendWriteRequest(writeUnit, 1))
         {
@@ -265,25 +270,34 @@ void HBModbusClient::ParseWeldResult()
 void HBModbusClient::ParsePresetSetting()
 {
     WELD_PRESET weldPreset;
-    // int base = 0;
     for (int i = 0; i < DEV_COUNT; ++i)
     {
         int base = SYS_HOLDING_REGISTERS_COUNT + i * DEV_HOLDING_REGISTERS_COUNT;;
-
-        qDebug()<< "ParsePresetSetting base" << base;
         weldPreset.Energy          = m_Holdings[base + (DEV_ENERGY_SET - SYS_HOLDING_REGISTERS_COUNT)];
         weldPreset.Amplitude       = m_Holdings[base + (DEV_AMPLITUDE_SET - SYS_HOLDING_REGISTERS_COUNT)];
         weldPreset.TriggerPressure = m_Holdings[base + (DEV_TP_SET - SYS_HOLDING_REGISTERS_COUNT)];
         weldPreset.WeldingPressure = m_Holdings[base + (DEV_WP_SET - SYS_HOLDING_REGISTERS_COUNT)];
 
-        qDebug() << "[ParsePresetSetting] Device:" << i
-                 << "Energy:" << weldPreset.Energy << base + (DEV_ENERGY_SET - SYS_HOLDING_REGISTERS_COUNT)
-                 << "Amplitude:" << weldPreset.Amplitude << base + (DEV_AMPLITUDE_SET - SYS_HOLDING_REGISTERS_COUNT)
-                 << "TriggerPressure:" << weldPreset.TriggerPressure << base + (DEV_TP_SET - SYS_HOLDING_REGISTERS_COUNT)
-                 << "WeldingPressure:" << weldPreset.WeldingPressure << base + (DEV_WP_SET - SYS_HOLDING_REGISTERS_COUNT);
 
-        emit notifyPresetSettingChanged(i, weldPreset);
+        bool changed = m_isFirstPresetParse ||
+            weldPreset.Energy          != m_lastPresets[i].Energy ||
+            weldPreset.Amplitude       != m_lastPresets[i].Amplitude ||
+            weldPreset.TriggerPressure != m_lastPresets[i].TriggerPressure ||
+            weldPreset.WeldingPressure != m_lastPresets[i].WeldingPressure;
+
+        if (changed)
+        {
+            qDebug() << "[ParsePresetSetting] Device:" << i
+                     << "Energy:" << weldPreset.Energy
+                     << "Amplitude:" << weldPreset.Amplitude
+                     << "TriggerPressure:" << weldPreset.TriggerPressure
+                     << "WeldingPressure:" << weldPreset.WeldingPressure;
+
+            emit notifyPresetSettingChanged(i, weldPreset);
+            m_lastPresets[i] = weldPreset;
+        }
     }
+    m_isFirstPresetParse = false;
 }
 
 void HBModbusClient::ParseDeviceStatus()
@@ -339,32 +353,38 @@ void HBModbusClient::setSystemClock(const QDateTime &datetime)
 
 Q_INVOKABLE void HBModbusClient::setLearnLedStatus(bool condition)
 {
-    QVector<quint8> value(1, condition ? 1 : 0);
-    qDebug() << "[LED] 设置Learn LED:" << condition << "写入地址:" << SYS_LED_L_BIT0;
-    WriteCoils(SYS_LED_L_BIT0, value);
-
+    updateLedStatus(SYS_LED_L_BIT0, condition);
 }
 
 Q_INVOKABLE void HBModbusClient::setPilotLedStatus(bool condition)
 {
-    QVector<quint8> value(1, condition ? 1 : 0);
-    qDebug() << "[LED] 设置Learn LED:" << condition << "写入地址:" << SYS_LED_P_BIT1;
-    WriteCoils(SYS_LED_P_BIT1, value);
-
+    updateLedStatus(SYS_LED_P_BIT1, condition);
 }
+
 Q_INVOKABLE void HBModbusClient::setReadyLedStatus(bool condition)
 {
-    QVector<quint8> value(1, condition ? 1 : 0);
-        qDebug() << "[LED] 设置Learn LED:" << condition << "写入地址:" << SYS_LED_R_BIT2;
-    WriteCoils(SYS_LED_R_BIT2, value);
-
+    updateLedStatus(SYS_LED_R_BIT2, condition);
 }
+
 Q_INVOKABLE void HBModbusClient::setAlarmLedStatus(bool condition)
 {
-    QVector<quint8> value(1, condition ? 1 : 0);
-    qDebug() << "[LED] 设置Learn LED:" << condition << "写入地址:" << SYS_LED_A_BIT3;
-    WriteCoils(SYS_LED_A_BIT3, value);
+    updateLedStatus(SYS_LED_A_BIT3, condition);
 }
+
+
+void HBModbusClient::updateLedStatus(int ledIndex, bool condition)
+{
+    QVector<quint8> values(4, 0);
+    values[0] = m_Coils[SYS_LED_L_BIT0];
+    values[1] = m_Coils[SYS_LED_P_BIT1];
+    values[2] = m_Coils[SYS_LED_R_BIT2];
+    values[3] = m_Coils[SYS_LED_A_BIT3];
+
+    values[ledIndex] = condition ? 1 : 0;
+    WriteCoils(SYS_LED_L_BIT0, values);
+    m_Coils[SYS_LED_L_BIT0 + ledIndex] = values[ledIndex];
+}
+
 
 Q_INVOKABLE void HBModbusClient::setDeviceIOStatusReject(int deviceId, bool condition) {
 
@@ -520,17 +540,37 @@ HBModbusClient::DataBit HBModbusClient::fromQtDataBits(QSerialPort::DataBits bit
 
 }
 
+// Q_INVOKABLE void HBModbusClient::setSysLedStatus(bool condition)
+// {
+//     // ledIndex: 灯编号（0=L, 1=P, 2=R, 3=A）
+//     // condition: true=开, false=关
+
+//     QVector<quint8> values(4, 0);
+//     if (condition) {
+//         values[SYS_LED_L_BIT0] = 1;
+//         values[SYS_LED_P_BIT1] = 0;
+//         values[SYS_LED_R_BIT2] = 0;
+//         values[SYS_LED_A_BIT3] = 0;
+//     } else {
+//         values[SYS_LED_L_BIT0] = 0;
+//         values[SYS_LED_P_BIT1] = 0;
+//         values[SYS_LED_R_BIT2] = 0;
+//         values[SYS_LED_A_BIT3] = 1;
+//     }
+//     WriteCoils(SYS_LED_L_BIT0, values);
+// }
+
 
 
 void HBModbusClient::testAllFunctions()
 {
     auto doTest = [this](){
 
-        setLearnLedStatus(true);
-        setPilotLedStatus(true);
-        setReadyLedStatus(true);
-        setAlarmLedStatus(true);
-        qDebug() << "[Test] LED状态已设置为 true";
+        // setLearnLedStatus(true);
+        // setPilotLedStatus(true);
+        // setReadyLedStatus(true);
+        // setAlarmLedStatus(true);
+        // qDebug() << "[Test] LED状态已设置为 true";
 
 
 
@@ -543,22 +583,34 @@ void HBModbusClient::testAllFunctions()
         qDebug() << "[Test] IO状态已设置为 true";
 
         // 3. 测试 RTC
-        QDate date(2025, 10, 25);
-        QTime time(14, 30, 0);
-        QDateTime datetime(date, time);
-        setSystemClock(datetime);
-        qDebug() << "[Test] 系统时间已设置:" << datetime.toString("yyyy-MM-dd HH:mm:ss");
+        // QDate date(2025, 10, 25);
+        // QTime time(14, 30, 0);
+        // QDateTime datetime(date, time);
+        // setSystemClock(datetime);
+        // qDebug() << "[Test] 系统时间已设置:" << datetime.toString("yyyy-MM-dd HH:mm:ss");
 
-        // 4. 测试 DeviceConfigure
-            DeviceInformation::MODBUS_CONFIGURE config;
-            // 填写示例配置
-            config.ConnectType = DeviceInfoEnum::TCP_IP;
-            config.ProtocolType = DeviceInfoEnum::WLEDER_TYPE::L20_VG;
-            config.ConnectState = DeviceInfoEnum::CONNECT_STATE::CONNECTED;
-            config.NewworkProperties.RemoteIP = "192.168.1.55";
-            config.NewworkProperties.LocalIP  = "192.168.1.100";
-            config.NewworkProperties.PortNumber = 4200;
-            setDeviceConfigure(1, config);
+        // // 4. 测试 DeviceConfigure
+        //     DeviceInformation::MODBUS_CONFIGURE device1;
+        //     // 填写示例配置
+        //     device1.ConnectType = DeviceInfoEnum::TCP_IP;
+        //     device1.ProtocolType = DeviceInfoEnum::WLEDER_TYPE::L20_VG;
+        //     device1.ConnectState = DeviceInfoEnum::CONNECT_STATE::CONNECTED;
+        //     device1.NewworkProperties.RemoteIP = "192.168.1.55";
+        //     device1.NewworkProperties.LocalIP  = "192.168.1.100";
+        //     device1.NewworkProperties.PortNumber = 4200;
+        //     setDeviceConfigure(1, device1);
+
+        //     DeviceInformation::MODBUS_CONFIGURE device2;
+        //     // 填写示例配置
+        //     device2.ConnectType = DeviceInfoEnum::RS232;
+        //     device2.ProtocolType = DeviceInfoEnum::WLEDER_TYPE::L20_TS;
+        //     device2.ConnectState = DeviceInfoEnum::CONNECT_STATE::CONNECTED;
+        //     device2.SerialProperties.ComNumber = 0;
+        //     device2.SerialProperties.ParityBits  = QSerialPort::Parity::NoParity;
+        //     device2.SerialProperties.BaudRate = QSerialPort::Baud9600;
+        //     device2.SerialProperties.DataBits = QSerialPort::Data8;
+        //     device2.SerialProperties.StopBits = QSerialPort::OneStop;
+        //     setDeviceConfigure(2, device2);
 
     };
 

@@ -63,7 +63,7 @@ int main(int argc, char *argv[])
     LocalRecord::getInstance()->start();
 
     //启动modbus服务器进程
-    UtilityAppLauncher::getInstance()->startUtilityApp();
+    // UtilityAppLauncher::getInstance()->startUtilityApp();
 
     LanguageManager LanguageManager;
     Manual* manual = new Manual();
