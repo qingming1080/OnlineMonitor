@@ -351,86 +351,28 @@ void HBModbusClient::setSystemClock(const QDateTime &datetime)
     WriteHoldingRegisters(SYS_RTC_YY, rtcValues);
 }
 
-// Q_INVOKABLE void HBModbusClient::setLearnLedStatus(bool condition)
-// {
-//     QVector<quint8> values(1, condition ? 1 : 0);
-//     qDebug() << "[LED] 设置Learn LED:" << condition << "写入地址:" << SYS_LED_L_BIT0;
-//     WriteCoils(SYS_LED_L_BIT0, values);
-
-// }
-
-// Q_INVOKABLE void HBModbusClient::setPilotLedStatus(bool condition)
-// {
-//     QVector<quint8> value(1, condition ? 1 : 0);
-//     qDebug() << "[LED] 设置Learn LED:" << condition << "写入地址:" << SYS_LED_P_BIT1;
-//     WriteCoils(SYS_LED_P_BIT1, value);
-
-// }
-// Q_INVOKABLE void HBModbusClient::setReadyLedStatus(bool condition)
-// {
-//     QVector<quint8> value(1, condition ? 1 : 0);
-//         qDebug() << "[LED] 设置Learn LED:" << condition << "写入地址:" << SYS_LED_R_BIT2;
-//     WriteCoils(SYS_LED_R_BIT2, value);
-
-// }
-// Q_INVOKABLE void HBModbusClient::setAlarmLedStatus(bool condition)
-// {
-//     QVector<quint8> value(1, condition ? 1 : 0);
-//     qDebug() << "[LED] 设置Learn LED:" << condition << "写入地址:" << SYS_LED_A_BIT3;
-//     WriteCoils(SYS_LED_A_BIT3, value);
-// }
 Q_INVOKABLE void HBModbusClient::setLearnLedStatus(bool condition)
 {
-    QVector<quint8> values(4, 0);
-    values[0] = m_Coils[SYS_LED_L_BIT0];
-    values[1] = m_Coils[SYS_LED_P_BIT1];
-    values[2] = m_Coils[SYS_LED_R_BIT2];
-    values[3] = m_Coils[SYS_LED_A_BIT3];
-
-    values[0] = condition ? 1 : 0;
-
-    qDebug() << "[LED] Learn LED:" << condition << "写入地址:" << SYS_LED_L_BIT0;
-
-    WriteCoils(SYS_LED_L_BIT0, values);
-
-    m_Coils[SYS_LED_L_BIT0] = values[0];
+    updateLedStatus(SYS_LED_L_BIT0, condition);
 }
 
 Q_INVOKABLE void HBModbusClient::setPilotLedStatus(bool condition)
 {
-    QVector<quint8> values(4, 0);
-    values[0] = m_Coils[SYS_LED_L_BIT0];
-    values[1] = m_Coils[SYS_LED_P_BIT1];
-    values[2] = m_Coils[SYS_LED_R_BIT2];
-    values[3] = m_Coils[SYS_LED_A_BIT3];
-
-    values[1] = condition ? 1 : 0;
-
-    qDebug() << "[LED] Pilot LED:" << condition << "写入地址:" << SYS_LED_P_BIT1;
-
-    WriteCoils(SYS_LED_L_BIT0, values);
-
-    m_Coils[SYS_LED_P_BIT1] = values[1];
+    updateLedStatus(SYS_LED_P_BIT1, condition);
 }
 
 Q_INVOKABLE void HBModbusClient::setReadyLedStatus(bool condition)
 {
-    QVector<quint8> values(4, 0);
-    values[0] = m_Coils[SYS_LED_L_BIT0];
-    values[1] = m_Coils[SYS_LED_P_BIT1];
-    values[2] = m_Coils[SYS_LED_R_BIT2];
-    values[3] = m_Coils[SYS_LED_A_BIT3];
-
-    values[2] = condition ? 1 : 0;
-
-    qDebug() << "[LED] Ready LED:" << condition << "写入地址:" << SYS_LED_R_BIT2;
-
-    WriteCoils(SYS_LED_L_BIT0, values);
-
-    m_Coils[SYS_LED_R_BIT2] = values[2];
+    updateLedStatus(SYS_LED_R_BIT2, condition);
 }
 
 Q_INVOKABLE void HBModbusClient::setAlarmLedStatus(bool condition)
+{
+    updateLedStatus(SYS_LED_A_BIT3, condition);
+}
+
+
+void HBModbusClient::updateLedStatus(int ledIndex, bool condition)
 {
     QVector<quint8> values(4, 0);
     values[0] = m_Coils[SYS_LED_L_BIT0];
@@ -438,13 +380,9 @@ Q_INVOKABLE void HBModbusClient::setAlarmLedStatus(bool condition)
     values[2] = m_Coils[SYS_LED_R_BIT2];
     values[3] = m_Coils[SYS_LED_A_BIT3];
 
-    values[3] = condition ? 1 : 0;
-
-    qDebug() << "[LED] Alarm LED:" << condition << "写入地址:" << SYS_LED_A_BIT3;
-
+    values[ledIndex] = condition ? 1 : 0;
     WriteCoils(SYS_LED_L_BIT0, values);
-
-    m_Coils[SYS_LED_A_BIT3] = values[3];
+    m_Coils[SYS_LED_L_BIT0 + ledIndex] = values[ledIndex];
 }
 
 

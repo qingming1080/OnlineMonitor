@@ -43,8 +43,6 @@ public:
 
     Q_INVOKABLE void testAllFunctions();
 
-    // Q_INVOKABLE void setSysLedStatus(bool condition);
-
 private:
     static constexpr int DEV_HOLDING_REGISTERS_COUNT = 30;
     static constexpr int DEV_COILS_REGISTERS_COUNT   = 5;
@@ -230,6 +228,8 @@ private:
     void ParseResetButton();
 
     void ParseDeviceIOResetStatus();
+
+    void updateLedStatus(int ledIndex, bool condition);
 
     void readRegisters(QModbusDataUnit::RegisterType type,int startAddress, int count, const char* errMsg);
 
