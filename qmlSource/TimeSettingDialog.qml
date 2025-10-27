@@ -347,11 +347,12 @@ Dialog {
                     //这里将年月日时间写入到
 
                 }
-                ModbusClient.testAllFunctions()
+                // ModbusClient.testAllFunctions()
+                // ModbusClient.setSysLedStatus(true)
                 ModbusClient.setLearnLedStatus(true);
-                // ModbusClient.setPilotLedStatus(true);
+                ModbusClient.setPilotLedStatus(true);
                 // ModbusClient.setReadyLedStatus(true);
-                // ModbusClient.setAlarmLedStatus(true);
+                ModbusClient.setAlarmLedStatus(true);
 
                 // ModbusClient.setSystemClock(qDateTime.datetime)
             }

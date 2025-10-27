@@ -43,6 +43,8 @@ public:
 
     Q_INVOKABLE void testAllFunctions();
 
+    // Q_INVOKABLE void setSysLedStatus(bool condition);
+
 private:
     static constexpr int DEV_HOLDING_REGISTERS_COUNT = 30;
     static constexpr int DEV_COILS_REGISTERS_COUNT   = 5;

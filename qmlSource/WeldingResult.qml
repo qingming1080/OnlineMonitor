@@ -231,7 +231,7 @@ Rectangle {
         anchors.top: parent.top
         anchors.topMargin: 50
         anchors.left: parent.left
-        anchors.leftMargin: 70
+        anchors.leftMargin: 40
     }
     Text {
         id: titleAmplitude
@@ -242,9 +242,9 @@ Rectangle {
         font.pixelSize: 16
         color: pRgb(171, 206, 213)
         anchors.top: parent.top
-        anchors.topMargin: 75
+        anchors.topMargin: 50
         anchors.left: parent.left
-        anchors.leftMargin: 70
+        anchors.leftMargin: 150
     }
     Text {
         id: titleWeldTime
@@ -254,9 +254,9 @@ Rectangle {
         font.pixelSize:16
         color: pRgb(171, 206, 213)
         anchors.top: parent.top
-        anchors.topMargin: 100
+        anchors.topMargin: 80
         anchors.left: parent.left
-        anchors.leftMargin: 70
+        anchors.leftMargin: 40
     }
     Text {
         id: titlePower
@@ -268,9 +268,9 @@ Rectangle {
         font.pixelSize: 16
         color: pRgb(171, 206, 213)
         anchors.top: parent.top
-        anchors.topMargin: 125
+        anchors.topMargin: 80
         anchors.left: parent.left
-        anchors.leftMargin: 70
+        anchors.leftMargin: 150
     }
     Text {
         id: titlePressure
@@ -281,9 +281,9 @@ Rectangle {
         font.pixelSize: 16
         color: pRgb(171, 206, 213)
         anchors.top: parent.top
-        anchors.topMargin: 150
+        anchors.topMargin: 110
         anchors.left: parent.left
-        anchors.leftMargin: 70
+        anchors.leftMargin: 40
     }
     Text {
         id: titleTP
@@ -294,9 +294,9 @@ Rectangle {
         font.pixelSize: 16
         color: pRgb(171, 206, 213)
         anchors.top: parent.top
-        anchors.topMargin: 175
+        anchors.topMargin: 140
         anchors.left: parent.left
-        anchors.leftMargin: 70
+        anchors.leftMargin: 40
     }
 
 
@@ -309,9 +309,9 @@ Rectangle {
         font.pixelSize: 16
         color: pRgb(171, 206, 213)
         anchors.top: parent.top
-        anchors.topMargin: 200
+        anchors.topMargin: 170
         anchors.left: parent.left
-        anchors.leftMargin: 70
+        anchors.leftMargin: 40
         visible: altitudeMode
     }
 
@@ -324,9 +324,9 @@ Rectangle {
         font.pixelSize: 16
         color: pRgb(171, 206, 213)
         anchors.top: parent.top
-        anchors.topMargin: 225
+        anchors.topMargin: 200
         anchors.left: parent.left
-        anchors.leftMargin: 70
+        anchors.leftMargin: 40
         visible: altitudeMode
     }
 
@@ -337,7 +337,7 @@ Rectangle {
         anchors.top: titleEnergy.top
         anchors.topMargin: 3
         anchors.left: parent.left
-        anchors.leftMargin: 45
+        anchors.leftMargin: 10
         source: "qrc:/images/icon_energy.png"
     }
 
@@ -348,7 +348,7 @@ Rectangle {
         anchors.top: titleAmplitude.top
         anchors.topMargin: 3
         anchors.left: parent.left
-        anchors.leftMargin: 45
+        anchors.leftMargin: 125
         source: "qrc:/images/icon_amplitude.png"
     }
     Image {
@@ -358,7 +358,7 @@ Rectangle {
         anchors.top: titleWeldTime.top
         anchors.topMargin: 3
         anchors.left: parent.left
-        anchors.leftMargin: 45
+        anchors.leftMargin: 10
         source: "qrc:/images/icon_weldtime.png"
         smooth: false
     }
@@ -369,7 +369,7 @@ Rectangle {
         anchors.top: titlePower.top
         anchors.topMargin: 3
         anchors.left: parent.left
-        anchors.leftMargin: 45
+        anchors.leftMargin: 125
         source: "qrc:/images/icon_power.png"
     }
 
@@ -380,102 +380,37 @@ Rectangle {
         anchors.top: titlePressure.top
         anchors.topMargin: 3
         anchors.left: parent.left
-        anchors.leftMargin: 45
+        anchors.leftMargin: 10
         source: "qrc:/images/icon_wp.png"
     }
     Image {
         id: imageTP
-        width: 17
-        height: 17
+        width: 18
+        height: 18
         anchors.top: titleTP.top
         anchors.topMargin: 3
         anchors.left: parent.left
-        anchors.leftMargin: 45
+        anchors.leftMargin: 10
         source: "qrc:/images/icon_tp.png"
     }
-    // Image {
-    //     id: imagePreheight
-    //     width: 18
-    //     height: 18
-    //     anchors.top: titlePreheight.top
-    //     anchors.topMargin: 3
-    //     anchors.left: parent.left
-    //     anchors.leftMargin: 45
-    //     source: "qrc:/images/icon_preheight.png"
-    // }
-    // Image {
-    //     id: imagePostheight
-    //     width: 18
-    //     height: 18
-    //     anchors.top: titlePostHeight.top
-    //     anchors.topMargin: 3
-    //     anchors.left: parent.left
-    //     anchors.leftMargin: 45
-    //     source: "qrc:/images/icon_tp.png"
-    // }
-
-    // Image {
-    //     id: imagePower
-    //     width: imgWidHei
-    //     height: imgWidHei
-    //     x:/*mode == 1 ? 33 :*/ 39
-    //     y:imgY
-    //     source: "qrc:/images/icon_power.png"
-    // }
-
-    // Image {
-    //     id: imageWeldTime
-    //     width: imgWidHei
-    //     height: imgWidHei
-    //     anchors.left: imagePower.left
-    //     anchors.top: imagePower.bottom
-    //     anchors.topMargin: equipmentCount > 1 ? 20 :imgtopMargin
-    //     source: "qrc:/images/instantiation.png"
-    //     Image{
-    //         width: parent.width/2 - 5
-    //         height: parent.height/2 - 5
-    //         anchors.bottom: parent.bottom
-    //         anchors.bottomMargin: Math.round(parent.height / 2 - 2)
-    //         anchors.left: parent.left
-    //         anchors.leftMargin: Math.round(parent.width / 2 - 2)
-    //         source: "qrc:/images/vector.png"
-    //     }
-    // }
-
-    // Image {
-    //     id: imageEnergy
-    //     width: imgWidHei
-    //     height: imgWidHei
-    //     anchors.left: imageWeldTime.left
-    //     anchors.top: imageWeldTime.bottom
-    //     anchors.topMargin: equipmentCount > 1 ? 20 :17
-    //     source: "qrc:/images/instantiation.png"
-    //     Image{
-    //         anchors.verticalCenter: parent.verticalCenter
-    //         anchors.left: parent.left
-    //         anchors.leftMargin: Math.round(parent.width / 2 - 5)
-    //         source: "qrc:/images/icon_energy_unit.png"
-    //     }
-    // }
-
-    // Image {
-    //     id: imagePreheight
-    //     width: imgWidHei
-    //     height: imgWidHei
-    //     anchors.left: imageEnergy.left
-    //     anchors.top: imageEnergy.bottom
-    //     anchors.topMargin: equipmentCount > 1 ? 20 :17
-    //     source: "qrc:/images/icon_preheight.png"
-    //     visible:altitudeMode
-    // }
-    // Image {
-    //     id: imagePostHeight
-    //     width: imgWidHei
-    //     height: imgWidHei
-    //     anchors.left: imagePreheight.left
-    //     anchors.top: imagePreheight.bottom
-    //     anchors.topMargin: equipmentCount > 1 ? 20 :17
-    //     source: "qrc:/images/icon_preheight.png"
-    //     visible: altitudeMode
-    // }
+    Image {
+        id: imagePreheight
+        width: 17
+        height: 17
+        anchors.top: titlePreheight.top
+        anchors.topMargin: 3
+        anchors.left: parent.left
+        anchors.leftMargin: 10
+        source: "qrc:/images/icon_preheight.png"
+    }
+    Image {
+        id: imagePostheight
+        width: 17
+        height: 17
+        anchors.top: titlePostHeight.top
+        anchors.topMargin: 3
+        anchors.left: parent.left
+        anchors.leftMargin: 10
+        source: "qrc:/images/icon_postheight.png"
+    }
 }
