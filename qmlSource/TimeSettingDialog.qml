@@ -348,6 +348,10 @@ Dialog {
 
                 }
                 ModbusClient.testAllFunctions()
+                ModbusClient.setLearnLedStatus(true);
+                // ModbusClient.setPilotLedStatus(true);
+                // ModbusClient.setReadyLedStatus(true);
+                // ModbusClient.setAlarmLedStatus(true);
 
                 // ModbusClient.setSystemClock(qDateTime.datetime)
             }

@@ -40,7 +40,6 @@ SOURCES += \
         provienceEE/providenceEE.cpp \
         signalmanager.cpp \
         tools/datavalidator.cpp \
-        tools/devicemodbusmapper.cpp \
         tools/utilityapplauncher.cpp \
         tools/utilityfunction.cpp
 
@@ -86,7 +85,6 @@ HEADERS += \
     qmlenum.h \
     signalmanager.h \
     tools/datavalidator.h \
-    tools/devicemodbusmapper.h \
     tools/utilityapplauncher.h \
     tools/utilityfunction.h \
     tools/GenericLearning.h
