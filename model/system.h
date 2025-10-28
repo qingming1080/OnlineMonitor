@@ -2,54 +2,53 @@
 #define SYSTEM_H
 
 #include <QObject>
+#include "DataBase/databasemanager.h"
 
 class System : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(int id           READ id             WRITE setId             NOTIFY idChanged)
-    Q_PROPERTY(int singleFact   READ singleFact     WRITE setSingleFact     NOTIFY singleFactChanged)
-    Q_PROPERTY(int generalFact  READ generalFact    WRITE setGeneralFact    NOTIFY generalFactChanged)
-    Q_PROPERTY(int otherFace    READ otherFace      WRITE setOtherFace      NOTIFY otherFaceChanged)
-    Q_PROPERTY(int autoModel    READ autoModel      WRITE setAutoModel      NOTIFY autoModelChanged)
+    // Q_PROPERTY(int id           READ id             WRITE setId             NOTIFY idChanged)
+    Q_PROPERTY(QString SingleFactor         READ getSingleFactor        WRITE setSingleFactor       NOTIFY notifySingleFactorChanged)
+    Q_PROPERTY(QString GeneralFactor        READ getGeneralFactor       WRITE setGeneralFactor      NOTIFY notifyGeneralFactorChanged)
+    Q_PROPERTY(QString ForceThreshold       READ getForceThreshold      WRITE setForceThreshold     NOTIFY notifyForceThresholdChanged)
+    Q_PROPERTY(QString ResidualThreshold    READ getResidualThreshold   WRITE setResidualThreshold  NOTIFY notifyResidualThresholdChanged FINAL)
+    Q_PROPERTY(QString AutoUpperLimit       READ getAutoUpperLimit      WRITE setAutoUpperLimit     NOTIFY notifyAutoUpperLimitChanged)
 public:
     explicit System(int welderID = 0, QObject *parent = nullptr);
 
-    Q_INVOKABLE int id() const;
-    Q_INVOKABLE void setId(int newId);
+    // Q_INVOKABLE int id() const;
+    // Q_INVOKABLE void setId(int newId);
 
-    Q_INVOKABLE int singleFact() const;
-    Q_INVOKABLE void setSingleFact(int newSingleFact);
+    QString getSingleFactor() const;
+        int GetSingleFactor() const;
+    void setSingleFactor(const QString &factor);
 
-    Q_INVOKABLE int generalFact() const;
-    Q_INVOKABLE void setGeneralFact(int newGeneralFact);
+    QString getGeneralFactor() const;
+        int GetGeneralFactor() const;
+    void setGeneralFactor(const QString &factor);
 
-    Q_INVOKABLE int otherFace() const;
-    Q_INVOKABLE void setOtherFace(int newOtherFace);
+    QString getForceThreshold() const;
+        int GetForceThreshold() const;
+    void setForceThreshold(const QString &threshold);
 
-    Q_INVOKABLE int autoModel() const;
-    Q_INVOKABLE void setAutoModel(int newAutoModel);
+    QString getResidualThreshold() const;
+        int GetResidualThreshold() const;
+    void setResidualThreshold(const QString &threshold);
+
+    QString getAutoUpperLimit() const;
+        int GetAutoUpperLimit() const;
+    void setAutoUpperLimit(const QString &limit);
 
 signals:
-
-    void idChanged();
-
-    void singleFactChanged();
-
-    void generalFactChanged();
-
-    void otherFaceChanged();
-
-    void autoModelChanged();
-
+    // void idChanged();
+    void notifySingleFactorChanged();
+    void notifyGeneralFactorChanged();
+    void notifyForceThresholdChanged();
+    void notifyResidualThresholdChanged();
+    void notifyAutoUpperLimitChanged();
 private:
-    const int m_welderID;
-
-    int m_id;
-    int m_singleFact{0};
-    int m_generalFact{0};
-    int m_otherFace{0};
-    int m_autoModel{0};
-
+    int m_WelderID;
+    DataBaseManager::DB_SYSTEM   m_DBSystem;
 };
 
 #endif // SYSTEM_H

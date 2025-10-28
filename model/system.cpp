@@ -1,93 +1,139 @@
 #include "system.h"
-#include "DataBase/databasemanager.h"
-
 #include "signalmanager.h"
 #include <QDebug>
 #include <QElapsedTimer>
 #include "log/localrecord.h"
 
 System::System(int welderID, QObject *parent)
-    : QObject{parent}, m_welderID(welderID)
+    : QObject{parent}, m_WelderID(welderID)
 {
-    QElapsedTimer timer;
-    timer.start();
+    // QElapsedTimer timer;
+    // timer.start();
 
-    QList<_System_Data> result = DataBaseManager::getInstance()->getSystemData(m_welderID);
-    if(result.size() != 0)
+    bool bResult = DataBaseManager::getInstance()->getSystemData(m_WelderID, m_DBSystem);
+    if(bResult == false)
     {
-        _System_Data data = result.at(0);
-        m_id = data.id;
-        m_singleFact = data.single_fact_setting;
-        m_generalFact = data.general_fact_setting;
-        m_otherFace = data.other_fact_setting;
-        m_autoModel = data.auto_model_limit;
+        setSingleFactor("20");
+        setGeneralFactor("80");
+        setAutoUpperLimit("90");
+        setForceThreshold("1300");
+        setResidualThreshold("90");
     }
 
-    QString text = QString("%1号设备_System_初始化耗时:%2ms").arg(welderID).arg(timer.elapsed());
-    emit SignalManager::getInstance()->signalAddRecord(QDateTime::currentDateTime(), text);
+    // QString text = QString("%1号设备_System_初始化耗时:%2ms").arg(welderID).arg(timer.elapsed());
+    // emit SignalManager::getInstance()->signalAddRecord(QDateTime::currentDateTime(), text);
 }
 
-int System::id() const
+// int System::id() const
+// {
+//     return m_id;
+// }
+
+// void System::setId(int newId)
+// {
+//     if (m_id == newId)
+//         return;
+//     m_id = newId;
+//     emit idChanged();
+// }
+
+QString System::getSingleFactor() const
 {
-    return m_id;
+    return QString::number(m_DBSystem.SingleFactorSetting);
 }
 
-void System::setId(int newId)
+int System::GetSingleFactor() const
 {
-    if (m_id == newId)
+    return m_DBSystem.SingleFactorSetting;
+}
+
+void System::setSingleFactor(const QString &factor)
+{
+    bool isOk;
+    int iFactor = factor.toInt(&isOk);
+    if (!isOk || m_DBSystem.SingleFactorSetting == iFactor)
         return;
-    m_id = newId;
-    emit idChanged();
+    m_DBSystem.SingleFactorSetting = iFactor;
+    emit notifySingleFactorChanged();
 }
 
-int System::singleFact() const
+QString System::getGeneralFactor() const
 {
-    return m_singleFact;
+    return QString::number(m_DBSystem.GeneralFactorSetting);
 }
 
-void System::setSingleFact(int newSingleFact)
+int System::GetGeneralFactor() const
 {
-    if (m_singleFact == newSingleFact)
+    return m_DBSystem.GeneralFactorSetting;
+}
+
+void System::setGeneralFactor(const QString &factor)
+{
+    bool isOk = false;
+    int iFactor = factor.toInt(&isOk);
+    if (!isOk || m_DBSystem.GeneralFactorSetting == iFactor)
         return;
-    m_singleFact = newSingleFact;
-    emit singleFactChanged();
+    m_DBSystem.GeneralFactorSetting = iFactor;
+    emit notifyGeneralFactorChanged();
 }
 
-int System::generalFact() const
+QString System::getForceThreshold() const
 {
-    return m_generalFact;
+    return QString::number(m_DBSystem.ForceThreshold);
 }
 
-void System::setGeneralFact(int newGeneralFact)
+int System::GetForceThreshold() const
 {
-    if (m_generalFact == newGeneralFact)
+    return m_DBSystem.ForceThreshold;
+}
+
+void System::setForceThreshold(const QString &threshold)
+{
+    bool isOk = false;
+    int iThreshold = threshold.toInt(&isOk);
+    if (!isOk || m_DBSystem.ForceThreshold == iThreshold)
         return;
-    m_generalFact = newGeneralFact;
-    emit generalFactChanged();
+    m_DBSystem.ForceThreshold = iThreshold;
+    emit notifyForceThresholdChanged();
 }
 
-int System::otherFace() const
+QString System::getAutoUpperLimit() const
 {
-    return m_otherFace;
+    return QString::number(m_DBSystem.AutoUpperLimit);
 }
 
-void System::setOtherFace(int newOtherFace)
+int System::GetAutoUpperLimit() const
 {
-    if (m_otherFace == newOtherFace)
+    return m_DBSystem.AutoUpperLimit;
+}
+
+void System::setAutoUpperLimit(const QString &limit)
+{
+    bool isOk = false;
+    int iLimit = limit.toInt(&isOk);
+    if (!isOk || m_DBSystem.AutoUpperLimit == iLimit)
         return;
-    m_otherFace = newOtherFace;
-    emit otherFaceChanged();
+    m_DBSystem.AutoUpperLimit = iLimit;
+    emit notifyAutoUpperLimitChanged();
 }
 
-int System::autoModel() const
+QString System::getResidualThreshold() const
 {
-    return m_autoModel;
+    return QString::number(m_DBSystem.ResidualThreshold);
 }
 
-void System::setAutoModel(int newAutoModel)
+int System::GetResidualThreshold() const
 {
-    if (m_autoModel == newAutoModel)
+    return m_DBSystem.ResidualThreshold;
+}
+
+void System::setResidualThreshold(const QString &threshold)
+{
+    bool isOk = false;
+    int iThreshold = threshold.toInt(&isOk);
+    if (!isOk || m_DBSystem.ResidualThreshold == iThreshold)
         return;
-    m_autoModel = newAutoModel;
-    emit autoModelChanged();
+    m_DBSystem.ResidualThreshold = iThreshold;
+    emit notifyResidualThresholdChanged();
 }
+

@@ -1,10 +1,10 @@
 ﻿#include "device.h"
 
 #include "model/deviceinformation.h"
-#include "model/io.h"
 #include "model/manual.h"
 #include "model/system.h"
 #include "model/trend.h"
+#include "model/production.h"
 
 #include "signalmanager.h"
 #include <QDebug>

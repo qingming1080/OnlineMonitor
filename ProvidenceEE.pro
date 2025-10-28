@@ -29,7 +29,6 @@ SOURCES += \
         model/devicemanager.cpp \
         model/devicenames.cpp \
         model/history.cpp \
-        model/io.cpp \
         model/manual.cpp \
         model/message.cpp \
         model/networkmodel.cpp \
@@ -73,7 +72,6 @@ HEADERS += \
     model/devicemanager.h \
     model/devicenames.h \
     model/history.h \
-    model/io.h \
     model/manual.h \
     model/message.h \
     model/networkmodel.h \

@@ -322,7 +322,7 @@ Rectangle {
             color: "#0c5596"
             revealing:{
                 if(DeviceManager.DeviceList[1]){
-                    return DeviceManager.DeviceList[1].pIO.availabel
+                    return DeviceManager.DeviceList[1].DevInfoObject.DefectiveCycleCount
                 }
                 else{
                     return true
@@ -330,7 +330,7 @@ Rectangle {
             }
             eqText1:{
                 if(DeviceManager.DeviceList[1]){
-                    return DeviceManager.DeviceList[1].DevInfoObject.goodCycles
+                    return DeviceManager.DeviceList[1].DevInfoObject.GoodCycleCount
                 }
                 else{
                     return ""
@@ -338,7 +338,7 @@ Rectangle {
             }
             eqText2:{
                 if(DeviceManager.DeviceList[1]){
-                    return DeviceManager.DeviceList[1].DevInfoObject.suspectCycles
+                    return DeviceManager.DeviceList[1].DevInfoObject.SuspectCycleCount
                 }
                 else{
                     return ""

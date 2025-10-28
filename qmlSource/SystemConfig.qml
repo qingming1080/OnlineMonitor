@@ -3,7 +3,6 @@ import QtQuick.Controls 1.4
 import QtQuick.Controls 2.5
 import Device 1.0
 import DeviceInformation 1.0
-import IO 1.0
 import QmlEnum 1.0
 import GlobalLanguageDefine 1.0
 import GlobalSystemDefine   1.0
@@ -33,11 +32,11 @@ Rectangle {
     property bool undetermined3: false
     property bool undetermined4: false
 
-    property Timer updateTimer: Timer {
-           interval: 1000
-           repeat: false
-           onTriggered: DeviceManager.DeviceListChanged()
-       }
+    // property Timer updateTimer: Timer {
+    //        interval: 1000
+    //        repeat: false
+    //        onTriggered: DeviceManager.DeviceListChanged()
+    //    }
     function isValidIP(ip) {
         var regex = /^(25[0-5]|2[0-4][0-9]|1?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|1?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|1?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|1?[0-9][0-9]?)$/;
         return regex.test(ip);

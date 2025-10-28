@@ -863,10 +863,6 @@ QList<DataBaseManager::DB_PRODUCTION> DataBaseManager::getProductionData(int wel
 
         data.Force                   = query.value(FORCE).toInt();
         data.Residual                = query.value(RESIDUAL).toInt();
-        data.GoodRate                = query.value(GOOD_RATE).toInt();
-        data.GoodCycleCount          = query.value(GOOD_CYCLE_COUNT).toInt();
-        data.SuspectCycleCount       = query.value(SUSPECT_CYCLE_COUNT).toInt();
-        data.DefectiveCycleCount     = query.value(DEFECTIVE_CYCLE_COUNT).toInt();
         data.FinalResult             = query.value(FINAL_RESULT).toInt();
 
         // 历史记录，最新的最先显示
@@ -1044,10 +1040,6 @@ bool DataBaseManager::insertProductionRow(DB_PRODUCTION data)
     query.bindValue(":post_height", data.PostHeight);
     query.bindValue(":force", data.Force);
     query.bindValue(":residual", data.Residual);
-    query.bindValue(":good_rate", data.GoodRate);
-    query.bindValue(":good_subtotal_cycles", data.GoodCycleCount);
-    query.bindValue(":suspect_subtotal_cycles", data.SuspectCycleCount);
-    query.bindValue(":not_definite_cycles", data.DefectiveCycleCount);
     query.bindValue(":final_result", data.FinalResult);
 
     // 调试输出
@@ -1123,14 +1115,12 @@ bool DataBaseManager::insertProductionRow(DB_PRODUCTION data)
 //         return true;
 // }
 
-QList<_System_Data> DataBaseManager::getSystemData(int welderID)
+bool DataBaseManager::getSystemData(const int welderID, DataBaseManager::DB_SYSTEM& system)
 {
-    QList<_System_Data> list;
-
+    bool bResult = false;
     QSqlQuery query;
     // %1_表格名称
     QString execStr = QString("SELECT * FROM %1 WHERE %2 = :welderID").arg(SYSTEM_TABLENAME, getSystem_ColumnName(QmlEnum::SYSTEM_welder_id));
-
     query.prepare(execStr);
     query.bindValue(":welderID", welderID);
 
@@ -1138,21 +1128,18 @@ QList<_System_Data> DataBaseManager::getSystemData(int welderID)
     {
         qDebug() << "查询失败: " << query.lastError();
     }
-
-    while(query.next())
+    if(query.next())
     {
-        _System_Data data;
-        data.id                   = query.value(QmlEnum::SYSTEM_COLUMN::SYSTEM_id).toInt();
-        data.welder_id            = query.value(QmlEnum::SYSTEM_COLUMN::SYSTEM_welder_id).toInt();
-        data.single_fact_setting  = query.value(QmlEnum::SYSTEM_COLUMN::SYSTEM_single_fact_setting).toInt();
-        data.general_fact_setting = query.value(QmlEnum::SYSTEM_COLUMN::SYSTEM_general_fact_setting).toInt();
-        data.other_fact_setting   = query.value(QmlEnum::SYSTEM_COLUMN::SYSTEM_other_fact_setting).toInt();
-        data.auto_model_limit     = query.value(QmlEnum::SYSTEM_COLUMN::SYSTEM_auto_model_limit).toInt();
-
-        list.push_back(data);
+        // data.id                   = query.value(QmlEnum::SYSTEM_COLUMN::SYSTEM_id).toInt();
+        // data.welder_id            = query.value(QmlEnum::SYSTEM_COLUMN::SYSTEM_welder_id).toInt();
+        system.SingleFactorSetting  = query.value(QmlEnum::SYSTEM_COLUMN::SYSTEM_single_fact_setting).toInt();
+        system.GeneralFactorSetting = query.value(QmlEnum::SYSTEM_COLUMN::SYSTEM_general_fact_setting).toInt();
+        system.ForceThreshold   = query.value(QmlEnum::SYSTEM_COLUMN::SYSTEM_other_fact_setting).toInt();
+        // data.ResidualThreshold = query.value(QmlEnum::SYSTEM_COLUMN::SYSTEM_other_fact_setting).toInt();
+        system.AutoUpperLimit     = query.value(QmlEnum::SYSTEM_COLUMN::SYSTEM_auto_model_limit).toInt();
+        bResult = true;
     }
-
-    return list;
+    return bResult;
 }
 
 bool DataBaseManager::setSystemData(int id, QmlEnum::SYSTEM_COLUMN column, QVariant data)

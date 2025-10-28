@@ -12,11 +12,7 @@ DeviceInformation::DeviceInformation(int welderID, QObject *parent)
 {
     // QElapsedTimer timer;
     // timer.start();
-    if(m_WelderID == -1)
-    {
-
-    }
-    else if(DataBaseManager::getInstance()->getConfigurationData(welderID, m_DBConfigure) == true)
+    if(DataBaseManager::getInstance()->getConfigurationData(welderID, m_DBConfigure) == true)
     {
         setWelderName(m_DBConfigure.WelderName);
         setWelderType(m_DBConfigure.WelderType);
@@ -29,7 +25,14 @@ DeviceInformation::DeviceInformation(int welderID, QObject *parent)
     }
     else
     {
-
+        setWelderName("NAN");
+        setWelderType(DeviceInfoEnum::L20_VG);
+        setProductionMaxBacth("200000");
+        setMaxModelSamples("20");
+        setYieldRateLowerLimit("90");
+        setHeightEncoderOption(true);
+        setSuspiciousOption(true);
+        setConnectType(DeviceInfoEnum::TCP_IP);
     }
 
     // QString text = QString("%1号设备_DeviceInformation_初始化耗时:%2ms").arg(welderID).arg(timer.elapsed());

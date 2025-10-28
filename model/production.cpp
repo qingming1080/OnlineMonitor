@@ -5,100 +5,160 @@ Production::Production(int welderID, QObject *parent)
 
 }
 
-int Production::goodRate() const
+QString Production::getGoodRate() const
 {
-    return m_goodRate;
+    return QString::number(m_iGoodRate);
 }
 
-void Production::setGoodRate(int newGoodRate)
+void Production::setGoodRate(const QString &rate)
 {
-    if (m_goodRate == newGoodRate)
-        return;
-    m_goodRate = newGoodRate;
-    emit goodRateChanged();
+    bool isOk;
+    int iRate = rate.toInt(&isOk);
+    if (isOk && m_iGoodRate != iRate)
+    {
+        m_iGoodRate = iRate;
+        emit notifyGoodRateChanged();
+    }
 }
 
-int Production::goodCycles() const
+QString Production::getGoodCycleCount() const
 {
-    return m_goodCycles;
+    return QString::number(m_iGoodCycleCount);
 }
 
-void Production::setGoodCycles(int newGoodCycles)
+void Production::setGoodCycleCount(const QString &count)
 {
-    if (m_goodCycles == newGoodCycles)
-        return;
-    m_goodCycles = newGoodCycles;
-    emit goodCyclesChanged();
+    bool isOk = false;
+    int iCount = count.toInt(&isOk);
+    if (isOk && m_iGoodCycleCount != iCount)
+    {
+        m_iGoodCycleCount = iCount;
+        m_iTotalCycleCount = m_iGoodCycleCount + m_iDefectiveCycleCount + m_iSuspectCycleCount;
+        setTotalCycleCount(QString::number(m_iTotalCycleCount));
+        m_iGoodCycleCount = static_cast<int>(m_iGoodCycleCount / m_iTotalCycleCount * 100);
+        setGoodRate(QString::number(m_iGoodCycleCount));
+        emit notifyGoodCycleCountChanged();
+    }
 }
 
-int Production::suspectCycles() const
+QString Production::getSuspectCycleCount() const
 {
-    return m_suspectCycles;
+    return QString::number(m_iSuspectCycleCount);
 }
 
-void Production::setSuspectCycles(int newSuspectCycles)
+void Production::setSuspectCycleCount(const QString &count)
 {
-    if (m_suspectCycles == newSuspectCycles)
-        return;
-    m_suspectCycles = newSuspectCycles;
-    emit suspectCyclesChanged();
+    bool isOk = false;
+    int iCount = count.toInt(&isOk);
+    if (isOk && m_iSuspectCycleCount != iCount)
+    {
+        m_iSuspectCycleCount = iCount;
+        m_iTotalCycleCount = m_iGoodCycleCount + m_iDefectiveCycleCount + m_iSuspectCycleCount;
+        setTotalCycleCount(QString::number(m_iTotalCycleCount));
+        emit notifySuspectCycleCountChanged();
+    }
 }
 
-int  Production::power() const
+QString Production::getDefectiveCycleCount() const
 {
-    return m_power;
+    return QString::number(m_iDefectiveCycleCount);
 }
 
-void Production::setPower(int  newPower)
+void Production::setDefectiveCycleCount(const QString &count)
 {
-    m_power = newPower;
-    emit powerChanged();
+    bool isOk = false;
+    int iCount = count.toInt(&isOk);
+    if (isOk && m_iDefectiveCycleCount != iCount)
+    {
+        m_iDefectiveCycleCount = iCount;
+        m_iTotalCycleCount = m_iGoodCycleCount + m_iDefectiveCycleCount + m_iSuspectCycleCount;
+        setTotalCycleCount(QString::number(m_iTotalCycleCount));
+        emit notifyDefectiveCycleCountChanged();
+    }
 }
 
-int  Production::time() const
+QString Production::getTotalCycleCount() const
 {
-    return m_time;
+    return QString::number(m_iTotalCycleCount);
 }
 
-void Production::setTime(int  newTime)
+void Production::setTotalCycleCount(const QString &count)
 {
-    m_time = newTime;
-    emit timeChanged();
+    bool isOk = false;
+    int iCount = count.toInt(&isOk);
+    if (isOk && m_iTotalCycleCount != iCount)
+    {
+        m_iTotalCycleCount = iCount;
+        emit notifyTotalCycleCountChanged();
+    }
 }
 
-int  Production::energy() const
+int Production::getPeakPower() const
 {
-    return m_energy;
+    return m_DBProduction.PeakPower;
 }
 
-void Production::setEnergy(int  newEnergy)
+void Production::setPeakPower(const int power)
 {
-    m_energy = newEnergy;
-    emit energyChanged();
-
+    if (m_DBProduction.PeakPower != power)
+    {
+        m_DBProduction.PeakPower = power;
+        emit notifyPeakPowerChanged();
+    }
 }
 
-int  Production::heightPre() const
+int Production::getWeldTime() const
 {
-    return m_heightPre;
+    return m_DBProduction.WeldTime;
 }
 
-void Production::setHeightPre(int  newHeightPre)
+void Production::setWeldTime(const int time)
 {
-    m_heightPre = newHeightPre;
-    emit heightPreChanged();
-
+    if (m_DBProduction.WeldTime != time)
+    {
+        m_DBProduction.WeldTime = time;
+        emit notifyWeldTimeChanged();
+    }   
 }
 
-int  Production::heightPost() const
+int Production::getEnergy() const
 {
-    return m_heightPost;
+    return m_DBProduction.Energy;
 }
 
-void Production::setHeightPost(int  newHeightPost)
+void Production::setEnergy(const int energy)
 {
-    if (m_heightPost == newHeightPost)
-        return;
-    m_heightPost = newHeightPost;
-    emit heightPostChanged();
+    if (m_DBProduction.Energy != energy)
+    {
+        m_DBProduction.Energy = energy;
+        emit notifyEnergyChanged();
+    }
+}
+
+int Production::getPreheight() const
+{
+    return m_DBProduction.Preheight;
+}
+
+void Production::setPreheight(const int height)
+{
+    if (m_DBProduction.Preheight != height)
+    {
+        m_DBProduction.Preheight = height;
+        emit notifyPreheightChanged();
+    }
+}
+
+int Production::getPostHeight() const
+{
+    return m_DBProduction.PostHeight;
+}
+
+void Production::setPostHeight(const int height)
+{
+    if (m_DBProduction.PostHeight != height)
+    {
+        m_DBProduction.PostHeight = height;
+        emit notifyPostHeightChanged();
+    }
 }

@@ -81,6 +81,17 @@ public:
         QString                         Device_IP;              // 客户端IP
     };
 
+    struct DB_SYSTEM
+    {
+        // int id;                     // id
+        // int welder_id;              // 设备id
+        int SingleFactorSetting;    // 单因素设置
+        int GeneralFactorSetting;   // 通用系数设置
+        int ForceThreshold;         // 撕拉力阈值设置
+        int ResidualThreshold;      // 残留阈值设置
+        int AutoUpperLimit;         // 自动学习上限
+    };
+
     struct DB_MANUAL
     {
         int WelderId;       // 焊机ID
@@ -169,10 +180,10 @@ public:
         int PostHeight;                     // 焊后高度
         int Force;                          // 撕拉力
         int Residual;                       // 残留度
-        int GoodRate;                       // 良率
-        int GoodCycleCount;                 // 合格
-        int DefectiveCycleCount;            // 次品
-        int SuspectCycleCount;              // 可疑
+        // int GoodRate;                       // 良率
+        // int GoodCycleCount;                 // 合格
+        // int DefectiveCycleCount;            // 次品
+        // int SuspectCycleCount;              // 可疑
         int FinalResult;                    // 产品状态 0_合格 1_次品 2_可疑
     };
 
@@ -408,7 +419,7 @@ public:
     /// \brief getSystemData : 获取system_conf表格数据
     /// \return : 数据
     ///
-    QList<_System_Data> getSystemData(int welderID);
+    bool getSystemData(const int welderID, DataBaseManager::DB_SYSTEM& system);
 
     ///
     /// \brief setIOData : 设置system_conf表格数据

@@ -2,12 +2,15 @@
 #define DEVICE_H
 
 #include <QObject>
-#include "deviceinformation.h"
-#include "io.h"
-#include "trend.h"
-#include "manual.h"
-#include "system.h"
-#include "production.h"
+
+// Forward declarations to avoid recursive includes in headers and reduce
+// precompiled-preamble recursion. Include concrete headers in the .cpp.
+class DeviceInformation;
+class IO;
+class Trend;
+class Manual;
+class System;
+class Production;
 
 // class DeviceInformation;
 // class IO;

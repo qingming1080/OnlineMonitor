@@ -2,87 +2,87 @@
 #define PRODUCTION_H
 
 #include <QObject>
+#include "DataBase/databasemanager.h"
 
 class Production : public QObject
 {
     Q_OBJECT
     /// 2024/04/07  实时良率暴露
     // 实时良率
-    Q_PROPERTY(int  goodRate                    READ goodRate            WRITE setGoodRate            NOTIFY goodRateChanged)
+    Q_PROPERTY(QString GoodRate             READ getGoodRate            WRITE setGoodRate               NOTIFY notifyGoodRateChanged)
     // 合格
-    Q_PROPERTY(int  goodCycles                  READ goodCycles          WRITE setGoodCycles          NOTIFY goodCyclesChanged)
+    Q_PROPERTY(QString GoodCycleCount       READ getGoodCycleCount      WRITE setGoodCycleCount         NOTIFY notifyGoodCycleCountChanged)
     // 可疑
-    Q_PROPERTY(int  suspectCycles               READ suspectCycles       WRITE setSuspectCycles       NOTIFY suspectCyclesChanged)
+    Q_PROPERTY(QString SuspectCycleCount    READ getSuspectCycleCount   WRITE setSuspectCycleCount      NOTIFY notifySuspectCycleCountChanged)
     // 次品
-    // Q_PROPERTY(int              notDefinite                 READ notDefinite         WRITE setNotDefinite         NOTIFY notDefiniteChanged)
+    Q_PROPERTY(QString DefectiveCycleCount  READ getDefectiveCycleCount WRITE setDefectiveCycleCount    NOTIFY notifyDefectiveCycleCountChanged)
+    // Total Count = Good + Suspect + Defective
+    Q_PROPERTY(QString TotalCycleCount       READ getTotalCycleCount    WRITE setTotalCycleCount       NOTIFY notifyTotalCycleCountChanged)
 
     /// 2024/04/07  焊接结果暴露
     // 焊接结果:功率
-    Q_PROPERTY(int  power                       READ power               WRITE setPower               NOTIFY powerChanged)
+    Q_PROPERTY(int PeakPower    READ getPeakPower   WRITE setPeakPower  NOTIFY notifyPeakPowerChanged)
     // 焊接结果:时间
-    Q_PROPERTY(int  time                        READ time                WRITE setTime                NOTIFY timeChanged)
+    Q_PROPERTY(int WeldTime     READ getWeldTime    WRITE setWeldTime   NOTIFY notifyWeldTimeChanged)
     // 焊接结果:能量
-    Q_PROPERTY(int  energy                      READ energy              WRITE setEnergy              NOTIFY energyChanged)
+    Q_PROPERTY(int Energy       READ getEnergy      WRITE setEnergy     NOTIFY notifyEnergyChanged)
     // 焊接结果:焊前高度
-    Q_PROPERTY(int  heightPre                   READ heightPre           WRITE setHeightPre           NOTIFY heightPreChanged)
+    Q_PROPERTY(int Preheight    READ getPreheight   WRITE setPreheight  NOTIFY notifyPreheightChanged)
     // 焊接结果:焊后高度
-    Q_PROPERTY(int  heightPost                  READ heightPost          WRITE setHeightPost          NOTIFY heightPostChanged)
+    Q_PROPERTY(int PostHeight   READ getPostHeight  WRITE setPostHeight NOTIFY notifyPostHeightChanged)
 public:
     explicit Production(int welderID = 0, QObject *parent = nullptr);
 
-    Q_INVOKABLE int goodRate() const;
-    Q_INVOKABLE void setGoodRate(int newGoodRate);
+    QString getGoodRate() const;
+    void setGoodRate(const QString &rate);
 
-    Q_INVOKABLE int goodCycles() const;
-    Q_INVOKABLE void setGoodCycles(int newGoodCycles);
+    QString getGoodCycleCount() const;
+    void setGoodCycleCount(const QString &cycles);
 
-    Q_INVOKABLE int suspectCycles() const;
-    Q_INVOKABLE void setSuspectCycles(int newSuspectCycles);
+    QString getSuspectCycleCount() const;
+    void setSuspectCycleCount(const QString &cycles);
 
-    Q_INVOKABLE int  power() const;
-    Q_INVOKABLE void setPower(int  newPower);
+    QString getDefectiveCycleCount() const;
+    void setDefectiveCycleCount(const QString &cycles);
 
-    Q_INVOKABLE int  time() const;
-    Q_INVOKABLE void setTime(int  newTime);
+    QString getTotalCycleCount() const;
+    void setTotalCycleCount(const QString &cycles);
 
-    Q_INVOKABLE int  energy() const;
-    Q_INVOKABLE void setEnergy(int  newEnergy);
+    int getPeakPower() const;
+    void setPeakPower(const int power);
 
-    Q_INVOKABLE int  heightPre() const;
-    Q_INVOKABLE void setHeightPre(int  newHeightPre);
+    int  getWeldTime() const;
+    void setWeldTime(const int time);
 
-    Q_INVOKABLE int  heightPost() const;
-    Q_INVOKABLE void setHeightPost(int  newHeightPost);
+    int getEnergy() const;
+    void setEnergy(const int energy);
+
+    int getPreheight() const;
+    void setPreheight(const int height);
+
+    int getPostHeight() const;
+    void setPostHeight(const int height);
 
 private:
     int m_WelderID;
-    int  m_power{0};
-    int  m_time{0};
-    int  m_energy{0};
-    // int m_heightPre{0};
-    // int m_heightPost{0};
-    int  m_heightPre{0};
-    int  m_heightPost{0};
-    int m_goodRate{0};
-    int m_goodCycles{0};
-    int m_suspectCycles{0};
+    DataBaseManager::DB_PRODUCTION m_DBProduction;
+    int m_iGoodRate;                       // 良率
+    int m_iGoodCycleCount;                 // 合格
+    int m_iDefectiveCycleCount;            // 次品
+    int m_iSuspectCycleCount;              // 可疑
+    int m_iTotalCycleCount;                // 总数
 
 signals:
-    void goodRateChanged();
-
-    void goodCyclesChanged();
-
-    void suspectCyclesChanged();
-
-    void powerChanged();
-
-    void timeChanged();
-
-    void energyChanged();
-
-    void heightPreChanged();
-
-    void heightPostChanged();
+    void notifyGoodRateChanged();
+    void notifyGoodCycleCountChanged();
+    void notifySuspectCycleCountChanged();
+    void notifyDefectiveCycleCountChanged();
+    void notifyTotalCycleCountChanged();
+    void notifyPeakPowerChanged();
+    void notifyWeldTimeChanged();
+    void notifyEnergyChanged();
+    void notifyPreheightChanged();
+    void notifyPostHeightChanged();
 };
 
 #endif // PRODUCTION_H

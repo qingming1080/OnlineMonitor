@@ -163,11 +163,11 @@ void RS232Model::setRS232Data(int id, int column, QVariant data)
 RS232Model::RS232Model(QObject *parent)
     : QAbstractListModel{parent}
 {
-    QElapsedTimer timer;
-    timer.start();
+    // QElapsedTimer timer;
+    // timer.start();
 
     m_data = DataBaseManager::getInstance()->getRS232Data();
 
-    QString text = QString("RS232_初始化耗时:%1ms").arg(timer.elapsed());
-    emit SignalManager::getInstance()->signalAddRecord(QDateTime::currentDateTime(), text);
+    // QString text = QString("RS232_初始化耗时:%1ms").arg(timer.elapsed());
+    // emit SignalManager::getInstance()->signalAddRecord(QDateTime::currentDateTime(), text);
 }

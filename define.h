@@ -41,18 +41,6 @@ struct _IO_Data
     int signal;     // 信号    0:alarm  1:reset 2:not_definite
 };
 
-struct _System_Data
-{
-    int id;                     // id
-    int welder_id;              // 设备id
-    int single_fact_setting;    // 单因素设置
-    int general_fact_setting;   // 通用系数设置
-    int other_fact_setting;     // 通用系数设置
-    int auto_model_limit;       // 自动学习上限
-};
-
-
-
 // 焊接趋势数据结构
 struct _Weld_TrendData
 {

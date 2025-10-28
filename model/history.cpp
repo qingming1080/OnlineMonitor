@@ -137,14 +137,14 @@ QVariant History::data(const QModelIndex &index, int role) const
         return data.Force;
     case DataBaseManager::RESIDUAL:
         return data.Residual;
-    case DataBaseManager::GOOD_RATE:
-        return data.GoodRate;
-    case DataBaseManager::GOOD_CYCLE_COUNT:
-        return data.GoodCycleCount;
-    case DataBaseManager::SUSPECT_CYCLE_COUNT:
-        return data.SuspectCycleCount;
-    case DataBaseManager::DEFECTIVE_CYCLE_COUNT:
-        return data.DefectiveCycleCount;
+    // case DataBaseManager::GOOD_RATE:
+    //     return data.GoodRate;
+    // case DataBaseManager::GOOD_CYCLE_COUNT:
+    //     return data.GoodCycleCount;
+    // case DataBaseManager::SUSPECT_CYCLE_COUNT:
+    //     return data.SuspectCycleCount;
+    // case DataBaseManager::DEFECTIVE_CYCLE_COUNT:
+    //     return data.DefectiveCycleCount;
     case DataBaseManager::FINAL_RESULT:
         return data.FinalResult;
     // case DataBaseManager::PRODUCTION_row_number:

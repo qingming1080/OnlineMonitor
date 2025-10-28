@@ -287,7 +287,7 @@ Rectangle {
                 }
                 eqText5:{
                     if(DeviceManager.DeviceList[swipeCurrIndex]){
-                        return DeviceManager.DeviceList[swipeCurrIndex].DevInfoObject.goodRate
+                        return DeviceManager.DeviceList[swipeCurrIndex].DevInfoObject.GoodRate
                     }
                     else{
                         return ""
