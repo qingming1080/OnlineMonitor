@@ -540,28 +540,6 @@ HBModbusClient::DataBit HBModbusClient::fromQtDataBits(QSerialPort::DataBits bit
 
 }
 
-// Q_INVOKABLE void HBModbusClient::setSysLedStatus(bool condition)
-// {
-//     // ledIndex: 灯编号（0=L, 1=P, 2=R, 3=A）
-//     // condition: true=开, false=关
-
-//     QVector<quint8> values(4, 0);
-//     if (condition) {
-//         values[SYS_LED_L_BIT0] = 1;
-//         values[SYS_LED_P_BIT1] = 0;
-//         values[SYS_LED_R_BIT2] = 0;
-//         values[SYS_LED_A_BIT3] = 0;
-//     } else {
-//         values[SYS_LED_L_BIT0] = 0;
-//         values[SYS_LED_P_BIT1] = 0;
-//         values[SYS_LED_R_BIT2] = 0;
-//         values[SYS_LED_A_BIT3] = 1;
-//     }
-//     WriteCoils(SYS_LED_L_BIT0, values);
-// }
-
-
-
 void HBModbusClient::testAllFunctions()
 {
     auto doTest = [this](){
@@ -583,34 +561,34 @@ void HBModbusClient::testAllFunctions()
         qDebug() << "[Test] IO状态已设置为 true";
 
         // 3. 测试 RTC
-        // QDate date(2025, 10, 25);
-        // QTime time(14, 30, 0);
-        // QDateTime datetime(date, time);
-        // setSystemClock(datetime);
-        // qDebug() << "[Test] 系统时间已设置:" << datetime.toString("yyyy-MM-dd HH:mm:ss");
+        QDate date(2025, 10, 28);
+        QTime time(14, 30, 0);
+        QDateTime datetime(date, time);
+        setSystemClock(datetime);
+        qDebug() << "[Test] 系统时间已设置:" << datetime.toString("yyyy-MM-dd HH:mm:ss");
 
-        // // 4. 测试 DeviceConfigure
-        //     DeviceInformation::MODBUS_CONFIGURE device1;
-        //     // 填写示例配置
-        //     device1.ConnectType = DeviceInfoEnum::TCP_IP;
-        //     device1.ProtocolType = DeviceInfoEnum::WLEDER_TYPE::L20_VG;
-        //     device1.ConnectState = DeviceInfoEnum::CONNECT_STATE::CONNECTED;
-        //     device1.NewworkProperties.RemoteIP = "192.168.1.55";
-        //     device1.NewworkProperties.LocalIP  = "192.168.1.100";
-        //     device1.NewworkProperties.PortNumber = 4200;
-        //     setDeviceConfigure(1, device1);
+        // 4. 测试 DeviceConfigure
+            DeviceInformation::MODBUS_CONFIGURE device1;
+            // 填写示例配置
+            device1.ConnectType = DeviceInfoEnum::TCP_IP;
+            device1.ProtocolType = DeviceInfoEnum::WLEDER_TYPE::L20_VG;
+            device1.ConnectState = DeviceInfoEnum::CONNECT_STATE::CONNECTED;
+            device1.NewworkProperties.RemoteIP = "192.168.1.55";
+            device1.NewworkProperties.LocalIP  = "192.168.1.100";
+            device1.NewworkProperties.PortNumber = 4200;
+            setDeviceConfigure(1, device1);
 
-        //     DeviceInformation::MODBUS_CONFIGURE device2;
-        //     // 填写示例配置
-        //     device2.ConnectType = DeviceInfoEnum::RS232;
-        //     device2.ProtocolType = DeviceInfoEnum::WLEDER_TYPE::L20_TS;
-        //     device2.ConnectState = DeviceInfoEnum::CONNECT_STATE::CONNECTED;
-        //     device2.SerialProperties.ComNumber = 0;
-        //     device2.SerialProperties.ParityBits  = QSerialPort::Parity::NoParity;
-        //     device2.SerialProperties.BaudRate = QSerialPort::Baud9600;
-        //     device2.SerialProperties.DataBits = QSerialPort::Data8;
-        //     device2.SerialProperties.StopBits = QSerialPort::OneStop;
-        //     setDeviceConfigure(2, device2);
+            DeviceInformation::MODBUS_CONFIGURE device2;
+            // 填写示例配置
+            device2.ConnectType = DeviceInfoEnum::RS232;
+            device2.ProtocolType = DeviceInfoEnum::WLEDER_TYPE::L20_TS;
+            device2.ConnectState = DeviceInfoEnum::CONNECT_STATE::CONNECTED;
+            device2.SerialProperties.ComNumber = 0;
+            device2.SerialProperties.ParityBits  = QSerialPort::Parity::NoParity;
+            device2.SerialProperties.BaudRate = QSerialPort::Baud9600;
+            device2.SerialProperties.DataBits = QSerialPort::Data8;
+            device2.SerialProperties.StopBits = QSerialPort::OneStop;
+            setDeviceConfigure(2, device2);
 
     };
 
