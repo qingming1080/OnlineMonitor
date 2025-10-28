@@ -26,6 +26,11 @@ Rectangle {
         loader1.sourceComponent = weld2
     }
 
+    MessageDialog
+    {
+        id:isValidMessageDialog
+    }
+
     Connections{
         target: window
         function onSigNewModel(){
@@ -607,9 +612,8 @@ Rectangle {
                             color: index % 2 === 0 ? "#014c8d" : pRgb(175, 195, 216)
                             font.family: GlobalSystemDefine.fontBold
                             font.pixelSize: 16
-                            text:actual_force + GlobalLanguageDefine.strActualForceUnit
+                            text:actual_force /*+ GlobalLanguageDefine.strActualForceUnit*/
                             inputMethodHints: Qt.ImhDigitsOnly
-                            validator: RegExpValidator {regExp: /^[0-9]+$/}
                             background: Rectangle{
                                 radius: 3
                                 border.width: 2
@@ -636,6 +640,12 @@ Rectangle {
                                     keyboardType = 0
                                 }
                             }
+                            onEditingFinished: {
+                                 var intRegex = /^[0-9]+$/
+                                 if (!intRegex.test(textField.text)) {
+                                     isValidMessageDialog.openFor(t7.text, "请输入整数！")
+                                 }
+                             }
                         }
                         TextField{
                             id: textField1
@@ -649,9 +659,8 @@ Rectangle {
                             color: index % 2 === 0 ? "#014c8d" : pRgb(175, 195, 216)
                             font.family: GlobalSystemDefine.fontBold
                             font.pixelSize: 16
-                            text:actual_degree + GlobalLanguageDefine.strActualDegreeUnit
+                            text:actual_degree /*+ GlobalLanguageDefine.strActualDegreeUnit*/
                             inputMethodHints: Qt.ImhDigitsOnly
-                            validator: RegExpValidator {regExp: /^[0-9]+$/}
                             background: Rectangle{
                                 radius: 3
                                 border.width: 2
@@ -678,6 +687,12 @@ Rectangle {
                                     keyboardType = 0
                                 }
                             }
+                            onEditingFinished: {
+                                 var intRegex = /^[0-9]+$/
+                                 if (!intRegex.test(textField1.text)) {
+                                     isValidMessageDialog.openFor(t8.text, "请输入整数！")
+                                 }
+                             }
                         }
                     }
                 }

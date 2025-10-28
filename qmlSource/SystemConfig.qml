@@ -32,14 +32,9 @@ Rectangle {
     property bool undetermined3: false
     property bool undetermined4: false
 
-    // property Timer updateTimer: Timer {
-    //        interval: 1000
-    //        repeat: false
-    //        onTriggered: DeviceManager.DeviceListChanged()
-    //    }
-    function isValidIP(ip) {
-        var regex = /^(25[0-5]|2[0-4][0-9]|1?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|1?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|1?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|1?[0-9][0-9]?)$/;
-        return regex.test(ip);
+    MessageDialog
+    {
+        id:isValidMessageDialog
     }
     property bool undeterMined: {
         //if(equipmentCount === 1){
@@ -198,8 +193,8 @@ Rectangle {
 
                 //TODO onSigAddDevice
                 function onSigAddDevice(){
-                    DeviceManager.addDevice(t1.text,t2.text,
-                                            t3.text,t7.text,t8.text,t9.text,
+                    DeviceManager.addDevice(maxProductionTextField.text,learningSamplesTextField.text,
+                                            yieldLowerLimitTextField.text,t7.text,t8.text,clientIPTextField.text,
                                             // altitudMode?1:0,t4.text,com1.currentText,loadType,networkId)
                                            altitudMode?1:0,t4.text,com1.currentText,loadType,loadType ? rs232Id:networkId )
                     // networkId = 1
@@ -236,7 +231,7 @@ Rectangle {
                     color: pRgb(174, 210, 216)
                 }
                 Text {
-                    id: s1
+                    id: titleMaxProduction
                     x:35
                     y:75
                     // text: qsTr("最大生产批量")
@@ -247,12 +242,12 @@ Rectangle {
                     font.pixelSize: 18
                 }
                 TextField{
-                    id:t1
+                    id: maxProductionTextField
                     width: 180
                     height: 40
                     anchors.top: parent.top
                     anchors.topMargin: 66
-                    anchors.left: s1.right
+                    anchors.left: titleMaxProduction.right
                     anchors.leftMargin: 37
                     horizontalAlignment: TextInput.AlignHCenter
                     verticalAlignment: TextInput.AlignVCenter
@@ -260,6 +255,7 @@ Rectangle {
                     font.family: GlobalSystemDefine.fontBold
                     font.bold: true
                     font.pixelSize: 18
+                    maximumLength: 7
                     inputMethodHints: Qt.ImhDigitsOnly
                     background: Rectangle{
                         radius: 6
@@ -291,37 +287,43 @@ Rectangle {
                     MouseArea {
                         anchors.fill: parent
                         onPressed: {
-                            t1.forceActiveFocus()
+                            maxProductionTextField.forceActiveFocus()
                             keyboardType = 0
                         }
+                    }
+                    onEditingFinished: {
+                        var maxProductionRegex = /^(?:[2-9]\d{4}|[1-9]\d{5}|1000000)$/
+                        if (!maxProductionRegex.test(maxProductionTextField.text))
+                            isValidMessageDialog.openFor(titleMaxProduction.text, "请输入20000~1000000之间整数！")
                     }
                 }
 
                 Text {
-                    id: s2
+                    id: titleLearningSamples
                     // text: qsTr("学习样本数")
                     text: GlobalLanguageDefine.strLearningSamples + ": "
                     color: pRgb(177, 213, 219)
                     font.family: GlobalSystemDefine.fontBold
                     font.bold: true
                     font.pixelSize: 18
-                    anchors.left: s1.left
-                    anchors.top: s1.bottom
+                    anchors.left: titleMaxProduction.left
+                    anchors.top: titleMaxProduction.bottom
                     anchors.topMargin: 41
                 }
                 TextField{
-                    id:t2
+                    id: learningSamplesTextField
                     width: 180
                     height: 40
-                    anchors.top: t1.bottom
+                    anchors.top: maxProductionTextField.bottom
                     anchors.topMargin: 30
-                    anchors.left: t1.left
+                    anchors.left: maxProductionTextField.left
                     horizontalAlignment: TextInput.AlignHCenter
                     verticalAlignment: TextInput.AlignVCenter
                     color: pRgb(43, 112, 173)
                     font.family: GlobalSystemDefine.fontBold
                     font.bold: true
                     font.pixelSize: 18
+                     maximumLength: 2
                     inputMethodHints: Qt.ImhDigitsOnly
                     background: Rectangle{
                         radius: 6
@@ -331,7 +333,7 @@ Rectangle {
                     MouseArea {
                         anchors.fill: parent
                         onPressed: {
-                            t2.forceActiveFocus()
+                            learningSamplesTextField.forceActiveFocus()
                             keyboardType = 0
                         }
                     }
@@ -354,26 +356,32 @@ Rectangle {
                             }
                         }
                     }
+                    onEditingFinished: {
+                        var learningSamplesRegex = /^(1[0-9]|20)$/
+                        if (!learningSamplesRegex.test(learningSamplesTextField.text))
+                            isValidMessageDialog.openFor(titleLearningSamples.text, "请输入10~20之间的整数！")
+                    }
+
                 }
                 Text {
-                    id: s3
+                    id: titleYieldLowerLimit
                     // text: qsTr("良率下限")
                     text: GlobalLanguageDefine.strYieldLowerLimit + ": "
                     color: pRgb(177, 213, 219)
                     font.family: GlobalSystemDefine.fontBold
                     font.bold: true
                     font.pixelSize: 18
-                    anchors.left: s2.left
-                    anchors.top: s2.bottom
+                    anchors.left: titleLearningSamples.left
+                    anchors.top: titleLearningSamples.bottom
                     anchors.topMargin: 45
                 }
                 TextField{
-                    id:t3
+                    id: yieldLowerLimitTextField
                     width: 180
                     height: 40
-                    anchors.top: t2.bottom
+                    anchors.top: learningSamplesTextField.bottom
                     anchors.topMargin: 30
-                    anchors.left: t2.left
+                    anchors.left: learningSamplesTextField.left
                     horizontalAlignment: TextInput.AlignHCenter
                     verticalAlignment: TextInput.AlignVCenter
                     color: pRgb(43, 112, 173)
@@ -381,6 +389,7 @@ Rectangle {
                     font.bold: true
                     font.pixelSize: 18
                     inputMethodHints: Qt.ImhDigitsOnly
+                    maximumLength: 2
                     background: Rectangle{
                         radius: 6
                         border.width: 3
@@ -389,7 +398,7 @@ Rectangle {
                     MouseArea {
                         anchors.fill: parent
                         onPressed: {
-                            t3.forceActiveFocus()
+                            yieldLowerLimitTextField.forceActiveFocus()
                             keyboardType = 0
                         }
                     }
@@ -412,6 +421,11 @@ Rectangle {
                             }
                         }
                     }
+                    onEditingFinished: {
+                        var yieldLowerLimitRegex = /^[1-9][0-9]$/
+                        if (!yieldLowerLimitRegex.test(yieldLowerLimitTextField.text))
+                            isValidMessageDialog.openFor(titleYieldLowerLimit.text, "请输入两位整数！")
+                    }
                 }
 
                 Text {
@@ -422,17 +436,17 @@ Rectangle {
                     font.family: GlobalSystemDefine.fontBold
                     font.bold: true
                     font.pixelSize: 18
-                    anchors.left: s3.left
-                    anchors.top: s3.bottom
+                    anchors.left: titleYieldLowerLimit.left
+                    anchors.top: titleYieldLowerLimit.bottom
                     anchors.topMargin: 45
                 }
                 TextField{
                     id:t7
                     width: 180
                     height: 40
-                    anchors.top: t3.bottom
+                    anchors.top: yieldLowerLimitTextField.bottom
                     anchors.topMargin: 30
-                    anchors.left: t3.left
+                    anchors.left: yieldLowerLimitTextField.left
                     horizontalAlignment: TextInput.AlignHCenter
                     verticalAlignment: TextInput.AlignVCenter
                     color: pRgb(43, 112, 173)
@@ -440,6 +454,7 @@ Rectangle {
                     font.bold: true
                     font.pixelSize: 18
                     inputMethodHints: Qt.ImhDigitsOnly
+                    maximumLength: 5
                     background: Rectangle{
                         radius: 6
                         border.width: 3
@@ -470,6 +485,12 @@ Rectangle {
                                 return ""
                             }
                         }
+                    }
+
+                    onEditingFinished: {
+                        var portRegex = /^([0-9]|[1-9][0-9]{1,4}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])$/
+                        if (!portRegex.test(t7.text))
+                            isValidMessageDialog.openFor(s7.text, "请输入0~65535之间的整数！")
                     }
                 }
 
@@ -530,11 +551,16 @@ Rectangle {
                             }
                         }
                     }
+                    onEditingFinished: {
+                        var ipRegex = /^(25[0-5]|2[0-4]\d|1\d{2}|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d{2}|[1-9]?\d)){3}$/
+                        if (!ipRegex.test(t8.text))
+                            isValidMessageDialog.openFor(s8.text, "请输入正确的IP地址！")
+                    }
                 }
 
 
                 Text {
-                    id: s9
+                    id: titleClientIP
                     // text: qsTr("客户端") + "IP"
                     text: GlobalLanguageDefine.strClient + "IP" + ": "
                     color: pRgb(177, 213, 219)
@@ -542,11 +568,11 @@ Rectangle {
                     font.bold: true
                     font.pixelSize: 18
                     anchors.left: s8.left
-                    anchors.top: t9.top
+                    anchors.top: clientIPTextField.top
                     anchors.topMargin: 10
                 }
                 TextField{
-                    id:t9
+                    id: clientIPTextField
                     width: 180
                     height: 40
                     anchors.top: t8.bottom
@@ -567,7 +593,7 @@ Rectangle {
                     MouseArea {
                         anchors.fill: parent
                         onPressed: {
-                            t9.forceActiveFocus()
+                            clientIPTextField.forceActiveFocus()
                             keyboardType = 0
                         }
                     }
@@ -590,19 +616,24 @@ Rectangle {
                             }
                         }
                     }
+                    onEditingFinished: {
+                        var portRegex = /^(25[0-5]|2[0-4]\d|1\d{2}|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d{2}|[1-9]?\d)){3}$/
+                        if (!portRegex.test(clientIPTextField.text))
+                            isValidMessageDialog.openFor(titleClientIP.text, "请输入正确的IP地址！")
+                    }
                 }
 
 
                 Text {
-                    id: s4
+                    id: titleHeightMode
                     // text: qsTr("高度模式")
                     text: GlobalLanguageDefine.strHeightMode + ": "
                     color: pRgb(177, 213, 219)
                     font.family: GlobalSystemDefine.fontBold
                     font.bold: true
                     font.pixelSize: 18
-                    anchors.left: s9.left
-                    anchors.top: s9.top
+                    anchors.left: titleClientIP.left
+                    anchors.top: titleClientIP.top
                     anchors.topMargin: 80
                 }
                 Text {
@@ -613,8 +644,8 @@ Rectangle {
                     font.family: GlobalSystemDefine.fontBold
                     font.bold: true
                     font.pixelSize: 18
-                    anchors.verticalCenter: s4.verticalCenter
-                    anchors.left: t9.left
+                    anchors.verticalCenter: titleHeightMode.verticalCenter
+                    anchors.left: clientIPTextField.left
 
                 }
                 RadioButton{
@@ -622,7 +653,7 @@ Rectangle {
                     width: 34
                     height: 34
                     anchors.left: s5.right
-                    anchors.verticalCenter: s4.verticalCenter
+                    anchors.verticalCenter: titleHeightMode.verticalCenter
                     anchors.leftMargin: 10
 
                     checked: altitudMode
@@ -726,6 +757,7 @@ Rectangle {
                     font.family: GlobalSystemDefine.fontBold
                     font.bold: true
                     font.pixelSize: 18
+                    maximumLength: 8
                     background: Rectangle{
                         radius: 6
                         border.width: 3
@@ -757,6 +789,12 @@ Rectangle {
                             }
                         }
                     }
+                    onEditingFinished: {
+                        var nameRegex = /^[\u4e00-\u9fa5A-Za-z0-9]+$/
+                        if (!nameRegex.test(t4.text))
+                            isValidMessageDialog.openFor(s14.text, "设备名称只能包含中文、字母、数字（1~8字符）！")
+                    }
+
                 }
                 Text {
                     id: s15
@@ -1110,6 +1148,7 @@ Rectangle {
                             font.family: GlobalSystemDefine.fontBold
                             font.bold: true
                             font.pixelSize: 18
+                            maximumLength: 5
                             inputMethodHints: Qt.ImhDigitsOnly
                             background: Rectangle{
                                 radius: 6
@@ -1141,7 +1180,6 @@ Rectangle {
                             }
 
                             onTextChanged: {
-                                 updateTimer.restart();
                                    if (com2.displayText === "ETH1") {
                                        NetworkModel.setNetworkData(2, QmlEnum.NETWORK_server_port, t5.text);
                                    } else if (com2.displayText === "ETH2") {
@@ -1151,9 +1189,13 @@ Rectangle {
                                    } else if (com2.displayText === "ETH4") {
                                        NetworkModel.setNetworkData(5, QmlEnum.NETWORK_server_port, t5.text);
                                    }
-                                    // DeviceManager.DeviceListChanged()
 
                                }
+                            onEditingFinished: {
+                                var portRegex = /^([0-9]|[1-9][0-9]{1,4}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])$/
+                                if (!portRegex.test(t5.text))
+                                    isValidMessageDialog.openFor(s17.text,"请输入0~65535之间的整数！")
+                            }
 
                         }
                         TextField{
@@ -1199,13 +1241,7 @@ Rectangle {
                             }
 
                             onTextChanged: {
-                                 updateTimer.restart();
-                                if (!isValidIP(t6.text)) {
-                                        console.log("Invalid IP address: " + t6.text);
-                                        return; // 不执行设置，避免无效数据
-                                    }
                                    if (com2.displayText === "ETH1") {
-                                       console.log("1111111111111text")
                                        NetworkModel.setNetworkData(2, QmlEnum.NETWORK_remote_ip, t6.text);
                                    } else if (com2.displayText === "ETH2") {
                                        NetworkModel.setNetworkData(3, QmlEnum.NETWORK_remote_ip, t6.text);
@@ -1214,10 +1250,13 @@ Rectangle {
                                    } else if (com2.displayText === "ETH4") {
                                        NetworkModel.setNetworkData(5, QmlEnum.NETWORK_remote_ip, t6.text);
                                    }
-                                   // console.log("1DeviceManager.DeviceListChanged()111111111111text")
-                                   //  DeviceManager.DeviceListChanged()
 
                                }
+                            onEditingFinished: {
+                                var ipRegex = /^(25[0-5]|2[0-4]\d|1\d{2}|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d{2}|[1-9]?\d)){3}$/
+                                if (!ipRegex.test(t6.text))
+                                    isValidMessageDialog.openFor(s18.text,"请输入正确的IP地址")
+                            }
                         }
 
                         TextField {
@@ -1264,11 +1303,6 @@ Rectangle {
                             }
 
                             onTextChanged: {
-                                 updateTimer.restart();
-                                if (!isValidIP(t6.text)) {
-                                        console.log("Invalid IP address: " + t6.text);
-                                        return; // 不执行设置，避免无效数据
-                                    }
                                    if (com2.displayText === "ETH1") {
                                        console.log("1DeviceManager.DeviceListChanged()111111111111text")
                                        NetworkModel.setNetworkData(2, QmlEnum.NETWORK_local_ip, t7.text);
@@ -1279,8 +1313,11 @@ Rectangle {
                                    } else if (com2.displayText === "ETH4") {
                                        NetworkModel.setNetworkData(5, QmlEnum.NETWORK_local_ip, t7.text);
                                    }
-                                   // console.log("1DeviceManager.DeviceListChanged()111111111111text")
-                                   //  DeviceManager.DeviceListChanged()
+                            }
+                            onEditingFinished: {
+                                var ipRegex = /^(25[0-5]|2[0-4]\d|1\d{2}|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d{2}|[1-9]?\d)){3}$/
+                                if (!ipRegex.test(t7.text))
+                                    isValidMessageDialog.openFor(s19.text,"请输入正确的IP地址")
                             }
                         }
                     }
@@ -1560,35 +1597,13 @@ Rectangle {
                     }
                 }
             }
+
             Button{
-                id:bt4
-                x:131
-                y:662
-                width: 243
-                height: 52
-                background: Rectangle{
-                    radius: 6
-                    color: pRgb(43, 112, 173)
-                }
-                contentItem: Text {
-                    // text: qsTr("系统保存")
-                    text: GlobalLanguageDefine.strSystemSave
-                    font.pixelSize: 20
-                    color: pRgb(153, 204, 255)
-                    anchors.centerIn: parent  // 确保文本在按钮内居中对齐
-                    horizontalAlignment: Text.AlignHCenter
-                    verticalAlignment: Text.AlignVCenter
-                    font.family: GlobalSystemDefine.fontBold
-                    font.bold: true
-                }
-                onPressed: {
-                    popup.openPop(10)
-                }
-            }
-            Button{
-                id:bt3
-                x:766
-                y:662
+                id: deviceSaveButton
+                anchors.top: parent.bottom
+                anchors.topMargin: 660
+                anchors.left: parent.right
+                anchors.leftMargin: 520
                 width: 243
                 height: 52
                 background: Rectangle{
@@ -1607,9 +1622,9 @@ Rectangle {
                     font.bold: true
                 }
                 onPressed: {
-                    if(t1.text >= 20000 && t1.text <= 1000000){
-                        if(t2.text >= 10 && t2.text <= 20){
-                            if(t3.text >= 90 && t3.text <= 99){
+                    if(maxProductionTextField.text >= 20000 && maxProductionTextField.text <= 1000000){
+                        if(learningSamplesTextField.text >= 10 && learningSamplesTextField.text <= 20){
+                            if(yieldLowerLimitTextField.text >= 90 && yieldLowerLimitTextField.text <= 99){
                                 if(isAdd){
                                     Qt.callLater(sigAddDevice)
                                     if(!oneself){
@@ -1623,20 +1638,20 @@ Rectangle {
                                 }
                                 //if(full.visible){//设置多设备时配置存储
                                 if(equipmentCount > 1){//设置多设备时配置存储
-                                    DeviceManager.DeviceList[currentConfigId-1].DevInfoObject.setMaxBacth(t1.text)
-                                    DeviceManager.DeviceList[currentConfigId-1].DevInfoObject.setSample(t2.text)
-                                    DeviceManager.DeviceList[currentConfigId-1].DevInfoObject.setLowerLimit(t3.text)
-                                    DeviceManager.DeviceList[currentConfigId-1].DevInfoObject.setName(t4.text)
+                                    DeviceManager.DeviceList[currentConfigId-1].DevInfoObject.setProductionMaxBacth(maxProductionTextField.text)
+                                    DeviceManager.DeviceList[currentConfigId-1].DevInfoObject.setMaxModelSamples(learningSamplesTextField.text)
+                                    DeviceManager.DeviceList[currentConfigId-1].DevInfoObject.setYieldRateLowerLimit(yieldLowerLimitTextField.text)
+                                    DeviceManager.DeviceList[currentConfigId-1].DevInfoObject.setWelderName(t4.text)
                                 }
                                 else{
                                     // DeviceManager.DeviceList[currentConfigId-1].DevInfoObject.setMaxBacth(t1.text)
                                     // DeviceManager.DeviceList[currentConfigId-1].DevInfoObject.setSample(t2.text)
                                     // DeviceManager.DeviceList[currentConfigId-1].DevInfoObject.setLowerLimit(t3.text)
                                     // DeviceManager.DeviceList[currentConfigId-1].DevInfoObject.setName(t4.text)
-                                    DeviceManager.DeviceList[0].DevInfoObject.setMaxBacth(t1.text)
-                                    DeviceManager.DeviceList[0].DevInfoObject.setSample(t2.text)
-                                    DeviceManager.DeviceList[0].DevInfoObject.setLowerLimit(t3.text)
-                                    DeviceManager.DeviceList[0].DevInfoObject.setName(t4.text)
+                                    DeviceManager.DeviceList[0].DevInfoObject.setProductionMaxBacth(maxProductionTextField.text)
+                                    DeviceManager.DeviceList[0].DevInfoObject.setMaxModelSamples(learningSamplesTextField.text)
+                                    DeviceManager.DeviceList[0].DevInfoObject.setYieldRateLowerLimit(yieldLowerLimitTextField.text)
+                                    DeviceManager.DeviceList[0].DevInfoObject.setWelderName(t4.text)
                                 }
                                 loadViewsys(2,musys)
                             }

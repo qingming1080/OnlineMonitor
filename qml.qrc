@@ -6,7 +6,7 @@
         <file>qmlSource/CustomDialog.qml</file>
         <file>qmlSource/CustomRipple.qml</file>
         <file>qmlSource/EquipmentInfor.qml</file>
-        <file>qmlSource/HistoryModule.qml</file>
+        <file>qmlSource/HistoryModel.qml</file>
         <file>qmlSource/Welcome.qml</file>
         <file>qmlSource/main.qml</file>
         <file>qmlSource/MultideviceProductionModule.qml</file>
@@ -28,5 +28,6 @@
         <file>qmlSource/GlobalSystemDefine.qml</file>
         <file>qmlSource/GlobalLanguageDefine.qml</file>
         <file>qmlSource/GlobalMessageDefine.qml</file>
+        <file>qmlSource/MessageDialog.qml</file>
     </qresource>
 </RCC>

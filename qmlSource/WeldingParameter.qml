@@ -16,6 +16,11 @@ Rectangle {
 
     property int deviceID: DeviceManager.DeviceList[swipeCurrIndex].DevInfoObject.id
 
+    MessageDialog
+    {
+        id:isValidMessageDialog
+    }
+
     radius: 3
     Rectangle {
            width:  equipmentCount == 1 ? 117 : 129
@@ -156,13 +161,12 @@ Rectangle {
         font.bold: true
         font.pixelSize: 16
         inputMethodHints: Qt.ImhDigitsOnly
-        validator: RegExpValidator { regExp: /^[0-9]+$/}
         background: Rectangle{
             radius: 6
             border.width: 2
             border.color: "#99ccff"
         }
-        text: UtilityFunction.displayValue(eqText1) + GlobalLanguageDefine.strEnergyUnit
+        text: UtilityFunction.displayValue(eqText1)/* + GlobalLanguageDefine.strEnergyUnit*/
         MouseArea {
             anchors.fill: parent
             onPressed: {
@@ -170,6 +174,12 @@ Rectangle {
                 keyboardType = 0
             }
         }
+        onEditingFinished: {
+             var intRegex = /^[0-9]+$/
+             if (!intRegex.test(fieldEnergy.text)) {
+                 isValidMessageDialog.openFor(titleEnergy.text, "请输入整数！")
+             }
+         }
     }
     TextField{
         id: fieldAmplitude
@@ -184,13 +194,12 @@ Rectangle {
         font.bold: true
         font.pixelSize: 16
         inputMethodHints: Qt.ImhDigitsOnly
-        validator: RegExpValidator { regExp: /^[0-9]+$/}
         background: Rectangle{
             radius: 6
             border.width: 2
             border.color: "#99ccff"
         }
-        text:UtilityFunction.displayValue(eqText2) + GlobalLanguageDefine.strAmplitudeUnit
+        text:UtilityFunction.displayValue(eqText2)/* + GlobalLanguageDefine.strAmplitudeUnit*/
         MouseArea {
             anchors.fill: parent
             onPressed: {
@@ -198,6 +207,11 @@ Rectangle {
                 keyboardType = 0
             }
         }
+        onEditingFinished: {
+             var wpRegex = /^[0-9]+$/
+             if (!wpRegex.test(fieldAmplitude.text))
+                 isValidMessageDialog.openFor(titleAmplitude.text, "请输入整数！")
+         }
     }
     TextField{
         id: fieldWeldPressure
@@ -212,13 +226,12 @@ Rectangle {
         font.bold: true
         font.pixelSize: 16
         inputMethodHints: Qt.ImhDigitsOnly
-        validator: RegExpValidator { regExp: /^[0-9]+$/}
         background: Rectangle{
             radius: 6
             border.width: 2
             border.color: "#99ccff"
         }
-        text: UtilityFunction.displayValue(eqText3,10,1) + GlobalLanguageDefine.strPressureUnit
+        text: UtilityFunction.displayValue(eqText3,10,1)/* + GlobalLanguageDefine.strPressureUnit*/
         MouseArea {
             anchors.fill: parent
             onPressed: {
@@ -226,6 +239,11 @@ Rectangle {
                 keyboardType = 0
             }
         }
+        onEditingFinished: {
+             var wpRegex = /^[0-9]+$/
+             if (!wpRegex.test(fieldWeldPressure.text))
+                 isValidMessageDialog.openFor(titleWeldPressure.text, "请输入整数！")
+         }
     }
     TextField{
         id: fieldTP
@@ -240,13 +258,12 @@ Rectangle {
         font.bold: true
         font.pixelSize: 16
         inputMethodHints: Qt.ImhDigitsOnly
-        validator: RegExpValidator { regExp: /^[0-9]+$/}
         background: Rectangle{
             radius: 6
             border.width: 2
             border.color: "#99ccff"
         }
-        text: UtilityFunction.displayValue(eqText4,10,1) + GlobalLanguageDefine.strPressureUnit
+        text: UtilityFunction.displayValue(eqText4,10,1)/* + GlobalLanguageDefine.strPressureUnit*/
         MouseArea {
             anchors.fill: parent
             onPressed: {
@@ -254,6 +271,11 @@ Rectangle {
                 keyboardType = 0
             }
         }
+        onEditingFinished: {
+             var tpRegex = /^[0-9]+$/
+             if (!tpRegex.test(fieldTP.text))
+                 isValidMessageDialog.openFor(titleTP.text, "请输入整数！")
+         }
     }
 
     ParameterSettingDialog {

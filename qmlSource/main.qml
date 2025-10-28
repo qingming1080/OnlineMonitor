@@ -204,7 +204,7 @@ Window {
 
     Component{
         id:his
-        HistoryModule{
+        HistoryModel{
             id:hisin
             width: 1280
             height: 740

@@ -1,7 +1,6 @@
 ﻿import QtQuick 2.15
 import QtQuick.Controls 2.15
 import GlobalLanguageDefine 1.0
-import GlobalSystemDefine 1.0
 Dialog {
     id: timeDialog
     modal: true
@@ -11,7 +10,6 @@ Dialog {
     height: 300
     font.pixelSize: 18
     font.family: "Arial"
-
     background: Rectangle {
         color: "#b1d5db"
         radius: 6
@@ -52,6 +50,10 @@ Dialog {
             }
         }
     }
+    MessageDialog
+    {
+        id:isValidMessageDialog
+    }
 
     signal timeSelected(int year, int month, int day, int hour, int minute, int second)
 
@@ -85,6 +87,7 @@ Dialog {
             columnSpacing: 15
 
             Label {
+                id: yearLable
                 text: GlobalLanguageDefine.strYear + ":"
                 font.pixelSize: 20
                 font.family: GlobalSystemDefine.fontBold
@@ -104,16 +107,24 @@ Dialog {
                 width: 100
                 height: 35
                 font.pixelSize: 17
+                maximumLength: 4
                 background: Rectangle{
                     radius: 6
                     border.width: 2
                     border.color: "#004b8d"
                 }
+
+                onEditingFinished: {
+                      var minuteRegex = /^(19|20)\d{2}$/
+                     if (!minuteRegex.test(yearField.text))
+                         isValidMessageDialog.openFor(yearLable.text, "请输入有效年份！")
+                 }
             }
 
 
             Label {
                 // text: qsTr("月") + ":"
+                id: monthLabel
                 text: GlobalLanguageDefine.strMonth + ":"
                 font.pixelSize: 20
                 font.family: GlobalSystemDefine.fontBold
@@ -134,19 +145,27 @@ Dialog {
                 width: 100
                 height: 35
                 font.pixelSize: 17
+                maximumLength: 2
                 background: Rectangle{
                     radius: 6
                     border.width: 2
                     border.color: "#004b8d"
                 }
+                onEditingFinished: {
+                      var monthRegex = /^(0[1-9]|1[0-2])$/
+                     if (!monthRegex.test(monthField.text))
+                         isValidMessageDialog.openFor(monthLabel.text, "月份必须是 1~12！")
+                 }
             }
 
             Label {
                 // text: qsTr("日") + ":"
+                id: dayLabel
                 text: GlobalLanguageDefine.strDay + ":"
                 font.pixelSize: 20
                 font.family: GlobalSystemDefine.fontBold
                 color:"#004b8d"
+
                 font.bold: true
             }
 
@@ -162,16 +181,22 @@ Dialog {
                 width: 100
                 height: 35
                 font.pixelSize: 17
-
+                maximumLength: 2
                 background: Rectangle{
                     radius: 6
                     border.width: 2
                     border.color: "#004b8d"
                 }
+                onEditingFinished: {
+                      var daoyRegex = /^([1-9]|[12][0-9]|3[01])$/
+                     if (!daoyRegex.test(dayField.text))
+                         isValidMessageDialog.openFor(dayLabel.text, "请输入正确的日期（1~31）！")
+                 }
             }
 
             Label {
                 // text: qsTr("时") + ":" ;
+                id: hourLabel
                 text: GlobalLanguageDefine.strHour + ":"
                 font.pixelSize: 20;
                 font.family: GlobalSystemDefine.fontBold
@@ -191,16 +216,22 @@ Dialog {
                 width: 100
                 height: 35
                 font.pixelSize: 17
-
+                maximumLength: 2
                 background: Rectangle{
                     radius: 6
                     border.width: 2
                     border.color: "#004b8d"
                 }
+                onEditingFinished: {
+                      var hourRegex = /^(0\d|1\d|2[0-3])$/
+                     if (!hourRegex.test(hourField.text))
+                         isValidMessageDialog.openFor(hourLabel.text, "请输入正确的小时（0~23）！")
+                 }
             }
 
             Label {
                 // text: qsTr("分") + ":" ;
+                id: minuteLabel
                 text: GlobalLanguageDefine.strMinute + ":"
                 font.pixelSize: 20;
                 font.family: GlobalSystemDefine.fontBold
@@ -220,16 +251,22 @@ Dialog {
                 width: 100
                 height: 35
                 font.pixelSize: 17
-
+                maximumLength: 2
                 background: Rectangle{
                     radius: 6
                     border.width: 2
                     border.color: "#004b8d"
                 }
+                onEditingFinished: {
+                     var minuteRegex = /^[0-5]\d$/
+                     if (!minuteRegex.test(minuteField.text))
+                         isValidMessageDialog.openFor(minuteLabel.text, "请输入正确的分钟（0~59）！")
+                 }
             }
 
             Label {
                 // text: qsTr("秒") + ":" ;
+                id: secondLabel
                 text: GlobalLanguageDefine.strSecond + ":"
                 font.pixelSize: 20;
                 font.family: GlobalSystemDefine.fontBold
@@ -247,17 +284,22 @@ Dialog {
                 font.bold: true
                 width: 100
                 height: 35
+                maximumLength: 2
                 font.pixelSize: 17
                 background: Rectangle{
                     radius: 6
                     border.width: 2
                     border.color: "#004b8d"
                 }
+                onEditingFinished: {
+                     var secondRegex = /^[0-5]\d$/
+                     if (!secondRegex.test(secondField.text))
+                         isValidMessageDialog.openFor(secondLabel.text, "请输入正确的秒数（0~59）！")
+                 }
             }
 
         }
     }
-
     Row{
         spacing: 60
         anchors.horizontalCenter: parent.horizontalCenter
@@ -349,10 +391,10 @@ Dialog {
                 }
                 // ModbusClient.testAllFunctions()
                 // ModbusClient.setSysLedStatus(true)
-                ModbusClient.setLearnLedStatus(true);
-                ModbusClient.setPilotLedStatus(true);
+                // ModbusClient.setLearnLedStatus(true);
+                // ModbusClient.setPilotLedStatus(true);
                 // ModbusClient.setReadyLedStatus(true);
-                ModbusClient.setAlarmLedStatus(true);
+                // ModbusClient.setAlarmLedStatus(true);
 
                 // ModbusClient.setSystemClock(qDateTime.datetime)
             }
