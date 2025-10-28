@@ -49,7 +49,8 @@ Rectangle {
         x:27
         y:22
         width: 1222
-        height: 677
+        // height: 677
+        height: 616
         color: "#007dbc"
         radius: 3
     }
@@ -433,7 +434,8 @@ Rectangle {
     }
     Rectangle{
         width: 1220
-        height: 605
+        // height: 605
+        height: 510
         anchors.top: top.bottom
         anchors.left: top.left
         anchors.leftMargin: 1
@@ -542,7 +544,8 @@ Rectangle {
         ListView{
             id: taskplanView
             width: 1220
-            height: 560
+            // height: 560
+            height: 510
             y:35
             clip: true
             model: History
@@ -673,6 +676,45 @@ Rectangle {
             }
         }
 
+    }
+
+    Text {
+        id: usbVisableText
+        anchors.left: parent.left
+        anchors.leftMargin: 25
+        anchors.bottom: version.bottom
+        anchors.bottomMargin: 40
+        text: "未插入U盘"
+        color: "#E8E8E8"
+        font.family: GlobalSystemDefine.fontBold
+        font.bold: true
+        font.pixelSize: LanguageManager.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 20 : 16
+    }
+
+    Button{
+        width: 120
+        height: 36
+        anchors.top: usbVisableText.top
+        anchors.left: version.right
+        anchors.leftMargin: 55
+        background: Rectangle{
+            radius: 6
+            color: pRgb(43, 112, 173)
+        }
+
+        contentItem: Text {
+            text: "导出数据"
+            font.pixelSize: 20
+            color: pRgb(153, 204, 255)
+            anchors.centerIn: parent
+            horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignVCenter
+            font.family: GlobalSystemDefine.fontBold
+            font.bold: true
+        }
+        onClicked: {
+            //TODO   add history export function
+        }
     }
 
     Text {
