@@ -15,12 +15,6 @@ Rectangle {
     property bool altitudeMode:DeviceManager.DeviceList[swipeCurrIndex].DevInfoObject.heightOption === 1 ? true:false
 
     property int deviceID: DeviceManager.DeviceList[swipeCurrIndex].DevInfoObject.id
-
-    MessageDialog
-    {
-        id:isValidMessageDialog
-    }
-
     radius: 3
     Rectangle {
            width:  equipmentCount == 1 ? 117 : 129
@@ -176,9 +170,10 @@ Rectangle {
         }
         onEditingFinished: {
              var intRegex = /^[0-9]+$/
-             if (!intRegex.test(fieldEnergy.text)) {
-                 isValidMessageDialog.openFor(titleEnergy.text, "请输入整数！")
-             }
+             if (!intRegex.test(fieldEnergy.text))
+                 footer.showError(titleEnergy.text + "请输入整数！")
+             else
+                 footer.hideError()
          }
     }
     TextField{
@@ -210,7 +205,9 @@ Rectangle {
         onEditingFinished: {
              var wpRegex = /^[0-9]+$/
              if (!wpRegex.test(fieldAmplitude.text))
-                 isValidMessageDialog.openFor(titleAmplitude.text, "请输入整数！")
+                 footer.showError(titleAmplitude.text + "请输入整数！")
+             else
+                 footer.hideError()
          }
     }
     TextField{
@@ -242,7 +239,9 @@ Rectangle {
         onEditingFinished: {
              var wpRegex = /^[0-9]+$/
              if (!wpRegex.test(fieldWeldPressure.text))
-                 isValidMessageDialog.openFor(titleWeldPressure.text, "请输入整数！")
+                 footer.showError(titleWeldPressure.text + "请输入整数！")
+             else
+                 footer.hideError()
          }
     }
     TextField{
@@ -274,7 +273,9 @@ Rectangle {
         onEditingFinished: {
              var tpRegex = /^[0-9]+$/
              if (!tpRegex.test(fieldTP.text))
-                 isValidMessageDialog.openFor(titleTP.text, "请输入整数！")
+                 footer.showError(titleTP.text + "请输入整数！")
+             else
+                 footer.hideError()
          }
     }
 

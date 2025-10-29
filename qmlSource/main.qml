@@ -183,6 +183,11 @@ Window {
             }
         }
     }
+    Footer {
+          id: footer
+          anchors.left: parent.left
+          anchors.bottom: parent.bottom
+    }
 
     Loader{
         id: welcomeScreen
@@ -240,7 +245,6 @@ Window {
         target: inputPannelID.keyboard.style
         property: 'keyboardDesignWidth'
     }
-
     InputPanel
     {
         id: inputPannelID

@@ -34,6 +34,9 @@ QtObject
     readonly property string strLearnSampleLimit:       qsTr("学习样本数上下限（10~20个）")
     readonly property string strYieldRateLimit:         qsTr("良率下限区间（90-99）")
     readonly property string strSetParameters:          qsTr("设置参数")
+    readonly property string strAutomaticLearningLimit: qsTr("自动学习上限")
+    readonly property string strResidualThreshold:      qsTr("残留度阈值")
+    readonly property string strPeelForceThreshold:     qsTr("撕拉力阈值")
     
     // 语言相关
     readonly property string strSimplifiedChinese:      qsTr("简体中文")

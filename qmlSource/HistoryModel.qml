@@ -682,7 +682,7 @@ Rectangle {
         id: usbVisableText
         anchors.left: parent.left
         anchors.leftMargin: 25
-        anchors.bottom: version.bottom
+        anchors.bottom: parent.bottom
         anchors.bottomMargin: 40
         text: "未插入U盘"
         color: "#E8E8E8"
@@ -695,8 +695,8 @@ Rectangle {
         width: 120
         height: 36
         anchors.top: usbVisableText.top
-        anchors.left: version.right
-        anchors.leftMargin: 55
+        anchors.right: parent.right
+        anchors.rightMargin: 35
         background: Rectangle{
             radius: 6
             color: pRgb(43, 112, 173)
@@ -716,60 +716,5 @@ Rectangle {
             //TODO   add history export function
         }
     }
-
-    Text {
-        id: version
-        color: "#639ed6"
-        anchors.top: timeText.top
-        anchors.right: timeText.left
-        anchors.rightMargin: 20
-        font.family: GlobalSystemDefine.fontBold
-        font.bold: true
-        font.pixelSize: 14
-        // text: qsTr("系统版本号") + ": " + "v2.0.1"
-        text: GlobalLanguageDefine.strSystemVersion + ": " + GlobalSystemDefine.strVersionNumber
-    }
-    // 显示时间的文本
-    Text {
-        id: timeText
-        y:718
-        anchors.right: parent.right
-        anchors.bottom: parent.bottom
-        anchors.rightMargin: 10
-        anchors.bottomMargin: 5
-        font.pixelSize: 14
-        font.family: GlobalSystemDefine.fontBold
-        font.bold: true
-        color: "#639ed6"
-        text: GlobalMessageDefine.getCurrentTime()
-
-        // 定时器每秒更新一次
-        Timer {
-            interval: 1  // 1秒
-            repeat: true
-            running: true
-            onTriggered: {
-                timeText.text = GlobalMessageDefine.getCurrentTime()
-            }
-        }
-
-        MouseArea {
-            anchors.fill: parent
-            cursorShape: Qt.PointingHandCursor
-            // drag.target: timeDialog
-            onClicked: {
-                timeDialog.open()  // 点击时弹出对话框
-            }
-        }
-    }
-
-    TimeSettingDialog {
-            id: timeDialog
-            onTimeSelected: {
-                // 接收 timeDialog 中发出的 timeSelected 信号，并更新 timeText 显示的时间
-                let date = new Date(year, month - 1, day, hour, minute, second);  // JavaScript 中月份是从 0 开始的
-                timeText.text = date.toLocaleString();  // 将选中的时间转为本地时间字符串
-            }
-        }
 
 }
