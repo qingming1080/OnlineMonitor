@@ -6,9 +6,9 @@ Dialog {
     modal: true
     width: 700
     height: 300
+    anchors.centerIn: Overlay.overlay
     font.pixelSize: 18
     font.family: "Arial"
-    anchors.centerIn: Overlay.overlay
     background: Rectangle {
         color: "#b1d5db"
         radius: 6

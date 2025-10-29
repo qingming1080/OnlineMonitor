@@ -4,7 +4,7 @@ Rectangle  {
 
     id: footer
     width: parent.width
-    height: 50
+    height: 100
     color: "transparent"
     property string versionText: GlobalLanguageDefine.strSystemVersion + ": " + GlobalSystemDefine.strVersionNumber
     property string currentTime: GlobalMessageDefine.getCurrentTime()
@@ -31,37 +31,31 @@ Rectangle  {
     {
         id: version
         color: "#639ed6"
-        anchors.right: timeText.left
+        anchors.right: timeRect.left
         anchors.rightMargin: 20
-        anchors.verticalCenter: parent.verticalCenter
-        anchors.top: parent.top
-        anchors.topMargin: 25
+        anchors.top: timeRect.top
         font.family: GlobalSystemDefine.fontBold
         font.bold: true
         font.pixelSize:14
         text: footer.versionText
     }
 
-    Text
-    {
-        id: timeText
+    Rectangle {
+        id: timeRect
+        width: 150
+        height: 40
         anchors.right: parent.right
-        anchors.rightMargin: 10
-        anchors.verticalCenter: parent.verticalCenter
-        anchors.bottom: version.bottom
-        font.pixelSize: 14
-        font.family: GlobalSystemDefine.fontBold
-        font.bold: true
-        color: "#639ed6"
-        text: footer.currentTime
+        anchors.bottom: parent.bottom
+        anchors.rightMargin: 45
+        anchors.bottomMargin: -10
+        color: "transparent"
 
-        Timer
-        {
-            id: timer
-            interval: 1000
-            repeat: true
-            running: true
-            onTriggered: footer.currentTime = GlobalMessageDefine.getCurrentTime()
+        Text {
+            id: timeText
+            text: footer.currentTime
+            font.pixelSize: 14
+            font.family: GlobalSystemDefine.fontBold
+            color: "#639ed6"
         }
 
         MouseArea {
@@ -86,6 +80,4 @@ Rectangle  {
     {
           timeDialog.open()
     }
-
-
 }
