@@ -194,4 +194,16 @@ QtObject
     readonly property string strActualDegreeUnit:       qsTr("%")
     readonly property string strActualForceUnit:        qsTr("N")
 
+    //ValidMessage
+    readonly property string strInputInterger:          qsTr("请输入整数！")
+    readonly property string strEnter0And65535:         qsTr("请输入0~65535之间的数！")
+    readonly property string strEnterValidIPAddress:    qsTr("请输入正确的IP地址！")
+    readonly property string strDeviceNameRule:         qsTr("设备名称只能包含中文、字母、数字（1~8字符）！")
+    readonly property string strEnterValidYear:         qsTr("请输入有效年份！")
+    readonly property string strMonthRange:             qsTr("月份必须是1~12之间的整数！")
+    readonly property string strEnterValidDay:          qsTr("请输入正确的日期（1~31）！")
+    readonly property string strEnterValidHour:         qsTr("请输入正确的小时（0~23）！")
+    readonly property string strEnterValidMinute:       qsTr("请输入正确的分钟（0~59）！")
+    readonly property string strEnterValidSecond:       qsTr("请输入正确的秒数（0~59）！")
+
 }

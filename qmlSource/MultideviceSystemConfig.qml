@@ -239,7 +239,7 @@ Rectangle {
                 undetermined4 = !undetermined4
             }
             //            sigUndetermined(sysCurrIndex)
-            DeviceManager.DeviceList[sysCurrIndex1-1].pIO.setAvailabel(!ctl.checked)
+            DeviceManager.DeviceList[sysCurrIndex1-1].DevInfoObject.setSuspiciousOption(!ctl.checked)
         }
 
         indicator: Rectangle{

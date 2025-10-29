@@ -111,7 +111,7 @@ Dialog {
                 onEditingFinished: {
                       var minuteRegex = /^(19|20)\d{2}$/
                      if (!minuteRegex.test(yearField.text))
-                         footer.showError(yearLable.text + "请输入有效年份！")
+                         footer.showError(yearLable.text + GlobalLanguageDefine.strEnterValidYear)
                      else
                          footer.hideError()
                  }
@@ -150,7 +150,7 @@ Dialog {
                 onEditingFinished: {
                       var monthRegex = /^(0[1-9]|1[0-2])$/
                      if (!monthRegex.test(monthField.text))
-                         footer.showError(monthLabel.text + "月份必须是 1~12！")
+                         footer.showError(monthLabel.text + GlobalLanguageDefine.strMonthRange)
                      else
                          footer.hideError()
                  }
@@ -188,7 +188,7 @@ Dialog {
                 onEditingFinished: {
                       var daoyRegex = /^([1-9]|[12][0-9]|3[01])$/
                      if (!daoyRegex.test(dayField.text))
-                         footer.showError(dayLabel.text + "请输入正确的日期（1~31）！")
+                         footer.showError(dayLabel.text + GlobalLanguageDefine.strEnterValidDay)
                      else
                          footer.hideError()
                  }
@@ -225,7 +225,7 @@ Dialog {
                 onEditingFinished: {
                       var hourRegex = /^(0\d|1\d|2[0-3])$/
                      if (!hourRegex.test(hourField.text))
-                         footer.showError(hourLabel.text + "请输入正确的小时（0~23）！")
+                         footer.showError(hourLabel.text + GlobalLanguageDefine.strEnterValidHour)
                      else
                          footer.hideError()
                  }
@@ -262,7 +262,7 @@ Dialog {
                 onEditingFinished: {
                      var minuteRegex = /^[0-5]\d$/
                      if (!minuteRegex.test(minuteField.text))
-                         footer.showError(minuteLabel.text + "请输入正确的分钟（0~59）！")
+                         footer.showError(minuteLabel.text + GlobalLanguageDefine.strEnterValidMinute)
                      else
                          footer.hideError()
                  }
@@ -298,7 +298,7 @@ Dialog {
                 onEditingFinished: {
                      var secondRegex = /^[0-5]\d$/
                      if (!secondRegex.test(secondField.text))
-                        footer.showError(secondLabel.text + "请输入正确的秒数（0~59）！")
+                        footer.showError(secondLabel.text + GlobalLanguageDefine.strEnterValidSecond)
                      else
                         footer.hideError()
                  }

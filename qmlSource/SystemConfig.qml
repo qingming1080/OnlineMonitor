@@ -290,7 +290,7 @@ Rectangle {
                     onEditingFinished: {
                         var maxProductionRegex = /^(?:[2-9]\d{4}|[1-9]\d{5}|1000000)$/
                         if (!maxProductionRegex.test(maxProductionTextField.text))
-                            footer.showError(titleMaxProduction.text + "请输入20000~1000000之间整数！")
+                            footer.showError(titleMaxProduction.text + GlobalLanguageDefine.strMaxProductionLimit)
                         else
                             footer.hideError()
                         }
@@ -357,7 +357,7 @@ Rectangle {
                     onEditingFinished: {
                         var learningSamplesRegex = /^(1[0-9]|20)$/
                         if (!learningSamplesRegex.test(learningSamplesTextField.text))
-                            footer.showError(titleLearningSamples.text + "请输入10~20之间的整数！")
+                            footer.showError(titleLearningSamples.text + GlobalLanguageDefine.strLearnSampleLimit)
                         else
                             footer.hideError()
                     }
@@ -423,7 +423,7 @@ Rectangle {
                     onEditingFinished: {
                         var yieldLowerLimitRegex = /^[1-9][0-9]$/
                         if (!yieldLowerLimitRegex.test(yieldLowerLimitTextField.text))
-                            footer.showError(titleYieldLowerLimit.text + "请输入两位整数！")
+                            footer.showError(titleYieldLowerLimit.text + GlobalLanguageDefine.strInputInterger)
                         else
                             footer.hideError()
                     }
@@ -490,7 +490,7 @@ Rectangle {
                     onEditingFinished: {
                         var portRegex = /^([0-9]|[1-9][0-9]{1,4}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])$/
                         if (!portRegex.test(t7.text))
-                            footer.showError(s7.text + "请输入0~65535之间的整数！")
+                            footer.showError(s7.text + GlobalLanguageDefine.strEnter0And65535)
                         else
                             footer.hideError()
                     }
@@ -555,7 +555,7 @@ Rectangle {
                     onEditingFinished: {
                         var ipRegex = /^(25[0-5]|2[0-4]\d|1\d{2}|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d{2}|[1-9]?\d)){3}$/
                         if (!ipRegex.test(t8.text))
-                            footer.showError(s8.text + "请输入正确的IP地址！")
+                            footer.showError(s8.text + GlobalLanguageDefine.strEnterValidIPAddress)
                         else
                             footer.hideError()
                     }
@@ -621,7 +621,7 @@ Rectangle {
                     onEditingFinished: {
                         var portRegex = /^(25[0-5]|2[0-4]\d|1\d{2}|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d{2}|[1-9]?\d)){3}$/
                         if (!portRegex.test(peelForceThresholdField.text))
-                            footer.showError(titlePeelForceThreshold.text + "请输入正确的IP地址！")
+                            footer.showError(titlePeelForceThreshold.text + GlobalLanguageDefine.strEnterValidIPAddress)
                         else
                             footer.hideError()
                     }
@@ -796,7 +796,7 @@ Rectangle {
                     onEditingFinished: {
                         var nameRegex = /^[\u4e00-\u9fa5A-Za-z0-9]+$/
                         if (!nameRegex.test(t4.text))
-                            footer.showError(s14.text + "设备名称只能包含中文、字母、数字（1~8字符）！")
+                            footer.showError(s14.text + GlobalLanguageDefine.strDeviceNameRule)
                         else
                             footer.hideError()
                     }
@@ -1197,7 +1197,7 @@ Rectangle {
                             onEditingFinished: {
                                 var portRegex = /^([0-9]|[1-9][0-9]{1,4}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])$/
                                 if (!portRegex.test(t5.text))
-                                    footer.showError(s17.text + "请输入0~65535之间的整数！")
+                                    footer.showError(s17.text + GlobalLanguageDefine.strEnter0And65535)
                                 else
                                     footer.hideError()
                             }

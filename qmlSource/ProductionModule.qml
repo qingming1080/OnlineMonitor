@@ -684,7 +684,7 @@ Rectangle {
                                     onEditingFinished: {
                                          var intRegex = /^[0-9]+$/
                                          if (!intRegex.test(textField.text))
-                                             footer.showError(titleTensileText.text + "请输入整数！")
+                                             footer.showError(titleTensileText.text + GlobalLanguageDefine.strInputInterger)
                                          else
                                              footer.hideError()
                                      }
@@ -732,7 +732,7 @@ Rectangle {
                                     onEditingFinished: {
                                          var intRegex = /^[0-9]+$/
                                          if (!intRegex.test(textField1.text))
-                                             footer.showError(residualText.text + "请输入整数！")
+                                             footer.showError(residualText.text + GlobalLanguageDefine.strInputInterger)
                                          else
                                              footer.hideError()
                                      }

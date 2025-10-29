@@ -171,7 +171,7 @@ Rectangle {
         onEditingFinished: {
              var intRegex = /^[0-9]+$/
              if (!intRegex.test(fieldEnergy.text))
-                 footer.showError(titleEnergy.text + "请输入整数！")
+                 footer.showError(titleEnergy.text + GlobalLanguageDefine.strInputInterger)
              else
                  footer.hideError()
          }
@@ -205,7 +205,7 @@ Rectangle {
         onEditingFinished: {
              var wpRegex = /^[0-9]+$/
              if (!wpRegex.test(fieldAmplitude.text))
-                 footer.showError(titleAmplitude.text + "请输入整数！")
+                 footer.showError(titleAmplitude.text + GlobalLanguageDefine.strInputInterger)
              else
                  footer.hideError()
          }
@@ -239,7 +239,7 @@ Rectangle {
         onEditingFinished: {
              var wpRegex = /^[0-9]+$/
              if (!wpRegex.test(fieldWeldPressure.text))
-                 footer.showError(titleWeldPressure.text + "请输入整数！")
+                 footer.showError(titleWeldPressure.text + GlobalLanguageDefine.strInputInterger)
              else
                  footer.hideError()
          }
@@ -273,19 +273,9 @@ Rectangle {
         onEditingFinished: {
              var tpRegex = /^[0-9]+$/
              if (!tpRegex.test(fieldTP.text))
-                 footer.showError(titleTP.text + "请输入整数！")
+                 footer.showError(titleTP.text + GlobalLanguageDefine.strInputInterger)
              else
                  footer.hideError()
          }
     }
-
-    ParameterSettingDialog {
-        id: parameterSetting
-        // onTimeSelected: {
-        //     // 接收 timeDialog 中发出的 timeSelected 信号，并更新 timeText 显示的时间
-        //     let date = new Date(year, month - 1, day, hour, minute, second);  // JavaScript 中月份是从 0 开始的
-        //     timeText.text = date.toLocaleString();  // 将选中的时间转为本地时间字符串
-        // }
-    }
-
 }
