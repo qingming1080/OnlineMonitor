@@ -679,10 +679,10 @@ Rectangle {
                         }
                         // else if(equipmentCount === 1){
                         else if(equipmentCount === 0){
-                            DeviceManager.DeviceList[0].DevInfoObject.setHeightOption(1)
+                            DeviceManager.DeviceList[0].DevInfoObject.setHeightEncoderOption(1)
                         }
                         else{
-                            DeviceManager.DeviceList[currentConfigId-1].DevInfoObject.setHeightOption(1)
+                            DeviceManager.DeviceList[currentConfigId-1].DevInfoObject.setHeightEncoderOption(1)
                         }
                     }
                 }
@@ -721,10 +721,10 @@ Rectangle {
                         }
                         // else if(equipmentCount === 1){
                         else if(equipmentCount === 0){
-                            DeviceManager.DeviceList[0].DevInfoObject.setHeightOption(0)
+                            DeviceManager.DeviceList[0].DevInfoObject.setHeightEncoderOption(0)
                         }
                         else{
-                            DeviceManager.DeviceList[currentConfigId-1].DevInfoObject.setHeightOption(0)
+                            DeviceManager.DeviceList[currentConfigId-1].DevInfoObject.setHeightEncoderOption(0)
                         }
                     }
                 }
@@ -778,7 +778,7 @@ Rectangle {
                         // if(equipmentCount === 1){
                         if(equipmentCount === 0){
                             if(DeviceManager.DeviceList[0]){
-                                return DeviceManager.DeviceList[0].DevInfoObject.name
+                                return DeviceManager.DeviceList[0].DevInfoObject.WelderName
                             }
                             else{
                                 return ""
@@ -786,7 +786,7 @@ Rectangle {
                         }
                         else{
                             if(DeviceManager.DeviceList[currentConfigId-1]){
-                                return DeviceManager.DeviceList[currentConfigId-1].DevInfoObject.name
+                                return DeviceManager.DeviceList[currentConfigId-1].DevInfoObject.WelderName
                             }
                             else{
                                 return ""

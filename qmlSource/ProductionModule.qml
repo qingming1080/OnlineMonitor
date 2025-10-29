@@ -291,7 +291,7 @@ Rectangle {
                         }
                         eqText1:{
                             if(DeviceManager.DeviceList[0]){
-                                return DeviceManager.DeviceList[0].DevInfoObject.goodCycles
+                                return DeviceManager.DeviceList[0].ProductionObj.GoodCycleCount
                             }
                             else{
                                 return ""
@@ -299,7 +299,7 @@ Rectangle {
                         }
                         eqText2:{
                             if(DeviceManager.DeviceList[0]){
-                                return DeviceManager.DeviceList[0].DevInfoObject.suspectCycles
+                                return DeviceManager.DeviceList[0].ProductionObj.SuspectCycleCount
                             }
                             else{
                                 return ""
@@ -307,7 +307,7 @@ Rectangle {
                         }
                         eqText3:{
                             if(DeviceManager.DeviceList[0]){
-                                return DeviceManager.DeviceList[0].DevInfoObject.notDefinite
+                                return DeviceManager.DeviceList[0].ProductionObj.DefectiveCycleCount
                             }
                             else{
                                 return ""
@@ -315,9 +315,9 @@ Rectangle {
                         }
                         eqText4:{
                             if(DeviceManager.DeviceList[0]){
-                                return DeviceManager.DeviceList[0].DevInfoObject.goodCycles
-                                        + DeviceManager.DeviceList[0].DevInfoObject.notDefinite
-                                        +DeviceManager.DeviceList[0].DevInfoObject.suspectCycles
+                                return DeviceManager.DeviceList[0].ProductionObj.GoodCycleCount
+                                        + DeviceManager.DeviceList[0].ProductionObj.SuspectCycleCount
+                                        +DeviceManager.DeviceList[0].ProductionObj.DefectiveCycleCount
                             }
                             else{
                                 return ""
@@ -325,7 +325,7 @@ Rectangle {
                         }
                         eqText5:{
                             if(DeviceManager.DeviceList[0]){
-                                return DeviceManager.DeviceList[0].DevInfoObject.goodRate
+                                return DeviceManager.DeviceList[0].ProductionObj.GoodRate
                             }
                             else{
                                 return ""
