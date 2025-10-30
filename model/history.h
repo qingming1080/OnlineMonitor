@@ -3,6 +3,7 @@
 
 #include <QAbstractListModel>
 #include "define.h"
+#include <QString>
 #include "DataBase/databasemanager.h"
 
 class History : public QAbstractListModel
@@ -28,6 +29,10 @@ public:
     Q_INVOKABLE int finalResult() const;
     Q_INVOKABLE void setFinalResult(int newFinalResult);
 
+    Q_INVOKABLE bool isAvailaleDiskUSB();
+    Q_INVOKABLE bool exportData();
+
+
 signals:
     void deviceIDChanged();
 
@@ -35,9 +40,12 @@ signals:
 
 private:
     explicit History(QObject *parent = nullptr);
+    bool ExportToCSV(const QString& filePath, const QStringList& headers, const QList<QStringList>& data);
 
 private:
     static History* s_pHistory;
+
+    static QString  m_USBDirectory;
 
     QList<DataBaseManager::DB_PRODUCTION> m_data;
 

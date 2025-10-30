@@ -74,6 +74,15 @@ Rectangle  {
           }
       }
 
+    Timer
+    {
+        id: timer
+        interval: 1000
+        repeat: true
+        running: true
+        onTriggered: footer.currentTime = GlobalMessageDefine.getCurrentTime()
+    }
+
     signal timeSelected(int year, int month, int day, int hour, int minute, int second)
 
     function openTimeDialog()

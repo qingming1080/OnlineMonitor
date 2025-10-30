@@ -16,7 +16,7 @@ QtObject
     readonly property string strInputRangeError:        qsTr("输入范围错误请重新输入!")
     readonly property string strSystemConfigSuccess:    qsTr("系统配置成功!")
     readonly property string strLoading:                qsTr("载入中")
-    readonly property string strRomveDevice:           qsTr("是否删除当前设备")
+    readonly property string strRomveDevice:            qsTr("是否删除当前设备")
     
     // 异常信息相关
     readonly property string strSuspiciousAppeared:     qsTr("出现可疑品")
@@ -205,5 +205,10 @@ QtObject
     readonly property string strEnterValidHour:         qsTr("请输入正确的小时（0~23）！")
     readonly property string strEnterValidMinute:       qsTr("请输入正确的分钟（0~59）！")
     readonly property string strEnterValidSecond:       qsTr("请输入正确的秒数（0~59）！")
+
+    //export
+    readonly property string strExportButton:           qsTr("数据导出")
+    readonly property string strNoUSB:                  qsTr("未插入U盘")
+    readonly property string strUSBConnected:           qsTr("U盘已插入")
 
 }

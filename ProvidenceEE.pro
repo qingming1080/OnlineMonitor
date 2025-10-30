@@ -1,4 +1,4 @@
-QT += widgets quick virtualkeyboard charts serialport sql qml xml serialbus
+QT += widgets quick virtualkeyboard charts serialport sql qml xml serialbus core
 CONFIG += c++11
 CONFIG += C++11UTF8
 msvc {
@@ -46,7 +46,8 @@ RESOURCES += qml.qrc \
     databaseSource.qrc \
     fonts.qrc \
     images.qrc \
-    languageTranslation.qrc
+    languageTranslation.qrc \
+    misc.qrc
 
 # Additional import path used to resolve QML modules in Qt Creator's code model
 QML_IMPORT_PATH =

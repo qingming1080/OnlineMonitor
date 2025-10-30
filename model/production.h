@@ -30,6 +30,8 @@ class Production : public QObject
     Q_PROPERTY(int Preheight    READ getPreheight   WRITE setPreheight  NOTIFY notifyPreheightChanged)
     // 焊接结果:焊后高度
     Q_PROPERTY(int PostHeight   READ getPostHeight  WRITE setPostHeight NOTIFY notifyPostHeightChanged)
+
+    //Need Add Amplitude /  WeldPressure / TriggerPressure
 public:
     explicit Production(int welderID = 0, QObject *parent = nullptr);
 

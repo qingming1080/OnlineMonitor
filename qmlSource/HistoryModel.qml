@@ -11,6 +11,7 @@ import LanguageEnum 1.0
 Rectangle {
     property int itemCount: equipmentCount
     property string buttonColor: "#0d988c"
+
     color: pRgb(153, 204, 255)
     Component.onCompleted: {
         bt1.checkable = true
@@ -684,11 +685,11 @@ Rectangle {
         anchors.leftMargin: 25
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 40
-        text: "未插入U盘"
+        text: window.isUSBAvailable ? "USB已连接": GlobalLanguageDefine.strNoUSB
         color: "#E8E8E8"
         font.family: GlobalSystemDefine.fontBold
         font.bold: true
-        font.pixelSize: LanguageManager.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 20 : 16
+        font.pixelSize: 20
     }
 
     Button{
@@ -703,7 +704,7 @@ Rectangle {
         }
 
         contentItem: Text {
-            text: "导出数据"
+            text: GlobalLanguageDefine.strExportButton
             font.pixelSize: 20
             color: pRgb(153, 204, 255)
             anchors.centerIn: parent
@@ -714,6 +715,9 @@ Rectangle {
         }
         onClicked: {
             //TODO   add history export function
+           // TODO  判断U盘是否插入，点击有遮罩，数据导出进度条..
+            History.exportData()
+             console.log("导出成功!")
         }
     }
 
