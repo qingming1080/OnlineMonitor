@@ -24,10 +24,12 @@ SOURCES += \
         main.cpp \
         modbus/hbmodbusclient.cpp \
         modbus/hbserver.cpp \
+        model/csvexportworker.cpp \
         model/device.cpp \
         model/deviceinformation.cpp \
         model/devicemanager.cpp \
         model/devicenames.cpp \
+        model/exportworker.cpp \
         model/history.cpp \
         model/manual.cpp \
         model/message.cpp \
@@ -68,10 +70,12 @@ HEADERS += \
     log/localrecord.h \
     modbus/hbmodbusclient.h \
     modbus/hbserver.h \
+    model/csvexportworker.h \
     model/device.h \
     model/deviceinformation.h \
     model/devicemanager.h \
     model/devicenames.h \
+    model/exportworker.h \
     model/history.h \
     model/manual.h \
     model/message.h \

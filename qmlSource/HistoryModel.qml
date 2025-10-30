@@ -12,6 +12,19 @@ Rectangle {
     property int itemCount: equipmentCount
     property string buttonColor: "#0d988c"
 
+    Connections {
+        target: History
+        function onSignalExportCompleted(success, message)
+        {
+            console.debug("message", message)
+            window.showLoading(true)
+            if(success === true)
+                window.showDialog(qsTr("提示"),qsTr("导出数据已完成"))
+            else
+                window.showDialog(qsTr("提示"),qsTr("没有找到可以使用的U盘或尝试再次导出"))
+        }
+    }
+
     color: pRgb(153, 204, 255)
     Component.onCompleted: {
         bt1.checkable = true
@@ -685,7 +698,7 @@ Rectangle {
         anchors.leftMargin: 25
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 40
-        text: window.isUSBAvailable ? "USB已连接": GlobalLanguageDefine.strNoUSB
+        text: window.isUSBAvailable ? GlobalLanguageDefine.strUSBConnected : GlobalLanguageDefine.strNoUSB
         color: "#E8E8E8"
         font.family: GlobalSystemDefine.fontBold
         font.bold: true
@@ -698,6 +711,7 @@ Rectangle {
         anchors.top: usbVisableText.top
         anchors.right: parent.right
         anchors.rightMargin: 35
+        // visible: window.isUSBAvailable
         background: Rectangle{
             radius: 6
             color: pRgb(43, 112, 173)
@@ -713,11 +727,14 @@ Rectangle {
             font.family: GlobalSystemDefine.fontBold
             font.bold: true
         }
-        onClicked: {
-            //TODO   add history export function
-           // TODO  判断U盘是否插入，点击有遮罩，数据导出进度条..
-            History.exportData()
-             console.log("导出成功!")
+        onClicked:
+        {
+            window.showLoading(true)
+            if(History.exportData() === false)
+            {
+                window.showLoading(false)
+            }
+            console.log("导出成功!")
         }
     }
 

@@ -125,6 +125,18 @@ Window {
         }
     }
 
+    function showLoading(isShow)
+    {
+        if(isShow === false)
+            loadingOverlay.progress = 0.0
+        loadingOverlay.visible = isShow;
+    }
+
+    function showDialog(title, text)
+    {
+        mesDialog.openFor(title,text)
+    }
+
     Connections
     {
         target: window
@@ -162,6 +174,17 @@ Window {
         }
     }
 
+    Connections {
+        target: History
+        function onSignalExportPrograss(current, total)
+        {
+            if(loadingOverlay.visible === true)
+            {
+                loadingOverlay.progress = (current + 1) / total
+            }
+        }
+    }
+
     Item{
         anchors.fill: parent
         Header{
@@ -184,10 +207,24 @@ Window {
             }
         }
     }
-    Footer {
+    Footer
+    {
           id: footer
           anchors.left: parent.left
           anchors.bottom: parent.bottom
+    }
+    MessageDialog
+    {
+        id: mesDialog
+    }
+
+    Loading{
+        id:loadingOverlay
+        width: parent.width
+        height: parent.height
+        anchors.centerIn: parent
+        z: 3
+        visible: false
     }
 
     Loader{

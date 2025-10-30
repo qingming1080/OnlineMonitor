@@ -11,7 +11,9 @@
 #include <QStringList>
 #include <qcoreapplication.h>
 #include <QProcess>
+#include <QThread>
 #include <QObject>
+#include "csvexportworker.h"
 
 History* History::s_pHistory = nullptr;
 QString  History::m_USBDirectory = "";
@@ -280,11 +282,33 @@ bool History::exportData()
 
     QDateTime currentDateTime = QDateTime::currentDateTime();
     QString formattedDateTime = currentDateTime.toString("yyyyMMddHHmmss");
-    QString filePath = m_USBDirectory + "/" + formattedDateTime + "-历史记录数据.csv";
+    QString localAppDirectory = QCoreApplication::applicationDirPath() + "/" + formattedDateTime + "-历史数据记录";
+    QStringList localFiles;
+    int filesCount = rows.count() / MAX_RECORDS_IN_ONE_FILE;
+    int restRecords = rows.count() % MAX_RECORDS_IN_ONE_FILE;
 
-    ExportToCSV(filePath, headers, rows);
+    if(restRecords > 0) filesCount += 1;
+    for(int i = 0; i < filesCount; i++)
+    {
+        localFiles.append(localAppDirectory + QString::number(i+1) + ".csv");
+    }
 
-    return true ;
+    QList<QStringList> oneFileRecords;
+    for(int i = 0; i < filesCount; i++)
+    {
+        oneFileRecords.clear();
+        for(int j = 0; j < MAX_RECORDS_IN_ONE_FILE; j++)
+        {
+            if((j + i * MAX_RECORDS_IN_ONE_FILE) < rows.count())
+                oneFileRecords.append(rows.at(j + i * MAX_RECORDS_IN_ONE_FILE));
+            else
+                break;
+        }
+        ExportToCSV(localFiles.at(i), headers, oneFileRecords);
+    }
+
+    ExportToCSVAsync(localFiles);
+    return true;
 }
 
 bool History::ExportToCSV(const QString& filePath, const QStringList& headers, const QList<QStringList>& data)
@@ -310,4 +334,31 @@ bool History::ExportToCSV(const QString& filePath, const QStringList& headers, c
     file.close();
     qDebug() << "数据已成功导出到：" << filePath;
     return true;
+}
+
+void History::ExportToCSVAsync(QStringList &localfiles)
+{
+    if(!m_exportThread)
+    {
+        m_exportThread = new QThread(this);
+        m_exportWorker = new CSVExportWorker(localfiles, m_USBDirectory);
+        m_exportWorker->moveToThread(m_exportThread);
+        connect(m_exportThread, &QThread::started, static_cast<CSVExportWorker*>(m_exportWorker), &CSVExportWorker::exportToFile);
+        connect(m_exportWorker, &CSVExportWorker::exportPrograss, this, &History::signalExportPrograss);
+        connect(m_exportWorker, &CSVExportWorker::exportFinished, this, &History::onExportFinished);
+        connect(m_exportThread, &QThread::finished, m_exportWorker, &QObject::deleteLater);
+    }
+    if(!m_exportThread->isRunning())
+    {
+        m_exportThread->start();
+    }
+}
+
+void History::onExportFinished(bool success, const QString &message)
+{
+    m_exportThread->quit();
+    m_exportThread->wait();
+    m_exportThread->deleteLater();
+    m_exportThread = nullptr;
+    emit signalExportCompleted(success, message);
 }

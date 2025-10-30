@@ -31,5 +31,6 @@
         <file>qmlSource/MessageDialog.qml</file>
         <file>qmlSource/ValidMessage.qml</file>
         <file>qmlSource/Footer.qml</file>
+        <file>qmlSource/Loading.qml</file>
     </qresource>
 </RCC>
