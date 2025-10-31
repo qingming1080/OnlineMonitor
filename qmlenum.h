@@ -48,12 +48,12 @@ public:
 
     enum SYSTEM_COLUMN
     {
-        SYSTEM_id                   = 0,   // id
-        SYSTEM_welder_id            = 1,   // 设备id
-        SYSTEM_single_fact_setting  = 2,   // 单因素设置
-        SYSTEM_general_fact_setting = 3,   // 通用系数设置
-        SYSTEM_other_fact_setting   = 4,   // 通用系数设置
-        SYSTEM_auto_model_limit     = 5,   // 自动学习上限
+        WELD_ID,
+        SINGLE_FACTOR_SETTING,
+        GENERAL_FACTOR_SETTING,
+        FORCE_THRESHOLD,
+        RESIDUAL_THRESHOLD,
+        AUTO_LEARNING_COUNT,
     };
     Q_ENUM(SYSTEM_COLUMN)
 

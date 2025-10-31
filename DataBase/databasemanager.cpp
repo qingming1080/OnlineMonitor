@@ -81,9 +81,12 @@ bool DataBaseManager::getConfigurationData(int welderID, DataBaseManager::DB_CON
         configure.HeightEncoderOption    = query.value(CONFIGURATION_COLUMN::HEIGHT_ENCODER_OPTION).toInt();
         configure.ConnectType            = query.value(CONFIGURATION_COLUMN::CONNECT_TYPE).toInt();
         configure.ConnectTypeId          = query.value(CONFIGURATION_COLUMN::CONNECT_TYPE_ID).toInt();
-        configure.MES_Port               = query.value(CONFIGURATION_COLUMN::MES_PORT).toInt();
-        configure.MES_IP                 = query.value(CONFIGURATION_COLUMN::MES_IP).toString();
-        configure.Device_IP              = query.value(CONFIGURATION_COLUMN::DEVICE_IP).toString();
+        configure.SingleFactSetting      = query.value(CONFIGURATION_COLUMN::SINGLE_FACT_SETTING).toInt();
+        configure.GeneralFactSetting     = query.value(CONFIGURATION_COLUMN::GENERAL_FACT_SETTING).toInt();
+        configure.OtherFactSetting       = query.value(CONFIGURATION_COLUMN::OTHER_FACT_SETTING).toInt();
+        configure.AutoLearnCount         = query.value(CONFIGURATION_COLUMN::AUTO_LEARN_COUNT).toInt();
+        configure.ForceThreshold         = query.value(CONFIGURATION_COLUMN::FORCE_THRESHOLD).toInt();
+        configure.ResidualThreshold      = query.value(CONFIGURATION_COLUMN::RESIDUAL_THRESHOLD).toInt();
         bResult = true;
     }
     return bResult;
@@ -123,35 +126,61 @@ bool DataBaseManager::insertConfigurationDevice(DB_CONFIGURE data)
 {
     QSqlQuery query;
     // %1_表格名称
-    QString execStr = QString("INSERT INTO %1 values("
-                              ":welder_name"
-                              ", :welder_type"
-                              ", :production_bacth"
-                              ", :model_sample"
-                              ", :lower_limit"
-                              ", :height_option"
-                              ", :connect_type"
-                              ", :connect_id"
-                              ", 0"
-                              ", :mes_port"
-                              ", :mes_ip"
-                              ", :device_ip)")
-                          .arg(CONFIGURATION_TABLENAME);
+    QString execStr = QString("INSERT INTO %1 ("
+                              "welder_name, "
+                              "welder_type, "
+                              "production_bacth, "
+                              "model_sample, "
+                              "lower_limit, "
+                              "height_option, "
+                              "suspicious_option, "
+                              "connect_type, "
+                              "connect_id, "
+                              "single_fact_setting, "
+                              "general_fact_setting, "
+                              "other_fact_setting, "
+                              "auto_learn_count, "
+                              "force_threshold, "
+                              "residual_threshold"
+                              ") VALUES ("
+                              ":welder_name, "
+                              ":welder_type, "
+                              ":production_bacth, "
+                              ":model_sample, "
+                              ":lower_limit, "
+                              ":height_option, "
+                              ":suspicious_option, "
+                              ":connect_type, "
+                              ":connect_id, "
+                              ":single_fact_setting, "
+                              ":general_fact_setting, "
+                              ":other_fact_setting, "
+                              ":auto_learn_count, "
+                              ":force_threshold, "
+                              ":residual_threshold"
+                              ")").arg(CONFIGURATION_TABLENAME);
+     query.prepare(execStr);
 
     // 绑定属性
-    query.prepare(execStr);
     query.bindValue(":welder_name", data.WelderName);
     query.bindValue(":welder_type", data.WelderType);
     query.bindValue(":production_bacth", data.ProductionBatch);
     query.bindValue(":model_sample", data.MaxModelSamples);
     query.bindValue(":lower_limit", data.YieldRateLowerLimit);
-    query.bindValue(":height_option", data.HeightEncoderOption);
+    query.bindValue(":height_option", data.HeightEncoderOption ? 1 : 0);
+    query.bindValue(":suspicious_option", data.SuspiciousOption? 1 : 0);
     query.bindValue(":connect_type", data.ConnectType);
     query.bindValue(":connect_id", data.ConnectTypeId);
-    query.bindValue(":mes_port", data.MES_Port);
-    query.bindValue(":mes_ip", data.MES_IP);
-    query.bindValue(":device_ip", data.Device_IP);
+    query.bindValue(":single_fact_setting", data.SingleFactSetting);
+    query.bindValue(":general_fact_setting", data.GeneralFactSetting);
+    query.bindValue(":other_fact_setting", data.OtherFactSetting);
+    query.bindValue(":auto_learn_count", data.AutoLearnCount);
+    query.bindValue(":force_threshold", data.ForceThreshold);
+    query.bindValue(":residual_threshold", data.ResidualThreshold);
     bool ret = query.exec();
+    if (!ret) {
+        qWarning() << "Insert configuration failed:" << query.lastError().text();
+    }
     return ret;
 }
 
@@ -167,30 +196,40 @@ bool DataBaseManager::updateConfigurationDevice(const int WelderID, DB_CONFIGURE
                               "model_sample = :model_sample, "
                               "lower_limit = :lower_limit, "
                               "height_option = :height_option, "
+                              "suspicious_option = :suspicious_option, "
                               "connect_type = :connect_type, "
                               "connect_id = :connect_id, "
-                              "mes_port = :mes_port, "
-                              "mes_ip = :mes_ip, "
-                              "device_ip = :device_ip "
+                              "single_fact_setting = :single_fact_setting, "
+                              "general_fact_setting = :general_fact_setting, "
+                              "other_fact_setting = :other_fact_setting, "
+                              "auto_learn_count = :auto_learn_count, "
+                              "force_threshold = :force_threshold, "
+                              "residual_threshold = :residual_threshold "
                               "WHERE welder_id = :welder_id")
                           .arg(CONFIGURATION_TABLENAME);
 
     // 绑定参数
-    query.prepare(execStr);
     query.bindValue(":welder_name", data.WelderName);
     query.bindValue(":welder_type", data.WelderType);
     query.bindValue(":production_bacth", data.ProductionBatch);
     query.bindValue(":model_sample", data.MaxModelSamples);
     query.bindValue(":lower_limit", data.YieldRateLowerLimit);
-    query.bindValue(":height_option", data.HeightEncoderOption);
+    query.bindValue(":height_option", data.HeightEncoderOption ? 1 : 0);
+    query.bindValue(":suspicious_option", data.SuspiciousOption? 1 : 0);
     query.bindValue(":connect_type", data.ConnectType);
     query.bindValue(":connect_id", data.ConnectTypeId);
-    query.bindValue(":mes_port", data.MES_Port);
-    query.bindValue(":mes_ip", data.MES_IP);
-    query.bindValue(":device_ip", data.Device_IP);
-    query.bindValue(":welder_id", WelderID); // 确保用 welder_id 来指定更新的记录
+    query.bindValue(":single_fact_setting", data.SingleFactSetting);
+    query.bindValue(":general_fact_setting", data.GeneralFactSetting);
+    query.bindValue(":other_fact_setting", data.OtherFactSetting);
+    query.bindValue(":auto_learn_count", data.AutoLearnCount);
+    query.bindValue(":force_threshold", data.ForceThreshold);
+    query.bindValue(":residual_threshold", data.ResidualThreshold);
+    query.bindValue(":welder_id",WelderID);
 
     bool ret = query.exec();
+    if (!ret) {
+        qWarning() << "Update configuration failed:" << query.lastError().text();
+    }
     return ret;
 }
 
@@ -1120,7 +1159,7 @@ bool DataBaseManager::getSystemData(const int welderID, DataBaseManager::DB_SYST
     bool bResult = false;
     QSqlQuery query;
     // %1_表格名称
-    QString execStr = QString("SELECT * FROM %1 WHERE %2 = :welderID").arg(SYSTEM_TABLENAME, getSystem_ColumnName(QmlEnum::SYSTEM_welder_id));
+    QString execStr = QString("SELECT * FROM %1 WHERE %2 = :welderID").arg(SYSTEM_TABLENAME, getSystem_ColumnName(QmlEnum::SYSTEM_COLUMN::WELD_ID));
     query.prepare(execStr);
     query.bindValue(":welderID", welderID);
 
@@ -1132,11 +1171,11 @@ bool DataBaseManager::getSystemData(const int welderID, DataBaseManager::DB_SYST
     {
         // data.id                   = query.value(QmlEnum::SYSTEM_COLUMN::SYSTEM_id).toInt();
         // data.welder_id            = query.value(QmlEnum::SYSTEM_COLUMN::SYSTEM_welder_id).toInt();
-        system.SingleFactorSetting  = query.value(QmlEnum::SYSTEM_COLUMN::SYSTEM_single_fact_setting).toInt();
-        system.GeneralFactorSetting = query.value(QmlEnum::SYSTEM_COLUMN::SYSTEM_general_fact_setting).toInt();
-        system.ForceThreshold   = query.value(QmlEnum::SYSTEM_COLUMN::SYSTEM_other_fact_setting).toInt();
+        system.SingleFactorSetting      = query.value(QmlEnum::SINGLE_FACTOR_SETTING).toInt();
+        system.GeneralFactorSetting     = query.value(QmlEnum::GENERAL_FACTOR_SETTING).toInt();
+        system.ForceThreshold           = query.value(QmlEnum::FORCE_THRESHOLD).toInt();
         // data.ResidualThreshold = query.value(QmlEnum::SYSTEM_COLUMN::SYSTEM_other_fact_setting).toInt();
-        system.AutoLearningCount     = query.value(QmlEnum::SYSTEM_COLUMN::SYSTEM_auto_model_limit).toInt();
+        system.AutoLearningCount        = query.value(QmlEnum::AUTO_LEARNING_COUNT).toInt();
         bResult = true;
     }
     return bResult;
@@ -1147,7 +1186,7 @@ bool DataBaseManager::setSystemData(int id, QmlEnum::SYSTEM_COLUMN column, QVari
     QSqlQuery query;
     // %1_表格名称 %2_要修改的字段名称 %3_ID字段名称
     QString execStr = QString("UPDATE %1 SET %2 = :newdata WHERE %3 = :id")
-                          .arg(SYSTEM_TABLENAME, getSystem_ColumnName(column), getSystem_ColumnName(QmlEnum::SYSTEM_id));
+                          .arg(SYSTEM_TABLENAME, getSystem_ColumnName(column), getSystem_ColumnName(QmlEnum::SYSTEM_COLUMN::WELD_ID));
 
     // 绑定属性
     query.prepare(execStr);
@@ -1258,14 +1297,19 @@ QString DataBaseManager::getConfiguration_ColumnName(CONFIGURATION_COLUMN column
         return "connect_type";
     case CONFIGURATION_COLUMN::CONNECT_TYPE_ID:
         return "connect_id";
-    case CONFIGURATION_COLUMN::MES_PORT:
-        return "mes_port";
-    case CONFIGURATION_COLUMN::MES_IP:
-        return "mes_ip";
-    case CONFIGURATION_COLUMN::DEVICE_IP:
-        return "device_ip";
+    case CONFIGURATION_COLUMN::SINGLE_FACT_SETTING:
+        return "single_fact_setting";
+    case CONFIGURATION_COLUMN::GENERAL_FACT_SETTING:
+        return "general_fact_setting";
+    case CONFIGURATION_COLUMN::OTHER_FACT_SETTING:
+        return "other_fact_setting";
+    case CONFIGURATION_COLUMN::AUTO_LEARN_COUNT:
+        return "auto_learn_count";
+    case CONFIGURATION_COLUMN::FORCE_THRESHOLD:
+        return "force_threshold";
+    case CONFIGURATION_COLUMN::RESIDUAL_THRESHOLD:
+        return "residual_threshold";
     }
-
     return "";
 }
 
@@ -1477,18 +1521,18 @@ QString DataBaseManager::getSystem_ColumnName(QmlEnum::SYSTEM_COLUMN column)
 {
     switch(column)
     {
-    case QmlEnum::SYSTEM_id:
-        return "id";
-    case QmlEnum::SYSTEM_welder_id:
+    case QmlEnum::SINGLE_FACTOR_SETTING:
+        return "single_factor_setting";
+    case QmlEnum::GENERAL_FACTOR_SETTING:
+        return "general_factor_setting";
+    case QmlEnum::FORCE_THRESHOLD:
+        return "force_threshold_setting";
+    case QmlEnum::RESIDUAL_THRESHOLD:
+        return "residual_threshold";
+    case QmlEnum::AUTO_LEARNING_COUNT:
+        return "auto_learning_count";
+    case QmlEnum::WELD_ID:
         return "welder_id";
-    case QmlEnum::SYSTEM_single_fact_setting:
-        return "single_fact_setting";
-    case QmlEnum::SYSTEM_general_fact_setting:
-        return "general_fact_setting";
-    case QmlEnum::SYSTEM_other_fact_setting:
-        return "other_fact_setting";
-    case QmlEnum::SYSTEM_auto_model_limit:
-        return "auto_model_limit";
     }
 
     return "";
