@@ -17,7 +17,7 @@ Rectangle {
         function onSignalExportCompleted(success, message)
         {
             console.debug("message", message)
-            window.showLoading(true)
+            window.showLoading(false)
             if(success === true)
                 window.showDialog(qsTr("提示"),qsTr("导出数据已完成"))
             else
@@ -729,12 +729,16 @@ Rectangle {
         }
         onClicked:
         {
-            window.showLoading(true)
-            if(History.exportData() === false)
+            // window.showLoading(true)
+            var started =  History.exportData()
+            if(started === true)
             {
                 window.showLoading(false)
             }
-            console.log("导出成功!")
+            else
+            {
+                window.showDialog(qsTr("提示"), qsTr("无法开始导出，未找到可用的U盘"))
+            }
         }
     }
 

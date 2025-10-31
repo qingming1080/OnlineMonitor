@@ -44,7 +44,7 @@ bool CSVExportWorker::ExportToCSV(const QString localDirectory, const QString ta
     QProcess process;
 
     // 设置要执行的命令
-    QString program = "python"; // 你可以替换为其他 Linux 命令
+    QString program = "python3"; // 你可以替换为其他 Linux 命令
     QStringList arguments; // 这里可以添加命令参数，例如 "-l" 或其他
     qDebug() << "localDirectly: " << localDirectory;
     qDebug() << "targetDirectory: " << targetDirectory;
