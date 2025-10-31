@@ -177,7 +177,7 @@ Rectangle {
             }
             eqText1:{
                 if(DeviceManager.DeviceList[0]){
-                    return DeviceManager.DeviceList[0].DeviceObj.goodCycles
+                    return DeviceManager.DeviceList[0].ProductionObj.GoodCycleCount
                 }
                 else{
                     return ""
@@ -185,7 +185,7 @@ Rectangle {
             }
             eqText2:{
                 if(DeviceManager.DeviceList[0]){
-                    return DeviceManager.DeviceList[0].DeviceObj.suspectCycles
+                    return DeviceManager.DeviceList[0].ProductionObj.SuspectCycleCount
                 }
                 else{
                     return ""
@@ -193,7 +193,7 @@ Rectangle {
             }
             eqText3:{
                 if(DeviceManager.DeviceList[0]){
-                    return DeviceManager.DeviceList[0].DeviceObj.notDefinite
+                    return DeviceManager.DeviceList[0].ProductionObj.DefectiveCycleCount
                 }
                 else{
                     return ""
@@ -201,9 +201,9 @@ Rectangle {
             }
             eqText4:{
                 if(DeviceManager.DeviceList[0]){
-                    return DeviceManager.DeviceList[0].DeviceObj.goodCycles
-                            + DeviceManager.DeviceList[0].DeviceObj.notDefinite
-                            +DeviceManager.DeviceList[0].DeviceObj.suspectCycles
+                    return DeviceManager.DeviceList[0].ProductionObj.GoodCycleCount
+                            + DeviceManager.DeviceList[0].ProductionObj.SuspectCycleCount
+                            +DeviceManager.DeviceList[0].ProductionObj.DefectiveCycleCount
                 }
                 else{
                     return ""
@@ -211,7 +211,7 @@ Rectangle {
             }
             eqText5:{
                 if(DeviceManager.DeviceList[0]){
-                    return DeviceManager.DeviceList[0].DeviceObj.goodRate
+                    return DeviceManager.DeviceList[0].ProductionObj.GoodRate
                 }
                 else{
                     return ""
@@ -346,7 +346,7 @@ Rectangle {
             }
             eqText3:{
                 if(DeviceManager.DeviceList[1]){
-                    return DeviceManager.DeviceList[1].DeviceObj.notDefinite
+                    return DeviceManager.DeviceList[1].ProductionObj.DefectiveCycleCount
                 }
                 else{
                     return ""
@@ -354,9 +354,9 @@ Rectangle {
             }
             eqText4:{
                 if(DeviceManager.DeviceList[1]){
-                    return DeviceManager.DeviceList[1].DeviceObj.goodCycles
-                            + DeviceManager.DeviceList[1].DeviceObj.notDefinite
-                            +DeviceManager.DeviceList[1].DeviceObj.suspectCycles
+                    return DeviceManager.DeviceList[1].ProductionObj.GoodCycleCount
+                            + DeviceManager.DeviceList[1].ProductionObj.SuspectCycleCount
+                            +DeviceManager.DeviceList[1].ProductionObj.DefectiveCycleCount
                 }
                 else{
                     return ""
@@ -364,7 +364,7 @@ Rectangle {
             }
             eqText5:{
                 if(DeviceManager.DeviceList[1]){
-                    return DeviceManager.DeviceList[1].DeviceObj.goodRate
+                    return DeviceManager.DeviceList[1].ProductionObj.GoodRate
                 }
                 else{
                     return ""
@@ -501,10 +501,10 @@ Rectangle {
             }
             eqText1:{
                 if(DeviceManager.DeviceList[2]){
-                    return DeviceManager.DeviceList[2].DeviceObj.goodCycles
+                    return DeviceManager.DeviceList[2].ProductionObj.GoodCycleCount
                 }
                 else if(DeviceManager.DeviceList[3]){
-                    return DeviceManager.DeviceList[3].DeviceObj.goodCycles
+                    return DeviceManager.DeviceList[3].ProductionObj.GoodCycleCount
                 }
                 else{
                     return ""
@@ -512,10 +512,10 @@ Rectangle {
             }
             eqText2:{
                 if(DeviceManager.DeviceList[2]){
-                    return DeviceManager.DeviceList[2].DeviceObj.suspectCycles
+                    return DeviceManager.DeviceList[2].ProductionObj.SuspectCycleCount
                 }
                 else if(DeviceManager.DeviceList[3]){
-                    return DeviceManager.DeviceList[3].DeviceObj.suspectCycles
+                    return DeviceManager.DeviceList[3].ProductionObj.SuspectCycleCount
                 }
                 else{
                     return ""
@@ -523,10 +523,10 @@ Rectangle {
             }
             eqText3:{
                 if(DeviceManager.DeviceList[2]){
-                    return DeviceManager.DeviceList[2].DeviceObj.notDefinite
+                    return DeviceManager.DeviceList[2].ProductionObj.DefectiveCycleCount
                 }
                 else if(DeviceManager.DeviceList[3]){
-                    return DeviceManager.DeviceList[3].DeviceObj.notDefinite
+                    return DeviceManager.DeviceList[3].ProductionObj.DefectiveCycleCount
                 }
                 else{
                     return ""
@@ -534,14 +534,14 @@ Rectangle {
             }
             eqText4:{
                 if(DeviceManager.DeviceList[2]){
-                    return DeviceManager.DeviceList[2].DeviceObj.goodCycles
-                            + DeviceManager.DeviceList[2].DeviceObj.notDefinite
-                            +DeviceManager.DeviceList[2].DeviceObj.suspectCycles
+                    return DeviceManager.DeviceList[2].ProductionObj.GoodCycleCount
+                            + DeviceManager.DeviceList[2].ProductionObj.SuspectCycleCount
+                            +DeviceManager.DeviceList[2].ProductionObj.DefectiveCycleCount
                 }
                 else if(DeviceManager.DeviceList[3]){
-                    return DeviceManager.DeviceList[3].DeviceObj.goodCycles
-                            + DeviceManager.DeviceList[3].DeviceObj.notDefinite
-                            +DeviceManager.DeviceList[3].DeviceObj.suspectCycles
+                    return DeviceManager.DeviceList[3].ProductionObj.GoodCycleCount
+                            + DeviceManager.DeviceList[3].ProductionObj.SuspectCycleCount
+                            +DeviceManager.DeviceList[3].ProductionObj.DefectiveCycleCount
                 }
                 else{
                     return ""
@@ -549,10 +549,10 @@ Rectangle {
             }
             eqText5:{
                 if(DeviceManager.DeviceList[2]){
-                    return DeviceManager.DeviceList[2].DeviceObj.goodRate
+                    return DeviceManager.DeviceList[2].ProductionObj.GoodRate
                 }
                 else if(DeviceManager.DeviceList[3]){
-                    return DeviceManager.DeviceList[3].DeviceObj.goodRate
+                    return DeviceManager.DeviceList[3].ProductionObj.GoodRate
                 }
                 else{
                     return ""
@@ -678,10 +678,10 @@ Rectangle {
             }
             eqText1:{
                 if(DeviceManager.DeviceList[3]){
-                    return DeviceManager.DeviceList[3].DeviceObj.goodCycles
+                    return DeviceManager.DeviceList[3].ProductionObj.GoodCycleCount
                 }
                 else if(DeviceManager.DeviceList[2]){
-                    return DeviceManager.DeviceList[2].DeviceObj.goodCycles
+                    return DeviceManager.DeviceList[2].ProductionObj.GoodCycleCount
                 }
                 else{
                     return ""
@@ -689,10 +689,10 @@ Rectangle {
             }
             eqText2:{
                 if(DeviceManager.DeviceList[3]){
-                    return DeviceManager.DeviceList[3].DeviceObj.suspectCycles
+                    return DeviceManager.DeviceList[3].ProductionObj.SuspectCycleCount
                 }
                 else if(DeviceManager.DeviceList[2]){
-                    return DeviceManager.DeviceList[2].DeviceObj.suspectCycles
+                    return DeviceManager.DeviceList[2].ProductionObj.SuspectCycleCount
                 }
                 else{
                     return ""
@@ -700,10 +700,10 @@ Rectangle {
             }
             eqText3:{
                 if(DeviceManager.DeviceList[3]){
-                    return DeviceManager.DeviceList[3].DeviceObj.notDefinite
+                    return DeviceManager.DeviceList[3].ProductionObj.DefectiveCycleCount
                 }
                 else if(DeviceManager.DeviceList[2]){
-                    return DeviceManager.DeviceList[2].DeviceObj.notDefinite
+                    return DeviceManager.DeviceList[2].ProductionObj.DefectiveCycleCount
                 }
                 else{
                     return ""
@@ -711,14 +711,14 @@ Rectangle {
             }
             eqText4:{
                 if(DeviceManager.DeviceList[3]){
-                    return DeviceManager.DeviceList[3].DeviceObj.goodCycles
-                            + DeviceManager.DeviceList[3].DeviceObj.notDefinite
-                            +DeviceManager.DeviceList[3].DeviceObj.suspectCycles
+                    return DeviceManager.DeviceList[3].ProductionObj.GoodCycleCount
+                            + DeviceManager.DeviceList[3].ProductionObj.SuspectCycleCount
+                            +DeviceManager.DeviceList[3].ProductionObj.DefectiveCycleCount
                 }
                 else if(DeviceManager.DeviceList[2]){
-                    return DeviceManager.DeviceList[2].DeviceObj.goodCycles
-                            + DeviceManager.DeviceList[2].DeviceObj.notDefinite
-                            +DeviceManager.DeviceList[2].DeviceObj.suspectCycles
+                    return DeviceManager.DeviceList[2].ProductionObj.GoodCycleCount
+                            + DeviceManager.DeviceList[2].ProductionObj.SuspectCycleCount
+                            +DeviceManager.DeviceList[2].ProductionObj.DefectiveCycleCount
                 }
                 else{
                     return ""
@@ -726,10 +726,10 @@ Rectangle {
             }
             eqText5:{
                 if(DeviceManager.DeviceList[3]){
-                    return DeviceManager.DeviceList[3].DeviceObj.goodRate
+                    return DeviceManager.DeviceList[3].ProductionObj.GoodRate
                 }
                 else if(DeviceManager.DeviceList[2]){
-                    return DeviceManager.DeviceList[2].DeviceObj.goodRate
+                    return DeviceManager.DeviceList[2].ProductionObj.GoodRate
                 }
                 else{
                     return ""
@@ -845,61 +845,6 @@ Rectangle {
         }
         onPressed: {
             popup.openPop(6)
-        }
-    }
-    Text {
-        id: version
-        color: "#639ed6"
-        anchors.top: timeText.top
-        anchors.right: timeText.left
-        anchors.rightMargin: 20
-        font.family: GlobalSystemDefine.fontBold
-        font.bold: true
-        font.pixelSize: 14
-        // text: qsTr("系统版本号") + ": " + "v2.0.1"
-        text: GlobalLanguageDefine.strSystemVersion + ": " + GlobalSystemDefine.strVersionNumber
-
-    }
-    // 显示时间的文本
-    Text {
-        id: timeText
-        y:718
-        anchors.right: parent.right
-        anchors.bottom: parent.bottom
-        anchors.rightMargin: 10
-        anchors.bottomMargin: 5
-        font.pixelSize: 14
-        font.family: GlobalSystemDefine.fontBold
-        font.bold: true
-        color: "#639ed6"
-        text: GlobalMessageDefine.getCurrentTime()
-
-        // 定时器每秒更新一次
-        Timer {
-            interval: 1  // 1秒
-            repeat: true
-            running: true
-            onTriggered: {
-                timeText.text = GlobalMessageDefine.getCurrentTime()
-            }
-        }
-
-        MouseArea {
-            anchors.fill: parent
-            cursorShape: Qt.PointingHandCursor
-            // drag.target: timeDialog
-            onClicked: {
-                timeDialog.open()  // 点击时弹出对话框
-            }
-        }
-    }
-
-    TimeSettingDialog {
-        id: timeDialog
-        onTimeSelected: {
-            // 接收 timeDialog 中发出的 timeSelected 信号，并更新 timeText 显示的时间
-            let date = new Date(year, month - 1, day, hour, minute, second);  // JavaScript 中月份是从 0 开始的
-            timeText.text = date.toLocaleString();  // 将选中的时间转为本地时间字符串
         }
     }
 }

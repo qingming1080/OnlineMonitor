@@ -25,12 +25,6 @@ Rectangle {
         loader.sourceComponent = mode2
         loader1.sourceComponent = weld2
     }
-
-    MessageDialog
-    {
-        id:isValidMessageDialog
-    }
-
     Connections{
         target: window
         function onSigNewModel(){
@@ -38,7 +32,6 @@ Rectangle {
             createModel = true
         }
     }
-
  //  TEST 2024_08_18
     // Button{
     //     height: 50
@@ -258,7 +251,7 @@ Rectangle {
                 }
                 eqText1:{
                     if(DeviceManager.DeviceList[swipeCurrIndex]){
-                        return DeviceManager.DeviceList[swipeCurrIndex].DeviceObj.goodCycles
+                        return DeviceManager.DeviceList[swipeCurrIndex].ProductionObj.GoodCycleCount
                     }
                     else{
                         return ""
@@ -266,7 +259,7 @@ Rectangle {
                 }
                 eqText2:{
                     if(DeviceManager.DeviceList[swipeCurrIndex]){
-                        return DeviceManager.DeviceList[swipeCurrIndex].DeviceObj.suspectCycles
+                        return DeviceManager.DeviceList[swipeCurrIndex].ProductionObj.SuspectCycleCount
                     }
                     else{
                         return ""
@@ -274,7 +267,7 @@ Rectangle {
                 }
                 eqText3:{
                     if(DeviceManager.DeviceList[swipeCurrIndex]){
-                        return DeviceManager.DeviceList[swipeCurrIndex].DeviceObj.notDefinite
+                        return DeviceManager.DeviceList[swipeCurrIndex].ProductionObj.DefectiveCycleCount
                     }
                     else{
                         return ""
@@ -282,9 +275,9 @@ Rectangle {
                 }
                 eqText4:{
                     if(DeviceManager.DeviceList[swipeCurrIndex]){
-                        return DeviceManager.DeviceList[swipeCurrIndex].DeviceObj.goodCycles
-                                + DeviceManager.DeviceList[swipeCurrIndex].DeviceObj.notDefinite
-                                +DeviceManager.DeviceList[swipeCurrIndex].DeviceObj.suspectCycles
+                        return DeviceManager.DeviceList[swipeCurrIndex].ProductionObj.GoodCycleCount
+                                + DeviceManager.DeviceList[swipeCurrIndex].ProductionObj.SuspectCycleCount
+                                +DeviceManager.DeviceList[swipeCurrIndex].ProductionObj.DefectiveCycleCount
                     }
                     else{
                         return ""
@@ -292,7 +285,7 @@ Rectangle {
                 }
                 eqText5:{
                     if(DeviceManager.DeviceList[swipeCurrIndex]){
-                        return DeviceManager.DeviceList[swipeCurrIndex].DeviceObj.GoodRate
+                        return DeviceManager.DeviceList[swipeCurrIndex].ProductionObj.GoodRate
                     }
                     else{
                         return ""
@@ -642,9 +635,10 @@ Rectangle {
                             }
                             onEditingFinished: {
                                  var intRegex = /^[0-9]+$/
-                                 if (!intRegex.test(textField.text)) {
-                                     isValidMessageDialog.openFor(t7.text, "请输入整数！")
-                                 }
+                                 if (!intRegex.test(textField.text))
+                                     footer.showError(t7.text + GlobalLanguageDefine.strInputInterger)
+                                 else
+                                     footer.hideError()
                              }
                         }
                         TextField{
@@ -689,9 +683,10 @@ Rectangle {
                             }
                             onEditingFinished: {
                                  var intRegex = /^[0-9]+$/
-                                 if (!intRegex.test(textField1.text)) {
-                                     isValidMessageDialog.openFor(t8.text, "请输入整数！")
-                                 }
+                                 if (!intRegex.test(textField1.text))
+                                     footer.showError(t8.text + GlobalLanguageDefine.strInputInterger)
+                                 else
+                                     footer.hideError()
                              }
                         }
                     }

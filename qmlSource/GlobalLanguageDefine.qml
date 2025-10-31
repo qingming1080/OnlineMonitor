@@ -16,7 +16,7 @@ QtObject
     readonly property string strInputRangeError:        qsTr("输入范围错误请重新输入!")
     readonly property string strSystemConfigSuccess:    qsTr("系统配置成功!")
     readonly property string strLoading:                qsTr("载入中")
-    readonly property string strRomveDevice:           qsTr("是否删除当前设备")
+    readonly property string strRomveDevice:            qsTr("是否删除当前设备")
     
     // 异常信息相关
     readonly property string strSuspiciousAppeared:     qsTr("出现可疑品")
@@ -34,6 +34,9 @@ QtObject
     readonly property string strLearnSampleLimit:       qsTr("学习样本数上下限（10~20个）")
     readonly property string strYieldRateLimit:         qsTr("良率下限区间（90-99）")
     readonly property string strSetParameters:          qsTr("设置参数")
+    readonly property string strAutomaticLearningLimit: qsTr("自动学习上限")
+    readonly property string strResidualThreshold:      qsTr("残留度阈值")
+    readonly property string strPeelForceThreshold:     qsTr("撕拉力阈值")
     
     // 语言相关
     readonly property string strSimplifiedChinese:      qsTr("简体中文")
@@ -190,5 +193,22 @@ QtObject
     readonly property string strWeldTimeUnit:           qsTr("S")
     readonly property string strActualDegreeUnit:       qsTr("%")
     readonly property string strActualForceUnit:        qsTr("N")
+
+    //ValidMessage
+    readonly property string strInputInterger:          qsTr("请输入整数！")
+    readonly property string strEnter0And65535:         qsTr("请输入0~65535之间的数！")
+    readonly property string strEnterValidIPAddress:    qsTr("请输入正确的IP地址！")
+    readonly property string strDeviceNameRule:         qsTr("设备名称只能包含中文、字母、数字（1~8字符）！")
+    readonly property string strEnterValidYear:         qsTr("请输入有效年份！")
+    readonly property string strMonthRange:             qsTr("月份必须是1~12之间的整数！")
+    readonly property string strEnterValidDay:          qsTr("请输入正确的日期（1~31）！")
+    readonly property string strEnterValidHour:         qsTr("请输入正确的小时（0~23）！")
+    readonly property string strEnterValidMinute:       qsTr("请输入正确的分钟（0~59）！")
+    readonly property string strEnterValidSecond:       qsTr("请输入正确的秒数（0~59）！")
+
+    //export
+    readonly property string strExportButton:           qsTr("数据导出")
+    readonly property string strNoUSB:                  qsTr("未插入U盘")
+    readonly property string strUSBConnected:           qsTr("U盘已插入")
 
 }

@@ -51,7 +51,8 @@ Rectangle {
         y:121
     }
     Text {
-        // text: qsTr("单因素系数") + ": "
+        // text: qsTr("单因素系数") + ":
+        id: titleSingleFactorCoeff
         text: GlobalLanguageDefine.strSingleFactorCoeff + ": "
         font.family: GlobalSystemDefine.fontBold
         font.bold: true
@@ -89,6 +90,7 @@ Rectangle {
     }
     Text {
         // text: qsTr("通用系数") + ": "
+        id: titleGeneralCoeff
         text: GlobalLanguageDefine.strGeneralCoeff + ": "
         font.family: GlobalSystemDefine.fontBold
         font.bold: true
@@ -126,6 +128,7 @@ Rectangle {
     }
     Text {
         // text: qsTr("其他系数") + ": "
+        id: titleOtherCoeff
         text: GlobalLanguageDefine.strOtherCoeff + ": "
         font.family: GlobalSystemDefine.fontBold
         font.bold: true

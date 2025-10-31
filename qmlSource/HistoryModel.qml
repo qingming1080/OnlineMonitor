@@ -11,6 +11,20 @@ import LanguageEnum 1.0
 Rectangle {
     property int itemCount: equipmentCount
     property string buttonColor: "#0d988c"
+
+    Connections {
+        target: History
+        function onSignalExportCompleted(success, message)
+        {
+            console.debug("message", message)
+            window.showLoading(true)
+            if(success === true)
+                window.showDialog(qsTr("提示"),qsTr("导出数据已完成"))
+            else
+                window.showDialog(qsTr("提示"),qsTr("没有找到可以使用的U盘或尝试再次导出"))
+        }
+    }
+
     color: pRgb(153, 204, 255)
     Component.onCompleted: {
         bt1.checkable = true
@@ -682,28 +696,29 @@ Rectangle {
         id: usbVisableText
         anchors.left: parent.left
         anchors.leftMargin: 25
-        anchors.bottom: version.bottom
+        anchors.bottom: parent.bottom
         anchors.bottomMargin: 40
-        text: "未插入U盘"
+        text: window.isUSBAvailable ? GlobalLanguageDefine.strUSBConnected : GlobalLanguageDefine.strNoUSB
         color: "#E8E8E8"
         font.family: GlobalSystemDefine.fontBold
         font.bold: true
-        font.pixelSize: LanguageManager.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 20 : 16
+        font.pixelSize: 20
     }
 
     Button{
         width: 120
         height: 36
         anchors.top: usbVisableText.top
-        anchors.left: version.right
-        anchors.leftMargin: 55
+        anchors.right: parent.right
+        anchors.rightMargin: 35
+        // visible: window.isUSBAvailable
         background: Rectangle{
             radius: 6
             color: pRgb(43, 112, 173)
         }
 
         contentItem: Text {
-            text: "导出数据"
+            text: GlobalLanguageDefine.strExportButton
             font.pixelSize: 20
             color: pRgb(153, 204, 255)
             anchors.centerIn: parent
@@ -712,64 +727,15 @@ Rectangle {
             font.family: GlobalSystemDefine.fontBold
             font.bold: true
         }
-        onClicked: {
-            //TODO   add history export function
+        onClicked:
+        {
+            window.showLoading(true)
+            if(History.exportData() === false)
+            {
+                window.showLoading(false)
+            }
+            console.log("导出成功!")
         }
     }
-
-    Text {
-        id: version
-        color: "#639ed6"
-        anchors.top: timeText.top
-        anchors.right: timeText.left
-        anchors.rightMargin: 20
-        font.family: GlobalSystemDefine.fontBold
-        font.bold: true
-        font.pixelSize: 14
-        // text: qsTr("系统版本号") + ": " + "v2.0.1"
-        text: GlobalLanguageDefine.strSystemVersion + ": " + GlobalSystemDefine.strVersionNumber
-    }
-    // 显示时间的文本
-    Text {
-        id: timeText
-        y:718
-        anchors.right: parent.right
-        anchors.bottom: parent.bottom
-        anchors.rightMargin: 10
-        anchors.bottomMargin: 5
-        font.pixelSize: 14
-        font.family: GlobalSystemDefine.fontBold
-        font.bold: true
-        color: "#639ed6"
-        text: GlobalMessageDefine.getCurrentTime()
-
-        // 定时器每秒更新一次
-        Timer {
-            interval: 1  // 1秒
-            repeat: true
-            running: true
-            onTriggered: {
-                timeText.text = GlobalMessageDefine.getCurrentTime()
-            }
-        }
-
-        MouseArea {
-            anchors.fill: parent
-            cursorShape: Qt.PointingHandCursor
-            // drag.target: timeDialog
-            onClicked: {
-                timeDialog.open()  // 点击时弹出对话框
-            }
-        }
-    }
-
-    TimeSettingDialog {
-            id: timeDialog
-            onTimeSelected: {
-                // 接收 timeDialog 中发出的 timeSelected 信号，并更新 timeText 显示的时间
-                let date = new Date(year, month - 1, day, hour, minute, second);  // JavaScript 中月份是从 0 开始的
-                timeText.text = date.toLocaleString();  // 将选中的时间转为本地时间字符串
-            }
-        }
 
 }

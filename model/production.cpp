@@ -3,6 +3,10 @@ Production::Production(int welderID, QObject *parent)
     :QObject{parent}, m_WelderID(welderID)
 {
 
+    m_iGoodRate = 90;
+    m_iGoodCycleCount = 333;
+    m_iDefectiveCycleCount = 1;
+    m_iSuspectCycleCount = 2;
 }
 
 QString Production::getGoodRate() const

@@ -1,14 +1,22 @@
 ﻿#include "history.h"
 #include "DataBase/databasemanager.h"
 #include <QtMath>
-
+#include <QFile>
+#include <QTextStream>
 #include "signalmanager.h"
 #include <QDebug>
 #include <QElapsedTimer>
-#include "log/localrecord.h"
+#include <QStorageInfo>
+#include <QDebug>
+#include <QStringList>
+#include <qcoreapplication.h>
+#include <QProcess>
+#include <QThread>
+#include <QObject>
+#include "csvexportworker.h"
 
 History* History::s_pHistory = nullptr;
-
+QString  History::m_USBDirectory = "";
 History *History::getInstance()
 {
     if(s_pHistory == nullptr)
@@ -29,6 +37,16 @@ History::History(QObject *parent)
 
     QString text = QString("History_初始化共耗时:%1ms 加载%2条数据").arg(timer.elapsed()).arg(m_data.size());
     emit SignalManager::getInstance()->signalAddRecord(QDateTime::currentDateTime(), text);
+
+    QString ConvertCSVPath      = QCoreApplication::applicationDirPath() + "/ConvertCSV.py";
+
+    if(!QFile::exists(ConvertCSVPath))
+    {
+        if(!QFile::copy(":/misc/ConvertCSV.py", ConvertCSVPath))
+        {
+            qWarning() << "Failed to copy ConvertCSV.py from resource to" << ConvertCSVPath;
+        }
+    }
 }
 
 int History::finalResult() const
@@ -159,26 +177,26 @@ QHash<int, QByteArray> History::roleNames() const
 {
     QHash<int, QByteArray> roles;
 
-    roles[DataBaseManager::PRODUCTION_ID]                       = "id";
-    roles[DataBaseManager::PRODUCTION_WELDER_ID]                = "welder_id";
+    roles[DataBaseManager::PRODUCTION_ID]            = "id";
+    roles[DataBaseManager::PRODUCTION_WELDER_ID]     = "welder_id";
     roles[DataBaseManager::MODEL_ID]                 = "model_id";
-    roles[DataBaseManager::PRODUCTION_CREATE_TIME]              = "create_time";
+    roles[DataBaseManager::PRODUCTION_CREATE_TIME]   = "create_time";
     roles[DataBaseManager::SERIAL_NUMBER]            = "serial_number";
     roles[DataBaseManager::CYCLE_COUNT]              = "cycle_count";
     roles[DataBaseManager::BATCH_COUNT]              = "batch_count";
     roles[DataBaseManager::ENERGY]                   = "energy";
     roles[DataBaseManager::AMPLITUDE]                = "amplitude";
-    roles[DataBaseManager::WELD_PRESSURE]                 = "pressure";
-    roles[DataBaseManager::WELD_TIME]                     = "time";
-    roles[DataBaseManager::PEAK_POWER]                    = "power";
+    roles[DataBaseManager::WELD_PRESSURE]            = "pressure";
+    roles[DataBaseManager::WELD_TIME]                = "time";
+    roles[DataBaseManager::PEAK_POWER]               = "power";
     roles[DataBaseManager::PRE_HEIGHT]               = "pre_height";
     roles[DataBaseManager::POST_HEIGHT]              = "post_height";
     roles[DataBaseManager::FORCE]                    = "force";
     roles[DataBaseManager::RESIDUAL]                 = "residual";
     roles[DataBaseManager::GOOD_RATE]                = "good_rate";
-    roles[DataBaseManager::GOOD_CYCLE_COUNT]     = "good_subtotal_cycles";
-    roles[DataBaseManager::SUSPECT_CYCLE_COUNT]  = "suspect_subtotal_cycles";
-    roles[DataBaseManager::DEFECTIVE_CYCLE_COUNT]      = "not_definite_cycles";
+    roles[DataBaseManager::GOOD_CYCLE_COUNT]         = "good_subtotal_cycles";
+    roles[DataBaseManager::SUSPECT_CYCLE_COUNT]      = "suspect_subtotal_cycles";
+    roles[DataBaseManager::DEFECTIVE_CYCLE_COUNT]    = "not_definite_cycles";
     roles[DataBaseManager::FINAL_RESULT]             = "final_result";
     // roles[QmlEnum::PRODUCTION_COLUMN::PRODUCTION_row_number]               = "row_number";
 
@@ -195,4 +213,152 @@ void History::setWelderID(int welderID)
         m_data = DataBaseManager::getInstance()->getProductionData(welderID);
 
     emit endResetModel();
+}
+
+
+bool History::isAvailaleDiskUSB()
+{
+    bool bResult = false;
+    m_USBDirectory.clear();
+#ifdef RASPBERRY
+    foreach (const QStorageInfo &storage, QStorageInfo::mountedVolumes()) {
+        if(!storage.isReady())
+            continue;
+
+        QString path = storage.rootPath();
+        if(path.startsWith("/media/pi/") && !path.contains("mmcblk")) {
+            m_USBDirectory = path;
+            return true;
+        }
+    }
+
+#endif
+    return bResult;
+}
+
+bool History::exportData()
+{
+    if(m_USBDirectory.isEmpty() == true)
+        return false;
+    QList<QStringList> rows;
+    QStringList headers =
+    {
+            "日期",
+            "循环值",
+            "能量",
+            "振幅",
+            "焊接压力",
+            "焊接时间",
+            "峰值功率",
+            "焊前高度",
+            "焊后高度",
+            "撕拉力",
+            "残留度",
+            "检测结果"
+    };
+
+    for(int i=0; i<m_data.count(); i++)
+    {
+        QString timeStr = m_data[i].CreateTime.toString("yyyy-MM-dd hh:mm:ss");
+
+        QStringList value;
+        value << timeStr
+              << QString::number(m_data[i].CycleCount)
+              << QString::number(m_data[i].Energy)
+              << QString::number(m_data[i].Amplitude)
+              << QString::number(m_data[i].WeldPressure)
+              << QString::number(m_data[i].WeldTime)
+              << QString::number(m_data[i].PeakPower)
+              << QString::number(m_data[i].Preheight)
+              << QString::number(m_data[i].PostHeight)
+              << QString::number(m_data[i].Force)
+              << QString::number(m_data[i].Residual)
+              << QString::number(m_data[i].FinalResult);
+        rows.append(value);
+    }
+
+    if(rows.empty())
+        return false;
+
+    QDateTime currentDateTime = QDateTime::currentDateTime();
+    QString formattedDateTime = currentDateTime.toString("yyyyMMddHHmmss");
+    QString localAppDirectory = QCoreApplication::applicationDirPath() + "/" + formattedDateTime + "-历史数据记录";
+    QStringList localFiles;
+    int filesCount = rows.count() / MAX_RECORDS_IN_ONE_FILE;
+    int restRecords = rows.count() % MAX_RECORDS_IN_ONE_FILE;
+
+    if(restRecords > 0) filesCount += 1;
+    for(int i = 0; i < filesCount; i++)
+    {
+        localFiles.append(localAppDirectory + QString::number(i+1) + ".csv");
+    }
+
+    QList<QStringList> oneFileRecords;
+    for(int i = 0; i < filesCount; i++)
+    {
+        oneFileRecords.clear();
+        for(int j = 0; j < MAX_RECORDS_IN_ONE_FILE; j++)
+        {
+            if((j + i * MAX_RECORDS_IN_ONE_FILE) < rows.count())
+                oneFileRecords.append(rows.at(j + i * MAX_RECORDS_IN_ONE_FILE));
+            else
+                break;
+        }
+        ExportToCSV(localFiles.at(i), headers, oneFileRecords);
+    }
+
+    ExportToCSVAsync(localFiles);
+    return true;
+}
+
+bool History::ExportToCSV(const QString& filePath, const QStringList& headers, const QList<QStringList>& data)
+{
+    QFile file(filePath);
+    if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
+        qDebug() << "无法打开文件：" << filePath;
+        return false;
+    }
+
+    QTextStream out(&file);
+    out.setCodec("UTF-8");
+    file.write("\xEF\xBB\xBF");
+
+    // 写入表头
+    out << headers.join(",") << "\n";
+
+    // 写入数据
+    for (const auto& row : data) {
+        out << row.join(",") << "\n";
+    }
+
+    file.close();
+    qDebug() << "数据已成功导出到：" << filePath;
+    return true;
+}
+
+void History::ExportToCSVAsync(QStringList &localfiles)
+{
+    if(!m_exportThread)
+    {
+        m_exportThread = new QThread(this);
+        m_exportWorker = new CSVExportWorker(localfiles, m_USBDirectory);
+        m_exportWorker->moveToThread(m_exportThread);
+        connect(m_exportThread, &QThread::started, static_cast<CSVExportWorker*>(m_exportWorker), &CSVExportWorker::exportToFile);
+        connect(m_exportWorker, &CSVExportWorker::exportPrograss, this, &History::signalExportPrograss);
+        connect(m_exportWorker, &CSVExportWorker::exportFinished, this, &History::onExportFinished);
+        connect(m_exportThread, &QThread::finished, m_exportWorker, &QObject::deleteLater);
+    }
+    if(!m_exportThread->isRunning())
+    {
+        m_exportThread->start();
+    }
+}
+
+void History::onExportFinished(bool success, const QString &message)
+{
+    m_exportThread->quit();
+    m_exportThread->wait();
+    m_exportThread->deleteLater();
+    m_exportThread = nullptr;
+    emit signalExportCompleted(success, message);
 }

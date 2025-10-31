@@ -37,13 +37,6 @@ Rectangle {
     onSwipeIndexChanged: {
         sigSwipeCurrIndex(swipeIndex)
     }
-
-
-    MessageDialog
-    {
-        id:isValidMessageDialog
-    }
-
     function loadViewpro(viewName, component)
     {
         if(viewName === 3){
@@ -298,7 +291,7 @@ Rectangle {
                         }
                         eqText1:{
                             if(DeviceManager.DeviceList[0]){
-                                return DeviceManager.DeviceList[0].DeviceObj.goodCycles
+                                return DeviceManager.DeviceList[0].ProductionObj.GoodCycleCount
                             }
                             else{
                                 return ""
@@ -306,7 +299,7 @@ Rectangle {
                         }
                         eqText2:{
                             if(DeviceManager.DeviceList[0]){
-                                return DeviceManager.DeviceList[0].DeviceObj.suspectCycles
+                                return DeviceManager.DeviceList[0].ProductionObj.SuspectCycleCount
                             }
                             else{
                                 return ""
@@ -314,7 +307,7 @@ Rectangle {
                         }
                         eqText3:{
                             if(DeviceManager.DeviceList[0]){
-                                return DeviceManager.DeviceList[0].DeviceObj.notDefinite
+                                return DeviceManager.DeviceList[0].ProductionObj.DefectiveCycleCount
                             }
                             else{
                                 return ""
@@ -322,9 +315,9 @@ Rectangle {
                         }
                         eqText4:{
                             if(DeviceManager.DeviceList[0]){
-                                return DeviceManager.DeviceList[0].DeviceObj.goodCycles
-                                        + DeviceManager.DeviceList[0].DeviceObj.notDefinite
-                                        +DeviceManager.DeviceList[0].DeviceObj.suspectCycles
+                                return DeviceManager.DeviceList[0].ProductionObj.GoodCycleCount
+                                        + DeviceManager.DeviceList[0].ProductionObj.SuspectCycleCount
+                                        +DeviceManager.DeviceList[0].ProductionObj.DefectiveCycleCount
                             }
                             else{
                                 return ""
@@ -332,7 +325,7 @@ Rectangle {
                         }
                         eqText5:{
                             if(DeviceManager.DeviceList[0]){
-                                return DeviceManager.DeviceList[0].DeviceObj.goodRate
+                                return DeviceManager.DeviceList[0].ProductionObj.GoodRate
                             }
                             else{
                                 return ""
@@ -690,9 +683,10 @@ Rectangle {
                                     }
                                     onEditingFinished: {
                                          var intRegex = /^[0-9]+$/
-                                         if (!intRegex.test(textField.text)) {
-                                             isValidMessageDialog.openFor(titleTensileText.text, "请输入整数！")
-                                         }
+                                         if (!intRegex.test(textField.text))
+                                             footer.showError(titleTensileText.text + GlobalLanguageDefine.strInputInterger)
+                                         else
+                                             footer.hideError()
                                      }
                                 }
                                 TextField{
@@ -737,9 +731,10 @@ Rectangle {
                                     }
                                     onEditingFinished: {
                                          var intRegex = /^[0-9]+$/
-                                         if (!intRegex.test(textField1.text)) {
-                                             isValidMessageDialog.openFor(residualText.text, "请输入整数！")
-                                         }
+                                         if (!intRegex.test(textField1.text))
+                                             footer.showError(residualText.text + GlobalLanguageDefine.strInputInterger)
+                                         else
+                                             footer.hideError()
                                      }
                                 }
                             }
@@ -768,60 +763,5 @@ Rectangle {
             height: 740
         }
     }
-
-    Text {
-        id: version
-        color: "#639ed6"
-        anchors.top: timeText.top
-        anchors.right: timeText.left
-        anchors.rightMargin: 20
-        font.family: GlobalSystemDefine.fontBold
-        font.bold: true
-        font.pixelSize: 14
-        // text: qsTr("系统版本号") + ": " + "v2.0.1"
-        text: GlobalLanguageDefine.strSystemVersion + ": " + GlobalSystemDefine.strVersionNumber
-    }
-
-    // 显示时间的文本
-    Text {
-        id: timeText
-        y: 718
-        anchors.right: parent.right
-        anchors.bottom: parent.bottom
-        anchors.rightMargin: 10
-        anchors.bottomMargin: 5
-        font.pixelSize: 14
-        font.family: GlobalSystemDefine.fontBold
-        font.bold: true
-        color: "#639ed6"
-        text: GlobalMessageDefine.getCurrentTime()
-
-        // 定时器每秒更新一次
-        Timer {
-            interval: 1  // 1秒
-            repeat: true
-            running: true
-            onTriggered: {
-                timeText.text = GlobalMessageDefine.getCurrentTime()
-            }
-        }
-        MouseArea {
-            anchors.fill: parent
-            cursorShape: Qt.PointingHandCursor
-            // drag.target: timeDialog
-            onClicked: {
-                timeDialog.open()  // 点击时弹出对话框
-            }
-        }
-    }
-
-    TimeSettingDialog {
-            id: timeDialog
-            onTimeSelected: {
-                // 接收 timeDialog 中发出的 timeSelected 信号，并更新 timeText 显示的时间
-                let date = new Date(year, month - 1, day, hour, minute, second);  // JavaScript 中月份是从 0 开始的
-                timeText.text = date.toLocaleString();  // 将选中的时间转为本地时间字符串
-            }
-        }
 
 }

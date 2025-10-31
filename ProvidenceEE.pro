@@ -1,4 +1,4 @@
-QT += widgets quick virtualkeyboard charts serialport sql qml xml serialbus
+QT += widgets quick virtualkeyboard charts serialport sql qml xml serialbus core
 CONFIG += c++11
 CONFIG += C++11UTF8
 msvc {
@@ -27,10 +27,12 @@ SOURCES += \
         model/baudratemodel.cpp \
         model/commodel.cpp \
         model/databitsmodel.cpp \
+        model/csvexportworker.cpp \
         model/device.cpp \
         model/deviceinformation.cpp \
         model/devicemanager.cpp \
         model/devicenames.cpp \
+        model/exportworker.cpp \
         model/history.cpp \
         model/manual.cpp \
         model/message.cpp \
@@ -49,7 +51,8 @@ RESOURCES += qml.qrc \
     databaseSource.qrc \
     fonts.qrc \
     images.qrc \
-    languageTranslation.qrc
+    languageTranslation.qrc \
+    misc.qrc
 
 # Additional import path used to resolve QML modules in Qt Creator's code model
 QML_IMPORT_PATH =
@@ -73,10 +76,12 @@ HEADERS += \
     model/baudratemodel.h \
     model/commodel.h \
     model/databitsmodel.h \
+    model/csvexportworker.h \
     model/device.h \
     model/deviceinformation.h \
     model/devicemanager.h \
     model/devicenames.h \
+    model/exportworker.h \
     model/history.h \
     model/manual.h \
     model/message.h \

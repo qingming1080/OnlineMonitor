@@ -28,6 +28,7 @@ Window {
     property int keyboardType: 0
     property bool createModel: false
     property bool swipevis: false
+    property bool isUSBAvailable: false
 
     onSwipeCurrIndexChanged: {
         sigSwipeCurrIndex(swipeCurrIndex)
@@ -124,6 +125,18 @@ Window {
         }
     }
 
+    function showLoading(isShow)
+    {
+        if(isShow === false)
+            loadingOverlay.progress = 0.0
+        loadingOverlay.visible = isShow;
+    }
+
+    function showDialog(title, text)
+    {
+        mesDialog.openFor(title,text)
+    }
+
     Connections
     {
         target: window
@@ -161,6 +174,17 @@ Window {
         }
     }
 
+    Connections {
+        target: History
+        function onSignalExportPrograss(current, total)
+        {
+            if(loadingOverlay.visible === true)
+            {
+                loadingOverlay.progress = (current + 1) / total
+            }
+        }
+    }
+
     Item{
         anchors.fill: parent
         Header{
@@ -182,6 +206,25 @@ Window {
                 sigUpdateUI(0)
             }
         }
+    }
+    Footer
+    {
+          id: footer
+          anchors.left: parent.left
+          anchors.bottom: parent.bottom
+    }
+    MessageDialog
+    {
+        id: mesDialog
+    }
+
+    Loading{
+        id:loadingOverlay
+        width: parent.width
+        height: parent.height
+        anchors.centerIn: parent
+        z: 3
+        visible: false
     }
 
     Loader{
@@ -240,7 +283,6 @@ Window {
         target: inputPannelID.keyboard.style
         property: 'keyboardDesignWidth'
     }
-
     InputPanel
     {
         id: inputPannelID
@@ -279,6 +321,18 @@ Window {
         {
             VirtualKeyboardSettings.wordCandidateList.alwaysVisible = true
             VirtualKeyboardSettings.activeLocales = ["en_US","zh_CN"/*,"ja_JP"*/]   // 英语、中文、日语 (若不设置,则语言就有很多种)
+        }
+    }
+
+    Timer
+    {
+        id: timer
+        interval: 2000
+        repeat: true
+        running: true
+        onTriggered:
+        {
+            isUSBAvailable = History.isAvailaleDiskUSB()
         }
     }
 }

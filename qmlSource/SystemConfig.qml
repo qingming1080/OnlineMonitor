@@ -31,11 +31,6 @@ Rectangle {
     property bool undetermined2: false
     property bool undetermined3: false
     property bool undetermined4: false
-
-    MessageDialog
-    {
-        id:isValidMessageDialog
-    }
     property bool undeterMined: {
         //if(equipmentCount === 1){
         if(equipmentCount === 0){
@@ -191,10 +186,10 @@ Rectangle {
             Connections{
                 target: sysUI
 
-                //TODO onSigAddDevice
+                // TODO onSigAddDevice
                 function onSigAddDevice(){
                     DeviceManager.addDevice(maxProductionTextField.text,learningSamplesTextField.text,
-                                            yieldLowerLimitTextField.text,t7.text,t8.text,clientIPTextField.text,
+                                            yieldLowerLimitTextField.text,t7.text,t8.text,peelForceThresholdField.text,
                                             // altitudMode?1:0,t4.text,com1.currentText,loadType,networkId)
                                            altitudMode?1:0,t4.text,com1.currentText,loadType,loadType ? rs232Id:networkId )
                     // networkId = 1
@@ -203,6 +198,7 @@ Rectangle {
                     // DeviceManager.DeviceListChanged()
 
                 }
+
 
             }
 
@@ -294,8 +290,10 @@ Rectangle {
                     onEditingFinished: {
                         var maxProductionRegex = /^(?:[2-9]\d{4}|[1-9]\d{5}|1000000)$/
                         if (!maxProductionRegex.test(maxProductionTextField.text))
-                            isValidMessageDialog.openFor(titleMaxProduction.text, "请输入20000~1000000之间整数！")
-                    }
+                            footer.showError(titleMaxProduction.text + GlobalLanguageDefine.strMaxProductionLimit)
+                        else
+                            footer.hideError()
+                        }
                 }
 
                 Text {
@@ -359,9 +357,10 @@ Rectangle {
                     onEditingFinished: {
                         var learningSamplesRegex = /^(1[0-9]|20)$/
                         if (!learningSamplesRegex.test(learningSamplesTextField.text))
-                            isValidMessageDialog.openFor(titleLearningSamples.text, "请输入10~20之间的整数！")
+                            footer.showError(titleLearningSamples.text + GlobalLanguageDefine.strLearnSampleLimit)
+                        else
+                            footer.hideError()
                     }
-
                 }
                 Text {
                     id: titleYieldLowerLimit
@@ -424,14 +423,15 @@ Rectangle {
                     onEditingFinished: {
                         var yieldLowerLimitRegex = /^[1-9][0-9]$/
                         if (!yieldLowerLimitRegex.test(yieldLowerLimitTextField.text))
-                            isValidMessageDialog.openFor(titleYieldLowerLimit.text, "请输入两位整数！")
+                            footer.showError(titleYieldLowerLimit.text + GlobalLanguageDefine.strInputInterger)
+                        else
+                            footer.hideError()
                     }
                 }
 
                 Text {
                     id: s7
-                    // text: qsTr("端口")
-                    text: GlobalLanguageDefine.strPort + ": "
+                    text: GlobalLanguageDefine.strAutomaticLearningLimit + ": "
                     color: pRgb(177, 213, 219)
                     font.family: GlobalSystemDefine.fontBold
                     font.bold: true
@@ -490,14 +490,15 @@ Rectangle {
                     onEditingFinished: {
                         var portRegex = /^([0-9]|[1-9][0-9]{1,4}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])$/
                         if (!portRegex.test(t7.text))
-                            isValidMessageDialog.openFor(s7.text, "请输入0~65535之间的整数！")
+                            footer.showError(s7.text + GlobalLanguageDefine.strEnter0And65535)
+                        else
+                            footer.hideError()
                     }
                 }
 
                 Text {
                     id: s8
-                    // text: qsTr("远程端") + "IP"
-                    text: GlobalLanguageDefine.strRemoteEnd + "IP" + ": "
+                    text: GlobalLanguageDefine.strResidualThreshold + ": "
                     color: pRgb(177, 213, 219)
                     font.family: GlobalSystemDefine.fontBold
                     font.bold: true
@@ -554,25 +555,26 @@ Rectangle {
                     onEditingFinished: {
                         var ipRegex = /^(25[0-5]|2[0-4]\d|1\d{2}|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d{2}|[1-9]?\d)){3}$/
                         if (!ipRegex.test(t8.text))
-                            isValidMessageDialog.openFor(s8.text, "请输入正确的IP地址！")
+                            footer.showError(s8.text + GlobalLanguageDefine.strEnterValidIPAddress)
+                        else
+                            footer.hideError()
                     }
                 }
 
 
                 Text {
-                    id: titleClientIP
-                    // text: qsTr("客户端") + "IP"
-                    text: GlobalLanguageDefine.strClient + "IP" + ": "
+                    id: titlePeelForceThreshold
+                    text: GlobalLanguageDefine.strPeelForceThreshold + ": "
                     color: pRgb(177, 213, 219)
                     font.family: GlobalSystemDefine.fontBold
                     font.bold: true
                     font.pixelSize: 18
                     anchors.left: s8.left
-                    anchors.top: clientIPTextField.top
+                    anchors.top: peelForceThresholdField.top
                     anchors.topMargin: 10
                 }
                 TextField{
-                    id: clientIPTextField
+                    id: peelForceThresholdField
                     width: 180
                     height: 40
                     anchors.top: t8.bottom
@@ -593,7 +595,7 @@ Rectangle {
                     MouseArea {
                         anchors.fill: parent
                         onPressed: {
-                            clientIPTextField.forceActiveFocus()
+                            peelForceThresholdField.forceActiveFocus()
                             keyboardType = 0
                         }
                     }
@@ -618,8 +620,10 @@ Rectangle {
                     }
                     onEditingFinished: {
                         var portRegex = /^(25[0-5]|2[0-4]\d|1\d{2}|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d{2}|[1-9]?\d)){3}$/
-                        if (!portRegex.test(clientIPTextField.text))
-                            isValidMessageDialog.openFor(titleClientIP.text, "请输入正确的IP地址！")
+                        if (!portRegex.test(peelForceThresholdField.text))
+                            footer.showError(titlePeelForceThreshold.text + GlobalLanguageDefine.strEnterValidIPAddress)
+                        else
+                            footer.hideError()
                     }
                 }
 
@@ -632,8 +636,8 @@ Rectangle {
                     font.family: GlobalSystemDefine.fontBold
                     font.bold: true
                     font.pixelSize: 18
-                    anchors.left: titleClientIP.left
-                    anchors.top: titleClientIP.top
+                    anchors.left: titlePeelForceThreshold.left
+                    anchors.top: titlePeelForceThreshold.top
                     anchors.topMargin: 80
                 }
                 Text {
@@ -645,7 +649,7 @@ Rectangle {
                     font.bold: true
                     font.pixelSize: 18
                     anchors.verticalCenter: titleHeightMode.verticalCenter
-                    anchors.left: clientIPTextField.left
+                    anchors.left: peelForceThresholdField.left
 
                 }
                 RadioButton{
@@ -675,10 +679,10 @@ Rectangle {
                         }
                         // else if(equipmentCount === 1){
                         else if(equipmentCount === 0){
-                            DeviceManager.DeviceList[0].DeviceObj.setHeightOption(1)
+                            DeviceManager.DeviceList[0].DevInfoObject.setHeightEncoderOption(1)
                         }
                         else{
-                            DeviceManager.DeviceList[currentConfigId-1].DeviceObj.setHeightOption(1)
+                            DeviceManager.DeviceList[currentConfigId-1].DevInfoObject.setHeightEncoderOption(1)
                         }
                     }
                 }
@@ -717,10 +721,10 @@ Rectangle {
                         }
                         // else if(equipmentCount === 1){
                         else if(equipmentCount === 0){
-                            DeviceManager.DeviceList[0].DeviceObj.setHeightOption(0)
+                            DeviceManager.DeviceList[0].DevInfoObject.setHeightEncoderOption(0)
                         }
                         else{
-                            DeviceManager.DeviceList[currentConfigId-1].DeviceObj.setHeightOption(0)
+                            DeviceManager.DeviceList[currentConfigId-1].DevInfoObject.setHeightEncoderOption(0)
                         }
                     }
                 }
@@ -774,7 +778,7 @@ Rectangle {
                         // if(equipmentCount === 1){
                         if(equipmentCount === 0){
                             if(DeviceManager.DeviceList[0]){
-                                return DeviceManager.DeviceList[0].DeviceObj.name
+                                return DeviceManager.DeviceList[0].DevInfoObject.WelderName
                             }
                             else{
                                 return ""
@@ -782,7 +786,7 @@ Rectangle {
                         }
                         else{
                             if(DeviceManager.DeviceList[currentConfigId-1]){
-                                return DeviceManager.DeviceList[currentConfigId-1].DeviceObj.name
+                                return DeviceManager.DeviceList[currentConfigId-1].DevInfoObject.WelderName
                             }
                             else{
                                 return ""
@@ -792,9 +796,10 @@ Rectangle {
                     onEditingFinished: {
                         var nameRegex = /^[\u4e00-\u9fa5A-Za-z0-9]+$/
                         if (!nameRegex.test(t4.text))
-                            isValidMessageDialog.openFor(s14.text, "设备名称只能包含中文、字母、数字（1~8字符）！")
+                            footer.showError(s14.text + GlobalLanguageDefine.strDeviceNameRule)
+                        else
+                            footer.hideError()
                     }
-
                 }
                 Text {
                     id: s15
@@ -818,8 +823,6 @@ Rectangle {
                     anchors.leftMargin: 23
                     model: ["L20-VG", "L20-TS", "20DP", "20MA", GlobalLanguageDefine.strCustomized]
                 }
-
-
 
                 Switch{
                     id:ctl1
@@ -1099,7 +1102,9 @@ Rectangle {
                             onEditingFinished: {
                                 var portRegex = /^([0-9]|[1-9][0-9]{1,4}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])$/
                                 if (!portRegex.test(t5.text))
-                                    isValidMessageDialog.openFor(s17.text,"请输入0~65535之间的整数！")
+                                    footer.showError(s17.text + GlobalLanguageDefine.strEnter0And65535)
+                                else
+                                    footer.hideError()
                             }
 
                         }
@@ -1160,7 +1165,9 @@ Rectangle {
                             onEditingFinished: {
                                 var ipRegex = /^(25[0-5]|2[0-4]\d|1\d{2}|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d{2}|[1-9]?\d)){3}$/
                                 if (!ipRegex.test(t6.text))
-                                    isValidMessageDialog.openFor(s18.text,"请输入正确的IP地址")
+                                    footer.showError(s18.text + "请输入正确的IP地址")
+                                else
+                                    footer.hideError()
                             }
                         }
 
@@ -1221,7 +1228,9 @@ Rectangle {
                             onEditingFinished: {
                                 var ipRegex = /^(25[0-5]|2[0-4]\d|1\d{2}|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d{2}|[1-9]?\d)){3}$/
                                 if (!ipRegex.test(t7.text))
-                                    isValidMessageDialog.openFor(s19.text,"请输入正确的IP地址")
+                                    footer.showError(s19.text + "请输入正确的IP地址")
+                                else
+                                    footer.hideError()
                             }
                         }
                     }
@@ -1946,61 +1955,6 @@ Rectangle {
 
                 }
             }
-        }
-    }
-
-    Text {
-        id: version
-        color: "#639ed6"
-        anchors.top: timeText.top
-        anchors.right: timeText.left
-        anchors.rightMargin: 20
-        font.family: GlobalSystemDefine.fontBold
-        font.bold: true
-        font.pixelSize: 14
-        // text: qsTr("系统版本号") + ": " + "v2.0.1"
-        text: GlobalLanguageDefine.strSystemVersion + ": " + GlobalSystemDefine.strVersionNumber
-    }
-    // 显示时间的文本
-    Text {
-        id: timeText
-        y:718
-        anchors.right: parent.right
-        anchors.bottom: parent.bottom
-        anchors.rightMargin: 10
-        anchors.bottomMargin: 5
-        font.pixelSize: 14
-        font.family: GlobalSystemDefine.fontBold
-        font.bold: true
-        color: "#639ed6"
-        text: GlobalMessageDefine.getCurrentTime()
-
-        // 定时器每秒更新一次
-        Timer {
-            interval: 1  // 1秒
-            repeat: true
-            running: true
-            onTriggered: {
-                timeText.text = GlobalMessageDefine.getCurrentTime()
-            }
-        }
-
-        MouseArea {
-            anchors.fill: parent
-            cursorShape: Qt.PointingHandCursor
-            // drag.target: timeDissalog
-            onClicked: {
-                timeDialog.open()  // 点击时弹出对话框
-            }
-        }
-    }
-
-    TimeSettingDialog {
-        id: timeDialog
-        onTimeSelected: {
-            // 接收 timeDialog 中发出的 timeSelected 信号，并更新 timeText 显示的时间
-            let date = new Date(year, month - 1, day, hour, minute, second);  // JavaScript 中月份是从 0 开始的
-            timeText.text = date.toLocaleString();  // 将选中的时间转为本地时间字符串
         }
     }
 }

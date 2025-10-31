@@ -15,12 +15,6 @@ Rectangle {
     property bool altitudeMode:DeviceManager.DeviceList[swipeCurrIndex].DevInfoObject.heightOption === 1 ? true:false
 
     property int deviceID: DeviceManager.DeviceList[swipeCurrIndex].DevInfoObject.id
-
-    MessageDialog
-    {
-        id:isValidMessageDialog
-    }
-
     radius: 3
     Rectangle {
            width:  equipmentCount == 1 ? 117 : 129
@@ -176,9 +170,10 @@ Rectangle {
         }
         onEditingFinished: {
              var intRegex = /^[0-9]+$/
-             if (!intRegex.test(fieldEnergy.text)) {
-                 isValidMessageDialog.openFor(titleEnergy.text, "请输入整数！")
-             }
+             if (!intRegex.test(fieldEnergy.text))
+                 footer.showError(titleEnergy.text + GlobalLanguageDefine.strInputInterger)
+             else
+                 footer.hideError()
          }
     }
     TextField{
@@ -210,7 +205,9 @@ Rectangle {
         onEditingFinished: {
              var wpRegex = /^[0-9]+$/
              if (!wpRegex.test(fieldAmplitude.text))
-                 isValidMessageDialog.openFor(titleAmplitude.text, "请输入整数！")
+                 footer.showError(titleAmplitude.text + GlobalLanguageDefine.strInputInterger)
+             else
+                 footer.hideError()
          }
     }
     TextField{
@@ -242,7 +239,9 @@ Rectangle {
         onEditingFinished: {
              var wpRegex = /^[0-9]+$/
              if (!wpRegex.test(fieldWeldPressure.text))
-                 isValidMessageDialog.openFor(titleWeldPressure.text, "请输入整数！")
+                 footer.showError(titleWeldPressure.text + GlobalLanguageDefine.strInputInterger)
+             else
+                 footer.hideError()
          }
     }
     TextField{
@@ -274,17 +273,9 @@ Rectangle {
         onEditingFinished: {
              var tpRegex = /^[0-9]+$/
              if (!tpRegex.test(fieldTP.text))
-                 isValidMessageDialog.openFor(titleTP.text, "请输入整数！")
+                 footer.showError(titleTP.text + GlobalLanguageDefine.strInputInterger)
+             else
+                 footer.hideError()
          }
     }
-
-    ParameterSettingDialog {
-        id: parameterSetting
-        // onTimeSelected: {
-        //     // 接收 timeDialog 中发出的 timeSelected 信号，并更新 timeText 显示的时间
-        //     let date = new Date(year, month - 1, day, hour, minute, second);  // JavaScript 中月份是从 0 开始的
-        //     timeText.text = date.toLocaleString();  // 将选中的时间转为本地时间字符串
-        // }
-    }
-
 }
