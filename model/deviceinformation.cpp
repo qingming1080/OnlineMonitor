@@ -35,6 +35,23 @@ DeviceInformation::DeviceInformation(int welderID, QObject *parent)
         setConnectType(DeviceInfoEnum::TCP_IP);
     }
 
+    if(DataBaseManager::getInstance()->getSystemData(m_WelderID, m_DBSystem) == true)
+    {
+        setSingleFactor(QString::number(m_DBSystem.SingleFactorSetting));
+        setGeneralFactor(QString::number(m_DBSystem.GeneralFactorSetting));
+        setAutoLearningCount(QString::number(m_DBSystem.AutoLearningCount));
+        setForceThreshold(QString::number(m_DBSystem.ForceThreshold));
+        setResidualThreshold(QString::number(m_DBSystem.ResidualThreshold));
+    }
+    else
+    {
+        setSingleFactor("20");
+        setGeneralFactor("80");
+        setAutoLearningCount("5");
+        setForceThreshold("1300");
+        setResidualThreshold("90");
+    }
+
     // QString text = QString("%1号设备_DeviceInformation_初始化耗时:%2ms").arg(welderID).arg(timer.elapsed());
     // emit SignalManager::getInstance()->signalAddRecord(QDateTime::currentDateTime(), text);
 }
@@ -173,55 +190,226 @@ void DeviceInformation::setConnectTypeID(const int &typeID)
 
 int DeviceInformation::getConnectState() const
 {
-    return static_cast<int>(m_iConnectState);
+    return static_cast<int>(m_ModbusConfigure.ConnectState);
 }
 
 void DeviceInformation::setConnectState(const int &state)
 {
-    if (m_iConnectState != state)
+    if (m_ModbusConfigure.ConnectState != state)
     {
-        m_iConnectState = static_cast<DeviceInfoEnum::CONNECT_STATE>(state);
+        m_ModbusConfigure.ConnectState = static_cast<DeviceInfoEnum::CONNECT_STATE>(state);
         emit notifyConnectStateChanged();
     }
 }
 
-// QString DeviceInformation::mesIP() const
-// {
-//     return m_mesIP;
-// }
+QString DeviceInformation::getSingleFactor() const
+{
+    return QString::number(m_DBSystem.SingleFactorSetting);
+}
 
-// void DeviceInformation::setMesIP(const QString &newMesIP)
-// {
-//     if (m_mesIP == newMesIP)
-//         return;
-//     m_mesIP = newMesIP;
-//     emit mesIPChanged();
-// }
+int DeviceInformation::GetSingleFactor() const
+{
+    return m_DBSystem.SingleFactorSetting;
+}
 
-// QString DeviceInformation::deviceIP() const
-// {
-//     return m_deviceIP;
-// }
+void DeviceInformation::setSingleFactor(const QString &factor)
+{
+    bool isOk;
+    int iFactor = factor.toInt(&isOk);
+    if (!isOk || m_DBSystem.SingleFactorSetting == iFactor)
+        return;
+    m_DBSystem.SingleFactorSetting = iFactor;
+    emit notifySingleFactorChanged();
+}
 
-// void DeviceInformation::setDeviceIP(const QString &newDeviceIP)
-// {
-//     if (m_deviceIP == newDeviceIP)
-//         return;
-//     m_deviceIP = newDeviceIP;
-//     emit deviceIPChanged();
-// }
+QString DeviceInformation::getGeneralFactor() const
+{
+    return QString::number(m_DBSystem.GeneralFactorSetting);
+}
 
-// int DeviceInformation::mesPort() const
-// {
-//     return m_mesPort;
-// }
+int DeviceInformation::GetGeneralFactor() const
+{
+    return m_DBSystem.GeneralFactorSetting;
+}
 
-// void DeviceInformation::setMesPort(int newMesPort)
-// {
-//     if (m_mesPort == newMesPort)
-//         return;
-//     m_mesPort = newMesPort;
-//     emit mesPortChanged();
-// }
+void DeviceInformation::setGeneralFactor(const QString &factor)
+{
+    bool isOk = false;
+    int iFactor = factor.toInt(&isOk);
+    if (!isOk || m_DBSystem.GeneralFactorSetting == iFactor)
+        return;
+    m_DBSystem.GeneralFactorSetting = iFactor;
+    emit notifyGeneralFactorChanged();
+}
 
+QString DeviceInformation::getForceThreshold() const
+{
+    return QString::number(m_DBSystem.ForceThreshold);
+}
+
+int DeviceInformation::GetForceThreshold() const
+{
+    return m_DBSystem.ForceThreshold;
+}
+
+void DeviceInformation::setForceThreshold(const QString &threshold)
+{
+    bool isOk = false;
+    int iThreshold = threshold.toInt(&isOk);
+    if (!isOk || m_DBSystem.ForceThreshold == iThreshold)
+        return;
+    m_DBSystem.ForceThreshold = iThreshold;
+    emit notifyForceThresholdChanged();
+}
+
+QString DeviceInformation::getResidualThreshold() const
+{
+    return QString::number(m_DBSystem.ResidualThreshold);
+}
+
+int DeviceInformation::GetResidualThreshold() const
+{
+    return m_DBSystem.ResidualThreshold;
+}
+
+void DeviceInformation::setResidualThreshold(const QString &threshold)
+{
+    bool isOk = false;
+    int iThreshold = threshold.toInt(&isOk);
+    if (!isOk || m_DBSystem.ResidualThreshold == iThreshold)
+        return;
+    m_DBSystem.ResidualThreshold = iThreshold;
+    emit notifyResidualThresholdChanged();
+}
+
+QString DeviceInformation::getAutoLearningCount() const
+{
+    return QString::number(m_DBSystem.AutoLearningCount);
+}
+
+int DeviceInformation::GetAutoLearningCount() const
+{
+    return m_DBSystem.AutoLearningCount;
+}
+
+void DeviceInformation::setAutoLearningCount(const QString &limit)
+{
+    bool isOk = false;
+    int iLimit = limit.toInt(&isOk);
+    if (!isOk || m_DBSystem.AutoLearningCount == iLimit)
+        return;
+    m_DBSystem.AutoLearningCount = iLimit;
+    emit notifyAutoLearningCountChanged();
+}
+
+int DeviceInformation::getPortNumber() const
+{
+    return m_ModbusConfigure.NetworkProperties.PortNumber;
+}
+
+void DeviceInformation::setPortNumber(const int &port)
+{
+    if (m_ModbusConfigure.NetworkProperties.PortNumber != port)
+    {
+        m_ModbusConfigure.NetworkProperties.PortNumber = port;
+        emit notifyPortNumberChanged();
+    }
+}
+
+QString DeviceInformation::getLocalIP() const
+{
+    return m_ModbusConfigure.NetworkProperties.LocalIP;
+}
+
+void DeviceInformation::setLocalIP(const QString &ip)
+{
+    if (m_ModbusConfigure.NetworkProperties.LocalIP != ip)
+    {
+        m_ModbusConfigure.NetworkProperties.LocalIP = ip;
+        emit notifyLocalIPChanged();
+    }
+}
+
+QString DeviceInformation::getRemoteIP() const
+{
+    return m_ModbusConfigure.NetworkProperties.RemoteIP;
+}
+
+void DeviceInformation::setRemoteIP(const QString &ip)
+{
+    if (m_ModbusConfigure.NetworkProperties.RemoteIP != ip)
+    {
+        m_ModbusConfigure.NetworkProperties.RemoteIP = ip;
+        emit notifyRemoteIPChanged();
+    }
+}
+int DeviceInformation::getComNumber() const
+{
+    return m_ModbusConfigure.SerialProperties.ComNumber;
+}
+
+void DeviceInformation::setComNumber(const int &com)
+{
+    if (m_ModbusConfigure.SerialProperties.ComNumber != com)
+    {
+        m_ModbusConfigure.SerialProperties.ComNumber = com;
+        emit notifyComNumberChanged();
+    }
+}
+
+int DeviceInformation::getBaudRate() const
+{
+    return m_ModbusConfigure.SerialProperties.BaudRate;
+}
+
+void DeviceInformation::setBaudRate(const int &baudrate)
+{
+    if (m_ModbusConfigure.SerialProperties.BaudRate != baudrate)
+    {
+        m_ModbusConfigure.SerialProperties.BaudRate = static_cast<QSerialPort::BaudRate>(baudrate);
+        emit notifyBaudRateChanged();
+    }
+}
+
+int DeviceInformation::getDataBits() const
+{
+    return m_ModbusConfigure.SerialProperties.DataBits;
+}
+
+void DeviceInformation::setDataBits(const int &databits)
+{
+    if (m_ModbusConfigure.SerialProperties.DataBits != databits)
+    {
+        m_ModbusConfigure.SerialProperties.DataBits = static_cast<QSerialPort::DataBits>(databits);
+        emit notifyDataBitsChanged();
+    }
+}
+
+int DeviceInformation::getParityBits() const
+{
+    return m_ModbusConfigure.SerialProperties.ParityBits;
+}
+
+void DeviceInformation::setParityBits(const int &paritybits)
+{
+    if (m_ModbusConfigure.SerialProperties.ParityBits != paritybits)
+    {
+        m_ModbusConfigure.SerialProperties.ParityBits = static_cast<QSerialPort::Parity>(paritybits);
+        emit notifyParityBitsChanged();
+    }
+}
+
+int DeviceInformation::getStopBits() const
+{
+    return m_ModbusConfigure.SerialProperties.StopBits;
+}
+
+void DeviceInformation::setStopBits(const int &stopbits)
+{
+    if (m_ModbusConfigure.SerialProperties.StopBits != stopbits)
+    {
+        m_ModbusConfigure.SerialProperties.StopBits = static_cast<QSerialPort::StopBits>(stopbits);
+        emit notifyStopBitsChanged();
+    }
+}
 

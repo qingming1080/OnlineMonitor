@@ -4,32 +4,35 @@
 #include <QElapsedTimer>
 #include "log/localrecord.h"
 
-NetworkModel* NetworkModel::s_pNetworkModel = nullptr;
+NetworkModel* NetworkModel::m_ptrInstance = nullptr;
 
 NetworkModel *NetworkModel::getInstance()
 {
-    if(s_pNetworkModel == nullptr)
-        s_pNetworkModel = new NetworkModel();
-
-    return s_pNetworkModel;
+    if(m_ptrInstance == nullptr)
+        m_ptrInstance = new NetworkModel();
+    return m_ptrInstance;
 }
 
 NetworkModel::NetworkModel(QObject *parent)
     : QAbstractListModel{parent}
 {
-    QElapsedTimer timer;
-    timer.start();
+    // QElapsedTimer timer;
+    // timer.start();
+    m_listETHPort.append({{"key", "ETH1"}, {"value", 0}});
+    m_listETHPort.append({{"key", "ETH2"}, {"value", 1}});
+    m_listETHPort.append({{"key", "ETH3"}, {"value", 2}});
+    m_listETHPort.append({{"key", "ETH4"}, {"value", 3}});
 
-    m_data = DataBaseManager::getInstance()->getNetworkData();
+    // m_data = DataBaseManager::getInstance()->getNetworkData();
 
-    QString text = QString("NetWork_初始化共耗时:%1ms").arg(timer.elapsed());
-    emit SignalManager::getInstance()->signalAddRecord(QDateTime::currentDateTime(), text);
+    // QString text = QString("NetWork_初始化共耗时:%1ms").arg(timer.elapsed());
+    // emit SignalManager::getInstance()->signalAddRecord(QDateTime::currentDateTime(), text);
 }
 
 int NetworkModel::rowCount(const QModelIndex &parent) const
 {
     Q_UNUSED(parent);
-    return m_data.size();
+    return m_listETHPort.size();
 }
 
 QVariant NetworkModel::data(const QModelIndex &index, int role) const
@@ -37,164 +40,40 @@ QVariant NetworkModel::data(const QModelIndex &index, int role) const
     if(!index.isValid())
         return QVariant();
 
-    int row = index.row();
-    _Network_Data data = m_data.at(row);
-    switch(role)
-    {
-    case QmlEnum::NETWORK_COLUMN::NETWORK_id:
-        return data.id;
-    case QmlEnum::NETWORK_COLUMN::NETWORK_type:
-        return data.type;
-    case QmlEnum::NETWORK_COLUMN::NETWORK_protocol:
-        return data.protocol;
-    case QmlEnum::NETWORK_COLUMN::NETWORK_local_ip:
-        return data.local_ip;
-    case QmlEnum::NETWORK_COLUMN::NETWORK_local_port:
-        return data.local_port;
-    case QmlEnum::NETWORK_COLUMN::NETWORK_remote_ip:
-        return data.remote_ip;
-    case QmlEnum::NETWORK_COLUMN::NETWORK_server_port:
-        return data.server_port;
-    case QmlEnum::NETWORK_COLUMN::NETWORK_user:
-        return data.user;
-    default:
+    if (!index.isValid() || index.row() >= m_listETHPort.count())
         return QVariant();
-    }
+
+    const auto &item = m_listETHPort.at(index.row());
+    if (role == KeyRole)
+        return item["key"];
+    else if (role == ValueRole)
+        return item["value"];
+
+    return QVariant();
 }
 
 QHash<int, QByteArray> NetworkModel::roleNames() const
 {
     QHash<int, QByteArray> roles;
-
-    roles[QmlEnum::NETWORK_COLUMN::NETWORK_id]          = "id";
-    roles[QmlEnum::NETWORK_COLUMN::NETWORK_type]        = "type";
-    roles[QmlEnum::NETWORK_COLUMN::NETWORK_protocol]    = "protocol";
-    roles[QmlEnum::NETWORK_COLUMN::NETWORK_local_ip]    = "local_ip";
-    roles[QmlEnum::NETWORK_COLUMN::NETWORK_local_port]  = "local_port";
-    roles[QmlEnum::NETWORK_COLUMN::NETWORK_remote_ip]   = "remote_ip";
-    roles[QmlEnum::NETWORK_COLUMN::NETWORK_server_port] = "server_port";
-    roles[QmlEnum::NETWORK_COLUMN::NETWORK_user]        = "user";
-
+    roles[KeyRole] = "key";
+    roles[ValueRole] = "value";
     return roles;
 }
 
-QVariant NetworkModel::getDataByWelderID(int welderID, int role) const
+QVariant NetworkModel::get(int index) const
 {
-    for(int i = 0; i < m_data.size(); ++i)
-    {
-        if(m_data.at(i).id != welderID)
-            continue;
-
-        switch(role)
-        {
-        case QmlEnum::NETWORK_COLUMN::NETWORK_id:
-        {
-            return m_data.at(i).id;
-        }
-        case QmlEnum::NETWORK_COLUMN::NETWORK_type:
-        {
-            return m_data.at(i).type;
-        }
-        case QmlEnum::NETWORK_COLUMN::NETWORK_protocol:
-        {
-            return m_data.at(i).protocol;
-        }
-        case QmlEnum::NETWORK_COLUMN::NETWORK_local_ip:
-        {
-            return m_data.at(i).local_ip;
-        }
-        case QmlEnum::NETWORK_COLUMN::NETWORK_local_port:
-        {
-            return m_data.at(i).local_port;
-        }
-        case QmlEnum::NETWORK_COLUMN::NETWORK_remote_ip:
-        {
-            return m_data.at(i).remote_ip;
-        }
-        case QmlEnum::NETWORK_COLUMN::NETWORK_server_port:
-        {
-            return m_data.at(i).server_port;
-        }
-        case QmlEnum::NETWORK_COLUMN::NETWORK_user:
-        {
-            return m_data.at(i).user;
-        }
-        default:
-            return QVariant();
-        }
-    }
-
-    return QVariant();
+    if (index < 0 || index >= m_listETHPort.count())
+        return QVariant();
+    
+    // Return a QVariantMap that QML can access with .key and .value
+    QVariantMap result;
+    result["key"] = m_listETHPort.at(index)["key"];
+    result["value"] = m_listETHPort.at(index)["value"];
+    return result;
 }
 
-void NetworkModel::setNetworkData(int id, int column, QVariant data)
-{
-    for(int i = 0; i < m_data.size(); ++i)
-    {
-        beginResetModel();
-        if(m_data.at(i).id != id)
-            continue;
-        QmlEnum::NETWORK_COLUMN index = (QmlEnum::NETWORK_COLUMN)column;
-        switch(index)
-        {
-        case QmlEnum::NETWORK_COLUMN::NETWORK_id:
-        {
-            m_data[i].id = data.toInt();
-            DataBaseManager::getInstance()->setNetworkData(id, index, data);
-            endResetModel();
-            return;
-        }
-        case QmlEnum::NETWORK_COLUMN::NETWORK_type:
-        {
-            m_data[i].type = data.toInt();
-            DataBaseManager::getInstance()->setNetworkData(id, index, data);
-            endResetModel();
-            return;
-        }
-        case QmlEnum::NETWORK_COLUMN::NETWORK_protocol:
-        {
-            m_data[i].protocol = data.toInt();
-            DataBaseManager::getInstance()->setNetworkData(id, index, data);
-            endResetModel();
-            return;
-        }
-        case QmlEnum::NETWORK_COLUMN::NETWORK_local_ip:
-        {
-            m_data[i].local_ip = data.toString();
-            DataBaseManager::getInstance()->setNetworkData(id, index, data);
-            endResetModel();
-            return;
-        }
-        case QmlEnum::NETWORK_COLUMN::NETWORK_local_port:
-        {
-            m_data[i].local_port = data.toInt();
-            DataBaseManager::getInstance()->setNetworkData(id, index, data);
-            endResetModel();
-            return;
-        }
-        case QmlEnum::NETWORK_COLUMN::NETWORK_remote_ip:
-        {
-            m_data[i].remote_ip = data.toString();
-            DataBaseManager::getInstance()->setNetworkData(id, index, data);
-            endResetModel();
-            return;
-        }
-        case QmlEnum::NETWORK_COLUMN::NETWORK_server_port:
-        {
-            m_data[i].server_port = data.toInt();
-            DataBaseManager::getInstance()->setNetworkData(id, index, data);
-            endResetModel();
-            return;
-        }
-        case QmlEnum::NETWORK_COLUMN::NETWORK_user:
-        {
-            m_data[i].user = data.toString();
-            DataBaseManager::getInstance()->setNetworkData(id, index, data);
-            endResetModel();
-            return;
-        }
-        default:
-            return;
-        }
-    }
-}
+
+
+
+
+

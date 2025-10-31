@@ -438,8 +438,8 @@ void HBModbusClient::setDeviceConfigure(const int deviceId, const DeviceInformat
 
     if (deviceConfig.ConnectType == DeviceInfoEnum::TCP_IP)
     {
-        QStringList remote = deviceConfig.NewworkProperties.RemoteIP.split(".");
-        QStringList local  = deviceConfig.NewworkProperties.LocalIP.split(".");
+        QStringList remote = deviceConfig.NetworkProperties.RemoteIP.split(".");
+        QStringList local  = deviceConfig.NetworkProperties.LocalIP.split(".");
 
         deviceConfiginfo.append(remote.value(0).toUShort());
         deviceConfiginfo.append(remote.value(1).toUShort());
@@ -450,7 +450,7 @@ void HBModbusClient::setDeviceConfigure(const int deviceId, const DeviceInformat
         deviceConfiginfo.append(local.value(1).toUShort());
         deviceConfiginfo.append(local.value(2).toUShort());
         deviceConfiginfo.append(local.value(3).toUShort());
-        deviceConfiginfo.append(deviceConfig.NewworkProperties.PortNumber);
+        deviceConfiginfo.append(deviceConfig.NetworkProperties.PortNumber);
 
         deviceConfiginfo.append(0);
         deviceConfiginfo.append(0);
@@ -573,9 +573,9 @@ void HBModbusClient::testAllFunctions()
             device1.ConnectType = DeviceInfoEnum::TCP_IP;
             device1.ProtocolType = DeviceInfoEnum::WLEDER_TYPE::L20_VG;
             device1.ConnectState = DeviceInfoEnum::CONNECT_STATE::CONNECTED;
-            device1.NewworkProperties.RemoteIP = "192.168.1.55";
-            device1.NewworkProperties.LocalIP  = "192.168.1.100";
-            device1.NewworkProperties.PortNumber = 4200;
+            device1.NetworkProperties.RemoteIP = "192.168.1.55";
+            device1.NetworkProperties.LocalIP  = "192.168.1.100";
+            device1.NetworkProperties.PortNumber = 4200;
             setDeviceConfigure(1, device1);
 
             DeviceInformation::MODBUS_CONFIGURE device2;

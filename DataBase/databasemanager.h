@@ -89,7 +89,7 @@ public:
         int GeneralFactorSetting;   // 通用系数设置
         int ForceThreshold;         // 撕拉力阈值设置
         int ResidualThreshold;      // 残留阈值设置
-        int AutoUpperLimit;         // 自动学习上限
+        int AutoLearningCount;      // 自动学习上限
     };
 
     struct DB_MANUAL

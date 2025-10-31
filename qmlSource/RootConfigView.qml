@@ -1,7 +1,6 @@
 ﻿import QtQuick 2.0
 import QtQuick.Controls 2.15
 import Device 1.0
-import System 1.0
 import GlobalLanguageDefine 1.0
 import GlobalSystemDefine 1.0
 import GlobalMessageDefine 1.0

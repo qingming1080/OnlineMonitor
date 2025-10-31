@@ -26,17 +26,16 @@ class Device : public QObject
 {
     Q_OBJECT
 
-    Q_PROPERTY(DeviceInformation* DevInfoObject READ getDevInfoObject   WRITE setDevInfoObject  NOTIFY notifyDevInfoObjectChanged FINAL)    // 设备信息
+    Q_PROPERTY(DeviceInformation* DeviceObj     READ getDeviceObj       WRITE setDeviceObj      NOTIFY notifyDeviceObjChanged FINAL)    // 设备信息
     Q_PROPERTY(Manual* ManualObj                READ getManualObj       WRITE setManualObj      NOTIFY notifyManualObjChanged FINAL)        // Manual表格
     Q_PROPERTY(Production* ProductionObj        READ getProductionObj   WRITE setProductionObj  NOTIFY notifyProductionObjChanged FINAL)
-    Q_PROPERTY(System* SystemObj                READ getSystemObj       WRITE setSystemObj      NOTIFY notifySystemObjChanged FINAL)        // System表格
     Q_PROPERTY(Trend *pTrend                    READ pTrend CONSTANT)               // 折线
 public:
     explicit Device(int welderID = 0, QObject *parent = nullptr);
     ~Device();
 
-    DeviceInformation* getDevInfoObject() const;
-    void setDevInfoObject(const DeviceInformation* object);
+    DeviceInformation* getDeviceObj() const;
+    void setDeviceObj(const DeviceInformation* object);
     Manual* getManualObj() const;
     void setManualObj(const Manual* object);
     Production* getProductionObj() const;
@@ -57,9 +56,8 @@ public:
 
 signals:
     void notifyProductionObjChanged();
-    void notifyDevInfoObjectChanged();
+    void notifyDeviceObjChanged();
     void notifyManualObjChanged();
-    void notifySystemObjChanged();
 
     void pYieldTrendChanged();
 
@@ -67,10 +65,9 @@ signals:
 
 private:
     int m_WelderID;
-    DeviceInformation*m_ptrDevInfo;   // 设备信息
-    Manual* m_ptrManual;
-    Production* m_ptrProduction;
-    System* m_ptrSystem;
+    DeviceInformation*  m_ptrDevice;   // 设备信息
+    Manual*             m_ptrManual;
+    Production*         m_ptrProduction;
 
     Trend* m_ptrTrend;
     int plotIndex;  // 每个设备独有的 plotIndex

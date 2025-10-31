@@ -57,7 +57,7 @@ Rectangle {
     }
     property bool altitudMode:{
         if(DeviceManager.DeviceList[currentConfigId-1]){
-            return DeviceManager.DeviceList[currentConfigId-1].DevInfoObject.heightOption
+            return DeviceManager.DeviceList[currentConfigId-1].DeviceObj.heightOption
                     === 1 ? true:false
         }
         else {
@@ -269,7 +269,7 @@ Rectangle {
                         // if(equipmentCount === 1){
                         if(equipmentCount === 0){
                             if(DeviceManager.DeviceList[0]){
-                                DeviceManager.DeviceList[0].DevInfoObject.maxBacth
+                                DeviceManager.DeviceList[0].DeviceObj.maxBacth
                             }
                             else{
                                 return 20000
@@ -277,7 +277,7 @@ Rectangle {
                         }
                         else{
                             if(DeviceManager.DeviceList[currentConfigId-1]){
-                                DeviceManager.DeviceList[currentConfigId-1].DevInfoObject.maxBacth
+                                DeviceManager.DeviceList[currentConfigId-1].DeviceObj.maxBacth
                             }
                             else{
                                 return 20000
@@ -341,7 +341,7 @@ Rectangle {
                         // if(equipmentCount === 1){
                         if(equipmentCount === 0){
                             if(DeviceManager.DeviceList[0]){
-                                DeviceManager.DeviceList[0].DevInfoObject.sample
+                                DeviceManager.DeviceList[0].DeviceObj.sample
                             }
                             else{
                                 return 20
@@ -349,7 +349,7 @@ Rectangle {
                         }
                         else{
                             if(DeviceManager.DeviceList[currentConfigId-1]){
-                                DeviceManager.DeviceList[currentConfigId-1].DevInfoObject.sample
+                                DeviceManager.DeviceList[currentConfigId-1].DeviceObj.sample
                             }
                             else{
                                 return 20
@@ -406,7 +406,7 @@ Rectangle {
                         // if(equipmentCount === 1){
                         if(equipmentCount === 0){
                             if(DeviceManager.DeviceList[0]){
-                                DeviceManager.DeviceList[0].DevInfoObject.lowerLimit
+                                DeviceManager.DeviceList[0].DeviceObj.lowerLimit
                             }
                             else{
                                 return 99
@@ -414,7 +414,7 @@ Rectangle {
                         }
                         else{
                             if(DeviceManager.DeviceList[currentConfigId-1]){
-                                DeviceManager.DeviceList[currentConfigId-1].DevInfoObject.lowerLimit
+                                DeviceManager.DeviceList[currentConfigId-1].DeviceObj.lowerLimit
                             }
                             else{
                                 return 99
@@ -471,7 +471,7 @@ Rectangle {
                        // if(equipmentCount === 1){
                         if(equipmentCount === 0){
                             if(DeviceManager.DeviceList[0]){
-                                DeviceManager.DeviceList[0].DevInfoObject.lowerLimit
+                                DeviceManager.DeviceList[0].DeviceObj.lowerLimit
                             }
                             else{
                                 return ""
@@ -479,7 +479,7 @@ Rectangle {
                         }
                         else{
                             if(DeviceManager.DeviceList[currentConfigId-1]){
-                                DeviceManager.DeviceList[currentConfigId-1].DevInfoObject.lowerLimit
+                                DeviceManager.DeviceList[currentConfigId-1].DeviceObj.lowerLimit
                             }
                             else{
                                 return ""
@@ -536,7 +536,7 @@ Rectangle {
                         // if(equipmentCount === 1){
                         if(equipmentCount === 0){
                             if(DeviceManager.DeviceList[0]){
-                                DeviceManager.DeviceList[0].DevInfoObject.lowerLimit
+                                DeviceManager.DeviceList[0].DeviceObj.lowerLimit
                             }
                             else{
                                 return ""
@@ -544,7 +544,7 @@ Rectangle {
                         }
                         else{
                             if(DeviceManager.DeviceList[currentConfigId-1]){
-                                DeviceManager.DeviceList[currentConfigId-1].DevInfoObject.lowerLimit
+                                DeviceManager.DeviceList[currentConfigId-1].DeviceObj.lowerLimit
                             }
                             else{
                                 return ""
@@ -601,7 +601,7 @@ Rectangle {
                         // if(equipmentCount === 1){
                         if(equipmentCount === 0){
                             if(DeviceManager.DeviceList[0]){
-                                DeviceManager.DeviceList[0].DevInfoObject.lowerLimit
+                                DeviceManager.DeviceList[0].DeviceObj.lowerLimit
                             }
                             else{
                                 return ""
@@ -609,7 +609,7 @@ Rectangle {
                         }
                         else{
                             if(DeviceManager.DeviceList[currentConfigId-1]){
-                                DeviceManager.DeviceList[currentConfigId-1].DevInfoObject.lowerLimit
+                                DeviceManager.DeviceList[currentConfigId-1].DeviceObj.lowerLimit
                             }
                             else{
                                 return ""
@@ -675,10 +675,10 @@ Rectangle {
                         }
                         // else if(equipmentCount === 1){
                         else if(equipmentCount === 0){
-                            DeviceManager.DeviceList[0].DevInfoObject.setHeightOption(1)
+                            DeviceManager.DeviceList[0].DeviceObj.setHeightOption(1)
                         }
                         else{
-                            DeviceManager.DeviceList[currentConfigId-1].DevInfoObject.setHeightOption(1)
+                            DeviceManager.DeviceList[currentConfigId-1].DeviceObj.setHeightOption(1)
                         }
                     }
                 }
@@ -717,10 +717,10 @@ Rectangle {
                         }
                         // else if(equipmentCount === 1){
                         else if(equipmentCount === 0){
-                            DeviceManager.DeviceList[0].DevInfoObject.setHeightOption(0)
+                            DeviceManager.DeviceList[0].DeviceObj.setHeightOption(0)
                         }
                         else{
-                            DeviceManager.DeviceList[currentConfigId-1].DevInfoObject.setHeightOption(0)
+                            DeviceManager.DeviceList[currentConfigId-1].DeviceObj.setHeightOption(0)
                         }
                     }
                 }
@@ -774,7 +774,7 @@ Rectangle {
                         // if(equipmentCount === 1){
                         if(equipmentCount === 0){
                             if(DeviceManager.DeviceList[0]){
-                                return DeviceManager.DeviceList[0].DevInfoObject.name
+                                return DeviceManager.DeviceList[0].DeviceObj.name
                             }
                             else{
                                 return ""
@@ -782,7 +782,7 @@ Rectangle {
                         }
                         else{
                             if(DeviceManager.DeviceList[currentConfigId-1]){
-                                return DeviceManager.DeviceList[currentConfigId-1].DevInfoObject.name
+                                return DeviceManager.DeviceList[currentConfigId-1].DeviceObj.name
                             }
                             else{
                                 return ""
@@ -817,46 +817,6 @@ Rectangle {
                     anchors.left: s15.right
                     anchors.leftMargin: 23
                     model: ["L20-VG", "L20-TS", "20DP", "20MA", GlobalLanguageDefine.strCustomized]
-                    displayText:{
-                        if(isAdd){
-                            return currentText
-                        }
-                       // else if(equipmentCount === 1){
-                        else if(equipmentCount === 0){
-                            if(DeviceManager.DeviceList[0]){
-                                 // DeviceManager.DeviceListChanged()
-                                return DeviceManager.DeviceList[0].DevInfoObject.model
-                            }
-                            else{
-                                return ""
-                            }
-                        }
-                        else{
-                            if(DeviceManager.DeviceList[currentConfigId-1]){
-                                 // DeviceManager.DeviceListChanged()
-                                return DeviceManager.DeviceList[currentConfigId-1].DevInfoObject.model
-                            }
-                            else{
-                                return ""
-                            }
-                        }
-
-                    }
-                    onDataAlter: {
-                        if(isAdd){
-                            return com1.currentText
-                        }
-                        //else if(equipmentCount === 1){
-                        else if(equipmentCount === 0){
-                             DeviceManager.DeviceListChanged()
-                            DeviceManager.DeviceList[0].DevInfoObject.setModel(com1.currentText)
-                        }
-                        else{
-                             DeviceManager.DeviceListChanged()
-                            DeviceManager.DeviceList[currentConfigId-1].DevInfoObject.setModel(com1.currentText)
-                        }
-
-                    }
                 }
 
 
@@ -872,18 +832,18 @@ Rectangle {
                        // if(equipmentCount === 1){
                         if(equipmentCount === 0){
                             if(ctl1.checked){
-                                DeviceManager.DeviceList[0].DevInfoObject.ConnectType = 1
+                                DeviceManager.DeviceList[0].DeviceObj.ConnectType = 1
                             }
                             else{
-                                DeviceManager.DeviceList[0].DevInfoObject.ConnectType = 0
+                                DeviceManager.DeviceList[0].DeviceObj.ConnectType = 0
                             }
                         }
                         else{
                             if(ctl1.checked){
-                                DeviceManager.DeviceList[currentConfigId-1].DevInfoObject.ConnectType = 1
+                                DeviceManager.DeviceList[currentConfigId-1].DeviceObj.ConnectType = 1
                             }
                             else{
-                                DeviceManager.DeviceList[currentConfigId-1].DevInfoObject.ConnectType = 0
+                                DeviceManager.DeviceList[currentConfigId-1].DeviceObj.ConnectType = 0
                             }
                         }
                     }
@@ -916,10 +876,10 @@ Rectangle {
                                     }
                                     //else if(equipmentCount === 1){
                                     else if(equipmentCount === 1){
-                                        return DeviceManager.DeviceList[0].DevInfoObject.ConnectType !== 0? true : false
+                                        return DeviceManager.DeviceList[0].DeviceObj.ConnectType !== 0? true : false
                                     }
                                     else{
-                                        return DeviceManager.DeviceList[currentConfigId - 1].DevInfoObject.ConnectType !== 0? true : false
+                                        return DeviceManager.DeviceList[currentConfigId - 1].DeviceObj.ConnectType !== 0? true : false
                                     }
                                 }
                                 duration: 0
@@ -932,10 +892,10 @@ Rectangle {
                                     }
                                     // else if(equipmentCount === 1){
                                     else if(equipmentCount === 1){
-                                        return DeviceManager.DeviceList[0].DevInfoObject.ConnectType !== 0? false : true
+                                        return DeviceManager.DeviceList[0].DeviceObj.ConnectType !== 0? false : true
                                     }
                                     else{
-                                        return DeviceManager.DeviceList[currentConfigId - 1].DevInfoObject.ConnectType !== 0? false : true
+                                        return DeviceManager.DeviceList[currentConfigId - 1].DeviceObj.ConnectType !== 0? false : true
                                     }
                                 }
                                 duration: 0
@@ -954,10 +914,10 @@ Rectangle {
                                 }
                                 // else if(equipmentCount === 1){
                                 else if(equipmentCount === 1){
-                                    return DeviceManager.DeviceList[0].DevInfoObject.ConnectType !== 0 ? pRgb(43, 112, 173) : "#e5e6e7"
+                                    return DeviceManager.DeviceList[0].DeviceObj.ConnectType !== 0 ? pRgb(43, 112, 173) : "#e5e6e7"
                                 }
                                 else{
-                                    return DeviceManager.DeviceList[currentConfigId - 1].DevInfoObject.ConnectType !== 0 ? pRgb(43, 112, 173) : "#e5e6e7"
+                                    return DeviceManager.DeviceList[currentConfigId - 1].DeviceObj.ConnectType !== 0 ? pRgb(43, 112, 173) : "#e5e6e7"
                                 }
                             }
                             font.family: GlobalSystemDefine.fontBold
@@ -976,10 +936,10 @@ Rectangle {
                                 }
                                 // else if(equipmentCount === 1){
                                 else if(equipmentCount === 1){
-                                    return DeviceManager.DeviceList[0].DevInfoObject.ConnectType !== 0? "#e5e6e7" : pRgb(43, 112, 173)
+                                    return DeviceManager.DeviceList[0].DeviceObj.ConnectType !== 0? "#e5e6e7" : pRgb(43, 112, 173)
                                 }
                                 else{
-                                    return DeviceManager.DeviceList[currentConfigId - 1].DevInfoObject.ConnectType !== 0? "#e5e6e7" : pRgb(43, 112, 173)
+                                    return DeviceManager.DeviceList[currentConfigId - 1].DeviceObj.ConnectType !== 0? "#e5e6e7" : pRgb(43, 112, 173)
                                 }
                             }
                             font.family: GlobalSystemDefine.fontBold
@@ -999,11 +959,11 @@ Rectangle {
                         // else if(equipmentCount === 1){
                         else if(equipmentCount === 1){
                             // DeviceManager.DeviceListChanged()
-                            return DeviceManager.DeviceList[0].DevInfoObject.ConnectType === 0 ? rect1 : rect2
+                            return DeviceManager.DeviceList[0].DeviceObj.ConnectType === 0 ? rect1 : rect2
                         }
                         else{
                             // DeviceManager.DeviceListChanged()
-                            return DeviceManager.DeviceList[currentConfigId - 1].DevInfoObject.ConnectType === 0 ? rect1 : rect2
+                            return DeviceManager.DeviceList[currentConfigId - 1].DeviceObj.ConnectType === 0 ? rect1 : rect2
                         }
 
                     }
@@ -1072,66 +1032,11 @@ Rectangle {
                             height: 40
                             x:233
                             y:55
-                            model: ["ETH1", "ETH2", "ETH3", "ETH4"]
-                            onDisplayTextChanged: {
-                                if(isAdd){
-                                    networkId = com2.currentIndex+1
-
-                                    console.log("currentText: ",currentText,"equipmentCount:",equipmentCount, "networkId:", networkId)
-                                }
-                            }
-
-                            displayText: {
-                                if(isAdd){
-                                    console.log("currentText: ",currentText,"equipmentCount:",equipmentCount,"currentConfigId:",currentConfigId)
-                                    return currentText
-
-                                }
-                                // else if(equipmentCount === 1){
-                                else if(equipmentCount === 0){
-                                     console.log("currentText: ",currentText,"equipmentCount<0:",equipmentCount, "networkId:", networkId,"currentConfigId:",currentConfigId)
-                                    if(DeviceManager.DeviceList[0].DevInfoObject.connectID === 1){
-                                        return "ETH1"
-                                    }
-                                    else if(DeviceManager.DeviceList[0].DevInfoObject.connectID === 2){
-                                        return "ETH2"
-                                    }
-                                    else if(DeviceManager.DeviceList[0].DevInfoObject.connectID === 3){
-                                        return "ETH3"
-                                    }
-                                    else if(DeviceManager.DeviceList[0].DevInfoObject.connectID === 4){
-                                        return "ETH4"
-                                    }
-
-                                }
-                                else{
-                                     console.log("currentText: ",currentText,"equipmentCount>>0:",equipmentCount, "networkId:", networkId,"currentConfigId:",currentConfigId)
-                                    if(DeviceManager.DeviceList[currentConfigId-1].DevInfoObject.connectID === 1){
-                                        return "ETH1"
-                                    }
-                                    else if(DeviceManager.DeviceList[currentConfigId-1].DevInfoObject.connectID === 2){
-                                        return "ETH2"
-                                    }
-                                    else if(DeviceManager.DeviceList[currentConfigId-1].DevInfoObject.connectID === 3){
-                                        return "ETH3"
-                                    }
-                                    else if(DeviceManager.DeviceList[currentConfigId-1].DevInfoObject.connectID === 4){
-                                        return "ETH4"
-                                    }
-
-                                }
-                            }
-                            onDataAlter: {
-                                // if(equipmentCount === 1){
-                                 console.log("currentText: ",currentText,"equipmentCount>>0:",equipmentCount, "networkId:", networkId,"currentConfigId:",currentConfigId)
-                                if(equipmentCount === 0){
-                                    DeviceManager.DeviceList[0].DevInfoObject.setConnectID(com2.currentIndex+1)
-                                }
-                                else{
-                                    DeviceManager.DeviceList[currentConfigId-1].DevInfoObject.setConnectID(com2.currentIndex+1)
-                                }
-                                 DeviceManager.DeviceListChanged()
-
+                            model: NetworkModel
+                            onAccepted: {
+                                console.debug("index: ", currentIndex)
+                                var value = model.get(currentIndex).value;
+                                console.debug("value: ", value)
                             }
                         }
 
@@ -1304,7 +1209,6 @@ Rectangle {
 
                             onTextChanged: {
                                    if (com2.displayText === "ETH1") {
-                                       console.log("1DeviceManager.DeviceListChanged()111111111111text")
                                        NetworkModel.setNetworkData(2, QmlEnum.NETWORK_local_ip, t7.text);
                                    } else if (com2.displayText === "ETH2") {
                                        NetworkModel.setNetworkData(3, QmlEnum.NETWORK_local_ip, t7.text);
@@ -1387,121 +1291,42 @@ Rectangle {
                             y:273
                         }
                         CustomComboBox{
-                            id:com3
+                            id: comboComPort
                             width: 243
                             height: 40
                             x:233
                             y:40
-                            model: ["COM1", "COM2"]
-                            onDisplayTextChanged: {
-                                if(isAdd){
-                                    console.log("rs232-onDisplayTextChanged-currentTex1t: ",currentText,"equipmentCount:",equipmentCount)
-                                    rs232Id = com3.currentIndex+1
-                                    console.log("rs232-onDisplayTextChanged-currentTex2t: ",currentText,"equipmentCount:",equipmentCount,"rs232Id:" , rs232Id)
-                                }
-                            }
-                            displayText: {
-                                if(isAdd){
-                                    console.log("rs232-currentText: ",currentText,"equipmentCount:",equipmentCount)
-                                    return currentText
-                                }
-                                // else if(equipmentCount === 1){
-                                else if(equipmentCount === 0){
-                                    if(DeviceManager.DeviceList[0].DevInfoObject.connectID === 1){
-                                        return "COM1"
-                                    }
-                                    else if(DeviceManager.DeviceList[0].DevInfoObject.connectID === 2){
-                                        return "COM2"
-                                    }
-
-                                }
-                                else{
-                                    if(DeviceManager.DeviceList[currentConfigId-1].DevInfoObject.connectID === 1){
-                                        return "COM1"
-                                    }
-                                    else if(DeviceManager.DeviceList[currentConfigId-1].DevInfoObject.connectID === 2){
-                                        return "COM2"
-                                    }
-
-                                }
-                            }
-                            onDataAlter: {
-                                // if(equipmentCount === 1){
-                                    if(equipmentCount === 0){
-                                     console.log("rs232-onDataAlter-currentText: ",currentText,"equipmentCount:",equipmentCount)
-                                    DeviceManager.DeviceList[0].DevInfoObject.setConnectID(com3.currentIndex+1)
-                                }
-                                else{
-                                    console.log("rs232-onDataAlter-currentText2: ",currentText,"equipmentCount:",equipmentCount)
-                                    DeviceManager.DeviceList[currentConfigId-1].DevInfoObject.setConnectID(com3.currentIndex+1)
-                                }
-                                    DeviceManager.DeviceListChanged()
-
+                            model: ComModel
+                            onAccepted: {
+                                console.debug("index: ", currentIndex)
+                                var value = model.get(currentIndex).value;
+                                console.debug("value: ", value)
                             }
                         }
                         CustomComboBox{
-                            id:com4
+                            id: comboBaudRate
                             width: 243
                             height: 40
                             x:233
                             y:97
-                            model: ["2400", "4800", "9600", "19200", "38400", "115200"]
-                            displayText:{
-                                if(com3.displayText === "COM1"){
-                                    return RS232Model.getDataByWelderID(1,QmlEnum.RS232_baud_rate)
-                                }
-                                else if(com3.displayText === "COM2"){
-                                    return RS232Model.getDataByWelderID(2,QmlEnum.RS232_baud_rate)
-                                }
-
-                            }
-                            onDataAlter: {
-                                if(com3.displayText === "COM1"){
-                                    RS232Model.setRS232Data(1,QmlEnum.RS232_baud_rate,currentText)
-                                }
-                                else if(com3.displayText === "COM2"){
-                                    RS232Model.setRS232Data(2,QmlEnum.RS232_baud_rate,currentText)
-                                }
-                                com4.displayText = currentText
-                                DeviceManager.DeviceListChanged()
-
+                            model: BaudRateModel
+                            onAccepted: {
+                                console.debug("index: ", currentIndex)
+                                var value = model.get(currentIndex).value;
+                                console.debug("value: ", value)
                             }
                         }
                         CustomComboBox{
-                            id:com5
+                            id: comboDataBits
                             width: 243
                             height: 40
                             x:233
                             y:151
-                            model: ["7bit", "8bit"]
-                            displayText:{
-                                if(com3.displayText === "COM1"){
-                                    return RS232Model.getDataByWelderID(1,QmlEnum.RS232_data_bit)
-                                }
-                                else if(com3.displayText === "COM2"){
-                                    return RS232Model.getDataByWelderID(2,QmlEnum.RS232_data_bit)
-                                }
-                            }
-                            onDataAlter: {
-                                if(com3.displayText === "COM1"){
-                                    if(com5.currentIndex === 0){
-                                        RS232Model.setRS232Data(1,QmlEnum.RS232_data_bit,7)
-                                    }
-                                    else if(com5.currentIndex === 1){
-                                        RS232Model.setRS232Data(1,QmlEnum.RS232_data_bit,8)
-                                    }
-                                }
-                                else if(com3.displayText === "COM2"){
-                                    if(com5.currentIndex === 0){
-                                        RS232Model.setRS232Data(2,QmlEnum.RS232_data_bit,7)
-                                    }
-                                    else if(com5.currentIndex === 1){
-                                        RS232Model.setRS232Data(2,QmlEnum.RS232_data_bit,8)
-                                    }
-                                }
-                                com5.displayText = currentText
-                                DeviceManager.DeviceListChanged()
-
+                            model: DataBitsModel
+                            onAccepted: {
+                                console.debug("index: ", currentIndex)
+                                var value = model.get(currentIndex).value;
+                                console.debug("value: ", value)
                             }
                         }
                         CustomComboBox{
@@ -1510,70 +1335,20 @@ Rectangle {
                             height: 40
                             x:233
                             y:206
-                            model: ["None", "Odd", "Even"]
-                            displayText: {
-                                if(com3.displayText === "COM1"){
-                                    return RS232Model.getDataByWelderID(1,QmlEnum.RS232_parity_bit)
-                                }
-                                else if(com3.displayText === "COM2"){
-                                    return RS232Model.getDataByWelderID(2,QmlEnum.RS232_parity_bit)
-                                }
-
-                            }
-                            onDataAlter: {
-                                if(com3.displayText === "COM1"){
-                                    RS232Model.setRS232Data(1,QmlEnum.RS232_parity_bit,currentText)
-                                }
-                                else if(com3.displayText === "COM2"){
-                                    RS232Model.setRS232Data(2,QmlEnum.RS232_parity_bit,currentText)
-                                }
-                                com6.displayText = currentText
-                                DeviceManager.DeviceListChanged()
-
+                            model: ParityModel
+                            onAccepted: {
+                                console.debug("index: ", currentIndex)
+                                var value = model.get(currentIndex).value;
+                                console.debug("value: ", value)
                             }
                         }
                         CustomComboBox{
-                            id:com7
+                            id: comboStopBits
                             width: 243
                             height: 40
                             x:233
                             y:265
-                            model: ["1bit", "1.5bit", "2bit"]
-                            displayText:{
-                                if(com3.displayText === "COM1"){
-                                    return RS232Model.getDataByWelderID(1,QmlEnum.RS232_stop_bit)
-                                }
-                                else if(com3.displayText === "COM2"){
-                                    return RS232Model.getDataByWelderID(2,QmlEnum.RS232_stop_bit)
-                                }
-
-                            }
-                            onDataAlter: {
-                                if(com3.displayText === "COM1"){
-                                    if(com7.currentIndex === 0){
-                                        RS232Model.setRS232Data(1,QmlEnum.RS232_stop_bit,1)
-                                    }
-                                    else if(com7.currentIndex === 1){
-                                        RS232Model.setRS232Data(1,QmlEnum.RS232_stop_bit,1.5)
-                                    }
-                                    else if(com7.currentIndex === 2){
-                                        RS232Model.setRS232Data(1,QmlEnum.RS232_stop_bit,2)
-                                    }
-                                }
-                                else if(com3.displayText === "COM2"){
-                                    if(com7.currentIndex === 0){
-                                        RS232Model.setRS232Data(2,QmlEnum.RS232_stop_bit,1)
-                                    }
-                                    else if(com7.currentIndex === 1){
-                                        RS232Model.setRS232Data(2,QmlEnum.RS232_stop_bit,1.5)
-                                    }
-                                    else if(com7.currentIndex === 2){
-                                        RS232Model.setRS232Data(2,QmlEnum.RS232_stop_bit,2)
-                                    }
-                                }
-                                com7.displayText = currentText
-                                DeviceManager.DeviceListChanged()
-                            }
+                            model: StopBitsModel
                         }
                     }
                 }
@@ -1638,20 +1413,20 @@ Rectangle {
                                 }
                                 //if(full.visible){//设置多设备时配置存储
                                 if(equipmentCount > 1){//设置多设备时配置存储
-                                    DeviceManager.DeviceList[currentConfigId-1].DevInfoObject.setProductionMaxBacth(maxProductionTextField.text)
-                                    DeviceManager.DeviceList[currentConfigId-1].DevInfoObject.setMaxModelSamples(learningSamplesTextField.text)
-                                    DeviceManager.DeviceList[currentConfigId-1].DevInfoObject.setYieldRateLowerLimit(yieldLowerLimitTextField.text)
-                                    DeviceManager.DeviceList[currentConfigId-1].DevInfoObject.setWelderName(t4.text)
+                                    DeviceManager.DeviceList[currentConfigId-1].DeviceObj.setProductionMaxBacth(maxProductionTextField.text)
+                                    DeviceManager.DeviceList[currentConfigId-1].DeviceObj.setMaxModelSamples(learningSamplesTextField.text)
+                                    DeviceManager.DeviceList[currentConfigId-1].DeviceObj.setYieldRateLowerLimit(yieldLowerLimitTextField.text)
+                                    DeviceManager.DeviceList[currentConfigId-1].DeviceObj.setWelderName(t4.text)
                                 }
                                 else{
-                                    // DeviceManager.DeviceList[currentConfigId-1].DevInfoObject.setMaxBacth(t1.text)
-                                    // DeviceManager.DeviceList[currentConfigId-1].DevInfoObject.setSample(t2.text)
-                                    // DeviceManager.DeviceList[currentConfigId-1].DevInfoObject.setLowerLimit(t3.text)
-                                    // DeviceManager.DeviceList[currentConfigId-1].DevInfoObject.setName(t4.text)
-                                    DeviceManager.DeviceList[0].DevInfoObject.setProductionMaxBacth(maxProductionTextField.text)
-                                    DeviceManager.DeviceList[0].DevInfoObject.setMaxModelSamples(learningSamplesTextField.text)
-                                    DeviceManager.DeviceList[0].DevInfoObject.setYieldRateLowerLimit(yieldLowerLimitTextField.text)
-                                    DeviceManager.DeviceList[0].DevInfoObject.setWelderName(t4.text)
+                                    // DeviceManager.DeviceList[currentConfigId-1].DeviceObj.setMaxBacth(t1.text)
+                                    // DeviceManager.DeviceList[currentConfigId-1].DeviceObj.setSample(t2.text)
+                                    // DeviceManager.DeviceList[currentConfigId-1].DeviceObj.setLowerLimit(t3.text)
+                                    // DeviceManager.DeviceList[currentConfigId-1].DeviceObj.setName(t4.text)
+                                    DeviceManager.DeviceList[0].DeviceObj.setProductionMaxBacth(maxProductionTextField.text)
+                                    DeviceManager.DeviceList[0].DeviceObj.setMaxModelSamples(learningSamplesTextField.text)
+                                    DeviceManager.DeviceList[0].DeviceObj.setYieldRateLowerLimit(yieldLowerLimitTextField.text)
+                                    DeviceManager.DeviceList[0].DeviceObj.setWelderName(t4.text)
                                 }
                                 loadViewsys(2,musys)
                             }
@@ -1679,11 +1454,11 @@ Rectangle {
                 id:s1
                 x:41
                 y:68
-                sysCurrIndex:DeviceManager.DeviceList[0].DevInfoObject.id
+                sysCurrIndex:DeviceManager.DeviceList[0].DeviceObj.id
                 sysCurrIndex1:1
                 heightOpation:{
                     if(DeviceManager.DeviceList[0]){
-                        return DeviceManager.DeviceList[0].DevInfoObject.heightOption
+                        return DeviceManager.DeviceList[0].DeviceObj.heightOption
                                 === 1 ? true:false
                     }
                     else{
@@ -1693,7 +1468,7 @@ Rectangle {
                 visible: musysTmp1
                 eqText1:{
                     if(DeviceManager.DeviceList[0]){
-                        DeviceManager.DeviceList[0].DevInfoObject.name
+                        DeviceManager.DeviceList[0].DeviceObj.name
                     }
                     else{
                         return ""
@@ -1701,7 +1476,7 @@ Rectangle {
                 }
                 eqText2:{
                     if(DeviceManager.DeviceList[0]){
-                        DeviceManager.DeviceList[0].DevInfoObject.model
+                        DeviceManager.DeviceList[0].DeviceObj.model
                     }
                     else{
                         return ""
@@ -1709,7 +1484,7 @@ Rectangle {
                 }
                 eqText3:{
                     if(DeviceManager.DeviceList[0]){
-                        DeviceManager.DeviceList[0].DevInfoObject.ConnectType === 0  ? "TCP/IP" : "RS232"
+                        DeviceManager.DeviceList[0].DeviceObj.ConnectType === 0  ? "TCP/IP" : "RS232"
                     }
                     else{
                         return ""
@@ -1718,7 +1493,7 @@ Rectangle {
                 eqText4:{
                     if(DeviceManager.DeviceList[0])
                     {
-                        var connectState = DeviceManager.DeviceList[0].DevInfoObject.ConnectState
+                        var connectState = DeviceManager.DeviceList[0].DeviceObj.ConnectState
                         return GlobalMessageDefine.getConnectState(connectState)
                     }
                     else{
@@ -1735,11 +1510,11 @@ Rectangle {
                 id:s2
                 x:347
                 y:68
-                sysCurrIndex:DeviceManager.DeviceList[1].DevInfoObject.id
+                sysCurrIndex:DeviceManager.DeviceList[1].DeviceObj.id
                 sysCurrIndex1:2
                 heightOpation:{
                     if(DeviceManager.DeviceList[1]){
-                        return DeviceManager.DeviceList[1].DevInfoObject.heightOption
+                        return DeviceManager.DeviceList[1].DeviceObj.heightOption
                                 === 1 ? true:false
                     }
                     else{
@@ -1749,7 +1524,7 @@ Rectangle {
                 visible: musysTmp2
                 eqText1:{
                     if(DeviceManager.DeviceList[1]){
-                        DeviceManager.DeviceList[1].DevInfoObject.name
+                        DeviceManager.DeviceList[1].DeviceObj.name
                     }
                     else{
                         return ""
@@ -1757,7 +1532,7 @@ Rectangle {
                 }
                 eqText2:{
                     if(DeviceManager.DeviceList[1]){
-                        DeviceManager.DeviceList[1].DevInfoObject.model
+                        DeviceManager.DeviceList[1].DeviceObj.model
                     }
                     else{
                         return ""
@@ -1765,7 +1540,7 @@ Rectangle {
                 }
                 eqText3:{
                     if(DeviceManager.DeviceList[1]){
-                        DeviceManager.DeviceList[1].DevInfoObject.ConnectType === 0 ? "TCP/IP" : "RS232"
+                        DeviceManager.DeviceList[1].DeviceObj.ConnectType === 0 ? "TCP/IP" : "RS232"
                     }
                     else{
                         return ""
@@ -1774,7 +1549,7 @@ Rectangle {
                 eqText4:{
                     if(DeviceManager.DeviceList[1])
                     {
-                        var connectState = DeviceManager.DeviceList[1].DevInfoObject.ConnectState
+                        var connectState = DeviceManager.DeviceList[1].DeviceObj.ConnectState
                         return GlobalMessageDefine.getConnectState(connectState)
                     }
                     else{
@@ -1791,15 +1566,15 @@ Rectangle {
                 id:s3
                 x:654
                 y:68
-                sysCurrIndex: DeviceManager.DeviceList[2].DevInfoObject.id
+                sysCurrIndex: DeviceManager.DeviceList[2].DeviceObj.id
                 sysCurrIndex1: 3
                 heightOpation:{
                     if(DeviceManager.DeviceList[2]){
-                        return DeviceManager.DeviceList[2].DevInfoObject.heightOption
+                        return DeviceManager.DeviceList[2].DeviceObj.heightOption
                                 === 1 ? true:false
                     }
                     else if(DeviceManager.DeviceList[3]){
-                        return DeviceManager.DeviceList[3].DevInfoObject.heightOption
+                        return DeviceManager.DeviceList[3].DeviceObj.heightOption
                                 === 1 ? true : false
                     }
                     else{
@@ -1809,10 +1584,10 @@ Rectangle {
                 visible: musysTmp3
                 eqText1:{
                     if(DeviceManager.DeviceList[2]){
-                        DeviceManager.DeviceList[2].DevInfoObject.name
+                        DeviceManager.DeviceList[2].DeviceObj.name
                     }
                     else if(DeviceManager.DeviceList[3]){
-                        DeviceManager.DeviceList[3].DevInfoObject.name
+                        DeviceManager.DeviceList[3].DeviceObj.name
                     }
                     else{
                         return ""
@@ -1820,10 +1595,10 @@ Rectangle {
                 }
                 eqText2:{
                     if(DeviceManager.DeviceList[2]){
-                        DeviceManager.DeviceList[2].DevInfoObject.model
+                        DeviceManager.DeviceList[2].DeviceObj.model
                     }
                     else if(DeviceManager.DeviceList[3]){
-                        DeviceManager.DeviceList[3].DevInfoObject.model
+                        DeviceManager.DeviceList[3].DeviceObj.model
                     }
                     else{
                         return ""
@@ -1831,10 +1606,10 @@ Rectangle {
                 }
                 eqText3:{
                     if(DeviceManager.DeviceList[2]){
-                        DeviceManager.DeviceList[2].DevInfoObject.ConnectType === 0  ? "TCP/IP" : "RS232"
+                        DeviceManager.DeviceList[2].DeviceObj.ConnectType === 0  ? "TCP/IP" : "RS232"
                     }
                     else if(DeviceManager.DeviceList[3]){
-                        DeviceManager.DeviceList[3].DevInfoObject.ConnectType === 0  ? "TCP/IP" : "RS232"
+                        DeviceManager.DeviceList[3].DeviceObj.ConnectType === 0  ? "TCP/IP" : "RS232"
                     }
                     else{
                         return ""
@@ -1844,12 +1619,12 @@ Rectangle {
                     var connectState = 0
                     if(DeviceManager.DeviceList[2])
                     {
-                        connectState = DeviceManager.DeviceList[2].DevInfoObject.ConnectState
+                        connectState = DeviceManager.DeviceList[2].DeviceObj.ConnectState
                         return GlobalMessageDefine.getConnectState(connectState)
                     }
                     else if(DeviceManager.DeviceList[3])
                     {
-                        connectState = DeviceManager.DeviceList[3].DevInfoObject.ConnectState
+                        connectState = DeviceManager.DeviceList[3].DeviceObj.ConnectState
                         return GlobalMessageDefine.getConnectState(connectState)
                     }
                     else{
@@ -1866,16 +1641,16 @@ Rectangle {
                 id:s4
                 x:961
                 y:68
-                sysCurrIndex:DeviceManager.DeviceList[3].DevInfoObject.id
+                sysCurrIndex:DeviceManager.DeviceList[3].DeviceObj.id
                 sysCurrIndex1:4
                 visible: musysTmp4
                 heightOpation:{
                     if(DeviceManager.DeviceList[3]){
-                        return DeviceManager.DeviceList[3].DevInfoObject.heightOption
+                        return DeviceManager.DeviceList[3].DeviceObj.heightOption
                                 === 1 ? true:false
                     }
                     else if(DeviceManager.DeviceList[2]){
-                        return DeviceManager.DeviceList[2].DevInfoObject.heightOption
+                        return DeviceManager.DeviceList[2].DeviceObj.heightOption
                                 === 1 ? true:false
                     }
                     else{
@@ -1884,10 +1659,10 @@ Rectangle {
                 }
                 eqText1:{
                     if(DeviceManager.DeviceList[3]){
-                        DeviceManager.DeviceList[3].DevInfoObject.name
+                        DeviceManager.DeviceList[3].DeviceObj.name
                     }
                     else if(DeviceManager.DeviceList[2]){
-                        DeviceManager.DeviceList[2].DevInfoObject.name
+                        DeviceManager.DeviceList[2].DeviceObj.name
                     }
                     else{
                         return ""
@@ -1895,10 +1670,10 @@ Rectangle {
                 }
                 eqText2:{
                     if(DeviceManager.DeviceList[3]){
-                        DeviceManager.DeviceList[3].DevInfoObject.model
+                        DeviceManager.DeviceList[3].DeviceObj.model
                     }
                     else if(DeviceManager.DeviceList[2]){
-                        DeviceManager.DeviceList[2].DevInfoObject.model
+                        DeviceManager.DeviceList[2].DeviceObj.model
                     }
                     else{
                         return ""
@@ -1906,10 +1681,10 @@ Rectangle {
                 }
                 eqText3:{
                     if(DeviceManager.DeviceList[3]){
-                        DeviceManager.DeviceList[3].DevInfoObject.ConnectType === 0  ? "TCP/IP" : "RS232"
+                        DeviceManager.DeviceList[3].DeviceObj.ConnectType === 0  ? "TCP/IP" : "RS232"
                     }
                     else if(DeviceManager.DeviceList[2]){
-                        DeviceManager.DeviceList[2].DevInfoObject.ConnectType === 0  ? "TCP/IP" : "RS232"
+                        DeviceManager.DeviceList[2].DeviceObj.ConnectType === 0  ? "TCP/IP" : "RS232"
                     }
                     else{
                         return ""
@@ -1919,12 +1694,12 @@ Rectangle {
                     var connectState = 0
                     if(DeviceManager.DeviceList[3])
                     {
-                        connectState = DeviceManager.DeviceList[3].DevInfoObject.ConnectState
+                        connectState = DeviceManager.DeviceList[3].DeviceObj.ConnectState
                         return GlobalMessageDefine.getConnectState(connectState)
                     }
                     else if(DeviceManager.DeviceList[2])
                     {
-                        connectState = DeviceManager.DeviceList[2].DevInfoObject.ConnectState
+                        connectState = DeviceManager.DeviceList[2].DeviceObj.ConnectState
                         return GlobalMessageDefine.getConnectState(connectState)
                     }
                     else{

@@ -3,7 +3,8 @@ import QtQuick.Controls 2.5
 import GlobalSystemDefine 1.0
 ComboBox{
     id:comboBox
-    signal dataAlter()
+    textRole: "key" // 指定显示的字段
+    signal accepted(var currentIndex)
     background: Rectangle{
         radius: 6
         border.width: 3
@@ -45,7 +46,7 @@ ComboBox{
             height: parent.height
             Text {
                 id:tt
-                text: modelData
+                text: model.key
                 font.pixelSize: 16  // 设置字体大小
                 color: pRgb(43, 112, 173)
                 anchors.centerIn: item
@@ -69,7 +70,7 @@ ComboBox{
                 onPressed: {
                     comboBox.currentIndex = index
                     comboBox.popup.visible = false
-                    dataAlter()
+                    accepted(currentIndex)
                 }
             }
         }

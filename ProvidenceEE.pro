@@ -24,6 +24,9 @@ SOURCES += \
         main.cpp \
         modbus/hbmodbusclient.cpp \
         modbus/hbserver.cpp \
+        model/baudratemodel.cpp \
+        model/commodel.cpp \
+        model/databitsmodel.cpp \
         model/device.cpp \
         model/deviceinformation.cpp \
         model/devicemanager.cpp \
@@ -32,9 +35,9 @@ SOURCES += \
         model/manual.cpp \
         model/message.cpp \
         model/networkmodel.cpp \
+        model/paritymodel.cpp \
         model/production.cpp \
-        model/rs232model.cpp \
-        model/system.cpp \
+        model/stopbitsmodel.cpp \
         model/trend.cpp \
         provienceEE/providenceEE.cpp \
         signalmanager.cpp \
@@ -67,6 +70,9 @@ HEADERS += \
     log/localrecord.h \
     modbus/hbmodbusclient.h \
     modbus/hbserver.h \
+    model/baudratemodel.h \
+    model/commodel.h \
+    model/databitsmodel.h \
     model/device.h \
     model/deviceinformation.h \
     model/devicemanager.h \
@@ -75,9 +81,9 @@ HEADERS += \
     model/manual.h \
     model/message.h \
     model/networkmodel.h \
+    model/paritymodel.h \
     model/production.h \
-    model/rs232model.h \
-    model/system.h \
+    model/stopbitsmodel.h \
     model/trend.h \
     provienceEE/providenceEE.h \
     qmlenum.h \

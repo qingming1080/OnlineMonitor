@@ -38,8 +38,8 @@ Device *DeviceManager::getDeviceByNetworkID(int networkID)
 {
     for(int i = 0; i < m_listDevices.size(); ++i)
     {
-        if(m_listDevices.at(i)->getDevInfoObject()->getConnectType() == DeviceInfoEnum::TCP_IP
-            && m_listDevices.at(i)->getDevInfoObject()->getConnectTypeID() == networkID)
+        if(m_listDevices.at(i)->getDeviceObj()->getConnectType() == DeviceInfoEnum::TCP_IP
+            && m_listDevices.at(i)->getDeviceObj()->getConnectTypeID() == networkID)
             return m_listDevices.at(i);
     }
 
@@ -50,8 +50,8 @@ Device *DeviceManager::getDeviceByRs232ID(int rs232ID)
 {
     for(int i = 0; i < m_listDevices.size(); ++i)
     {
-        if(m_listDevices.at(i)->getDevInfoObject()->getConnectType() == DeviceInfoEnum::RS232
-            && m_listDevices.at(i)->getDevInfoObject()->getConnectTypeID() == rs232ID)
+        if(m_listDevices.at(i)->getDeviceObj()->getConnectType() == DeviceInfoEnum::RS232
+            && m_listDevices.at(i)->getDeviceObj()->getConnectTypeID() == rs232ID)
             return m_listDevices.at(i);
     }
 

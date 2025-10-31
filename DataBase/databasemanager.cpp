@@ -1136,7 +1136,7 @@ bool DataBaseManager::getSystemData(const int welderID, DataBaseManager::DB_SYST
         system.GeneralFactorSetting = query.value(QmlEnum::SYSTEM_COLUMN::SYSTEM_general_fact_setting).toInt();
         system.ForceThreshold   = query.value(QmlEnum::SYSTEM_COLUMN::SYSTEM_other_fact_setting).toInt();
         // data.ResidualThreshold = query.value(QmlEnum::SYSTEM_COLUMN::SYSTEM_other_fact_setting).toInt();
-        system.AutoUpperLimit     = query.value(QmlEnum::SYSTEM_COLUMN::SYSTEM_auto_model_limit).toInt();
+        system.AutoLearningCount     = query.value(QmlEnum::SYSTEM_COLUMN::SYSTEM_auto_model_limit).toInt();
         bResult = true;
     }
     return bResult;

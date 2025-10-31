@@ -53,30 +53,37 @@ class DeviceInformation : public QObject
     // 焊机型号
     Q_PROPERTY(int      WelderType           READ getWelderType          WRITE setWelderType             NOTIFY notifyWelderTypeChanged FINAL)
     // 最大生产批量
-    Q_PROPERTY(QString  ProductionMaxBacth   READ getProductionMaxBacth  WRITE setProductionMaxBacth     NOTIFY notifyProductionMaxBacthChanged)
+    Q_PROPERTY(QString ProductionMaxBacth   READ getProductionMaxBacth  WRITE setProductionMaxBacth     NOTIFY notifyProductionMaxBacthChanged)
     // 学习样本数
-    Q_PROPERTY(QString  MaxModelSamples      READ getMaxModelSamples     WRITE setMaxModelSamples        NOTIFY notifyMaxModelSamplesChanged)
+    Q_PROPERTY(QString MaxModelSamples      READ getMaxModelSamples     WRITE setMaxModelSamples        NOTIFY notifyMaxModelSamplesChanged)
     // 良率下限
-    Q_PROPERTY(QString  YieldRateLowerLimit  READ getYieldRateLowerLimit WRITE setYieldRateLowerLimit    NOTIFY notifyYieldRateLowerLimitChanged)
+    Q_PROPERTY(QString YieldRateLowerLimit  READ getYieldRateLowerLimit WRITE setYieldRateLowerLimit    NOTIFY notifyYieldRateLowerLimitChanged)
     // 高度模式
-    Q_PROPERTY(bool     HeightEncoderOption  READ getHeightEncoderOption WRITE setHeightEncoderOption    NOTIFY notifyHeightEncoderOptionChanged)
+    Q_PROPERTY(bool    HeightEncoderOption  READ getHeightEncoderOption WRITE setHeightEncoderOption    NOTIFY notifyHeightEncoderOptionChanged)
     // 可疑模式
-    Q_PROPERTY(bool     SuspiciousOption     READ getSuspiciousOption    WRITE setSuspiciousOption       NOTIFY notifySuspiciousOptionChanged)
+    Q_PROPERTY(bool    SuspiciousOption     READ getSuspiciousOption    WRITE setSuspiciousOption   NOTIFY notifySuspiciousOptionChanged)
     // 连接方式
-    Q_PROPERTY(int      ConnectType          READ getConnectType         WRITE setConnectType            NOTIFY notifyConnectTypeChanged)
+    Q_PROPERTY(int     ConnectType          READ getConnectType         WRITE setConnectType        NOTIFY notifyConnectTypeChanged)
     /// 2024/04/07 设备状态 暴露
     // 设备状态(生产中，待机等)
-    Q_PROPERTY(int      ConnectState         READ getConnectState        WRITE setConnectState           NOTIFY notifyConnectStateChanged)
+    Q_PROPERTY(int     ConnectState         READ getConnectState        WRITE setConnectState       NOTIFY notifyConnectStateChanged)
 
     /// 2024/08/01 IP与端口 暴露
-    // 远程端口
-    // Q_PROPERTY(QString          mesIP                       READ mesIP               WRITE setMesIP               NOTIFY mesIPChanged)
-    // // 远程IP
-    // Q_PROPERTY(QString          deviceIP                    READ deviceIP            WRITE setDeviceIP            NOTIFY deviceIPChanged)
-    // // 客户端IP
-    // Q_PROPERTY(int              mesPort                     READ mesPort             WRITE setMesPort             NOTIFY mesPortChanged)
+    Q_PROPERTY(QString SingleFactor         READ getSingleFactor        WRITE setSingleFactor       NOTIFY notifySingleFactorChanged FINAL)
+    Q_PROPERTY(QString GeneralFactor        READ getGeneralFactor       WRITE setGeneralFactor      NOTIFY notifyGeneralFactorChanged FINAL)
+    Q_PROPERTY(QString ForceThreshold       READ getForceThreshold      WRITE setForceThreshold     NOTIFY notifyForceThresholdChanged FINAL)
+    Q_PROPERTY(QString ResidualThreshold    READ getResidualThreshold   WRITE setResidualThreshold  NOTIFY notifyResidualThresholdChanged FINAL)
+    Q_PROPERTY(QString AutoLearningCount    READ getAutoLearningCount   WRITE setAutoLearningCount  NOTIFY notifyAutoLearningCountChanged FINAL)
 
+    Q_PROPERTY(int     PortNumber           READ getPortNumber          WRITE setPortNumber         NOTIFY notifyPortNumberChanged FINAL)
+    Q_PROPERTY(QString LocalIP              READ getLocalIP             WRITE setLocalIP            NOTIFY notifyLocalIPChanged FINAL)
+    Q_PROPERTY(QString RemoteIP             READ getRemoteIP            WRITE setRemoteIP           NOTIFY notifyRemoteIPChanged FINAL)
 
+    Q_PROPERTY(int     ComNumber            READ getComNumber           WRITE setComNumber          NOTIFY notifyComNumberChanged FINAL)
+    Q_PROPERTY(int     BaudRate             READ getBaudRate            WRITE setBaudRate           NOTIFY notifyBaudRateChanged FINAL)
+    Q_PROPERTY(int     DataBits             READ getDataBits            WRITE setDataBits           NOTIFY notifyDataBitsChanged FINAL)
+    Q_PROPERTY(int     ParityBits           READ getParityBits          WRITE setParityBits         NOTIFY notifyParityBitsChanged FINAL)
+    Q_PROPERTY(int     StopBits             READ getStopBits            WRITE setStopBits           NOTIFY notifyStopBitsChanged FINAL)
 public:
     struct NETWORK_PROPERTIES
     {
@@ -96,12 +103,12 @@ public:
 
     struct MODBUS_CONFIGURE
     {
-        DeviceInfoEnum::CONNECT_TYPE ConnectType;    // 连接方式     0_RS232  1_Network
-        DeviceInfoEnum::WLEDER_TYPE  ProtocolType;   // 焊机型号
-        DeviceInfoEnum::CONNECT_STATE ConnectState;  // 连接state
-        DeviceInfoEnum::NETWORK_TYPE NetworkType;
-        NETWORK_PROPERTIES NewworkProperties;
-        SERIAL_PROPERTIES SerialProperties;
+        DeviceInfoEnum::CONNECT_TYPE    ConnectType;    // 连接方式     0_RS232  1_Network
+        DeviceInfoEnum::WLEDER_TYPE     ProtocolType;   // 焊机型号
+        DeviceInfoEnum::CONNECT_STATE   ConnectState;   // 连接state
+        DeviceInfoEnum::NETWORK_TYPE    NetworkType;
+        NETWORK_PROPERTIES              NetworkProperties;
+        SERIAL_PROPERTIES               SerialProperties;
     };
 
     explicit DeviceInformation(int welderID = 0, QObject *parent = nullptr);
@@ -136,14 +143,49 @@ public:
     int getConnectState() const;
     void setConnectState(const int &state);
 
-    // QString mesIP() const;
-    // void setMesIP(const QString &newMesIP);
+    QString getSingleFactor() const;
+    int GetSingleFactor() const;
+    void setSingleFactor(const QString &factor);
 
-    // QString deviceIP() const;
-    // void setDeviceIP(const QString &newDeviceIP);
+    QString getGeneralFactor() const;
+    int GetGeneralFactor() const;
+    void setGeneralFactor(const QString &factor);
 
-    // int mesPort() const;
-    // void setMesPort(int newMesPort);
+    QString getForceThreshold() const;
+    int GetForceThreshold() const;
+    void setForceThreshold(const QString &threshold);
+
+    QString getResidualThreshold() const;
+    int GetResidualThreshold() const;
+    void setResidualThreshold(const QString &threshold);
+
+    QString getAutoLearningCount() const;
+    int GetAutoLearningCount() const;
+    void setAutoLearningCount(const QString &limit);
+
+    int getPortNumber() const;
+    void setPortNumber(const int &port);
+
+    QString getLocalIP() const;
+    void setLocalIP(const QString &ip);
+
+    QString getRemoteIP() const;
+    void setRemoteIP(const QString &ip);
+
+    int getComNumber() const;
+    void setComNumber(const int &com);
+
+    int getBaudRate() const;
+    void setBaudRate(const int &baudrate);
+
+    int getDataBits() const;
+    void setDataBits(const int &databits);
+
+    int getParityBits() const;
+    void setParityBits(const int &paritybits);
+
+    int getStopBits() const;
+    void setStopBits(const int &stopbits);
 
 signals:
     void notifyWelderNameChanged();
@@ -156,22 +198,29 @@ signals:
     void notifyConnectTypeChanged();
     void notifyConnectStateChanged();
 
-    // void mesIPChanged();
+    void notifySingleFactorChanged();
+    void notifyGeneralFactorChanged();
+    void notifyForceThresholdChanged();
+    void notifyResidualThresholdChanged();
+    void notifyAutoLearningCountChanged();
 
-    // void deviceIPChanged();
-
-    // void mesPortChanged();
+    void notifyPortNumberChanged();
+    void notifyLocalIPChanged();
+    void notifyRemoteIPChanged();
+    void notifyComNumberChanged();
+    void notifyBaudRateChanged();
+    void notifyDataBitsChanged();
+    void notifyParityBitsChanged();
+    void notifyStopBitsChanged();
 
 private:
     int m_WelderID;
     DataBaseManager::DB_CONFIGURE   m_DBConfigure;
-    DeviceInfoEnum::CONNECT_TYPE    m_iConnectType;
-    DeviceInfoEnum::CONNECT_STATE   m_iConnectState;
+    DataBaseManager::DB_SYSTEM      m_DBSystem;
+    // DeviceInfoEnum::CONNECT_TYPE    m_iConnectType;
+    // DeviceInfoEnum::CONNECT_STATE   m_iConnectState;
 
-    // int m_mesPort{0};
-    // QString m_mesIP;
-    // QString m_deviceIP;
-
+    MODBUS_CONFIGURE                m_ModbusConfigure;
 };
 
 #endif // DEVICEINFORMATION_H

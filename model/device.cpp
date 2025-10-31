@@ -2,7 +2,6 @@
 
 #include "model/deviceinformation.h"
 #include "model/manual.h"
-#include "model/system.h"
 #include "model/trend.h"
 #include "model/production.h"
 
@@ -23,9 +22,8 @@ Device::Device(int welderID, QObject *parent)
     // QElapsedTimer timer;
     // timer.start();
 
-    m_ptrDevInfo    = new DeviceInformation(m_WelderID);
+    m_ptrDevice     = new DeviceInformation(m_WelderID);
     m_ptrManual     = new Manual(m_WelderID);
-    m_ptrSystem     = new System(m_WelderID);
     m_ptrProduction = new Production(m_WelderID);
     m_ptrTrend      = new Trend(m_WelderID);
 
@@ -35,12 +33,10 @@ Device::Device(int welderID, QObject *parent)
 
 Device::~Device()
 {
-    delete m_ptrDevInfo;
-    m_ptrDevInfo = nullptr;
+    delete m_ptrDevice;
+    m_ptrDevice = nullptr;
     delete m_ptrManual;
     m_ptrManual = nullptr;
-    delete m_ptrSystem;
-    m_ptrSystem = nullptr;
     delete m_ptrProduction;
     m_ptrProduction = nullptr;
     delete m_ptrTrend;
@@ -60,16 +56,16 @@ void Device::incrementPlotIndex() {
     plotIndex++;
 }
 
-DeviceInformation* Device::getDevInfoObject() const
+DeviceInformation* Device::getDeviceObj() const
 {
-    return m_ptrDevInfo;
+    return m_ptrDevice;
 }
 
-void Device::setDevInfoObject(const DeviceInformation *object)
+void Device::setDeviceObj(const DeviceInformation *object)
 {
-    if (m_ptrDevInfo != object) {
-        m_ptrDevInfo = const_cast<DeviceInformation*>(object);
-        emit notifyDevInfoObjectChanged();
+    if (m_ptrDevice != object) {
+        m_ptrDevice = const_cast<DeviceInformation*>(object);
+        emit notifyDeviceObjChanged();
     }
 }
 
@@ -96,19 +92,6 @@ void Device::setProductionObj(const Production *object)
     if (m_ptrProduction != object) {
         m_ptrProduction = const_cast<Production*>(object);
         emit notifyProductionObjChanged();
-    }
-}
-
-System *Device::getSystemObj() const
-{
-    return m_ptrSystem;
-}
-
-void Device::setSystemObj(const System *object)
-{
-    if (m_ptrSystem != object) {
-        m_ptrSystem = const_cast<System*>(object);
-        emit notifySystemObjChanged();
     }
 }
 
