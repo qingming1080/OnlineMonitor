@@ -1225,21 +1225,20 @@ void DataBaseManager::init()
     // qDebug() << "I_WANT_TEST" << dbPath;
     if (!m_database.open())
     {
-        qDebug() << "Database Open Fail ";
         qDebug() << m_database.lastError();
     }
     else
     {
         qDebug() << "Database Open Success";
-        b_hasFeature = m_database.driver()->hasFeature(QSqlDriver::QuerySize);
-        qDebug() << "数据库是否允许获取行数" << b_hasFeature;
+        // b_hasFeature = m_database.driver()->hasFeature(QSqlDriver::QuerySize);
+        // qDebug() << "数据库是否允许获取行数" << b_hasFeature;
     }
 }
 
 
 QString DataBaseManager::getConfiguration_ColumnName(CONFIGURATION_COLUMN column)
 {
-    switch(column)
+    switch(static_cast<int>(column))
     {
     case CONFIGURATION_COLUMN::WELDER_ID:
         return "welder_id";
