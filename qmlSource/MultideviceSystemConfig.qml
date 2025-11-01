@@ -14,7 +14,7 @@ Rectangle {
     property int sysCurrIndex1: 0
     property bool undetermined: {
         if(DeviceManager.DeviceList[sysCurrIndex1-1]){
-            return DeviceManager.DeviceList[sysCurrIndex1-1].pIO.availabel
+            return DeviceManager.DeviceList[sysCurrIndex1-1].DeviceObj.SuspiciousOption
         }
         else{
             false
@@ -174,7 +174,7 @@ Rectangle {
         onPressed: {
             sigAltitudeModel(true)
             sigUpdateUI(sysCurrIndex1)
-            DeviceManager.DeviceList[sysCurrIndex1-1].DevInfoObject.setHeightEncoderOption(1)
+            DeviceManager.DeviceList[sysCurrIndex1-1].DeviceObj.HeightEncoderOption = true
         }
     }
     Text {
@@ -209,7 +209,7 @@ Rectangle {
         onPressed: {
             sigAltitudeModel(false)
             sigUpdateUI(sysCurrIndex1)
-            DeviceManager.DeviceList[sysCurrIndex1-1].DevInfoObject.setHeightEncoderOption(0)
+            DeviceManager.DeviceList[sysCurrIndex1-1].DeviceObj.HeightEncoderOption = false
         }
     }
     Text {

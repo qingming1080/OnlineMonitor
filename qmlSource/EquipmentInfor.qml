@@ -4,10 +4,10 @@ import GlobalSystemDefine 1.0
 import LanguageEnum 1.0
 //设备信息
 Rectangle {
-    property string eqText1: ""
-    property string eqText2: ""
-    property string eqText3: ""
-    property string eqText4: ""
+    property string deviceName: ""
+    property string deviceType: ""
+    property string connectionType: ""
+    property string devcieStatus: ""
     color: pRgb(43, 112, 173)
     radius: 3
     Text {
@@ -46,7 +46,7 @@ Rectangle {
     Text {
         id:t1
         // text: qsTr("设备名称") + ": " + eqText1
-        text: GlobalLanguageDefine.strDeviceName + ": " + eqText1
+        text: GlobalLanguageDefine.strDeviceName + ": " + deviceName
         font.family: GlobalSystemDefine.fontBold
         font.bold: true
         font.pixelSize: LanguageManager.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 16 : 14
@@ -57,7 +57,7 @@ Rectangle {
     Text {
         id:t2
         // text: qsTr("设备型号") + ": " + eqText2
-        text: GlobalLanguageDefine.strDeviceModel + ": " + eqText2
+        text: GlobalLanguageDefine.strDeviceModel + ": " + deviceType
         font.family: GlobalSystemDefine.fontBold
         font.bold: true
         font.pixelSize: LanguageManager.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 16 : 14
@@ -69,7 +69,7 @@ Rectangle {
     Text {
         id:t3
         // text: qsTr("连接方式") + ": " + eqText3
-        text: GlobalLanguageDefine.strConnectionMethod + ": " + eqText3
+        text: GlobalLanguageDefine.strConnectionMethod + ": " + connectionType
         font.family: GlobalSystemDefine.fontBold
         font.bold: true
         font.pixelSize: LanguageManager.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 16 : 14
@@ -81,7 +81,7 @@ Rectangle {
     Text {
         id:t4
         // text: qsTr("设备状态") + ": " + eqText4
-        text: GlobalLanguageDefine.strDeviceStatus + ": " + eqText4
+        text: GlobalLanguageDefine.strDeviceStatus + ": " + devcieStatus
         font.family: GlobalSystemDefine.fontBold
         font.bold: true
         font.pixelSize: LanguageManager.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 16 : 14

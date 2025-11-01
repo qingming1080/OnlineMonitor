@@ -13,14 +13,9 @@ import DeviceInfoEnum       1.0
 //系统配置
 Rectangle {
     id: sysUI
-    // property bool isFirstDeviceConfigured: false
-    // property string firstDeviceLocalIp: ""
-
     property int itemCount: equipmentCount
     property int currIndex: 0
     property int currentConfigId: 0 // 多设备时放大界面数据判断
-    property int networkId: 1
-    property int rs232Id: 1
     property int loadType: 0
     property bool musysTmp1: false
     property bool musysTmp2: false
@@ -188,18 +183,8 @@ Rectangle {
 
                 // TODO onSigAddDevice
                 function onSigAddDevice(){
-                    DeviceManager.addDevice(maxProductionTextField.text,learningSamplesTextField.text,
-                                            yieldLowerLimitTextField.text,t7.text,t8.text,peelForceThresholdField.text,
-                                            // altitudMode?1:0,t4.text,com1.currentText,loadType,networkId)
-                                           altitudMode?1:0,t4.text,com1.currentText,loadType,loadType ? rs232Id:networkId )
-                    // networkId = 1
-                    // rs232Id = 1
-                    // loadType = 0
-                    // DeviceManager.DeviceListChanged()
-
+                    DeviceManager.addDevice()
                 }
-
-
             }
 
             Rectangle{
@@ -1367,8 +1352,8 @@ Rectangle {
                     height: 30
                     x:1170
                     y:10
-                    visible: equipmentCount > 1 ? true : false
-                    //visible: equipmentCount > 1
+                    // visible: equipmentCount > 1 ? true : false
+                    visible: true
                     background: Rectangle{
                         color: "transparent"
                         Image {
@@ -1467,7 +1452,7 @@ Rectangle {
                 sysCurrIndex1:1
                 heightOpation:{
                     if(DeviceManager.DeviceList[0]){
-                        return DeviceManager.DeviceList[0].DeviceObj.heightOption
+                        return DeviceManager.DeviceList[0].DeviceObj.HeightEncoderOption
                                 === 1 ? true:false
                     }
                     else{
@@ -1475,23 +1460,23 @@ Rectangle {
                     }
                 }
                 visible: musysTmp1
-                eqText1:{
+                mulitSysDeviceName:{
                     if(DeviceManager.DeviceList[0]){
-                        DeviceManager.DeviceList[0].DeviceObj.name
+                        DeviceManager.DeviceList[0].DeviceObj.WelderName
                     }
                     else{
                         return ""
                     }
                 }
-                eqText2:{
+                mulitSysDeviceType:{
                     if(DeviceManager.DeviceList[0]){
-                        DeviceManager.DeviceList[0].DeviceObj.model
+                        DeviceManager.DeviceList[0].DeviceObj.WelderType === 0 ?  "L20-VG" : "L2-TS"
                     }
                     else{
                         return ""
                     }
                 }
-                eqText3:{
+                mulitSysConnectionType:{
                     if(DeviceManager.DeviceList[0]){
                         DeviceManager.DeviceList[0].DeviceObj.ConnectType === 0  ? "TCP/IP" : "RS232"
                     }
@@ -1499,7 +1484,7 @@ Rectangle {
                         return ""
                     }
                 }
-                eqText4:{
+                mulitSysDeviceStatus:{
                     if(DeviceManager.DeviceList[0])
                     {
                         var connectState = DeviceManager.DeviceList[0].DeviceObj.ConnectState
@@ -1523,7 +1508,7 @@ Rectangle {
                 sysCurrIndex1:2
                 heightOpation:{
                     if(DeviceManager.DeviceList[1]){
-                        return DeviceManager.DeviceList[1].DeviceObj.heightOption
+                        return DeviceManager.DeviceList[1].DeviceObj.HeightEncoderOption
                                 === 1 ? true:false
                     }
                     else{
@@ -1531,23 +1516,23 @@ Rectangle {
                     }
                 }
                 visible: musysTmp2
-                eqText1:{
+                mulitSysDeviceName:{
                     if(DeviceManager.DeviceList[1]){
-                        DeviceManager.DeviceList[1].DeviceObj.name
+                        DeviceManager.DeviceList[1].DeviceObj.WelderName
                     }
                     else{
                         return ""
                     }
                 }
-                eqText2:{
+                mulitSysDeviceType:{
                     if(DeviceManager.DeviceList[1]){
-                        DeviceManager.DeviceList[1].DeviceObj.model
+                         DeviceManager.DeviceList[0].DeviceObj.WelderType === 0 ?  "L20-VG" : "L2-TS"
                     }
                     else{
                         return ""
                     }
                 }
-                eqText3:{
+                mulitSysConnectionType:{
                     if(DeviceManager.DeviceList[1]){
                         DeviceManager.DeviceList[1].DeviceObj.ConnectType === 0 ? "TCP/IP" : "RS232"
                     }
@@ -1555,7 +1540,7 @@ Rectangle {
                         return ""
                     }
                 }
-                eqText4:{
+                mulitSysDeviceStatus:{
                     if(DeviceManager.DeviceList[1])
                     {
                         var connectState = DeviceManager.DeviceList[1].DeviceObj.ConnectState
@@ -1579,11 +1564,11 @@ Rectangle {
                 sysCurrIndex1: 3
                 heightOpation:{
                     if(DeviceManager.DeviceList[2]){
-                        return DeviceManager.DeviceList[2].DeviceObj.heightOption
+                        return DeviceManager.DeviceList[2].DeviceObj.HeightEncoderOption
                                 === 1 ? true:false
                     }
                     else if(DeviceManager.DeviceList[3]){
-                        return DeviceManager.DeviceList[3].DeviceObj.heightOption
+                        return DeviceManager.DeviceList[3].DeviceObj.HeightEncoderOption
                                 === 1 ? true : false
                     }
                     else{
@@ -1591,29 +1576,29 @@ Rectangle {
                     }
                 }
                 visible: musysTmp3
-                eqText1:{
+                mulitSysDeviceName:{
                     if(DeviceManager.DeviceList[2]){
-                        DeviceManager.DeviceList[2].DeviceObj.name
+                        DeviceManager.DeviceList[2].DeviceObj.WelderName
                     }
                     else if(DeviceManager.DeviceList[3]){
-                        DeviceManager.DeviceList[3].DeviceObj.name
+                        DeviceManager.DeviceList[3].DeviceObj.WelderName
                     }
                     else{
                         return ""
                     }
                 }
-                eqText2:{
+                mulitSysDeviceType:{
                     if(DeviceManager.DeviceList[2]){
-                        DeviceManager.DeviceList[2].DeviceObj.model
+                         DeviceManager.DeviceList[0].DeviceObj.WelderType === 0 ?  "L20-VG" : "L2-TS"
                     }
                     else if(DeviceManager.DeviceList[3]){
-                        DeviceManager.DeviceList[3].DeviceObj.model
+                         DeviceManager.DeviceList[0].DeviceObj.WelderType === 0 ?  "L20-VG" : "L2-TS"
                     }
                     else{
                         return ""
                     }
                 }
-                eqText3:{
+                mulitSysConnectionType:{
                     if(DeviceManager.DeviceList[2]){
                         DeviceManager.DeviceList[2].DeviceObj.ConnectType === 0  ? "TCP/IP" : "RS232"
                     }
@@ -1624,7 +1609,7 @@ Rectangle {
                         return ""
                     }
                 }
-                eqText4:{
+                mulitSysDeviceStatus:{
                     var connectState = 0
                     if(DeviceManager.DeviceList[2])
                     {
@@ -1655,40 +1640,40 @@ Rectangle {
                 visible: musysTmp4
                 heightOpation:{
                     if(DeviceManager.DeviceList[3]){
-                        return DeviceManager.DeviceList[3].DeviceObj.heightOption
+                        return DeviceManager.DeviceList[3].DeviceObj.HeightEncoderOption
                                 === 1 ? true:false
                     }
                     else if(DeviceManager.DeviceList[2]){
-                        return DeviceManager.DeviceList[2].DeviceObj.heightOption
+                        return DeviceManager.DeviceList[2].DeviceObj.HeightEncoderOption
                                 === 1 ? true:false
                     }
                     else{
                         return false
                     }
                 }
-                eqText1:{
+                mulitSysDeviceName:{
                     if(DeviceManager.DeviceList[3]){
-                        DeviceManager.DeviceList[3].DeviceObj.name
+                        DeviceManager.DeviceList[3].DeviceObj.WelderName
                     }
                     else if(DeviceManager.DeviceList[2]){
-                        DeviceManager.DeviceList[2].DeviceObj.name
+                        DeviceManager.DeviceList[2].DeviceObj.WelderName
                     }
                     else{
                         return ""
                     }
                 }
-                eqText2:{
+                mulitSysDeviceType:{
                     if(DeviceManager.DeviceList[3]){
-                        DeviceManager.DeviceList[3].DeviceObj.model
+                         DeviceManager.DeviceList[0].DeviceObj.WelderType === 0 ?  "L20-VG" : "L2-TS"
                     }
                     else if(DeviceManager.DeviceList[2]){
-                        DeviceManager.DeviceList[2].DeviceObj.model
+                         DeviceManager.DeviceList[0].DeviceObj.WelderType === 0 ?  "L20-VG" : "L2-TS"
                     }
                     else{
                         return ""
                     }
                 }
-                eqText3:{
+                mulitSysConnectionType:{
                     if(DeviceManager.DeviceList[3]){
                         DeviceManager.DeviceList[3].DeviceObj.ConnectType === 0  ? "TCP/IP" : "RS232"
                     }
@@ -1699,7 +1684,7 @@ Rectangle {
                         return ""
                     }
                 }
-                eqText4:{
+                mulitSysDeviceStatus:{
                     var connectState = 0
                     if(DeviceManager.DeviceList[3])
                     {
@@ -1721,6 +1706,7 @@ Rectangle {
                     }
                 }
             }
+
 
             Connections{
                 target: sysUI
@@ -1753,111 +1739,18 @@ Rectangle {
                 }
                 function onSigDelDevice(){
                     DeviceManager.removeDevice(currIndex)
-                    //                    var a = altitudeModel1
-                    //                    var b = altitudeModel2
-                    //                    var c = altitudeModel3
-                    //                    var d = altitudeModel4
-                    //                    var p1 = undetermined1
-                    //                    var p2 = undetermined2
-                    //                    var p3 = undetermined3
-                    //                    var p4 = undetermined4
-                    //                    altitudeModel1 = false
-                    //                    altitudeModel2 = false
-                    //                    altitudeModel3 = false
-                    //                    altitudeModel4 = false
-                    //                    undetermined1 = false
-                    //                    undetermined2 = false
-                    //                    undetermined3 = false
-                    //                    undetermined4 = false
                     if(currIndex == 1){
                         s1.color = pRgb(43, 112, 173)
-                        //                        if(equipmentCount == 3){
-                        //                            altitudeModel1 = b
-                        //                            altitudeModel2 = c
-                        //                            altitudeModel3 = d
-                        //                            undetermined1 = p2
-                        //                            undetermined2 = p3
-                        //                            undetermined3 = p4
-                        //                        }
-                        //                        else if(equipmentCount == 2){
-                        //                            altitudeModel1 = b
-                        //                            altitudeModel2 = c
-                        //                            undetermined1 = p2
-                        //                            undetermined2 = p3
-                        //                        }
-                        //                        else if(equipmentCount == 1){
-                        //                            altitudeModel1 = b
-                        //                            btnDefault = b
-                        //                            undetermined1 = p2
-                        //                        }
                     }
                     else if(currIndex == 2){
                         s2.color = pRgb(43, 112, 173)
-                        //                        if(equipmentCount == 3){
-                        //                            altitudeModel1 = a
-                        //                            altitudeModel2 = c
-                        //                            altitudeModel3 = d
-                        //                            undetermined1 = p1
-                        //                            undetermined2 = p3
-                        //                            undetermined3 = p4
-                        //                        }
-                        //                        else if(equipmentCount == 2){
-                        //                            altitudeModel1 = a
-                        //                            altitudeModel2 = c
-                        //                            undetermined1 = p1
-                        //                            undetermined2 = p3
-                        //                        }
-                        //                        else if(equipmentCount == 1){
-                        //                            altitudeModel1 = a
-                        //                            btnDefault = a
-                        //                            undetermined1 = p1
-                        //                        }
                     }
                     else if(currIndex == 3){
                         s3.color = pRgb(43, 112, 173)
-                        //                        if(equipmentCount == 3){
-                        //                            altitudeModel1 = a
-                        //                            altitudeModel2 = b
-                        //                            altitudeModel3 = d
-                        //                            undetermined1 = p1
-                        //                            undetermined2 = p2
-                        //                            undetermined3 = p4
-                        //                        }
-                        //                        else if(equipmentCount == 2){
-                        //                            altitudeModel1 = a
-                        //                            altitudeModel2 = b
-                        //                            undetermined1 = p1
-                        //                            undetermined2 = p2
-                        //                        }
-                        //                        else if(equipmentCount == 1){
-                        //                            altitudeModel1 = a
-                        //                            btnDefault = a
-                        //                            undetermined1 = p1
-                        //                        }
                     }
                     else if(currIndex == 4){
                         s4.color = pRgb(43, 112, 173)
-                        //                        if(equipmentCount == 3){
-                        //                            altitudeModel1 = a
-                        //                            altitudeModel2 = b
-                        //                            altitudeModel3 = c
-                        //                            undetermined1 = p1
-                        //                            undetermined2 = p2
-                        //                            undetermined3 = p3
-                        //                        }
-                        //                        else if(equipmentCount == 2){
-                        //                            altitudeModel1 = a
-                        //                            altitudeModel2 = b
-                        //                            undetermined1 = p1
-                        //                            undetermined2 = p2
-                        //                        }
-                        //                        else if(equipmentCount == 1){
-                        //                            altitudeModel1 = a
-                        //                            btnDefault = a
-                        //                            undetermined1 = p1
-                        //                        }
                     }
-                    // currIndex = 0
                 }
             }
             Button{
