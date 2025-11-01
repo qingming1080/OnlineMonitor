@@ -23,7 +23,7 @@ Rectangle {
     property int presetTriggerPressure: 0
     property int parameter5: 0
     property int listSize: 0
-    property bool altitudeMode:DeviceManager.DeviceList[0].DeviceObj.heightOption === 1 ? true:false
+    property bool altitudeMode:DeviceManager.DeviceList[0].DeviceObj.HeightEncoderOption === 1 ? true:false
     property bool switchingEquipment: false
     signal sigBtnSynchronization(var index,var time)
     signal sigSwipeCurrIndex(var index)
@@ -165,7 +165,7 @@ Rectangle {
                         color: mode == 1 ? "#0c5696" : pRgb(43, 112, 173)
                         altitudeMode:{
                             if(equipmentCount === 1){
-                                return DeviceManager.DeviceList[0].DeviceObj.heightOption
+                                return DeviceManager.DeviceList[0].DeviceObj.HeightEncoderOption
                                         === 1 ? true : false
                             }
                         }
@@ -279,7 +279,7 @@ Rectangle {
                         color: mode === 1 ? "#0c5696" : pRgb(43, 112, 173)
                         revealing:{
                             if(DeviceManager.DeviceList[0]){
-                                return DeviceManager.DeviceList[0].pIO.availabel
+                                return DeviceManager.DeviceList[0].DeviceObj.SuspiciousOption
                             }
                             else{
                                 return true

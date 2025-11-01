@@ -30,7 +30,7 @@ Rectangle {
         //if(equipmentCount === 1){
         if(equipmentCount === 0){
             if(DeviceManager.DeviceList[0]){
-                return DeviceManager.DeviceList[0].pIO.availabel
+                return DeviceManager.DeviceList[0].DeviceObj.SuspiciousOption
             }
             else{
                 return false
@@ -38,7 +38,7 @@ Rectangle {
         }
         else{
             if(DeviceManager.DeviceList[currentConfigId-1]){
-                return DeviceManager.DeviceList[currentConfigId-1].pIO.availabel
+                return DeviceManager.DeviceList[currentConfigId-1].DeviceObj.SuspiciousOption
             }
             else{
                 return false
@@ -47,7 +47,7 @@ Rectangle {
     }
     property bool altitudMode:{
         if(DeviceManager.DeviceList[currentConfigId-1]){
-            return DeviceManager.DeviceList[currentConfigId-1].DeviceObj.heightOption
+            return DeviceManager.DeviceList[currentConfigId-1].DeviceObj.HeightEncoderOption
                     === 1 ? true:false
         }
         else {
@@ -1470,7 +1470,7 @@ Rectangle {
                 }
                 mulitSysDeviceType:{
                     if(DeviceManager.DeviceList[0]){
-                        DeviceManager.DeviceList[0].DeviceObj.WelderType === 0 ?  "L20-VG" : "L2-TS"
+                        DeviceManager.DeviceList[0].DeviceObj.WelderType === 0 ?  "L20-VG" : "L20-TS"
                     }
                     else{
                         return ""
@@ -1526,7 +1526,7 @@ Rectangle {
                 }
                 mulitSysDeviceType:{
                     if(DeviceManager.DeviceList[1]){
-                         DeviceManager.DeviceList[0].DeviceObj.WelderType === 0 ?  "L20-VG" : "L2-TS"
+                         DeviceManager.DeviceList[0].DeviceObj.WelderType === 0 ?  "L20-VG" : "L20-TS"
                     }
                     else{
                         return ""
@@ -1589,10 +1589,10 @@ Rectangle {
                 }
                 mulitSysDeviceType:{
                     if(DeviceManager.DeviceList[2]){
-                         DeviceManager.DeviceList[0].DeviceObj.WelderType === 0 ?  "L20-VG" : "L2-TS"
+                         DeviceManager.DeviceList[0].DeviceObj.WelderType === 0 ?  "L20-VG" : "L20-TS"
                     }
                     else if(DeviceManager.DeviceList[3]){
-                         DeviceManager.DeviceList[0].DeviceObj.WelderType === 0 ?  "L20-VG" : "L2-TS"
+                         DeviceManager.DeviceList[0].DeviceObj.WelderType === 0 ?  "L20-VG" : "L20-TS"
                     }
                     else{
                         return ""
@@ -1664,10 +1664,10 @@ Rectangle {
                 }
                 mulitSysDeviceType:{
                     if(DeviceManager.DeviceList[3]){
-                         DeviceManager.DeviceList[0].DeviceObj.WelderType === 0 ?  "L20-VG" : "L2-TS"
+                         DeviceManager.DeviceList[0].DeviceObj.WelderType === 0 ?  "L20-VG" : "L20-TS"
                     }
                     else if(DeviceManager.DeviceList[2]){
-                         DeviceManager.DeviceList[0].DeviceObj.WelderType === 0 ?  "L20-VG" : "L2-TS"
+                         DeviceManager.DeviceList[0].DeviceObj.WelderType === 0 ?  "L20-VG" : "L20-TS"
                     }
                     else{
                         return ""

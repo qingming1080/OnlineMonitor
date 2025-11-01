@@ -490,10 +490,10 @@ Rectangle {
             color: "#0c5596"
             revealing:{
                 if(DeviceManager.DeviceList[2]){
-                    return DeviceManager.DeviceList[2].pIO.availabel
+                    return DeviceManager.DeviceList[2].DeviceObj.SuspiciousOption
                 }
                 else if(DeviceManager.DeviceList[3]){
-                    return DeviceManager.DeviceList[3].pIO.availabel
+                    return DeviceManager.DeviceList[3].DeviceObj.SuspiciousOption
                 }
                 else{
                     return true
@@ -667,10 +667,10 @@ Rectangle {
             color: "#0c5596"
             revealing:{
                 if(DeviceManager.DeviceList[3]){
-                    return DeviceManager.DeviceList[3].pIO.availabel
+                    return DeviceManager.DeviceList[3].DeviceObj.SuspiciousOption
                 }
                 else if(DeviceManager.DeviceList[2]){
-                    return DeviceManager.DeviceList[2].pIO.availabel
+                    return DeviceManager.DeviceList[2].DeviceObj.SuspiciousOption
                 }
                 else{
                     return true

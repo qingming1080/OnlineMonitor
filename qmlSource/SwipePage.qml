@@ -19,7 +19,7 @@ Rectangle {
     property int presetAmplitude: 0
     property int presetWeldPressure: 0
     property int presetTriggerPressure: 0
-    property bool altitudeMode:DeviceManager.DeviceList[swipeCurrIndex].DeviceObj.heightOption === 1 ? true:false
+    property bool altitudeMode:DeviceManager.DeviceList[swipeCurrIndex].DeviceObj.HeightEncoderOption === 1 ? true:false
     function newModel(){
         loader.sourceComponent = mode2
         loader1.sourceComponent = weld2
