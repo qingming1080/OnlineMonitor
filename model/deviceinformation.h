@@ -216,7 +216,6 @@ signals:
 private:
     int m_WelderID;
     DataBaseManager::DB_CONFIGURE   m_DBConfigure;
-    DataBaseManager::DB_SYSTEM      m_DBSystem;
     // DeviceInfoEnum::CONNECT_TYPE    m_iConnectType;
     // DeviceInfoEnum::CONNECT_STATE   m_iConnectState;
 

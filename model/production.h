@@ -17,21 +17,26 @@ class Production : public QObject
     // 次品
     Q_PROPERTY(QString DefectiveCycleCount  READ getDefectiveCycleCount WRITE setDefectiveCycleCount    NOTIFY notifyDefectiveCycleCountChanged)
     // Total Count = Good + Suspect + Defective
-    Q_PROPERTY(QString TotalCycleCount       READ getTotalCycleCount    WRITE setTotalCycleCount       NOTIFY notifyTotalCycleCountChanged)
+    Q_PROPERTY(QString TotalCycleCount      READ getTotalCycleCount     WRITE setTotalCycleCount        NOTIFY notifyTotalCycleCountChanged)
 
     /// 2024/04/07  焊接结果暴露
     // 焊接结果:功率
-    Q_PROPERTY(int PeakPower    READ getPeakPower   WRITE setPeakPower  NOTIFY notifyPeakPowerChanged)
+    Q_PROPERTY(int PeakPower                READ getPeakPower           WRITE setPeakPower              NOTIFY notifyPeakPowerChanged)
     // 焊接结果:时间
-    Q_PROPERTY(int WeldTime     READ getWeldTime    WRITE setWeldTime   NOTIFY notifyWeldTimeChanged)
+    Q_PROPERTY(int WeldTime                 READ getWeldTime            WRITE setWeldTime               NOTIFY notifyWeldTimeChanged)
     // 焊接结果:能量
-    Q_PROPERTY(int Energy       READ getEnergy      WRITE setEnergy     NOTIFY notifyEnergyChanged)
+    Q_PROPERTY(int Energy                   READ getEnergy              WRITE setEnergy                 NOTIFY notifyEnergyChanged)
     // 焊接结果:焊前高度
-    Q_PROPERTY(int Preheight    READ getPreheight   WRITE setPreheight  NOTIFY notifyPreheightChanged)
+    Q_PROPERTY(int Preheight                READ getPreheight           WRITE setPreheight              NOTIFY notifyPreheightChanged)
     // 焊接结果:焊后高度
-    Q_PROPERTY(int PostHeight   READ getPostHeight  WRITE setPostHeight NOTIFY notifyPostHeightChanged)
+    Q_PROPERTY(int PostHeight               READ getPostHeight          WRITE setPostHeight             NOTIFY notifyPostHeightChanged)
 
-    //Need Add Amplitude /  WeldPressure / TriggerPressure
+    Q_PROPERTY(int Amplitude                READ getAmplitude           WRITE setAmplitude              NOTIFY notifyAmplitudeChanged)
+
+    Q_PROPERTY(int WeldPressure             READ getWeldPressure        WRITE setWeldPressure           NOTIFY notifyWeldPressureChanged)
+
+    Q_PROPERTY(int TriggertPressure         READ getTriggertPressure    WRITE setTriggertPressure       NOTIFY notifyTriggertPressureChanged)
+
 public:
     explicit Production(int welderID = 0, QObject *parent = nullptr);
 
@@ -65,6 +70,15 @@ public:
     int getPostHeight() const;
     void setPostHeight(const int height);
 
+    int getAmplitude() const;
+    void setAmplitude(const int amplitude);
+
+    int getWeldPressure() const;
+    void setWeldPressure(const int weldPressure);
+
+    int getTriggertPressure() const;
+    void setTriggertPressure(const int triggertPressure);
+
 private:
     int m_WelderID;
     DataBaseManager::DB_PRODUCTION m_DBProduction;
@@ -85,6 +99,10 @@ signals:
     void notifyEnergyChanged();
     void notifyPreheightChanged();
     void notifyPostHeightChanged();
+    void notifyAmplitudeChanged();
+    void notifyWeldPressureChanged();
+    void notifyTriggertPressureChanged();
+
 };
 
 #endif // PRODUCTION_H

@@ -11,8 +11,7 @@ Rectangle {
     property string eqText2: ""
     property string eqText3: ""
     property string eqText4: ""
-    property string eqText5: ""
-    property bool altitudeMode:DeviceManager.DeviceList[swipeCurrIndex].DevInfoObject.heightOption === 1 ? true:false
+    property bool altitudeMode:DeviceManager.DeviceList[swipeCurrIndex].DevInfoObject.HeightEncoderOption === 1 ? true:false
 
     property int deviceID: DeviceManager.DeviceList[swipeCurrIndex].DevInfoObject.id
     radius: 3

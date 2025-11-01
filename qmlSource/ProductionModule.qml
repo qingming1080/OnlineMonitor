@@ -18,13 +18,13 @@ Rectangle {
     property int rect1: 1
     property int rect2: 1
     property int swipeIndex: 0
-    property int parameter1: 0
-    property int parameter2: 0
-    property int parameter3: 0
-    property int parameter4: 0
+    property int presetEnergy: 0
+    property int presetAmplitude: 0
+    property int presetWeldPressure: 0
+    property int presetTriggerPressure: 0
     property int parameter5: 0
     property int listSize: 0
-    property bool altitudeMode:DeviceManager.DeviceList[0].DeviceObj.heightOption === 1 ? true:false
+    property bool altitudeMode:DeviceManager.DeviceList[0].DeviceObj.HeightEncoderOption === 1 ? true:false
     property bool switchingEquipment: false
     signal sigBtnSynchronization(var index,var time)
     signal sigSwipeCurrIndex(var index)
@@ -115,11 +115,12 @@ Rectangle {
                 width: mode == 1 ? 208 : 243
                 height: mode == 1 ? 203 : 258
                 color: mode == 1 ? "#0c5696" : pRgb(43, 112, 173)
-                eqText1: DeviceManager.DeviceList[0].DeviceObj.name
-                eqText2: DeviceManager.DeviceList[0].DeviceObj.model
-                eqText3: DeviceManager.DeviceList[0].DeviceObj.ConnectType === 1
+                deviceName: DeviceManager.DeviceList[0].DeviceObj.WelderName
+                deviceType: DeviceManager.DeviceList[0].DeviceObj.WelderType === 0 ? "L20-VG" : "L20-TS"
+
+                connectionType: DeviceManager.DeviceList[0].DeviceObj.ConnectType === 1
                         ? "RS232" : "TCP/IP"
-                eqText4:{
+                devcieStatus:{
                     var connectState = DeviceManager.DeviceList[0].DeviceObj.ConnectState
                     return GlobalMessageDefine.getConnectState(connectState)
                 }
@@ -139,20 +140,16 @@ Rectangle {
                         x: mode == 1 ? 50 : 29
                         y: mode == 1 ? 248 : 289
                         color: mode == 1 ? "#0c5696" : pRgb(43, 112, 173)
+                        property int currentIndex: DeviceManager.SelectedDeviceIndex
 
-                        eqText1: DeviceManager.DeviceList[0] ? DeviceManager.DeviceList[0].DeviceObj.power : ""
-
-
-                        eqText2: DeviceManager.DeviceList[0] ? DeviceManager.DeviceList[0].DeviceObj.time : ""
-
-
-                        eqText3: DeviceManager.DeviceList[0] ? DeviceManager.DeviceList[0].DeviceObj.energy : ""
-
-
-                        eqText4: DeviceManager.DeviceList[0] ? DeviceManager.DeviceList[0].DeviceObj.heightPre : ""
-
-
-                        eqText5: DeviceManager.DeviceList[0] ? DeviceManager.DeviceList[0].DeviceObj.heightPost : ""
+                        energy:             DeviceManager.DeviceList[currentIndex] ? DeviceManager.DeviceList[currentIndex].ProductionObj.Energy  : ""
+                        amplitude:          DeviceManager.DeviceList[currentIndex] ? DeviceManager.DeviceList[currentIndex].ProductionObj.Amplitude : ""
+                        weldPressure:       DeviceManager.DeviceList[currentIndex] ? DeviceManager.DeviceList[currentIndex].ProductionObj.WeldPressure : ""
+                        triggerPressure:    DeviceManager.DeviceList[currentIndex] ? DeviceManager.DeviceList[currentIndex].ProductionObj.TriggerPressure : ""
+                        peakPower:          DeviceManager.DeviceList[currentIndex] ? DeviceManager.DeviceList[currentIndex].ProductionObj.PeakPower : ""
+                        weldTime:           DeviceManager.DeviceList[currentIndex] ? DeviceManager.DeviceList[currentIndex].ProductionObj.WeldTime  : ""
+                        preheight:          DeviceManager.DeviceList[currentIndex] ? DeviceManager.DeviceList[currentIndex].ProductionObj.Preheight : ""
+                        postHeight:         DeviceManager.DeviceList[currentIndex] ? DeviceManager.DeviceList[currentIndex].ProductionObj.PostHeight : ""
 
                     }
                 }
@@ -169,15 +166,14 @@ Rectangle {
                         color: mode == 1 ? "#0c5696" : pRgb(43, 112, 173)
                         altitudeMode:{
                             if(equipmentCount === 1){
-                                return DeviceManager.DeviceList[0].DeviceObj.heightOption
+                                return DeviceManager.DeviceList[0].DeviceObj.HeightEncoderOption
                                         === 1 ? true : false
                             }
                         }
-                        eqText1:parameter1
-                        eqText2:parameter2
-                        eqText3:parameter3
-                        eqText4:parameter4
-                        // eqText5:parameter5
+                        eqText1:presetEnergy
+                        eqText2:presetAmplitude
+                        eqText3:presetWeldPressure
+                        eqText4:presetTriggerPressure
                     }
                 }
             }
@@ -284,7 +280,7 @@ Rectangle {
                         color: mode === 1 ? "#0c5696" : pRgb(43, 112, 173)
                         revealing:{
                             if(DeviceManager.DeviceList[0]){
-                                return DeviceManager.DeviceList[0].pIO.availabel
+                                return DeviceManager.DeviceList[0].DeviceObj.SuspiciousOption
                             }
                             else{
                                 return true
@@ -524,11 +520,11 @@ Rectangle {
                                     id: mouseArea
                                     anchors.fill: parent
                                     onPressed: {
-                                        taskplanView.currentIndex = index
-                                        parameter1 = Manual.data(Manual.index(index,0),QmlEnum.MANUAL_preEnergy)
-                                        parameter2 = Manual.data(Manual.index(index,0),QmlEnum.MANUAL_preAmplitude)
-                                        parameter3 = Manual.data(Manual.index(index,0),QmlEnum.MANUAL_preWP)
-                                        parameter4 = Manual.data(Manual.index(index,0),QmlEnum.MANUAL_preTP)
+                                        taskplanView.currentIndex   = index
+                                        presetEnergy                = Manual.data(Manual.index(index,0),QmlEnum.MANUAL_preEnergy)
+                                        presetAmplitude             = Manual.data(Manual.index(index,0),QmlEnum.MANUAL_preAmplitude)
+                                        presetWeldPressure          = Manual.data(Manual.index(index,0),QmlEnum.MANUAL_preWP)
+                                        presetTriggerPressure       = Manual.data(Manual.index(index,0),QmlEnum.MANUAL_preTP)
                                     }
                                 }
                                 Button{
@@ -590,7 +586,7 @@ Rectangle {
                                     anchors.leftMargin: altitudeMode ? 140 : 180
                                     anchors.verticalCenter: parent.verticalCenter
                                     font.pixelSize: 16
-                                    text:serial_number
+                                    text: cycle_count
                                     font.family: GlobalSystemDefine.fontBold
                                     color: index % 2 !== 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
                                 }
@@ -638,7 +634,7 @@ Rectangle {
                                     anchors.verticalCenter: parent.verticalCenter
                                     x: 960/8*5 + 960/8/2-width/2
                                     font.pixelSize: 16
-                                    text: create_time
+                                    text: UtilityFunction.timestampToString(create_time).split(" ")[0]
                                     font.family: GlobalSystemDefine.fontBold
                                     color: index % 2 !== 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
                                 }

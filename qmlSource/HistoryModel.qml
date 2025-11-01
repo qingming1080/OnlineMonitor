@@ -457,7 +457,7 @@ Rectangle {
         Text{
             id:t1
             anchors.left: parent.left
-            anchors.leftMargin: 20
+            anchors.leftMargin: LanguageManager.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 20 : 10
             anchors.top: parent.top
             anchors.topMargin: 7
             font.pixelSize: 16
@@ -469,7 +469,7 @@ Rectangle {
         Text{
             id: serialNumberText
             anchors.left: parent.left
-            anchors.leftMargin: 120
+            anchors.leftMargin: LanguageManager.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 120 : 130
             anchors.top: parent.top
             anchors.topMargin: 7
             font.pixelSize: 16
@@ -482,7 +482,7 @@ Rectangle {
             id: historyDateText
             anchors.top: t1.top
             anchors.left: t1.right
-            anchors.leftMargin: 180
+            anchors.leftMargin: LanguageManager.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 180 : 200
             font.pixelSize: 16
             text: GlobalLanguageDefine.strDate
             font.family: GlobalSystemDefine.fontBold
@@ -493,7 +493,7 @@ Rectangle {
             id: historyEnergyeText
             anchors.top: historyDateText.top
             anchors.left: historyDateText.right
-            anchors.leftMargin: 150
+            anchors.leftMargin: LanguageManager.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 150 : 100
             font.pixelSize: 16
             text: GlobalLanguageDefine.strEnergy
             font.family: GlobalSystemDefine.fontBold
@@ -504,7 +504,7 @@ Rectangle {
             id: historyAmplitudeText
             anchors.top: historyEnergyeText.top
             anchors.left: historyEnergyeText.right
-            anchors.leftMargin: 100
+            anchors.leftMargin: LanguageManager.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 100 : 70
             font.pixelSize: 16
             text: GlobalLanguageDefine.strAmplitude
             font.family: GlobalSystemDefine.fontBold
@@ -515,7 +515,7 @@ Rectangle {
             id: historyPowerText
             anchors.top: historyAmplitudeText.top
             anchors.left: historyAmplitudeText.right
-            anchors.leftMargin: 100
+            anchors.leftMargin: LanguageManager.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 100 : 60
             font.pixelSize: 16
             text: GlobalLanguageDefine.strPower
             font.family: GlobalSystemDefine.fontBold
@@ -526,7 +526,7 @@ Rectangle {
             id: historyWeldTimeText
             anchors.top: historyPowerText.top
             anchors.left: historyPowerText.right
-            anchors.leftMargin: 100
+            anchors.leftMargin: LanguageManager.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 100 : 80
             font.pixelSize: 16
             text: GlobalLanguageDefine.strTime
             font.family: GlobalSystemDefine.fontBold
@@ -537,7 +537,7 @@ Rectangle {
             id: historyWeldPressureText
             anchors.top: historyWeldTimeText.top
             anchors.left: historyWeldTimeText.right
-            anchors.leftMargin: 100
+            anchors.leftMargin: LanguageManager.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 100 : 70
             font.pixelSize: 16
             text: GlobalLanguageDefine.strPressure
             font.family: GlobalSystemDefine.fontBold
@@ -548,7 +548,7 @@ Rectangle {
             id: historyWeldResultText
             anchors.top: historyWeldPressureText.top
             anchors.left: historyWeldPressureText.right
-            anchors.leftMargin: 100
+            anchors.leftMargin: LanguageManager.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 100 : 60
             font.pixelSize: 16
             text: GlobalLanguageDefine.strResult
             font.family: GlobalSystemDefine.fontBold
@@ -583,9 +583,9 @@ Rectangle {
                      id: rowNumberText
                      anchors.verticalCenter: parent.verticalCenter
                      anchors.left: parent.left
-                     anchors.leftMargin: 120
+                     anchors.leftMargin: LanguageManager.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 120 : 150
                      font.pixelSize: 16
-                     text: row_number
+                     text: cycle_count
                      font.family: GlobalSystemDefine.fontBold
                      font.bold: true
                      color: index % 2 === 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
@@ -594,9 +594,9 @@ Rectangle {
                     id: historyDateValueText
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.left: parent.left
-                    anchors.leftMargin: 200
+                    anchors.leftMargin: LanguageManager.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 200 : 250
                     font.pixelSize: 16
-                    text: create_time
+                    text: UtilityFunction.timestampToString(create_time)
                     font.family: GlobalSystemDefine.fontBold
                     font.bold: true
                     color: index % 2 === 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
@@ -651,7 +651,7 @@ Rectangle {
                     anchors.left: parent.left
                     anchors.leftMargin: 975
                     font.pixelSize: 16
-                    text: UtilityFunction.displayValue(pressure,10,1) + GlobalLanguageDefine.strPressureUnit
+                    text: UtilityFunction.displayValue(weld_pressure,10,1) + GlobalLanguageDefine.strPressureUnit
                     font.family: GlobalSystemDefine.fontBold
                     font.bold: true
                     color: index % 2 === 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)

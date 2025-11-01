@@ -166,3 +166,48 @@ void Production::setPostHeight(const int height)
         emit notifyPostHeightChanged();
     }
 }
+
+int Production::getAmplitude() const
+{
+    return m_DBProduction.Amplitude;
+}
+
+void Production::setAmplitude(const int amplitude)
+{
+    if (m_DBProduction.Amplitude != amplitude)
+    {
+        m_DBProduction.Amplitude = amplitude;
+        emit notifyAmplitudeChanged();
+    }
+
+}
+
+int Production::getWeldPressure() const
+{
+    return m_DBProduction.WeldPressure;
+}
+
+void Production::setWeldPressure(const int weldPressure)
+{
+    if (m_DBProduction.WeldPressure != weldPressure)
+    {
+        m_DBProduction.WeldPressure = weldPressure;
+        emit notifyWeldPressureChanged();
+    }
+
+}
+
+int Production::getTriggertPressure() const
+{
+     return m_DBProduction.TriggertPressure;
+}
+
+void Production::setTriggertPressure(const int triggertPressure)
+{
+    if (m_DBProduction.TriggertPressure != triggertPressure)
+    {
+        m_DBProduction.TriggertPressure = triggertPressure;
+        emit notifyTriggertPressureChanged();
+    }
+
+}

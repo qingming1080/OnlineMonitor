@@ -22,6 +22,11 @@ DeviceInformation::DeviceInformation(int welderID, QObject *parent)
         setHeightEncoderOption(m_DBConfigure.HeightEncoderOption);
         setSuspiciousOption(m_DBConfigure.SuspiciousOption);
         setConnectType(m_DBConfigure.ConnectType);
+		setSingleFactor(QString::number(m_DBConfigure.SingleFactSetting));
+        setGeneralFactor(QString::number(m_DBConfigure.GeneralFactSetting));
+        setAutoLearningCount(QString::number(m_DBConfigure.AutoLearnCount));
+        setForceThreshold(QString::number(m_DBConfigure.ForceThreshold));
+        setResidualThreshold(QString::number(m_DBConfigure.ResidualThreshold));
     }
     else
     {
@@ -33,7 +38,6 @@ DeviceInformation::DeviceInformation(int welderID, QObject *parent)
         setHeightEncoderOption(true);
         setSuspiciousOption(true);
         setConnectType(DeviceInfoEnum::TCP_IP);
-
         setSingleFactor("20");
         setGeneralFactor("80");
         setAutoLearningCount("5");
@@ -193,101 +197,101 @@ void DeviceInformation::setConnectState(const int &state)
 
 QString DeviceInformation::getSingleFactor() const
 {
-    return QString::number(m_DBSystem.SingleFactorSetting);
+    return QString::number(m_DBConfigure.SingleFactSetting);
 }
 
 int DeviceInformation::GetSingleFactor() const
 {
-    return m_DBSystem.SingleFactorSetting;
+    return m_DBConfigure.SingleFactSetting;
 }
 
 void DeviceInformation::setSingleFactor(const QString &factor)
 {
     bool isOk;
     int iFactor = factor.toInt(&isOk);
-    if (!isOk || m_DBSystem.SingleFactorSetting == iFactor)
+    if (!isOk || m_DBConfigure.SingleFactSetting == iFactor)
         return;
-    m_DBSystem.SingleFactorSetting = iFactor;
+    m_DBConfigure.SingleFactSetting = iFactor;
     emit notifySingleFactorChanged();
 }
 
 QString DeviceInformation::getGeneralFactor() const
 {
-    return QString::number(m_DBSystem.GeneralFactorSetting);
+    return QString::number(m_DBConfigure.GeneralFactSetting);
 }
 
 int DeviceInformation::GetGeneralFactor() const
 {
-    return m_DBSystem.GeneralFactorSetting;
+    return m_DBConfigure.GeneralFactSetting;
 }
 
 void DeviceInformation::setGeneralFactor(const QString &factor)
 {
     bool isOk = false;
     int iFactor = factor.toInt(&isOk);
-    if (!isOk || m_DBSystem.GeneralFactorSetting == iFactor)
+    if (!isOk || m_DBConfigure.GeneralFactSetting == iFactor)
         return;
-    m_DBSystem.GeneralFactorSetting = iFactor;
+    m_DBConfigure.GeneralFactSetting = iFactor;
     emit notifyGeneralFactorChanged();
 }
 
 QString DeviceInformation::getForceThreshold() const
 {
-    return QString::number(m_DBSystem.ForceThreshold);
+    return QString::number(m_DBConfigure.ForceThreshold);
 }
 
 int DeviceInformation::GetForceThreshold() const
 {
-    return m_DBSystem.ForceThreshold;
+    return m_DBConfigure.ForceThreshold;
 }
 
 void DeviceInformation::setForceThreshold(const QString &threshold)
 {
     bool isOk = false;
     int iThreshold = threshold.toInt(&isOk);
-    if (!isOk || m_DBSystem.ForceThreshold == iThreshold)
+    if (!isOk || m_DBConfigure.ForceThreshold == iThreshold)
         return;
-    m_DBSystem.ForceThreshold = iThreshold;
+    m_DBConfigure.ForceThreshold = iThreshold;
     emit notifyForceThresholdChanged();
 }
 
 QString DeviceInformation::getResidualThreshold() const
 {
-    return QString::number(m_DBSystem.ResidualThreshold);
+    return QString::number(m_DBConfigure.ResidualThreshold);
 }
 
 int DeviceInformation::GetResidualThreshold() const
 {
-    return m_DBSystem.ResidualThreshold;
+    return m_DBConfigure.ResidualThreshold;
 }
 
 void DeviceInformation::setResidualThreshold(const QString &threshold)
 {
     bool isOk = false;
     int iThreshold = threshold.toInt(&isOk);
-    if (!isOk || m_DBSystem.ResidualThreshold == iThreshold)
+    if (!isOk || m_DBConfigure.ResidualThreshold == iThreshold)
         return;
-    m_DBSystem.ResidualThreshold = iThreshold;
+    m_DBConfigure.ResidualThreshold = iThreshold;
     emit notifyResidualThresholdChanged();
 }
 
 QString DeviceInformation::getAutoLearningCount() const
 {
-    return QString::number(m_DBSystem.AutoLearningCount);
+    return QString::number(m_DBConfigure.AutoLearnCount);
 }
 
 int DeviceInformation::GetAutoLearningCount() const
 {
-    return m_DBSystem.AutoLearningCount;
+    return m_DBConfigure.AutoLearnCount;
 }
 
 void DeviceInformation::setAutoLearningCount(const QString &limit)
 {
     bool isOk = false;
     int iLimit = limit.toInt(&isOk);
-    if (!isOk || m_DBSystem.AutoLearningCount == iLimit)
+    if (!isOk || m_DBConfigure.AutoLearnCount == iLimit)
         return;
-    m_DBSystem.AutoLearningCount = iLimit;
+    m_DBConfigure.AutoLearnCount = iLimit;
     emit notifyAutoLearningCountChanged();
 }
 

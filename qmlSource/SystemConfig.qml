@@ -13,24 +13,6 @@ import DeviceInfoEnum       1.0
 //系统配置
 Rectangle {
     id: layoutSystemConfig
-
-    // property int itemCount: equipmentCount
-    // property int currIndex: 0
-    // property int networkId: 1
-    // property int rs232Id: 1
-    // property int loadType: 0
-    // property bool musysTmp1: false
-    // property bool musysTmp2: false
-    // property bool musysTmp3: false
-    // property bool musysTmp4: false
-
-    // property bool undetermined1: false
-    // property bool undetermined2: false
-    // property bool undetermined3: false
-    // property bool undetermined4: false
-
-    // property bool oneself: false
-    // property bool btnDefault: false
     property var sysViews: []
     Component.onCompleted: {
         loadViewsys(1, syscfg)

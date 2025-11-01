@@ -124,23 +124,23 @@ Rectangle {
             height: 237
             radius: 3
             color: "#0c5596"
-            eqText1:{
+            deviceName:{
                 if(DeviceManager.DeviceList[0]){
-                    return DeviceManager.DeviceList[0].DeviceObj.name
+                    return DeviceManager.DeviceList[0].DeviceObj.WelderName
                 }
                 else{
                     return ""
                 }
             }
-            eqText2:{
+            deviceType:{
                 if(DeviceManager.DeviceList[0]){
-                    return DeviceManager.DeviceList[0].DeviceObj.model
+                    return DeviceManager.DeviceList[0].DeviceObj.WelderType === 0 ? "L20-VG" : "L20-TS"
                 }
                 else{
                     return ""
                 }
             }
-            eqText3:{
+            connectionType:{
                 if(DeviceManager.DeviceList[0]){
                     return DeviceManager.DeviceList[0].DeviceObj.ConnectType === 1
                             ? "RS232" : "TCP/IP"
@@ -149,7 +149,7 @@ Rectangle {
                     return ""
                 }
             }
-            eqText4:{
+            devcieStatus:{
                 if(DeviceManager.DeviceList[0])
                 {
                     var connectState = DeviceManager.DeviceList[0].DeviceObj.ConnectState
@@ -170,7 +170,7 @@ Rectangle {
             color: "#0c5596"
             revealing:{
                 if(DeviceManager.DeviceList[0]){
-                    return DeviceManager.DeviceList[0].pIO.availabel
+                    return DeviceManager.DeviceList[0].DeviceObj.SuspiciousOption
                 }
                 else{
                     return true
@@ -274,27 +274,27 @@ Rectangle {
             height: 237
             radius: 3
             color: "#0c5596"
-            eqText1:{
+            deviceName:{
                 if(DeviceManager.DeviceList[1])
                 {
-                    return DeviceManager.DeviceList[1].DeviceObj.name
+                    return DeviceManager.DeviceList[1].DeviceObj.WelderName
                 }
                 else
                 {
                     return ""
                 }
             }
-            eqText2:{
+            deviceType:{
                 if(DeviceManager.DeviceList[1])
                 {
-                    return DeviceManager.DeviceList[1].DeviceObj.model
+                    return DeviceManager.DeviceList[1].DeviceObj.WelderType === 0 ? "L20-VG" : "L20-TS"
                 }
                 else
                 {
                     return ""
                 }
             }
-            eqText3:{
+            connectionType:{
                 if(DeviceManager.DeviceList[1]){
                     return DeviceManager.DeviceList[1].DeviceObj.ConnectType === 1
                             ? "RS232" : "TCP/IP"
@@ -303,7 +303,7 @@ Rectangle {
                     return ""
                 }
             }
-            eqText4:{
+            devcieStatus:{
                 if(DeviceManager.DeviceList[1])
                 {
                     var connectState = DeviceManager.DeviceList[1].DeviceObj.ConnectState
@@ -323,7 +323,7 @@ Rectangle {
             color: "#0c5596"
             revealing:{
                 if(DeviceManager.DeviceList[1]){
-                    return DeviceManager.DeviceList[1].DeviceObj.DefectiveCycleCount
+                    return DeviceManager.DeviceList[1].ProductionObj.DefectiveCycleCount
                 }
                 else{
                     return true
@@ -331,7 +331,7 @@ Rectangle {
             }
             eqText1:{
                 if(DeviceManager.DeviceList[1]){
-                    return DeviceManager.DeviceList[1].DeviceObj.GoodCycleCount
+                    return DeviceManager.DeviceList[1].ProductionObj.GoodCycleCount
                 }
                 else{
                     return ""
@@ -339,7 +339,7 @@ Rectangle {
             }
             eqText2:{
                 if(DeviceManager.DeviceList[1]){
-                    return DeviceManager.DeviceList[1].DeviceObj.SuspectCycleCount
+                    return DeviceManager.DeviceList[1].ProductionObj.SuspectCycleCount
                 }
                 else{
                     return ""
@@ -428,7 +428,7 @@ Rectangle {
             height: 227
             radius: 3
             color: "#0c5596"
-            eqText1:{
+            deviceName:{
                 if(DeviceManager.DeviceList[2]){
                     return DeviceManager.DeviceList[2].DeviceObj.name
                 }
@@ -439,18 +439,18 @@ Rectangle {
                     return ""
                 }
             }
-            eqText2:{
+            deviceType:{
                 if(DeviceManager.DeviceList[2]){
-                    return DeviceManager.DeviceList[2].DeviceObj.model
+                    return DeviceManager.DeviceList[2].DeviceObj.WelderTyep === 0 ? "L20-VG" : "L20-TS"
                 }
                 else if(DeviceManager.DeviceList[3]){
-                    return DeviceManager.DeviceList[3].DeviceObj.model
+                    return DeviceManager.DeviceList[3].DeviceObj.WelderTyep === 0 ? "L20-VG" : "L20-TS"
                 }
                 else{
                     return ""
                 }
             }
-            eqText3:{
+            connectionType:{
                 if(DeviceManager.DeviceList[2]){
                     return DeviceManager.DeviceList[2].DeviceObj.ConnectType === 1
                             ? "RS232" : "TCP/IP"
@@ -463,7 +463,7 @@ Rectangle {
                     return ""
                 }
             }
-            eqText4:{
+            devcieStatus:{
                 var connectState = 0
                 if(DeviceManager.DeviceList[2])
                 {
@@ -491,10 +491,10 @@ Rectangle {
             color: "#0c5596"
             revealing:{
                 if(DeviceManager.DeviceList[2]){
-                    return DeviceManager.DeviceList[2].pIO.availabel
+                    return DeviceManager.DeviceList[2].DeviceObj.SuspiciousOption
                 }
                 else if(DeviceManager.DeviceList[3]){
-                    return DeviceManager.DeviceList[3].pIO.availabel
+                    return DeviceManager.DeviceList[3].DeviceObj.SuspiciousOption
                 }
                 else{
                     return true
@@ -605,7 +605,7 @@ Rectangle {
             height: 227
             radius: 3
             color: "#0c5596"
-            eqText1:{
+            deviceName:{
                 if(DeviceManager.DeviceList[3]){
                     return DeviceManager.DeviceList[3].DeviceObj.name
                 }
@@ -616,18 +616,18 @@ Rectangle {
                     return ""
                 }
             }
-            eqText2:{
+            deviceType:{
                 if(DeviceManager.DeviceList[3]){
-                    return DeviceManager.DeviceList[3].DeviceObj.model
+                    return DeviceManager.DeviceList[3].DeviceObj.WelderType === 0 ? "L20-VG" : "L20-TS"
                 }
                 else if(DeviceManager.DeviceList[2]){
-                    return DeviceManager.DeviceList[2].DeviceObj.model
+                    return DeviceManager.DeviceList[2].DeviceObj.WelderType === 0 ? "L20-VG" : "L20-TS"
                 }
                 else{
                     return ""
                 }
             }
-            eqText3:{
+            connectionType:{
                 if(DeviceManager.DeviceList[3]){
                     return DeviceManager.DeviceList[3].DeviceObj.ConnectType === 1
                             ? "RS232" : "TCP/IP"
@@ -640,7 +640,7 @@ Rectangle {
                     return ""
                 }
             }
-            eqText4:{
+            devcieStatus:{
                 var connectState = 0
                 if(DeviceManager.DeviceList[3])
                 {
@@ -668,10 +668,10 @@ Rectangle {
             color: "#0c5596"
             revealing:{
                 if(DeviceManager.DeviceList[3]){
-                    return DeviceManager.DeviceList[3].pIO.availabel
+                    return DeviceManager.DeviceList[3].DeviceObj.SuspiciousOption
                 }
                 else if(DeviceManager.DeviceList[2]){
-                    return DeviceManager.DeviceList[2].pIO.availabel
+                    return DeviceManager.DeviceList[2].DeviceObj.SuspiciousOption
                 }
                 else{
                     return true

@@ -16,12 +16,11 @@ Rectangle {
     color: pRgb(153, 204, 255)
     radius: 5
     property int listSize: 0
-    property int parameter1: 0
-    property int parameter2: 0
-    property int parameter3: 0
-    property int parameter4: 0
-    property int parameter5: 0
-     property bool altitudeMode:DeviceManager.DeviceList[swipeCurrIndex].DeviceObj.heightOption === 1 ? true:false
+    property int presetEnergy: 0
+    property int presetAmplitude: 0
+    property int presetWeldPressure: 0
+    property int presetTriggerPressure: 0
+    property bool altitudeMode:DeviceManager.DeviceList[swipeCurrIndex].DeviceObj.HeightEncoderOption === 1 ? true:false
     function newModel(){
         loader.sourceComponent = mode2
         loader1.sourceComponent = weld2
@@ -48,23 +47,23 @@ Rectangle {
         //TODO Need to have a double check
         height: (mt1.text === "新建模型" || mt1.text === "New Model") ? 255 : 225
         color: "#0c5696"
-        eqText1:{
+        deviceName:{
             if(DeviceManager.DeviceList[swipeCurrIndex]){
-                return DeviceManager.DeviceList[swipeCurrIndex].DeviceObj.name
+                return DeviceManager.DeviceList[swipeCurrIndex].DeviceObj.WelderName
             }
             else{
                 return ""
             }
         }
-        eqText2:{
+        deviceType:{
             if(DeviceManager.DeviceList[swipeCurrIndex]){
-                return DeviceManager.DeviceList[swipeCurrIndex].DeviceObj.model
+                return DeviceManager.DeviceList[swipeCurrIndex].DeviceObj.WelderType === 1 ? "L20-VG" : "L20-TS"
             }
             else{
                 return ""
             }
         }
-        eqText3:{
+        connectionType:{
             if(DeviceManager.DeviceList[swipeCurrIndex]){
                 return DeviceManager.DeviceList[swipeCurrIndex].DeviceObj.ConnectType === 1
                         ? "RS232" : "TCP/IP"
@@ -73,7 +72,7 @@ Rectangle {
                 return ""
             }
         }
-        eqText4:{
+        devcieStatus:{
             if(DeviceManager.DeviceList[swipeCurrIndex])
             {
                 var connectState = DeviceManager.DeviceList[swipeCurrIndex].DeviceObj.ConnectState
@@ -101,16 +100,15 @@ Rectangle {
                 x:42
                 y:314
                 color: "#0c5696"
-
-                eqText1: DeviceManager.DeviceList[swipeCurrIndex] ? DeviceManager.DeviceList[swipeCurrIndex].DeviceObj.power : ""
-
-                eqText2: DeviceManager.DeviceList[swipeCurrIndex] ? DeviceManager.DeviceList[swipeCurrIndex].DeviceObj.time  : ""
-
-                eqText3: DeviceManager.DeviceList[swipeCurrIndex] ? DeviceManager.DeviceList[swipeCurrIndex].DeviceObj.energy  : ""
-
-                eqText4: DeviceManager.DeviceList[swipeCurrIndex]  ? DeviceManager.DeviceList[swipeCurrIndex].DeviceObj.heightPre : ""
-
-                eqText5: DeviceManager.DeviceList[swipeCurrIndex]   ? DeviceManager.DeviceList[swipeCurrIndex].DeviceObj.heightPost : ""
+                property int currentIndex: DeviceManager.SelectedDeviceIndex
+                energy:             DeviceManager.DeviceList[currentIndex] ? DeviceManager.DeviceList[currentIndex].ProductionObj.Energy  : ""
+                amplitude:          DeviceManager.DeviceList[currentIndex] ? DeviceManager.DeviceList[currentIndex].ProductionObj.Amplitude : ""
+                weldPressure:       DeviceManager.DeviceList[currentIndex] ? DeviceManager.DeviceList[currentIndex].ProductionObj.WeldPressure : ""
+                triggerPressure:    DeviceManager.DeviceList[currentIndex] ? DeviceManager.DeviceList[currentIndex].ProductionObj.TriggerPressure : ""
+                peakPower:          DeviceManager.DeviceList[currentIndex] ? DeviceManager.DeviceList[currentIndex].ProductionObj.PeakPower : ""
+                weldTime:           DeviceManager.DeviceList[currentIndex] ? DeviceManager.DeviceList[currentIndex].ProductionObj.WeldTime  : ""
+                preheight:          DeviceManager.DeviceList[currentIndex] ? DeviceManager.DeviceList[currentIndex].ProductionObj.Preheight : ""
+                postHeight:         DeviceManager.DeviceList[currentIndex] ? DeviceManager.DeviceList[currentIndex].ProductionObj.PostHeight : ""
 
             }
         }
@@ -125,11 +123,10 @@ Rectangle {
                 x:42
                 y:274
                 color:  "#0c5696"
-                eqText1:parameter1
-                eqText2:parameter2
-                eqText3:parameter3
-                eqText4:parameter4
-                eqText5:parameter5
+                eqText1: presetEnergy
+                eqText2: presetAmplitude
+                eqText3: presetWeldPressure
+                eqText4: presetTriggerPressure
             }
         }
     }
@@ -244,7 +241,7 @@ Rectangle {
                 color:  "#0c5696"
                 revealing:{
                     if(DeviceManager.DeviceList[swipeCurrIndex]){
-                        return DeviceManager.DeviceList[swipeCurrIndex].pIO.availabel
+                        return DeviceManager.DeviceList[swipeCurrIndex].DeviceObj.SuspiciousOption
                     }
                     else{
                         return true
@@ -479,10 +476,10 @@ Rectangle {
                             anchors.fill: parent
                             onPressed: {
                                 taskplanView.currentIndex = index
-                                parameter1 = Manual.data(Manual.index(index,0),QmlEnum.MANUAL_preEnergy)
-                                parameter2 = Manual.data(Manual.index(index,0),QmlEnum.MANUAL_preAmplitude)
-                                parameter3 = Manual.data(Manual.index(index,0),QmlEnum.MANUAL_preWP)
-                                parameter4 = Manual.data(Manual.index(index,0),QmlEnum.MANUAL_preTP)
+                                presetEnergy              = Manual.data(Manual.index(index,0),QmlEnum.MANUAL_preEnergy)
+                                presetAmplitude           = Manual.data(Manual.index(index,0),QmlEnum.MANUAL_preAmplitude)
+                                presetWeldPressure        = Manual.data(Manual.index(index,0),QmlEnum.MANUAL_preWP)
+                                presetTriggerPressure     = Manual.data(Manual.index(index,0),QmlEnum.MANUAL_preTP)
                             }
                         }
                         Button{
@@ -544,7 +541,7 @@ Rectangle {
                             anchors.leftMargin: altitudeMode ? 115 : 160
                             anchors.verticalCenter: parent.verticalCenter
                             font.pixelSize: 16
-                            text: serial_number
+                            text: cycle_count
                             font.family: GlobalSystemDefine.fontBold
                             color: index % 2 !== 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
                         }
@@ -590,7 +587,7 @@ Rectangle {
                             anchors.verticalCenter: parent.verticalCenter
                             x:840/8*5 + 840/8/2-width/2
                             font.pixelSize: 16
-                            text: create_time
+                            text: UtilityFunction.timestampToString(create_time).split(" ")[0]
                             font.family: GlobalSystemDefine.fontBold
                             color: index % 2 !== 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
                         }

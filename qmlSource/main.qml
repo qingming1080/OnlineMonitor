@@ -21,7 +21,7 @@ Window {
     property int showWidth: 1280
     property int showHeight: 800
     property int mode: 0
-    property int swipeCurrIndex: 0
+
     property int interFaceId: 0
     property int keyboardType: 0
     property bool createModel: false

@@ -4,11 +4,14 @@ import GlobalSystemDefine 1.0
 import LanguageEnum 1.0
 //焊接结果
 Rectangle {
-    property string eqText1: ""
-    property string eqText2: ""
-    property string eqText3: ""
-    property string eqText4: ""
-    property string eqText5: ""
+    property string energy: ""
+    property string amplitude: ""
+    property string weldPressure: ""
+    property string triggerPressure: ""
+    property string weldTime: ""
+    property string peakPower: ""
+    property string preheight: ""
+    property string postHeight: ""
     property bool altitudeMode:false
     property int powerY: 1
     property int imgY: 1
@@ -217,13 +220,13 @@ Rectangle {
         height: 1
         width: 97
         color: pRgb(174, 210, 216)
-    }//能量、振幅、焊接压力、触发压力、焊接时间、峰值功率、焊前高度、焊后高度
+    }
 
 
     Text {
         id: titleEnergy
         // text: qsTr("能量") + ": " + eqText3 + "J"
-        text: GlobalLanguageDefine.strEnergy + ": " + eqText3 + GlobalLanguageDefine.strEnergyUnit
+        text: GlobalLanguageDefine.strEnergy + ": " + energy + GlobalLanguageDefine.strEnergyUnit
         font.family: GlobalSystemDefine.fontBold
         font.bold: true
         font.pixelSize: 16
@@ -236,7 +239,7 @@ Rectangle {
     Text {
         id: titleAmplitude
         // text: qsTr("振幅") + ": " + eqText3 + "J"
-        text: GlobalLanguageDefine.strAmplitude + ": " + eqText3 + GlobalLanguageDefine.strAmplitudeUnit
+        text: GlobalLanguageDefine.strAmplitude + ": " + amplitude + GlobalLanguageDefine.strAmplitudeUnit
         font.family: GlobalSystemDefine.fontBold
         font.bold: true
         font.pixelSize: 16
@@ -248,7 +251,7 @@ Rectangle {
     }
     Text {
         id: titleWeldTime
-        text: GlobalLanguageDefine.strTime + ": " + eqText2 + GlobalLanguageDefine.strWeldTimeUnit
+        text: GlobalLanguageDefine.strTime + ": " + weldTime + GlobalLanguageDefine.strWeldTimeUnit
         font.family: GlobalSystemDefine.fontBold
         font.bold: true
         font.pixelSize:16
@@ -262,7 +265,7 @@ Rectangle {
         id: titlePower
         // anchors.verticalCenter: imagePower.verticalCenter
         // text: qsTr("功率") + ": " + eqText1 + "W"
-        text: GlobalLanguageDefine.strPower + ": " + eqText1 + GlobalLanguageDefine.strPowerUnit
+        text: GlobalLanguageDefine.strPower + ": " + peakPower + GlobalLanguageDefine.strPowerUnit
         font.family: GlobalSystemDefine.fontBold
         font.bold: true
         font.pixelSize: 16
@@ -275,7 +278,7 @@ Rectangle {
     Text {
         id: titlePressure
         // text: qsTr("焊接压力") + ": " + eqText3 + "J"
-        text: GlobalLanguageDefine.strPressure + ": " + eqText3 + GlobalLanguageDefine.strPressureUnit
+        text: GlobalLanguageDefine.strPressure + ": " + weldPressure + GlobalLanguageDefine.strPressureUnit
         font.family: GlobalSystemDefine.fontBold
         font.bold: true
         font.pixelSize: 16
@@ -288,7 +291,7 @@ Rectangle {
     Text {
         id: titleTP
         // text: qsTr("触发压力") + ": " + eqText3 + "J"
-        text: GlobalLanguageDefine.strTP + ": " + eqText3 + GlobalLanguageDefine.strPressureUnit
+        text: GlobalLanguageDefine.strTP + ": " + triggerPressure + GlobalLanguageDefine.strPressureUnit
         font.family: GlobalSystemDefine.fontBold
         font.bold: true
         font.pixelSize: 16
@@ -303,7 +306,7 @@ Rectangle {
     Text {
         id: titlePreheight
         // text: qsTr("焊前高度") + ": " + eqText4/100.0 + "mm"
-        text: GlobalLanguageDefine.strPreWeldHeight + ": " + eqText4 + GlobalLanguageDefine.strHeightUnit
+        text: GlobalLanguageDefine.strPreWeldHeight + ": " + preheight + GlobalLanguageDefine.strHeightUnit
         font.family: GlobalSystemDefine.fontBold
         font.bold: true
         font.pixelSize: 16
@@ -318,7 +321,7 @@ Rectangle {
     Text {
         id: titlePostHeight
         // text: qsTr("焊后高度") + ": " + eqText5/100.0 + "mm"
-        text: GlobalLanguageDefine.strPostWeldHeight + ": " + eqText5 + GlobalLanguageDefine.strHeightUnit
+        text: GlobalLanguageDefine.strPostWeldHeight + ": " + postHeight + GlobalLanguageDefine.strHeightUnit
         font.family: GlobalSystemDefine.fontBold
         font.bold: true
         font.pixelSize: 16
