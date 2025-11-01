@@ -7,7 +7,7 @@ import QtQuick.Controls 2.5
 import QtQuick.VirtualKeyboard.Settings 2.2
 import "."
 import Device 1.0
-import DeviceInformation 1.0
+import DeviceObj    1.0
 import QtQml 2.15
 
 
@@ -21,8 +21,6 @@ Window {
     property int showWidth: 1280
     property int showHeight: 800
     property int mode: 0
-    property int equipmentCount: DeviceManager.DeviceCounter
-    property int equipmentCurrentIndex: 0
     property int swipeCurrIndex: 0
     property int interFaceId: 0
     property int keyboardType: 0
@@ -34,39 +32,6 @@ Window {
         sigSwipeCurrIndex(swipeCurrIndex)
     }
 
-    property bool altitudeModel1: {
-        if(DeviceManager.DeviceList[0]){
-            DeviceManager.DeviceList[0].DeviceObj.heightOption === 0 ? false : true
-        }
-        else{
-            return false
-        }
-    }
-    property bool altitudeModel2: {
-        if(DeviceManager.DeviceList[1]){
-            DeviceManager.DeviceList[1].DeviceObj.heightOption === 0 ? false : true
-        }
-        else{
-            return false
-        }
-    }
-    property bool altitudeModel3: {
-        if(DeviceManager.DeviceList[2]){
-            DeviceManager.DeviceList[2].DeviceObj.heightOption === 0 ? false : true
-        }
-        else{
-            return false
-        }
-    }
-    property bool altitudeModel4: {
-        if(DeviceManager.DeviceList[3]){
-            DeviceManager.DeviceList[3].DeviceObj.heightOption === 0 ? false : true
-        }
-        else{
-            return false
-        }
-    }
-    property bool isAdd: false
     function pRgb(r, g, b){
         var ret = (r << 16 | g << 8 | b)
         return ("#"+ret.toString(16)).toUpperCase();
@@ -87,7 +52,6 @@ Window {
     signal sigSysConfig()
     signal sigStatusReset()
     signal sigUpdateUI(var index)
-    signal sigUndetermined(var index)
     signal sigRoot()
     signal sigNewModel()
     signal sigOneModel()
@@ -97,7 +61,6 @@ Window {
     signal sigSwipeCurrIndex(var swipeCurrIndex)
     function switchUI(id)
     {
-        equipmentCurrentIndex = id
         sigSwitch(id)
         sigUpdateUI(swipeCurrIndex)
     }
@@ -149,15 +112,12 @@ Window {
             case 1:
                 loadView(id, pro)
                 // p1.bt1Check()
-                isAdd = false
                 break;
             case 2:
                 loadView(id, his)
                 // p1.bt2Check()
-                isAdd = false
                 break;
             case 3:
-                isAdd = false
                 sigSysConfig()
                 Qt.callLater(sigSysConfig)//立即执行
                 loadView(id, sys)
@@ -165,7 +125,6 @@ Window {
                 // p1.bt3Check()
                 break;
             case 4:
-                isAdd = false
                 loadView(id, rootview)
                 break;
             default:

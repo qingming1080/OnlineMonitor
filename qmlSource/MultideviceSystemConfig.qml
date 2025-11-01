@@ -1,42 +1,31 @@
 import QtQuick 2.0
 import QtQuick.Controls 2.15
 import Device 1.0
-import DeviceInformation 1.0
+
 import GlobalLanguageDefine 1.0
+import DeviceObj            1.0
+import DeviceInfoEnum       1.0
 //系统配置（小）
 Rectangle {
-    property string eqText1: ""
-    property string eqText2: ""
-    property string eqText3: ""
-    property string eqText4: ""
-    property int sysCurrIndex: 0
-    property int sysCurrIndex1: 0
-    property bool undetermined: {
-        if(DeviceManager.DeviceList[sysCurrIndex1-1]){
-            return DeviceManager.DeviceList[sysCurrIndex1-1].pIO.availabel
-        }
-        else{
-            false
-        }
-    }
-    property bool heightOpation: false
-
-    signal sigAltitudeModel(var tmp)
+    id: multiDeviceConfigure
+    property string nameWelder: ""
+    property int typeWelder: 0
+    property int typeConnect: 0
+    property bool isConnected: false
+    property int currentIndex: -1
+    property bool suspiciousOption: false
+    property bool heightOption: false
+    property alias backgroundColor: multiDeviceConfigure.color
+    signal signalWelderSelected(var index)
     radius: 5
     width: 281
     height: 504
-    color: pRgb(43, 112, 173)
+    // color: pRgb(43, 112, 173)
+    color: "#2B70AD"
     MouseArea{
         anchors.fill: parent
         onPressed: {
-            if(color == "#4a8ac4"){
-                color = pRgb(43, 112, 173)
-                currIndex = 0
-            }
-            else{
-                sysCheck(sysCurrIndex1)
-                currIndex = sysCurrIndex
-            }
+            signalWelderSelected(currentIndex)
         }
     }
     onVisibleChanged: {
@@ -67,7 +56,7 @@ Rectangle {
     Text {
         id:t1
         // text: qsTr("设备名称") + ": " + eqText1
-        text: GlobalLanguageDefine.strDeviceName + ": " + eqText1
+        text: GlobalLanguageDefine.strDeviceName + ": " + nameWelder
         font.family: GlobalSystemDefine.fontBold
         font.bold: true
         font.pixelSize: 16
@@ -78,7 +67,25 @@ Rectangle {
     Text {
         id:t2
         // text: qsTr("设备型号") + ": " + eqText2
-        text: GlobalLanguageDefine.strDeviceModel + ": " + eqText2
+        text: {
+            var str = GlobalLanguageDefine.strDeviceModel + ": "
+            switch(typeWelder)
+            {
+            case DeviceInfoEnum.L20_VG:
+                str += "L20_VG";
+                break;
+            case DeviceInfoEnum.L20_TS:
+                str += "L20_TS";
+                break;
+            case DeviceInfoEnum.BRANSON_2000XC:
+                str += "2000XC";
+                break;
+            default:
+                str += "Other";
+                break;
+            }
+            return str;
+        }
         font.family: GlobalSystemDefine.fontBold
         font.bold: true
         font.pixelSize: 16
@@ -90,7 +97,22 @@ Rectangle {
     Text {
         id:t3
         // text: qsTr("连接方式") + ": " + eqText3
-        text: GlobalLanguageDefine.strConnectionMethod + ": " + eqText3
+        text: {
+            var str = GlobalLanguageDefine.strConnectionMethod + ": "
+            switch(typeConnect)
+            {
+            case DeviceInfoEnum.TCP_IP:
+                str += "TCP/IP"
+                break;
+            case DeviceInfoEnum.RS232:
+                str += "RS232"
+                break;
+            default:
+                str += "TCP/IP"
+                break;
+            }
+            return str
+        }
         font.family: GlobalSystemDefine.fontBold
         font.bold: true
         font.pixelSize: 16
@@ -102,7 +124,11 @@ Rectangle {
     Text {
         id:t4
         // text: qsTr("设备状态") + ": " + eqText4
-        text: GlobalLanguageDefine.strDeviceStatus + ": " + eqText4
+        text: {
+            var str = GlobalLanguageDefine.strDeviceStatus + ": "
+            str += GlobalMessageDefine.getConnectState(isConnected)
+            return str
+        }
         font.family: GlobalSystemDefine.fontBold
         font.bold: true
         font.pixelSize: 16
@@ -124,9 +150,8 @@ Rectangle {
             }
         }
         onPressed: {
-            loadViewsys(1,syscfg)
-            currentConfigId = sysCurrIndex1
-            sigUpdateUI(sysCurrIndex - 1)
+            signalWelderSelected(currentIndex)
+            loadViewsys(1, syscfg)
         }
     }
     Text {
@@ -164,16 +189,12 @@ Rectangle {
             width: 30
             height: 30
             radius: 15
-            color: heightOpation ? "#0d988c" : pRgb(232, 232, 232)
+            color: heightOption ? "#0d988c" : pRgb(232, 232, 232)
             border.color: "#b1d5db"
             border.width: 2
         }
-        onPressed: {
-            sigAltitudeModel(true)
-            sigUpdateUI(sysCurrIndex1)
-            DeviceManager.DeviceList[sysCurrIndex1-1].DevInfoObject.setHeightEncoderOption(1)
-        }
     }
+
     Text {
         id: s6
         // text: qsTr("关闭")
@@ -199,14 +220,9 @@ Rectangle {
             width: 30
             height: 30
             radius: 15
-            color: !heightOpation ? "#0d988c" : pRgb(232, 232, 232)
+            color: !heightOption ? "#0d988c" : pRgb(232, 232, 232)
             border.color: "#b1d5db"
             border.width: 2
-        }
-        onPressed: {
-            sigAltitudeModel(false)
-            sigUpdateUI(sysCurrIndex1)
-            DeviceManager.DeviceList[sysCurrIndex1-1].DevInfoObject.setHeightEncoderOption(0)
         }
     }
     Text {
@@ -225,23 +241,6 @@ Rectangle {
         anchors.verticalCenter: s7.verticalCenter
         anchors.left: s7.right
         anchors.leftMargin: 5
-        onPressed: {
-            if(sysCurrIndex1 == 1){
-                undetermined1 = !undetermined1
-            }
-            else if(sysCurrIndex1 ==2){
-                undetermined2 = !undetermined2
-            }
-            else if(sysCurrIndex1 ==3){
-                undetermined3 = !undetermined3
-            }
-            else if(sysCurrIndex1 ==4){
-                undetermined4 = !undetermined4
-            }
-            //            sigUndetermined(sysCurrIndex)
-            DeviceManager.DeviceList[sysCurrIndex1-1].DevInfoObject.setSuspiciousOption(!ctl.checked)
-        }
-
         indicator: Rectangle{
             id:indicator
             implicitWidth: 110
@@ -265,12 +264,12 @@ Rectangle {
                 //改变小圆点位置
                 NumberAnimation on x{
                     to:smallRect.width
-                    running: undetermined
+                    running: suspiciousOption
                     duration: 0
                 }
                 NumberAnimation on x{
                     to:6
-                    running: !undetermined
+                    running: !suspiciousOption
                     duration: 0
                 }
             }
@@ -281,7 +280,7 @@ Rectangle {
                 anchors.leftMargin: 14
                 // text: qsTr("关闭")
                 text: GlobalLanguageDefine.strClose
-                color: undetermined? pRgb(43, 112, 173) : "#e5e6e7"
+                color: suspiciousOption ? pRgb(43, 112, 173) : "#e5e6e7"
                 font.family: GlobalSystemDefine.fontBold
                 font.bold: true
                 font.pixelSize: 14
@@ -293,7 +292,7 @@ Rectangle {
                 anchors.rightMargin: 14
                 // text: qsTr("启动")
                 text: GlobalLanguageDefine.strStart
-                color: undetermined? "#e5e6e7" : pRgb(43, 112, 173)
+                color: suspiciousOption ? "#e5e6e7" : pRgb(43, 112, 173)
                 font.family: GlobalSystemDefine.fontBold
                 font.bold: true
                 font.pixelSize: 14
@@ -304,18 +303,18 @@ Rectangle {
         id: pinAlarmTitle
         text:{
             var pinName = ""
-            switch(sysCurrIndex1)
+            switch(currentIndex)
             {
-            case 1:
+            case 0:
                 pinName = "PIN1"
                 break;
-            case 2:
+            case 1:
                 pinName = "PIN4"
                 break;
-            case 3:
+            case 2:
                 pinName = "PIN7"
                 break;
-            case 4:
+            case 3:
                 pinName = "PIN10"
                 break;
             default:
@@ -337,18 +336,18 @@ Rectangle {
         id: pinResetTitle
         text: {
             var pinName = ""
-            switch(sysCurrIndex1)
+            switch(currentIndex)
             {
-            case 1:
+            case 0:
                 pinName = "PIN2"
                 break;
-            case 2:
+            case 1:
                 pinName = "PIN5"
                 break;
-            case 3:
+            case 2:
                 pinName = "PIN8"
                 break;
-            case 4:
+            case 3:
                 pinName = "PIN11"
                 break;
             default:
@@ -369,18 +368,18 @@ Rectangle {
         id: pinSuspectTitle
         text: {
             var pinName = ""
-            switch(sysCurrIndex1)
+            switch(currentIndex)
             {
-            case 1:
+            case 0:
                 pinName = "PIN3"
                 break;
-            case 2:
+            case 1:
                 pinName = "PIN6"
                 break;
-            case 3:
+            case 2:
                 pinName = "PIN9"
                 break;
-            case 4:
+            case 3:
                 pinName = "PIN12"
                 break;
             default:
@@ -416,7 +415,7 @@ Rectangle {
     }
     Image {
         id: pinSuspectIcon
-        source: undetermined ? "qrc:/images/icon_io_suspicious_on.png" : "qrc:/images/icon_io_suspicious_off.png"
+        source: suspiciousOption ? "qrc:/images/icon_io_suspicious_on.png" : "qrc:/images/icon_io_suspicious_off.png"
         anchors.left: pinAlarmIcon.left
         anchors.verticalCenter: pinSuspectTitle.verticalCenter
         width: 22

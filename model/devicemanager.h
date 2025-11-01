@@ -33,18 +33,12 @@ public:
     void setDeviceCounter(int counter);
 
     //获取指针
-    Device* getDeviceByNetworkID(int networkID);
+    // Device* getDeviceByNetworkID(int networkID);
 
-    Device* getDeviceByRs232ID(int rs232ID);
+    // Device* getDeviceByRs232ID(int rs232ID);
 
-    ///
-    /// \brief addDevice : 新增一台设备
-    ///
     Q_INVOKABLE bool addDevice();
 
-    ///
-    /// \brief removeDevice : 删除一台设备
-    ///
     Q_INVOKABLE bool removeDevice();
 
     Q_INVOKABLE bool saveDevice();

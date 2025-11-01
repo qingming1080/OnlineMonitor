@@ -34,29 +34,29 @@ DeviceManager::DeviceManager(QObject *parent)
     // emit SignalManager::getInstance()->signalAddRecord(QDateTime::currentDateTime(), QString("DeviceManager初始化耗时:%1ms").arg(timer.elapsed()));
 }
 
-Device *DeviceManager::getDeviceByNetworkID(int networkID)
-{
-    for(int i = 0; i < m_listDevices.size(); ++i)
-    {
-        if(m_listDevices.at(i)->getDeviceObj()->getConnectType() == DeviceInfoEnum::TCP_IP
-            && m_listDevices.at(i)->getDeviceObj()->getConnectTypeID() == networkID)
-            return m_listDevices.at(i);
-    }
+// Device *DeviceManager::getDeviceByNetworkID(int networkID)
+// {
+//     for(int i = 0; i < m_listDevices.size(); ++i)
+//     {
+//         if(m_listDevices.at(i)->getDeviceObj()->getConnectType() == DeviceInfoEnum::TCP_IP
+//             && m_listDevices.at(i)->getDeviceObj()->getConnectTypeID() == networkID)
+//             return m_listDevices.at(i);
+//     }
 
-    return nullptr;
-}
+//     return nullptr;
+// }
 
-Device *DeviceManager::getDeviceByRs232ID(int rs232ID)
-{
-    for(int i = 0; i < m_listDevices.size(); ++i)
-    {
-        if(m_listDevices.at(i)->getDeviceObj()->getConnectType() == DeviceInfoEnum::RS232
-            && m_listDevices.at(i)->getDeviceObj()->getConnectTypeID() == rs232ID)
-            return m_listDevices.at(i);
-    }
+// Device *DeviceManager::getDeviceByRs232ID(int rs232ID)
+// {
+//     for(int i = 0; i < m_listDevices.size(); ++i)
+//     {
+//         if(m_listDevices.at(i)->getDeviceObj()->getConnectType() == DeviceInfoEnum::RS232
+//             && m_listDevices.at(i)->getDeviceObj()->getConnectTypeID() == rs232ID)
+//             return m_listDevices.at(i);
+//     }
 
-    return nullptr;
-}
+//     return nullptr;
+// }
 
 int DeviceManager::getSelectedDeviceIndex() const
 {
@@ -130,6 +130,7 @@ bool DeviceManager::addDevice()
     setDeviceList(m_listDevices);
     setDeviceCounter(m_listDevices.size());
     setSelectedDeviceIndex(m_listDevices.size() - 1);
+    qDebug() << "add Device";
     return true;
 }
 

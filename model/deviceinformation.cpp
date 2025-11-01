@@ -33,18 +33,7 @@ DeviceInformation::DeviceInformation(int welderID, QObject *parent)
         setHeightEncoderOption(true);
         setSuspiciousOption(true);
         setConnectType(DeviceInfoEnum::TCP_IP);
-    }
 
-    if(DataBaseManager::getInstance()->getSystemData(m_WelderID, m_DBSystem) == true)
-    {
-        setSingleFactor(QString::number(m_DBSystem.SingleFactorSetting));
-        setGeneralFactor(QString::number(m_DBSystem.GeneralFactorSetting));
-        setAutoLearningCount(QString::number(m_DBSystem.AutoLearningCount));
-        setForceThreshold(QString::number(m_DBSystem.ForceThreshold));
-        setResidualThreshold(QString::number(m_DBSystem.ResidualThreshold));
-    }
-    else
-    {
         setSingleFactor("20");
         setGeneralFactor("80");
         setAutoLearningCount("5");

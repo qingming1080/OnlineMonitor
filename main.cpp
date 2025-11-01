@@ -95,7 +95,7 @@ int main(int argc, char *argv[])
 
     qmlRegisterType<Device>("Device", 1, 0, "Device");
     // qmlRegisterType<IO>("IO", 1, 0, "IO");
-    qmlRegisterType<DeviceInformation>("DeviceInformation", 1, 0, "DeviceInformation");
+    qmlRegisterType<DeviceInformation>("DeviceObj", 1, 0, "DeviceObj");
     qmlRegisterType<Production>("Production", 1, 0, "Production");
     qmlRegisterType<Trend>("Trend",1,0,"Trend");
     qmlRegisterType<QmlEnum>("QmlEnum",1,0,"QmlEnum");

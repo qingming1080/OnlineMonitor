@@ -2,7 +2,7 @@
 import QtQuick.Controls 1.4
 import QtQuick.Controls 2.5
 import Device 1.0
-import DeviceInformation 1.0
+import DeviceObj            1.0
 import QmlEnum 1.0
 import GlobalLanguageDefine 1.0
 import GlobalSystemDefine   1.0
@@ -12,68 +12,36 @@ import DeviceInfoEnum       1.0
 
 //系统配置
 Rectangle {
-    id: sysUI
-    // property bool isFirstDeviceConfigured: false
-    // property string firstDeviceLocalIp: ""
+    id: layoutSystemConfig
 
-    property int itemCount: equipmentCount
-    property int currIndex: 0
-    property int currentConfigId: 0 // 多设备时放大界面数据判断
-    property int networkId: 1
-    property int rs232Id: 1
-    property int loadType: 0
-    property bool musysTmp1: false
-    property bool musysTmp2: false
-    property bool musysTmp3: false
-    property bool musysTmp4: false
+    // property int itemCount: equipmentCount
+    // property int currIndex: 0
+    // property int networkId: 1
+    // property int rs232Id: 1
+    // property int loadType: 0
+    // property bool musysTmp1: false
+    // property bool musysTmp2: false
+    // property bool musysTmp3: false
+    // property bool musysTmp4: false
 
-    property bool undetermined1: false
-    property bool undetermined2: false
-    property bool undetermined3: false
-    property bool undetermined4: false
-    property bool undeterMined: {
-        //if(equipmentCount === 1){
-        if(equipmentCount === 0){
-            if(DeviceManager.DeviceList[0]){
-                return DeviceManager.DeviceList[0].pIO.availabel
-            }
-            else{
-                return false
-            }
-        }
-        else{
-            if(DeviceManager.DeviceList[currentConfigId-1]){
-                return DeviceManager.DeviceList[currentConfigId-1].pIO.availabel
-            }
-            else{
-                return false
-            }
-        }
-    }
-    property bool altitudMode:{
-        if(DeviceManager.DeviceList[currentConfigId-1]){
-            return DeviceManager.DeviceList[currentConfigId-1].DeviceObj.heightOption
-                    === 1 ? true:false
-        }
-        else {
-            return false
-        }
-    }
-    property bool oneself: false
-    property bool btnDefault: false
+    // property bool undetermined1: false
+    // property bool undetermined2: false
+    // property bool undetermined3: false
+    // property bool undetermined4: false
+
+    // property bool oneself: false
+    // property bool btnDefault: false
     property var sysViews: []
     Component.onCompleted: {
-        loadViewsys(1,syscfg)
+        loadViewsys(1, syscfg)
     }
 
     color: pRgb(153, 204, 255)
 
-    signal sigSysCheck(var id)
     signal sigAddDevice()
-    function sysCheck(id){
-        sigSysCheck(id)
-    }
-    function loadViewsys(viewName, component) {
+
+    function loadViewsys(viewName, component)
+    {
         loader1.pop()
         if (sysViews[viewName]) {
             // 如果视图已缓存，直接显示
@@ -94,46 +62,13 @@ Rectangle {
     }
 
     function configCheck(){
-        if(isAdd){
+        if(DeviceManager.DeviceCounter === 0)
+        {
             loadViewsys(1, syscfg)
         }
-        else{
+        else
+        {
             loadViewsys(2, musys)
-            // currIndex = 0
-        }
-    }
-    ///TODO    onItemCountChanged
-
-    onItemCountChanged: {
-        if(itemCount == 0){
-            musysTmp1 = false
-            musysTmp2 = false
-            musysTmp3 = false
-            musysTmp4 = false
-        }
-        else if(itemCount == 1){
-            musysTmp1 = true
-            musysTmp2 = false
-            musysTmp3 = false
-            musysTmp4 = false
-        }
-        else if(itemCount == 2){
-            musysTmp1 = true
-            musysTmp2 = true
-            musysTmp3 = false
-            musysTmp4 = false
-        }
-        else if(itemCount == 3){
-            musysTmp1 = true
-            musysTmp2 = true
-            musysTmp3 = true
-            musysTmp4 = false
-        }
-        else if(itemCount == 4){
-            musysTmp1 = true
-            musysTmp2 = true
-            musysTmp3 = true
-            musysTmp4 = true
         }
     }
 
@@ -184,22 +119,11 @@ Rectangle {
         id: syscfg
         Item {
             Connections{
-                target: sysUI
-
-                // TODO onSigAddDevice
-                function onSigAddDevice(){
-                    DeviceManager.addDevice(maxProductionTextField.text,learningSamplesTextField.text,
-                                            yieldLowerLimitTextField.text,t7.text,t8.text,peelForceThresholdField.text,
-                                            // altitudMode?1:0,t4.text,com1.currentText,loadType,networkId)
-                                           altitudMode?1:0,t4.text,com1.currentText,loadType,loadType ? rs232Id:networkId )
-                    // networkId = 1
-                    // rs232Id = 1
-                    // loadType = 0
-                    // DeviceManager.DeviceListChanged()
-
+                target: layoutSystemConfig
+                function onSigAddDevice()
+                {
+                    DeviceManager.addDevice()
                 }
-
-
             }
 
             Rectangle{
@@ -258,27 +182,11 @@ Rectangle {
                         border.width: 3
                         border.color: "#99ccff"
                     }
-
-                    //TODO
-
-                    text:{
-                        // if(equipmentCount === 1){
-                        if(equipmentCount === 0){
-                            if(DeviceManager.DeviceList[0]){
-                                DeviceManager.DeviceList[0].DeviceObj.maxBacth
-                            }
-                            else{
-                                return 20000
-                            }
-                        }
-                        else{
-                            if(DeviceManager.DeviceList[currentConfigId-1]){
-                                DeviceManager.DeviceList[currentConfigId-1].DeviceObj.maxBacth
-                            }
-                            else{
-                                return 20000
-                            }
-                        }
+                    text: {
+                        if(DeviceManager.SelectedDeviceIndex === -1)
+                            return ""
+                        else
+                            DeviceManager.DeviceList[DeviceManager.SelectedDeviceIndex].DeviceObj.ProductionMaxBacth
                     }
                     MouseArea {
                         anchors.fill: parent
@@ -290,10 +198,16 @@ Rectangle {
                     onEditingFinished: {
                         var maxProductionRegex = /^(?:[2-9]\d{4}|[1-9]\d{5}|1000000)$/
                         if (!maxProductionRegex.test(maxProductionTextField.text))
+                        {
                             footer.showError(titleMaxProduction.text + GlobalLanguageDefine.strMaxProductionLimit)
-                        else
-                            footer.hideError()
                         }
+                        else
+                        {
+                            footer.hideError()
+                            console.debug("111111111111111111: ", titleMaxProduction.text)
+                            DeviceManager.DeviceList[DeviceManager.SelectedDeviceIndex].DeviceObj.ProductionMaxBacth = titleMaxProduction.text
+                        }
+                    }
                 }
 
                 Text {
@@ -336,30 +250,21 @@ Rectangle {
                         }
                     }
                     text:{
-                        // if(equipmentCount === 1){
-                        if(equipmentCount === 0){
-                            if(DeviceManager.DeviceList[0]){
-                                DeviceManager.DeviceList[0].DeviceObj.sample
-                            }
-                            else{
-                                return 20
-                            }
-                        }
-                        else{
-                            if(DeviceManager.DeviceList[currentConfigId-1]){
-                                DeviceManager.DeviceList[currentConfigId-1].DeviceObj.sample
-                            }
-                            else{
-                                return 20
-                            }
-                        }
+                        var index = DeviceManager.SelectedDeviceIndex
+                        if(index === -1)
+                            return ""
+                        else
+                            DeviceManager.DeviceList[index].DeviceObj.MaxModelSamples
                     }
                     onEditingFinished: {
                         var learningSamplesRegex = /^(1[0-9]|20)$/
                         if (!learningSamplesRegex.test(learningSamplesTextField.text))
                             footer.showError(titleLearningSamples.text + GlobalLanguageDefine.strLearnSampleLimit)
                         else
+                        {
                             footer.hideError()
+                            DeviceManager.DeviceList[DeviceManager.SelectedDeviceIndex].DeviceObj.MaxModelSamples = learningSamplesTextField.text
+                        }
                     }
                 }
                 Text {
@@ -389,6 +294,7 @@ Rectangle {
                     font.pixelSize: 18
                     inputMethodHints: Qt.ImhDigitsOnly
                     maximumLength: 2
+                    property int tmpIndex: DeviceManager.SelectedDeviceIndex
                     background: Rectangle{
                         radius: 6
                         border.width: 3
@@ -402,30 +308,21 @@ Rectangle {
                         }
                     }
                     text:{
-                        // if(equipmentCount === 1){
-                        if(equipmentCount === 0){
-                            if(DeviceManager.DeviceList[0]){
-                                DeviceManager.DeviceList[0].DeviceObj.lowerLimit
-                            }
-                            else{
-                                return 99
-                            }
-                        }
-                        else{
-                            if(DeviceManager.DeviceList[currentConfigId-1]){
-                                DeviceManager.DeviceList[currentConfigId-1].DeviceObj.lowerLimit
-                            }
-                            else{
-                                return 99
-                            }
-                        }
+                        if(tmpIndex === -1)
+                            return ""
+                        else
+                            DeviceManager.DeviceList[tmpIndex].DeviceObj.YieldRateLowerLimit
+
                     }
                     onEditingFinished: {
                         var yieldLowerLimitRegex = /^[1-9][0-9]$/
                         if (!yieldLowerLimitRegex.test(yieldLowerLimitTextField.text))
                             footer.showError(titleYieldLowerLimit.text + GlobalLanguageDefine.strInputInterger)
                         else
+                        {
                             footer.hideError()
+                            DeviceManager.DeviceList[tmpIndex].DeviceObj.YieldRateLowerLimit = yieldLowerLimitTextField.text
+                        }
                     }
                 }
 
@@ -455,6 +352,7 @@ Rectangle {
                     font.pixelSize: 18
                     inputMethodHints: Qt.ImhDigitsOnly
                     maximumLength: 5
+                    property int tmpIndex: DeviceManager.SelectedDeviceIndex
                     background: Rectangle{
                         radius: 6
                         border.width: 3
@@ -468,23 +366,10 @@ Rectangle {
                         }
                     }
                     text:{
-                       // if(equipmentCount === 1){
-                        if(equipmentCount === 0){
-                            if(DeviceManager.DeviceList[0]){
-                                DeviceManager.DeviceList[0].DeviceObj.lowerLimit
-                            }
-                            else{
-                                return ""
-                            }
-                        }
-                        else{
-                            if(DeviceManager.DeviceList[currentConfigId-1]){
-                                DeviceManager.DeviceList[currentConfigId-1].DeviceObj.lowerLimit
-                            }
-                            else{
-                                return ""
-                            }
-                        }
+                        if(tmpIndex === -1)
+                            return ""
+                        else
+                            return DeviceManager.DeviceList[tmpIndex].DeviceObj.AutoLearningCount
                     }
 
                     onEditingFinished: {
@@ -492,7 +377,10 @@ Rectangle {
                         if (!portRegex.test(t7.text))
                             footer.showError(s7.text + GlobalLanguageDefine.strEnter0And65535)
                         else
+                        {
                             footer.hideError()
+                            DeviceManager.DeviceList[tmpIndex].DeviceObj.AutoLearningCount = t7.text
+                        }
                     }
                 }
 
@@ -533,31 +421,22 @@ Rectangle {
                             keyboardType = 0
                         }
                     }
+                    property int tmpIndex: DeviceManager.SelectedDeviceIndex
                     text:{
-                        // if(equipmentCount === 1){
-                        if(equipmentCount === 0){
-                            if(DeviceManager.DeviceList[0]){
-                                DeviceManager.DeviceList[0].DeviceObj.lowerLimit
-                            }
-                            else{
-                                return ""
-                            }
-                        }
-                        else{
-                            if(DeviceManager.DeviceList[currentConfigId-1]){
-                                DeviceManager.DeviceList[currentConfigId-1].DeviceObj.lowerLimit
-                            }
-                            else{
-                                return ""
-                            }
-                        }
+                        if(tmpIndex === -1)
+                            return ""
+                        else
+                            DeviceManager.DeviceList[tmpIndex].DeviceObj.ResidualThreshold
                     }
                     onEditingFinished: {
                         var ipRegex = /^(25[0-5]|2[0-4]\d|1\d{2}|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d{2}|[1-9]?\d)){3}$/
                         if (!ipRegex.test(t8.text))
                             footer.showError(s8.text + GlobalLanguageDefine.strEnterValidIPAddress)
                         else
+                        {
                             footer.hideError()
+                            DeviceManager.DeviceList[tmpIndex].DeviceObj.ResidualThreshold = s8.text
+                        }
                     }
                 }
 
@@ -599,31 +478,22 @@ Rectangle {
                             keyboardType = 0
                         }
                     }
+                    property int tmpIndex: DeviceManager.SelectedDeviceIndex
                     text:{
-                        // if(equipmentCount === 1){
-                        if(equipmentCount === 0){
-                            if(DeviceManager.DeviceList[0]){
-                                DeviceManager.DeviceList[0].DeviceObj.lowerLimit
-                            }
-                            else{
-                                return ""
-                            }
-                        }
-                        else{
-                            if(DeviceManager.DeviceList[currentConfigId-1]){
-                                DeviceManager.DeviceList[currentConfigId-1].DeviceObj.lowerLimit
-                            }
-                            else{
-                                return ""
-                            }
-                        }
+                        if(tmpIndex === -1)
+                            return ""
+                        else
+                            return DeviceManager.DeviceList[tmpIndex].DeviceObj.ForceThreshold
                     }
                     onEditingFinished: {
                         var portRegex = /^(25[0-5]|2[0-4]\d|1\d{2}|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d{2}|[1-9]?\d)){3}$/
                         if (!portRegex.test(peelForceThresholdField.text))
                             footer.showError(titlePeelForceThreshold.text + GlobalLanguageDefine.strEnterValidIPAddress)
                         else
+                        {
                             footer.hideError()
+                            DeviceManager.DeviceList[tmpIndex].DeviceObj.ForceThreshold = peelForceThresholdField.text
+                        }
                     }
                 }
 
@@ -653,37 +523,24 @@ Rectangle {
 
                 }
                 RadioButton{
-                    id:bt1
+                    id: bt1
                     width: 34
                     height: 34
                     anchors.left: s5.right
                     anchors.verticalCenter: titleHeightMode.verticalCenter
                     anchors.leftMargin: 10
-
-                    checked: altitudMode
+                    checked: DeviceManager.DeviceList[DeviceManager.SelectedDeviceIndex].DeviceObj.HeightEncoderOption
                     indicator: Rectangle
                     {
                         width: 34
                         height: 34
                         radius: 17
-                        color: altitudMode ? "#0d988c" : pRgb(232, 232, 232)
+                        color: DeviceManager.DeviceList[DeviceManager.SelectedDeviceIndex].DeviceObj.HeightEncoderOption ? "#0d988c" : pRgb(232, 232, 232)
                         border.color: "#b1d5db"
                         border.width: 2
                     }
                     onPressed: {
-                        if(equipmentCount > 1){
-                            sigUndetermined(currentConfigId)
-                        }
-                        if(isAdd){
-                            altitudMode = true
-                        }
-                        // else if(equipmentCount === 1){
-                        else if(equipmentCount === 0){
-                            DeviceManager.DeviceList[0].DevInfoObject.setHeightEncoderOption(1)
-                        }
-                        else{
-                            DeviceManager.DeviceList[currentConfigId-1].DevInfoObject.setHeightEncoderOption(1)
-                        }
+                        DeviceManager.DeviceList[DeviceManager.SelectedDeviceIndex].DevInfoObject.HeightEncoderOption = true
                     }
                 }
                 Text {
@@ -705,27 +562,18 @@ Rectangle {
                     anchors.left: bt1.right
                     anchors.top: bt1.top
                     anchors.leftMargin: 65
-                    checked: !altitudMode
+                    checked: !DeviceManager.DeviceList[DeviceManager.SelectedDeviceIndex].DeviceObj.HeightEncoderOption
                     indicator: Rectangle
                     {
                         width: 34
                         height: 34
                         radius: 17
-                        color: !altitudMode ? "#0d988c" : pRgb(232, 232, 232)
+                        color: !DeviceManager.DeviceList[DeviceManager.SelectedDeviceIndex].DeviceObj.HeightEncoderOption ? "#0d988c" : pRgb(232, 232, 232)
                         border.color: "#b1d5db"
                         border.width: 2
                     }
                     onPressed: {
-                        if(isAdd){
-                            altitudMode = false
-                        }
-                        // else if(equipmentCount === 1){
-                        else if(equipmentCount === 0){
-                            DeviceManager.DeviceList[0].DevInfoObject.setHeightEncoderOption(0)
-                        }
-                        else{
-                            DeviceManager.DeviceList[currentConfigId-1].DevInfoObject.setHeightEncoderOption(0)
-                        }
+                        DeviceManager.DeviceList[DeviceManager.SelectedDeviceIndex].DeviceObj.HeightEncoderOption = false
                     }
                 }
             }
@@ -774,31 +622,22 @@ Rectangle {
                             keyboardType = 1
                         }
                     }
+                    property int tmpIndex: DeviceManager.SelectedDeviceIndex
                     text:{
-                        // if(equipmentCount === 1){
-                        if(equipmentCount === 0){
-                            if(DeviceManager.DeviceList[0]){
-                                return DeviceManager.DeviceList[0].DevInfoObject.WelderName
-                            }
-                            else{
-                                return ""
-                            }
-                        }
-                        else{
-                            if(DeviceManager.DeviceList[currentConfigId-1]){
-                                return DeviceManager.DeviceList[currentConfigId-1].DevInfoObject.WelderName
-                            }
-                            else{
-                                return ""
-                            }
-                        }
+                        if(tmpIndex === -1)
+                            return ""
+                        else
+                            return DeviceManager.DeviceList[tmpIndex].DeviceObj.WelderName
                     }
                     onEditingFinished: {
                         var nameRegex = /^[\u4e00-\u9fa5A-Za-z0-9]+$/
                         if (!nameRegex.test(t4.text))
                             footer.showError(s14.text + GlobalLanguageDefine.strDeviceNameRule)
                         else
+                        {
                             footer.hideError()
+                            DeviceManager.DeviceList[tmpIndex].DeviceObj.WelderName = t4.text
+                        }
                     }
                 }
                 Text {
@@ -828,27 +667,12 @@ Rectangle {
                     id:ctl1
                     x:228
                     y:147
+                    property int tmpIndex: DeviceManager.SelectedDeviceIndex
                     onPressed: {
-                        if(isAdd){
-
-                        }
-                       // if(equipmentCount === 1){
-                        if(equipmentCount === 0){
-                            if(ctl1.checked){
-                                DeviceManager.DeviceList[0].DeviceObj.ConnectType = 1
-                            }
-                            else{
-                                DeviceManager.DeviceList[0].DeviceObj.ConnectType = 0
-                            }
-                        }
-                        else{
-                            if(ctl1.checked){
-                                DeviceManager.DeviceList[currentConfigId-1].DeviceObj.ConnectType = 1
-                            }
-                            else{
-                                DeviceManager.DeviceList[currentConfigId-1].DeviceObj.ConnectType = 0
-                            }
-                        }
+                        if(ctl1.checked)
+                            DeviceManager.DeviceList[tmpIndex].DeviceObj.ConnectType = DeviceInfoEnum.TCP_IP
+                        else
+                            DeviceManager.DeviceList[tmpIndex].DeviceObj.ConnectType = DeviceInfoEnum.RS232
                     }
                     indicator: Rectangle{
                         id:indicator1
@@ -874,32 +698,42 @@ Rectangle {
                             NumberAnimation on x{
                                 to:smallRect1.width
                                 running: {
-                                    if(isAdd){
-                                        return ctl1.checked
+                                    var bResult = false;
+                                    var tmpIndex = DeviceManager.SelectedDeviceIndex
+                                    switch(DeviceManager.DeviceList[tmpIndex].DeviceObj.ConnectType)
+                                    {
+                                    case DeviceInfoEnum.TCP_IP:
+                                        bResult = false;
+                                        break;
+                                    case DeviceInfoEnum.RS232:
+                                        bResult = true;
+                                        break;
+                                    default:
+                                        bResult = false;
+                                        break;
                                     }
-                                    //else if(equipmentCount === 1){
-                                    else if(equipmentCount === 1){
-                                        return DeviceManager.DeviceList[0].DeviceObj.ConnectType !== 0? true : false
-                                    }
-                                    else{
-                                        return DeviceManager.DeviceList[currentConfigId - 1].DeviceObj.ConnectType !== 0? true : false
-                                    }
+                                    return bResult;
                                 }
                                 duration: 0
                             }
                             NumberAnimation on x{
                                 to:8
                                 running: {
-                                    if(isAdd){
-                                        return !ctl1.checked
+                                    var bResult = false;
+                                    var tmpIndex = DeviceManager.SelectedDeviceIndex
+                                    switch(DeviceManager.DeviceList[tmpIndex].DeviceObj.ConnectType)
+                                    {
+                                    case DeviceInfoEnum.TCP_IP:
+                                        bResult = true;
+                                        break;
+                                    case DeviceInfoEnum.RS232:
+                                        bResult = false;
+                                        break;
+                                    default:
+                                        bResult = false;
+                                        break;
                                     }
-                                    // else if(equipmentCount === 1){
-                                    else if(equipmentCount === 1){
-                                        return DeviceManager.DeviceList[0].DeviceObj.ConnectType !== 0? false : true
-                                    }
-                                    else{
-                                        return DeviceManager.DeviceList[currentConfigId - 1].DeviceObj.ConnectType !== 0? false : true
-                                    }
+                                    return bResult;
                                 }
                                 duration: 0
                             }
@@ -912,16 +746,7 @@ Rectangle {
                             // text: qsTr("网络")
                             text: "TCP/IP"
                             color: {
-                                if(isAdd){
-                                    return ctl1.checked ? pRgb(43, 112, 173) : "#e5e6e7"
-                                }
-                                // else if(equipmentCount === 1){
-                                else if(equipmentCount === 1){
-                                    return DeviceManager.DeviceList[0].DeviceObj.ConnectType !== 0 ? pRgb(43, 112, 173) : "#e5e6e7"
-                                }
-                                else{
-                                    return DeviceManager.DeviceList[currentConfigId - 1].DeviceObj.ConnectType !== 0 ? pRgb(43, 112, 173) : "#e5e6e7"
-                                }
+                                return DeviceManager.DeviceList[DeviceManager.SelectedDeviceIndex].DeviceObj.ConnectType !== DeviceInfoEnum.TCP_IP ? pRgb(43, 112, 173) : "#e5e6e7"
                             }
                             font.family: GlobalSystemDefine.fontBold
                             font.bold: true
@@ -934,16 +759,7 @@ Rectangle {
                             anchors.rightMargin: 63
                             text: "RS232"
                             color: {
-                                if(isAdd){
-                                    return !ctl1.checked ? pRgb(43, 112, 173) : "#e5e6e7"
-                                }
-                                // else if(equipmentCount === 1){
-                                else if(equipmentCount === 1){
-                                    return DeviceManager.DeviceList[0].DeviceObj.ConnectType !== 0? "#e5e6e7" : pRgb(43, 112, 173)
-                                }
-                                else{
-                                    return DeviceManager.DeviceList[currentConfigId - 1].DeviceObj.ConnectType !== 0? "#e5e6e7" : pRgb(43, 112, 173)
-                                }
+                                return DeviceManager.DeviceList[0].DeviceObj.ConnectType !== DeviceInfoEnum.TCP_IP ? "#e5e6e7" : pRgb(43, 112, 173)
                             }
                             font.family: GlobalSystemDefine.fontBold
                             font.bold: true
@@ -954,23 +770,10 @@ Rectangle {
                 Loader{
                     id:loader
                     focus: true
+                    property int tmpIndex: DeviceManager.SelectedDeviceIndex
                     sourceComponent: {
-                        if(isAdd){
-                            loadType = ctl1.checked ? 1 : 0
-                            return ctl1.checked ? rect2 : rect1
-                        }
-                        // else if(equipmentCount === 1){
-                        else if(equipmentCount === 1){
-                            // DeviceManager.DeviceListChanged()
-                            return DeviceManager.DeviceList[0].DeviceObj.ConnectType === 0 ? rect1 : rect2
-                        }
-                        else{
-                            // DeviceManager.DeviceListChanged()
-                            return DeviceManager.DeviceList[currentConfigId - 1].DeviceObj.ConnectType === 0 ? rect1 : rect2
-                        }
-
+                        return DeviceManager.DeviceList[tmpIndex].DeviceObj.ConnectType === DeviceInfoEnum.TCP_IP ? rect1 : rect2
                     }
-
                 }
                 Component{
                     id:rect1
@@ -1367,8 +1170,7 @@ Rectangle {
                     height: 30
                     x:1170
                     y:10
-                    visible: equipmentCount > 1 ? true : false
-                    //visible: equipmentCount > 1
+                    visible: DeviceManager.DeviceCounter > 1 ? true : false
                     background: Rectangle{
                         color: "transparent"
                         Image {
@@ -1377,7 +1179,7 @@ Rectangle {
                         }
                     }
                     onPressed: {
-                        loadViewsys(2,musys)
+                        loadViewsys(2, musys)
                     }
                 }
             }
@@ -1406,50 +1208,8 @@ Rectangle {
                     font.bold: true
                 }
                 onPressed: {
-                    if(maxProductionTextField.text >= 20000 && maxProductionTextField.text <= 1000000){
-                        if(learningSamplesTextField.text >= 10 && learningSamplesTextField.text <= 20){
-                            if(yieldLowerLimitTextField.text >= 90 && yieldLowerLimitTextField.text <= 99){
-                                if(isAdd){
-                                    Qt.callLater(sigAddDevice)
-                                    if(!oneself){
-                                        switchUI(1)
-                                    }
-                                    oneself = false
-                                    sigUndetermined(1)
-                                    loadViewsys(2,musys)
-                                    isAdd = false
-                                    return
-                                }
-                                //if(full.visible){//设置多设备时配置存储
-                                if(equipmentCount > 1){//设置多设备时配置存储
-                                    DeviceManager.DeviceList[currentConfigId-1].DeviceObj.setProductionMaxBacth(maxProductionTextField.text)
-                                    DeviceManager.DeviceList[currentConfigId-1].DeviceObj.setMaxModelSamples(learningSamplesTextField.text)
-                                    DeviceManager.DeviceList[currentConfigId-1].DeviceObj.setYieldRateLowerLimit(yieldLowerLimitTextField.text)
-                                    DeviceManager.DeviceList[currentConfigId-1].DeviceObj.setWelderName(t4.text)
-                                }
-                                else{
-                                    // DeviceManager.DeviceList[currentConfigId-1].DeviceObj.setMaxBacth(t1.text)
-                                    // DeviceManager.DeviceList[currentConfigId-1].DeviceObj.setSample(t2.text)
-                                    // DeviceManager.DeviceList[currentConfigId-1].DeviceObj.setLowerLimit(t3.text)
-                                    // DeviceManager.DeviceList[currentConfigId-1].DeviceObj.setName(t4.text)
-                                    DeviceManager.DeviceList[0].DeviceObj.setProductionMaxBacth(maxProductionTextField.text)
-                                    DeviceManager.DeviceList[0].DeviceObj.setMaxModelSamples(learningSamplesTextField.text)
-                                    DeviceManager.DeviceList[0].DeviceObj.setYieldRateLowerLimit(yieldLowerLimitTextField.text)
-                                    DeviceManager.DeviceList[0].DeviceObj.setWelderName(t4.text)
-                                }
-                                loadViewsys(2,musys)
-                            }
-                            else{
-                                popup.openPop(11)
-                            }
-                        }
-                        else{
-                            popup.openPop(11)
-                        }
-                    }
-                    else{
-                        popup.openPop(11)
-                    }
+                    DeviceManager.saveDevice()
+                    loadViewsys(2, musys)
                 }
             }
         }
@@ -1457,290 +1217,100 @@ Rectangle {
 
     Component{
         id: musys
-        //TODO
         Item{
-            MultideviceSystemConfig{
+            readonly property string backgroundColor: "#2B70AD"
+            readonly property string selectedColor: "#4a8ac4"
+            function selectDevice(index)
+            {
+                s1.color = backgroundColor
+                s2.color = backgroundColor
+                s3.color = backgroundColor
+                s4.color = backgroundColor
+                switch(index)
+                {
+                case 0:
+                    s1.color = selectedColor;
+                    break;
+                case 1:
+                    s2.color = selectedColor;
+                    break;
+                case 2:
+                    s3.color = selectedColor
+                    break;
+                case 3:
+                    s4.color = selectedColor
+                    break;
+                default:
+                    break;
+                }
+            }
+            MultideviceSystemConfig
+            {
                 id:s1
                 x:41
                 y:68
-                sysCurrIndex:DeviceManager.DeviceList[0].DeviceObj.id
-                sysCurrIndex1:1
-                heightOpation:{
-                    if(DeviceManager.DeviceList[0]){
-                        return DeviceManager.DeviceList[0].DeviceObj.heightOption
-                                === 1 ? true:false
-                    }
-                    else{
-                        return false
-                    }
-                }
-                visible: musysTmp1
-                eqText1:{
-                    if(DeviceManager.DeviceList[0]){
-                        DeviceManager.DeviceList[0].DeviceObj.name
-                    }
-                    else{
-                        return ""
-                    }
-                }
-                eqText2:{
-                    if(DeviceManager.DeviceList[0]){
-                        DeviceManager.DeviceList[0].DeviceObj.model
-                    }
-                    else{
-                        return ""
-                    }
-                }
-                eqText3:{
-                    if(DeviceManager.DeviceList[0]){
-                        DeviceManager.DeviceList[0].DeviceObj.ConnectType === 0  ? "TCP/IP" : "RS232"
-                    }
-                    else{
-                        return ""
-                    }
-                }
-                eqText4:{
-                    if(DeviceManager.DeviceList[0])
-                    {
-                        var connectState = DeviceManager.DeviceList[0].DeviceObj.ConnectState
-                        return GlobalMessageDefine.getConnectState(connectState)
-                    }
-                    else{
-                        return ""
-                    }
-                }
-                onSigAltitudeModel: {
-                    if(visible){
-                        altitudeModel1 = tmp
-                    }
+                currentIndex: 0
+                heightOption: DeviceManager.DeviceList[currentIndex].DeviceObj.HeightEncoderOption
+                suspiciousOption: DeviceManager.DeviceList[currentIndex].DeviceObj.SuspiciousOption
+                visible: (DeviceManager.DeviceCounter > currentIndex) ? true : false
+                nameWelder: DeviceManager.DeviceList[currentIndex].DeviceObj.WelderName
+                typeWelder: DeviceManager.DeviceList[currentIndex].DeviceObj.WelderType
+                typeConnect: DeviceManager.DeviceList[currentIndex].DeviceObj.ConnectType
+                isConnected: DeviceManager.DeviceList[currentIndex].DeviceObj.ConnectState
+                onSignalWelderSelected: {
+                        selectDevice(index)
+                        DeviceManager.SelectedDeviceIndex = index
                 }
             }
             MultideviceSystemConfig{
                 id:s2
                 x:347
                 y:68
-                sysCurrIndex:DeviceManager.DeviceList[1].DeviceObj.id
-                sysCurrIndex1:2
-                heightOpation:{
-                    if(DeviceManager.DeviceList[1]){
-                        return DeviceManager.DeviceList[1].DeviceObj.heightOption
-                                === 1 ? true:false
-                    }
-                    else{
-                        return false
-                    }
-                }
-                visible: musysTmp2
-                eqText1:{
-                    if(DeviceManager.DeviceList[1]){
-                        DeviceManager.DeviceList[1].DeviceObj.name
-                    }
-                    else{
-                        return ""
-                    }
-                }
-                eqText2:{
-                    if(DeviceManager.DeviceList[1]){
-                        DeviceManager.DeviceList[1].DeviceObj.model
-                    }
-                    else{
-                        return ""
-                    }
-                }
-                eqText3:{
-                    if(DeviceManager.DeviceList[1]){
-                        DeviceManager.DeviceList[1].DeviceObj.ConnectType === 0 ? "TCP/IP" : "RS232"
-                    }
-                    else{
-                        return ""
-                    }
-                }
-                eqText4:{
-                    if(DeviceManager.DeviceList[1])
-                    {
-                        var connectState = DeviceManager.DeviceList[1].DeviceObj.ConnectState
-                        return GlobalMessageDefine.getConnectState(connectState)
-                    }
-                    else{
-                        return ""
-                    }
-                }
-                onSigAltitudeModel: {
-                    if(visible){
-                        altitudeModel2 = tmp
-                    }
+                currentIndex: 1
+                heightOption: DeviceManager.DeviceList[currentIndex].DeviceObj.HeightEncoderOption
+                suspiciousOption: DeviceManager.DeviceList[currentIndex].DeviceObj.SuspiciousOption
+                visible: (DeviceManager.DeviceCounter > currentIndex) ? true : false
+                nameWelder: DeviceManager.DeviceList[currentIndex].DeviceObj.WelderName
+                typeWelder: DeviceManager.DeviceList[currentIndex].DeviceObj.WelderType
+                typeConnect: DeviceManager.DeviceList[currentIndex].DeviceObj.ConnectType
+                isConnected: DeviceManager.DeviceList[currentIndex].DeviceObj.ConnectState
+                onSignalWelderSelected: {
+                        selectDevice(index)
+                        DeviceManager.SelectedDeviceIndex = index
                 }
             }
             MultideviceSystemConfig{
                 id:s3
                 x:654
                 y:68
-                sysCurrIndex: DeviceManager.DeviceList[2].DeviceObj.id
-                sysCurrIndex1: 3
-                heightOpation:{
-                    if(DeviceManager.DeviceList[2]){
-                        return DeviceManager.DeviceList[2].DeviceObj.heightOption
-                                === 1 ? true:false
-                    }
-                    else if(DeviceManager.DeviceList[3]){
-                        return DeviceManager.DeviceList[3].DeviceObj.heightOption
-                                === 1 ? true : false
-                    }
-                    else{
-                        return false
-                    }
-                }
-                visible: musysTmp3
-                eqText1:{
-                    if(DeviceManager.DeviceList[2]){
-                        DeviceManager.DeviceList[2].DeviceObj.name
-                    }
-                    else if(DeviceManager.DeviceList[3]){
-                        DeviceManager.DeviceList[3].DeviceObj.name
-                    }
-                    else{
-                        return ""
-                    }
-                }
-                eqText2:{
-                    if(DeviceManager.DeviceList[2]){
-                        DeviceManager.DeviceList[2].DeviceObj.model
-                    }
-                    else if(DeviceManager.DeviceList[3]){
-                        DeviceManager.DeviceList[3].DeviceObj.model
-                    }
-                    else{
-                        return ""
-                    }
-                }
-                eqText3:{
-                    if(DeviceManager.DeviceList[2]){
-                        DeviceManager.DeviceList[2].DeviceObj.ConnectType === 0  ? "TCP/IP" : "RS232"
-                    }
-                    else if(DeviceManager.DeviceList[3]){
-                        DeviceManager.DeviceList[3].DeviceObj.ConnectType === 0  ? "TCP/IP" : "RS232"
-                    }
-                    else{
-                        return ""
-                    }
-                }
-                eqText4:{
-                    var connectState = 0
-                    if(DeviceManager.DeviceList[2])
-                    {
-                        connectState = DeviceManager.DeviceList[2].DeviceObj.ConnectState
-                        return GlobalMessageDefine.getConnectState(connectState)
-                    }
-                    else if(DeviceManager.DeviceList[3])
-                    {
-                        connectState = DeviceManager.DeviceList[3].DeviceObj.ConnectState
-                        return GlobalMessageDefine.getConnectState(connectState)
-                    }
-                    else{
-                        return ""
-                    }
-                }
-                onSigAltitudeModel: {
-                    if(visible){
-                        altitudeModel3 = tmp
-                    }
+                currentIndex: 2
+                heightOption: DeviceManager.DeviceList[currentIndex].DeviceObj.HeightEncoderOption
+                suspiciousOption: DeviceManager.DeviceList[currentIndex].DeviceObj.SuspiciousOption
+                visible: (DeviceManager.DeviceCounter > currentIndex) ? true : false
+                nameWelder: DeviceManager.DeviceList[currentIndex].DeviceObj.WelderName
+                typeWelder: DeviceManager.DeviceList[currentIndex].DeviceObj.WelderType
+                typeConnect: DeviceManager.DeviceList[currentIndex].DeviceObj.ConnectType
+                isConnected: DeviceManager.DeviceList[currentIndex].DeviceObj.ConnectState
+                onSignalWelderSelected: {
+                        selectDevice(index)
+                        DeviceManager.SelectedDeviceIndex = index
                 }
             }
             MultideviceSystemConfig{
                 id:s4
                 x:961
                 y:68
-                sysCurrIndex:DeviceManager.DeviceList[3].DeviceObj.id
-                sysCurrIndex1:4
-                visible: musysTmp4
-                heightOpation:{
-                    if(DeviceManager.DeviceList[3]){
-                        return DeviceManager.DeviceList[3].DeviceObj.heightOption
-                                === 1 ? true:false
-                    }
-                    else if(DeviceManager.DeviceList[2]){
-                        return DeviceManager.DeviceList[2].DeviceObj.heightOption
-                                === 1 ? true:false
-                    }
-                    else{
-                        return false
-                    }
-                }
-                eqText1:{
-                    if(DeviceManager.DeviceList[3]){
-                        DeviceManager.DeviceList[3].DeviceObj.name
-                    }
-                    else if(DeviceManager.DeviceList[2]){
-                        DeviceManager.DeviceList[2].DeviceObj.name
-                    }
-                    else{
-                        return ""
-                    }
-                }
-                eqText2:{
-                    if(DeviceManager.DeviceList[3]){
-                        DeviceManager.DeviceList[3].DeviceObj.model
-                    }
-                    else if(DeviceManager.DeviceList[2]){
-                        DeviceManager.DeviceList[2].DeviceObj.model
-                    }
-                    else{
-                        return ""
-                    }
-                }
-                eqText3:{
-                    if(DeviceManager.DeviceList[3]){
-                        DeviceManager.DeviceList[3].DeviceObj.ConnectType === 0  ? "TCP/IP" : "RS232"
-                    }
-                    else if(DeviceManager.DeviceList[2]){
-                        DeviceManager.DeviceList[2].DeviceObj.ConnectType === 0  ? "TCP/IP" : "RS232"
-                    }
-                    else{
-                        return ""
-                    }
-                }
-                eqText4:{
-                    var connectState = 0
-                    if(DeviceManager.DeviceList[3])
-                    {
-                        connectState = DeviceManager.DeviceList[3].DeviceObj.ConnectState
-                        return GlobalMessageDefine.getConnectState(connectState)
-                    }
-                    else if(DeviceManager.DeviceList[2])
-                    {
-                        connectState = DeviceManager.DeviceList[2].DeviceObj.ConnectState
-                        return GlobalMessageDefine.getConnectState(connectState)
-                    }
-                    else{
-                        return ""
-                    }
-                }
-                onSigAltitudeModel: {
-                    if(visible){
-                        altitudeModel4 = tmp
-                    }
-                }
-            }
-
-            Connections{
-                target: sysUI
-                function onSigSysCheck(id){
-                    s1.color = pRgb(43, 112, 173)
-                    s2.color = pRgb(43, 112, 173)
-                    s3.color = pRgb(43, 112, 173)
-                    s4.color = pRgb(43, 112, 173)
-                    if(id === 1){
-                        s1.color = "#4a8ac4"
-                    }
-                    else if(id === 2){
-                        s2.color = "#4a8ac4"
-                    }
-                    else if(id === 3){
-                        s3.color = "#4a8ac4"
-                    }
-                    else if(id === 4){
-                        s4.color = "#4a8ac4"
-                    }
+                currentIndex: 3
+                heightOption: DeviceManager.DeviceList[currentIndex].DeviceObj.HeightEncoderOption
+                suspiciousOption: DeviceManager.DeviceList[currentIndex].DeviceObj.SuspiciousOption
+                visible: (DeviceManager.DeviceCounter > currentIndex) ? true : false
+                nameWelder: DeviceManager.DeviceList[currentIndex].DeviceObj.WelderName
+                typeWelder: DeviceManager.DeviceList[currentIndex].DeviceObj.WelderType
+                typeConnect: DeviceManager.DeviceList[currentIndex].DeviceObj.ConnectType
+                isConnected: DeviceManager.DeviceList[currentIndex].DeviceObj.ConnectState
+                onSignalWelderSelected: {
+                        selectDevice(index)
+                        DeviceManager.SelectedDeviceIndex = index
                 }
             }
             Connections{
@@ -1752,112 +1322,7 @@ Rectangle {
                     s4.color = pRgb(43, 112, 173)
                 }
                 function onSigDelDevice(){
-                    DeviceManager.removeDevice(currIndex)
-                    //                    var a = altitudeModel1
-                    //                    var b = altitudeModel2
-                    //                    var c = altitudeModel3
-                    //                    var d = altitudeModel4
-                    //                    var p1 = undetermined1
-                    //                    var p2 = undetermined2
-                    //                    var p3 = undetermined3
-                    //                    var p4 = undetermined4
-                    //                    altitudeModel1 = false
-                    //                    altitudeModel2 = false
-                    //                    altitudeModel3 = false
-                    //                    altitudeModel4 = false
-                    //                    undetermined1 = false
-                    //                    undetermined2 = false
-                    //                    undetermined3 = false
-                    //                    undetermined4 = false
-                    if(currIndex == 1){
-                        s1.color = pRgb(43, 112, 173)
-                        //                        if(equipmentCount == 3){
-                        //                            altitudeModel1 = b
-                        //                            altitudeModel2 = c
-                        //                            altitudeModel3 = d
-                        //                            undetermined1 = p2
-                        //                            undetermined2 = p3
-                        //                            undetermined3 = p4
-                        //                        }
-                        //                        else if(equipmentCount == 2){
-                        //                            altitudeModel1 = b
-                        //                            altitudeModel2 = c
-                        //                            undetermined1 = p2
-                        //                            undetermined2 = p3
-                        //                        }
-                        //                        else if(equipmentCount == 1){
-                        //                            altitudeModel1 = b
-                        //                            btnDefault = b
-                        //                            undetermined1 = p2
-                        //                        }
-                    }
-                    else if(currIndex == 2){
-                        s2.color = pRgb(43, 112, 173)
-                        //                        if(equipmentCount == 3){
-                        //                            altitudeModel1 = a
-                        //                            altitudeModel2 = c
-                        //                            altitudeModel3 = d
-                        //                            undetermined1 = p1
-                        //                            undetermined2 = p3
-                        //                            undetermined3 = p4
-                        //                        }
-                        //                        else if(equipmentCount == 2){
-                        //                            altitudeModel1 = a
-                        //                            altitudeModel2 = c
-                        //                            undetermined1 = p1
-                        //                            undetermined2 = p3
-                        //                        }
-                        //                        else if(equipmentCount == 1){
-                        //                            altitudeModel1 = a
-                        //                            btnDefault = a
-                        //                            undetermined1 = p1
-                        //                        }
-                    }
-                    else if(currIndex == 3){
-                        s3.color = pRgb(43, 112, 173)
-                        //                        if(equipmentCount == 3){
-                        //                            altitudeModel1 = a
-                        //                            altitudeModel2 = b
-                        //                            altitudeModel3 = d
-                        //                            undetermined1 = p1
-                        //                            undetermined2 = p2
-                        //                            undetermined3 = p4
-                        //                        }
-                        //                        else if(equipmentCount == 2){
-                        //                            altitudeModel1 = a
-                        //                            altitudeModel2 = b
-                        //                            undetermined1 = p1
-                        //                            undetermined2 = p2
-                        //                        }
-                        //                        else if(equipmentCount == 1){
-                        //                            altitudeModel1 = a
-                        //                            btnDefault = a
-                        //                            undetermined1 = p1
-                        //                        }
-                    }
-                    else if(currIndex == 4){
-                        s4.color = pRgb(43, 112, 173)
-                        //                        if(equipmentCount == 3){
-                        //                            altitudeModel1 = a
-                        //                            altitudeModel2 = b
-                        //                            altitudeModel3 = c
-                        //                            undetermined1 = p1
-                        //                            undetermined2 = p2
-                        //                            undetermined3 = p3
-                        //                        }
-                        //                        else if(equipmentCount == 2){
-                        //                            altitudeModel1 = a
-                        //                            altitudeModel2 = b
-                        //                            undetermined1 = p1
-                        //                            undetermined2 = p2
-                        //                        }
-                        //                        else if(equipmentCount == 1){
-                        //                            altitudeModel1 = a
-                        //                            btnDefault = a
-                        //                            undetermined1 = p1
-                        //                        }
-                    }
-                    // currIndex = 0
+                    DeviceManager.removeDevice()
                 }
             }
             Button{
@@ -1866,12 +1331,12 @@ Rectangle {
                 y:654
                 width: 243
                 height: 52
-                enabled: itemCount === 4 ? false : true
+                enabled: DeviceManager.DeviceCounter === 4 ? false : true
                 background: Rectangle{
                     radius: 6
                     border.width: 2
                     border.color: pRgb(43, 112, 173)
-                    color: itemCount === 4 ? pRgb(232, 232, 232) : pRgb(43, 112, 173)
+                    color: DeviceManager.DeviceCounter === 4 ? pRgb(232, 232, 232) : pRgb(43, 112, 173)
                 }
                 contentItem: Text {
                     // text: qsTr( "新增设备")
@@ -1885,16 +1350,9 @@ Rectangle {
                     font.bold: true
                 }
                 onPressed: {
-                    isAdd = true
-                    oneself = true //打开就是新增完设备就是进入生产页面
-                    // isFirstDeviceConfigured = updateIsFirstDeviceConfigured()
-                    // console.log("isFirstDeviceConfigured :" + isFirstDeviceConfigured)
-                    if (equipmentCount >= 0 && equipmentCount <= 3) {
-                        currentConfigId = equipmentCount + 1;
-                    }
                     // popup.openPop(8)
+                    DeviceManager.addDevice()
                     switchUI(3)
-                    isAdd = true
                     sigSysConfig()
                 }
             }
@@ -1904,12 +1362,12 @@ Rectangle {
                 y:654
                 width: 243
                 height: 52
-                enabled: currIndex === 0 ? false : true
+                enabled: DeviceManager.DeviceCounter === 0 ? false : true
                 background: Rectangle{
                     radius: 6
                     border.width: 2
                     border.color: pRgb(43, 112, 173)
-                    color: currIndex === 0 ? pRgb(232, 232, 232) : pRgb(43, 112, 173)
+                    color: DeviceManager.DeviceCounter === 0 ? pRgb(232, 232, 232) : pRgb(43, 112, 173)
                 }
                 contentItem: Text {
                     // text: qsTr("删除设备")
@@ -1923,10 +1381,7 @@ Rectangle {
                     font.bold: true
                 }
                 onPressed: {
-                    if (equipmentCount > 0) {
-                        currentConfigId = equipmentCount - 1;
-                    }
-                     popup.openPop(12)
+                    popup.openPop(12)
                 }
             }
             Button{
