@@ -28,10 +28,6 @@ Window {
     property bool swipevis: false
     property bool isUSBAvailable: false
 
-    onSwipeCurrIndexChanged: {
-        sigSwipeCurrIndex(swipeCurrIndex)
-    }
-
     function pRgb(r, g, b){
         var ret = (r << 16 | g << 8 | b)
         return ("#"+ret.toString(16)).toUpperCase();
