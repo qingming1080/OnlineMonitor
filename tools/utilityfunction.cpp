@@ -42,8 +42,8 @@ qint64 UtilityFunction::toTimestamp(int year, int month, int day, int hour, int 
     return dt.toMSecsSinceEpoch();
 }
 
-QString UtilityFunction::timestampToString(qint64 timestamp)
+QString UtilityFunction::timestampToString(int timestamp)
 {
-    QDateTime dt = QDateTime::fromMSecsSinceEpoch(timestamp, Qt::UTC);
+    QDateTime dt = QDateTime::fromSecsSinceEpoch(timestamp, Qt::UTC);
     return dt.toString("yyyy-MM-dd HH:mm:ss");
 }

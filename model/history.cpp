@@ -14,6 +14,7 @@
 #include <QThread>
 #include <QObject>
 #include "csvexportworker.h"
+#include "tools/utilityfunction.h"
 
 History* History::s_pHistory = nullptr;
 QString  History::m_USBDirectory = "";
@@ -154,15 +155,7 @@ QVariant History::data(const QModelIndex &index, int role) const
     case DataBaseManager::FORCE:
         return data.Force;
     case DataBaseManager::RESIDUAL:
-        return data.Residual;
-    // case DataBaseManager::GOOD_RATE:
-    //     return data.GoodRate;
-    // case DataBaseManager::GOOD_CYCLE_COUNT:
-    //     return data.GoodCycleCount;
-    // case DataBaseManager::SUSPECT_CYCLE_COUNT:
-    //     return data.SuspectCycleCount;
-    // case DataBaseManager::DEFECTIVE_CYCLE_COUNT:
-    //     return data.DefectiveCycleCount;
+        return data.Residual;;
     case DataBaseManager::FINAL_RESULT:
         return data.FinalResult;
     // case DataBaseManager::PRODUCTION_row_number:
@@ -186,17 +179,14 @@ QHash<int, QByteArray> History::roleNames() const
     roles[DataBaseManager::BATCH_COUNT]              = "batch_count";
     roles[DataBaseManager::ENERGY]                   = "energy";
     roles[DataBaseManager::AMPLITUDE]                = "amplitude";
-    roles[DataBaseManager::WELD_PRESSURE]            = "pressure";
+    roles[DataBaseManager::WELD_PRESSURE]            = "weld_pressure";
     roles[DataBaseManager::WELD_TIME]                = "time";
     roles[DataBaseManager::PEAK_POWER]               = "power";
     roles[DataBaseManager::PRE_HEIGHT]               = "pre_height";
     roles[DataBaseManager::POST_HEIGHT]              = "post_height";
     roles[DataBaseManager::FORCE]                    = "force";
     roles[DataBaseManager::RESIDUAL]                 = "residual";
-    roles[DataBaseManager::GOOD_RATE]                = "good_rate";
-    roles[DataBaseManager::GOOD_CYCLE_COUNT]         = "good_subtotal_cycles";
-    roles[DataBaseManager::SUSPECT_CYCLE_COUNT]      = "suspect_subtotal_cycles";
-    roles[DataBaseManager::DEFECTIVE_CYCLE_COUNT]    = "not_definite_cycles";
+    roles[DataBaseManager::TRIGGER_PRESSURE]         = "trigger_pressure";
     roles[DataBaseManager::FINAL_RESULT]             = "final_result";
     // roles[QmlEnum::PRODUCTION_COLUMN::PRODUCTION_row_number]               = "row_number";
 
@@ -248,6 +238,7 @@ bool History::exportData()
             "能量",
             "振幅",
             "焊接压力",
+            "触发压力"
             "焊接时间",
             "峰值功率",
             "焊前高度",
@@ -259,14 +250,14 @@ bool History::exportData()
 
     for(int i=0; i<m_data.count(); i++)
     {
-        QString timeStr = m_data[i].CreateTime.toString("yyyy-MM-dd hh:mm:ss");
-
+        QString timeStr = UtilityFunction::getInstance()->timestampToString(m_data[i].CreateTime);
         QStringList value;
         value << timeStr
               << QString::number(m_data[i].CycleCount)
               << QString::number(m_data[i].Energy)
               << QString::number(m_data[i].Amplitude)
               << QString::number(m_data[i].WeldPressure)
+              << QString::number(m_data[i].TriggertPressure)
               << QString::number(m_data[i].WeldTime)
               << QString::number(m_data[i].PeakPower)
               << QString::number(m_data[i].Preheight)

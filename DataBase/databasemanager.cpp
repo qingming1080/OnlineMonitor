@@ -34,8 +34,10 @@ void DataBaseManager::closeTransaction()
     m_database.commit();
 }
 
-QList<int> DataBaseManager::getDeviceCount()
+bool DataBaseManager::getDeviceCount(QList<int> &welderList)
 {
+    welderList.clear();
+
     QSqlQuery query;
     // %1_表格名称
     QString execStr = QString("SELECT * FROM %1").arg(CONFIGURATION_TABLENAME);
@@ -44,15 +46,15 @@ QList<int> DataBaseManager::getDeviceCount()
     if (!query.exec(execStr))
     {
         qDebug() << "Configuration查询失败: " << query.lastError();
+        return false;
     }
 
-    QList<int> welderList;
     while(query.next())
     {
         welderList.push_back(query.value(CONFIGURATION_COLUMN::WELDER_ID).toInt());
     }
 
-    return welderList;
+    return true;
 }
 
 bool DataBaseManager::getConfigurationDevice(const int welderID, DB_CONFIGURE &configure)
@@ -872,7 +874,7 @@ QList<DataBaseManager::DB_PRODUCTION> DataBaseManager::getProductionData(int wel
         // data.id                       = query.value(QmlEnum::PRODUCTION_id).toInt();
         data.WelderID                = query.value(PRODUCTION_WELDER_ID).toInt();
         data.ModelID                 = query.value(MODEL_ID).toInt();
-        // data.CreateTime              = query.value(CREATE_TIME).toString();
+        data.CreateTime              = query.value(PRODUCTION_CREATE_TIME).toInt();
         data.SerialNumber            = query.value(SERIAL_NUMBER).toInt();
         data.CycleCount              = query.value(CYCLE_COUNT).toInt();
         data.BatchCount              = query.value(BATCH_COUNT).toInt();
@@ -880,6 +882,7 @@ QList<DataBaseManager::DB_PRODUCTION> DataBaseManager::getProductionData(int wel
 
         data.Amplitude               = query.value(AMPLITUDE).toInt();
         data.WeldPressure            = query.value(WELD_PRESSURE).toInt();
+        data.TriggertPressure        = query.value(TRIGGER_PRESSURE).toInt();
         data.WeldTime                = query.value(WELD_TIME).toInt();
         data.PeakPower               = query.value(PEAK_POWER).toInt();
         data.Preheight               = query.value(PRE_HEIGHT).toInt();
@@ -974,21 +977,21 @@ _Yield_TrendData DataBaseManager::getYieldTrendData(int interVal, int welderID)
     }
 
     // 开始计算每个时间段的生产总数与良品总数
-    for(int i = 0; i < list.size(); ++i)
-    {
-        QDateTime creatTime = list.at(i).CreateTime;
-        int finalResult = list.at(i).FinalResult;
+    // for(int i = 0; i < list.size(); ++i)
+    // {
+    //     QDateTime creatTime = list.at(i).CreateTime;
+    //     int finalResult = list.at(i).FinalResult;
 
-        int timeslot_index = startTime.secsTo(creatTime)/60;
-        if(timeslot_index >= 0 && timeslot_index < 60)
-        {
-            production_num_list[timeslot_index]++;
-            if(finalResult == 0)
-            {
-                good_num_list[timeslot_index]++;
-            }
-        }
-    }
+    //     int timeslot_index = startTime.secsTo(creatTime)/60;
+    //     if(timeslot_index >= 0 && timeslot_index < 60)
+    //     {
+    //         production_num_list[timeslot_index]++;
+    //         if(finalResult == 0)
+    //         {
+    //             good_num_list[timeslot_index]++;
+    //         }
+    //     }
+    // }
 
     // 开始计算每个时间段的良率
     for(int i = 0; i < 60; ++i)
@@ -1487,14 +1490,8 @@ QString DataBaseManager::getProduction_ColumnName(PRODUCTION_COLUMN column)
         return "force";
     case RESIDUAL:
         return "residual";
-    case GOOD_RATE:
-        return "good_rate";
-    case GOOD_CYCLE_COUNT:
-        return "good_subtotal_cycles";
-    case SUSPECT_CYCLE_COUNT:
-        return "suspect_subtotal_cycles";
-    case DEFECTIVE_CYCLE_COUNT:
-        return "not_definite_cycles";
+    case TRIGGER_PRESSURE:
+        return "trigger_pressure";
     case FINAL_RESULT:
         return "final_result";
     }

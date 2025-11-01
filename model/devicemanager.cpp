@@ -24,12 +24,19 @@ DeviceManager::DeviceManager(QObject *parent)
     // timer.start();
     m_iDeviceCounter = 0;
     setSelectedDeviceIndex(-1);
-    QList<int> list = DataBaseManager::getInstance()->getDeviceCount();
-    QList<Device *> tmpDeviceList;
-    for(int i = 0; i < list.size(); ++i)
-        tmpDeviceList.push_back(new Device(list.at(i)));
-    setDeviceList(tmpDeviceList);
-    setDeviceCounter(m_listDevices.size());
+    QList<int> welderlist;
+    bool isWelderList = DataBaseManager::getInstance()->getDeviceCount(welderlist);
+    if(isWelderList)
+    {
+        QList<Device *> tmpDeviceList;
+        for(int i = 0; i < welderlist.size(); ++i)
+            tmpDeviceList.push_back(new Device(welderlist.at(i)));
+        setDeviceList(tmpDeviceList);
+        setDeviceCounter(m_listDevices.size());
+    }else{
+        qDebug() << "Failed to query device list from database! ";
+    }
+
 
     // emit SignalManager::getInstance()->signalAddRecord(QDateTime::currentDateTime(), QString("DeviceManager初始化耗时:%1ms").arg(timer.elapsed()));
 }

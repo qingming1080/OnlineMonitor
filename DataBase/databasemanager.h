@@ -53,18 +53,16 @@ public:
         BATCH_COUNT             = 6,    // 生产值
         ENERGY                  = 7,    // 能量
         AMPLITUDE               = 8,    // 振幅
-        WELD_PRESSURE           = 9,    // 压力
-        WELD_TIME               = 10,   // 焊接时间
-        PEAK_POWER              = 11,   // 功率
-        PRE_HEIGHT              = 12,   // 焊前高度
-        POST_HEIGHT             = 13,   // 焊后高度
-        FORCE                   = 14,   // 撕拉力
-        RESIDUAL                = 15,   // 残留度
-        GOOD_RATE               = 16,   // 良率
-        GOOD_CYCLE_COUNT        = 17,   // 合格
-        SUSPECT_CYCLE_COUNT     = 18,   // 次品
-        DEFECTIVE_CYCLE_COUNT   = 19,   // 可疑
-        FINAL_RESULT            = 20,   // 产品状态 0_合格 1_次品 2_可疑
+        TRIGGER_PRESSURE        = 9,
+        WELD_PRESSURE           = 10,    // 压力
+        WELD_TIME               = 11,   // 焊接时间
+        PEAK_POWER              = 12,   // 功率
+        PRE_HEIGHT              = 13,   // 焊前高度
+        POST_HEIGHT             = 14,   // 焊后高度
+        FORCE                   = 15,   // 撕拉力
+        RESIDUAL                = 16,   // 残留度
+        FINAL_RESULT            = 17,   // 产品状态 0_合格 1_次品 2_可疑
+
     };
 
     struct DB_CONFIGURE
@@ -172,23 +170,20 @@ public:
         int ProductionID;
         int WelderID;                       //deviceID
         int ModelID;                        // 模型ID
-        QDateTime CreateTime;               // 创建时间
+        int CreateTime;                     // 创建时间
         int SerialNumber;                   // 序号Barcode
         int CycleCount;                     // 循环值
         int BatchCount;                     // 生产值
         int Energy;                         // 能量
         int Amplitude;                      // 振幅
         int WeldPressure;                   // 压力
+        int TriggertPressure;
         int WeldTime;                       // 焊接时间
         int PeakPower;                      // 功率
         int Preheight;                      // 焊前高度
         int PostHeight;                     // 焊后高度
         int Force;                          // 撕拉力
         int Residual;                       // 残留度
-        // int GoodRate;                       // 良率
-        // int GoodCycleCount;                 // 合格
-        // int DefectiveCycleCount;            // 次品
-        // int SuspectCycleCount;              // 可疑
         int FinalResult;                    // 产品状态 0_合格 1_次品 2_可疑
     };
 
@@ -202,7 +197,7 @@ public:
     void closeTransaction();
 
 /////////////////////////configuration////////////////////////////////
-    QList<int> getDeviceCount();
+    bool getDeviceCount(QList<int> &welderList);
     bool getConfigurationDevice(const int welderID, DB_CONFIGURE& configure);
     bool removeConfigurationDevice(const int welderID);
     bool insertConfigurationDevice(const DB_CONFIGURE configure);

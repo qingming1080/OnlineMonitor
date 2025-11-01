@@ -5,10 +5,11 @@ import DeviceInformation 1.0
 import GlobalLanguageDefine 1.0
 //系统配置（小）
 Rectangle {
-    property string eqText1: ""
-    property string eqText2: ""
-    property string eqText3: ""
-    property string eqText4: ""
+    property string mulitSysDeviceName: ""
+    property string mulitSysDeviceType: ""
+    property string mulitSysConnectionType: ""
+    property string mulitSysDeviceStatus: ""
+    // property string SelectedDeviceIndex: 0
     property int sysCurrIndex: 0
     property int sysCurrIndex1: 0
     property bool undetermined: {
@@ -31,11 +32,13 @@ Rectangle {
         onPressed: {
             if(color == "#4a8ac4"){
                 color = pRgb(43, 112, 173)
+
                 currIndex = 0
             }
             else{
                 sysCheck(sysCurrIndex1)
                 currIndex = sysCurrIndex
+                console.log("currIndex",sysCurrIndex)
             }
         }
     }
@@ -67,7 +70,7 @@ Rectangle {
     Text {
         id:t1
         // text: qsTr("设备名称") + ": " + eqText1
-        text: GlobalLanguageDefine.strDeviceName + ": " + eqText1
+        text: GlobalLanguageDefine.strDeviceName + ": " + mulitSysDeviceName
         font.family: GlobalSystemDefine.fontBold
         font.bold: true
         font.pixelSize: 16
@@ -78,7 +81,7 @@ Rectangle {
     Text {
         id:t2
         // text: qsTr("设备型号") + ": " + eqText2
-        text: GlobalLanguageDefine.strDeviceModel + ": " + eqText2
+        text: GlobalLanguageDefine.strDeviceModel + ": " + mulitSysDeviceType
         font.family: GlobalSystemDefine.fontBold
         font.bold: true
         font.pixelSize: 16
@@ -90,7 +93,7 @@ Rectangle {
     Text {
         id:t3
         // text: qsTr("连接方式") + ": " + eqText3
-        text: GlobalLanguageDefine.strConnectionMethod + ": " + eqText3
+        text: GlobalLanguageDefine.strConnectionMethod + ": " + mulitSysConnectionType
         font.family: GlobalSystemDefine.fontBold
         font.bold: true
         font.pixelSize: 16
@@ -102,7 +105,7 @@ Rectangle {
     Text {
         id:t4
         // text: qsTr("设备状态") + ": " + eqText4
-        text: GlobalLanguageDefine.strDeviceStatus + ": " + eqText4
+        text: GlobalLanguageDefine.strDeviceStatus + ": " + mulitSysDeviceStatus
         font.family: GlobalSystemDefine.fontBold
         font.bold: true
         font.pixelSize: 16
