@@ -12,7 +12,7 @@ DeviceInformation::DeviceInformation(int welderID, QObject *parent)
 {
     // QElapsedTimer timer;
     // timer.start();
-    if(DataBaseManager::getInstance()->getConfigurationData(welderID, m_DBConfigure) == true)
+    if(DataBaseManager::getInstance()->getConfigurationDevice(welderID, m_DBConfigure) == true)
     {
         setWelderName(m_DBConfigure.WelderName);
         setWelderType(m_DBConfigure.WelderType);

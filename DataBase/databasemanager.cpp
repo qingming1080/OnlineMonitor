@@ -55,7 +55,7 @@ QList<int> DataBaseManager::getDeviceCount()
     return welderList;
 }
 
-bool DataBaseManager::getConfigurationData(int welderID, DataBaseManager::DB_CONFIGURE& configure)
+bool DataBaseManager::getConfigurationDevice(const int welderID, DB_CONFIGURE &configure)
 {
     bool bResult = false;
     QSqlQuery query;
@@ -92,22 +92,7 @@ bool DataBaseManager::getConfigurationData(int welderID, DataBaseManager::DB_CON
     return bResult;
 }
 
-bool DataBaseManager::setConfigurationData(int deviceID, CONFIGURATION_COLUMN column, QVariant data)
-{
-    QSqlQuery query;
-    // %1_表格名称 %2_要修改的字段名称 %3_ID字段名称
-    QString execStr = QString("UPDATE %1 SET %2 = :newdata WHERE %3 = :id")
-                          .arg(CONFIGURATION_TABLENAME, getConfiguration_ColumnName(column), getConfiguration_ColumnName(CONFIGURATION_COLUMN::WELDER_ID));
-
-    // 绑定属性
-    query.prepare(execStr);
-    query.bindValue(":newdata", data);
-    query.bindValue(":id", deviceID);
-
-    return query.exec();
-}
-
-bool DataBaseManager::removeConfigurationDevice(int deviceID)
+bool DataBaseManager::removeConfigurationDevice(const int welderID)
 {
     QSqlQuery query;
 
@@ -117,12 +102,12 @@ bool DataBaseManager::removeConfigurationDevice(int deviceID)
 
     // 绑定属性
     query.prepare(execStr);
-    query.bindValue(":id", deviceID);
+    query.bindValue(":id", welderID);
     bool ret = query.exec();
     return ret;
 }
 
-bool DataBaseManager::insertConfigurationDevice(DB_CONFIGURE data)
+bool DataBaseManager::insertConfigurationDevice(const DB_CONFIGURE configure)
 {
     QSqlQuery query;
     // %1_表格名称
@@ -162,21 +147,21 @@ bool DataBaseManager::insertConfigurationDevice(DB_CONFIGURE data)
      query.prepare(execStr);
 
     // 绑定属性
-    query.bindValue(":welder_name", data.WelderName);
-    query.bindValue(":welder_type", data.WelderType);
-    query.bindValue(":production_bacth", data.ProductionBatch);
-    query.bindValue(":model_sample", data.MaxModelSamples);
-    query.bindValue(":lower_limit", data.YieldRateLowerLimit);
-    query.bindValue(":height_option", data.HeightEncoderOption ? 1 : 0);
-    query.bindValue(":suspicious_option", data.SuspiciousOption? 1 : 0);
-    query.bindValue(":connect_type", data.ConnectType);
-    query.bindValue(":connect_id", data.ConnectTypeId);
-    query.bindValue(":single_fact_setting", data.SingleFactSetting);
-    query.bindValue(":general_fact_setting", data.GeneralFactSetting);
-    query.bindValue(":other_fact_setting", data.OtherFactSetting);
-    query.bindValue(":auto_learn_count", data.AutoLearnCount);
-    query.bindValue(":force_threshold", data.ForceThreshold);
-    query.bindValue(":residual_threshold", data.ResidualThreshold);
+     query.bindValue(":welder_name", configure.WelderName);
+     query.bindValue(":welder_type", configure.WelderType);
+     query.bindValue(":production_bacth", configure.ProductionBatch);
+     query.bindValue(":model_sample", configure.MaxModelSamples);
+     query.bindValue(":lower_limit", configure.YieldRateLowerLimit);
+     query.bindValue(":height_option", configure.HeightEncoderOption ? 1 : 0);
+     query.bindValue(":suspicious_option", configure.SuspiciousOption? 1 : 0);
+     query.bindValue(":connect_type", configure.ConnectType);
+     query.bindValue(":connect_id", configure.ConnectTypeId);
+     query.bindValue(":single_fact_setting", configure.SingleFactSetting);
+     query.bindValue(":general_fact_setting", configure.GeneralFactSetting);
+     query.bindValue(":other_fact_setting", configure.OtherFactSetting);
+     query.bindValue(":auto_learn_count", configure.AutoLearnCount);
+     query.bindValue(":force_threshold", configure.ForceThreshold);
+     query.bindValue(":residual_threshold", configure.ResidualThreshold);
     bool ret = query.exec();
     if (!ret) {
         qWarning() << "Insert configuration failed:" << query.lastError().text();
@@ -184,7 +169,7 @@ bool DataBaseManager::insertConfigurationDevice(DB_CONFIGURE data)
     return ret;
 }
 
-bool DataBaseManager::updateConfigurationDevice(const int WelderID, DB_CONFIGURE& data)
+bool DataBaseManager::updateConfigurationDevice(const int welderID, const DB_CONFIGURE configure)
 {
     QSqlQuery query;
 
@@ -209,22 +194,22 @@ bool DataBaseManager::updateConfigurationDevice(const int WelderID, DB_CONFIGURE
                           .arg(CONFIGURATION_TABLENAME);
 
     // 绑定参数
-    query.bindValue(":welder_name", data.WelderName);
-    query.bindValue(":welder_type", data.WelderType);
-    query.bindValue(":production_bacth", data.ProductionBatch);
-    query.bindValue(":model_sample", data.MaxModelSamples);
-    query.bindValue(":lower_limit", data.YieldRateLowerLimit);
-    query.bindValue(":height_option", data.HeightEncoderOption ? 1 : 0);
-    query.bindValue(":suspicious_option", data.SuspiciousOption? 1 : 0);
-    query.bindValue(":connect_type", data.ConnectType);
-    query.bindValue(":connect_id", data.ConnectTypeId);
-    query.bindValue(":single_fact_setting", data.SingleFactSetting);
-    query.bindValue(":general_fact_setting", data.GeneralFactSetting);
-    query.bindValue(":other_fact_setting", data.OtherFactSetting);
-    query.bindValue(":auto_learn_count", data.AutoLearnCount);
-    query.bindValue(":force_threshold", data.ForceThreshold);
-    query.bindValue(":residual_threshold", data.ResidualThreshold);
-    query.bindValue(":welder_id",WelderID);
+    query.bindValue(":welder_name", configure.WelderName);
+    query.bindValue(":welder_type", configure.WelderType);
+    query.bindValue(":production_bacth", configure.ProductionBatch);
+    query.bindValue(":model_sample", configure.MaxModelSamples);
+    query.bindValue(":lower_limit", configure.YieldRateLowerLimit);
+    query.bindValue(":height_option", configure.HeightEncoderOption ? 1 : 0);
+    query.bindValue(":suspicious_option", configure.SuspiciousOption? 1 : 0);
+    query.bindValue(":connect_type", configure.ConnectType);
+    query.bindValue(":connect_id", configure.ConnectTypeId);
+    query.bindValue(":single_fact_setting", configure.SingleFactSetting);
+    query.bindValue(":general_fact_setting", configure.GeneralFactSetting);
+    query.bindValue(":other_fact_setting", configure.OtherFactSetting);
+    query.bindValue(":auto_learn_count", configure.AutoLearnCount);
+    query.bindValue(":force_threshold", configure.ForceThreshold);
+    query.bindValue(":residual_threshold", configure.ResidualThreshold);
+    query.bindValue(":welder_id",welderID);
 
     bool ret = query.exec();
     if (!ret) {

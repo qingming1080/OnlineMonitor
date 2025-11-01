@@ -68,7 +68,7 @@ public:
     };
 
     struct DB_CONFIGURE
-    {   int                             WelderId;
+    {
         QString                         WelderName;             // 焊机名称
         int                             WelderType;             // 焊机型号
         int                             ProductionBatch;        // 最大生产批量
@@ -202,45 +202,11 @@ public:
     void closeTransaction();
 
 /////////////////////////configuration////////////////////////////////
-
     QList<int> getDeviceCount();
-
-    ///
-    /// \brief getConfigurationData : 获取Configuration表格数据
-    /// \return : 数据
-    ///
-    bool getConfigurationData(int welderID, DataBaseManager::DB_CONFIGURE& configure);
-
-    ///
-    /// \brief setConfigurationData : 设置Configuration表格数据
-    /// \param deviceID : 设备号
-    /// \param column : 列号
-    /// \param data : 新数据
-    /// \return : 设置结果
-    ///
-    bool setConfigurationData(int deviceID, CONFIGURATION_COLUMN column, QVariant data);
-
-    ///
-    /// \brief removeConfigurationDevice : 删除Configuration表格一行数据
-    /// \param deviceID : 设备号
-    /// \return : 删除结果
-    ///
-    bool removeConfigurationDevice(int deviceID);
-
-    ///
-    /// \brief insertConfigurationDevice : 插入Configuration表格一行数据
-    /// \param data : 数据
-    /// \return : 插入结果
-    ///
-    bool insertConfigurationDevice(DB_CONFIGURE data);
-
-    ///
-    /// \brief insertConfigurationDevice : 插入Configuration表格一行数据
-    /// \param data : 数据
-    /// \return : 更新结果
-
-    bool updateConfigurationDevice(const int WelderID, DB_CONFIGURE &data);
-
+    bool getConfigurationDevice(const int welderID, DB_CONFIGURE& configure);
+    bool removeConfigurationDevice(const int welderID);
+    bool insertConfigurationDevice(const DB_CONFIGURE configure);
+    bool updateConfigurationDevice(const int welderID, const DB_CONFIGURE configure);
 
 /////////////////////////connection_network////////////////////////////////
     ///
