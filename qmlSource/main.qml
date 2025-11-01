@@ -23,7 +23,7 @@ Window {
     property int mode: 0
     property int equipmentCount: DeviceManager.DeviceCounter
     property int equipmentCurrentIndex: 0
-    property int swipeCurrIndex: 0
+    property int swipeCurrIndex: DeviceManager.SelectedDeviceIndex
     property int interFaceId: 0
     property int keyboardType: 0
     property bool createModel: false

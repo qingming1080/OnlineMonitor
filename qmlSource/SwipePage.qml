@@ -56,7 +56,7 @@ Rectangle {
         }
         deviceType:{
             if(DeviceManager.DeviceList[swipeCurrIndex]){
-                return DeviceManager.DeviceList[swipeCurrIndex].DeviceObj.WelderType
+                return DeviceManager.DeviceList[swipeCurrIndex].DeviceObj.WelderType === 1 ? "L20-VG" : "L20-TS"
             }
             else{
                 return ""
