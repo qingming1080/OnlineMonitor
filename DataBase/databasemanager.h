@@ -34,10 +34,12 @@ public:
         HEIGHT_ENCODER_OPTION   = 6,    // 高度模式
         CONNECT_TYPE            = 7,    // 连接方式
         CONNECT_TYPE_ID         = 8,    // 连接方式ID
-        DELECT_TYPE             = 9,    // 是否删除(已无用)
-        MES_PORT                = 10,   // 远程端口
-        MES_IP                  = 11,   // 远程IP
-        DEVICE_IP               = 12,   // 客户端IP
+        SINGLE_FACT_SETTING,
+        GENERAL_FACT_SETTING,
+        OTHER_FACT_SETTING,
+        AUTO_LEARN_COUNT,
+        FORCE_THRESHOLD,
+        RESIDUAL_THRESHOLD,
     };
 
     enum PRODUCTION_COLUMN
@@ -66,7 +68,7 @@ public:
     };
 
     struct DB_CONFIGURE
-    {
+    {   int                             WelderId;
         QString                         WelderName;             // 焊机名称
         int                             WelderType;             // 焊机型号
         int                             ProductionBatch;        // 最大生产批量
@@ -76,9 +78,12 @@ public:
         bool                            SuspiciousOption;       // 可疑
         int                             ConnectType;            // 连接方式     0_RS232  1_Network
         int                             ConnectTypeId;          // 连接方式ID
-        int                             MES_Port;               // 远程端口
-        QString                         MES_IP;                 // 远程IP
-        QString                         Device_IP;              // 客户端IP
+        int                             SingleFactSetting;
+        int                             GeneralFactSetting;
+        int                             OtherFactSetting;
+        int                             AutoLearnCount;
+        int                             ForceThreshold;
+        int                             ResidualThreshold;
     };
 
     struct DB_SYSTEM
