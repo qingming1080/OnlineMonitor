@@ -608,7 +608,7 @@ QList<DataBaseManager::DB_MANUAL> DataBaseManager::getManualData(int welderID)
         DB_MANUAL data;
         // data.id              = query.value(QmlEnum::MANUAL_id).toInt();
         data.WelderId       = query.value(QmlEnum::MANUAL_welder_id).toInt();
-        data.CreateTime     = query.value(QmlEnum::MANUAL_create_time).toString();
+        data.CreateTime     = query.value(QmlEnum::MANUAL_create_time).toInt();
         data.serial_number  = query.value(QmlEnum::MANUAL_serial_number).toInt();
         data.CycleCount     = query.value(QmlEnum::MANUAL_cycle_count).toInt();
         data.Energy         = query.value(QmlEnum::MANUAL_energy).toInt();

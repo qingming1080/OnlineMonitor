@@ -585,7 +585,7 @@ Rectangle {
                                     anchors.leftMargin: altitudeMode ? 140 : 180
                                     anchors.verticalCenter: parent.verticalCenter
                                     font.pixelSize: 16
-                                    text:serial_number
+                                    text: cycle_count
                                     font.family: GlobalSystemDefine.fontBold
                                     color: index % 2 !== 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
                                 }
@@ -633,7 +633,7 @@ Rectangle {
                                     anchors.verticalCenter: parent.verticalCenter
                                     x: 960/8*5 + 960/8/2-width/2
                                     font.pixelSize: 16
-                                    text: create_time
+                                    text: UtilityFunction.timestampToString(create_time).split(" ")[0]
                                     font.family: GlobalSystemDefine.fontBold
                                     color: index % 2 !== 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
                                 }

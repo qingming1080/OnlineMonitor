@@ -98,7 +98,7 @@ public:
     struct DB_MANUAL
     {
         int WelderId;       // 焊机ID
-        QString CreateTime; // 创建时间
+        int CreateTime; // 创建时间
         int serial_number;  // 序号
         int CycleCount;     // 循环总计
         int Energy;         // 能量
