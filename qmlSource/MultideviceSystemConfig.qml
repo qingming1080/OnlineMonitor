@@ -16,10 +16,12 @@ Rectangle {
     property bool suspiciousOption: false
     property bool heightOption: false
     property alias backgroundColor: multiDeviceConfigure.color
+
     signal signalWelderSelected(var index)
     radius: 5
     width: 281
-    height: 504
+    // height: 504
+    height:404
     // color: pRgb(43, 112, 173)
     color: "#2B70AD"
     MouseArea{
@@ -39,33 +41,42 @@ Rectangle {
 
     Text {
         // text: qsTr("设备信息")
+        id: titleDeviceInfo
         text: GlobalLanguageDefine.strEquipmentInfo
         font.family: GlobalSystemDefine.fontBold
         font.bold: true
-        font.pixelSize: 17
+        font.pixelSize: 20
         color: pRgb(153, 204, 255)
-        x:17
-        y:9
+        // x:17
+        // y:9
+        anchors.top: parent.top
+        anchors.topMargin: 15
+        anchors.left: parent.left
+        anchors.leftMargin: 20
     }
     Rectangle{
-        y:42
+        anchors.top: titleDeviceInfo.bottom
         height: 1
         width: 97
         color: pRgb(174, 210, 216)
     }
     Text {
-        id:t1
+        id: deviceNameText
         // text: qsTr("设备名称") + ": " + eqText1
         text: GlobalLanguageDefine.strDeviceName + ": " + nameWelder
         font.family: GlobalSystemDefine.fontBold
         font.bold: true
         font.pixelSize: 16
         color: pRgb(171, 206, 213)
-        x:26
-        y:54
+        // x:26
+        // y:54
+        anchors.top: parent.top
+        anchors.topMargin: 60
+        anchors.left: parent.left
+        anchors.leftMargin: 30
     }
     Text {
-        id:t2
+        id: titleDeviceType
         // text: qsTr("设备型号") + ": " + eqText2
         text: {
             var str = GlobalLanguageDefine.strDeviceModel + ": "
@@ -90,12 +101,12 @@ Rectangle {
         font.bold: true
         font.pixelSize: 16
         color: pRgb(171, 206, 213)
-        anchors.top:t1.bottom
-        anchors.left: t1.left
-        anchors.topMargin: 24
+        anchors.top:deviceNameText.bottom
+        anchors.left: deviceNameText.left
+        anchors.topMargin: 30
     }
     Text {
-        id:t3
+        id: titleConnectionType
         // text: qsTr("连接方式") + ": " + eqText3
         text: {
             var str = GlobalLanguageDefine.strConnectionMethod + ": "
@@ -117,12 +128,12 @@ Rectangle {
         font.bold: true
         font.pixelSize: 16
         color: pRgb(171, 206, 213)
-        anchors.top:t2.bottom
-        anchors.left: t2.left
-        anchors.topMargin: 24
+        anchors.top:titleDeviceType.bottom
+        anchors.left: titleDeviceType.left
+        anchors.topMargin: 30
     }
     Text {
-        id:t4
+        id: titleDeviceStatus
         // text: qsTr("设备状态") + ": " + eqText4
         text: {
             var str = GlobalLanguageDefine.strDeviceStatus + ": "
@@ -133,9 +144,9 @@ Rectangle {
         font.bold: true
         font.pixelSize: 16
         color: pRgb(171, 206, 213)
-        anchors.top: t3.bottom
-        anchors.left: t3.left
-        anchors.topMargin: 24
+        anchors.top: titleConnectionType.bottom
+        anchors.left: titleConnectionType.left
+        anchors.topMargin: 30
     }
     Button{
         width: 30
@@ -155,307 +166,325 @@ Rectangle {
         }
     }
     Text {
-        id: s4
+        id: titleHeightOption
         // text: qsTr("高度模式")
         text: GlobalLanguageDefine.strHeightMode + ": "
         color: pRgb(177, 213, 219)
         font.family: GlobalSystemDefine.fontBold
         font.bold: true
         font.pixelSize: 16
-        x:26
-        y:252
+        anchors.left: titleDeviceStatus.left
+        anchors.top: titleDeviceStatus.bottom
+        anchors.topMargin: 30
+        // x:26
+        // y:252
     }
     Text {
         id: s5
         // text: qsTr("启动")
-        text: GlobalLanguageDefine.strStart
+        text: DeviceManager.DeviceList[currentIndex].DeviceObj.HeightEncoderOption ? GlobalLanguageDefine.strStart : GlobalLanguageDefine.strClose
         color: pRgb(177, 213, 219)
         font.family: GlobalSystemDefine.fontBold
         font.bold: true
         font.pixelSize: 16
-        anchors.verticalCenter: bt1.verticalCenter
-        anchors.left: bt1.right
+        anchors.verticalCenter: titleHeightOption.verticalCenter
+        anchors.left: titleHeightOption.right
         anchors.leftMargin: 5
     }
-    RadioButton{
-        id:bt1
-        width: 30
-        height: 30
-        anchors.verticalCenter: s4.verticalCenter
-        anchors.left: s4.right
-        anchors.leftMargin: 10
-        indicator: Rectangle
-        {
-            width: 30
-            height: 30
-            radius: 15
-            color: heightOption ? "#0d988c" : pRgb(232, 232, 232)
-            border.color: "#b1d5db"
-            border.width: 2
-        }
-    }
+    // RadioButton{
+    //     id:bt1
+    //     width: 30
+    //     height: 30
+    //     anchors.verticalCenter: s4.verticalCenter
+    //     anchors.left: s4.right
+    //     anchors.leftMargin: 10
+    //     indicator: Rectangle
+    //     {
+    //         width: 30
+    //         height: 30
+    //         radius: 15
+    //         color: heightOption ? "#0d988c" : pRgb(232, 232, 232)
+    //         border.color: "#b1d5db"
+    //         border.width: 2
+    //     }
+    // }
 
-    Text {
-        id: s6
-        // text: qsTr("关闭")
-        text: GlobalLanguageDefine.strClose
-        color: pRgb(177, 213, 219)
-        font.family: GlobalSystemDefine.fontBold
-        font.bold: true
-        font.pixelSize: 16
-        anchors.verticalCenter: bt2.verticalCenter
-        anchors.left: bt2.right
-        anchors.leftMargin: 5
-    }
-    RadioButton{
-        id:bt2
-        width: 30
-        height: 30
-        anchors.verticalCenter: s5.verticalCenter
-        anchors.left: s5.right
-        anchors.leftMargin: 8
-        checked: true
-        indicator: Rectangle
-        {
-            width: 30
-            height: 30
-            radius: 15
-            color: !heightOption ? "#0d988c" : pRgb(232, 232, 232)
-            border.color: "#b1d5db"
-            border.width: 2
-        }
-    }
+    // Text {
+    //     id: s6
+    //     // text: qsTr("关闭")
+    //     text: GlobalLanguageDefine.strClose
+    //     color: pRgb(177, 213, 219)
+    //     font.family: GlobalSystemDefine.fontBold
+    //     font.bold: true
+    //     font.pixelSize: 16
+    //     anchors.verticalCenter: bt2.verticalCenter
+    //     anchors.left: bt2.right
+    //     anchors.leftMargin: 5
+    // }
+    // RadioButton{
+    //     id:bt2
+    //     width: 30
+    //     height: 30
+    //     anchors.verticalCenter: s5.verticalCenter
+    //     anchors.left: s5.right
+    //     anchors.leftMargin: 8
+    //     checked: true
+    //     indicator: Rectangle
+    //     {
+    //         width: 30
+    //         height: 30
+    //         radius: 15
+    //         color: !heightOption ? "#0d988c" : pRgb(232, 232, 232)
+    //         border.color: "#b1d5db"
+    //         border.width: 2
+    //     }
+    // }
     Text {
         id: s7
         // text: qsTr("是否开启待定")
-        text: GlobalLanguageDefine.strOpenPending
+        text: GlobalLanguageDefine.strOpenPending + ": "
         color: "#b1d5db"
         font.family: GlobalSystemDefine.fontBold
         font.bold: true
-        font.pixelSize: 17
-        x:24
-        y:319
+        font.pixelSize: 16
+        anchors.top: titleHeightOption.bottom
+        anchors.topMargin: 30
+        anchors.left: titleHeightOption.left
+        // x:24
+        // y:319
     }
-    Switch{
-        id:ctl
+
+    Text {
+        id: openPendingtext
+        text: DeviceManager.DeviceList[currentIndex].DeviceObj.SuspiciousOption ? GlobalLanguageDefine.strStart : GlobalLanguageDefine.strClose
+        color: pRgb(177, 213, 219)
+        font.family: GlobalSystemDefine.fontBold
+        font.bold: true
+        font.pixelSize: 16
         anchors.verticalCenter: s7.verticalCenter
         anchors.left: s7.right
         anchors.leftMargin: 5
-        indicator: Rectangle{
-            id:indicator
-            implicitWidth: 110
-            implicitHeight:27
-            x:ctl.leftPadding
-            y:parent.height / 2 - height / 2
-            border.width: 3
-            radius: 15
-            color: pRgb(232, 232, 232)
-            border.color: "#99ccff"
-            //小圆点
-            Rectangle{
-                id:smallRect
-                width: 55
-                height: 22
-                radius: 15
-                border.width: 3
-                color: "#2b70ad"
-                border.color: "#99ccff"
-                anchors.verticalCenter: parent.verticalCenter
-                //改变小圆点位置
-                NumberAnimation on x{
-                    to:smallRect.width
-                    running: suspiciousOption
-                    duration: 0
-                }
-                NumberAnimation on x{
-                    to:6
-                    running: !suspiciousOption
-                    duration: 0
-                }
-            }
-            Text {
-                anchors.left: parent.left
-                anchors.top: parent.top
-                anchors.topMargin: 5
-                anchors.leftMargin: 14
-                // text: qsTr("关闭")
-                text: GlobalLanguageDefine.strClose
-                color: suspiciousOption ? pRgb(43, 112, 173) : "#e5e6e7"
-                font.family: GlobalSystemDefine.fontBold
-                font.bold: true
-                font.pixelSize: 14
-            }
-            Text {
-                anchors.right: parent.right
-                anchors.top: parent.top
-                anchors.topMargin: 5
-                anchors.rightMargin: 14
-                // text: qsTr("启动")
-                text: GlobalLanguageDefine.strStart
-                color: suspiciousOption ? "#e5e6e7" : pRgb(43, 112, 173)
-                font.family: GlobalSystemDefine.fontBold
-                font.bold: true
-                font.pixelSize: 14
-            }
-        }
     }
-    Text {
-        id: pinAlarmTitle
-        text:{
-            var pinName = ""
-            switch(currentIndex)
-            {
-            case 0:
-                pinName = "PIN1"
-                break;
-            case 1:
-                pinName = "PIN4"
-                break;
-            case 2:
-                pinName = "PIN7"
-                break;
-            case 3:
-                pinName = "PIN10"
-                break;
-            default:
-                break;
-            }
-            return pinName
-        }
-        color: pRgb(177, 213, 219)
-        font.family: GlobalSystemDefine.fontBold
-        font.bold: true
-        font.pixelSize: 16
-        verticalAlignment: Text.AlignVCenter
-        anchors.left: parent.left
-        anchors.leftMargin: 18
-        anchors.top: parent.top
-        anchors.topMargin: 380
-    }
-    Text {
-        id: pinResetTitle
-        text: {
-            var pinName = ""
-            switch(currentIndex)
-            {
-            case 0:
-                pinName = "PIN2"
-                break;
-            case 1:
-                pinName = "PIN5"
-                break;
-            case 2:
-                pinName = "PIN8"
-                break;
-            case 3:
-                pinName = "PIN11"
-                break;
-            default:
-                break;
-            }
-            return pinName
-        }
-        color: pRgb(177, 213, 219)
-        font.family: GlobalSystemDefine.fontBold
-        font.bold: true
-        font.pixelSize: 16
-        verticalAlignment: Text.AlignVCenter
-        anchors.left: pinAlarmTitle.left
-        anchors.top: pinAlarmTitle.bottom
-        anchors.topMargin: 15
-    }
-    Text {
-        id: pinSuspectTitle
-        text: {
-            var pinName = ""
-            switch(currentIndex)
-            {
-            case 0:
-                pinName = "PIN3"
-                break;
-            case 1:
-                pinName = "PIN6"
-                break;
-            case 2:
-                pinName = "PIN9"
-                break;
-            case 3:
-                pinName = "PIN12"
-                break;
-            default:
-                break;
-            }
-            return pinName
-        }
-        color: pRgb(177, 213, 219)
-        font.family: GlobalSystemDefine.fontBold
-        font.bold: true
-        font.pixelSize: 16
-        verticalAlignment: Text.AlignVCenter
-        anchors.left: pinResetTitle.left
-        anchors.top: pinResetTitle.bottom
-        anchors.topMargin: 15
-    }
-    Image {
-        id: pinAlarmIcon
-        source: "qrc:/images/icon_io_alarm"
-        anchors.left: pinAlarmTitle.right
-        anchors.leftMargin: 50
-        anchors.verticalCenter: pinAlarmTitle.verticalCenter
-        width: 22
-        height: 22
-    }
-    Image {
-        id: pinResetIcon
-        source: "qrc:/images/icon_io_reset.png"
-        anchors.left: pinAlarmIcon.left
-        anchors.verticalCenter: pinResetTitle.verticalCenter
-        width: 22
-        height: 22
-    }
-    Image {
-        id: pinSuspectIcon
-        source: suspiciousOption ? "qrc:/images/icon_io_suspicious_on.png" : "qrc:/images/icon_io_suspicious_off.png"
-        anchors.left: pinAlarmIcon.left
-        anchors.verticalCenter: pinSuspectTitle.verticalCenter
-        width: 22
-        height: 22
-    }
-    Text {
-        id: pinAlarmName
-        // text: qsTr("报警")
-        text: GlobalLanguageDefine.strAlarm
-        color: pRgb(177, 213, 219)
-        font.family: GlobalSystemDefine.fontBold
-        font.bold: true
-        font.pixelSize: 16
-        verticalAlignment: Text.AlignVCenter
-        anchors.top: pinAlarmTitle.top
-        anchors.left: pinAlarmIcon.right
-        anchors.leftMargin: 50
-    }
-    Text {
-        id: pinResetName
-        // text: qsTr("复位")
-        text: GlobalLanguageDefine.strReset
-        color: pRgb(177, 213, 219)
-        font.family: GlobalSystemDefine.fontBold
-        font.bold: true
-        font.pixelSize: 16
-        verticalAlignment: Text.AlignVCenter
-        anchors.top: pinResetTitle.top
-        anchors.left: pinAlarmName.left
-    }
-    Text {
-        id: pinSuspectName
-        // text: qsTr("待定")
-        text: GlobalLanguageDefine.strPending
-        color: pRgb(177, 213, 219)
-        font.family: GlobalSystemDefine.fontBold
-        font.bold: true
-        font.pixelSize: 16
-        verticalAlignment: Text.AlignVCenter
-        anchors.top: pinSuspectTitle.top
-        anchors.left: pinAlarmName.left
-    }
+    // Switch{
+    //     id:ctl
+    //     anchors.verticalCenter: s7.verticalCenter
+    //     anchors.left: s7.right
+    //     anchors.leftMargin: 5
+    //     indicator: Rectangle{
+    //         id:indicator
+    //         implicitWidth: 110
+    //         implicitHeight:27
+    //         x:ctl.leftPadding
+    //         y:parent.height / 2 - height / 2
+    //         border.width: 3
+    //         radius: 15
+    //         color: pRgb(232, 232, 232)
+    //         border.color: "#99ccff"
+    //         //小圆点
+    //         Rectangle{
+    //             id:smallRect
+    //             width: 55
+    //             height: 22
+    //             radius: 15
+    //             border.width: 3
+    //             color: "#2b70ad"
+    //             border.color: "#99ccff"
+    //             anchors.verticalCenter: parent.verticalCenter
+    //             //改变小圆点位置
+    //             NumberAnimation on x{
+    //                 to:smallRect.width
+    //                 running: suspiciousOption
+    //                 duration: 0
+    //             }
+    //             NumberAnimation on x{
+    //                 to:6
+    //                 running: !suspiciousOption
+    //                 duration: 0
+    //             }
+    //         }
+    //         Text {
+    //             anchors.left: parent.left
+    //             anchors.top: parent.top
+    //             anchors.topMargin: 5
+    //             anchors.leftMargin: 14
+    //             // text: qsTr("关闭")
+    //             text: GlobalLanguageDefine.strClose
+    //             color: suspiciousOption ? pRgb(43, 112, 173) : "#e5e6e7"
+    //             font.family: GlobalSystemDefine.fontBold
+    //             font.bold: true
+    //             font.pixelSize: 14
+    //         }
+    //         Text {
+    //             anchors.right: parent.right
+    //             anchors.top: parent.top
+    //             anchors.topMargin: 5
+    //             anchors.rightMargin: 14
+    //             // text: qsTr("启动")
+    //             text: GlobalLanguageDefine.strStart
+    //             color: suspiciousOption ? "#e5e6e7" : pRgb(43, 112, 173)
+    //             font.family: GlobalSystemDefine.fontBold
+    //             font.bold: true
+    //             font.pixelSize: 14
+    //         }
+    //     }
+    // }
+    // Text {
+    //     id: pinAlarmTitle
+    //     text:{
+    //         var pinName = ""
+    //         switch(currentIndex)
+    //         {
+    //         case 0:
+    //             pinName = "PIN1"
+    //             break;
+    //         case 1:
+    //             pinName = "PIN4"
+    //             break;
+    //         case 2:
+    //             pinName = "PIN7"
+    //             break;
+    //         case 3:
+    //             pinName = "PIN10"
+    //             break;
+    //         default:
+    //             break;
+    //         }
+    //         return pinName
+    //     }
+    //     color: pRgb(177, 213, 219)
+    //     font.family: GlobalSystemDefine.fontBold
+    //     font.bold: true
+    //     font.pixelSize: 16
+    //     verticalAlignment: Text.AlignVCenter
+    //     anchors.left: parent.left
+    //     anchors.leftMargin: 18
+    //     anchors.top: parent.top
+    //     anchors.topMargin: 380
+    // }
+    // Text {
+    //     id: pinResetTitle
+    //     text: {
+    //         var pinName = ""
+    //         switch(currentIndex)
+    //         {
+    //         case 0:
+    //             pinName = "PIN2"
+    //             break;
+    //         case 1:
+    //             pinName = "PIN5"
+    //             break;
+    //         case 2:
+    //             pinName = "PIN8"
+    //             break;
+    //         case 3:
+    //             pinName = "PIN11"
+    //             break;
+    //         default:
+    //             break;
+    //         }
+    //         return pinName
+    //     }
+    //     color: pRgb(177, 213, 219)
+    //     font.family: GlobalSystemDefine.fontBold
+    //     font.bold: true
+    //     font.pixelSize: 16
+    //     verticalAlignment: Text.AlignVCenter
+    //     anchors.left: pinAlarmTitle.left
+    //     anchors.top: pinAlarmTitle.bottom
+    //     anchors.topMargin: 15
+    // }
+    // Text {
+    //     id: pinSuspectTitle
+    //     text: {
+    //         var pinName = ""
+    //         switch(currentIndex)
+    //         {
+    //         case 0:
+    //             pinName = "PIN3"
+    //             break;
+    //         case 1:
+    //             pinName = "PIN6"
+    //             break;
+    //         case 2:
+    //             pinName = "PIN9"
+    //             break;
+    //         case 3:
+    //             pinName = "PIN12"
+    //             break;
+    //         default:
+    //             break;
+    //         }
+    //         return pinName
+    //     }
+    //     color: pRgb(177, 213, 219)
+    //     font.family: GlobalSystemDefine.fontBold
+    //     font.bold: true
+    //     font.pixelSize: 16
+    //     verticalAlignment: Text.AlignVCenter
+    //     anchors.left: pinResetTitle.left
+    //     anchors.top: pinResetTitle.bottom
+    //     anchors.topMargin: 15
+    // }
+    // Image {
+    //     id: pinAlarmIcon
+    //     source: "qrc:/images/icon_io_alarm"
+    //     anchors.left: pinAlarmTitle.right
+    //     anchors.leftMargin: 50
+    //     anchors.verticalCenter: pinAlarmTitle.verticalCenter
+    //     width: 22
+    //     height: 22
+    // }
+    // Image {
+    //     id: pinResetIcon
+    //     source: "qrc:/images/icon_io_reset.png"
+    //     anchors.left: pinAlarmIcon.left
+    //     anchors.verticalCenter: pinResetTitle.verticalCenter
+    //     width: 22
+    //     height: 22
+    // }
+    // Image {
+    //     id: pinSuspectIcon
+    //     source: suspiciousOption ? "qrc:/images/icon_io_suspicious_on.png" : "qrc:/images/icon_io_suspicious_off.png"
+    //     anchors.left: pinAlarmIcon.left
+    //     anchors.verticalCenter: pinSuspectTitle.verticalCenter
+    //     width: 22
+    //     height: 22
+    // }
+    // Text {
+    //     id: pinAlarmName
+    //     // text: qsTr("报警")
+    //     text: GlobalLanguageDefine.strAlarm
+    //     color: pRgb(177, 213, 219)
+    //     font.family: GlobalSystemDefine.fontBold
+    //     font.bold: true
+    //     font.pixelSize: 16
+    //     verticalAlignment: Text.AlignVCenter
+    //     anchors.top: pinAlarmTitle.top
+    //     anchors.left: pinAlarmIcon.right
+    //     anchors.leftMargin: 50
+    // }
+    // Text {
+    //     id: pinResetName
+    //     // text: qsTr("复位")
+    //     text: GlobalLanguageDefine.strReset
+    //     color: pRgb(177, 213, 219)
+    //     font.family: GlobalSystemDefine.fontBold
+    //     font.bold: true
+    //     font.pixelSize: 16
+    //     verticalAlignment: Text.AlignVCenter
+    //     anchors.top: pinResetTitle.top
+    //     anchors.left: pinAlarmName.left
+    // }
+    // Text {
+    //     id: pinSuspectName
+    //     // text: qsTr("待定")
+    //     text: GlobalLanguageDefine.strPending
+    //     color: pRgb(177, 213, 219)
+    //     font.family: GlobalSystemDefine.fontBold
+    //     font.bold: true
+    //     font.pixelSize: 16
+    //     verticalAlignment: Text.AlignVCenter
+    //     anchors.top: pinSuspectTitle.top
+    //     anchors.left: pinAlarmName.left
+    // }
 }

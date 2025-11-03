@@ -96,6 +96,17 @@ Window {
         mesDialog.openFor(title,text)
     }
 
+    Connections {
+        target: History
+        function onSignalExportPrograss(current, total)
+        {
+            if(loadingOverlay.visible === true)
+            {
+                loadingOverlay.progress = (current + 1) / total
+            }
+        }
+    }
+
     Connections
     {
         target: window
@@ -125,17 +136,6 @@ Window {
                 break;
             default:
                 break;
-            }
-        }
-    }
-
-    Connections {
-        target: History
-        function onSignalExportPrograss(current, total)
-        {
-            if(loadingOverlay.visible === true)
-            {
-                loadingOverlay.progress = (current + 1) / total
             }
         }
     }

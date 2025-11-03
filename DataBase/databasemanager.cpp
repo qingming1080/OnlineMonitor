@@ -817,7 +817,7 @@ bool DataBaseManager::insertModelRow(DB_MODEL model)
     return query.exec();
 }
 
-QList<DataBaseManager::DB_PRODUCTION> DataBaseManager::getProductionData(int welderID, int finalResult)
+QList<DataBaseManager::DB_PRODUCTION> DataBaseManager::getProductionData(int welderID, int finalResult, bool exportAll)
 {
     QList<DB_PRODUCTION> list;
 
@@ -825,11 +825,12 @@ QList<DataBaseManager::DB_PRODUCTION> DataBaseManager::getProductionData(int wel
     if(welderID != 0 && finalResult != 0)
     {
         // %1_表格名称
-        QString execStr = QString("SELECT * FROM %1 WHERE %2 = :welderID AND %3 = :finalResult ORDER BY create_time DESC LIMIT 150")
+        QString execStr = QString("SELECT * FROM %1 WHERE %2 = :welderID AND %3 = :finalResult ORDER BY create_time DESC")
                               .arg(PRODUCTION_TABLENAME
                                    , getProduction_ColumnName(PRODUCTION_WELDER_ID)
                                    , getProduction_ColumnName(FINAL_RESULT));
 
+        if (!exportAll) execStr += " LIMIT 150";
         query.prepare(execStr);
         query.bindValue(":welderID", welderID);
         query.bindValue(":finalResult", finalResult-1);
@@ -837,29 +838,31 @@ QList<DataBaseManager::DB_PRODUCTION> DataBaseManager::getProductionData(int wel
     else if(welderID != 0)
     {
         // %1_表格名称
-        QString execStr = QString("SELECT * FROM %1 WHERE %2 = :welderID ORDER BY create_time DESC LIMIT 150")
+        QString execStr = QString("SELECT * FROM %1 WHERE %2 = :welderID ORDER BY create_time DESC")
                               .arg(PRODUCTION_TABLENAME
                                    , getProduction_ColumnName(PRODUCTION_WELDER_ID));
 
+        if (!exportAll) execStr += " LIMIT 150";
         query.prepare(execStr);
         query.bindValue(":welderID", welderID);
     }
     else if(finalResult != 0)
     {
         // %1_表格名称
-        QString execStr = QString("SELECT * FROM %1 WHERE %2 = :finalResult ORDER BY create_time DESC LIMIT 150")
+        QString execStr = QString("SELECT * FROM %1 WHERE %2 = :finalResult ORDER BY create_time DESC")
                               .arg(PRODUCTION_TABLENAME
                                    , getProduction_ColumnName(FINAL_RESULT));
-
+        if (!exportAll) execStr += " LIMIT 150";
         query.prepare(execStr);
         query.bindValue(":finalResult", finalResult-1);
     }
     else
     {
         // %1_表格名称
-        QString execStr = QString("SELECT * FROM %1 ORDER BY %2 DESC LIMIT 150")
+        QString execStr = QString("SELECT * FROM %1 ORDER BY %2 DESC")
                               .arg(PRODUCTION_TABLENAME
                                    , getProduction_ColumnName(PRODUCTION_CREATE_TIME));
+        if (!exportAll) execStr += " LIMIT 150";
         query.prepare(execStr);
     }
 

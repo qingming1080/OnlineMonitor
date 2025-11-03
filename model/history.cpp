@@ -15,6 +15,7 @@
 #include <QObject>
 #include "csvexportworker.h"
 #include "tools/utilityfunction.h"
+#define RASPBERRY
 
 History* History::s_pHistory = nullptr;
 QString  History::m_USBDirectory = "";
@@ -212,6 +213,7 @@ bool History::isAvailaleDiskUSB()
     m_USBDirectory.clear();
 #ifdef RASPBERRY
     foreach (const QStorageInfo &storage, QStorageInfo::mountedVolumes()) {
+        // qDebug() << "path:" << storage.rootPath() << "ready:" << storage.isReady();
         if(!storage.isReady())
             continue;
 
@@ -221,7 +223,6 @@ bool History::isAvailaleDiskUSB()
             return true;
         }
     }
-
 #endif
     return bResult;
 }
@@ -230,6 +231,13 @@ bool History::exportData()
 {
     if(m_USBDirectory.isEmpty() == true)
         return false;
+
+    QList<DataBaseManager::DB_PRODUCTION> exportList = DataBaseManager::getInstance()->getProductionData(m_deviceID, m_finalResult, true);
+
+    if (exportList.isEmpty()) {
+        qWarning() << "没有符合条件的数据可导出";
+        return false;
+    }
     QList<QStringList> rows;
     QStringList headers =
     {
@@ -248,23 +256,23 @@ bool History::exportData()
             "检测结果"
     };
 
-    for(int i=0; i<m_data.count(); i++)
+    for(int i=0; i< exportList.count(); i++)
     {
-        QString timeStr = UtilityFunction::getInstance()->timestampToString(m_data[i].CreateTime);
+        QString timeStr = UtilityFunction::getInstance()->timestampToString(exportList[i].CreateTime);
         QStringList value;
         value << timeStr
-              << QString::number(m_data[i].CycleCount)
-              << QString::number(m_data[i].Energy)
-              << QString::number(m_data[i].Amplitude)
-              << QString::number(m_data[i].WeldPressure)
-              << QString::number(m_data[i].TriggertPressure)
-              << QString::number(m_data[i].WeldTime)
-              << QString::number(m_data[i].PeakPower)
-              << QString::number(m_data[i].Preheight)
-              << QString::number(m_data[i].PostHeight)
-              << QString::number(m_data[i].Force)
-              << QString::number(m_data[i].Residual)
-              << QString::number(m_data[i].FinalResult);
+              << QString::number(exportList[i].CycleCount)
+              << QString::number(exportList[i].Energy)
+              << QString::number(exportList[i].Amplitude)
+              << QString::number(exportList[i].WeldPressure)
+              << QString::number(exportList[i].TriggertPressure)
+              << QString::number(exportList[i].WeldTime)
+              << QString::number(exportList[i].PeakPower)
+              << QString::number(exportList[i].Preheight)
+              << QString::number(exportList[i].PostHeight)
+              << QString::number(exportList[i].Force)
+              << QString::number(exportList[i].Residual)
+              << QString::number(exportList[i].FinalResult);
         rows.append(value);
     }
 

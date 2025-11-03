@@ -130,7 +130,7 @@ QtObject
     readonly property string strSystemSave:             qsTr("系统保存")
     readonly property string strDeviceSave:             qsTr("设备保存")
     readonly property string strChangePassword:         qsTr("修改密码")
-    readonly property string strOpenPending:            qsTr("是否开启待定")
+    readonly property string strOpenPending:            qsTr("待定模式")
     readonly property string strPending:                qsTr("待定")
     readonly property string strAlarm:                  qsTr("报警")
     readonly property string strReset:                  qsTr("复位")
