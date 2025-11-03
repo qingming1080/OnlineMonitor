@@ -344,7 +344,7 @@ public:
     /// \param finalResult : 生产状态 0_全部 1_合格 2_次品 3_可疑
     /// \return
     ///
-    QList<DB_PRODUCTION> getProductionData(int welderID = 0, int finalResult = 0);
+    QList<DB_PRODUCTION> getProductionData(int welderID = 0, int finalResult = 0, bool exportAll = false);
 
     ///
     /// \brief getWeldTrendData : 获取焊接趋势折线图，取最新五百个

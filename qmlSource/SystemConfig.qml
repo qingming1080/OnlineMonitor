@@ -522,7 +522,7 @@ Rectangle {
                         border.width: 2
                     }
                     onPressed: {
-                        DeviceManager.DeviceList[DeviceManager.SelectedDeviceIndex].DevInfoObject.HeightEncoderOption = true
+                        DeviceManager.DeviceList[DeviceManager.SelectedDeviceIndex].DeviceObj.HeightEncoderOption = true
                     }
                 }
                 Text {
@@ -556,6 +556,83 @@ Rectangle {
                     }
                     onPressed: {
                         DeviceManager.DeviceList[DeviceManager.SelectedDeviceIndex].DeviceObj.HeightEncoderOption = false
+                    }
+                }
+
+                Text {
+                    id: titleOpenPendingOption
+                    text: GlobalLanguageDefine.strOpenPending + ": "
+                    color: pRgb(177, 213, 219)
+                    font.family: GlobalSystemDefine.fontBold
+                    font.bold: true
+                    font.pixelSize: 18
+                    anchors.left: titleHeightMode.left
+                    anchors.top: titleHeightMode.top
+                    anchors.topMargin: 70
+                }
+                Text {
+                    id: openPendingStatrtext
+                    text: GlobalLanguageDefine.strStart + ": "
+                    color: pRgb(177, 213, 219)
+                    font.family: GlobalSystemDefine.fontBold
+                    font.bold: true
+                    font.pixelSize: 18
+                    anchors.verticalCenter: titleOpenPendingOption.verticalCenter
+                    anchors.left: peelForceThresholdField.left
+
+                }
+                RadioButton{
+                    id: openPeningStartButton
+                    width: 34
+                    height: 34
+                    anchors.left: s5.right
+                    anchors.verticalCenter: titleOpenPendingOption.verticalCenter
+                    anchors.leftMargin: 10
+                    checked: DeviceManager.DeviceList[DeviceManager.SelectedDeviceIndex].DeviceObj.SuspiciousOption
+                    indicator: Rectangle
+                    {
+                        width: 34
+                        height: 34
+                        radius: 17
+                        color: DeviceManager.DeviceList[DeviceManager.SelectedDeviceIndex].DeviceObj.SuspiciousOption ? "#0d988c" : pRgb(232, 232, 232)
+                        border.color: "#b1d5db"
+                        border.width: 2
+                    }
+                    onPressed: {
+                        DeviceManager.DeviceList[DeviceManager.SelectedDeviceIndex].DeviceObj.SuspiciousOption = true
+                    }
+                }
+                Text {
+                    id: openPendingClosetext
+                    // text: qsTr("关闭")
+                    text: GlobalLanguageDefine.strClose + ": "
+                    color: pRgb(177, 213, 219)
+                    font.family: GlobalSystemDefine.fontBold
+                    font.bold: true
+                    font.pixelSize: 18
+                    anchors.top: openPendingStatrtext.top
+                    anchors.left: s5.right
+                    anchors.leftMargin: 55
+                }
+                RadioButton{
+                    id: peningCloseButton
+                    width: 34
+                    height: 34
+                    anchors.left: openPeningStartButton.right
+                    anchors.top: openPeningStartButton.top
+                    anchors.leftMargin: 65
+                    checked: !DeviceManager.DeviceList[DeviceManager.SelectedDeviceIndex].DeviceObj.SuspiciousOption
+                    indicator: Rectangle
+                    {
+                        width: 34
+                        height: 34
+                        radius: 17
+                        color: !DeviceManager.DeviceList[DeviceManager.SelectedDeviceIndex].DeviceObj.SuspiciousOption ? "#0d988c" : pRgb(232, 232, 232)
+                        border.color: "#b1d5db"
+                        border.width: 2
+                    }
+                    onPressed: {
+                        DeviceManager.DeviceList[DeviceManager.SelectedDeviceIndex].DeviceObj.SuspiciousOption = false
                     }
                 }
             }

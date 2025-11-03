@@ -9,7 +9,7 @@ import GlobalSystemDefine 1.0
 import GlobalMessageDefine 1.0
 import LanguageEnum 1.0
 Rectangle {
-    property int itemCount: equipmentCount
+    property int itemCount: DeviceManager.DeviceCounter
     property string buttonColor: "#0d988c"
 
     Connections {
@@ -711,7 +711,7 @@ Rectangle {
         anchors.top: usbVisableText.top
         anchors.right: parent.right
         anchors.rightMargin: 35
-        // visible: window.isUSBAvailable
+        visible: window.isUSBAvailable
         background: Rectangle{
             radius: 6
             color: pRgb(43, 112, 173)
@@ -729,15 +729,14 @@ Rectangle {
         }
         onClicked:
         {
-            // window.showLoading(true)
-            var started =  History.exportData()
-            if(started === true)
+             window.showLoading(true)
+            if(History.exportData() === false)
             {
                 window.showLoading(false)
             }
             else
             {
-                window.showDialog(qsTr("提示"), qsTr("无法开始导出，未找到可用的U盘"))
+                // window.showDialog(qsTr("提示"), qsTr("无法开始导出，未找到可用的U盘"))
             }
         }
     }
