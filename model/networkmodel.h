@@ -23,7 +23,8 @@ public:
     virtual QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
     virtual QHash<int,QByteArray> roleNames() const override;
 
-    Q_INVOKABLE QVariant get(int index) const;
+    Q_INVOKABLE QVariant get(const int index) const;
+    Q_INVOKABLE int getKeyRoleIndex(const int value) const;
 
 private:
     explicit NetworkModel(QObject *parent = nullptr);

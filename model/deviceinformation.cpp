@@ -12,7 +12,7 @@ DeviceInformation::DeviceInformation(int welderID, QObject *parent)
 {
     // QElapsedTimer timer;
     // timer.start();
-    if(DataBaseManager::getInstance()->getConfigurationDevice(welderID, m_DBConfigure) == true)
+     if(DataBaseManager::getInstance()->getConfigurationDevice(welderID, m_DBConfigure) == true)
     {
         setWelderName(m_DBConfigure.WelderName);
         setWelderType(m_DBConfigure.WelderType);
@@ -295,16 +295,32 @@ void DeviceInformation::setAutoLearningCount(const QString &limit)
     emit notifyAutoLearningCountChanged();
 }
 
-int DeviceInformation::getPortNumber() const
+int DeviceInformation::getEthNumber() const
 {
-    return m_ModbusConfigure.NetworkProperties.PortNumber;
+    return m_ModbusConfigure.NetworkProperties.EthNumber;
 }
 
-void DeviceInformation::setPortNumber(const int &port)
+void DeviceInformation::setEthNumber(const int &eth)
 {
-    if (m_ModbusConfigure.NetworkProperties.PortNumber != port)
+    if (m_ModbusConfigure.NetworkProperties.EthNumber != eth)
     {
-        m_ModbusConfigure.NetworkProperties.PortNumber = port;
+        m_ModbusConfigure.NetworkProperties.EthNumber = eth;
+        emit notifyEthNumberChanged();
+    }
+}
+
+QString DeviceInformation::getPortNumber() const
+{
+    return QString::number(m_ModbusConfigure.NetworkProperties.PortNumber);
+}
+
+void DeviceInformation::setPortNumber(const QString &port)
+{
+    bool isOk = false;
+    int portNum = port.toInt(&isOk);
+    if (!isOk || m_ModbusConfigure.NetworkProperties.PortNumber != portNum)
+    {
+        m_ModbusConfigure.NetworkProperties.PortNumber = portNum;
         emit notifyPortNumberChanged();
     }
 }

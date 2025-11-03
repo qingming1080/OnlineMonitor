@@ -25,14 +25,14 @@ DeviceManager::DeviceManager(QObject *parent)
     m_iDeviceCounter = 0;
     setSelectedDeviceIndex(-1);
     QList<int> welderlist;
-    bool isWelderList = DataBaseManager::getInstance()->getDeviceCount(welderlist);
-    if(isWelderList)
+    if(DataBaseManager::getInstance()->getDeviceCount(welderlist) == true)
     {
         QList<Device *> tmpDeviceList;
         for(int i = 0; i < welderlist.size(); ++i)
             tmpDeviceList.push_back(new Device(welderlist.at(i)));
         setDeviceList(tmpDeviceList);
         setDeviceCounter(m_listDevices.size());
+        setSelectedDeviceIndex(0);
     }else{
         qDebug() << "Failed to query device list from database! ";
     }

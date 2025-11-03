@@ -18,6 +18,7 @@
 #include "model/databitsmodel.h"
 #include "model/stopbitsmodel.h"
 #include "model/paritymodel.h"
+#include "model/weldertypemodel.h"
 
 #include "DataBase/databasemanager.h"
 #include "log/localrecord.h"
@@ -88,6 +89,7 @@ int main(int argc, char *argv[])
     pQmlContext->setContextProperty("DataBitsModel",    DataBitsModel::getInstance());
     pQmlContext->setContextProperty("StopBitsModel",    StopBitsModel::getInstance());
     pQmlContext->setContextProperty("ParityModel",      ParityModel::getInstance());
+    pQmlContext->setContextProperty("WelderTypeModel",  WelderTypeModel::getInstance());
 
     pQmlContext->setContextProperty("Manual", manual);
     pQmlContext->setContextProperty("ModbusClient",     HBModbusClient::getInstance());

@@ -642,7 +642,12 @@ Rectangle {
                     anchors.topMargin: 66
                     anchors.left: s15.right
                     anchors.leftMargin: 23
-                    model: ["L20-VG", "L20-TS", "20DP", "20MA", GlobalLanguageDefine.strCustomized]
+                    model: WelderTypeModel
+                    property int tmpIndex: DeviceManager.SelectedDeviceIndex
+                    currentIndex: DeviceManager.DeviceList[tmpIndex].DeviceObj.WelderType
+                    onAccepted: {
+                        DeviceManager.DeviceList[tmpIndex].DeviceObj.WelderType = currentIndex
+                    }
                 }
 
                 Switch{
@@ -691,7 +696,7 @@ Rectangle {
                                         bResult = true;
                                         break;
                                     default:
-                                        bResult = false;
+                                        bResult = true;
                                         break;
                                     }
                                     return bResult;
@@ -699,7 +704,7 @@ Rectangle {
                                 duration: 0
                             }
                             NumberAnimation on x{
-                                to:8
+                                to: 8
                                 running: {
                                     var bResult = false;
                                     var tmpIndex = DeviceManager.SelectedDeviceIndex
@@ -712,7 +717,7 @@ Rectangle {
                                         bResult = false;
                                         break;
                                     default:
-                                        bResult = false;
+                                        bResult = true;
                                         break;
                                     }
                                     return bResult;
@@ -741,7 +746,7 @@ Rectangle {
                             anchors.rightMargin: 63
                             text: "RS232"
                             color: {
-                                return DeviceManager.DeviceList[0].DeviceObj.ConnectType !== DeviceInfoEnum.TCP_IP ? "#e5e6e7" : pRgb(43, 112, 173)
+                                return DeviceManager.DeviceList[DeviceManager.SelectedDeviceIndex].DeviceObj.ConnectType !== DeviceInfoEnum.TCP_IP ? "#e5e6e7" : pRgb(43, 112, 173)
                             }
                             font.family: GlobalSystemDefine.fontBold
                             font.bold: true
@@ -821,10 +826,14 @@ Rectangle {
                             x:233
                             y:55
                             model: NetworkModel
+                            property int tmpIndex: DeviceManager.SelectedDeviceIndex
+                            property int tmpPort: DeviceManager.DeviceList[tmpIndex].DeviceObj.EthNumber
+                            currentIndex: NetworkModel.getKeyRoleIndex(tmpPort)
                             onAccepted: {
                                 console.debug("index: ", currentIndex)
                                 var value = model.get(currentIndex).value;
                                 console.debug("value: ", value)
+                                DeviceManager.DeviceList[tmpIndex].DeviceObj.EthNumber = value
                             }
                         }
 
@@ -855,41 +864,17 @@ Rectangle {
                                     keyboardType = 0
                                 }
                             }
-                            //TODO
-                            text: {
-                                if(com2.displayText === "ETH1"){
-
-                                    return NetworkModel.getDataByWelderID(2,QmlEnum.NETWORK_server_port)
-                                }
-                                else if(com2.displayText === "ETH2"){
-                                    return NetworkModel.getDataByWelderID(3,QmlEnum.NETWORK_server_port)
-                                }
-                                else if(com2.displayText === "ETH3"){
-                                    return NetworkModel.getDataByWelderID(4,QmlEnum.NETWORK_server_port)
-                                }
-                                else if(com2.displayText === "ETH4"){
-                                    return NetworkModel.getDataByWelderID(5,QmlEnum.NETWORK_server_port)
-                                }
-                            }
-
-                            onTextChanged: {
-                                   if (com2.displayText === "ETH1") {
-                                       NetworkModel.setNetworkData(2, QmlEnum.NETWORK_server_port, t5.text);
-                                   } else if (com2.displayText === "ETH2") {
-                                       NetworkModel.setNetworkData(3, QmlEnum.NETWORK_server_port, t5.text);
-                                   } else if (com2.displayText === "ETH3") {
-                                       NetworkModel.setNetworkData(4, QmlEnum.NETWORK_server_port, t5.text);
-                                   } else if (com2.displayText === "ETH4") {
-                                       NetworkModel.setNetworkData(5, QmlEnum.NETWORK_server_port, t5.text);
-                                   }
-
-                               }
+                            property int tmpIndex: DeviceManager.SelectedDeviceIndex
+                            text: DeviceManager.DeviceList[tmpIndex].DeviceObj.PortNumber
                             onEditingFinished: {
                                 var portRegex = /^([0-9]|[1-9][0-9]{1,4}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])$/
                                 if (!portRegex.test(t5.text))
                                     footer.showError(s17.text + GlobalLanguageDefine.strEnter0And65535)
                                 else
+                                {
                                     footer.hideError()
+                                    DeviceManager.DeviceList[tmpIndex].DeviceObj.PortNumber = t5.text
+                                }
                             }
 
                         }
@@ -919,40 +904,17 @@ Rectangle {
                                     keyboardType = 0
                                 }
                             }
-                                   //TODO
-                            text:{
-                                if(com2.displayText === "ETH1"){
-                                    return NetworkModel.getDataByWelderID(2,QmlEnum.NETWORK_remote_ip)
-                                }
-                                else if(com2.displayText === "ETH2"){
-                                    return NetworkModel.getDataByWelderID(3,QmlEnum.NETWORK_remote_ip)
-                                }
-                                else if(com2.displayText === "ETH3"){
-                                    return NetworkModel.getDataByWelderID(4,QmlEnum.NETWORK_remote_ip)
-                                }
-                                else if(com2.displayText === "ETH4"){
-                                    return NetworkModel.getDataByWelderID(5,QmlEnum.NETWORK_remote_ip)
-                                }
-                            }
-
-                            onTextChanged: {
-                                   if (com2.displayText === "ETH1") {
-                                       NetworkModel.setNetworkData(2, QmlEnum.NETWORK_remote_ip, t6.text);
-                                   } else if (com2.displayText === "ETH2") {
-                                       NetworkModel.setNetworkData(3, QmlEnum.NETWORK_remote_ip, t6.text);
-                                   } else if (com2.displayText === "ETH3") {
-                                       NetworkModel.setNetworkData(4, QmlEnum.NETWORK_remote_ip, t6.text);
-                                   } else if (com2.displayText === "ETH4") {
-                                       NetworkModel.setNetworkData(5, QmlEnum.NETWORK_remote_ip, t6.text);
-                                   }
-
-                               }
+                            property int tmpIndex: DeviceManager.SelectedDeviceIndex
+                            text: DeviceManager.DeviceList[tmpIndex].DeviceObj.RemoteIP
                             onEditingFinished: {
                                 var ipRegex = /^(25[0-5]|2[0-4]\d|1\d{2}|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d{2}|[1-9]?\d)){3}$/
                                 if (!ipRegex.test(t6.text))
                                     footer.showError(s18.text + "请输入正确的IP地址")
                                 else
+                                {
                                     footer.hideError()
+                                    DeviceManager.DeviceList[tmpIndex].DeviceObj.RemoteIP = t6.text
+                                }
                             }
                         }
 
@@ -983,39 +945,17 @@ Rectangle {
                                     keyboardType = 0
                                 }
                             }
-
-                            text: {
-                                if (com2.displayText === "ETH1") {
-                                    return NetworkModel.getDataByWelderID(2, QmlEnum.NETWORK_local_ip)
-                                }
-                                else if (com2.displayText === "ETH2") {
-                                    return NetworkModel.getDataByWelderID(3, QmlEnum.NETWORK_local_ip)
-                                }
-                                else if (com2.displayText === "ETH3") {
-                                    return NetworkModel.getDataByWelderID(4, QmlEnum.NETWORK_local_ip)
-                                }
-                                else if (com2.displayText === "ETH4") {
-                                    return NetworkModel.getDataByWelderID(5, QmlEnum.NETWORK_local_ip)
-                                }
-                            }
-
-                            onTextChanged: {
-                                   if (com2.displayText === "ETH1") {
-                                       NetworkModel.setNetworkData(2, QmlEnum.NETWORK_local_ip, t7.text);
-                                   } else if (com2.displayText === "ETH2") {
-                                       NetworkModel.setNetworkData(3, QmlEnum.NETWORK_local_ip, t7.text);
-                                   } else if (com2.displayText === "ETH3") {
-                                       NetworkModel.setNetworkData(4, QmlEnum.NETWORK_local_ip, t7.text);
-                                   } else if (com2.displayText === "ETH4") {
-                                       NetworkModel.setNetworkData(5, QmlEnum.NETWORK_local_ip, t7.text);
-                                   }
-                            }
+                            property int tmpIndex: DeviceManager.SelectedDeviceIndex
+                            text: DeviceManager.DeviceList[tmpIndex].DeviceObj.LocalIP
                             onEditingFinished: {
                                 var ipRegex = /^(25[0-5]|2[0-4]\d|1\d{2}|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d{2}|[1-9]?\d)){3}$/
                                 if (!ipRegex.test(t7.text))
                                     footer.showError(s19.text + "请输入正确的IP地址")
                                 else
+                                {
                                     footer.hideError()
+                                    DeviceManager.DeviceList[tmpIndex].DeviceObj.LocalIP = t7.text
+                                }
                             }
                         }
                     }

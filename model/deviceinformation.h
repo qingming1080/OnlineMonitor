@@ -75,7 +75,8 @@ class DeviceInformation : public QObject
     Q_PROPERTY(QString ResidualThreshold    READ getResidualThreshold   WRITE setResidualThreshold  NOTIFY notifyResidualThresholdChanged FINAL)
     Q_PROPERTY(QString AutoLearningCount    READ getAutoLearningCount   WRITE setAutoLearningCount  NOTIFY notifyAutoLearningCountChanged FINAL)
 
-    Q_PROPERTY(int     PortNumber           READ getPortNumber          WRITE setPortNumber         NOTIFY notifyPortNumberChanged FINAL)
+    Q_PROPERTY(int     EthNumber            READ getEthNumber           WRITE setEthNumber          NOTIFY notifyEthNumberChanged FINAL)
+    Q_PROPERTY(QString PortNumber           READ getPortNumber          WRITE setPortNumber         NOTIFY notifyPortNumberChanged FINAL)
     Q_PROPERTY(QString LocalIP              READ getLocalIP             WRITE setLocalIP            NOTIFY notifyLocalIPChanged FINAL)
     Q_PROPERTY(QString RemoteIP             READ getRemoteIP            WRITE setRemoteIP           NOTIFY notifyRemoteIPChanged FINAL)
 
@@ -87,6 +88,7 @@ class DeviceInformation : public QObject
 public:
     struct NETWORK_PROPERTIES
     {
+        int     EthNumber;
         QString LocalIP;
         QString RemoteIP;
         int     PortNumber;
@@ -163,8 +165,11 @@ public:
     int GetAutoLearningCount() const;
     void setAutoLearningCount(const QString &limit);
 
-    int getPortNumber() const;
-    void setPortNumber(const int &port);
+    int getEthNumber() const;
+    void setEthNumber(const int &eth);
+
+    QString getPortNumber() const;
+    void setPortNumber(const QString &port);
 
     QString getLocalIP() const;
     void setLocalIP(const QString &ip);
@@ -204,6 +209,7 @@ signals:
     void notifyResidualThresholdChanged();
     void notifyAutoLearningCountChanged();
 
+    void notifyEthNumberChanged();
     void notifyPortNumberChanged();
     void notifyLocalIPChanged();
     void notifyRemoteIPChanged();

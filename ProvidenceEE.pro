@@ -41,6 +41,7 @@ SOURCES += \
         model/production.cpp \
         model/stopbitsmodel.cpp \
         model/trend.cpp \
+        model/weldertypemodel.cpp \
         provienceEE/providenceEE.cpp \
         signalmanager.cpp \
         tools/datavalidator.cpp \
@@ -90,6 +91,7 @@ HEADERS += \
     model/production.h \
     model/stopbitsmodel.h \
     model/trend.h \
+    model/weldertypemodel.h \
     provienceEE/providenceEE.h \
     qmlenum.h \
     signalmanager.h \

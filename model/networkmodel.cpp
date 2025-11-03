@@ -60,7 +60,7 @@ QHash<int, QByteArray> NetworkModel::roleNames() const
     return roles;
 }
 
-QVariant NetworkModel::get(int index) const
+QVariant NetworkModel::get(const int index) const
 {
     if (index < 0 || index >= m_listETHPort.count())
         return QVariant();
@@ -70,6 +70,20 @@ QVariant NetworkModel::get(int index) const
     result["key"] = m_listETHPort.at(index)["key"];
     result["value"] = m_listETHPort.at(index)["value"];
     return result;
+}
+
+int NetworkModel::getKeyRoleIndex(const int value) const
+{
+    int iResult = 0;
+    for(int i = 0; i < m_listETHPort.count(); i++)
+    {
+        if(value == m_listETHPort.at(i)["value"])
+        {
+            iResult = i;
+            break;
+        }
+    }
+    return iResult;
 }
 
 
