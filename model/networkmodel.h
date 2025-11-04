@@ -2,6 +2,7 @@
 #define NETWORKMODEL_H
 
 #include <QAbstractListModel>
+#include <QMap>
 
 ///
 /// \brief The NetworkModel class : 网络连接

@@ -95,6 +95,28 @@ public:
         int AutoLearningCount;      // 自动学习上限
     };
 
+    struct DB_NETWORK
+    {
+        // int id;          // 网口号
+        int Type;           // 类型  0_Server  1_Client
+        int Protocol;       // 协议  0_TCP/IP  1_OPCUA
+        QString LocalIP;    // 本地IP
+        int LocalPort;      // 本地端口
+        QString RemoteIP;   // 远程IP
+        int ServerPort;     // 服务器端口
+        QString User;       // 用户
+    };
+
+    struct DB_RS232
+    {
+        // int id;      // 串口id
+        QString Port;   // 串口号
+        int BaudRate;   // 波特率
+        int DataBit;    // 数据位
+        int ParityBit;  // 奇偶校验位
+        int StopBit;    // 停止位
+    };
+
     struct DB_MANUAL
     {
         int WelderId;       // 焊机ID
@@ -203,69 +225,14 @@ public:
     bool insertConfigurationDevice(const DB_CONFIGURE configure);
     bool updateConfigurationDevice(const int welderID, const DB_CONFIGURE configure);
 
-/////////////////////////connection_network////////////////////////////////
-    ///
-    /// \brief getNetworkData : 获取connection_network表格数据
-    /// \return : 数据
-    ///
-    QList<_Network_Data> getNetworkData();
 
-    ///
-    /// \brief setNetworkData : 设置connection_network表格数据(注:1网口不允许界面配置!!!)
-    /// \param networkID: 网口号
-    /// \param column : 列号
-    /// \param data : 新数据
-    /// \return : 设置结果
-    ///
-    bool setNetworkData(int networkID, QmlEnum::NETWORK_COLUMN column, QVariant data);
+    QList<DB_NETWORK> getNetworkData();
+    bool updateNetworkConfigure(const int id, const DB_NETWORK network);
+    bool getNetworkConfigure(const int id, DB_NETWORK& network);
 
-    ///
-    /// \brief removeNetworkRow : 删除connection_network表格一行数据(注:1网口不允许界面配置!!!)
-    /// \param networkID : 网口号
-    /// \return : 删除结果
-    ///
-    bool removeNetworkRow(int networkID);
-
-    ///
-    /// \brief insertNetworkRow : 插入connection_network表格一行数据(注:1网口不允许界面配置!!!)
-    /// \param data : 数据
-    /// \return : 插入结果
-    ///
-    bool insertNetworkRow(_Network_Data data);
-
-    QStringList getNetworkInfoById(int id);
-
-/////////////////////////connection_rs232////////////////////////////////
-    ///
-    /// \brief getRS232Data : 获取connection_rs232表格数据
-    /// \return : 数据
-    ///
-    QList<_RS232_Data> getRS232Data();
-
-    ///
-    /// \brief setRS232Data : 设置RS232表格数据
-    /// \param id : 串口id
-    /// \param column : 列号
-    /// \param data : 新数据
-    /// \return : 设置结果
-    ///
-    bool setRS232Data(int id, QmlEnum::RS232_COLUMN column, QVariant data);
-
-    ///
-    /// \brief removeRS232Row : 删除RS232表格一行数据
-    /// \param id : 串口id
-    /// \return : 删除结果
-    ///
-    bool removeRS232Row(int id);
-
-    ///
-    /// \brief insertRS232Row : 插入RS232表格一行数据
-    /// \param data : 数据
-    /// \return : 插入结果
-    ///
-    bool insertRS232Row(_RS232_Data data);
-
-    _RS232_Data getRS232DataById(int id);
+    QList<DB_RS232> getRS232Data();
+    bool updateRS232Configure(const int id, const DB_RS232 rs232);
+    bool getRS232Configure(const int id, DB_RS232& rs232);
 
 /////////////////////////io_data////////////////////////////////
 /// 只处理待定

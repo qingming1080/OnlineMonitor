@@ -6,30 +6,6 @@
 #include <QByteArray>
 #include <QDateTime>
 #include <QPointF>
-// #include <Database/databasemanager.h>
-
-struct _Network_Data
-{
-    int id;                    // 网口号
-    int type;                  // 类型  0_Server  1_User
-    int protocol;              // 协议  0_TCP/IP  1_OPCUA
-    QString local_ip;          // 本地IP
-    int local_port;            // 本地端口
-    QString remote_ip;         // 远程IP
-    int server_port;           // 服务器端口
-    QString user;              // 用户
-};
-
-struct _RS232_Data
-{
-    int id;                 // 串口id
-    QString port;           // 串口号
-    int baud_rate;          // 波特率
-    int data_bit;           // 数据位
-    QString parity_bit;     // 奇偶校验位
-    int stop_bit;           // 停止位
-};
-
 
 struct _IO_Data
 {

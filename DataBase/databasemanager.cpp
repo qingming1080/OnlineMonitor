@@ -221,9 +221,9 @@ bool DataBaseManager::updateConfigurationDevice(const int welderID, const DB_CON
 }
 
 
-QList<_Network_Data> DataBaseManager::getNetworkData()
+QList<DataBaseManager::DB_NETWORK> DataBaseManager::getNetworkData()
 {
-    QList<_Network_Data> list;
+    QList<DB_NETWORK> list;
 
     QSqlQuery query;
     // %1_表格名称
@@ -235,14 +235,14 @@ QList<_Network_Data> DataBaseManager::getNetworkData()
 
     while(query.next())
     {
-        _Network_Data data;
-        data.id             = query.value(QmlEnum::NETWORK_id).toInt();
-        data.type           = query.value(QmlEnum::NETWORK_type).toInt();
-        data.protocol       = query.value(QmlEnum::NETWORK_protocol).toInt();
-        data.server_port    = query.value(QmlEnum::NETWORK_server_port).toInt();
-        data.remote_ip      = query.value(QmlEnum::NETWORK_remote_ip).toString();
-        data.local_ip       = query.value(QmlEnum::NETWORK_local_ip).toString();
-        data.user           = query.value(QmlEnum::NETWORK_user).toString();
+        DB_NETWORK data;
+        // data.id             = query.value(QmlEnum::NETWORK_id).toInt();
+        data.Type           = query.value(QmlEnum::NETWORK_type).toInt();
+        data.Protocol       = query.value(QmlEnum::NETWORK_protocol).toInt();
+        data.ServerPort    = query.value(QmlEnum::NETWORK_server_port).toInt();
+        data.RemoteIP      = query.value(QmlEnum::NETWORK_remote_ip).toString();
+        data.LocalIP       = query.value(QmlEnum::NETWORK_local_ip).toString();
+        data.User           = query.value(QmlEnum::NETWORK_user).toString();
 
         list.push_back(data);
 
@@ -251,113 +251,73 @@ QList<_Network_Data> DataBaseManager::getNetworkData()
     return list;
 }
 
-bool DataBaseManager::setNetworkData(int networkID, QmlEnum::NETWORK_COLUMN column, QVariant data)
+bool DataBaseManager::updateNetworkConfigure(const int id, const DB_NETWORK network)
 {
-    if(networkID == 1)
-        return false;
-
     QSqlQuery query;
-    // %1_表格名称 %2_要修改的字段名称 %3_ID字段名称
-    QString execStr = QString("UPDATE %1 SET %2 = :newdata WHERE %3 = :id")
-                          .arg(NETWORK_TABLENAME, getNetwork_ColumnName(column), getNetwork_ColumnName(QmlEnum::NETWORK_id));
 
-    // 绑定属性
-    query.prepare(execStr);
-    query.bindValue(":newdata", data);
-    query.bindValue(":id", networkID);
-
-    return query.exec();
-}
-
-bool DataBaseManager::removeNetworkRow(int networkID)
-{
-    if(networkID == 1)
-        return false;
-
-    QSqlQuery query;
-    // %1_表格名称 %2_ID字段名称
-    QString execStr = QString("DELETE FROM %1 WHERE %2=:id")
-                          .arg(NETWORK_TABLENAME,getNetwork_ColumnName(QmlEnum::NETWORK_id));
-
-    // 绑定属性
-    query.prepare(execStr);
-    query.bindValue(":id", networkID);
-
-    return query.exec();
-}
-
-bool DataBaseManager::insertNetworkRow(_Network_Data data)
-{
-    if(data.id == 1)
-        return false;
-
-    QSqlQuery query;
-    // %1_表格名称
-    QString execStr = QString("INSERT INTO %1 values("
-                              ":id"
-                              ", :type"
-                              ", :protocol"
-                              ", :server_port"
-                              ", :remote_ip"
-                              ", :local_ip"
-                              ", :user)")
+    // 构建更新SQL语句，更新指定welder_id的设备配置
+    QString execStr = QString("UPDATE %1 SET "
+                              "type = :type, "
+                              "protocol = :protocol, "
+                              "local_ip = :local_ip, "
+                              "local_port = :local_port, "
+                              "remote_ip = :remote_ip, "
+                              "server_port = :server_port, "
+                              "user = :user "
+                              "WHERE id = :id")
                           .arg(NETWORK_TABLENAME);
 
-    // 绑定属性
-    query.prepare(execStr);
-    query.bindValue(":id", data.id);
-    query.bindValue(":type", data.type);
-    query.bindValue(":protocol", data.protocol);
-    query.bindValue(":server_port", data.server_port);
-    query.bindValue(":remote_ip", data.remote_ip);
-    query.bindValue(":local_ip", data.local_ip);
-    query.bindValue(":user", data.user);
+    // 绑定参数
+    query.bindValue(":type", network.Type);
+    query.bindValue(":protocol", network.Protocol);
+    query.bindValue(":local_ip", network.LocalIP);
+    query.bindValue(":local_port", network.LocalPort);
+    query.bindValue(":remote_ip", network.RemoteIP);
+    query.bindValue(":server_port", network.ServerPort);
+    query.bindValue(":user", network.User);
+    query.bindValue(":id", id);
 
-    return query.exec();
+    bool ret = query.exec();
+    if (!ret) {
+        qWarning() << "Update network failed:" << query.lastError().text();
+    }
+    return ret;
 }
 
-QStringList DataBaseManager::getNetworkInfoById(int id)
+bool DataBaseManager::getNetworkConfigure(const int id, DB_NETWORK& network)
 {
-    QStringList result;  // 用来存储查询结果，包含 remote_ip、server_port 和 local_ip
-
-    // 获取列名
-    QString remoteIpColumn = getNetwork_ColumnName(QmlEnum::NETWORK_remote_ip);
-    QString serverPortColumn = getNetwork_ColumnName(QmlEnum::NETWORK_server_port);
-    QString localIpColumn = getNetwork_ColumnName(QmlEnum::NETWORK_local_ip);
-
-    // 如果列名获取失败（空字符串），则直接返回
-    if (remoteIpColumn.isEmpty() || serverPortColumn.isEmpty() || localIpColumn.isEmpty()) {
-        return result;
-    }
+    bool bResult = false;
 
     // 构造查询字符串，选择 id 匹配的行
     QSqlQuery query;
-    QString execStr = QString("SELECT %1, %2, %3 FROM %4 WHERE id = %5")
-                          .arg(remoteIpColumn)
-                          .arg(serverPortColumn)
-                          .arg(localIpColumn)
+    QString execStr = QString("SELECT * FROM %1 WHERE id = %2")
                           .arg(NETWORK_TABLENAME)
                           .arg(id);
 
-    if (!query.exec(execStr)) {
+    if (!query.exec(execStr))
+    {
         qDebug() << "查询失败: " << query.lastError();
-        return result;  // 返回空的结果
+        return bResult;  // 返回空的结果
     }
 
-    // 查询结果存在时，取出 remote_ip, server_port 和 local_ip
-    if (query.next()) {
-        result << query.value(0).toString();  // remote_ip
-        result << query.value(1).toString();  // server_port
-        result << query.value(2).toString();  // local_ip
+    if (query.next())
+    {
+        network.Type        = query.value(QmlEnum::NETWORK_type).toInt();
+        network.Protocol    = query.value(QmlEnum::NETWORK_protocol).toInt();
+        network.ServerPort  = query.value(QmlEnum::NETWORK_server_port).toInt();
+        network.LocalPort   = query.value(QmlEnum::NETWORK_local_port).toInt();
+        network.RemoteIP    = query.value(QmlEnum::NETWORK_remote_ip).toString();
+        network.LocalIP     = query.value(QmlEnum::NETWORK_local_ip).toString();
+        network.User        = query.value(QmlEnum::NETWORK_user).toString();
+        bResult = true;
     }
-
-    return result;
+    return bResult;
 }
 
 
-QList<_RS232_Data> DataBaseManager::getRS232Data()
+QList<DataBaseManager::DB_RS232> DataBaseManager::getRS232Data()
 {
-    QList<_RS232_Data> list;
+    QList<DB_RS232> list;
 
     QSqlQuery query;
     // %1_表格名称
@@ -369,38 +329,49 @@ QList<_RS232_Data> DataBaseManager::getRS232Data()
 
     while(query.next())
     {
-        _RS232_Data data;
-        data.id             = query.value(QmlEnum::RS232_id).toInt();
-        data.port           = query.value(QmlEnum::RS232_port).toString();
-        data.baud_rate      = query.value(QmlEnum::RS232_baud_rate).toInt();
-        data.data_bit       = query.value(QmlEnum::RS232_data_bit).toInt();
-        data.parity_bit     = query.value(QmlEnum::RS232_parity_bit).toString();
-        data.stop_bit       = query.value(QmlEnum::RS232_stop_bit).toInt();
-
+        DB_RS232 data;
+        // data.id             = query.value(QmlEnum::RS232_id).toInt();
+        data.Port           = query.value(QmlEnum::RS232_port).toString();
+        data.BaudRate      = query.value(QmlEnum::RS232_baud_rate).toInt();
+        data.DataBit       = query.value(QmlEnum::RS232_data_bit).toInt();
+        data.ParityBit     = query.value(QmlEnum::RS232_parity_bit).toInt();
+        data.StopBit       = query.value(QmlEnum::RS232_stop_bit).toInt();
         list.push_back(data);
     }
 
     return list;
 }
 
-_RS232_Data DataBaseManager::getRS232DataById(int id)
+bool DataBaseManager::getRS232Configure(const int id, DB_RS232& rs232)
 {
-    QList<_RS232_Data> list = getRS232Data();  // 获取所有 RS232 数据
+    bool bResult = false;
 
-    // 遍历列表查找匹配的 id
-    for (const _RS232_Data &data : list) {
-        if (data.id == id) {
-            return data;  // 返回匹配的 RS232 数据
-        }
+    // 构造查询字符串，选择 id 匹配的行
+    QSqlQuery query;
+    QString execStr = QString("SELECT * FROM %1 WHERE id = %2")
+                          .arg(RS232_TABLENAME)
+                          .arg(id);
+
+    if (!query.exec(execStr))
+    {
+        qDebug() << "查询失败: " << query.lastError();
+        return bResult;  // 返回空的结果
     }
 
-    // 如果没有找到对应的 id，返回一个空的 _RS232_Data 对象
-    return _RS232_Data();
+    if (query.next())
+    {
+        rs232.Port        = query.value(QmlEnum::RS232_port).toString();
+        rs232.BaudRate    = query.value(QmlEnum::RS232_baud_rate).toInt();
+        rs232.DataBit     = query.value(QmlEnum::RS232_data_bit).toInt();
+        rs232.ParityBit   = query.value(QmlEnum::RS232_parity_bit).toInt();
+        rs232.StopBit     = query.value(QmlEnum::RS232_stop_bit).toInt();
+        bResult = true;
+    }
+    return bResult;
 }
 
 
-
-bool DataBaseManager::setRS232Data(int id, QmlEnum::RS232_COLUMN column, QVariant data)
+bool DataBaseManager::updateRS232Configure(const int id, const DB_RS232 rs232)
 {
     QSqlQuery query;
     // %1_表格名称 %2_要修改的字段名称 %3_ID字段名称
@@ -411,48 +382,6 @@ bool DataBaseManager::setRS232Data(int id, QmlEnum::RS232_COLUMN column, QVarian
     query.prepare(execStr);
     query.bindValue(":newdata", data);
     query.bindValue(":id", id);
-
-    return query.exec();
-}
-
-bool DataBaseManager::removeRS232Row(int id)
-{
-    QSqlQuery query;
-    // %1_表格名称 %2_ID字段名称
-    QString execStr = QString("DELETE FROM %1 WHERE %2=:id")
-                          .arg(RS232_TABLENAME, getRS232_ColumnName(QmlEnum::RS232_id));
-
-    // 绑定属性
-    query.prepare(execStr);
-    query.bindValue(":id", id);
-
-    return query.exec();
-}
-
-bool DataBaseManager::insertRS232Row(_RS232_Data data)
-{
-    if(data.id == 1)
-        return false;
-
-    QSqlQuery query;
-    // %1_表格名称
-    QString execStr = QString("INSERT INTO %1 values("
-                              ":id"
-                              ", :port"
-                              ", :baud_rate"
-                              ", :data_bit"
-                              ", :parity_bit"
-                              ", :stop_bit)")
-                          .arg(RS232_TABLENAME);
-
-    // 绑定属性
-    query.prepare(execStr);
-    query.bindValue(":id", data.id);
-    query.bindValue(":port", data.port);
-    query.bindValue(":baud_rate", data.baud_rate);
-    query.bindValue(":data_bit", data.data_bit);
-    query.bindValue(":parity_bit", data.parity_bit);
-    query.bindValue(":stop_bit", data.stop_bit);
 
     return query.exec();
 }
