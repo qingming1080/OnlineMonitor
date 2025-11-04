@@ -110,7 +110,7 @@ public:
     struct DB_RS232
     {
         // int id;      // 串口id
-        int Port;   // 串口号
+        QString Port;   // 串口号
         int BaudRate;   // 波特率
         int DataBit;    // 数据位
         int ParityBit;  // 奇偶校验位

@@ -1108,12 +1108,10 @@ Rectangle {
                             x:233
                             y:40
                             model: ComModel
-                            currentIndex: DeviceManager.DeviceList[DeviceManager.SelectedDeviceIndex].DeviceObj.ComNumber
                             onAccepted: {
                                 console.debug("index: ", currentIndex)
                                 var value = model.get(currentIndex).value;
                                 console.debug("value: ", value)
-                                DeviceManager.DeviceList[DeviceManager.SelectedDeviceIndex].DeviceObj.ComNumber = value
                             }
                         }
                         CustomComboBox{
@@ -1123,12 +1121,10 @@ Rectangle {
                             x:233
                             y:97
                             model: BaudRateModel
-                            currentIndex: DeviceManager.DeviceList[DeviceManager.SelectedDeviceIndex].DeviceObj.BaudRate
                             onAccepted: {
                                 console.debug("index: ", currentIndex)
                                 var value = model.get(currentIndex).value;
                                 console.debug("value: ", value)
-                                DeviceManager.DeviceList[DeviceManager.SelectedDeviceIndex].DeviceObj.BaudRate = value
                             }
                         }
                         CustomComboBox{
@@ -1138,12 +1134,10 @@ Rectangle {
                             x:233
                             y:151
                             model: DataBitsModel
-                            currentIndex:DeviceManager.DeviceList[DeviceManager.SelectedDeviceIndex].DeviceObj.DataBits
                             onAccepted: {
                                 console.debug("index: ", currentIndex)
                                 var value = model.get(currentIndex).value;
                                 console.debug("value: ", value)
-                                DeviceManager.DeviceList[DeviceManager.SelectedDeviceIndex].DeviceObj.DataBits = value
                             }
                         }
                         CustomComboBox{
@@ -1153,12 +1147,10 @@ Rectangle {
                             x:233
                             y:206
                             model: ParityModel
-                            currentIndex:DeviceManager.DeviceList[DeviceManager.SelectedDeviceIndex].DeviceObj.ParityBits
                             onAccepted: {
                                 console.debug("index: ", currentIndex)
                                 var value = model.get(currentIndex).value;
                                 console.debug("value: ", value)
-                                DeviceManager.DeviceList[DeviceManager.SelectedDeviceIndex].DeviceObj.ParityBits = value
                             }
                         }
                         CustomComboBox{
@@ -1168,13 +1160,6 @@ Rectangle {
                             x:233
                             y:265
                             model: StopBitsModel
-                            currentIndex:  DeviceManager.DeviceList[DeviceManager.SelectedDeviceIndex].DeviceObj.StopBits
-                            onAccepted: {
-                                console.debug("index: ", currentIndex)
-                                var value = model.get(currentIndex).value;
-                                console.debug("value: ", value)
-                                DeviceManager.DeviceList[DeviceManager.SelectedDeviceIndex].DeviceObj.StopBits = value
-                            }
                         }
                     }
                 }
@@ -1222,10 +1207,7 @@ Rectangle {
                     font.bold: true
                 }
                 onPressed: {
-                    // DeviceManager.saveDevice()
-                    console.log("DeviceManager object:", DeviceManager)
-                    var result = DeviceManager.saveDevice()
-                    console.log("saveDevice result:", result)
+                    DeviceManager.saveDevice()
                     loadViewsys(2, musys)
                 }
             }
