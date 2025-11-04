@@ -389,7 +389,6 @@ bool DataBaseManager::updateRS232Configure(const int id, const DB_RS232 rs232)
     query.bindValue(":stopbit", rs232.StopBit);
     query.bindValue(":id", id);
 
-    return query.exec();
     if (!query.exec()) {
         qWarning() << "Failed to update RS232 configuration:" << query.lastError().text();
         return false;
