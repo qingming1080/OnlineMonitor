@@ -45,6 +45,42 @@ DeviceInformation::DeviceInformation(int welderID, QObject *parent)
         setResidualThreshold("90");
     }
 
+    if (m_DBConfigure.ConnectType == DeviceInfoEnum::TCP_IP) {
+        if (DataBaseManager::getInstance()->getNetworkConfigure(welderID, m_DBNetwork))
+        {
+            setPortNumber(QString::number(m_DBNetwork.ServerPort));
+            setLocalIP(m_DBNetwork.LocalIP);
+            setRemoteIP(m_DBNetwork.RemoteIP);
+        }
+        else
+        {
+            setPortNumber("4000");
+            setLocalIP("192.168.1.255");
+            setRemoteIP("192.168.1.223");
+        }
+    }
+    else if (m_DBConfigure.ConnectType == DeviceInfoEnum::RS232)
+    {
+
+        if (DataBaseManager::getInstance()->getRS232Configure(welderID, m_DBRS232))
+        {
+
+            setComNumber(m_DBRS232.Port);
+            setBaudRate(m_DBRS232.BaudRate);
+            setDataBits(m_DBRS232.DataBit);
+            setParityBits(m_DBRS232.ParityBit);
+            setStopBits(m_DBRS232.StopBit);
+        }
+        else
+        {
+            setComNumber(0);
+            setBaudRate(9600);
+            setDataBits(8);
+            setParityBits(0);
+            setStopBits(1);
+        }
+    }
+
     // QString text = QString("%1号设备_DeviceInformation_初始化耗时:%2ms").arg(welderID).arg(timer.elapsed());
     // emit SignalManager::getInstance()->signalAddRecord(QDateTime::currentDateTime(), text);
 }

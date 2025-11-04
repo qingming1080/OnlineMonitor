@@ -331,7 +331,7 @@ QList<DataBaseManager::DB_RS232> DataBaseManager::getRS232Data()
     {
         DB_RS232 data;
         // data.id             = query.value(QmlEnum::RS232_id).toInt();
-        data.Port           = query.value(QmlEnum::RS232_port).toString();
+        data.Port          = query.value(QmlEnum::RS232_port).toInt();
         data.BaudRate      = query.value(QmlEnum::RS232_baud_rate).toInt();
         data.DataBit       = query.value(QmlEnum::RS232_data_bit).toInt();
         data.ParityBit     = query.value(QmlEnum::RS232_parity_bit).toInt();
@@ -360,7 +360,7 @@ bool DataBaseManager::getRS232Configure(const int id, DB_RS232& rs232)
 
     if (query.next())
     {
-        rs232.Port        = query.value(QmlEnum::RS232_port).toString();
+        rs232.Port        = query.value(QmlEnum::RS232_port).toInt();
         rs232.BaudRate    = query.value(QmlEnum::RS232_baud_rate).toInt();
         rs232.DataBit     = query.value(QmlEnum::RS232_data_bit).toInt();
         rs232.ParityBit   = query.value(QmlEnum::RS232_parity_bit).toInt();
@@ -374,16 +374,26 @@ bool DataBaseManager::getRS232Configure(const int id, DB_RS232& rs232)
 bool DataBaseManager::updateRS232Configure(const int id, const DB_RS232 rs232)
 {
     QSqlQuery query;
-    // %1_表格名称 %2_要修改的字段名称 %3_ID字段名称
-    QString execStr = QString("UPDATE %1 SET %2 = :newdata WHERE %3 = :id")
-                          .arg(RS232_TABLENAME, getRS232_ColumnName(column), getRS232_ColumnName(QmlEnum::RS232_id));
+    query.prepare("UPDATE connection_rs232 "
+                  "SET port = :port, "
+                  "baud_rate = :baudrate, "
+                  "data_bit = :databit, "
+                  "parity_bit = :paritybit, "
+                  "stop_bit = :stopbit "
+                  "WHERE id = :id");
 
-    // 绑定属性
-    query.prepare(execStr);
-    query.bindValue(":newdata", data);
+    query.bindValue(":port", rs232.Port);
+    query.bindValue(":baudrate", rs232.BaudRate);
+    query.bindValue(":databit", rs232.DataBit);
+    query.bindValue(":paritybit", rs232.ParityBit);
+    query.bindValue(":stopbit", rs232.StopBit);
     query.bindValue(":id", id);
 
-    return query.exec();
+    if (!query.exec()) {
+        qWarning() << "Failed to update RS232 configuration:" << query.lastError().text();
+        return false;
+    }
+    return true;
 }
 
 QList<_IO_Data> DataBaseManager::getIOData(int welderID)

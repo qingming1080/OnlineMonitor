@@ -222,6 +222,8 @@ signals:
 private:
     int m_WelderID;
     DataBaseManager::DB_CONFIGURE   m_DBConfigure;
+    DataBaseManager::DB_NETWORK     m_DBNetwork;
+    DataBaseManager::DB_RS232       m_DBRS232;
     // DeviceInfoEnum::CONNECT_TYPE    m_iConnectType;
     // DeviceInfoEnum::CONNECT_STATE   m_iConnectState;
 
