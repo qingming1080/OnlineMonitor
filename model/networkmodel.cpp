@@ -22,6 +22,7 @@ void NetworkModel::setEthIndex(const int &index)
     {
         m_iCurrentEthIndex = index;
         emit notifyEthIndexChanged();
+        qDebug() << "setEthIndex: " << index;
     }
 }
 
@@ -35,6 +36,7 @@ void NetworkModel::setConnectTypeId(const int &typeId)
     if(m_iConnectTypeId != typeId)
     {
         m_iConnectTypeId = typeId;
+
         emit notifyConnectTypeIdChanged();
     }
 }
@@ -87,42 +89,10 @@ NetworkModel::NetworkModel(QObject *parent)
     : QAbstractListModel{parent}
 {
     m_iCurrentWelderId = 1;
-    QList<DataBaseManager::DB_NETWORK> networkList;
-    DataBaseManager::getInstance()->getAllNetworkConfigure(networkList);
-    m_listManager.clear();
-    for(int i = 0; i< networkList.count(); i++)
-    {
-        NETWORK_MANAGER manager;
-        manager.ModbusDeviceId = i;
-        manager.WelderId = -1;
-        manager.LocalIP = networkList.at(i).LocalIP;
-        manager.RemoteIP = networkList.at(i).RemoteIP;
-        manager.LocalPort = networkList.at(i).LocalPort;
-        manager.Protocol = networkList.at(i).Protocol;
-        manager.ServerPort = networkList.at(i).ServerPort;
-        manager.Type = networkList.at(i).Type;
-        manager.User = networkList.at(i).User;
-        m_listManager.insert(networkList.at(i).Id, manager);
-    }
-    qDebug() << "m_listManger.cout: " << m_listManager.size();
 
-    QList<DataBaseManager::DB_CONFIGURE> configureList;
-    DataBaseManager::getInstance()->getAllConfigureationDevice(configureList);
-    qDebug() << "configureList.size: " << configureList.size();
-    for(int i = 0; i < configureList.count(); i++)
-    {
-        qDebug() << "m_listManger[" << i <<"].ConnectType: " << configureList.at(i).ConnectType;
-        qDebug() << "m_listManger[" << i <<"].ConnectTypeId: " << configureList.at(i).ConnectTypeId;
-        if(configureList.at(i).ConnectType == DeviceInfoEnum::TCP_IP)
-        {
-            auto iter = m_listManager.find(configureList.at(i).ConnectTypeId);
-            if(iter != m_listManager.end())
-            {
-                iter.value().WelderId = configureList.at(i).WelderID;
-                qDebug() << "WelderID: " << iter.value().WelderId;
-            }
-        }
-    }
+    initListManager();
+
+    updateWelderID();
 
     NotifySelectedDeviceIndexChanged(m_iCurrentWelderId);
 
@@ -158,6 +128,7 @@ void NetworkModel::NotifySelectedDeviceIndexChanged(int welderID)
     }
     modelReset();
     int index = indexOfEthRole(m_iConnectTypeId);
+    qDebug() << "index: " << index;
     if(index != -1)
         setEthIndex(index);
     else
@@ -218,8 +189,54 @@ void NetworkModel::modelReset()
     endResetModel();
 }
 
+bool NetworkModel::initListManager()
+{
+    bool bResult = false;
+    QList<DataBaseManager::DB_NETWORK> networkList;
+    DataBaseManager::getInstance()->getAllNetworkConfigure(networkList);
+    m_listManager.clear();
+    for(int i = 0; i< networkList.count(); i++)
+    {
+        NETWORK_MANAGER manager;
+        manager.ModbusDeviceId = i;
+        manager.WelderId = -1;
+        manager.LocalIP = networkList.at(i).LocalIP;
+        manager.RemoteIP = networkList.at(i).RemoteIP;
+        manager.LocalPort = networkList.at(i).LocalPort;
+        manager.Protocol = networkList.at(i).Protocol;
+        manager.ServerPort = networkList.at(i).ServerPort;
+        manager.Type = networkList.at(i).Type;
+        manager.User = networkList.at(i).User;
+        m_listManager.insert(networkList.at(i).Id, manager);
+    }
+    bResult = !m_listManager.empty();
+    qDebug() << "m_listManger.cout: " << m_listManager.size();
+    return bResult;
+}
+
+bool NetworkModel::updateWelderID()
+{
+    QList<Device *> deviceList = DeviceManager::getInstance()->getDeviceList();
+    for(int i = 0; i < deviceList.count(); i++)
+    {
+        qDebug() << "m_listManger[" << i <<"].ConnectType: " << deviceList.at(i)->getDeviceObj()->getConnectType();
+        qDebug() << "m_listManger[" << i <<"].ConnectTypeId: " << deviceList.at(i)->getDeviceObj()->getConnectTypeID();
+        if(deviceList.at(i)->getDeviceObj()->getConnectType() == DeviceInfoEnum::TCP_IP)
+        {
+            auto iter = m_listManager.find(deviceList.at(i)->getDeviceObj()->getConnectTypeID());
+            if(iter != m_listManager.end())
+            {
+                iter.value().WelderId = deviceList.at(i)->GetWelderID();
+                qDebug() << "WelderID: " << iter.value().WelderId;
+            }
+        }
+    }
+    return !deviceList.empty();
+}
+
 QVariant NetworkModel::get(int index) const
 {
+    qDebug() << "c++ index：" << index;
     if (index < 0 || index >= m_listETHPort.count())
         return QVariant();
     
@@ -230,13 +247,27 @@ QVariant NetworkModel::get(int index) const
     return result;
 }
 
-QStringList NetworkModel::keys() const
+bool NetworkModel::UpdateDatabase()
 {
-    QStringList list;
-    for (int i = 0; i < m_listETHPort.size(); ++i) {
-        list << m_listETHPort.at(i).value("key").toString();
+    bool bResult = false;
+    DataBaseManager::DB_NETWORK network;
+    auto iter = m_listManager.find(m_iConnectTypeId);
+    if(iter != m_listManager.end())
+    {
+        network.LocalIP = m_strLocalIP;
+        network.RemoteIP = m_strRemoteIP;
+        network.LocalPort = iter.value().LocalPort;
+        network.ServerPort = m_iServerPort;
+        network.Protocol = iter.value().Protocol;
+        network.Type = iter.value().Type;
+        network.User = iter.value().User;
+        bResult = DataBaseManager::getInstance()->updateNetworkConfigure(m_iConnectTypeId, network);
     }
-    return list;
+
+    initListManager();
+    updateWelderID();
+
+    return bResult;
 }
 
 int NetworkModel::indexOfEthRole(const int id) const

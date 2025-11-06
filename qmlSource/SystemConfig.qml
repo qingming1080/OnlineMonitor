@@ -897,7 +897,7 @@ Rectangle {
                         }
                         //TODO CustomComboBox
                         CustomComboBox{
-                            id:com2
+                            id: com2
                             width: 243
                             height: 40
                             x:233
@@ -905,10 +905,15 @@ Rectangle {
                             model: NetworkModel
                             currentIndex: NetworkModel.EthIndex
                             onAccepted: {
-                                console.debug("index: ", currentIndex)
-                                var value = model.get(currentIndex).value;
-                                console.debug("value: ", value)
+                                var value = model.get(currentIndex).Id;
                                 NetworkModel.ConnectTypeId = value
+                            }
+                            Connections{
+                                target: NetworkModel
+                                function onNotifyEthIndexChanged()
+                                {
+                                    com2.currentIndex = NetworkModel.EthIndex
+                                }
                             }
                         }
 

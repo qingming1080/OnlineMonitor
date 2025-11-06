@@ -6,6 +6,7 @@
 #include <QElapsedTimer>
 #include "log/localrecord.h"
 #include "tools/utilityfunction.h"
+#include "networkmodel.h"
 
 DeviceInformation::DeviceInformation(int welderID, QObject *parent)
     : QObject{parent}, m_WelderID(welderID)
@@ -364,5 +365,15 @@ void DeviceInformation::setStopBits(const int &stopbits)
         m_ModbusConfigure.SerialProperties.StopBits = static_cast<QSerialPort::StopBits>(stopbits);
         emit notifyStopBitsChanged();
     }
+}
+
+bool DeviceInformation::SaveDevice()
+{
+    if(m_DBConfigure.ConnectType == DeviceInfoEnum::TCP_IP)
+    {
+        m_DBConfigure.ConnectTypeId = NetworkModel::getInstance()->getConnectTypeId();
+        NetworkModel::getInstance()->UpdateDatabase();
+    }
+    return true;
 }
 

@@ -176,6 +176,7 @@ public:
     int getStopBits() const;
     void setStopBits(const int &stopbits);
 
+    bool SaveDevice();
 signals:
     void notifyWelderNameChanged();
     void notifyWelderTypeChanged();

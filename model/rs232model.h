@@ -1,9 +1,9 @@
-#ifndef COMMODEL_H
-#define COMMODEL_H
+#ifndef RS232MODEL_H
+#define RS232MODEL_H
 
 #include <QAbstractListModel>
 
-class ComModel : public QAbstractListModel
+class RS232Model : public QAbstractListModel
 {
     Q_OBJECT
 public:
@@ -12,7 +12,7 @@ public:
         ValueRole
     };
 public:
-    static ComModel* getInstance();
+    static RS232Model* getInstance();
 
     // QAbstractItemModel interface
 public:
@@ -23,12 +23,12 @@ public:
     Q_INVOKABLE QVariant get(int index) const;
 
 private:
-    explicit ComModel(QObject *parent = nullptr);
+    explicit RS232Model(QObject *parent = nullptr);
 
 private:
     static constexpr int COM1 = 0;
     static constexpr int COM2 = 1;
-    static ComModel* m_ptrInstance;
+    static RS232Model* m_ptrInstance;
     QList<QVariantMap> m_listComPort; // List of key-value pairs m_listComPort;
 };
-#endif // COMMODEL_H
+#endif // RS232MODEL_H

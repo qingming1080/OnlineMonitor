@@ -25,7 +25,6 @@ SOURCES += \
         modbus/hbmodbusclient.cpp \
         modbus/hbserver.cpp \
         model/baudratemodel.cpp \
-        model/commodel.cpp \
         model/databitsmodel.cpp \
         model/csvexportworker.cpp \
         model/device.cpp \
@@ -39,6 +38,7 @@ SOURCES += \
         model/networkmodel.cpp \
         model/paritymodel.cpp \
         model/production.cpp \
+        model/rs232model.cpp \
         model/stopbitsmodel.cpp \
         model/trend.cpp \
         model/weldertypemodel.cpp \
@@ -75,7 +75,6 @@ HEADERS += \
     modbus/hbmodbusclient.h \
     modbus/hbserver.h \
     model/baudratemodel.h \
-    model/commodel.h \
     model/databitsmodel.h \
     model/csvexportworker.h \
     model/device.h \
@@ -89,6 +88,7 @@ HEADERS += \
     model/networkmodel.h \
     model/paritymodel.h \
     model/production.h \
+    model/rs232model.h \
     model/stopbitsmodel.h \
     model/trend.h \
     model/weldertypemodel.h \

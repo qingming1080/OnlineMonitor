@@ -3,7 +3,7 @@
 
 #include <QAbstractListModel>
 #include <QMap>
-#include "DataBase/databasemanager.h"
+// #include "DataBase/databasemanager.h"
 ///
 /// \brief The NetworkModel class : 网络连接
 ///
@@ -46,12 +46,14 @@ public:
     virtual QHash<int,QByteArray> roleNames() const override;
 
     Q_INVOKABLE QVariant get(const int index) const;
-    Q_INVOKABLE QStringList keys() const;
+    bool UpdateDatabase();
 
 private:
     explicit NetworkModel(QObject *parent = nullptr);
     int indexOfEthRole(const int value) const;
     void modelReset();
+    bool initListManager();
+    bool updateWelderID();
 
 private:
     static constexpr int ETH1 = 0;

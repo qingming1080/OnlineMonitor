@@ -97,6 +97,7 @@ void Device::setProductionObj(const Production *object)
 
 bool Device::SaveDevice()
 {
+    m_ptrDevice->SaveDevice();
     return true;
 }
 

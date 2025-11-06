@@ -1,14 +1,14 @@
-#include "commodel.h"
+#include "rs232model.h"
 
-ComModel* ComModel::m_ptrInstance = nullptr;
-ComModel *ComModel::getInstance()
+RS232Model* RS232Model::m_ptrInstance = nullptr;
+RS232Model *RS232Model::getInstance()
 {
     if(m_ptrInstance == nullptr)
-        m_ptrInstance = new ComModel();
+        m_ptrInstance = new RS232Model();
     return m_ptrInstance;
 }
 
-ComModel::ComModel(QObject *parent)
+RS232Model::RS232Model(QObject *parent)
     : QAbstractListModel{parent}
 {
     m_listComPort.append({{"key", "COM1"}, {"value", 0}});
@@ -16,13 +16,13 @@ ComModel::ComModel(QObject *parent)
 
 }
 
-int ComModel::rowCount(const QModelIndex &parent) const
+int RS232Model::rowCount(const QModelIndex &parent) const
 {
     Q_UNUSED(parent);
     return m_listComPort.size();
 }
 
-QVariant ComModel::data(const QModelIndex &index, int role) const
+QVariant RS232Model::data(const QModelIndex &index, int role) const
 {
     if(!index.isValid())
         return QVariant();
@@ -39,7 +39,7 @@ QVariant ComModel::data(const QModelIndex &index, int role) const
     return QVariant();
 }
 
-QHash<int, QByteArray> ComModel::roleNames() const
+QHash<int, QByteArray> RS232Model::roleNames() const
 {
     QHash<int, QByteArray> roles;
     roles[KeyRole] = "key";
@@ -47,7 +47,7 @@ QHash<int, QByteArray> ComModel::roleNames() const
     return roles;
 }
 
-QVariant ComModel::get(int index) const
+QVariant RS232Model::get(int index) const
 {
     if (index < 0 || index >= m_listComPort.count())
         return QVariant();

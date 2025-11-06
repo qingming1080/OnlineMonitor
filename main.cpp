@@ -13,7 +13,7 @@
 #include "model/trend.h"
 #include "model/history.h"
 #include "model/networkmodel.h"
-#include "model/commodel.h"
+#include "model/rs232model.h"
 #include "model/baudratemodel.h"
 #include "model/databitsmodel.h"
 #include "model/stopbitsmodel.h"
@@ -84,7 +84,7 @@ int main(int argc, char *argv[])
     pQmlContext->setContextProperty("DataBaseManager", DataBaseManager::getInstance());
 
     pQmlContext->setContextProperty("NetworkModel",     NetworkModel::getInstance());
-    pQmlContext->setContextProperty("ComModel",         ComModel::getInstance());
+    pQmlContext->setContextProperty("RS232Model",       RS232Model::getInstance());
     pQmlContext->setContextProperty("BaudRateModel",    BaudRateModel::getInstance());
     pQmlContext->setContextProperty("DataBitsModel",    DataBitsModel::getInstance());
     pQmlContext->setContextProperty("StopBitsModel",    StopBitsModel::getInstance());
