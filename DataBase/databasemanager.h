@@ -32,14 +32,16 @@ public:
         MAX_MODEL_SAMPLES       = 4,    // 学习样本数
         YIELD_RATE_LOWER_LIMIT  = 5,    // 良率下限
         HEIGHT_ENCODER_OPTION   = 6,    // 高度模式
-        CONNECT_TYPE            = 7,    // 连接方式
-        CONNECT_TYPE_ID         = 8,    // 连接方式ID
+        SUSPICIOUS_OPTION       = 7,
+        CONNECT_TYPE            = 8,    // 连接方式
+        CONNECT_TYPE_ID,                 // 连接方式ID
         SINGLE_FACT_SETTING,
         GENERAL_FACT_SETTING,
         OTHER_FACT_SETTING,
         AUTO_LEARN_COUNT,
         FORCE_THRESHOLD,
         RESIDUAL_THRESHOLD,
+
     };
 
     enum PRODUCTION_COLUMN
@@ -110,7 +112,7 @@ public:
     struct DB_RS232
     {
         // int id;      // 串口id
-        int Port;   // 串口号
+        QString Port;   // 串口号
         int BaudRate;   // 波特率
         int DataBit;    // 数据位
         int ParityBit;  // 奇偶校验位

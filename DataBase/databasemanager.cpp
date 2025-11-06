@@ -120,6 +120,7 @@ bool DataBaseManager::getConfigurationDevice(const int welderID, DB_CONFIGURE &c
         configure.MaxModelSamples        = query.value(CONFIGURATION_COLUMN::MAX_MODEL_SAMPLES).toInt();
         configure.YieldRateLowerLimit    = query.value(CONFIGURATION_COLUMN::YIELD_RATE_LOWER_LIMIT).toInt();
         configure.HeightEncoderOption    = query.value(CONFIGURATION_COLUMN::HEIGHT_ENCODER_OPTION).toInt();
+        configure.SuspiciousOption       = query.value(CONFIGURATION_COLUMN::SUSPICIOUS_OPTION).toInt();
         configure.ConnectType            = query.value(CONFIGURATION_COLUMN::CONNECT_TYPE).toInt();
         configure.ConnectTypeId          = query.value(CONFIGURATION_COLUMN::CONNECT_TYPE_ID).toInt();
         configure.SingleFactSetting      = query.value(CONFIGURATION_COLUMN::SINGLE_FACT_SETTING).toInt();
@@ -371,7 +372,7 @@ QList<DataBaseManager::DB_RS232> DataBaseManager::getRS232Data()
     {
         DB_RS232 data;
         // data.id             = query.value(QmlEnum::RS232_id).toInt();
-        data.Port          = query.value(QmlEnum::RS232_port).toInt();
+        data.Port           = query.value(QmlEnum::RS232_port).toString();
         data.BaudRate      = query.value(QmlEnum::RS232_baud_rate).toInt();
         data.DataBit       = query.value(QmlEnum::RS232_data_bit).toInt();
         data.ParityBit     = query.value(QmlEnum::RS232_parity_bit).toInt();
@@ -400,7 +401,7 @@ bool DataBaseManager::getRS232Configure(const int id, DB_RS232& rs232)
 
     if (query.next())
     {
-        rs232.Port        = query.value(QmlEnum::RS232_port).toInt();
+        rs232.Port        = query.value(QmlEnum::RS232_port).toString();
         rs232.BaudRate    = query.value(QmlEnum::RS232_baud_rate).toInt();
         rs232.DataBit     = query.value(QmlEnum::RS232_data_bit).toInt();
         rs232.ParityBit   = query.value(QmlEnum::RS232_parity_bit).toInt();
@@ -1279,6 +1280,8 @@ QString DataBaseManager::getConfiguration_ColumnName(CONFIGURATION_COLUMN column
         return "force_threshold";
     case CONFIGURATION_COLUMN::RESIDUAL_THRESHOLD:
         return "residual_threshold";
+    case CONFIGURATION_COLUMN::SUSPICIOUS_OPTION:
+        return "suspicious_option";
     }
     return "";
 }
