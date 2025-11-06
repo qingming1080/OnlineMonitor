@@ -81,6 +81,7 @@ bool DataBaseManager::getConfigurationDevice(const int welderID, DB_CONFIGURE &c
         configure.MaxModelSamples        = query.value(CONFIGURATION_COLUMN::MAX_MODEL_SAMPLES).toInt();
         configure.YieldRateLowerLimit    = query.value(CONFIGURATION_COLUMN::YIELD_RATE_LOWER_LIMIT).toInt();
         configure.HeightEncoderOption    = query.value(CONFIGURATION_COLUMN::HEIGHT_ENCODER_OPTION).toInt();
+        configure.SuspiciousOption       = query.value(CONFIGURATION_COLUMN::SUSPICIOUS_OPTION).toInt();
         configure.ConnectType            = query.value(CONFIGURATION_COLUMN::CONNECT_TYPE).toInt();
         configure.ConnectTypeId          = query.value(CONFIGURATION_COLUMN::CONNECT_TYPE_ID).toInt();
         configure.SingleFactSetting      = query.value(CONFIGURATION_COLUMN::SINGLE_FACT_SETTING).toInt();
@@ -1239,6 +1240,8 @@ QString DataBaseManager::getConfiguration_ColumnName(CONFIGURATION_COLUMN column
         return "force_threshold";
     case CONFIGURATION_COLUMN::RESIDUAL_THRESHOLD:
         return "residual_threshold";
+    case CONFIGURATION_COLUMN::SUSPICIOUS_OPTION:
+        return "suspicious_option";
     }
     return "";
 }
