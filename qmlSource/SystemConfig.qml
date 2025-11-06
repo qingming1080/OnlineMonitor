@@ -903,14 +903,12 @@ Rectangle {
                             x:233
                             y:55
                             model: NetworkModel
-                            property int tmpIndex: DeviceManager.SelectedDeviceIndex
-                            property int tmpPort: DeviceManager.DeviceList[tmpIndex].DeviceObj.EthNumber
-                            currentIndex: NetworkModel.getKeyRoleIndex(tmpPort)
+                            currentIndex: NetworkModel.EthIndex
                             onAccepted: {
                                 console.debug("index: ", currentIndex)
                                 var value = model.get(currentIndex).value;
                                 console.debug("value: ", value)
-                                DeviceManager.DeviceList[tmpIndex].DeviceObj.EthNumber = value
+                                NetworkModel.ConnectTypeId = value
                             }
                         }
 
@@ -942,7 +940,7 @@ Rectangle {
                                 }
                             }
                             property int tmpIndex: DeviceManager.SelectedDeviceIndex
-                            text: DeviceManager.DeviceList[tmpIndex].DeviceObj.PortNumber
+                            text: NetworkModel.PortNumber
                             onEditingFinished: {
                                 var portRegex = /^([0-9]|[1-9][0-9]{1,4}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])$/
                                 if (!portRegex.test(t5.text))
@@ -950,7 +948,7 @@ Rectangle {
                                 else
                                 {
                                     footer.hideError()
-                                    DeviceManager.DeviceList[tmpIndex].DeviceObj.PortNumber = t5.text
+                                    NetworkModel.PortNumber = t5.text
                                 }
                             }
 
@@ -981,8 +979,7 @@ Rectangle {
                                     keyboardType = 0
                                 }
                             }
-                            property int tmpIndex: DeviceManager.SelectedDeviceIndex
-                            text: DeviceManager.DeviceList[tmpIndex].DeviceObj.RemoteIP
+                            text: NetworkModel.RemoteIP
                             onEditingFinished: {
                                 var ipRegex = /^(25[0-5]|2[0-4]\d|1\d{2}|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d{2}|[1-9]?\d)){3}$/
                                 if (!ipRegex.test(t6.text))
@@ -990,7 +987,7 @@ Rectangle {
                                 else
                                 {
                                     footer.hideError()
-                                    DeviceManager.DeviceList[tmpIndex].DeviceObj.RemoteIP = t6.text
+                                    NetworkModel.RemoteIP = t6.text
                                 }
                             }
                         }
@@ -1022,8 +1019,8 @@ Rectangle {
                                     keyboardType = 0
                                 }
                             }
-                            property int tmpIndex: DeviceManager.SelectedDeviceIndex
-                            text: DeviceManager.DeviceList[tmpIndex].DeviceObj.LocalIP
+
+                            text: NetworkModel.LocalIP
                             onEditingFinished: {
                                 var ipRegex = /^(25[0-5]|2[0-4]\d|1\d{2}|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d{2}|[1-9]?\d)){3}$/
                                 if (!ipRegex.test(t7.text))
@@ -1031,7 +1028,7 @@ Rectangle {
                                 else
                                 {
                                     footer.hideError()
-                                    DeviceManager.DeviceList[tmpIndex].DeviceObj.LocalIP = t7.text
+                                    NetworkModel.LocalIP = t7.text
                                 }
                             }
                         }

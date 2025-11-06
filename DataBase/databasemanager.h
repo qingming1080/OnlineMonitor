@@ -67,6 +67,7 @@ public:
 
     struct DB_CONFIGURE
     {
+        int                             WelderID;
         QString                         WelderName;             // 焊机名称
         int                             WelderType;             // 焊机型号
         int                             ProductionBatch;        // 最大生产批量
@@ -86,8 +87,7 @@ public:
 
     struct DB_SYSTEM
     {
-        // int id;                     // id
-        // int welder_id;              // 设备id
+        // int Id;                     // id
         int SingleFactorSetting;    // 单因素设置
         int GeneralFactorSetting;   // 通用系数设置
         int ForceThreshold;         // 撕拉力阈值设置
@@ -97,7 +97,7 @@ public:
 
     struct DB_NETWORK
     {
-        // int id;          // 网口号
+        int Id;          // 网口号
         int Type;           // 类型  0_Server  1_Client
         int Protocol;       // 协议  0_TCP/IP  1_OPCUA
         QString LocalIP;    // 本地IP
@@ -219,14 +219,14 @@ public:
     void closeTransaction();
 
 /////////////////////////configuration////////////////////////////////
-    bool getDeviceCount(QList<int> &welderList);
+    bool getWelderID(QList<int> &IdList);
+    bool getAllConfigureationDevice(QList<DataBaseManager::DB_CONFIGURE>& list);
     bool getConfigurationDevice(const int welderID, DB_CONFIGURE& configure);
     bool removeConfigurationDevice(const int welderID);
     bool insertConfigurationDevice(const DB_CONFIGURE configure);
     bool updateConfigurationDevice(const int welderID, const DB_CONFIGURE configure);
 
-
-    QList<DB_NETWORK> getNetworkData();
+    bool getAllNetworkConfigure(QList<DataBaseManager::DB_NETWORK>& list);
     bool updateNetworkConfigure(const int id, const DB_NETWORK network);
     bool getNetworkConfigure(const int id, DB_NETWORK& network);
 

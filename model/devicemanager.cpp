@@ -24,16 +24,18 @@ DeviceManager::DeviceManager(QObject *parent)
     // timer.start();
     m_iDeviceCounter = 0;
     setSelectedDeviceIndex(-1);
-    QList<int> welderlist;
-    if(DataBaseManager::getInstance()->getDeviceCount(welderlist) == true)
+    QList<int> welderIdlist;
+    if(DataBaseManager::getInstance()->getWelderID(welderIdlist) == true)
     {
         QList<Device *> tmpDeviceList;
-        for(int i = 0; i < welderlist.size(); ++i)
-            tmpDeviceList.push_back(new Device(welderlist.at(i)));
+        for(int i = 0; i < welderIdlist.size(); ++i)
+            tmpDeviceList.push_back(new Device(welderIdlist.at(i)));
         setDeviceList(tmpDeviceList);
         setDeviceCounter(m_listDevices.size());
         setSelectedDeviceIndex(0);
-    }else{
+    }
+    else
+    {
         qDebug() << "Failed to query device list from database! ";
     }
 
@@ -88,10 +90,13 @@ void DeviceManager::setDeviceCounter(int counter)
 }
 void DeviceManager::setSelectedDeviceIndex(const int &index)
 {
+    int weldID = -1;
     if(m_iSelectedDeviceIndex != index)
     {
         m_iSelectedDeviceIndex = index;
-        emit notifySelectedDeviceIndexChanged();
+        if(index != -1)
+            weldID = m_listDevices[index]->GetWelderID();
+        emit notifySelectedDeviceIndexChanged(weldID);
     }
 }
 void DeviceManager::setDeviceList(const QList<Device *> &list)

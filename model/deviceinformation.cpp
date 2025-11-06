@@ -43,42 +43,7 @@ DeviceInformation::DeviceInformation(int welderID, QObject *parent)
         setAutoLearningCount("5");
         setForceThreshold("1300");
         setResidualThreshold("90");
-    }
-
-    if (m_DBConfigure.ConnectType == DeviceInfoEnum::TCP_IP) {
-        if (DataBaseManager::getInstance()->getNetworkConfigure(welderID, m_DBNetwork))
-        {
-            setPortNumber(QString::number(m_DBNetwork.ServerPort));
-            setLocalIP(m_DBNetwork.LocalIP);
-            setRemoteIP(m_DBNetwork.RemoteIP);
-        }
-        else
-        {
-            setPortNumber("4000");
-            setLocalIP("192.168.1.255");
-            setRemoteIP("192.168.1.223");
-        }
-    }
-    else if (m_DBConfigure.ConnectType == DeviceInfoEnum::RS232)
-    {
-
-        if (DataBaseManager::getInstance()->getRS232Configure(welderID, m_DBRS232))
-        {
-
-            setComNumber(m_DBRS232.Port);
-            setBaudRate(m_DBRS232.BaudRate);
-            setDataBits(m_DBRS232.DataBit);
-            setParityBits(m_DBRS232.ParityBit);
-            setStopBits(m_DBRS232.StopBit);
-        }
-        else
-        {
-            setComNumber(0);
-            setBaudRate(9600);
-            setDataBits(8);
-            setParityBits(0);
-            setStopBits(1);
-        }
+        m_DBConfigure.ConnectTypeId = DeviceInfoEnum::TCP_IP;
     }
 
     // QString text = QString("%1号设备_DeviceInformation_初始化耗时:%2ms").arg(welderID).arg(timer.elapsed());
@@ -331,63 +296,6 @@ void DeviceInformation::setAutoLearningCount(const QString &limit)
     emit notifyAutoLearningCountChanged();
 }
 
-int DeviceInformation::getEthNumber() const
-{
-    return m_ModbusConfigure.NetworkProperties.EthNumber;
-}
-
-void DeviceInformation::setEthNumber(const int &eth)
-{
-    if (m_ModbusConfigure.NetworkProperties.EthNumber != eth)
-    {
-        m_ModbusConfigure.NetworkProperties.EthNumber = eth;
-        emit notifyEthNumberChanged();
-    }
-}
-
-QString DeviceInformation::getPortNumber() const
-{
-    return QString::number(m_ModbusConfigure.NetworkProperties.PortNumber);
-}
-
-void DeviceInformation::setPortNumber(const QString &port)
-{
-    bool isOk = false;
-    int portNum = port.toInt(&isOk);
-    if (!isOk || m_ModbusConfigure.NetworkProperties.PortNumber != portNum)
-    {
-        m_ModbusConfigure.NetworkProperties.PortNumber = portNum;
-        emit notifyPortNumberChanged();
-    }
-}
-
-QString DeviceInformation::getLocalIP() const
-{
-    return m_ModbusConfigure.NetworkProperties.LocalIP;
-}
-
-void DeviceInformation::setLocalIP(const QString &ip)
-{
-    if (m_ModbusConfigure.NetworkProperties.LocalIP != ip)
-    {
-        m_ModbusConfigure.NetworkProperties.LocalIP = ip;
-        emit notifyLocalIPChanged();
-    }
-}
-
-QString DeviceInformation::getRemoteIP() const
-{
-    return m_ModbusConfigure.NetworkProperties.RemoteIP;
-}
-
-void DeviceInformation::setRemoteIP(const QString &ip)
-{
-    if (m_ModbusConfigure.NetworkProperties.RemoteIP != ip)
-    {
-        m_ModbusConfigure.NetworkProperties.RemoteIP = ip;
-        emit notifyRemoteIPChanged();
-    }
-}
 int DeviceInformation::getComNumber() const
 {
     return m_ModbusConfigure.SerialProperties.ComNumber;

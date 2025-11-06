@@ -75,10 +75,6 @@ class DeviceInformation : public QObject
     Q_PROPERTY(QString ResidualThreshold    READ getResidualThreshold   WRITE setResidualThreshold  NOTIFY notifyResidualThresholdChanged FINAL)
     Q_PROPERTY(QString AutoLearningCount    READ getAutoLearningCount   WRITE setAutoLearningCount  NOTIFY notifyAutoLearningCountChanged FINAL)
 
-    Q_PROPERTY(int     EthNumber            READ getEthNumber           WRITE setEthNumber          NOTIFY notifyEthNumberChanged FINAL)
-    Q_PROPERTY(QString PortNumber           READ getPortNumber          WRITE setPortNumber         NOTIFY notifyPortNumberChanged FINAL)
-    Q_PROPERTY(QString LocalIP              READ getLocalIP             WRITE setLocalIP            NOTIFY notifyLocalIPChanged FINAL)
-    Q_PROPERTY(QString RemoteIP             READ getRemoteIP            WRITE setRemoteIP           NOTIFY notifyRemoteIPChanged FINAL)
 
     Q_PROPERTY(int     ComNumber            READ getComNumber           WRITE setComNumber          NOTIFY notifyComNumberChanged FINAL)
     Q_PROPERTY(int     BaudRate             READ getBaudRate            WRITE setBaudRate           NOTIFY notifyBaudRateChanged FINAL)
@@ -165,18 +161,6 @@ public:
     int GetAutoLearningCount() const;
     void setAutoLearningCount(const QString &limit);
 
-    int getEthNumber() const;
-    void setEthNumber(const int &eth);
-
-    QString getPortNumber() const;
-    void setPortNumber(const QString &port);
-
-    QString getLocalIP() const;
-    void setLocalIP(const QString &ip);
-
-    QString getRemoteIP() const;
-    void setRemoteIP(const QString &ip);
-
     int getComNumber() const;
     void setComNumber(const int &com);
 
@@ -209,10 +193,6 @@ signals:
     void notifyResidualThresholdChanged();
     void notifyAutoLearningCountChanged();
 
-    void notifyEthNumberChanged();
-    void notifyPortNumberChanged();
-    void notifyLocalIPChanged();
-    void notifyRemoteIPChanged();
     void notifyComNumberChanged();
     void notifyBaudRateChanged();
     void notifyDataBitsChanged();

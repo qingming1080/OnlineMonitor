@@ -104,3 +104,8 @@ bool Device::UpdateDevice()
 {
     return true;
 }
+
+int Device::GetWelderID() const
+{
+    return m_WelderID;
+}

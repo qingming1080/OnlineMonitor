@@ -45,6 +45,8 @@ public:
     bool SaveDevice();
     bool UpdateDevice();
 
+    int GetWelderID() const;
+
     // Q_INVOKABLE IO *pIO() const;
     Q_INVOKABLE Trend *pTrend() const;
 

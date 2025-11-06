@@ -47,6 +47,7 @@ ComboBox{
             Text {
                 id:tt
                 text: model.key
+                // text: model
                 font.pixelSize: 16  // 设置字体大小
                 color: pRgb(43, 112, 173)
                 anchors.centerIn: item

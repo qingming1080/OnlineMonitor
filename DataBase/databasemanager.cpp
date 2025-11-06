@@ -34,9 +34,9 @@ void DataBaseManager::closeTransaction()
     m_database.commit();
 }
 
-bool DataBaseManager::getDeviceCount(QList<int> &welderList)
+bool DataBaseManager::getWelderID(QList<int> &IdList)
 {
-    welderList.clear();
+    IdList.clear();
 
     QSqlQuery query;
     // %1_表格名称
@@ -51,10 +51,49 @@ bool DataBaseManager::getDeviceCount(QList<int> &welderList)
 
     while(query.next())
     {
-        welderList.push_back(query.value(CONFIGURATION_COLUMN::WELDER_ID).toInt());
+        IdList.push_back(query.value(CONFIGURATION_COLUMN::WELDER_ID).toInt());
     }
 
     return true;
+}
+
+bool DataBaseManager::getAllConfigureationDevice(QList<DB_CONFIGURE> &list)
+{
+    bool bResult = false;
+    list.clear();
+    QSqlQuery query;
+    QString execStr = QString("SELECT * FROM %1").arg(CONFIGURATION_TABLENAME);
+
+    if (!query.exec(execStr))
+    {
+        qDebug() << "Configuration查询失败: " << query.lastError();
+        return false;
+    }
+
+    while(query.next())
+    {
+        DB_CONFIGURE configure;
+        configure.WelderID               = query.value(CONFIGURATION_COLUMN::WELDER_ID).toInt();
+        configure.WelderName             = query.value(CONFIGURATION_COLUMN::WELDER_NAME).toString();
+        configure.WelderType             = query.value(CONFIGURATION_COLUMN::WELDER_TYPE).toInt();
+        configure.ProductionBatch        = query.value(CONFIGURATION_COLUMN::PRODUCTION_BATCH).toInt();
+        configure.MaxModelSamples        = query.value(CONFIGURATION_COLUMN::MAX_MODEL_SAMPLES).toInt();
+        configure.YieldRateLowerLimit    = query.value(CONFIGURATION_COLUMN::YIELD_RATE_LOWER_LIMIT).toInt();
+        configure.HeightEncoderOption    = query.value(CONFIGURATION_COLUMN::HEIGHT_ENCODER_OPTION).toInt();
+        configure.ConnectType            = query.value(CONFIGURATION_COLUMN::CONNECT_TYPE).toInt();
+        configure.ConnectTypeId          = query.value(CONFIGURATION_COLUMN::CONNECT_TYPE_ID).toInt();
+        configure.SingleFactSetting      = query.value(CONFIGURATION_COLUMN::SINGLE_FACT_SETTING).toInt();
+        configure.GeneralFactSetting     = query.value(CONFIGURATION_COLUMN::GENERAL_FACT_SETTING).toInt();
+        configure.OtherFactSetting       = query.value(CONFIGURATION_COLUMN::OTHER_FACT_SETTING).toInt();
+        configure.AutoLearnCount         = query.value(CONFIGURATION_COLUMN::AUTO_LEARN_COUNT).toInt();
+        configure.ForceThreshold         = query.value(CONFIGURATION_COLUMN::FORCE_THRESHOLD).toInt();
+        configure.ResidualThreshold      = query.value(CONFIGURATION_COLUMN::RESIDUAL_THRESHOLD).toInt();
+        list.push_back(configure);
+    }
+    if(list.count() > 0)
+        bResult = true;
+
+    return bResult;
 }
 
 bool DataBaseManager::getConfigurationDevice(const int welderID, DB_CONFIGURE &configure)
@@ -221,13 +260,13 @@ bool DataBaseManager::updateConfigurationDevice(const int welderID, const DB_CON
 }
 
 
-QList<DataBaseManager::DB_NETWORK> DataBaseManager::getNetworkData()
+bool DataBaseManager::getAllNetworkConfigure(QList<DataBaseManager::DB_NETWORK>& list)
 {
-    QList<DB_NETWORK> list;
-
+    bool bResult = false;
+    list.clear();
     QSqlQuery query;
     // %1_表格名称
-    QString execStr = QString("SELECT * FROM %1").arg(NETWORK_TABLENAME);
+    QString execStr = QString("SELECT * FROM %1 WHERE %2 > 1").arg(NETWORK_TABLENAME, getNetwork_ColumnName(QmlEnum::NETWORK_id));
     if (!query.exec(execStr))
     {
         qDebug() << "查询失败: " << query.lastError();
@@ -236,19 +275,20 @@ QList<DataBaseManager::DB_NETWORK> DataBaseManager::getNetworkData()
     while(query.next())
     {
         DB_NETWORK data;
-        // data.id             = query.value(QmlEnum::NETWORK_id).toInt();
+        data.Id             = query.value(QmlEnum::NETWORK_id).toInt();
         data.Type           = query.value(QmlEnum::NETWORK_type).toInt();
         data.Protocol       = query.value(QmlEnum::NETWORK_protocol).toInt();
         data.ServerPort    = query.value(QmlEnum::NETWORK_server_port).toInt();
         data.RemoteIP      = query.value(QmlEnum::NETWORK_remote_ip).toString();
         data.LocalIP       = query.value(QmlEnum::NETWORK_local_ip).toString();
         data.User           = query.value(QmlEnum::NETWORK_user).toString();
-
         list.push_back(data);
 
     }
+    if(list.empty() == false)
+        bResult = true;
 
-    return list;
+    return bResult;
 }
 
 bool DataBaseManager::updateNetworkConfigure(const int id, const DB_NETWORK network)
