@@ -2,7 +2,7 @@ import QtQuick 2.0
 import QtQuick.Controls 2.5
 import GlobalSystemDefine 1.0
 ComboBox{
-    id:comboBox
+    id: comboBox
     textRole: "key" // 指定显示的字段
     signal accepted(var currentIndex)
     background: Rectangle{
@@ -39,7 +39,7 @@ ComboBox{
         }
     }
     delegate: ItemDelegate {
-        width: parent.width
+        width: comboBox.width
         contentItem: Rectangle{
             id:item
             width: parent.width

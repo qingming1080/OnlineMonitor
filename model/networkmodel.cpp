@@ -141,7 +141,6 @@ void NetworkModel::NotifySelectedDeviceIndexChanged(int welderID)
         {
             if(m_iCurrentWelderId != -1)
             {
-                qDebug() << "QString::number(iter.value().ServerPort)" << QString::number(iter.value().ServerPort);
                 setPortNumber(QString::number(iter.value().ServerPort));
                 setLocalIP(iter.value().LocalIP);
                 setRemoteIP(iter.value().RemoteIP);
