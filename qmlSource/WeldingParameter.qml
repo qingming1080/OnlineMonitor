@@ -7,13 +7,10 @@ import LanguageEnum         1.0
 
 Rectangle {
     color: pRgb(43, 112, 173)
-    property string eqText1: ""
-    property string eqText2: ""
-    property string eqText3: ""
-    property string eqText4: ""
-    property bool altitudeMode:DeviceManager.DeviceList[swipeCurrIndex].DevInfoObject.HeightEncoderOption === 1 ? true:false
-
-    property int deviceID: DeviceManager.DeviceList[swipeCurrIndex].DevInfoObject.id
+    property int presetEnergyValue: 0
+    property int presetAmplitudeValue: 0
+    property int presetWeldPressureValue: 0
+    property int presetTriggerPressureValue: 0
     radius: 3
     Rectangle {
            width:  equipmentCount == 1 ? 117 : 129
@@ -159,7 +156,7 @@ Rectangle {
             border.width: 2
             border.color: "#99ccff"
         }
-        text: UtilityFunction.displayValue(eqText1)/* + GlobalLanguageDefine.strEnergyUnit*/
+        text: UtilityFunction.displayValue(presetEnergyValue)/* + GlobalLanguageDefine.strEnergyUnit*/
         MouseArea {
             anchors.fill: parent
             onPressed: {
@@ -193,7 +190,7 @@ Rectangle {
             border.width: 2
             border.color: "#99ccff"
         }
-        text:UtilityFunction.displayValue(eqText2)/* + GlobalLanguageDefine.strAmplitudeUnit*/
+        text:UtilityFunction.displayValue(presetAmplitudeValue)/* + GlobalLanguageDefine.strAmplitudeUnit*/
         MouseArea {
             anchors.fill: parent
             onPressed: {
@@ -227,7 +224,7 @@ Rectangle {
             border.width: 2
             border.color: "#99ccff"
         }
-        text: UtilityFunction.displayValue(eqText3,10,1)/* + GlobalLanguageDefine.strPressureUnit*/
+        text: UtilityFunction.displayValue(presetWeldPressureValue,10,1)/* + GlobalLanguageDefine.strPressureUnit*/
         MouseArea {
             anchors.fill: parent
             onPressed: {
@@ -261,7 +258,7 @@ Rectangle {
             border.width: 2
             border.color: "#99ccff"
         }
-        text: UtilityFunction.displayValue(eqText4,10,1)/* + GlobalLanguageDefine.strPressureUnit*/
+        text: UtilityFunction.displayValue(presetTriggerPressureValue,10,1)/* + GlobalLanguageDefine.strPressureUnit*/
         MouseArea {
             anchors.fill: parent
             onPressed: {

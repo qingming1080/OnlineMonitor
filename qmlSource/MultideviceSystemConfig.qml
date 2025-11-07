@@ -182,7 +182,7 @@ Rectangle {
     Text {
         id: s5
         // text: qsTr("启动")
-        text: DeviceManager.DeviceList[currentIndex].DeviceObj.HeightEncoderOption ? GlobalLanguageDefine.strStart : GlobalLanguageDefine.strClose
+        text: heightOption ? GlobalLanguageDefine.strStart : GlobalLanguageDefine.strClose
         color: pRgb(177, 213, 219)
         font.family: GlobalSystemDefine.fontBold
         font.bold: true
@@ -256,7 +256,7 @@ Rectangle {
 
     Text {
         id: openPendingtext
-        text: DeviceManager.DeviceList[currentIndex].DeviceObj.SuspiciousOption ? GlobalLanguageDefine.strStart : GlobalLanguageDefine.strClose
+        text: suspiciousOption ? GlobalLanguageDefine.strStart : GlobalLanguageDefine.strClose
         color: pRgb(177, 213, 219)
         font.family: GlobalSystemDefine.fontBold
         font.bold: true

@@ -21,7 +21,6 @@ Window {
     property int showWidth: 1280
     property int showHeight: 800
     property int mode: 0
-
     property int interFaceId: 0
     property int keyboardType: 0
     property bool createModel: false
@@ -54,7 +53,6 @@ Window {
     signal sigPassError()
     signal sigDelDevice()
     signal sigRecover()
-    signal sigSwipeCurrIndex(var swipeCurrIndex)
     function switchUI(id)
     {
         sigSwitch(id)

@@ -4,201 +4,201 @@ import GlobalSystemDefine 1.0
 import LanguageEnum 1.0
 //焊接结果
 Rectangle {
-    property string energy: ""
-    property string amplitude: ""
-    property string weldPressure: ""
-    property string triggerPressure: ""
-    property string weldTime: ""
-    property string peakPower: ""
-    property string preheight: ""
-    property string postHeight: ""
+    property int energy: 0
+    property int amplitude: 0
+    property int weldPressure: 0
+    property int triggerPressure: 0
+    property int weldTime: 0
+    property int peakPower: 0
+    property int preheight: 0
+    property int postHeight: 0
     property bool altitudeMode:false
     property int powerY: 1
     property int imgY: 1
     property int imgtopMargin: 1
     property int imgcenterX: 1
     property int imgcenterY: 1
-    Component.onCompleted: {
-        sigUpdateUI(swipeCurrIndex)
-    }
+    // Component.onCompleted: {
+    //     sigUpdateUI(swipeCurrIndex)
+    // }
 
-    Connections{
-        target: window
-        function onSigUpdateUI(index){
-            if(mode == 1){
-                if(index === 0){
-                    altitudeMode = altitudeModel1
-                    if(altitudeModel1){
-                        imgcenterY = 4
-                        imgcenterX = 10
-                        imgtopMargin = 14
-                        textMargin = 23
-                        imgWidHei = 20
-                        powerY = 50
-                        imgY = 48
-                    }
-                    else{
-                        imgcenterY = 6
-                        imgcenterX = 17
-                        imgtopMargin = 17
-                        textMargin = 35
-                        imgWidHei = 31
-                        powerY = 75
-                        imgY = 68
-                    }
-                }
-                else if(index === 1){
-                    altitudeMode = altitudeModel2
-                    if(altitudeModel2){
-                        imgcenterY = 4
-                        imgcenterX = 10
-                        imgtopMargin = 14
-                        textMargin = 23
-                        imgWidHei = 20
-                        powerY = 50
-                        imgY = 48
-                    }
-                    else{
-                        imgcenterY = 6
-                        imgcenterX = 17
-                        imgtopMargin = 17
-                        textMargin = 35
-                        imgWidHei = 31
-                        powerY = 75
-                        imgY = 68
-                    }
-                }
-                else if(index === 2){
-                    altitudeMode = altitudeModel3
-                    if(altitudeModel3){
-                        imgcenterY = 4
-                        imgcenterX = 10
-                        imgtopMargin = 14
-                        textMargin = 23
-                        imgWidHei = 20
-                        powerY = 50
-                        imgY = 48
-                    }
-                    else{
-                        imgcenterY = 6
-                        imgcenterX = 17
-                        imgtopMargin = 17
-                        textMargin = 35
-                        imgWidHei = 31
-                        powerY = 75
-                        imgY = 68
-                    }
-                }
-                else if(index === 3){
-                    altitudeMode = altitudeModel4
-                    if(altitudeModel4){
-                        imgcenterY = 4
-                        imgcenterX = 10
-                        imgtopMargin = 14
-                        textMargin = 23
-                        imgWidHei = 20
-                        powerY = 50
-                        imgY = 48
-                    }
-                    else{
-                        imgcenterY = 6
-                        imgcenterX = 17
-                        imgtopMargin = 17
-                        textMargin = 35
-                        imgWidHei = 31
-                        powerY = 75
-                        imgY = 68
-                    }
-                }
-            }
-            else{
-                if(index === 0){
-                    altitudeMode = altitudeModel1
-                    if(altitudeModel1){
-                        imgcenterY = 4
-                        imgcenterX = 10
-                        imgtopMargin = 14
-                        textMargin = 23
-                        imgWidHei = 24
-                        powerY = 65
-                        imgY = 59
-                    }
-                    else{
-                        imgcenterY = 6
-                        imgcenterX = 17
-                        imgtopMargin = 17
-                        textMargin = 35
-                        imgWidHei = 36
-                        powerY = 85
-                        imgY = 79
-                    }
-                }
-                else if(index === 1){
-                    altitudeMode = altitudeModel2
-                    if(altitudeModel2){
-                        imgcenterY = 4
-                        imgcenterX = 10
-                        imgtopMargin = 14
-                        textMargin = 23
-                        imgWidHei = 24
-                        powerY = 59
-                        imgY = 59
-                    }
-                    else{
-                        imgcenterY = 6
-                        imgcenterX = 17
-                        imgtopMargin = 17
-                        textMargin = 35
-                        imgWidHei = 36
-                        powerY = 85
-                        imgY = 79
-                    }
-                }
-                else if(index === 2){
-                    altitudeMode = altitudeModel3
-                    if(altitudeModel3){
-                        imgcenterY = 4
-                        imgcenterX = 10
-                        imgtopMargin = 14
-                        textMargin = 23
-                        imgWidHei = 24
-                        powerY = 59
-                        imgY = 59
-                    }
-                    else{
-                        imgcenterY = 6
-                        imgcenterX = 17
-                        imgtopMargin = 17
-                        textMargin = 35
-                        imgWidHei = 36
-                        powerY = 85
-                        imgY = 79
-                    }
-                }
-                else if(index === 3){
-                    altitudeMode = altitudeModel4
-                    if(altitudeModel4){
-                        imgcenterY = 4
-                        imgcenterX = 10
-                        imgtopMargin = 14
-                        textMargin = 23
-                        imgWidHei = 24
-                        powerY = 59
-                        imgY = 59
-                    }
-                    else{
-                        imgcenterY = 6
-                        imgcenterX = 17
-                        imgtopMargin = 17
-                        textMargin = 35
-                        imgWidHei = 36
-                        powerY = 85
-                        imgY = 79
-                    }
-                }
-            }
-        }
-    }
+    // Connections{
+    //     target: window
+    //     function onSigUpdateUI(index){
+    //         if(mode == 1){
+    //             if(index === 0){
+    //                 altitudeMode = altitudeModel1
+    //                 if(altitudeModel1){
+    //                     imgcenterY = 4
+    //                     imgcenterX = 10
+    //                     imgtopMargin = 14
+    //                     textMargin = 23
+    //                     imgWidHei = 20
+    //                     powerY = 50
+    //                     imgY = 48
+    //                 }
+    //                 else{
+    //                     imgcenterY = 6
+    //                     imgcenterX = 17
+    //                     imgtopMargin = 17
+    //                     textMargin = 35
+    //                     imgWidHei = 31
+    //                     powerY = 75
+    //                     imgY = 68
+    //                 }
+    //             }
+    //             else if(index === 1){
+    //                 altitudeMode = altitudeModel2
+    //                 if(altitudeModel2){
+    //                     imgcenterY = 4
+    //                     imgcenterX = 10
+    //                     imgtopMargin = 14
+    //                     textMargin = 23
+    //                     imgWidHei = 20
+    //                     powerY = 50
+    //                     imgY = 48
+    //                 }
+    //                 else{
+    //                     imgcenterY = 6
+    //                     imgcenterX = 17
+    //                     imgtopMargin = 17
+    //                     textMargin = 35
+    //                     imgWidHei = 31
+    //                     powerY = 75
+    //                     imgY = 68
+    //                 }
+    //             }
+    //             else if(index === 2){
+    //                 altitudeMode = altitudeModel3
+    //                 if(altitudeModel3){
+    //                     imgcenterY = 4
+    //                     imgcenterX = 10
+    //                     imgtopMargin = 14
+    //                     textMargin = 23
+    //                     imgWidHei = 20
+    //                     powerY = 50
+    //                     imgY = 48
+    //                 }
+    //                 else{
+    //                     imgcenterY = 6
+    //                     imgcenterX = 17
+    //                     imgtopMargin = 17
+    //                     textMargin = 35
+    //                     imgWidHei = 31
+    //                     powerY = 75
+    //                     imgY = 68
+    //                 }
+    //             }
+    //             else if(index === 3){
+    //                 altitudeMode = altitudeModel4
+    //                 if(altitudeModel4){
+    //                     imgcenterY = 4
+    //                     imgcenterX = 10
+    //                     imgtopMargin = 14
+    //                     textMargin = 23
+    //                     imgWidHei = 20
+    //                     powerY = 50
+    //                     imgY = 48
+    //                 }
+    //                 else{
+    //                     imgcenterY = 6
+    //                     imgcenterX = 17
+    //                     imgtopMargin = 17
+    //                     textMargin = 35
+    //                     imgWidHei = 31
+    //                     powerY = 75
+    //                     imgY = 68
+    //                 }
+    //             }
+    //         }
+    //         else{
+    //             if(index === 0){
+    //                 altitudeMode = altitudeModel1
+    //                 if(altitudeModel1){
+    //                     imgcenterY = 4
+    //                     imgcenterX = 10
+    //                     imgtopMargin = 14
+    //                     textMargin = 23
+    //                     imgWidHei = 24
+    //                     powerY = 65
+    //                     imgY = 59
+    //                 }
+    //                 else{
+    //                     imgcenterY = 6
+    //                     imgcenterX = 17
+    //                     imgtopMargin = 17
+    //                     textMargin = 35
+    //                     imgWidHei = 36
+    //                     powerY = 85
+    //                     imgY = 79
+    //                 }
+    //             }
+    //             else if(index === 1){
+    //                 altitudeMode = altitudeModel2
+    //                 if(altitudeModel2){
+    //                     imgcenterY = 4
+    //                     imgcenterX = 10
+    //                     imgtopMargin = 14
+    //                     textMargin = 23
+    //                     imgWidHei = 24
+    //                     powerY = 59
+    //                     imgY = 59
+    //                 }
+    //                 else{
+    //                     imgcenterY = 6
+    //                     imgcenterX = 17
+    //                     imgtopMargin = 17
+    //                     textMargin = 35
+    //                     imgWidHei = 36
+    //                     powerY = 85
+    //                     imgY = 79
+    //                 }
+    //             }
+    //             else if(index === 2){
+    //                 altitudeMode = altitudeModel3
+    //                 if(altitudeModel3){
+    //                     imgcenterY = 4
+    //                     imgcenterX = 10
+    //                     imgtopMargin = 14
+    //                     textMargin = 23
+    //                     imgWidHei = 24
+    //                     powerY = 59
+    //                     imgY = 59
+    //                 }
+    //                 else{
+    //                     imgcenterY = 6
+    //                     imgcenterX = 17
+    //                     imgtopMargin = 17
+    //                     textMargin = 35
+    //                     imgWidHei = 36
+    //                     powerY = 85
+    //                     imgY = 79
+    //                 }
+    //             }
+    //             else if(index === 3){
+    //                 altitudeMode = altitudeModel4
+    //                 if(altitudeModel4){
+    //                     imgcenterY = 4
+    //                     imgcenterX = 10
+    //                     imgtopMargin = 14
+    //                     textMargin = 23
+    //                     imgWidHei = 24
+    //                     powerY = 59
+    //                     imgY = 59
+    //                 }
+    //                 else{
+    //                     imgcenterY = 6
+    //                     imgcenterX = 17
+    //                     imgtopMargin = 17
+    //                     textMargin = 35
+    //                     imgWidHei = 36
+    //                     powerY = 85
+    //                     imgY = 79
+    //                 }
+    //             }
+    //         }
+    //     }
+    // }
 
     property int textMargin:1
     property int imgWidHei:1
@@ -405,6 +405,7 @@ Rectangle {
         anchors.left: parent.left
         anchors.leftMargin: 10
         source: "qrc:/images/icon_preheight.png"
+        visible: altitudeMode
     }
     Image {
         id: imagePostheight
@@ -415,5 +416,6 @@ Rectangle {
         anchors.left: parent.left
         anchors.leftMargin: 10
         source: "qrc:/images/icon_postheight.png"
+        visible: altitudeMode
     }
 }
