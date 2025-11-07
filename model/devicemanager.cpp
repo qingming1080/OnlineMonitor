@@ -1,13 +1,7 @@
 ﻿#include "devicemanager.h"
 #include "DataBase/databasemanager.h"
-#include "model/deviceinformation.h"
-#include "define.h"
 #include <qdebug.h>
-#include "model/deviceinformation.h"
 #include "modbus/hbmodbusclient.h"
-#include "signalmanager.h"
-#include <QElapsedTimer>
-#include "model/devicenames.h"
 
 DeviceManager* DeviceManager::m_ptrInstance = nullptr;
 DeviceManager *DeviceManager::getInstance()
@@ -20,52 +14,36 @@ DeviceManager *DeviceManager::getInstance()
 DeviceManager::DeviceManager(QObject *parent)
     : QObject{parent}
 {
-    // QElapsedTimer timer;
-    // timer.start();
     m_iDeviceCounter = 0;
     setSelectedDeviceIndex(-1);
-    QList<int> welderIdlist;
-    if(DataBaseManager::getInstance()->getWelderID(welderIdlist) == true)
+
+    if(InitDeviceList() == true)
     {
-        QList<Device *> tmpDeviceList;
-        for(int i = 0; i < welderIdlist.size(); ++i)
-            tmpDeviceList.push_back(new Device(welderIdlist.at(i)));
-        setDeviceList(tmpDeviceList);
-        setDeviceCounter(m_listDevices.size());
         setSelectedDeviceIndex(0);
     }
     else
     {
         qDebug() << "Failed to query device list from database! ";
     }
-
-
-    // emit SignalManager::getInstance()->signalAddRecord(QDateTime::currentDateTime(), QString("DeviceManager初始化耗时:%1ms").arg(timer.elapsed()));
 }
 
-// Device *DeviceManager::getDeviceByNetworkID(int networkID)
-// {
-//     for(int i = 0; i < m_listDevices.size(); ++i)
-//     {
-//         if(m_listDevices.at(i)->getDeviceObj()->getConnectType() == DeviceInfoEnum::TCP_IP
-//             && m_listDevices.at(i)->getDeviceObj()->getConnectTypeID() == networkID)
-//             return m_listDevices.at(i);
-//     }
+bool DeviceManager::InitDeviceList()
+{
+    bool bResult = false;
+    QList<int> welderIdlist;
+    if(DataBaseManager::getInstance()->getWelderID(welderIdlist) == true)
+    {
+        QList<Device *> tmpDeviceList;
+        for(int i = 0; i < welderIdlist.size(); i++)
+            tmpDeviceList.push_back(new Device(welderIdlist.at(i)));
+        setDeviceList(tmpDeviceList);
+        setDeviceCounter(m_listDevices.size());
+        bResult = true;
+    }
+    return bResult;
+}
 
-//     return nullptr;
-// }
 
-// Device *DeviceManager::getDeviceByRs232ID(int rs232ID)
-// {
-//     for(int i = 0; i < m_listDevices.size(); ++i)
-//     {
-//         if(m_listDevices.at(i)->getDeviceObj()->getConnectType() == DeviceInfoEnum::RS232
-//             && m_listDevices.at(i)->getDeviceObj()->getConnectTypeID() == rs232ID)
-//             return m_listDevices.at(i);
-//     }
-
-//     return nullptr;
-// }
 
 int DeviceManager::getSelectedDeviceIndex() const
 {
@@ -101,13 +79,20 @@ void DeviceManager::setSelectedDeviceIndex(const int &index)
 }
 void DeviceManager::setDeviceList(const QList<Device *> &list)
 {
-    if(m_listDevices.size() != list.size())
+    Device* _obj = nullptr;
+    for(int i = 0; i < m_listDevices.size(); i++)
     {
-        m_listDevices.clear();
-        for(int i = 0; i < list.size(); i++)
-            m_listDevices.append(list[i]);
-        emit notifyDeviceListChanged();
+        _obj = m_listDevices[i];
+        delete _obj;
+        _obj = nullptr;
     }
+    m_listDevices.clear();
+    for(int i = 0; i < list.size(); i++)
+    {
+        _obj = list[i];
+        m_listDevices.append(_obj);
+    }
+    emit notifyDeviceListChanged();
 }
 
 int DeviceManager::getPasswordLevel(QString password)
@@ -130,6 +115,7 @@ QString DeviceManager::getHistoryName(int welderID)
     return "";
 }
 
+
 bool DeviceManager::addDevice()
 {
     if(m_listDevices.size() == 4)
@@ -139,7 +125,7 @@ bool DeviceManager::addDevice()
     for(int i = 0; i < m_listDevices.size(); i++)
         tmpDeviceList.append(m_listDevices[i]);
     tmpDeviceList.append(_ptrDev);
-    setDeviceList(m_listDevices);
+    setDeviceList(tmpDeviceList);
     setDeviceCounter(m_listDevices.size());
     setSelectedDeviceIndex(m_listDevices.size() - 1);
     qDebug() << "add Device";
@@ -158,13 +144,14 @@ bool DeviceManager::removeDevice()
         tmpDeviceList.append(m_listDevices[i]);
 
     Device* _ptrDev = m_listDevices.at(m_iSelectedDeviceIndex);
+    _ptrDev->RemoveDevice();
     tmpDeviceList.removeAt(m_iSelectedDeviceIndex);
     //TODO need to delete database when the object is detoried.
     delete _ptrDev;
     _ptrDev = nullptr;
     setDeviceList(tmpDeviceList);
     setDeviceCounter(m_listDevices.size());
-    setSelectedDeviceIndex(-1);
+    setSelectedDeviceIndex(0);
     return true;
 }
 
@@ -174,14 +161,6 @@ bool DeviceManager::saveDevice()
         return false;
     else if(m_iSelectedDeviceIndex >= m_listDevices.size())
         return false;
-    return m_listDevices[m_iSelectedDeviceIndex]->SaveDevice();
-}
-
-bool DeviceManager::editDevice()
-{
-    if(m_iSelectedDeviceIndex < 0)
-        return false;
-    else if(m_iSelectedDeviceIndex >= m_listDevices.size())
-        return false;
-    return m_listDevices[m_iSelectedDeviceIndex]->UpdateDevice();
+    m_listDevices[m_iSelectedDeviceIndex]->SaveDevice();
+    return InitDeviceList();
 }

@@ -370,9 +370,35 @@ void DeviceInformation::setStopBits(const int &stopbits)
 bool DeviceInformation::SaveDevice()
 {
     if(m_DBConfigure.ConnectType == DeviceInfoEnum::TCP_IP)
-    {
         m_DBConfigure.ConnectTypeId = NetworkModel::getInstance()->getConnectTypeId();
+    else //(m_DBConfigure.ConnectType == DeviceInfoEnum::RS232)
+    {
+
+    }
+
+
+    if(m_WelderID == -1)
+        DataBaseManager::getInstance()->insertConfigurationDevice(m_DBConfigure);
+    else
+        DataBaseManager::getInstance()->updateConfigurationDevice(m_WelderID, m_DBConfigure);
+
+    if(m_DBConfigure.ConnectType == DeviceInfoEnum::TCP_IP)
+    {
         NetworkModel::getInstance()->UpdateDatabase();
+        NetworkModel::getInstance()->InitListManager();
+        NetworkModel::getInstance()->UpdateWelderID();
+    }
+    return true;
+}
+
+bool DeviceInformation::RemoveDevice()
+{
+    DataBaseManager::getInstance()->removeConfigurationDevice(m_WelderID);
+    if(m_DBConfigure.ConnectType == DeviceInfoEnum::TCP_IP)
+    {
+        NetworkModel::getInstance()->UpdateDatabase();
+        NetworkModel::getInstance()->InitListManager();
+        NetworkModel::getInstance()->UpdateWelderID();
     }
     return true;
 }

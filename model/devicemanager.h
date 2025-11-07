@@ -43,8 +43,6 @@ public:
 
     Q_INVOKABLE bool saveDevice();
 
-    Q_INVOKABLE bool editDevice();
-
     
 
     ///
@@ -76,10 +74,9 @@ signals:
 
     // void manualDataListChanged();  // 用于通知 UI 数据更新
 
-
-
 private:
     explicit DeviceManager(QObject *parent = nullptr);
+    bool InitDeviceList();
 private:
     static DeviceManager* m_ptrInstance;
     int m_iSelectedDeviceIndex;

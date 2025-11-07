@@ -1352,9 +1352,10 @@ Rectangle {
                 }
                 onPressed: {
                     // popup.openPop(8)
+                    // switchUI(3)
+                    // sigSysConfig()
                     DeviceManager.addDevice()
-                    switchUI(3)
-                    sigSysConfig()
+                    loadViewsys(1, syscfg)
                 }
             }
             Button{

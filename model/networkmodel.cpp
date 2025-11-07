@@ -89,12 +89,9 @@ NetworkModel::NetworkModel(QObject *parent)
     : QAbstractListModel{parent}
 {
     m_iCurrentWelderId = 1;
-
-    initListManager();
-
-    updateWelderID();
-
-    NotifySelectedDeviceIndexChanged(m_iCurrentWelderId);
+    InitListManager();
+    UpdateWelderID();
+    // NotifySelectedDeviceIndexChanged(m_iCurrentWelderId);
 
     connect(DeviceManager::getInstance(), &DeviceManager::notifySelectedDeviceIndexChanged,
             this, &NetworkModel::NotifySelectedDeviceIndexChanged);
@@ -103,7 +100,6 @@ NetworkModel::NetworkModel(QObject *parent)
 void NetworkModel::NotifySelectedDeviceIndexChanged(int welderID)
 {
     qDebug() << "CurrentWelderId: " << welderID;
-    bool bResult = false;
     m_iCurrentWelderId = welderID;
     for(auto iter = m_listManager.begin(); iter != m_listManager.end(); iter++)
     {
@@ -189,7 +185,7 @@ void NetworkModel::modelReset()
     endResetModel();
 }
 
-bool NetworkModel::initListManager()
+bool NetworkModel::InitListManager()
 {
     bool bResult = false;
     QList<DataBaseManager::DB_NETWORK> networkList;
@@ -214,24 +210,25 @@ bool NetworkModel::initListManager()
     return bResult;
 }
 
-bool NetworkModel::updateWelderID()
+bool NetworkModel::UpdateWelderID()
 {
-    QList<Device *> deviceList = DeviceManager::getInstance()->getDeviceList();
-    for(int i = 0; i < deviceList.count(); i++)
+    QList<DataBaseManager::DB_CONFIGURE> configureList;
+    DataBaseManager::getInstance()->getAllConfigureationDevice(configureList);
+    for(int i = 0; i < configureList.count(); i++)
     {
-        qDebug() << "m_listManger[" << i <<"].ConnectType: " << deviceList.at(i)->getDeviceObj()->getConnectType();
-        qDebug() << "m_listManger[" << i <<"].ConnectTypeId: " << deviceList.at(i)->getDeviceObj()->getConnectTypeID();
-        if(deviceList.at(i)->getDeviceObj()->getConnectType() == DeviceInfoEnum::TCP_IP)
+        qDebug() << "m_listManger[" << i <<"].ConnectType: " << configureList[i].ConnectType;
+        qDebug() << "m_listManger[" << i <<"].ConnectTypeId: " << configureList[i].ConnectTypeId;
+        if(configureList[i].ConnectType == DeviceInfoEnum::TCP_IP)
         {
-            auto iter = m_listManager.find(deviceList.at(i)->getDeviceObj()->getConnectTypeID());
+            auto iter = m_listManager.find(configureList[i].ConnectTypeId);
             if(iter != m_listManager.end())
             {
-                iter.value().WelderId = deviceList.at(i)->GetWelderID();
+                iter.value().WelderId = configureList[i].WelderID;
                 qDebug() << "WelderID: " << iter.value().WelderId;
             }
         }
     }
-    return !deviceList.empty();
+    return !configureList.empty();
 }
 
 QVariant NetworkModel::get(int index) const
@@ -263,10 +260,6 @@ bool NetworkModel::UpdateDatabase()
         network.User = iter.value().User;
         bResult = DataBaseManager::getInstance()->updateNetworkConfigure(m_iConnectTypeId, network);
     }
-
-    initListManager();
-    updateWelderID();
-
     return bResult;
 }
 

@@ -58,7 +58,7 @@ Window {
     function switchUI(id)
     {
         sigSwitch(id)
-        sigUpdateUI(swipeCurrIndex)
+        // sigUpdateUI(swipeCurrIndex)
     }
 
     //Only one time running

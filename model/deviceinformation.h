@@ -177,6 +177,7 @@ public:
     void setStopBits(const int &stopbits);
 
     bool SaveDevice();
+    bool RemoveDevice();
 signals:
     void notifyWelderNameChanged();
     void notifyWelderTypeChanged();
@@ -199,7 +200,6 @@ signals:
     void notifyDataBitsChanged();
     void notifyParityBitsChanged();
     void notifyStopBitsChanged();
-
 private:
     int m_WelderID;
     DataBaseManager::DB_CONFIGURE   m_DBConfigure;

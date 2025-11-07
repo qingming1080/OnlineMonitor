@@ -43,6 +43,7 @@ public:
     System* getSystemObj() const;
     void setSystemObj(const System* object);
     bool SaveDevice();
+    bool RemoveDevice();
     bool UpdateDevice();
 
     int GetWelderID() const;

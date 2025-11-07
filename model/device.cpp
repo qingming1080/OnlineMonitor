@@ -101,9 +101,9 @@ bool Device::SaveDevice()
     return true;
 }
 
-bool Device::UpdateDevice()
+bool Device::RemoveDevice()
 {
-    return true;
+    return m_ptrDevice->RemoveDevice();
 }
 
 int Device::GetWelderID() const

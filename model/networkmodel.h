@@ -47,13 +47,13 @@ public:
 
     Q_INVOKABLE QVariant get(const int index) const;
     bool UpdateDatabase();
+    bool InitListManager();
+    bool UpdateWelderID();
 
 private:
     explicit NetworkModel(QObject *parent = nullptr);
     int indexOfEthRole(const int value) const;
     void modelReset();
-    bool initListManager();
-    bool updateWelderID();
 
 private:
     static constexpr int ETH1 = 0;
