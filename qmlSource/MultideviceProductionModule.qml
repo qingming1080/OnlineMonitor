@@ -7,11 +7,14 @@ import GlobalLanguageDefine 1.0
 import GlobalMessageDefine  1.0
 import DeviceInfoEnum       1.0
 import DeviceObj            1.0
+import ProductionObj        1.0
 
 //多设备生产界面
 Rectangle {
     color: pRgb(153, 204, 255)
-    property int itemCount: 0
+    property int itemCount: -1
+    property int swipeCurrIndex: -1
+
     Connections{
         target: mpro
         function onSigBtnSynchronization(index,time){
@@ -142,8 +145,7 @@ Rectangle {
             }
             connectionType:{
                 if(DeviceManager.DeviceList[0]){
-                    return DeviceManager.DeviceList[0].DeviceObj.ConnectType === 1
-                            ? "RS232" : "TCP/IP"
+                    return DeviceManager.DeviceList[0].DeviceObj.ConnectType === 1 ? "RS232" : "TCP/IP"
                 }
                 else{
                     return ""
@@ -244,7 +246,6 @@ Rectangle {
             onPressed: {
                 swipevis = true
                 mpro.swipeIndex = 0
-                swipeCurrIndex = 0
                 loadViewpro(3,swipe)
                 sigUpdateUI(0)
             }
@@ -296,8 +297,8 @@ Rectangle {
             }
             connectionType:{
                 if(DeviceManager.DeviceList[1]){
-                    return DeviceManager.DeviceList[1].DeviceObj.ConnectType === 1
-                            ? "RS232" : "TCP/IP"
+                    return DeviceManager.DeviceList[1].DeviceObj.ConnectType === 1 ? "RS232" : "TCP/IP"
+
                 }
                 else{
                     return ""
@@ -323,7 +324,7 @@ Rectangle {
             color: "#0c5596"
             revealing:{
                 if(DeviceManager.DeviceList[1]){
-                    return DeviceManager.DeviceList[1].ProductionObj.DefectiveCycleCount
+                    return DeviceManager.DeviceList[1].DeviceObj.SuspiciousOption
                 }
                 else{
                     return true
@@ -397,7 +398,6 @@ Rectangle {
             onPressed: {
                 swipevis = true
                 mpro.swipeIndex = 1
-                swipeCurrIndex = 1
                 loadViewpro(3,swipe)
                 sigUpdateUI(1)
             }
@@ -430,10 +430,10 @@ Rectangle {
             color: "#0c5596"
             deviceName:{
                 if(DeviceManager.DeviceList[2]){
-                    return DeviceManager.DeviceList[2].DeviceObj.name
+                    return DeviceManager.DeviceList[2].DeviceObj.WelderName
                 }
                 else if(DeviceManager.DeviceList[3]){
-                    return DeviceManager.DeviceList[3].DeviceObj.name
+                    return DeviceManager.DeviceList[3].DeviceObj.WelderName
                 }
                 else{
                     return ""
@@ -441,10 +441,10 @@ Rectangle {
             }
             deviceType:{
                 if(DeviceManager.DeviceList[2]){
-                    return DeviceManager.DeviceList[2].DeviceObj.WelderTyep === 0 ? "L20-VG" : "L20-TS"
+                    return DeviceManager.DeviceList[2].DeviceObj.WelderType === 0 ? "L20-VG" : "L20-TS"
                 }
                 else if(DeviceManager.DeviceList[3]){
-                    return DeviceManager.DeviceList[3].DeviceObj.WelderTyep === 0 ? "L20-VG" : "L20-TS"
+                    return DeviceManager.DeviceList[3].DeviceObj.WelderType === 0 ? "L20-VG" : "L20-TS"
                 }
                 else{
                     return ""
@@ -452,12 +452,12 @@ Rectangle {
             }
             connectionType:{
                 if(DeviceManager.DeviceList[2]){
-                    return DeviceManager.DeviceList[2].DeviceObj.ConnectType === 1
-                            ? "RS232" : "TCP/IP"
+                    return DeviceManager.DeviceList[2].DeviceObj.ConnectType === 1 ? "RS232" : "TCP/IP"
+
                 }
                 else if(DeviceManager.DeviceList[3]){
-                    return DeviceManager.DeviceList[3].DeviceObj.ConnectType === 1
-                            ? "RS232" : "TCP/IP"
+                    return DeviceManager.DeviceList[3].DeviceObj.ConnectType === 1 ? "RS232" : "TCP/IP"
+
                 }
                 else{
                     return ""
@@ -575,7 +575,6 @@ Rectangle {
             onPressed: {
                 swipevis = true
                 mpro.swipeIndex = 2
-                swipeCurrIndex = 2
                 loadViewpro(3,swipe)
                 sigUpdateUI(2)
             }
@@ -607,10 +606,10 @@ Rectangle {
             color: "#0c5596"
             deviceName:{
                 if(DeviceManager.DeviceList[3]){
-                    return DeviceManager.DeviceList[3].DeviceObj.name
+                    return DeviceManager.DeviceList[3].DeviceObj.WelderName
                 }
                 else if(DeviceManager.DeviceList[2]){
-                    return DeviceManager.DeviceList[2].DeviceObj.name
+                    return DeviceManager.DeviceList[2].DeviceObj.WelderName
                 }
                 else{
                     return ""
@@ -629,12 +628,12 @@ Rectangle {
             }
             connectionType:{
                 if(DeviceManager.DeviceList[3]){
-                    return DeviceManager.DeviceList[3].DeviceObj.ConnectType === 1
-                            ? "RS232" : "TCP/IP"
+                    return DeviceManager.DeviceList[3].DeviceObj.ConnectType === 1 ? "RS232" : "TCP/IP"
+
                 }
                 else if(DeviceManager.DeviceList[2]){
-                    return DeviceManager.DeviceList[2].DeviceObj.ConnectType === 1
-                            ? "RS232" : "TCP/IP"
+                    return DeviceManager.DeviceList[2].DeviceObj.ConnectType === 1 ? "RS232" : "TCP/IP"
+
                 }
                 else{
                     return ""
@@ -751,13 +750,11 @@ Rectangle {
             }
             onPressed: {
                 swipevis = true
-                if(equipmentCount === 4){
+                if(DeviceManager.DeviceCounter === 4){
                     mpro.swipeIndex = 3
-                    swipeCurrIndex = 3
                 }
                 else{
                     mpro.swipeIndex = 2
-                    swipeCurrIndex = 2
                 }
                 loadViewpro(3,swipe)
                 sigUpdateUI(3)
@@ -790,62 +787,62 @@ Rectangle {
        //         mt2.text = "清除数据"
        //     }
        // }
-    Button{
-        id:b2
-        width: 243
-        height: 52
-        x:228
-        y:654
-        background: Rectangle{
-            radius: 6
-            border.width: 2
-            border.color: pRgb(43, 112, 173)
-            color: itemCount === 4 ? pRgb(232, 232, 232) : pRgb(43, 112, 173)
-        }
-        contentItem: Text {
-            id:mt2
-            anchors.centerIn: parent
-            // text: qsTr("新增设备")
-            text: GlobalLanguageDefine.strAddDevice
-            font.pixelSize: 20
-            color: pRgb(153, 204, 255)
-            horizontalAlignment: Text.AlignHCenter
-            verticalAlignment: Text.AlignVCenter
-            font.family: GlobalSystemDefine.fontBold
-            font.bold: true
-        }
-        onPressed: {
-            // if(mt2.text === qsTr("新增设备"))
-            if(mt2.text === GlobalLanguageDefine.strAddDevice)
-            {
-                popup.openPop(8)
-            }
-        }
-    }
-    Button{
-        id:b3
-        width: 243
-        height: 52
-        x:813
-        y:654
-        background: Rectangle{
-            radius: 6
-            color: pRgb(43, 112, 173)
-        }
-        contentItem: Text {
-            id:mt3
-            anchors.centerIn: parent
-            // text: qsTr( "系统消息")
-            text: GlobalLanguageDefine.strSystemMessage
-            font.pixelSize: 20
-            color: pRgb(153, 204, 255)
-            horizontalAlignment: Text.AlignHCenter
-            verticalAlignment: Text.AlignVCenter
-            font.family: GlobalSystemDefine.fontBold
-            font.bold: true
-        }
-        onPressed: {
-            popup.openPop(6)
-        }
-    }
+    // Button{
+    //     id:b2
+    //     width: 243
+    //     height: 52
+    //     x:228
+    //     y:654
+    //     background: Rectangle{
+    //         radius: 6
+    //         border.width: 2
+    //         border.color: pRgb(43, 112, 173)
+    //         color: itemCount === 4 ? pRgb(232, 232, 232) : pRgb(43, 112, 173)
+    //     }
+    //     contentItem: Text {
+    //         id:mt2
+    //         anchors.centerIn: parent
+    //         // text: qsTr("新增设备")
+    //         text: GlobalLanguageDefine.strAddDevice
+    //         font.pixelSize: 20
+    //         color: pRgb(153, 204, 255)
+    //         horizontalAlignment: Text.AlignHCenter
+    //         verticalAlignment: Text.AlignVCenter
+    //         font.family: GlobalSystemDefine.fontBold
+    //         font.bold: true
+    //     }
+    //     onPressed: {
+    //         // if(mt2.text === qsTr("新增设备"))
+    //         if(mt2.text === GlobalLanguageDefine.strAddDevice)
+    //         {
+    //             popup.openPop(8)
+    //         }
+    //     }
+    // }
+    // Button{
+    //     id:b3
+    //     width: 243
+    //     height: 52
+    //     x:813
+    //     y:654
+    //     background: Rectangle{
+    //         radius: 6
+    //         color: pRgb(43, 112, 173)
+    //     }
+    //     contentItem: Text {
+    //         id:mt3
+    //         anchors.centerIn: parent
+    //         // text: qsTr( "系统消息")
+    //         text: GlobalLanguageDefine.strSystemMessage
+    //         font.pixelSize: 20
+    //         color: pRgb(153, 204, 255)
+    //         horizontalAlignment: Text.AlignHCenter
+    //         verticalAlignment: Text.AlignVCenter
+    //         font.family: GlobalSystemDefine.fontBold
+    //         font.bold: true
+    //     }
+    //     onPressed: {
+    //         popup.openPop(6)
+    //     }
+    // }
 }

@@ -10,23 +10,23 @@ import LanguageEnum 1.0
 Rectangle {
     color: pRgb(43, 112, 173)
     property bool altitudeMode:false
-    Connections{
-        target: window
-        function onSigUpdateUI(index){
-            if(index === 0){
-                altitudeMode = altitudeModel1
-            }
-            else if(index === 1){
-                altitudeMode = altitudeModel2
-            }
-            else if(index === 2){
-                altitudeMode = altitudeModel3
-            }
-            else if(index === 3){
-                altitudeMode = altitudeModel4
-            }
-        }
-    }
+    // Connections{
+    //     target: window
+    //     function onSigUpdateUI(index){
+    //         if(index === 0){
+    //             altitudeMode = altitudeModel1
+    //         }
+    //         else if(index === 1){
+    //             altitudeMode = altitudeModel2
+    //         }
+    //         else if(index === 2){
+    //             altitudeMode = altitudeModel3
+    //         }
+    //         else if(index === 3){
+    //             altitudeMode = altitudeModel4
+    //         }
+    //     }
+    // }
 
     radius: 3
     Text {

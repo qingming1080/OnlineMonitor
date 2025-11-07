@@ -9,6 +9,7 @@ import GlobalSystemDefine   1.0
 import GlobalMessageDefine  1.0
 import DeviceInfoEnum       1.0
 import DeviceObj            1.0
+import ProductionObj        1.0
 
 Rectangle {
     id:mpro
@@ -17,14 +18,10 @@ Rectangle {
     property var proViews: []
     property int rect1: 1
     property int rect2: 1
-    property int swipeIndex: 0
-    property int presetEnergy: 0
-    property int presetAmplitude: 0
-    property int presetWeldPressure: 0
-    property int presetTriggerPressure: 0
-    property int parameter5: 0
+    property int swipeIndex: -1
+    property int equipmentCount: -1
     property int listSize: 0
-    property bool altitudeMode:DeviceManager.DeviceList[0].DeviceObj.HeightEncoderOption === 1 ? true:false
+    property bool altitudeMode: DeviceManager.DeviceList[0].DeviceObj.HeightEncoderOption === 1 ? true:false
     property bool switchingEquipment: false
     signal sigBtnSynchronization(var index,var time)
     signal sigSwipeCurrIndex(var index)
@@ -61,7 +58,7 @@ Rectangle {
 
     Component.onCompleted: {
         loadViewpro(3, swipe)
-        if(equipmentCount > 1)
+        if(DeviceManager.DeviceCounter > 1)
         {
             mode = 1
             loadViewpro(2, multipro)
@@ -74,10 +71,10 @@ Rectangle {
     }
 
     Connections{
-        target: window
-        function onEquipmentCountChanged()
+        target: DeviceManager
+        function notifyDeviceCounterChanged()
         {
-            if(equipmentCount > 1)
+            if(DeviceManager.DeviceCounter > 1)
             {
                 mode = 1
                 loadViewpro(2, multipro)
@@ -117,9 +114,7 @@ Rectangle {
                 color: mode == 1 ? "#0c5696" : pRgb(43, 112, 173)
                 deviceName: DeviceManager.DeviceList[0].DeviceObj.WelderName
                 deviceType: DeviceManager.DeviceList[0].DeviceObj.WelderType === 0 ? "L20-VG" : "L20-TS"
-
-                connectionType: DeviceManager.DeviceList[0].DeviceObj.ConnectType === 1
-                        ? "RS232" : "TCP/IP"
+                connectionType: DeviceManager.DeviceList[0].DeviceObj.ConnectType === 1 ? "RS232" : "TCP/IP"
                 devcieStatus:{
                     var connectState = DeviceManager.DeviceList[0].DeviceObj.ConnectState
                     return GlobalMessageDefine.getConnectState(connectState)
@@ -140,17 +135,15 @@ Rectangle {
                         x: mode == 1 ? 50 : 29
                         y: mode == 1 ? 248 : 289
                         color: mode == 1 ? "#0c5696" : pRgb(43, 112, 173)
-                        property int currentIndex: DeviceManager.SelectedDeviceIndex
-
-                        energy:             DeviceManager.DeviceList[currentIndex] ? DeviceManager.DeviceList[currentIndex].ProductionObj.Energy  : ""
-                        amplitude:          DeviceManager.DeviceList[currentIndex] ? DeviceManager.DeviceList[currentIndex].ProductionObj.Amplitude : ""
-                        weldPressure:       DeviceManager.DeviceList[currentIndex] ? DeviceManager.DeviceList[currentIndex].ProductionObj.WeldPressure : ""
-                        triggerPressure:    DeviceManager.DeviceList[currentIndex] ? DeviceManager.DeviceList[currentIndex].ProductionObj.TriggerPressure : ""
-                        peakPower:          DeviceManager.DeviceList[currentIndex] ? DeviceManager.DeviceList[currentIndex].ProductionObj.PeakPower : ""
-                        weldTime:           DeviceManager.DeviceList[currentIndex] ? DeviceManager.DeviceList[currentIndex].ProductionObj.WeldTime  : ""
-                        preheight:          DeviceManager.DeviceList[currentIndex] ? DeviceManager.DeviceList[currentIndex].ProductionObj.Preheight : ""
-                        postHeight:         DeviceManager.DeviceList[currentIndex] ? DeviceManager.DeviceList[currentIndex].ProductionObj.PostHeight : ""
-
+                        altitudeMode:       DeviceManager.DeviceList[[0]] ? DeviceManager.DeviceList[[0]].DeviceObj.HeightEncoderOption : fasle
+                        energy:             DeviceManager.DeviceList[[0]] ? DeviceManager.DeviceList[[0]].ProductionObj.Energy : 0
+                        amplitude:          DeviceManager.DeviceList[[0]] ? DeviceManager.DeviceList[[0]].ProductionObj.Amplitude : 0
+                        weldPressure:       DeviceManager.DeviceList[[0]] ? DeviceManager.DeviceList[[0]].ProductionObj.WeldPressure : 0
+                        triggerPressure:    DeviceManager.DeviceList[[0]] ? DeviceManager.DeviceList[[0]].ProductionObj.TriggertPressure : 0
+                        peakPower:          DeviceManager.DeviceList[[0]] ? DeviceManager.DeviceList[[0]].ProductionObj.PeakPower : 0
+                        weldTime:           DeviceManager.DeviceList[[0]] ? DeviceManager.DeviceList[[0]].ProductionObj.WeldTime : 0
+                        preheight:          DeviceManager.DeviceList[[0]] ? DeviceManager.DeviceList[[0]].ProductionObj.Preheight : 0
+                        postHeight:         DeviceManager.DeviceList[[0]] ? DeviceManager.DeviceList[[0]].ProductionObj.PostHeight : 0
                     }
                 }
             }
@@ -164,16 +157,11 @@ Rectangle {
                         x: mode == 1 ? 50 : 29
                         y: mode == 1 ? 248 : 289
                         color: mode == 1 ? "#0c5696" : pRgb(43, 112, 173)
-                        altitudeMode:{
-                            if(equipmentCount === 1){
-                                return DeviceManager.DeviceList[0].DeviceObj.HeightEncoderOption
-                                        === 1 ? true : false
-                            }
-                        }
-                        eqText1:presetEnergy
-                        eqText2:presetAmplitude
-                        eqText3:presetWeldPressure
-                        eqText4:presetTriggerPressure
+                        presetEnergyValue:          DeviceManager.DeviceList[0].ProductionObj.Energy
+                        presetAmplitudeValue:       DeviceManager.DeviceList[0].ProductionObj.Amplitude
+                        presetWeldPressureValue:    DeviceManager.DeviceList[0].ProductionObj.WeldPressure
+                        presetTriggerPressureValue: DeviceManager.DeviceList[0].ProductionObj.TriggertPressure
+
                     }
                 }
             }
@@ -208,7 +196,7 @@ Rectangle {
                     // else if(mt1.text === "创建模型")
                     else if(mt1.text === GlobalLanguageDefine.strCreateModel)
                     {
-                        if(DeviceManager.DeviceList[0].DeviceObj.sample <= listSize)
+                        if(DeviceManager.DeviceList[0].DeviceObj.YieldRateLowerLimit <= listSize)
                         {
                             loader.sourceComponent = mode1
                             loader1.sourceComponent = weld1
@@ -278,14 +266,8 @@ Rectangle {
                         x:mode === 1 ? 269:286
                         y:mode === 1 ? 35:20
                         color: mode === 1 ? "#0c5696" : pRgb(43, 112, 173)
-                        revealing:{
-                            if(DeviceManager.DeviceList[0]){
-                                return DeviceManager.DeviceList[0].DeviceObj.SuspiciousOption
-                            }
-                            else{
-                                return true
-                            }
-                        }
+                        revealing: DeviceManager.DeviceList[0].DeviceObj.SuspiciousOption
+
                         eqText1:{
                             if(DeviceManager.DeviceList[0]){
                                 return DeviceManager.DeviceList[0].ProductionObj.GoodCycleCount
@@ -516,17 +498,17 @@ Rectangle {
                                 height: 36
                                 width: 960
                                 color: index % 2 === 0 ? "#afc3d8" : "#2d71ae"
-                                MouseArea {
-                                    id: mouseArea
-                                    anchors.fill: parent
-                                    onPressed: {
-                                        taskplanView.currentIndex   = index
-                                        presetEnergy                = Manual.data(Manual.index(index,0),QmlEnum.MANUAL_preEnergy)
-                                        presetAmplitude             = Manual.data(Manual.index(index,0),QmlEnum.MANUAL_preAmplitude)
-                                        presetWeldPressure          = Manual.data(Manual.index(index,0),QmlEnum.MANUAL_preWP)
-                                        presetTriggerPressure       = Manual.data(Manual.index(index,0),QmlEnum.MANUAL_preTP)
-                                    }
-                                }
+                                // MouseArea {
+                                //     id: mouseArea
+                                //     anchors.fill: parent
+                                //     onPressed: {
+                                //         taskplanView.currentIndex   = index
+                                //         presetEnergy                = Manual.data(Manual.index(index,0),QmlEnum.MANUAL_preEnergy)
+                                //         presetAmplitude             = Manual.data(Manual.index(index,0),QmlEnum.MANUAL_preAmplitude)
+                                //         presetWeldPressure          = Manual.data(Manual.index(index,0),QmlEnum.MANUAL_preWP)
+                                //         presetTriggerPressure       = Manual.data(Manual.index(index,0),QmlEnum.MANUAL_preTP)
+                                //     }
+                                // }
                                 Button{
                                     id:bt
                                     x:960/8/2-width/2
@@ -748,7 +730,7 @@ Rectangle {
             id:mupMode
             width: 1280
             height: 740
-            itemCount:equipmentCount
+            itemCount:DeviceManager.DeviceCounter
         }
     }
 

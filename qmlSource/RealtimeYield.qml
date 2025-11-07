@@ -9,7 +9,7 @@ Rectangle {
     property string eqText3: ""
     property string eqText4: ""
     property string eqText5: ""
-    property bool revealing: true
+    property bool revealing: false
     onHeightChanged: {
         if(height < 260 && height > 230){
             yuan.x = 110
