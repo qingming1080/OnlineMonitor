@@ -1,13 +1,17 @@
 ﻿#include "networkmodel.h"
 #include "devicemanager.h"
-#include "deviceinformation.h"
+#include "DataBase/databasemanager.h"
+#include "deviceinfoenum.h"
 #include <QDebug>
 NetworkModel* NetworkModel::m_ptrInstance = nullptr;
 
 NetworkModel *NetworkModel::getInstance()
 {
     if(m_ptrInstance == nullptr)
+    {
         m_ptrInstance = new NetworkModel();
+        qDebug() << "m_ptrInstance: " << m_ptrInstance;
+    }
     return m_ptrInstance;
 }
 
@@ -95,8 +99,8 @@ NetworkModel::NetworkModel(QObject *parent)
 
     // NotifySelectedDeviceIndexChanged(m_iCurrentWelderId);
 
-    connect(DeviceManager::getInstance(), &DeviceManager::notifySelectedDeviceIndexChanged,
-            this, &NetworkModel::NotifySelectedDeviceIndexChanged);
+    // connect(DeviceManager::getInstance(), &DeviceManager::notifySelectedDeviceIndexChanged,
+    //         this, &NetworkModel::NotifySelectedDeviceIndexChanged);
 }
 
 void NetworkModel::NotifySelectedDeviceIndexChanged(int welderID)
@@ -105,7 +109,7 @@ void NetworkModel::NotifySelectedDeviceIndexChanged(int welderID)
     m_iCurrentWelderId = welderID;
     for(auto iter = m_listManager.begin(); iter != m_listManager.end(); iter++)
     {
-		if(iter.value().WelderId == m_iCurrentWelderId)
+        if(iter.value().WelderId == m_iCurrentWelderId)
         {
             if(m_iCurrentWelderId != -1)
             {
@@ -123,7 +127,7 @@ void NetworkModel::NotifySelectedDeviceIndexChanged(int welderID)
             }
             break;
         }
-	}
+    }
     modelReset();
     int index = indexOfEthRole(m_iConnectTypeId);
     qDebug() << "index: " << index;
@@ -209,8 +213,8 @@ bool NetworkModel::InitListManager()
                  << " LocalIP:" << manager.LocalIP
                  << " RemoteIP:" << manager.RemoteIP
                  << " LocalPort:" << manager.LocalPort
-                 << " ServerPort:" << manager.ServerPort;
-        qDebug() << "  Protocol:" << manager.Protocol
+                 << " ServerPort:" << manager.ServerPort
+                 << "  Protocol:" << manager.Protocol
                  << " Type:" << manager.Type
                  << " WelderId:" << manager.WelderId;
     }

@@ -82,7 +82,7 @@ signals:
     void notifyParityBitsChanged();
     void notifyStopBitsChanged();
 
-private slots:
+public slots:
     void NotifySelectedDeviceIndexChanged(int welderID);
 };
 #endif // RS232MODEL_H

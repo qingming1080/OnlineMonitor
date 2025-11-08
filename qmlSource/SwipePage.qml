@@ -100,7 +100,7 @@ Rectangle {
                 x:42
                 y:314
                 color: "#0c5696"
-                altitudeMode:       DeviceManager.DeviceList[swipeCurrIndex] ? DeviceManager.DeviceList[swipeCurrIndex].DeviceObj.HeightEncoderOption : fasle
+                altitudeMode:       DeviceManager.DeviceList[swipeCurrIndex] ? DeviceManager.DeviceList[swipeCurrIndex].DeviceObj.HeightEncoderOption : false
                 energy:             DeviceManager.DeviceList[swipeCurrIndex] ? DeviceManager.DeviceList[swipeCurrIndex].ProductionObj.Energy : 0
                 amplitude:          DeviceManager.DeviceList[swipeCurrIndex] ? DeviceManager.DeviceList[swipeCurrIndex].ProductionObj.Amplitude : 0
                 weldPressure:       DeviceManager.DeviceList[swipeCurrIndex] ? DeviceManager.DeviceList[swipeCurrIndex].ProductionObj.WeldPressure : 0

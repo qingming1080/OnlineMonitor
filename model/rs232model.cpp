@@ -118,10 +118,6 @@ RS232Model::RS232Model(QObject *parent)
     m_iCurrentWelderId = 1;
     InitListManager();
     UpdateWelderID();
-    // NotifySelectedDeviceIndexChanged(m_iCurrentWelderId);
-
-    connect(DeviceManager::getInstance(), &DeviceManager::notifySelectedDeviceIndexChanged,
-            this, &RS232Model::NotifySelectedDeviceIndexChanged);
 }
 
 void RS232Model::NotifySelectedDeviceIndexChanged(int welderID)
@@ -230,9 +226,16 @@ bool RS232Model::InitListManager()
         manager.Port = rs232List[i].Port;
         manager.StopBit = rs232List[i].StopBit;
         m_listManager.insert(rs232List.at(i).Id, manager);
+        qDebug() << "  Id:" << manager.ModbusDeviceId
+                 << " BaudRate:" << manager.BaudRate
+                 << " DataBit:" << manager.DataBit
+                 << " ParityBit:" << manager.ParityBit
+                 << " Port:" << manager.Port
+                 << " StopBit: " << manager.StopBit
+                 << " WelderId:" << manager.WelderId;
     }
     bResult = !m_listManager.empty();
-    qDebug() << "m_listManger.cout: " << m_listManager.size();
+    qDebug() << "RS232 m_listManger.cout: " << m_listManager.size();
     return bResult;
 }
 

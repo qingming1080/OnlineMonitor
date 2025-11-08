@@ -66,7 +66,7 @@ public:
 
 signals:
     void notifyDeviceListChanged();
-    void notifySelectedDeviceIndexChanged(int weldID);
+    void notifySelectedDeviceIndexChanged();
     void notifyDeviceCounterChanged();
 
 

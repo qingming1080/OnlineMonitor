@@ -91,7 +91,7 @@ signals:
     void notifyRemoteIPChanged();
     void notifyConnectTypeIdChanged();
 
-private slots:
+public slots:
     void NotifySelectedDeviceIndexChanged(int welderID);
 };
 #endif // NETWORKMODEL_H

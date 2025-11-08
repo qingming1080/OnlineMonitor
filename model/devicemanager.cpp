@@ -1,7 +1,8 @@
 ﻿#include "devicemanager.h"
 #include "DataBase/databasemanager.h"
 #include <qdebug.h>
-#include "modbus/hbmodbusclient.h"
+#include "networkmodel.h"
+#include "rs232model.h"
 
 DeviceManager* DeviceManager::m_ptrInstance = nullptr;
 DeviceManager *DeviceManager::getInstance()
@@ -71,8 +72,12 @@ void DeviceManager::setSelectedDeviceIndex(const int &index)
     int weldID = -1;
     m_iSelectedDeviceIndex = index;
     if(index != -1)
+    {
         weldID = m_listDevices[index]->GetWelderID();
-    emit notifySelectedDeviceIndexChanged(weldID);
+        NetworkModel::getInstance()->NotifySelectedDeviceIndexChanged(weldID);
+        RS232Model::getInstance()->NotifySelectedDeviceIndexChanged(weldID);
+    }
+    emit notifySelectedDeviceIndexChanged();
 }
 void DeviceManager::setDeviceList(const QList<Device *> &list)
 {
