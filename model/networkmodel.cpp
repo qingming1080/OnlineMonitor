@@ -88,9 +88,10 @@ void NetworkModel::setRemoteIP(const QString &ip)
 NetworkModel::NetworkModel(QObject *parent)
     : QAbstractListModel{parent}
 {
-    m_iCurrentWelderId = 1;
+    m_iCurrentWelderId = -1;
     InitListManager();
     UpdateWelderID();
+
     // NotifySelectedDeviceIndexChanged(m_iCurrentWelderId);
 
     connect(DeviceManager::getInstance(), &DeviceManager::notifySelectedDeviceIndexChanged,
@@ -204,6 +205,14 @@ bool NetworkModel::InitListManager()
         manager.Type = networkList.at(i).Type;
         manager.User = networkList.at(i).User;
         m_listManager.insert(networkList.at(i).Id, manager);
+        qDebug() << "  Id:" << manager.ModbusDeviceId
+                 << " LocalIP:" << manager.LocalIP
+                 << " RemoteIP:" << manager.RemoteIP
+                 << " LocalPort:" << manager.LocalPort
+                 << " ServerPort:" << manager.ServerPort;
+        qDebug() << "  Protocol:" << manager.Protocol
+                 << " Type:" << manager.Type
+                 << " WelderId:" << manager.WelderId;
     }
     bResult = !m_listManager.empty();
     qDebug() << "m_listManger.cout: " << m_listManager.size();

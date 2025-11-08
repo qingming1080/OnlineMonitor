@@ -69,13 +69,10 @@ void DeviceManager::setDeviceCounter(int counter)
 void DeviceManager::setSelectedDeviceIndex(const int &index)
 {
     int weldID = -1;
-    if(m_iSelectedDeviceIndex != index)
-    {
-        m_iSelectedDeviceIndex = index;
-        if(index != -1)
-            weldID = m_listDevices[index]->GetWelderID();
-        emit notifySelectedDeviceIndexChanged(weldID);
-    }
+    m_iSelectedDeviceIndex = index;
+    if(index != -1)
+        weldID = m_listDevices[index]->GetWelderID();
+    emit notifySelectedDeviceIndexChanged(weldID);
 }
 void DeviceManager::setDeviceList(const QList<Device *> &list)
 {
