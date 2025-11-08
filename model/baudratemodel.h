@@ -6,6 +6,7 @@
 class BaudRateModel : public QAbstractListModel
 {
     Q_OBJECT
+    Q_PROPERTY(int BaudRateIndex    READ getBaudRateIndex   WRITE setBaudRateIndex  NOTIFY notifyBaudRateIndexChanged FINAL)
 public:
     enum Roles {
         KeyRole = Qt::UserRole + 1,
@@ -14,6 +15,10 @@ public:
 public:
     static BaudRateModel* getInstance();
 
+    int getBaudRateIndex() const;
+    void setBaudRateIndex(const int &index);
+    int indexOfValueRole(const int value) const;
+
     // QAbstractItemModel interface
 public:
     virtual int rowCount(const QModelIndex &parent = QModelIndex()) const override;
@@ -21,6 +26,8 @@ public:
     virtual QHash<int,QByteArray> roleNames() const override;
 
     Q_INVOKABLE QVariant get(int index) const;
+signals:
+    void notifyBaudRateIndexChanged();
 
 private:
     explicit BaudRateModel(QObject *parent = nullptr);
@@ -28,6 +35,7 @@ private:
 private:
     static BaudRateModel* m_ptrInstance;
     QList<QVariantMap> m_listBaudRate; // List of key-value pairs m_listComPort;
+    int m_iCurrentBaudRateIndex;
 };
 
 #endif // BAUDRATEMODEL_H

@@ -9,6 +9,30 @@ ParityModel *ParityModel::getInstance()
     return m_ptrInstance;
 }
 
+int ParityModel::getParityBitsIndex() const
+{
+    return m_iCurrentParityBitsIndex;
+}
+
+void ParityModel::setParityBitsIndex(const int &index)
+{
+    if(m_iCurrentParityBitsIndex != index)
+    {
+        m_iCurrentParityBitsIndex = index;
+        emit notifyParityBitsIndexChanged();
+    }
+}
+
+int ParityModel::indexOfValueRole(const int value) const
+{
+    for (int i = 0; i < m_listParityBits.size(); ++i) {
+        if (m_listParityBits.at(i)["value"].toInt() == value) {
+            return i;
+        }
+    }
+    return -1;
+}
+
 ParityModel::ParityModel(QObject *parent)
     : QAbstractListModel{parent}
 {

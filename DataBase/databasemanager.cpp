@@ -355,11 +355,8 @@ bool DataBaseManager::getNetworkConfigure(const int id, DB_NETWORK& network)
     return bResult;
 }
 
-
-QList<DataBaseManager::DB_RS232> DataBaseManager::getRS232Data()
+bool DataBaseManager::getAllRS232Configure(QList<DataBaseManager::DB_RS232>& list)
 {
-    QList<DB_RS232> list;
-
     QSqlQuery query;
     // %1_表格名称
     QString execStr = QString("SELECT * FROM %1").arg(RS232_TABLENAME);
@@ -367,11 +364,10 @@ QList<DataBaseManager::DB_RS232> DataBaseManager::getRS232Data()
     {
         qDebug() << "查询失败: " << query.lastError();
     }
-
     while(query.next())
     {
-        DB_RS232 data;
-        // data.id             = query.value(QmlEnum::RS232_id).toInt();
+        DataBaseManager::DB_RS232 data;
+        data.Id             = query.value(QmlEnum::RS232_id).toInt();
         data.Port           = query.value(QmlEnum::RS232_port).toString();
         data.BaudRate      = query.value(QmlEnum::RS232_baud_rate).toInt();
         data.DataBit       = query.value(QmlEnum::RS232_data_bit).toInt();
@@ -379,8 +375,7 @@ QList<DataBaseManager::DB_RS232> DataBaseManager::getRS232Data()
         data.StopBit       = query.value(QmlEnum::RS232_stop_bit).toInt();
         list.push_back(data);
     }
-
-    return list;
+    return !list.empty();
 }
 
 bool DataBaseManager::getRS232Configure(const int id, DB_RS232& rs232)

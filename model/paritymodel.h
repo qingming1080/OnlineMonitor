@@ -6,6 +6,7 @@
 class ParityModel : public QAbstractListModel
 {
     Q_OBJECT
+    Q_PROPERTY(int ParityBitsIndex READ getParityBitsIndex WRITE setParityBitsIndex NOTIFY notifyParityBitsIndexChanged FINAL)
 public:
     enum Roles {
         KeyRole = Qt::UserRole + 1,
@@ -13,6 +14,9 @@ public:
     };
 public:
     static ParityModel* getInstance();
+    int getParityBitsIndex() const;
+    void setParityBitsIndex(const int &index);
+    int indexOfValueRole(const int value) const;
 
     // QAbstractItemModel interface
 public:
@@ -21,13 +25,15 @@ public:
     virtual QHash<int,QByteArray> roleNames() const override;
 
     Q_INVOKABLE QVariant get(int index) const;
-
+signals:
+    void notifyParityBitsIndexChanged();
 private:
     explicit ParityModel(QObject *parent = nullptr);
 
 private:
     static ParityModel* m_ptrInstance;
     QList<QVariantMap> m_listParityBits; // List of key-value pairs m_listParityBits;
+    int m_iCurrentParityBitsIndex;
 };
 
 #endif // PARITYMODEL_H

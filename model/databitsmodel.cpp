@@ -9,6 +9,30 @@ DataBitsModel *DataBitsModel::getInstance()
     return m_ptrInstance;
 }
 
+int DataBitsModel::getDataBitsIndex() const
+{
+    return m_iCurrentDataBitsIndex;
+}
+
+void DataBitsModel::setDataBitsIndex(const int &index)
+{
+    if(m_iCurrentDataBitsIndex != index)
+    {
+        m_iCurrentDataBitsIndex = index;
+        emit notifyDataBitsIndexChanged();
+    }
+}
+
+int DataBitsModel::indexOfValueRole(const int value) const
+{
+    for (int i = 0; i < m_listDataBits.size(); ++i) {
+        if (m_listDataBits.at(i)["value"].toInt() == value) {
+            return i;
+        }
+    }
+    return -1;
+}
+
 DataBitsModel::DataBitsModel(QObject *parent)
     : QAbstractListModel{parent}
 {

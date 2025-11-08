@@ -996,7 +996,6 @@ Rectangle {
                                 }
                             }
                         }
-
                         TextField {
                             id: t7
                             width: 243
@@ -1109,11 +1108,18 @@ Rectangle {
                             height: 40
                             x:233
                             y:40
-                            model: ComModel
+                            model: RS232Model
+                            currentIndex: RS232Model.ComIndex
                             onAccepted: {
-                                console.debug("index: ", currentIndex)
-                                var value = model.get(currentIndex).value;
-                                console.debug("value: ", value)
+                                var value = model.get(currentIndex).Id;
+                                RS232Model.ConnectTypeId = value
+                            }
+                            Connections{
+                                target: RS232Model
+                                function onNotifyComIndexChanged()
+                                {
+                                    comboComPort.currentIndex = RS232Model.ComIndex
+                                }
                             }
                         }
                         CustomComboBox{
@@ -1123,10 +1129,19 @@ Rectangle {
                             x:233
                             y:97
                             model: BaudRateModel
+                            currentIndex: BaudRateModel.BaudRateIndex
                             onAccepted: {
                                 console.debug("index: ", currentIndex)
                                 var value = model.get(currentIndex).value;
                                 console.debug("value: ", value)
+                                RS232Model.BaudRate = value
+                            }
+                            Connections{
+                                target: BaudRateModel
+                                function onNotifyBaudRateIndexChanged()
+                                {
+                                    comboBaudRate.currentIndex = BaudRateModel.BaudRateIndex
+                                }
                             }
                         }
                         CustomComboBox{
@@ -1136,23 +1151,41 @@ Rectangle {
                             x:233
                             y:151
                             model: DataBitsModel
+                            currentIndex: DataBitsModel.DataBitsIndex
                             onAccepted: {
                                 console.debug("index: ", currentIndex)
                                 var value = model.get(currentIndex).value;
                                 console.debug("value: ", value)
+                                RS232Model.DataBits = value;
+                            }
+                            Connections{
+                                target: DataBitsModel
+                                function onNotifyDataBitsIndexChanged()
+                                {
+                                    comboDataBits.currentIndex = DataBitsModel.DataBitsIndex
+                                }
                             }
                         }
                         CustomComboBox{
-                            id:com6
+                            id: comboxParityBits
                             width: 243
                             height: 40
                             x:233
                             y:206
                             model: ParityModel
+                            currentIndex: ParityModel.ParityBitsIndex
                             onAccepted: {
                                 console.debug("index: ", currentIndex)
                                 var value = model.get(currentIndex).value;
                                 console.debug("value: ", value)
+                                RS232Model.ParityBits = value;
+                            }
+                            Connections{
+                                target: ParityModel
+                                function onNotifyParityBitsIndexChanged()
+                                {
+                                    comboxParityBits.currentIndex = ParityModel.ParityBitsIndex
+                                }
                             }
                         }
                         CustomComboBox{
@@ -1162,6 +1195,20 @@ Rectangle {
                             x:233
                             y:265
                             model: StopBitsModel
+                            currentIndex: StopBitsModel.StopBitsIndex
+                            onAccepted: {
+                                console.debug("index: ", currentIndex)
+                                var value = model.get(currentIndex).value;
+                                console.debug("value: ", value)
+                                RS232Model.StopBits = value;
+                            }
+                            Connections{
+                                target: StopBitsModel
+                                function onNotifyStopBitsIndexChanged()
+                                {
+                                    comboStopBits.currentIndex = StopBitsModel.ParityBitsIndex
+                                }
+                            }
                         }
                     }
                 }

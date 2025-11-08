@@ -99,7 +99,7 @@ public:
 
     struct DB_NETWORK
     {
-        int Id;          // 网口号
+        int Id;             // 网口号
         int Type;           // 类型  0_Server  1_Client
         int Protocol;       // 协议  0_TCP/IP  1_OPCUA
         QString LocalIP;    // 本地IP
@@ -111,7 +111,7 @@ public:
 
     struct DB_RS232
     {
-        // int id;      // 串口id
+        int Id;         // 串口id
         QString Port;   // 串口号
         int BaudRate;   // 波特率
         int DataBit;    // 数据位
@@ -232,7 +232,7 @@ public:
     bool updateNetworkConfigure(const int id, const DB_NETWORK network);
     bool getNetworkConfigure(const int id, DB_NETWORK& network);
 
-    QList<DB_RS232> getRS232Data();
+    bool getAllRS232Configure(QList<DataBaseManager::DB_RS232>& list);
     bool updateRS232Configure(const int id, const DB_RS232 rs232);
     bool getRS232Configure(const int id, DB_RS232& rs232);
 

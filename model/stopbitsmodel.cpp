@@ -9,6 +9,30 @@ StopBitsModel *StopBitsModel::getInstance()
     return m_ptrInstance;
 }
 
+int StopBitsModel::getStopBitsIndex() const
+{
+    return m_iCurrentStopBitsIndex;
+}
+
+void StopBitsModel::setStopBitsIndex(const int &index)
+{
+    if(m_iCurrentStopBitsIndex != index)
+    {
+        m_iCurrentStopBitsIndex = index;
+        emit notifyStopBitsIndexChanged();
+    }
+}
+
+int StopBitsModel::indexOfValueRole(const int value) const
+{
+    for (int i = 0; i < m_listStopBits.size(); ++i) {
+        if (m_listStopBits.at(i)["value"].toInt() == value) {
+            return i;
+        }
+    }
+    return -1;
+}
+
 StopBitsModel::StopBitsModel(QObject *parent)
     : QAbstractListModel{parent}
 {

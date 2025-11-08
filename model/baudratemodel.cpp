@@ -9,6 +9,30 @@ BaudRateModel *BaudRateModel::getInstance()
     return m_ptrInstance;
 }
 
+int BaudRateModel::getBaudRateIndex() const
+{
+    return m_iCurrentBaudRateIndex;
+}
+
+void BaudRateModel::setBaudRateIndex(const int &index)
+{
+    if(m_iCurrentBaudRateIndex != index)
+    {
+        m_iCurrentBaudRateIndex = index;
+        emit notifyBaudRateIndexChanged();
+    }
+}
+
+int BaudRateModel::indexOfValueRole(const int value) const
+{
+    for (int i = 0; i < m_listBaudRate.size(); ++i) {
+        if (m_listBaudRate.at(i)["value"].toInt() == value) {
+            return i;
+        }
+    }
+    return -1;
+}
+
 BaudRateModel::BaudRateModel(QObject *parent)
     : QAbstractListModel{parent}
 {

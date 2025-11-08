@@ -70,16 +70,16 @@ private:
         QString RemoteIP;   // 远程IP
         int ServerPort;     // 服务器端口
         QString User;       // 用户
-        int WelderId;       // WelderID
-        int ModbusDeviceId; // ModbusDeviceID
-    };
+		int WelderId;		// WelderID
+		int ModbusDeviceId; // ModbusDeviceID
+	};
 
     static NetworkModel* m_ptrInstance;
     int m_iCurrentWelderId;
     QList<QVariantMap> m_listETHPort; // List of key-value pairs m_listETHPort;
     QMap<int, NETWORK_MANAGER> m_listManager;
     int m_iCurrentEthIndex;
-    int m_iConnectTypeId;
+	int m_iConnectTypeId;
     int m_iServerPort;
     QString m_strLocalIP;
     QString m_strRemoteIP;

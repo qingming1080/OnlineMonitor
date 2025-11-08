@@ -75,12 +75,6 @@ class DeviceInformation : public QObject
     Q_PROPERTY(QString ResidualThreshold    READ getResidualThreshold   WRITE setResidualThreshold  NOTIFY notifyResidualThresholdChanged FINAL)
     Q_PROPERTY(QString AutoLearningCount    READ getAutoLearningCount   WRITE setAutoLearningCount  NOTIFY notifyAutoLearningCountChanged FINAL)
 
-
-    Q_PROPERTY(int     ComNumber            READ getComNumber           WRITE setComNumber          NOTIFY notifyComNumberChanged FINAL)
-    Q_PROPERTY(int     BaudRate             READ getBaudRate            WRITE setBaudRate           NOTIFY notifyBaudRateChanged FINAL)
-    Q_PROPERTY(int     DataBits             READ getDataBits            WRITE setDataBits           NOTIFY notifyDataBitsChanged FINAL)
-    Q_PROPERTY(int     ParityBits           READ getParityBits          WRITE setParityBits         NOTIFY notifyParityBitsChanged FINAL)
-    Q_PROPERTY(int     StopBits             READ getStopBits            WRITE setStopBits           NOTIFY notifyStopBitsChanged FINAL)
 public:
     struct NETWORK_PROPERTIES
     {
@@ -161,21 +155,6 @@ public:
     int GetAutoLearningCount() const;
     void setAutoLearningCount(const QString &limit);
 
-    int getComNumber() const;
-    void setComNumber(const int &com);
-
-    int getBaudRate() const;
-    void setBaudRate(const int &baudrate);
-
-    int getDataBits() const;
-    void setDataBits(const int &databits);
-
-    int getParityBits() const;
-    void setParityBits(const int &paritybits);
-
-    int getStopBits() const;
-    void setStopBits(const int &stopbits);
-
     bool SaveDevice();
     bool RemoveDevice();
 signals:
@@ -194,12 +173,6 @@ signals:
     void notifyForceThresholdChanged();
     void notifyResidualThresholdChanged();
     void notifyAutoLearningCountChanged();
-
-    void notifyComNumberChanged();
-    void notifyBaudRateChanged();
-    void notifyDataBitsChanged();
-    void notifyParityBitsChanged();
-    void notifyStopBitsChanged();
 private:
     int m_WelderID;
     DataBaseManager::DB_CONFIGURE   m_DBConfigure;

@@ -46,6 +46,7 @@ QString NetworkModel::getPortNumber() const
     return QString::number(m_iServerPort);
 }
 
+
 void NetworkModel::setPortNumber(const QString &port)
 {
     bool isOk = false;
@@ -103,7 +104,7 @@ void NetworkModel::NotifySelectedDeviceIndexChanged(int welderID)
     m_iCurrentWelderId = welderID;
     for(auto iter = m_listManager.begin(); iter != m_listManager.end(); iter++)
     {
-        if(iter.value().WelderId == m_iCurrentWelderId)
+		if(iter.value().WelderId == m_iCurrentWelderId)
         {
             if(m_iCurrentWelderId != -1)
             {
@@ -121,7 +122,7 @@ void NetworkModel::NotifySelectedDeviceIndexChanged(int welderID)
             }
             break;
         }
-    }
+	}
     modelReset();
     int index = indexOfEthRole(m_iConnectTypeId);
     qDebug() << "index: " << index;
@@ -129,7 +130,6 @@ void NetworkModel::NotifySelectedDeviceIndexChanged(int welderID)
         setEthIndex(index);
     else
         setEthIndex(0);
-
 }
 
 int NetworkModel::rowCount(const QModelIndex &parent) const
@@ -227,7 +227,7 @@ bool NetworkModel::UpdateWelderID()
                 qDebug() << "WelderID: " << iter.value().WelderId;
             }
         }
-    }
+	}
     return !configureList.empty();
 }
 
@@ -274,9 +274,3 @@ int NetworkModel::indexOfEthRole(const int id) const
     }
     return -1;
 }
-
-
-
-
-
-

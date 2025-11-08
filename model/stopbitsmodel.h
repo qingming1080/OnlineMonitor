@@ -6,6 +6,7 @@
 class StopBitsModel : public QAbstractListModel
 {
     Q_OBJECT
+    Q_PROPERTY(int StopBitsIndex    READ getStopBitsIndex   WRITE setStopBitsIndex  NOTIFY notifyStopBitsIndexChanged FINAL)
 public:
     enum Roles {
         KeyRole = Qt::UserRole + 1,
@@ -13,7 +14,9 @@ public:
     };
 public:
     static StopBitsModel* getInstance();
-
+    int getStopBitsIndex() const;
+    void setStopBitsIndex(const int &index);
+    int indexOfValueRole(const int value) const;
     // QAbstractItemModel interface
 public:
     virtual int rowCount(const QModelIndex &parent = QModelIndex()) const override;
@@ -21,13 +24,15 @@ public:
     virtual QHash<int,QByteArray> roleNames() const override;
 
     Q_INVOKABLE QVariant get(int index) const;
-
+signals:
+    void notifyStopBitsIndexChanged();
 private:
     explicit StopBitsModel(QObject *parent = nullptr);
 
 private:
     static StopBitsModel* m_ptrInstance;
     QList<QVariantMap> m_listStopBits; // List of key-value pairs m_listStopBits;
+    int m_iCurrentStopBitsIndex;
 };
 
 #endif // STOPBITSMODEL_H

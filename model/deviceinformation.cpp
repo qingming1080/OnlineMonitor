@@ -1,12 +1,10 @@
 ﻿#include "deviceinformation.h"
 #include <QVariant>
-
-#include "signalmanager.h"
 #include <QDebug>
 #include <QElapsedTimer>
-#include "log/localrecord.h"
 #include "tools/utilityfunction.h"
 #include "networkmodel.h"
+#include "rs232model.h"
 
 DeviceInformation::DeviceInformation(int welderID, QObject *parent)
     : QObject{parent}, m_WelderID(welderID)
@@ -297,85 +295,14 @@ void DeviceInformation::setAutoLearningCount(const QString &limit)
     emit notifyAutoLearningCountChanged();
 }
 
-int DeviceInformation::getComNumber() const
-{
-    return m_ModbusConfigure.SerialProperties.ComNumber;
-}
-
-void DeviceInformation::setComNumber(const int &com)
-{
-    if (m_ModbusConfigure.SerialProperties.ComNumber != com)
-    {
-        m_ModbusConfigure.SerialProperties.ComNumber = com;
-        emit notifyComNumberChanged();
-    }
-}
-
-int DeviceInformation::getBaudRate() const
-{
-    return m_ModbusConfigure.SerialProperties.BaudRate;
-}
-
-void DeviceInformation::setBaudRate(const int &baudrate)
-{
-    if (m_ModbusConfigure.SerialProperties.BaudRate != baudrate)
-    {
-        m_ModbusConfigure.SerialProperties.BaudRate = static_cast<QSerialPort::BaudRate>(baudrate);
-        emit notifyBaudRateChanged();
-    }
-}
-
-int DeviceInformation::getDataBits() const
-{
-    return m_ModbusConfigure.SerialProperties.DataBits;
-}
-
-void DeviceInformation::setDataBits(const int &databits)
-{
-    if (m_ModbusConfigure.SerialProperties.DataBits != databits)
-    {
-        m_ModbusConfigure.SerialProperties.DataBits = static_cast<QSerialPort::DataBits>(databits);
-        emit notifyDataBitsChanged();
-    }
-}
-
-int DeviceInformation::getParityBits() const
-{
-    return m_ModbusConfigure.SerialProperties.ParityBits;
-}
-
-void DeviceInformation::setParityBits(const int &paritybits)
-{
-    if (m_ModbusConfigure.SerialProperties.ParityBits != paritybits)
-    {
-        m_ModbusConfigure.SerialProperties.ParityBits = static_cast<QSerialPort::Parity>(paritybits);
-        emit notifyParityBitsChanged();
-    }
-}
-
-int DeviceInformation::getStopBits() const
-{
-    return m_ModbusConfigure.SerialProperties.StopBits;
-}
-
-void DeviceInformation::setStopBits(const int &stopbits)
-{
-    if (m_ModbusConfigure.SerialProperties.StopBits != stopbits)
-    {
-        m_ModbusConfigure.SerialProperties.StopBits = static_cast<QSerialPort::StopBits>(stopbits);
-        emit notifyStopBitsChanged();
-    }
-}
-
 bool DeviceInformation::SaveDevice()
 {
     if(m_DBConfigure.ConnectType == DeviceInfoEnum::TCP_IP)
         m_DBConfigure.ConnectTypeId = NetworkModel::getInstance()->getConnectTypeId();
     else //(m_DBConfigure.ConnectType == DeviceInfoEnum::RS232)
     {
-
+        m_DBConfigure.ConnectType = RS232Model::getInstance()->getConnectTypeId();
     }
-
 
     if(m_WelderID == -1)
         DataBaseManager::getInstance()->insertConfigurationDevice(m_DBConfigure);
@@ -388,6 +315,12 @@ bool DeviceInformation::SaveDevice()
         NetworkModel::getInstance()->InitListManager();
         NetworkModel::getInstance()->UpdateWelderID();
     }
+    else
+    {
+        RS232Model::getInstance()->UpdateDatabase();
+        RS232Model::getInstance()->InitListManager();
+        RS232Model::getInstance()->UpdateWelderID();
+    }
     return true;
 }
 
@@ -399,6 +332,12 @@ bool DeviceInformation::RemoveDevice()
         NetworkModel::getInstance()->UpdateDatabase();
         NetworkModel::getInstance()->InitListManager();
         NetworkModel::getInstance()->UpdateWelderID();
+    }
+    else
+    {
+        RS232Model::getInstance()->UpdateDatabase();
+        RS232Model::getInstance()->InitListManager();
+        RS232Model::getInstance()->UpdateWelderID();
     }
     return true;
 }
