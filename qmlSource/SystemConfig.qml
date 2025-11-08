@@ -297,7 +297,7 @@ Rectangle {
 
                     }
                     onEditingFinished: {
-                        var yieldLowerLimitRegex = /^[1-9][0-9]$/
+                        var yieldLowerLimitRegex = /^[1-9][0-9]*$/
                         if (!yieldLowerLimitRegex.test(yieldLowerLimitTextField.text))
                             footer.showError(titleYieldLowerLimit.text + GlobalLanguageDefine.strInputInterger)
                         else
@@ -355,9 +355,9 @@ Rectangle {
                     }
 
                     onEditingFinished: {
-                        var portRegex = /^([0-9]|[1-9][0-9]{1,4}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])$/
+                        var portRegex = /^[1-9][0-9]*$/
                         if (!portRegex.test(t7.text))
-                            footer.showError(s7.text + GlobalLanguageDefine.strEnter0And65535)
+                            footer.showError(s7.text + GlobalLanguageDefine.strInputInterger)
                         else
                         {
                             footer.hideError()
@@ -411,9 +411,9 @@ Rectangle {
                             DeviceManager.DeviceList[tmpIndex].DeviceObj.ResidualThreshold
                     }
                     onEditingFinished: {
-                        var ipRegex = /^(25[0-5]|2[0-4]\d|1\d{2}|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d{2}|[1-9]?\d)){3}$/
+                        var ipRegex = /^[1-9][0-9]*$/
                         if (!ipRegex.test(t8.text))
-                            footer.showError(s8.text + GlobalLanguageDefine.strEnterValidIPAddress)
+                            footer.showError(s8.text + GlobalLanguageDefine.strInputInterger)
                         else
                         {
                             footer.hideError()
@@ -468,9 +468,9 @@ Rectangle {
                             return DeviceManager.DeviceList[tmpIndex].DeviceObj.ForceThreshold
                     }
                     onEditingFinished: {
-                        var portRegex = /^(25[0-5]|2[0-4]\d|1\d{2}|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d{2}|[1-9]?\d)){3}$/
+                        var portRegex = /^[1-9][0-9]*$/
                         if (!portRegex.test(peelForceThresholdField.text))
-                            footer.showError(titlePeelForceThreshold.text + GlobalLanguageDefine.strEnterValidIPAddress)
+                            footer.showError(titlePeelForceThreshold.text + GlobalLanguageDefine.strInputInterger)
                         else
                         {
                             footer.hideError()
