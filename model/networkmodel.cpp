@@ -240,6 +240,20 @@ bool NetworkModel::UpdateWelderID()
     return !configureList.empty();
 }
 
+int NetworkModel::GetModbusDeviceID()
+{
+    int iModbusDeviceId = -1;
+    for (auto iter = m_listManager.constBegin(); iter != m_listManager.constEnd(); iter++)
+    {
+        if(iter.value().WelderId == m_iCurrentWelderId)
+        {
+            iModbusDeviceId = iter.value().ModbusDeviceId;
+            break;
+        }
+    }
+    return iModbusDeviceId;
+}
+
 QVariant NetworkModel::get(int index) const
 {
     qDebug() << "c++ index：" << index;

@@ -8,7 +8,7 @@
 #include <QVector>
 #include <QMutex>
 #include "define.h"
-#include "model/deviceinformation.h"
+#include "model/deviceinfoenum.h"
 #include <QSerialPort>
 
 class HBModbusClient : public QObject
@@ -31,6 +31,34 @@ public:
         QDateTime   DateTime;
     };
 
+    struct NETWORK_PROPERTIES
+    {
+        int     EthNumber;
+        QString LocalIP;
+        QString RemoteIP;
+        int     PortNumber;
+    };
+
+    struct SERIAL_PROPERTIES
+    {
+        int ComNumber;
+        QSerialPort::BaudRate BaudRate;
+        QSerialPort::DataBits DataBits;
+        QSerialPort::Parity   ParityBits;
+        QSerialPort::StopBits StopBits;
+    };
+
+    struct MODBUS_CONFIGURE
+    {
+        DeviceInfoEnum::CONNECT_TYPE    ConnectType;    // 连接方式     0_RS232  1_Network
+        DeviceInfoEnum::WLEDER_TYPE     ProtocolType;   // 焊机型号
+        DeviceInfoEnum::CONNECT_STATE   ConnectState;   // 连接state
+        DeviceInfoEnum::NETWORK_TYPE    NetworkType;
+        NETWORK_PROPERTIES              NetworkProperties;
+        SERIAL_PROPERTIES               SerialProperties;
+    };
+
+
 public:
     static HBModbusClient* getInstance();
     ~HBModbusClient();
@@ -48,7 +76,7 @@ public:
     //RTC
     Q_INVOKABLE void setSystemClock(const QDateTime &datetime);
 
-    Q_INVOKABLE void setDeviceConfigure(const int deviceId, const DeviceInformation::MODBUS_CONFIGURE deviceConfig);
+    void setDeviceConfigure(const int deviceId, const MODBUS_CONFIGURE deviceConfig);
 
     //TODO Need to move others.
     Q_INVOKABLE void setMesConfig(const QVector<quint16> mesHostValues);

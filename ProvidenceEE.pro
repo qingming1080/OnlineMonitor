@@ -78,6 +78,7 @@ HEADERS += \
     model/databitsmodel.h \
     model/csvexportworker.h \
     model/device.h \
+    model/deviceinfoenum.h \
     model/deviceinformation.h \
     model/devicemanager.h \
     model/devicenames.h \

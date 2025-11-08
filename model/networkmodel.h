@@ -49,6 +49,7 @@ public:
     bool UpdateDatabase();
     bool InitListManager();
     bool UpdateWelderID();
+    int GetModbusDeviceID();
 
 private:
     explicit NetworkModel(QObject *parent = nullptr);

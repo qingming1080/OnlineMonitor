@@ -426,7 +426,7 @@ bool HBModbusClient::getResetButtonStatus() const
     return m_bFrontPanelResetButton;
 }
 
-void HBModbusClient::setDeviceConfigure(const int deviceId, const DeviceInformation::MODBUS_CONFIGURE deviceConfig)
+void HBModbusClient::setDeviceConfigure(const int deviceId, const MODBUS_CONFIGURE deviceConfig)
 {
 
     int base = DEV_TYPE + (deviceId - 1) * DEV_HOLDING_REGISTERS_COUNT;
@@ -568,7 +568,7 @@ void HBModbusClient::testAllFunctions()
         qDebug() << "[Test] 系统时间已设置:" << datetime.toString("yyyy-MM-dd HH:mm:ss");
 
         // 4. 测试 DeviceConfigure
-            DeviceInformation::MODBUS_CONFIGURE device1;
+            MODBUS_CONFIGURE device1;
             // 填写示例配置
             device1.ConnectType = DeviceInfoEnum::TCP_IP;
             device1.ProtocolType = DeviceInfoEnum::WLEDER_TYPE::L20_VG;
@@ -578,7 +578,7 @@ void HBModbusClient::testAllFunctions()
             device1.NetworkProperties.PortNumber = 4200;
             setDeviceConfigure(1, device1);
 
-            DeviceInformation::MODBUS_CONFIGURE device2;
+            MODBUS_CONFIGURE device2;
             // 填写示例配置
             device2.ConnectType = DeviceInfoEnum::RS232;
             device2.ProtocolType = DeviceInfoEnum::WLEDER_TYPE::L20_TS;

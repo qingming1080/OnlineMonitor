@@ -257,6 +257,20 @@ bool RS232Model::UpdateWelderID()
     return !configureList.empty();
 }
 
+int RS232Model::GetModbusDeviceID()
+{
+    int iModbusDeviceId = -1;
+    for (auto iter = m_listManager.constBegin(); iter != m_listManager.constEnd(); iter++)
+    {
+        if(iter.value().WelderId == m_iCurrentWelderId)
+        {
+            iModbusDeviceId = iter.value().ModbusDeviceId;
+            break;
+        }
+    }
+    return iModbusDeviceId;
+}
+
 QVariant RS232Model::get(int index) const
 {
 	qDebug() << "c++ index: " << index;

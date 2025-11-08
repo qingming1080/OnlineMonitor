@@ -43,6 +43,7 @@ public:
     bool UpdateDatabase();
     bool InitListManager();
     bool UpdateWelderID();
+    int GetModbusDeviceID();
 
 private:
     explicit RS232Model(QObject *parent = nullptr);

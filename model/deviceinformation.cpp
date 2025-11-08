@@ -1,7 +1,7 @@
 ﻿#include "deviceinformation.h"
 #include <QVariant>
 #include <QDebug>
-#include <QElapsedTimer>
+#include <QSerialPort>
 #include "tools/utilityfunction.h"
 #include "networkmodel.h"
 #include "rs232model.h"
@@ -26,6 +26,7 @@ DeviceInformation::DeviceInformation(int welderID, QObject *parent)
         setAutoLearningCount(QString::number(m_DBConfigure.AutoLearnCount));
         setForceThreshold(QString::number(m_DBConfigure.ForceThreshold));
         setResidualThreshold(QString::number(m_DBConfigure.ResidualThreshold));
+        InitModbusDevice();
     }
     else
     {
@@ -340,5 +341,32 @@ bool DeviceInformation::RemoveDevice()
         RS232Model::getInstance()->UpdateWelderID();
     }
     return true;
+}
+
+void DeviceInformation::InitModbusDevice()
+{
+    m_ModbusConfigure.ConnectState = DeviceInfoEnum::DISCONNECTED;
+    m_ModbusConfigure.ConnectType = static_cast<DeviceInfoEnum::CONNECT_TYPE>(m_DBConfigure.ConnectType);
+    m_ModbusConfigure.NetworkType = DeviceInfoEnum::CLIENT;
+    m_ModbusConfigure.ProtocolType = static_cast<DeviceInfoEnum::WLEDER_TYPE>(m_DBConfigure.WelderType);
+    if(m_ModbusConfigure.ConnectType == DeviceInfoEnum::TCP_IP)
+    {
+        m_ModbusConfigure.NetworkProperties.EthNumber = NetworkModel::getInstance()->GetModbusDeviceID();
+        QString strPort = NetworkModel::getInstance()->getPortNumber();
+        bool isOk = false;
+        int iPort = strPort.toInt(&isOk);
+        m_ModbusConfigure.NetworkProperties.PortNumber = iPort;
+        m_ModbusConfigure.NetworkProperties.LocalIP = NetworkModel::getInstance()->getLocalIP();
+        m_ModbusConfigure.NetworkProperties.RemoteIP = NetworkModel::getInstance()->getRemoteIP();
+    }
+    else
+    {
+        m_ModbusConfigure.SerialProperties.ComNumber = RS232Model::getInstance()->GetModbusDeviceID();
+        m_ModbusConfigure.SerialProperties.BaudRate = static_cast<QSerialPort::BaudRate>(RS232Model::getInstance()->getBaudRate());
+        m_ModbusConfigure.SerialProperties.DataBits = static_cast<QSerialPort::DataBits>(RS232Model::getInstance()->getDataBits());
+        m_ModbusConfigure.SerialProperties.ParityBits = static_cast<QSerialPort::Parity>(RS232Model::getInstance()->getParityBits());
+        m_ModbusConfigure.SerialProperties.StopBits = static_cast<QSerialPort::StopBits>(RS232Model::getInstance()->getStopBits());
+    }
+    HBModbusClient::getInstance()->setDeviceConfigure(m_WelderID, m_ModbusConfigure);
 }
 

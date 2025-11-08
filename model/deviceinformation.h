@@ -4,46 +4,10 @@
 #include <QObject>
 #include <QSerialPort>
 #include "DataBase/databasemanager.h"
+#include "modbus/hbmodbusclient.h"
 ///
 /// \brief The DeviceInformation class : 设备信息:对应表格Configuration
 ///
-
-class DeviceInfoEnum : public QObject
-{
-    Q_OBJECT
-public:
-    enum CONNECT_STATE
-    {
-        DISCONNECTED    = 0,    // 未连接
-        CONNECTED       = 1,     // 已连接
-    };
-    Q_ENUM(CONNECT_STATE)
-
-    // 设备连接方式
-    enum CONNECT_TYPE
-    {
-        TCP_IP = 0,    // TCP_CP
-        RS232  = 1,    // RS232
-        ANALOG = 2     //Analog
-    };
-    Q_ENUM(CONNECT_TYPE)
-
-    enum WLEDER_TYPE
-    {
-        L20_VG  = 0,
-        L20_TS  = 1,
-        BRANSON_2000XC  = 2
-    };Q_ENUM(WLEDER_TYPE)
-
-    enum NETWORK_TYPE
-    {
-        SERVER = 0,
-        CLIENT = 1
-    };
-
-public:
-    explicit DeviceInfoEnum(QObject *parent = nullptr){Q_UNUSED(parent);}
-};
 
 class DeviceInformation : public QObject
 {
@@ -76,33 +40,6 @@ class DeviceInformation : public QObject
     Q_PROPERTY(QString AutoLearningCount    READ getAutoLearningCount   WRITE setAutoLearningCount  NOTIFY notifyAutoLearningCountChanged FINAL)
 
 public:
-    struct NETWORK_PROPERTIES
-    {
-        int     EthNumber;
-        QString LocalIP;
-        QString RemoteIP;
-        int     PortNumber;
-    };
-
-    struct SERIAL_PROPERTIES
-    {
-        int ComNumber;
-        QSerialPort::BaudRate BaudRate;
-        QSerialPort::DataBits DataBits;
-        QSerialPort::Parity   ParityBits;
-        QSerialPort::StopBits StopBits;
-    };
-
-    struct MODBUS_CONFIGURE
-    {
-        DeviceInfoEnum::CONNECT_TYPE    ConnectType;    // 连接方式     0_RS232  1_Network
-        DeviceInfoEnum::WLEDER_TYPE     ProtocolType;   // 焊机型号
-        DeviceInfoEnum::CONNECT_STATE   ConnectState;   // 连接state
-        DeviceInfoEnum::NETWORK_TYPE    NetworkType;
-        NETWORK_PROPERTIES              NetworkProperties;
-        SERIAL_PROPERTIES               SerialProperties;
-    };
-
     explicit DeviceInformation(int welderID = 0, QObject *parent = nullptr);
 
     QString getWelderName() const;
@@ -157,6 +94,8 @@ public:
 
     bool SaveDevice();
     bool RemoveDevice();
+private:
+    void InitModbusDevice();
 signals:
     void notifyWelderNameChanged();
     void notifyWelderTypeChanged();
@@ -175,11 +114,8 @@ signals:
     void notifyAutoLearningCountChanged();
 private:
     int m_WelderID;
-    DataBaseManager::DB_CONFIGURE   m_DBConfigure;
-    // DeviceInfoEnum::CONNECT_TYPE    m_iConnectType;
-    // DeviceInfoEnum::CONNECT_STATE   m_iConnectState;
-
-    MODBUS_CONFIGURE                m_ModbusConfigure;
+    DataBaseManager::DB_CONFIGURE       m_DBConfigure;
+    HBModbusClient::MODBUS_CONFIGURE    m_ModbusConfigure;
 };
 
 #endif // DEVICEINFORMATION_H
