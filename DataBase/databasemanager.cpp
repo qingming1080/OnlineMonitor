@@ -214,35 +214,38 @@ bool DataBaseManager::insertConfigurationDevice(const DB_CONFIGURE configure)
 bool DataBaseManager::updateConfigurationDevice(const int welderID, const DB_CONFIGURE configure)
 {
     QSqlQuery query;
+    QString execStr = QString(
+                          "UPDATE %1 SET "
+                          "welder_name = :welder_name, "
+                          "welder_type = :welder_type, "
+                          "production_bacth = :production_bacth, "
+                          "model_sample = :model_sample, "
+                          "lower_limit = :lower_limit, "
+                          "height_option = :height_option, "
+                          "suspicious_option = :suspicious_option, "
+                          "connect_type = :connect_type, "
+                          "connect_id = :connect_id, "
+                          "single_fact_setting = :single_fact_setting, "
+                          "general_fact_setting = :general_fact_setting, "
+                          "other_fact_setting = :other_fact_setting, "
+                          "auto_learn_count = :auto_learn_count, "
+                          "force_threshold = :force_threshold, "
+                          "residual_threshold = :residual_threshold "
+                          "WHERE welder_id = :welder_id"
+                          ).arg(CONFIGURATION_TABLENAME);
 
-    // 构建更新SQL语句，更新指定welder_id的设备配置
-    QString execStr = QString("UPDATE %1 SET "
-                              "welder_name = :welder_name, "
-                              "welder_type = :welder_type, "
-                              "production_bacth = :production_bacth, "
-                              "model_sample = :model_sample, "
-                              "lower_limit = :lower_limit, "
-                              "height_option = :height_option, "
-                              "suspicious_option = :suspicious_option, "
-                              "connect_type = :connect_type, "
-                              "connect_id = :connect_id, "
-                              "single_fact_setting = :single_fact_setting, "
-                              "general_fact_setting = :general_fact_setting, "
-                              "other_fact_setting = :other_fact_setting, "
-                              "auto_learn_count = :auto_learn_count, "
-                              "force_threshold = :force_threshold, "
-                              "residual_threshold = :residual_threshold "
-                              "WHERE welder_id = :welder_id")
-                          .arg(CONFIGURATION_TABLENAME);
+    if (!query.prepare(execStr)) {
+        qWarning() << "Failed to prepare SQL:" << query.lastError().text();
+        return false;
+    }
 
-    // 绑定参数
     query.bindValue(":welder_name", configure.WelderName);
     query.bindValue(":welder_type", configure.WelderType);
     query.bindValue(":production_bacth", configure.ProductionBatch);
     query.bindValue(":model_sample", configure.MaxModelSamples);
     query.bindValue(":lower_limit", configure.YieldRateLowerLimit);
     query.bindValue(":height_option", configure.HeightEncoderOption ? 1 : 0);
-    query.bindValue(":suspicious_option", configure.SuspiciousOption? 1 : 0);
+    query.bindValue(":suspicious_option", configure.SuspiciousOption ? 1 : 0);
     query.bindValue(":connect_type", configure.ConnectType);
     query.bindValue(":connect_id", configure.ConnectTypeId);
     query.bindValue(":single_fact_setting", configure.SingleFactSetting);
@@ -251,15 +254,25 @@ bool DataBaseManager::updateConfigurationDevice(const int welderID, const DB_CON
     query.bindValue(":auto_learn_count", configure.AutoLearnCount);
     query.bindValue(":force_threshold", configure.ForceThreshold);
     query.bindValue(":residual_threshold", configure.ResidualThreshold);
-    query.bindValue(":welder_id",welderID);
+    query.bindValue(":welder_id", welderID);
+
 
     bool ret = query.exec();
     if (!ret) {
         qWarning() << "Update configuration failed:" << query.lastError().text();
+        qWarning() << "Executed query:" << query.lastQuery();
+        return false;
     }
-    return ret;
-}
 
+    int affectedRows = query.numRowsAffected();
+    if (affectedRows == 0) {
+        qWarning() << "No rows updated! welder_id may not exist:" << welderID;
+        return false;
+    }
+
+    qDebug() << "Update success, rows affected:" << affectedRows;
+    return true;
+}
 
 bool DataBaseManager::getAllNetworkConfigure(QList<DataBaseManager::DB_NETWORK>& list)
 {
@@ -279,9 +292,9 @@ bool DataBaseManager::getAllNetworkConfigure(QList<DataBaseManager::DB_NETWORK>&
         data.Id             = query.value(QmlEnum::NETWORK_id).toInt();
         data.Type           = query.value(QmlEnum::NETWORK_type).toInt();
         data.Protocol       = query.value(QmlEnum::NETWORK_protocol).toInt();
-        data.ServerPort    = query.value(QmlEnum::NETWORK_server_port).toInt();
-        data.RemoteIP      = query.value(QmlEnum::NETWORK_remote_ip).toString();
-        data.LocalIP       = query.value(QmlEnum::NETWORK_local_ip).toString();
+        data.ServerPort     = query.value(QmlEnum::NETWORK_server_port).toInt();
+        data.RemoteIP       = query.value(QmlEnum::NETWORK_remote_ip).toString();
+        data.LocalIP        = query.value(QmlEnum::NETWORK_local_ip).toString();
         data.User           = query.value(QmlEnum::NETWORK_user).toString();
         list.push_back(data);
 
@@ -291,28 +304,30 @@ bool DataBaseManager::getAllNetworkConfigure(QList<DataBaseManager::DB_NETWORK>&
 
     return bResult;
 }
+bool DataBaseManager::updateNetworkConfigure(const int id, const DB_NETWORK network){
 
-bool DataBaseManager::updateNetworkConfigure(const int id, const DB_NETWORK network)
-{
     QSqlQuery query;
 
-    // 构建更新SQL语句，更新指定welder_id的设备配置
-    QString execStr = QString("UPDATE %1 SET "
-                              "type = :type, "
-                              "protocol = :protocol, "
-                              "local_ip = :local_ip, "
-                              "local_port = :local_port, "
-                              "remote_ip = :remote_ip, "
-                              "server_port = :server_port, "
-                              "user = :user "
-                              "WHERE id = :id")
-                          .arg(NETWORK_TABLENAME);
+    QString execStr = QString(
+                          "UPDATE %1 SET "
+                          "type = :type, "
+                          "protocol = :protocol, "
+                          "local_ip = :local_ip, "
+                          "remote_ip = :remote_ip, "
+                          "server_port = :server_port, "
+                          "\"user\" = :user "
+                          "WHERE id = :id"
+                          ).arg(NETWORK_TABLENAME);
 
-    // 绑定参数
+    if (!query.prepare(execStr)) {
+        qWarning() << "Failed to prepare SQL:" << query.lastError().text();
+        return false;
+    }
+
+
     query.bindValue(":type", network.Type);
     query.bindValue(":protocol", network.Protocol);
     query.bindValue(":local_ip", network.LocalIP);
-    query.bindValue(":local_port", network.LocalPort);
     query.bindValue(":remote_ip", network.RemoteIP);
     query.bindValue(":server_port", network.ServerPort);
     query.bindValue(":user", network.User);
@@ -321,8 +336,10 @@ bool DataBaseManager::updateNetworkConfigure(const int id, const DB_NETWORK netw
     bool ret = query.exec();
     if (!ret) {
         qWarning() << "Update network failed:" << query.lastError().text();
+        qWarning() << "Executed query:" << query.lastQuery();
+        return false;
     }
-    return ret;
+    return true;
 }
 
 bool DataBaseManager::getNetworkConfigure(const int id, DB_NETWORK& network)
