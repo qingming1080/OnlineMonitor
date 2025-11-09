@@ -1,6 +1,7 @@
 ﻿#include "devicemanager.h"
 #include "DataBase/databasemanager.h"
 #include <qdebug.h>
+#include "model/deviceinformation.h"
 #include "networkmodel.h"
 #include "rs232model.h"
 
@@ -26,6 +27,8 @@ DeviceManager::DeviceManager(QObject *parent)
     {
         qDebug() << "Failed to query device list from database! ";
     }
+    connect(HBModbusClient::getInstance(), &HBModbusClient::notifyDeviceStatusChanged, this, &DeviceManager::slotNotifyDeviceStatusChanged);
+    connect(HBModbusClient::getInstance(), &HBModbusClient::notifyWeldResultComing, this, &DeviceManager::slotNotifyWeldResultComing);
 }
 
 bool DeviceManager::InitDeviceList()
@@ -115,6 +118,23 @@ QString DeviceManager::getHistoryName(int welderID)
     //         return m_listDevices.at(i)->getDevInfoObject()->name();
     // }
     return "";
+}
+
+void DeviceManager::slotNotifyDeviceStatusChanged(int welderId, const DEVICE_STATUS &status)
+{
+    for(int i = 0; i < m_listDevices.size(); i++)
+    {
+        int id = m_listDevices[i]->GetWelderID();
+        if(id == welderId)
+        {
+            m_listDevices[i]->getDeviceObj()->setConnectState(status.IsDeviceStatus || status.IsDeviceDataStatus);
+        }
+    }
+}
+
+void DeviceManager::slotNotifyWeldResultComing(int welderId, const HBModbusClient::MODBUS_WELD_RESULT &data)
+{
+
 }
 
 

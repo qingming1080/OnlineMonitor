@@ -81,7 +81,8 @@ public:
 
 private:
     int m_WelderID;
-    DataBaseManager::DB_PRODUCTION m_DBProduction;
+    DataBaseManager::DB_PRODUCTION  m_DBProduction;
+    DataBaseManager::DB_MODEL       m_DBModel;
     int m_iGoodRate;                       // 良率
     int m_iGoodCycleCount;                 // 合格
     int m_iDefectiveCycleCount;            // 次品

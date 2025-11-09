@@ -3,8 +3,9 @@
 
 #include <QObject>
 #include <QMap>
-#include "model/device.h"
-// #include "qmlenum.h"
+#include "device.h"
+#include "define.h"
+#include "modbus/hbmodbusclient.h"
 
 ///
 /// \brief The DeviceManager class : 设备管理
@@ -69,10 +70,9 @@ signals:
     void notifySelectedDeviceIndexChanged();
     void notifyDeviceCounterChanged();
 
-
-    // Q_INVOKABLE void upDateBtns();
-
-    // void manualDataListChanged();  // 用于通知 UI 数据更新
+public slots:
+    void slotNotifyDeviceStatusChanged(int welderId, const DEVICE_STATUS &status);
+    void slotNotifyWeldResultComing(int welderId, const HBModbusClient::MODBUS_WELD_RESULT& data);
 
 private:
     explicit DeviceManager(QObject *parent = nullptr);

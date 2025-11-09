@@ -33,6 +33,7 @@ HBModbusClient::HBModbusClient( QObject *parent)
     m_timer->setInterval(1000);
     connect(m_timer, &QTimer::timeout, this, &HBModbusClient::onPollingTimeoutEvent);
     m_timer->start();
+    m_WelderDeviceMap.clear();
 }
 
 
@@ -262,7 +263,14 @@ void HBModbusClient::ParseWeldResult()
                      << "WeldAlarm:" << data.WeldAlarm
                      << "DateTime:" << data.DateTime.toString("yyyy-MM-dd HH:mm:ss");
 
-            emit notifyWeldResultComing(i, data);
+            for(auto iter = m_WelderDeviceMap.begin(); iter != m_WelderDeviceMap.end(); iter++)
+            {
+                if(iter.value() == i)
+                {
+                    emit notifyWeldResultComing(iter.key(), data);
+                    break;
+                }
+            }
         }
     }
 }
@@ -292,8 +300,14 @@ void HBModbusClient::ParsePresetSetting()
                      << "Amplitude:" << weldPreset.Amplitude
                      << "TriggerPressure:" << weldPreset.TriggerPressure
                      << "WeldingPressure:" << weldPreset.WeldingPressure;
-
-            emit notifyPresetSettingChanged(i, weldPreset);
+            for(auto iter = m_WelderDeviceMap.begin(); iter != m_WelderDeviceMap.end(); iter++)
+            {
+                if(iter.value() == i)
+                {
+                    emit notifyPresetSettingChanged(iter.key(), weldPreset);
+                    break;
+                }
+            }
             m_lastPresets[i] = weldPreset;
         }
     }
@@ -309,7 +323,13 @@ void HBModbusClient::ParseDeviceStatus()
         base = i * DEV_DISCRETE_REGISTERS_COUNT;
         DeviceStatus.IsDeviceStatus     = m_Discreteds[base + DEV_STATUE];
         DeviceStatus.IsDeviceDataStatus = m_Discreteds[base + DEV_DATA_STATUE];
-        emit notifyDeviceStatusChanged(i, DeviceStatus);
+        for(auto iter = m_WelderDeviceMap.begin(); iter != m_WelderDeviceMap.end(); iter++)
+        {
+            if(iter.value() == i)
+            {
+                emit notifyDeviceStatusChanged(iter.key(), DeviceStatus);
+            }
+        }
     }
 }
 
@@ -327,7 +347,14 @@ void HBModbusClient::ParseDeviceIOResetStatus()
     {
         base = SYS_COILS_REGISTERS_COUNT + i * DEV_COILS_REGISTERS_COUNT;
         IOStatus.IOResetStatus = m_Coils[base + DEV_RESET_BIT2 - SYS_COILS_REGISTERS_COUNT];
-        emit notifyDeviceIOStatusChanged(i, IOStatus);
+        for(auto iter = m_WelderDeviceMap.begin(); iter != m_WelderDeviceMap.end(); iter++)
+        {
+            if(iter.value() == i)
+            {
+                emit notifyDeviceIOStatusChanged(iter.key(), IOStatus);
+                break;
+            }
+        }
     }
 }
 
@@ -386,19 +413,33 @@ void HBModbusClient::updateLedStatus(int ledIndex, bool condition)
 }
 
 
-Q_INVOKABLE void HBModbusClient::setDeviceIOStatusReject(int deviceId, bool condition) {
-
-    if (deviceId < 1 || deviceId > DEV_COUNT) return;
-    int base = SYS_COILS_REGISTERS_COUNT + (deviceId - 1) * DEV_COILS_REGISTERS_COUNT;;
+Q_INVOKABLE void HBModbusClient::setDeviceIOStatusReject(int welderId, bool condition)
+{
+    int deviceId = -1;
+    auto iter = m_WelderDeviceMap.find(welderId);
+    if(iter != m_WelderDeviceMap.end())
+        deviceId = iter.value();
+    else
+        return;
+    if (deviceId < 0 || deviceId > (DEV_COUNT - 1))
+        return;
+    int base = SYS_COILS_REGISTERS_COUNT + deviceId * DEV_COILS_REGISTERS_COUNT;;
     int rejectAddress = base + DEV_REJECT_BIT0 - SYS_COILS_REGISTERS_COUNT;
 
     QVector<quint8> value(1, condition ? 1 : 0);
     WriteCoils(rejectAddress, value);
 }
 
-Q_INVOKABLE void HBModbusClient::setDeviceIOStatusSuspect(int deviceId, bool condition) {
-
-    if (deviceId < 1 || deviceId > DEV_COUNT) return;
+Q_INVOKABLE void HBModbusClient::setDeviceIOStatusSuspect(int welderId, bool condition)
+{
+    int deviceId = -1;
+    auto iter = m_WelderDeviceMap.find(welderId);
+    if(iter != m_WelderDeviceMap.end())
+        deviceId = iter.value();
+    else
+        return;
+    if (deviceId < 0 || deviceId > (DEV_COUNT - 1))
+        return;
     int base = SYS_COILS_REGISTERS_COUNT + (deviceId - 1) * DEV_COILS_REGISTERS_COUNT;;
     int suspectAddress = base + DEV_SUSPECT_BIT1 - SYS_COILS_REGISTERS_COUNT;
 
@@ -426,15 +467,26 @@ bool HBModbusClient::getResetButtonStatus() const
     return m_bFrontPanelResetButton;
 }
 
-void HBModbusClient::setDeviceConfigure(const int deviceId, const MODBUS_CONFIGURE deviceConfig)
+void HBModbusClient::setDeviceConfigure(const int welderId, const MODBUS_CONFIGURE deviceConfig)
 {
+    auto iter = m_WelderDeviceMap.find(welderId);
+    int base = 0;
+    if(iter != m_WelderDeviceMap.end())
+        base = DEV_TYPE + iter.value() * DEV_HOLDING_REGISTERS_COUNT;
+    else
+    {
+        if(m_WelderDeviceMap.size() < DEV_COUNT)
+        {
+            int deviceId = m_WelderDeviceMap.size();
+            m_WelderDeviceMap.insert(welderId, deviceId);
+            base = DEV_TYPE + deviceId * DEV_HOLDING_REGISTERS_COUNT;
+        }
+    }
 
-    int base = DEV_TYPE + (deviceId - 1) * DEV_HOLDING_REGISTERS_COUNT;
-     QVector<quint16> deviceConfiginfo;
-
+    QVector<quint16> deviceConfiginfo;
     deviceConfiginfo.append(deviceConfig.ConnectType);
     deviceConfiginfo.append(deviceConfig.ProtocolType);
-    deviceConfiginfo.append(deviceConfig.ConnectState);
+    deviceConfiginfo.append(DeviceInfoEnum::CONNECTED);
 
     if (deviceConfig.ConnectType == DeviceInfoEnum::TCP_IP)
     {
@@ -468,9 +520,61 @@ void HBModbusClient::setDeviceConfigure(const int deviceId, const MODBUS_CONFIGU
         deviceConfiginfo.append(fromQtParity(deviceConfig.SerialProperties.ParityBits));
         deviceConfiginfo.append(fromQtStopBits(deviceConfig.SerialProperties.StopBits));
     }
-
     WriteHoldingRegisters(base, deviceConfiginfo);
+}
 
+void HBModbusClient::removeDeviceConfigure(const int welderId, const MODBUS_CONFIGURE deviceConfig)
+{
+    auto iter = m_WelderDeviceMap.find(welderId);
+    int base = 0;
+    if(iter != m_WelderDeviceMap.end())
+    {
+        base = DEV_TYPE + iter.value() * DEV_HOLDING_REGISTERS_COUNT;
+        m_WelderDeviceMap.remove(iter.key());
+    }
+    else
+    {
+        return;
+    }
+
+    QVector<quint16> deviceConfiginfo;
+    deviceConfiginfo.append(deviceConfig.ConnectType);
+    deviceConfiginfo.append(deviceConfig.ProtocolType);
+    deviceConfiginfo.append(DeviceInfoEnum::DISCONNECTED);
+
+    if (deviceConfig.ConnectType == DeviceInfoEnum::TCP_IP)
+    {
+        QStringList remote = deviceConfig.NetworkProperties.RemoteIP.split(".");
+        QStringList local  = deviceConfig.NetworkProperties.LocalIP.split(".");
+
+        deviceConfiginfo.append(remote.value(0).toUShort());
+        deviceConfiginfo.append(remote.value(1).toUShort());
+        deviceConfiginfo.append(remote.value(2).toUShort());
+        deviceConfiginfo.append(remote.value(3).toUShort());
+
+        deviceConfiginfo.append(local.value(0).toUShort());
+        deviceConfiginfo.append(local.value(1).toUShort());
+        deviceConfiginfo.append(local.value(2).toUShort());
+        deviceConfiginfo.append(local.value(3).toUShort());
+        deviceConfiginfo.append(deviceConfig.NetworkProperties.PortNumber);
+
+        deviceConfiginfo.append(0);
+        deviceConfiginfo.append(0);
+        deviceConfiginfo.append(0);
+        deviceConfiginfo.append(0);
+        deviceConfiginfo.append(0);
+    }
+    else
+    {
+        for (int i = 0; i < 9; ++i)
+            deviceConfiginfo.append(0);
+        deviceConfiginfo.append(deviceConfig.SerialProperties.ComNumber);
+        deviceConfiginfo.append(fromQtBaudRate(deviceConfig.SerialProperties.BaudRate));
+        deviceConfiginfo.append(fromQtDataBits(deviceConfig.SerialProperties.DataBits));
+        deviceConfiginfo.append(fromQtParity(deviceConfig.SerialProperties.ParityBits));
+        deviceConfiginfo.append(fromQtStopBits(deviceConfig.SerialProperties.StopBits));
+    }
+    WriteHoldingRegisters(base, deviceConfiginfo);
 }
 
 HBModbusClient::BaudRate HBModbusClient:: fromQtBaudRate(QSerialPort::BaudRate baud)

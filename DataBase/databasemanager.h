@@ -236,6 +236,11 @@ public:
     bool updateRS232Configure(const int id, const DB_RS232 rs232);
     bool getRS232Configure(const int id, DB_RS232& rs232);
 
+    QList<DB_MODEL> getModelData();
+    bool insertModelRecord(DB_MODEL model);
+    bool removeModelRow(int id);
+    bool clearModel();
+
 /////////////////////////io_data////////////////////////////////
 /// 只处理待定
     ///
@@ -280,29 +285,6 @@ public:
     bool removeManualDevice(int deviceID);
 
     bool insertManualRow(DB_MANUAL data);
-
-/////////////////////////model////////////////////////////////
-    ///
-    /// \brief getModelData : 获取model表格数据
-    /// \return : 数据
-    ///
-    QList<DB_MODEL> getModelData();
-
-    ///
-    /// \brief removeModelRow : 删除model表格一行数据
-    /// \param id : model_id
-    /// \return : 删除结果
-    ///
-    bool removeModelRow(int id);
-
-    bool clearModel();
-
-    ///
-    /// \brief insertModelRow : 插入model表格一行数据
-    /// \param data : 数据
-    /// \return : 插入结果
-    ///
-    bool insertModelRow(DB_MODEL model);
 
     bool existsManualRowByCycle(int cycleCount);
 

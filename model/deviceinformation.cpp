@@ -27,6 +27,7 @@ DeviceInformation::DeviceInformation(int welderID, QObject *parent)
         setForceThreshold(QString::number(m_DBConfigure.ForceThreshold));
         setResidualThreshold(QString::number(m_DBConfigure.ResidualThreshold));
         InitModbusDevice();
+        HBModbusClient::getInstance()->setDeviceConfigure(m_WelderID, m_ModbusConfigure);
     }
     else
     {
@@ -322,6 +323,7 @@ bool DeviceInformation::SaveDevice()
         RS232Model::getInstance()->InitListManager();
         RS232Model::getInstance()->UpdateWelderID();
     }
+
     return true;
 }
 
@@ -340,6 +342,8 @@ bool DeviceInformation::RemoveDevice()
         RS232Model::getInstance()->InitListManager();
         RS232Model::getInstance()->UpdateWelderID();
     }
+    InitModbusDevice();
+    HBModbusClient::getInstance()->removeDeviceConfigure(m_WelderID, m_ModbusConfigure);
     return true;
 }
 
@@ -367,6 +371,5 @@ void DeviceInformation::InitModbusDevice()
         m_ModbusConfigure.SerialProperties.ParityBits = static_cast<QSerialPort::Parity>(RS232Model::getInstance()->getParityBits());
         m_ModbusConfigure.SerialProperties.StopBits = static_cast<QSerialPort::StopBits>(RS232Model::getInstance()->getStopBits());
     }
-    HBModbusClient::getInstance()->setDeviceConfigure(m_WelderID, m_ModbusConfigure);
 }
 

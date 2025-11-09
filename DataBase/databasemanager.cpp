@@ -753,13 +753,13 @@ bool DataBaseManager::clearModel()
     return query.exec(execStr);
 }
 
-bool DataBaseManager::insertModelRow(DB_MODEL model)
+bool DataBaseManager::insertModelRecord(DB_MODEL model)
 {
 
     QSqlQuery query;
     // %1_表格名称
     QString execStr = QString("INSERT INTO %1 values("
-                              ":id"
+                              // ":id"
                               ", :welder_id"
                               ", :create_time"
                               ", :energy"
@@ -784,7 +784,7 @@ bool DataBaseManager::insertModelRow(DB_MODEL model)
 
     // 绑定属性
     query.prepare(execStr);
-    query.bindValue(":id", model.id);
+    // query.bindValue(":id", model.id);
     query.bindValue(":welder_id", model.WelderId);
     query.bindValue(":create_time", model.CreateTime);
     query.bindValue(":energy", model.Energy);
