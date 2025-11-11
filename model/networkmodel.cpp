@@ -4,14 +4,10 @@
 #include "deviceinfoenum.h"
 #include <QDebug>
 NetworkModel* NetworkModel::m_ptrInstance = nullptr;
-
 NetworkModel *NetworkModel::getInstance()
 {
     if(m_ptrInstance == nullptr)
-    {
         m_ptrInstance = new NetworkModel();
-        qDebug() << "m_ptrInstance: " << m_ptrInstance;
-    }
     return m_ptrInstance;
 }
 
@@ -26,7 +22,6 @@ void NetworkModel::setEthIndex(const int &index)
     {
         m_iCurrentEthIndex = index;
         emit notifyEthIndexChanged();
-        qDebug() << "setEthIndex: " << index;
     }
 }
 
@@ -40,7 +35,6 @@ void NetworkModel::setConnectTypeId(const int &typeId)
     if(m_iConnectTypeId != typeId)
     {
         m_iConnectTypeId = typeId;
-
         emit notifyConnectTypeIdChanged();
     }
 }
@@ -93,44 +87,47 @@ void NetworkModel::setRemoteIP(const QString &ip)
 NetworkModel::NetworkModel(QObject *parent)
     : QAbstractListModel{parent}
 {
-    m_iCurrentWelderId = -1;
+    m_iCurrentWelderId = 1;
+    m_iCurrentEthIndex = -1;
+	m_iConnectTypeId = -1;
+    m_iServerPort = -1;
+    m_strLocalIP = "";
+    m_strRemoteIP = "";
+	setEthIndex(0);
+    setPortNumber("4000");
+    setLocalIP("xxx.xxx.xxx.xxx");
+    setRemoteIP("xxx.xxx.xxx.xxx");
+    setConnectTypeId(1);
     InitListManager();
     UpdateWelderID();
-
-    // NotifySelectedDeviceIndexChanged(m_iCurrentWelderId);
-
-    // connect(DeviceManager::getInstance(), &DeviceManager::notifySelectedDeviceIndexChanged,
-    //         this, &NetworkModel::NotifySelectedDeviceIndexChanged);
 }
 
 void NetworkModel::NotifySelectedDeviceIndexChanged(int welderID)
 {
-    qDebug() << "CurrentWelderId: " << welderID;
+    qDebug() << "Eth CurrentWelderId: " << welderID;
     m_iCurrentWelderId = welderID;
     for(auto iter = m_listManager.begin(); iter != m_listManager.end(); iter++)
     {
-        if(iter.value().WelderId == m_iCurrentWelderId)
+		if(iter.value().WelderId == m_iCurrentWelderId)
         {
             if(m_iCurrentWelderId != -1)
             {
                 setPortNumber(QString::number(iter.value().ServerPort));
                 setLocalIP(iter.value().LocalIP);
                 setRemoteIP(iter.value().RemoteIP);
-                setConnectTypeId(iter.key());
-            }
+			}
             else
             {
                 setPortNumber("4000");
                 setLocalIP("xxx.xxx.xxx.xxx");
                 setRemoteIP("xxx.xxx.xxx.xxx");
-                setConnectTypeId(iter.key());
             }
+            setConnectTypeId(iter.key());
             break;
         }
-    }
+	}
     modelReset();
     int index = indexOfEthRole(m_iConnectTypeId);
-    qDebug() << "index: " << index;
     if(index != -1)
         setEthIndex(index);
     else
@@ -219,7 +216,6 @@ bool NetworkModel::InitListManager()
                  << " WelderId:" << manager.WelderId;
     }
     bResult = !m_listManager.empty();
-    qDebug() << "m_listManger.cout: " << m_listManager.size();
     return bResult;
 }
 
@@ -229,15 +225,14 @@ bool NetworkModel::UpdateWelderID()
     DataBaseManager::getInstance()->getAllConfigureationDevice(configureList);
     for(int i = 0; i < configureList.count(); i++)
     {
-        qDebug() << "m_listManger[" << i <<"].ConnectType: " << configureList[i].ConnectType;
-        qDebug() << "m_listManger[" << i <<"].ConnectTypeId: " << configureList[i].ConnectTypeId;
+        // qDebug() << "m_listManger[" << i <<"].ConnectType: " << configureList[i].ConnectType;
+        // qDebug() << "m_listManger[" << i <<"].ConnectTypeId: " << configureList[i].ConnectTypeId;
         if(configureList[i].ConnectType == DeviceInfoEnum::TCP_IP)
         {
             auto iter = m_listManager.find(configureList[i].ConnectTypeId);
             if(iter != m_listManager.end())
             {
                 iter.value().WelderId = configureList[i].WelderID;
-                qDebug() << "WelderID: " << iter.value().WelderId;
             }
         }
 	}
@@ -260,10 +255,8 @@ int NetworkModel::GetModbusDeviceID()
 
 QVariant NetworkModel::get(int index) const
 {
-    qDebug() << "c++ index：" << index;
     if (index < 0 || index >= m_listETHPort.count())
         return QVariant();
-    
     // Return a QVariantMap that QML can access with .key and .value
     QVariantMap result;
     result["key"] = m_listETHPort.at(index)["key"];
@@ -299,5 +292,5 @@ int NetworkModel::indexOfEthRole(const int id) const
         if (ok && tmp == id) 
             return i;
     }
-    return -1;
+    return 0;
 }

@@ -300,16 +300,40 @@ void DeviceInformation::setAutoLearningCount(const QString &limit)
 bool DeviceInformation::SaveDevice()
 {
     if(m_DBConfigure.ConnectType == DeviceInfoEnum::TCP_IP)
+    {
         m_DBConfigure.ConnectTypeId = NetworkModel::getInstance()->getConnectTypeId();
+    }
     else //(m_DBConfigure.ConnectType == DeviceInfoEnum::RS232)
     {
-        m_DBConfigure.ConnectType = RS232Model::getInstance()->getConnectTypeId();
+        m_DBConfigure.ConnectTypeId = RS232Model::getInstance()->getConnectTypeId();
     }
 
     if(m_WelderID == -1)
+    {
         DataBaseManager::getInstance()->insertConfigurationDevice(m_DBConfigure);
+        qDebug() << "Insert a new Device Info";
+    }
     else
+    {
         DataBaseManager::getInstance()->updateConfigurationDevice(m_WelderID, m_DBConfigure);
+        qDebug() << "Update existing Device Info";
+    }
+    qDebug() << "Welder ID: ";
+    qDebug() << "  WelderName:" << m_DBConfigure.WelderName
+             << " WelderType:" << m_DBConfigure.WelderType
+             << " ProductionBatch:" << m_DBConfigure.ProductionBatch
+             << " MaxModelSamples:" << m_DBConfigure.MaxModelSamples
+             << " YieldRateLowerLimit:" << m_DBConfigure.YieldRateLowerLimit
+             << " HeightEncoderOption:" << m_DBConfigure.HeightEncoderOption
+             << " SuspiciousOption:" << m_DBConfigure.SuspiciousOption
+             << " ConnectType:" << m_DBConfigure.ConnectType
+             << " ConnectTypeId:" << m_DBConfigure.ConnectTypeId
+             << " SingleFactSetting:" << m_DBConfigure.SingleFactSetting
+             << " GeneralFactSetting: " << m_DBConfigure.GeneralFactSetting
+             << " OtherFactSetting:" << m_DBConfigure.OtherFactSetting
+             << " AutoLearnCount:" << m_DBConfigure.AutoLearnCount
+             << " ForceThreshold:" << m_DBConfigure.ForceThreshold
+             << " ResidualThreshold:" << m_DBConfigure.ResidualThreshold;
 
     if(m_DBConfigure.ConnectType == DeviceInfoEnum::TCP_IP)
     {

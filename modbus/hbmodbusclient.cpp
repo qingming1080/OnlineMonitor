@@ -36,7 +36,6 @@ HBModbusClient::HBModbusClient( QObject *parent)
     m_WelderDeviceMap.clear();
 }
 
-
 HBModbusClient *HBModbusClient::getInstance()
 {
     if (!m_instance)
@@ -157,7 +156,6 @@ void HBModbusClient::readRegisters(QModbusDataUnit::RegisterType type,int startA
                 });
     }
 }
-
 
 void HBModbusClient::WriteHoldingRegisters(int startAddress, const QVector<quint16>& values)
 {
@@ -398,7 +396,6 @@ Q_INVOKABLE void HBModbusClient::setAlarmLedStatus(bool condition)
     updateLedStatus(SYS_LED_A_BIT3, condition);
 }
 
-
 void HBModbusClient::updateLedStatus(int ledIndex, bool condition)
 {
     QVector<quint8> values(4, 0);
@@ -411,7 +408,6 @@ void HBModbusClient::updateLedStatus(int ledIndex, bool condition)
     WriteCoils(SYS_LED_L_BIT0, values);
     m_Coils[SYS_LED_L_BIT0 + ledIndex] = values[ledIndex];
 }
-
 
 Q_INVOKABLE void HBModbusClient::setDeviceIOStatusReject(int welderId, bool condition)
 {
@@ -472,7 +468,9 @@ void HBModbusClient::setDeviceConfigure(const int welderId, const MODBUS_CONFIGU
     auto iter = m_WelderDeviceMap.find(welderId);
     int base = 0;
     if(iter != m_WelderDeviceMap.end())
+    {
         base = DEV_TYPE + iter.value() * DEV_HOLDING_REGISTERS_COUNT;
+    }
     else
     {
         if(m_WelderDeviceMap.size() < DEV_COUNT)
@@ -481,6 +479,13 @@ void HBModbusClient::setDeviceConfigure(const int welderId, const MODBUS_CONFIGU
             m_WelderDeviceMap.insert(welderId, deviceId);
             base = DEV_TYPE + deviceId * DEV_HOLDING_REGISTERS_COUNT;
         }
+    }
+
+    qDebug() << "Modbus Device Map";
+    for(auto iter = m_WelderDeviceMap.begin(); iter != m_WelderDeviceMap.end(); iter++)
+    {
+        qDebug() << " welderId: " << iter.key()
+                 << " deviceId: " << iter.value();
     }
 
     QVector<quint16> deviceConfiginfo;

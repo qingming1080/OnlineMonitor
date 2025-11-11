@@ -3,10 +3,6 @@
 
 #include <QAbstractListModel>
 #include <QMap>
-// #include "DataBase/databasemanager.h"
-///
-/// \brief The NetworkModel class : 网络连接
-///
 class NetworkModel : public QAbstractListModel
 {
     Q_OBJECT
@@ -19,7 +15,7 @@ class NetworkModel : public QAbstractListModel
 public:
     enum Roles {
         KeyRole = Qt::UserRole + 1,
-        IdRole,
+        IdRole
     };
 public:
     static NetworkModel* getInstance();
@@ -37,7 +33,6 @@ public:
 
     QString getLocalIP() const;
     void setLocalIP(const QString &ip);
-
     QString getRemoteIP() const;
     void setRemoteIP(const QString &ip);
 
@@ -63,7 +58,7 @@ private:
     static constexpr int ETH4 = 3;
     static constexpr int ETH5 = 4;
     struct NETWORK_MANAGER
-    {
+	{
         int Type;           // 类型  0_Server  1_Client
         int Protocol;       // 协议  0_TCP/IP  1_OPCUA
         QString LocalIP;    // 本地IP

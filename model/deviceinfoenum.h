@@ -25,7 +25,8 @@ public:
     {
         L20_VG  = 0,
         L20_TS  = 1,
-        BRANSON_2000XC  = 2
+        BRANSON_2000XC  = 2,
+        OTHER = 3
     };Q_ENUM(WLEDER_TYPE)
 
     enum NETWORK_TYPE

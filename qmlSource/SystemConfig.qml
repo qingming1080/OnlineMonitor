@@ -1298,13 +1298,43 @@ Rectangle {
                 x:41
                 y:68
                 currentIndex: 0
-                heightOption: DeviceManager.DeviceList[currentIndex].DeviceObj.HeightEncoderOption
-                suspiciousOption: DeviceManager.DeviceList[currentIndex].DeviceObj.SuspiciousOption
-                visible: (DeviceManager.DeviceCounter > currentIndex) ? true : false
-                nameWelder: DeviceManager.DeviceList[currentIndex].DeviceObj.WelderName
-                typeWelder: DeviceManager.DeviceList[currentIndex].DeviceObj.WelderType
-                typeConnect: DeviceManager.DeviceList[currentIndex].DeviceObj.ConnectType
-                isConnected: DeviceManager.DeviceList[currentIndex].DeviceObj.ConnectState
+                heightOption: {
+                    if(currentIndex < DeviceManager.DeviceCounter)
+                        return DeviceManager.DeviceList[currentIndex].DeviceObj.HeightEncoderOption
+                    else
+                        return false;
+                }
+                suspiciousOption: {
+                    if(currentIndex < DeviceManager.DeviceCounter)
+                        return DeviceManager.DeviceList[currentIndex].DeviceObj.SuspiciousOption
+                    else
+                        return false
+                }
+                visible: (currentIndex < DeviceManager.DeviceCounter) ? true : false
+                nameWelder: {
+                    if(currentIndex < DeviceManager.DeviceCounter)
+                        return DeviceManager.DeviceList[currentIndex].DeviceObj.WelderName
+                    else
+                        return "NAN"
+                }
+                typeWelder: {
+                    if(currentIndex < DeviceManager.DeviceCounter)
+                        return DeviceManager.DeviceList[currentIndex].DeviceObj.WelderType
+                    else
+                        return DeviceInfoEnum.OTHER
+                }
+                typeConnect: {
+                    if(currentIndex < DeviceManager.DeviceCounter)
+                        return DeviceManager.DeviceList[currentIndex].DeviceObj.ConnectType
+                    else
+                        return DeviceInfoEnum.TCP_IP
+                }
+                isConnected: {
+                    if(currentIndex < DeviceManager.DeviceCounter)
+                        return DeviceManager.DeviceList[currentIndex].DeviceObj.ConnectState
+                    else
+                        return DeviceInfoEnum.DISCONNECTED
+                }
                 onSignalWelderSelected: {
                         selectDevice(index)
                         DeviceManager.SelectedDeviceIndex = index
@@ -1315,13 +1345,43 @@ Rectangle {
                 x:347
                 y:68
                 currentIndex: 1
-                heightOption: DeviceManager.DeviceList[currentIndex].DeviceObj.HeightEncoderOption
-                suspiciousOption: DeviceManager.DeviceList[currentIndex].DeviceObj.SuspiciousOption
-                visible: (DeviceManager.DeviceCounter > currentIndex) ? true : false
-                nameWelder: DeviceManager.DeviceList[currentIndex].DeviceObj.WelderName
-                typeWelder: DeviceManager.DeviceList[currentIndex].DeviceObj.WelderType
-                typeConnect: DeviceManager.DeviceList[currentIndex].DeviceObj.ConnectType
-                isConnected: DeviceManager.DeviceList[currentIndex].DeviceObj.ConnectState
+                heightOption: {
+                    if(currentIndex < DeviceManager.DeviceCounter)
+                        return DeviceManager.DeviceList[currentIndex].DeviceObj.HeightEncoderOption
+                    else
+                        return false;
+                }
+                suspiciousOption: {
+                    if(currentIndex < DeviceManager.DeviceCounter)
+                        return DeviceManager.DeviceList[currentIndex].DeviceObj.SuspiciousOption
+                    else
+                        return false
+                }
+                visible: (currentIndex < DeviceManager.DeviceCounter) ? true : false
+                nameWelder: {
+                    if(currentIndex < DeviceManager.DeviceCounter)
+                        return DeviceManager.DeviceList[currentIndex].DeviceObj.WelderName
+                    else
+                        return "NAN"
+                }
+                typeWelder: {
+                    if(currentIndex < DeviceManager.DeviceCounter)
+                        return DeviceManager.DeviceList[currentIndex].DeviceObj.WelderType
+                    else
+                        return DeviceInfoEnum.OTHER
+                }
+                typeConnect: {
+                    if(currentIndex < DeviceManager.DeviceCounter)
+                        return DeviceManager.DeviceList[currentIndex].DeviceObj.ConnectType
+                    else
+                        return DeviceInfoEnum.TCP_IP
+                }
+                isConnected: {
+                    if(currentIndex < DeviceManager.DeviceCounter)
+                        return DeviceManager.DeviceList[currentIndex].DeviceObj.ConnectState
+                    else
+                        return DeviceInfoEnum.DISCONNECTED
+                }
                 onSignalWelderSelected: {
                         selectDevice(index)
                         DeviceManager.SelectedDeviceIndex = index
@@ -1332,13 +1392,43 @@ Rectangle {
                 x:654
                 y:68
                 currentIndex: 2
-                heightOption: DeviceManager.DeviceList[currentIndex].DeviceObj.HeightEncoderOption
-                suspiciousOption: DeviceManager.DeviceList[currentIndex].DeviceObj.SuspiciousOption
-                visible: (DeviceManager.DeviceCounter > currentIndex) ? true : false
-                nameWelder: DeviceManager.DeviceList[currentIndex].DeviceObj.WelderName
-                typeWelder: DeviceManager.DeviceList[currentIndex].DeviceObj.WelderType
-                typeConnect: DeviceManager.DeviceList[currentIndex].DeviceObj.ConnectType
-                isConnected: DeviceManager.DeviceList[currentIndex].DeviceObj.ConnectState
+                heightOption: {
+                    if(currentIndex < DeviceManager.DeviceCounter)
+                        return DeviceManager.DeviceList[currentIndex].DeviceObj.HeightEncoderOption
+                    else
+                        return false;
+                }
+                suspiciousOption: {
+                    if(currentIndex < DeviceManager.DeviceCounter)
+                        return DeviceManager.DeviceList[currentIndex].DeviceObj.SuspiciousOption
+                    else
+                        return false
+                }
+                visible: (currentIndex < DeviceManager.DeviceCounter) ? true : false
+                nameWelder: {
+                    if(currentIndex < DeviceManager.DeviceCounter)
+                        return DeviceManager.DeviceList[currentIndex].DeviceObj.WelderName
+                    else
+                        return "NAN"
+                }
+                typeWelder: {
+                    if(currentIndex < DeviceManager.DeviceCounter)
+                        return DeviceManager.DeviceList[currentIndex].DeviceObj.WelderType
+                    else
+                        return DeviceInfoEnum.OTHER
+                }
+                typeConnect: {
+                    if(currentIndex < DeviceManager.DeviceCounter)
+                        return DeviceManager.DeviceList[currentIndex].DeviceObj.ConnectType
+                    else
+                        return DeviceInfoEnum.TCP_IP
+                }
+                isConnected: {
+                    if(currentIndex < DeviceManager.DeviceCounter)
+                        return DeviceManager.DeviceList[currentIndex].DeviceObj.ConnectState
+                    else
+                        return DeviceInfoEnum.DISCONNECTED
+                }
                 onSignalWelderSelected: {
                         selectDevice(index)
                         DeviceManager.SelectedDeviceIndex = index
@@ -1349,13 +1439,43 @@ Rectangle {
                 x:961
                 y:68
                 currentIndex: 3
-                heightOption: DeviceManager.DeviceList[currentIndex].DeviceObj.HeightEncoderOption
-                suspiciousOption: DeviceManager.DeviceList[currentIndex].DeviceObj.SuspiciousOption
-                visible: (DeviceManager.DeviceCounter > currentIndex) ? true : false
-                nameWelder: DeviceManager.DeviceList[currentIndex].DeviceObj.WelderName
-                typeWelder: DeviceManager.DeviceList[currentIndex].DeviceObj.WelderType
-                typeConnect: DeviceManager.DeviceList[currentIndex].DeviceObj.ConnectType
-                isConnected: DeviceManager.DeviceList[currentIndex].DeviceObj.ConnectState
+                heightOption: {
+                    if(currentIndex < DeviceManager.DeviceCounter)
+                        return DeviceManager.DeviceList[currentIndex].DeviceObj.HeightEncoderOption
+                    else
+                        return false;
+                }
+                suspiciousOption: {
+                    if(currentIndex < DeviceManager.DeviceCounter)
+                        return DeviceManager.DeviceList[currentIndex].DeviceObj.SuspiciousOption
+                    else
+                        return false
+                }
+                visible: (currentIndex < DeviceManager.DeviceCounter) ? true : false
+                nameWelder: {
+                    if(currentIndex < DeviceManager.DeviceCounter)
+                        return DeviceManager.DeviceList[currentIndex].DeviceObj.WelderName
+                    else
+                        return "NAN"
+                }
+                typeWelder: {
+                    if(currentIndex < DeviceManager.DeviceCounter)
+                        return DeviceManager.DeviceList[currentIndex].DeviceObj.WelderType
+                    else
+                        return DeviceInfoEnum.OTHER
+                }
+                typeConnect: {
+                    if(currentIndex < DeviceManager.DeviceCounter)
+                        return DeviceManager.DeviceList[currentIndex].DeviceObj.ConnectType
+                    else
+                        return DeviceInfoEnum.TCP_IP
+                }
+                isConnected: {
+                    if(currentIndex < DeviceManager.DeviceCounter)
+                        return DeviceManager.DeviceList[currentIndex].DeviceObj.ConnectState
+                    else
+                        return DeviceInfoEnum.DISCONNECTED
+                }
                 onSignalWelderSelected: {
                         selectDevice(index)
                         DeviceManager.SelectedDeviceIndex = index

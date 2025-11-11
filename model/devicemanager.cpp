@@ -47,8 +47,6 @@ bool DeviceManager::InitDeviceList()
     return bResult;
 }
 
-
-
 int DeviceManager::getSelectedDeviceIndex() const
 {
     return m_iSelectedDeviceIndex;
@@ -82,14 +80,14 @@ void DeviceManager::setSelectedDeviceIndex(const int &index)
     }
     emit notifySelectedDeviceIndexChanged();
 }
+
 void DeviceManager::setDeviceList(const QList<Device *> &list)
 {
     Device* _obj = nullptr;
     for(int i = 0; i < m_listDevices.size(); i++)
     {
         _obj = m_listDevices[i];
-        delete _obj;
-        _obj = nullptr;
+        _obj->deleteLater();
     }
     m_listDevices.clear();
     for(int i = 0; i < list.size(); i++)
@@ -136,7 +134,6 @@ void DeviceManager::slotNotifyWeldResultComing(int welderId, const HBModbusClien
 {
 
 }
-
 
 bool DeviceManager::addDevice()
 {

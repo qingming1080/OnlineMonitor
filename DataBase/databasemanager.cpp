@@ -270,7 +270,6 @@ bool DataBaseManager::updateConfigurationDevice(const int welderID, const DB_CON
         return false;
     }
 
-    qDebug() << "Update success, rows affected:" << affectedRows;
     return true;
 }
 

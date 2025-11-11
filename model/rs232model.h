@@ -2,12 +2,11 @@
 #define RS232MODEL_H
 
 #include <QAbstractListModel>
-
 class RS232Model : public QAbstractListModel
 {
     Q_OBJECT
-    Q_PROPERTY(int     ComIndex             READ getComIndex            WRITE setComIndex            NOTIFY notifyComIndexChanged FINAL)
-    Q_PROPERTY(int     ConnectTypeId        READ getConnectTypeId       WRITE setConnectTypeId       NOTIFY notifyConnectTypeIdChanged FINAL)
+    Q_PROPERTY(int     ComIndex             READ getComIndex            WRITE setComIndex           NOTIFY notifyComIndexChanged FINAL)
+    Q_PROPERTY(int     ConnectTypeId        READ getConnectTypeId       WRITE setConnectTypeId      NOTIFY notifyConnectTypeIdChanged FINAL)
 
     Q_PROPERTY(int     BaudRate            READ getBaudRate            WRITE setBaudRate            NOTIFY notifyBaudRateChanged FINAL)
     Q_PROPERTY(int     DataBits            READ getDataBits            WRITE setDataBits            NOTIFY notifyDataBitsChanged FINAL)
@@ -25,8 +24,10 @@ public:
 public:
     int getComIndex() const;
     void setComIndex(const int &index);
+
     int getConnectTypeId() const;
     void setConnectTypeId(const int &typeId);
+
     int getBaudRate() const;
     void setBaudRate(const int &baudRate);
     int getDataBits() const;
@@ -35,6 +36,7 @@ public:
     void setParityBits(const int &parityBits);
     int getStopBits() const;
     void setStopBits(const int &stopBits);
+
     virtual int rowCount(const QModelIndex &parent = QModelIndex()) const override;
     virtual QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
     virtual QHash<int,QByteArray> roleNames() const override;
@@ -76,11 +78,11 @@ private:
 	int m_iCurrentStopBits;
 signals:
     void notifyComIndexChanged();
-    void notifyConnectTypeIdChanged();
     void notifyBaudRateChanged();
     void notifyDataBitsChanged();
     void notifyParityBitsChanged();
     void notifyStopBitsChanged();
+    void notifyConnectTypeIdChanged();
 
 public slots:
     void NotifySelectedDeviceIndexChanged(int welderID);

@@ -26,7 +26,6 @@ void RS232Model::setComIndex(const int &index)
     {
         m_iCurrentComIndex = index;
         emit notifyComIndexChanged();
-
     }
 }
 
@@ -40,7 +39,6 @@ void RS232Model::setConnectTypeId(const int &typeId)
     if(m_iConnectTypeId != typeId)
     {
         m_iConnectTypeId = typeId;
-
         emit notifyConnectTypeIdChanged();
     }
 }
@@ -116,14 +114,25 @@ RS232Model::RS232Model(QObject *parent)
     : QAbstractListModel{parent}
 {
     m_iCurrentWelderId = 1;
+    m_iCurrentComIndex = -1;
+	m_iConnectTypeId = -1;
+    m_iCurrentBaudRate = -1;
+    m_iCurrentDataBits = -1;
+    m_iCurrentParityBits = -1;
+    m_iCurrentStopBits = -1;
+    setComIndex(0);
+    setBaudRate(QSerialPort::Baud9600);
+    setDataBits(QSerialPort::Data8);
+    setParityBits(QSerialPort::NoParity);
+    setStopBits(QSerialPort::OneStop);
+    setConnectTypeId(1);
     InitListManager();
     UpdateWelderID();
 }
 
 void RS232Model::NotifySelectedDeviceIndexChanged(int welderID)
 {
-    qDebug() << "CurrentWelderId: " << welderID;
-    int index = 0;
+    qDebug() << "RS232 CurrentWelderId: " << welderID;
     m_iCurrentWelderId = welderID;
     for(auto iter = m_listManager.begin(); iter != m_listManager.end(); iter++)
     {
@@ -148,8 +157,7 @@ void RS232Model::NotifySelectedDeviceIndexChanged(int welderID)
         }
 	}
     modelReset();
-    index = indexOfComRole(m_iConnectTypeId);
-    qDebug() << "index: " << index;
+    int index = indexOfComRole(m_iConnectTypeId);
     if(index != -1)
         setComIndex(index);
     else
@@ -235,7 +243,6 @@ bool RS232Model::InitListManager()
                  << " WelderId:" << manager.WelderId;
     }
     bResult = !m_listManager.empty();
-    qDebug() << "RS232 m_listManger.cout: " << m_listManager.size();
     return bResult;
 }
 
@@ -245,15 +252,14 @@ bool RS232Model::UpdateWelderID()
     DataBaseManager::getInstance()->getAllConfigureationDevice(configureList);
     for(int i = 0; i < configureList.count(); i++)
     {
-        qDebug() << "m_listManger[" << i <<"].ConnectType: " << configureList[i].ConnectType;
-        qDebug() << "m_listManger[" << i <<"].ConnectTypeId: " << configureList[i].ConnectTypeId;
+        // qDebug() << "m_listManger[" << i <<"].ConnectType: " << configureList[i].ConnectType;
+        // qDebug() << "m_listManger[" << i <<"].ConnectTypeId: " << configureList[i].ConnectTypeId;
         if(configureList[i].ConnectType == DeviceInfoEnum::RS232)
         {
             auto iter = m_listManager.find(configureList[i].ConnectTypeId);
             if(iter != m_listManager.end())
             {
                 iter.value().WelderId = configureList[i].WelderID;
-                qDebug() << "WelderID: " << iter.value().WelderId;
             }
         }
 	}
@@ -276,14 +282,12 @@ int RS232Model::GetModbusDeviceID()
 
 QVariant RS232Model::get(int index) const
 {
-	qDebug() << "c++ index: " << index;
-    if (index < 0 || index >= m_listComPort.count())
+    if(index < 0 || index >= m_listComPort.size())
         return QVariant();
-    
     // Return a QVariantMap that QML can access with .key and .value
     QVariantMap result;
     result["key"] = m_listComPort.at(index)["key"];
-    result["value"] = m_listComPort.at(index)["value"];
+    result["Id"] = m_listComPort.at(index)["Id"];
     return result;
 }
 
@@ -298,6 +302,7 @@ bool RS232Model::UpdateDatabase()
         rs232.DataBit = m_iCurrentDataBits;
         rs232.ParityBit = m_iCurrentParityBits;
         rs232.StopBit = m_iCurrentStopBits;
+        rs232.Port = iter.value().Port;
         bResult = DataBaseManager::getInstance()->updateRS232Configure(m_iConnectTypeId, rs232);
     }
     return bResult;
@@ -312,5 +317,5 @@ int RS232Model::indexOfComRole(const int id) const
         if (ok && tmp == id) 
             return i;
     }
-    return -1;
+    return 0;
 }
