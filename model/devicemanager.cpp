@@ -37,10 +37,19 @@ bool DeviceManager::InitDeviceList()
     QList<int> welderIdlist;
     if(DataBaseManager::getInstance()->getWelderID(welderIdlist) == true)
     {
-        QList<Device *> tmpDeviceList;
+        Device* _obj = nullptr;
+        for(int i = 0; i < m_listDevices.size(); i++)
+        {
+            _obj = m_listDevices[i];
+            _obj->deleteLater();
+            _obj = nullptr;
+        }
+        m_listDevices.clear();
         for(int i = 0; i < welderIdlist.size(); i++)
-            tmpDeviceList.push_back(new Device(welderIdlist.at(i)));
-        setDeviceList(tmpDeviceList);
+        {
+            _obj = new Device(welderIdlist.at(i));
+            m_listDevices.push_back(_obj);
+        }
         setDeviceCounter(m_listDevices.size());
         bResult = true;
     }
@@ -132,7 +141,17 @@ void DeviceManager::slotNotifyDeviceStatusChanged(int welderId, const DEVICE_STA
 
 void DeviceManager::slotNotifyWeldResultComing(int welderId, const HBModbusClient::MODBUS_WELD_RESULT &data)
 {
-
+    qDebug() << "Modbus Weld Result & WeldID: " << welderId;
+    qDebug() << " Cycle Count：" << data.CycleCount
+             << " Energy:" << data.Energy
+             << " Amplitude:" << data.Amplitude
+             << " TP:" << data.TriggerPressure
+             << " WP:" << data.WeldingPressure
+             << " PeakPower:" << data.PeakPower
+             << " Preheight:" << data.Preheight
+             << " PostHeight:" << data.PostHeight
+             << " WeldAlarm: " << data.WeldAlarm
+             << " DateTime:" << data.DateTime.toString("yyyy-MM-dd hh:mm:ss");
 }
 
 bool DeviceManager::addDevice()
@@ -140,11 +159,7 @@ bool DeviceManager::addDevice()
     if(m_listDevices.size() == 4)
         return false;
     Device* _ptrDev = new Device(-1);
-    QList<Device*> tmpDeviceList;
-    for(int i = 0; i < m_listDevices.size(); i++)
-        tmpDeviceList.append(m_listDevices[i]);
-    tmpDeviceList.append(_ptrDev);
-    setDeviceList(tmpDeviceList);
+    m_listDevices.append(_ptrDev);
     setDeviceCounter(m_listDevices.size());
     setSelectedDeviceIndex(m_listDevices.size() - 1);
     qDebug() << "add Device";
@@ -158,17 +173,9 @@ bool DeviceManager::removeDevice()
     else if(m_iSelectedDeviceIndex >= m_listDevices.size())
         return false;
 
-    QList<Device*> tmpDeviceList;
-    for(int i = 0; i < m_listDevices.size(); i++)
-        tmpDeviceList.append(m_listDevices[i]);
-
     Device* _ptrDev = m_listDevices.at(m_iSelectedDeviceIndex);
     _ptrDev->RemoveDevice();
-    tmpDeviceList.removeAt(m_iSelectedDeviceIndex);
-    //TODO need to delete database when the object is detoried.
-    delete _ptrDev;
-    _ptrDev = nullptr;
-    setDeviceList(tmpDeviceList);
+    m_listDevices.removeAt(m_iSelectedDeviceIndex);
     setDeviceCounter(m_listDevices.size());
     setSelectedDeviceIndex(0);
     return true;
