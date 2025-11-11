@@ -1206,7 +1206,7 @@ Rectangle {
                                 target: StopBitsModel
                                 function onNotifyStopBitsIndexChanged()
                                 {
-                                    comboStopBits.currentIndex = StopBitsModel.ParityBitsIndex
+                                    comboStopBits.currentIndex = StopBitsModel.StopBitsIndex
                                 }
                             }
                         }

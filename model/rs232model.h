@@ -78,11 +78,11 @@ private:
 	int m_iCurrentStopBits;
 signals:
     void notifyComIndexChanged();
+    void notifyConnectTypeIdChanged();
     void notifyBaudRateChanged();
     void notifyDataBitsChanged();
     void notifyParityBitsChanged();
     void notifyStopBitsChanged();
-    void notifyConnectTypeIdChanged();
 
 public slots:
     void NotifySelectedDeviceIndexChanged(int welderID);
