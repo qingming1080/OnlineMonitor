@@ -186,8 +186,8 @@ Rectangle {
                         else
                         {
                             footer.hideError()
-                            console.debug("111111111111111111: ", titleMaxProduction.text)
-                            DeviceManager.DeviceList[DeviceManager.SelectedDeviceIndex].DeviceObj.ProductionMaxBacth = titleMaxProduction.text
+                            console.debug("111111111111111111: ", maxProductionTextField.text)
+                            DeviceManager.DeviceList[DeviceManager.SelectedDeviceIndex].DeviceObj.ProductionMaxBacth = maxProductionTextField.text
                         }
                     }
                 }
