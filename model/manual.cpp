@@ -1,51 +1,25 @@
 #include "manual.h"
 #include "DataBase/databasemanager.h"
-#include  "tools/utilityfunction.h"
-#include "signalmanager.h"
+#include "tools/utilityfunction.h"
 #include <QDebug>
-#include <QElapsedTimer>
-#include "log/localrecord.h"
 #include "tools/GenericLearning.h"
 #include "provienceEE/providenceEE.h"
 
-Manual::Manual(int welderID,QObject *parent)
+Manual::Manual(int welderID, QObject *parent)
     : QAbstractListModel{parent}, m_welderID(welderID)
 {
-
-    m_modbusClient = HBModbusClient::getInstance();
-
-    m_listRawData = DataBaseManager::getInstance()->getManualData(m_welderID);
-
-    for(int i = 0; i < m_listRawData.size(); ++i) {
-        m_listRawData[i].serial_number = m_nextSerial++;
-    }
-
+    loadData();
 }
 
 Manual::~Manual()
 {
-
-}
-
-int Manual::welderID() const
-{
- return m_welderID;
-}
-
-void Manual::setWelderID(int id) {
-    if (m_welderID != id) {
-        m_welderID = id;
-
-         loadData();  // 重新加载数据
-        emit welderIDChanged();
-
-    }
+    m_listManualRecords.clear();
 }
 
 int Manual::rowCount(const QModelIndex &parent) const
 {
     Q_UNUSED(parent);
-    return m_listRawData.size();
+    return m_listManualRecords.size();
 }
 
 QVariant Manual::data(const QModelIndex &index, int role) const
@@ -54,48 +28,39 @@ QVariant Manual::data(const QModelIndex &index, int role) const
         return QVariant();
 
     int row = index.row();
-    DataBaseManager::DB_MANUAL data = m_listRawData.at(row);
+    DataBaseManager::DB_MANUAL data = m_listManualRecords.at(row);
     switch(role)
     {
-    // case QmlEnum::MANUAL_COLUMN::MANUAL_id:
-    //     return data.id;
-    case QmlEnum::MANUAL_COLUMN::MANUAL_welder_id:
+    case MANUAL_COLUMN::ID:
+        return data.Id;
+    case MANUAL_COLUMN::WELDER_ID:
         return data.WelderId;
-    case QmlEnum::MANUAL_COLUMN::MANUAL_create_time:
+    case MANUAL_COLUMN::CREATE_TIME:
         return data.CreateTime;
-    case QmlEnum::MANUAL_COLUMN::MANUAL_serial_number:
-        return data.serial_number;
-        // return row + 1;
-    case QmlEnum::MANUAL_COLUMN::MANUAL_cycle_count:
+    case MANUAL_COLUMN::CYCLE_COUNT:
         return data.CycleCount;
-    case QmlEnum::MANUAL_COLUMN::MANUAL_energy:
+    case MANUAL_COLUMN::ENERGY:
         return data.Energy;
-    case QmlEnum::MANUAL_COLUMN::MANUAL_amplitude:
+    case MANUAL_COLUMN::AMPLITUDE:
         return data.Amplitude;
-    case QmlEnum::MANUAL_COLUMN::MANUAL_pressure:
+    case MANUAL_COLUMN::TRIGGER_PRESSURE:
+        return data.TriggerPressure;
+    case MANUAL_COLUMN::WELD_PRESSURE:
         return data.WeldPressure;
-    case QmlEnum::MANUAL_COLUMN::MANUAL_time:
+    case MANUAL_COLUMN::WELD_TIME:
         return data.WeldTime;
-    case QmlEnum::MANUAL_COLUMN::MANUAL_power:
+    case MANUAL_COLUMN::PEAK_POWER:
         return data.PeakPower;
-    case QmlEnum::MANUAL_COLUMN::MANUAL_pre_height:
+    case MANUAL_COLUMN::PRE_HEIGHT:
         return data.Preheight;
-    case QmlEnum::MANUAL_COLUMN::MANUAL_post_height:
+    case MANUAL_COLUMN::POST_HEIGHT:
         return data.PostHeight;
-    case QmlEnum::MANUAL_COLUMN::MANUAL_actual_force:
+    case MANUAL_COLUMN::ACTUAL_FORCE:
         return data.ActualForce;
-    case QmlEnum::MANUAL_COLUMN::MANUAL_actual_degree:
+    case MANUAL_COLUMN::ACTUAL_RESIDUAL:
         return data.ActualResidual;
-    case QmlEnum::MANUAL_COLUMN::MANUAL_isSelected:
+    case MANUAL_COLUMN::IS_SELECTED:
         return data.IsSelected;
-    case QmlEnum::MANUAL_COLUMN::MANUAL_preEnergy:
-        return data.EnergySetting;
-    case QmlEnum::MANUAL_COLUMN::MANUAL_preAmplitude:
-        return data.AmplitudeSetting;
-    case QmlEnum::MANUAL_COLUMN::MANUAL_preTP:
-        return data.TPressureSetting;
-    case QmlEnum::MANUAL_COLUMN::MANUAL_preWP:
-        return data.WPressureSetting;
     default:
         return QVariant();
     }
@@ -104,28 +69,21 @@ QVariant Manual::data(const QModelIndex &index, int role) const
 QHash<int, QByteArray> Manual::roleNames() const
 {
     QHash<int, QByteArray> roles;
-
-    roles[QmlEnum::MANUAL_COLUMN::MANUAL_id]               = "id";
-    roles[QmlEnum::MANUAL_COLUMN::MANUAL_welder_id]        = "welder_id";
-    roles[QmlEnum::MANUAL_COLUMN::MANUAL_create_time]      = "create_time";
-    roles[QmlEnum::MANUAL_COLUMN::MANUAL_serial_number]    = "serial_number";
-    roles[QmlEnum::MANUAL_COLUMN::MANUAL_cycle_count]      = "cycle_count";
-    roles[QmlEnum::MANUAL_COLUMN::MANUAL_energy]           = "energy";
-    roles[QmlEnum::MANUAL_COLUMN::MANUAL_amplitude]        = "amplitude";
-    roles[QmlEnum::MANUAL_COLUMN::MANUAL_pressure]         = "pressure";
-    roles[QmlEnum::MANUAL_COLUMN::MANUAL_time]             = "time";
-    roles[QmlEnum::MANUAL_COLUMN::MANUAL_power]            = "power";
-    roles[QmlEnum::MANUAL_COLUMN::MANUAL_pre_height]       = "preheight";
-    roles[QmlEnum::MANUAL_COLUMN::MANUAL_post_height]      = "postheight";
-    roles[QmlEnum::MANUAL_COLUMN::MANUAL_actual_force]     = "actual_force";
-    roles[QmlEnum::MANUAL_COLUMN::MANUAL_actual_degree]    = "actual_degree";
-    roles[QmlEnum::MANUAL_COLUMN::MANUAL_isSelected]       = "selected";
-    roles[QmlEnum::MANUAL_COLUMN::MANUAL_isNewComming]     = "isNewComming";
-    roles[QmlEnum::MANUAL_COLUMN::MANUAL_preEnergy]        = "preEnergy";
-    roles[QmlEnum::MANUAL_COLUMN::MANUAL_preAmplitude]     = "preAmplitude";
-    roles[QmlEnum::MANUAL_COLUMN::MANUAL_preTP]            = "preTP";
-    roles[QmlEnum::MANUAL_COLUMN::MANUAL_preWP]            = "preWP";
-
+    roles[MANUAL_COLUMN::ID]               = "id";
+    roles[MANUAL_COLUMN::WELDER_ID]        = "welder_id";
+    roles[MANUAL_COLUMN::CREATE_TIME]      = "create_time";
+    roles[MANUAL_COLUMN::CYCLE_COUNT]      = "cycle_count";
+    roles[MANUAL_COLUMN::ENERGY]           = "energy";
+    roles[MANUAL_COLUMN::AMPLITUDE]        = "amplitude";
+    roles[MANUAL_COLUMN::TRIGGER_PRESSURE] = "trigger_pressure";
+    roles[MANUAL_COLUMN::WELD_PRESSURE]    = "weld_pressure";
+    roles[MANUAL_COLUMN::WELD_TIME]        = "weld_time";
+    roles[MANUAL_COLUMN::PEAK_POWER]       = "peak_power";
+    roles[MANUAL_COLUMN::PRE_HEIGHT]       = "preheight";
+    roles[MANUAL_COLUMN::POST_HEIGHT]      = "postheight";
+    roles[MANUAL_COLUMN::ACTUAL_FORCE]     = "actual_force";
+    roles[MANUAL_COLUMN::ACTUAL_RESIDUAL]  = "actual_residual";
+    roles[MANUAL_COLUMN::IS_SELECTED]      = "is_selected";
     return roles;
 }
 
@@ -138,67 +96,41 @@ bool Manual::setData(const QModelIndex &index, const QVariant &value, int role)
     int row = index.row();
     switch(role)
     {
-    // case QmlEnum::MANUAL_COLUMN::MANUAL_id:
-    // {
-    //     m_data[row].id = value.toInt();
-    //     return true;
-    // }
-    case QmlEnum::MANUAL_welder_id:
-        m_listRawData[row].WelderId = value.toInt();
+    case MANUAL_COLUMN::CYCLE_COUNT:
+        m_listManualRecords[row].CycleCount = value.toInt();
         break;
-    case QmlEnum::MANUAL_COLUMN::MANUAL_create_time:
-        m_listRawData[row].CreateTime = value.toInt();
+    case MANUAL_COLUMN::ENERGY:
+        m_listManualRecords[row].Energy = value.toInt();
         break;
-    // case QmlEnum::MANUAL_COLUMN::MANUAL_serial_number:
-    // {
-    //     // m_data[row].serial_number = value.toInt();
-    //     m_rowSerialMap.value(index.row());
-    //     return true;
-    // }
-    case QmlEnum::MANUAL_COLUMN::MANUAL_cycle_count:
-        m_listRawData[row].CycleCount = value.toInt();
+    case MANUAL_COLUMN::AMPLITUDE:
+        m_listManualRecords[row].Amplitude = value.toInt();
         break;
-    case QmlEnum::MANUAL_COLUMN::MANUAL_energy:
-        m_listRawData[row].Energy = value.toInt();
+    case MANUAL_COLUMN::TRIGGER_PRESSURE:
+        m_listManualRecords[row].TriggerPressure = value.toInt();
         break;
-    case QmlEnum::MANUAL_COLUMN::MANUAL_amplitude:
-        m_listRawData[row].Amplitude = value.toInt();
+    case MANUAL_COLUMN::WELD_PRESSURE:
+        m_listManualRecords[row].WeldPressure = value.toInt();
         break;
-    case QmlEnum::MANUAL_COLUMN::MANUAL_pressure:
-        m_listRawData[row].WeldPressure = value.toInt();
+    case MANUAL_COLUMN::WELD_TIME:
+        m_listManualRecords[row].WeldTime = value.toInt();
         break;
-    case QmlEnum::MANUAL_COLUMN::MANUAL_time:
-        m_listRawData[row].WeldTime = value.toInt();
+    case MANUAL_COLUMN::PEAK_POWER:
+        m_listManualRecords[row].PeakPower = value.toInt();
         break;
-    case QmlEnum::MANUAL_COLUMN::MANUAL_power:
-        m_listRawData[row].PeakPower = value.toInt();
+    case MANUAL_COLUMN::PRE_HEIGHT:
+        m_listManualRecords[row].Preheight = value.toInt();
         break;
-    case QmlEnum::MANUAL_COLUMN::MANUAL_pre_height:
-        m_listRawData[row].Preheight = value.toInt();
+    case MANUAL_COLUMN::POST_HEIGHT:
+        m_listManualRecords[row].PostHeight = value.toInt();
         break;
-    case QmlEnum::MANUAL_COLUMN::MANUAL_post_height:
-        m_listRawData[row].PostHeight = value.toInt();
+    case MANUAL_COLUMN::ACTUAL_FORCE:
+        m_listManualRecords[row].ActualForce = value.toInt();
         break;
-    case QmlEnum::MANUAL_COLUMN::MANUAL_actual_force:
-        m_listRawData[row].ActualForce = value.toInt();
+    case MANUAL_COLUMN::ACTUAL_RESIDUAL:
+        m_listManualRecords[row].ActualResidual = value.toInt();
         break;
-    case QmlEnum::MANUAL_COLUMN::MANUAL_actual_degree:
-        m_listRawData[row].ActualResidual = value.toInt();
-        break;
-    case QmlEnum::MANUAL_COLUMN::MANUAL_preEnergy:
-        m_listRawData[row].EnergySetting =  value.toInt();
-        break;
-    case QmlEnum::MANUAL_COLUMN::MANUAL_preAmplitude:
-        m_listRawData[row].AmplitudeSetting =  value.toInt();
-        break;
-    case QmlEnum::MANUAL_COLUMN::MANUAL_preTP:
-        m_listRawData[row].TPressureSetting =  value.toInt();
-        break;
-    case QmlEnum::MANUAL_COLUMN::MANUAL_preWP:
-        m_listRawData[row].WPressureSetting =  value.toInt();
-        break;
-    case QmlEnum::MANUAL_COLUMN::MANUAL_isSelected:
-        m_listRawData[row].IsSelected = value.toBool();
+    case MANUAL_COLUMN::IS_SELECTED:
+        m_listManualRecords[row].IsSelected = value.toBool();
         emit dataChanged(index, index, {role});
         break;
     default:
@@ -208,69 +140,42 @@ bool Manual::setData(const QModelIndex &index, const QVariant &value, int role)
     return bResult;
 }
 
-void Manual::save()
+void Manual::saveData()
 {
     CalibrateModel();
-    for(int i = 0; i < m_listRawData.size(); ++i)
+    for(int i = 0; i < m_listManualRecords.size(); ++i)
     {
-        if (m_listRawData[i].IsSelected)
-        DataBaseManager::getInstance()->insertManualRow(m_listRawData.at(i));
+        if (m_listManualRecords[i].IsSelected)
+        {
+            if(m_listManualRecords[i].IsNewComming)
+                DataBaseManager::getInstance()->insertManualRecord(m_listManualRecords.at(i));
+            else
+                DataBaseManager::getInstance()->updateManualRecord(m_listManualRecords.at(i).Id, m_listManualRecords.at(i));
+        }
         QModelIndex idx = index(i);
-        emit dataChanged(idx, idx, {QmlEnum::MANUAL_COLUMN::MANUAL_isSelected});
+        emit dataChanged(idx, idx, {MANUAL_COLUMN::IS_SELECTED});
     }
 }
-
 
 void Manual::clearData()
 {
     beginResetModel();
-    m_listRawData.clear();
-    DataBaseManager::getInstance()->removeManualDevice(m_welderID);
+    m_listManualRecords.clear();
+    DataBaseManager::getInstance()->removeManualRecords(m_welderID);
     endResetModel();
-    m_nextSerial = 1;
 }
 
 void Manual::loadData()
 {
     beginResetModel();  // 通知 QML 模型发生变化
-    m_listRawData = DataBaseManager::getInstance()->getManualData(m_welderID); // 重新加载数据
-    m_nextSerial = 1;
-    for(int i = 0; i < m_listRawData.size(); ++i) {
-        m_listRawData[i].serial_number = m_nextSerial++;
-    }
+    m_listManualRecords.clear();
+    DataBaseManager::getInstance()->getManualRecords(m_welderID, m_listManualRecords); // 重新加载数据
     endResetModel();
-}
-
-
-void Manual::startReading()
-{
-    // connect(m_modbusClient, &HBModbusClient::newData, this, &Manual::onNewManualData, Qt::UniqueConnection);
-
-    qDebug() << "Manual 开始接收 Modbus 数据";
-}
-
-void Manual::stopReading()
-{
-    // disconnect(m_modbusClient, &HBModbusClient::newData, this, &Manual::onNewManualData);
-    qDebug() << "Manual 停止接收 Modbus 数据";
 }
 
 bool Manual::CalibrateModel()
 {
-    qDebug()<< "111111111";
-    m_listManualData.clear();
-    for(int i = 0; i < m_listRawData.size(); i++)
-    { qDebug()<< "222222";
-        // if(m_listRawData[i].IsSelected == true)
-        // {
-            qDebug()<< "333333";
-            // if(m_listRawData[i].ActualForce != 0 && m_listRawData[i].ActualResidual != 0)
-            // {
-                m_listManualData.append(m_listRawData[i]);
-            // }
-        // }
-    }
-    if(m_listManualData.size() == 0)
+    if(m_listManualRecords.size() == 0)
         return false;
 #if RASPBERRY
     ProvidenceEE::GetInstance()->ResetProcess();
@@ -323,35 +228,29 @@ bool Manual::CalibrateModel()
     return true;
 }
 
-// void Manual::onNewManualData(int welderId, const RECEIVE_INPUTDATA& input, const RECEIVE_HOLDINGDATA& holding, const RECEIVE_COILSDATA& coil, const RECEIVE_DISCRETE& discrete)
-// {
-//     if (welderId != m_welderID)
-//     {
-//         return;
-//     }
-//     beginInsertRows(QModelIndex(), 0, 0);
-//     MANUAL_DATA data;
-//     data.WelderId       = welderId;
-//     data.CycleCount     = input.CycleCount;
-//     data.Energy         = input.Energy;
-//     data.Amplitude      = input.Amplitude;
-//     data.WeldPressure   = input.WeldingPressure;
-//     data.WeldTime       = input.WeldTime;
-//     data.PeakPower      = input.PeakPower;
-//     data.Preheight      = input.PreHeight;
-//     data.PostHeight     = input.PostHeight;
-//     data.ActualForce    = 10;
-//     data.ActualResidual = 10;
-//     data.CreateTime     = UtilityFunction::getInstance()->timestampToString(input.DateData).left(10);
-//     data.serial_number  = m_nextSerial++;
-//     data.IsSelected     = false;
-//     data.IsNewComming   = true;
-//     data.PreEnergy      = holding.PreEnergy;
-//     data.PreAmplitude   = holding.PreAmplitude;
-//     data.PreTP          = holding.PreTriggerPressure;
-//     data.PreWP          = holding.PreWeldingPressure;
+void Manual::AppendNewRecordComming(const int welderId, const HBModbusClient::MODBUS_WELD_RESULT &data)
+{
+    if (welderId != m_welderID)
+        return;
 
-//     m_listRawData.prepend(data);
-//     endInsertRows();
-// }
+    beginInsertRows(QModelIndex(), 0, 0);
+    DataBaseManager::DB_MANUAL record;
+    record.WelderId       = welderId;
+    record.CycleCount     = data.CycleCount;
+    record.Energy         = data.Energy;
+    record.Amplitude      = data.Amplitude;
+    record.WeldPressure   = data.WeldingPressure;
+    record.WeldTime       = data.WeldTime;
+    record.PeakPower      = data.PeakPower;
+    record.Preheight      = data.Preheight;
+    record.PostHeight     = data.PostHeight;
+    record.ActualForce    = 0;
+    record.ActualResidual = 0;
+    record.CreateTime     = data.DateTime;
+    record.IsSelected     = false;
+    record.IsNewComming   = true;
+
+    m_listManualRecords.prepend(record);
+    endInsertRows();
+}
 

@@ -2,6 +2,8 @@
 #include "DataBase/databasemanager.h"
 #include <qdebug.h>
 #include "model/deviceinformation.h"
+#include "production.h"
+#include "manual.h"
 #include "networkmodel.h"
 #include "rs232model.h"
 
@@ -152,6 +154,58 @@ void DeviceManager::slotNotifyWeldResultComing(int welderId, const HBModbusClien
              << " PostHeight:" << data.PostHeight
              << " WeldAlarm: " << data.WeldAlarm
              << " DateTime:" << data.DateTime.toString("yyyy-MM-dd hh:mm:ss");
+    for(int i = 0; i < m_listDevices.size(); i++)
+    {
+        Device* _objDevice = m_listDevices[i];
+        Production* _objProduction = _objDevice->getProductionObj();
+        Manual* _objManual = _objDevice->getManualObj();
+        if(welderId == _objDevice->GetWelderID())
+        {
+            int energy = _objProduction->getEnergySetting();
+            float energy_lower = static_cast<float>(0.95 * energy);
+            float energy_upper = static_cast<float>(1.05 * energy);
+            int amplitude = _objProduction->getAmpSetting();
+            int triggerPressure = _objProduction->getTPSetting();
+            int weldPressure = _objProduction->getWPSetting();
+            if(amplitude != data.Amplitude)
+            {
+                _objProduction->SetModelStatus(false);
+                _objManual->clearData();
+            }
+            else if(triggerPressure != data.TriggerPressure)
+            {
+                _objProduction->SetModelStatus(false);
+                _objManual->clearData();
+            }
+            else if(weldPressure != data.WeldingPressure)
+            {
+                _objProduction->SetModelStatus(false);
+                _objManual->clearData();
+            }
+            else if(energy != data.Energy)
+            {
+                if((data.WeldAlarm == 0) && ((data.Energy < energy_lower) || (data.Energy > energy_upper)))
+                {
+                    _objProduction->SetModelStatus(false);
+                    _objManual->clearData();
+                }
+            }
+            else
+            {
+            }
+
+            if(_objProduction->GetModelStatus() == true)
+            {
+
+
+            }
+            else
+            {
+                _objManual->AppendNewRecordComming(welderId, data);
+            }
+        }
+
+    }
 }
 
 bool DeviceManager::addDevice()

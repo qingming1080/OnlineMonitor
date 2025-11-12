@@ -18,7 +18,8 @@ Popup {
     function openPop(index){//1输入密码(配置) 2输入密码(新建模型) 3输入密码(新建模型单设备)
         //4语言 5采样 6系统消息 7修改密码 8新增设备 9删除设备 10系统保存 11输入范围
         id = index
-        if(index === 1 || index === 2 || index === 3 || index === 8 ){
+        if(index === 1 || index === 2 || index === 3 || index === 8 )
+        {
             sigDataClear()
             popload.sourceComponent = inputpass
             open()
@@ -174,7 +175,8 @@ Popup {
                         close()
                         sigRoot()
                     }
-                    else if(DeviceManager.getPasswordLevel(t1.text) === 2){
+                    else if(DeviceManager.getPasswordLevel(t1.text) === 2)
+                    {
                         if(id === 2){
                             sigNewModel()
                         }

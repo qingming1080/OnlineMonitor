@@ -245,7 +245,7 @@ Rectangle {
             }
             onPressed: {
                 swipevis = true
-                mpro.swipeIndex = 0
+                DeviceManager.SelectedDeviceIndex = 0;
                 loadViewpro(3,swipe)
                 sigUpdateUI(0)
             }
@@ -397,7 +397,7 @@ Rectangle {
             }
             onPressed: {
                 swipevis = true
-                mpro.swipeIndex = 1
+                DeviceManager.SelectedDeviceIndex = 1
                 loadViewpro(3,swipe)
                 sigUpdateUI(1)
             }
@@ -574,7 +574,7 @@ Rectangle {
             }
             onPressed: {
                 swipevis = true
-                mpro.swipeIndex = 2
+                DeviceManager.SelectedDeviceIndex = 2
                 loadViewpro(3,swipe)
                 sigUpdateUI(2)
             }
@@ -750,11 +750,13 @@ Rectangle {
             }
             onPressed: {
                 swipevis = true
-                if(DeviceManager.DeviceCounter === 4){
-                    mpro.swipeIndex = 3
+                if(DeviceManager.DeviceCounter === 4)
+                {
+                    DeviceManager.SelectedDeviceIndex = 3
                 }
-                else{
-                    mpro.swipeIndex = 2
+                else
+                {
+                    DeviceManager.SelectedDeviceIndex = 2
                 }
                 loadViewpro(3,swipe)
                 sigUpdateUI(3)

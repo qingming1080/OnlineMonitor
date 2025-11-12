@@ -11,6 +11,8 @@ import DeviceInfoEnum       1.0
 import DeviceObj            1.0
 import GlobalLanguageDefine 1.0
 import ProductionObj        1.0
+import ManualObj            1.0
+
 // import Manual 1.0
 
 Rectangle {
@@ -18,20 +20,16 @@ Rectangle {
     color: pRgb(153, 204, 255)
     radius: 5
     property int listSize: 0
-    property int swipeCurrIndex: -1
-    property bool altitudeMode: DeviceManager.DeviceList[swipeCurrIndex].DeviceObj.HeightEncoderOption
-    function newModel(){
+    // property int swipeCurrIndex: -1
+    property int currentIndex: DeviceManager.SelectedDeviceIndex
+    property int deviceCount: DeviceManager.DeviceCounter
+    property bool heightOption: (currentIndex < deviceCount) ? DeviceManager.DeviceList[currentIndex].DeviceObj.HeightEncoderOption : false
+    function newModel()
+    {
         loader.sourceComponent = mode2
         loader1.sourceComponent = weld2
     }
-    Connections {
-           target: mpro
-           function onSigSwipeCurrIndex(index)
-           {
-                swipeCurrIndex = index
-               console.log("swipeCurrIndex::: ",swipeCurrIndex)
-           }
-       }
+
     Connections{
         target: window
         function onSigNewModel(){
@@ -48,34 +46,26 @@ Rectangle {
         height: (mt1.text === "新建模型" || mt1.text === "New Model") ? 255 : 225
         color: "#0c5696"
         deviceName:{
-            if(DeviceManager.DeviceList[swipeCurrIndex]){
-                return DeviceManager.DeviceList[swipeCurrIndex].DeviceObj.WelderName
-            }
-            else{
+            if(currentIndex < deviceCount)
+                return DeviceManager.DeviceList[currentIndex].DeviceObj.WelderName
+            else
                 return ""
-            }
         }
         deviceType:{
-            if(DeviceManager.DeviceList[swipeCurrIndex]){
-                return DeviceManager.DeviceList[swipeCurrIndex].DeviceObj.WelderType === 0 ? "L20-VG" : "L20-TS"
-            }
-            else{
+            if(currentIndex < deviceCount)
+                return DeviceManager.DeviceList[currentIndex].DeviceObj.WelderType === 0 ? "L20-VG" : "L20-TS"
                 return ""
-            }
         }
         connectionType:{
-            if(DeviceManager.DeviceList[swipeCurrIndex]){
-                return DeviceManager.DeviceList[swipeCurrIndex].DeviceObj.ConnectType === 1 ? "RS232" : "TCP/IP"
-
-            }
-            else{
+            if(currentIndex < deviceCount)
+                return DeviceManager.DeviceList[currentIndex].DeviceObj.ConnectType === 1 ? "RS232" : "TCP/IP"
+            else
                 return ""
-            }
         }
         devcieStatus:{
-            if(DeviceManager.DeviceList[swipeCurrIndex])
+            if(currentIndex < deviceCount)
             {
-                var connectState = DeviceManager.DeviceList[swipeCurrIndex].DeviceObj.ConnectState
+                var connectState = DeviceManager.DeviceList[currentIndex].DeviceObj.ConnectState
                 return GlobalMessageDefine.getConnectState(connectState)
             }
             else
@@ -87,11 +77,11 @@ Rectangle {
 
     Loader{
         id:loader1
-        asynchronous:true
+        asynchronous: true
         sourceComponent: weld1
     }
     Component{
-        id:weld1
+        id: weld1
         Item {
             WeldingResult{
                 id:s3
@@ -100,15 +90,15 @@ Rectangle {
                 x:42
                 y:314
                 color: "#0c5696"
-                altitudeMode:       DeviceManager.DeviceList[swipeCurrIndex] ? DeviceManager.DeviceList[swipeCurrIndex].DeviceObj.HeightEncoderOption : false
-                energy:             DeviceManager.DeviceList[swipeCurrIndex] ? DeviceManager.DeviceList[swipeCurrIndex].ProductionObj.Energy : 0
-                amplitude:          DeviceManager.DeviceList[swipeCurrIndex] ? DeviceManager.DeviceList[swipeCurrIndex].ProductionObj.Amplitude : 0
-                weldPressure:       DeviceManager.DeviceList[swipeCurrIndex] ? DeviceManager.DeviceList[swipeCurrIndex].ProductionObj.WeldPressure : 0
-                triggerPressure:    DeviceManager.DeviceList[swipeCurrIndex] ? DeviceManager.DeviceList[swipeCurrIndex].ProductionObj.TriggertPressure : 0
-                peakPower:          DeviceManager.DeviceList[swipeCurrIndex] ? DeviceManager.DeviceList[swipeCurrIndex].ProductionObj.PeakPower : 0
-                weldTime:           DeviceManager.DeviceList[swipeCurrIndex] ? DeviceManager.DeviceList[swipeCurrIndex].ProductionObj.WeldTime : 0
-                preheight:          DeviceManager.DeviceList[swipeCurrIndex] ? DeviceManager.DeviceList[swipeCurrIndex].ProductionObj.Preheight : 0
-                postHeight:         DeviceManager.DeviceList[swipeCurrIndex] ? DeviceManager.DeviceList[swipeCurrIndex].ProductionObj.PostHeight : 0
+                altitudeMode:       (currentIndex < deviceCount) ? DeviceManager.DeviceList[currentIndex].DeviceObj.HeightEncoderOption : false
+                energy:             (currentIndex < deviceCount) ? DeviceManager.DeviceList[currentIndex].ProductionObj.Energy : 0
+                amplitude:          (currentIndex < deviceCount) ? DeviceManager.DeviceList[currentIndex].ProductionObj.Amplitude : 0
+                weldPressure:       (currentIndex < deviceCount) ? DeviceManager.DeviceList[currentIndex].ProductionObj.WeldPressure : 0
+                triggerPressure:    (currentIndex < deviceCount) ? DeviceManager.DeviceList[currentIndex].ProductionObj.TriggertPressure : 0
+                peakPower:          (currentIndex < deviceCount) ? DeviceManager.DeviceList[currentIndex].ProductionObj.PeakPower : 0
+                weldTime:           (currentIndex < deviceCount) ? DeviceManager.DeviceList[currentIndex].ProductionObj.WeldTime : 0
+                preheight:          (currentIndex < deviceCount) ? DeviceManager.DeviceList[currentIndex].ProductionObj.Preheight : 0
+                postHeight:         (currentIndex < deviceCount) ? DeviceManager.DeviceList[currentIndex].ProductionObj.PostHeight : 0
 
             }
         }
@@ -134,7 +124,7 @@ Rectangle {
         id:s4
         x: 42
         //TODO Need to have a double check
-        y: (mt1.text === "新建模型" || mt1.text === "New Model") ? 580 :520
+        y: (mt1.text === "新建模型" || mt1.text === "New Model") ? 580 : 520
         width:   258
         height:  45
         background: Rectangle{
@@ -146,15 +136,9 @@ Rectangle {
             text:
             {
                 if(createModel)
-                {
-                    // return qsTr("创建模型")
-                    return GlobalLanguageDefine.strCreateModel
-                }
+                    return GlobalLanguageDefine.strCreateModel // return qsTr("创建模型")
                 else
-                {
-                    // return qsTr("新建模型")
-                    return GlobalLanguageDefine.strNewModel
-                }
+                    return GlobalLanguageDefine.strNewModel // return qsTr("新建模型")
             }
             font.pixelSize:  17
             color: pRgb(153, 204, 255)
@@ -167,8 +151,7 @@ Rectangle {
             // if(mt1.text === qsTr("新建模型"))
             if(mt1.text === GlobalLanguageDefine.strNewModel)
             {
-                Manual.setWelderID(swipeCurrIndex + 1)
-                Manual.startReading()
+                console.debug("Welder ID: ", currentIndex)
                 popup.openPop(2)
             }
             // else if(mt1.text === qsTr("创建模型"))
@@ -181,7 +164,6 @@ Rectangle {
                     loader.sourceComponent = mode1
                     loader1.sourceComponent = weld1
                     Manual.save()
-                    Manual.stopReading()
                     sigUpdateUI(0)
                     sigRecover()
                     createModel = false
@@ -240,54 +222,45 @@ Rectangle {
                 y: 35
                 color:  "#0c5696"
                 revealing:{
-                    if(DeviceManager.DeviceList[swipeCurrIndex]){
-                        return DeviceManager.DeviceList[swipeCurrIndex].DeviceObj.SuspiciousOption
-                    }
-                    else{
+                    if(currentIndex < deviceCount)
+                        return DeviceManager.DeviceList[currentIndex].DeviceObj.SuspiciousOption
+                    else
                         return true
-                    }
                 }
                 eqText1:{
-                    if(DeviceManager.DeviceList[swipeCurrIndex]){
-                        return DeviceManager.DeviceList[swipeCurrIndex].ProductionObj.GoodCycleCount
-                    }
-                    else{
+                    if(currentIndex < deviceCount)
+                        return DeviceManager.DeviceList[currentIndex].ProductionObj.GoodCycleCount
+                    else
                         return ""
-                    }
                 }
                 eqText2:{
-                    if(DeviceManager.DeviceList[swipeCurrIndex]){
-                        return DeviceManager.DeviceList[swipeCurrIndex].ProductionObj.SuspectCycleCount
-                    }
-                    else{
+                    if(currentIndex < deviceCount)
+                        return DeviceManager.DeviceList[currentIndex].ProductionObj.SuspectCycleCount
+                    else
                         return ""
-                    }
                 }
                 eqText3:{
-                    if(DeviceManager.DeviceList[swipeCurrIndex]){
-                        return DeviceManager.DeviceList[swipeCurrIndex].ProductionObj.DefectiveCycleCount
-                    }
-                    else{
+                    if(currentIndex < deviceCount)
+                        return DeviceManager.DeviceList[currentIndex].ProductionObj.DefectiveCycleCount
+                    else
                         return ""
-                    }
                 }
                 eqText4:{
-                    if(DeviceManager.DeviceList[swipeCurrIndex]){
-                        return DeviceManager.DeviceList[swipeCurrIndex].ProductionObj.GoodCycleCount
-                                + DeviceManager.DeviceList[swipeCurrIndex].ProductionObj.SuspectCycleCount
-                                +DeviceManager.DeviceList[swipeCurrIndex].ProductionObj.DefectiveCycleCount
+                    if(currentIndex < deviceCount)
+                    {
+                        return DeviceManager.DeviceList[currentIndex].ProductionObj.GoodCycleCount
+                                + DeviceManager.DeviceList[currentIndex].ProductionObj.SuspectCycleCount
+                                +DeviceManager.DeviceList[currentIndex].ProductionObj.DefectiveCycleCount
                     }
                     else{
                         return ""
                     }
                 }
                 eqText5:{
-                    if(DeviceManager.DeviceList[swipeCurrIndex]){
-                        return DeviceManager.DeviceList[swipeCurrIndex].ProductionObj.GoodRate
-                    }
-                    else{
+                    if(currentIndex < deviceCount)
+                        return DeviceManager.DeviceList[currentIndex].ProductionObj.GoodRate
+                    else
                         return ""
-                    }
                 }
             }
             YieldTrend{
@@ -318,7 +291,7 @@ Rectangle {
         }
     }
     Component{
-        id:mode2
+        id: mode2
         Item {
             Rectangle{
                 id:rect
@@ -462,10 +435,21 @@ Rectangle {
                     height: 535
                     y:40
                     clip: true
-                    model: Manual
-                    onCountChanged:{
-                        listSize = taskplanView.count
+                    model: {
+                        // Guard access: ensure index is valid and the list entry exists before dereferencing
+                        if (currentIndex >= 0 && currentIndex < deviceCount
+                                && DeviceManager.DeviceList
+                                && DeviceManager.DeviceList[currentIndex] !== undefined)
+                        {
+                            return DeviceManager.DeviceList[currentIndex].ManualObj
+                        } else {
+                            console.debug("1111111111111")
+                            return 0
+                        }
                     }
+                    // onCountChanged:{
+                    //     listSize = taskplanView.count
+                    // }
                     delegate: Rectangle{
                         id: regionItem
                         height: 36

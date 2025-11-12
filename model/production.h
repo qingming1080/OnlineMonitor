@@ -21,21 +21,26 @@ class Production : public QObject
 
     /// 2024/04/07  焊接结果暴露
     // 焊接结果:功率
-    Q_PROPERTY(int PeakPower                READ getPeakPower           WRITE setPeakPower              NOTIFY notifyPeakPowerChanged)
+    Q_PROPERTY(int PeakPower        READ getPeakPower           WRITE setPeakPower              NOTIFY notifyPeakPowerChanged)
     // 焊接结果:时间
-    Q_PROPERTY(int WeldTime                 READ getWeldTime            WRITE setWeldTime               NOTIFY notifyWeldTimeChanged)
+    Q_PROPERTY(int WeldTime         READ getWeldTime            WRITE setWeldTime               NOTIFY notifyWeldTimeChanged)
     // 焊接结果:能量
-    Q_PROPERTY(int Energy                   READ getEnergy              WRITE setEnergy                 NOTIFY notifyEnergyChanged)
+    Q_PROPERTY(int Energy           READ getEnergy              WRITE setEnergy                 NOTIFY notifyEnergyChanged)
     // 焊接结果:焊前高度
-    Q_PROPERTY(int Preheight                READ getPreheight           WRITE setPreheight              NOTIFY notifyPreheightChanged)
+    Q_PROPERTY(int Preheight        READ getPreheight           WRITE setPreheight              NOTIFY notifyPreheightChanged)
     // 焊接结果:焊后高度
-    Q_PROPERTY(int PostHeight               READ getPostHeight          WRITE setPostHeight             NOTIFY notifyPostHeightChanged)
+    Q_PROPERTY(int PostHeight       READ getPostHeight          WRITE setPostHeight             NOTIFY notifyPostHeightChanged)
 
-    Q_PROPERTY(int Amplitude                READ getAmplitude           WRITE setAmplitude              NOTIFY notifyAmplitudeChanged)
+    Q_PROPERTY(int Amplitude        READ getAmplitude           WRITE setAmplitude              NOTIFY notifyAmplitudeChanged)
 
-    Q_PROPERTY(int WeldPressure             READ getWeldPressure        WRITE setWeldPressure           NOTIFY notifyWeldPressureChanged)
+    Q_PROPERTY(int WeldPressure     READ getWeldPressure        WRITE setWeldPressure           NOTIFY notifyWeldPressureChanged)
 
-    Q_PROPERTY(int TriggertPressure         READ getTriggertPressure    WRITE setTriggertPressure       NOTIFY notifyTriggertPressureChanged)
+    Q_PROPERTY(int TriggertPressure READ getTriggertPressure    WRITE setTriggertPressure   NOTIFY notifyTriggertPressureChanged)
+
+    Q_PROPERTY(int EnergySetting    READ getEnergySetting       WRITE setEnergySetting      NOTIFY notifyEnergySettingChanged FINAL)
+    Q_PROPERTY(int AmpSetting       READ getAmpSetting          WRITE setAmpSetting         NOTIFY notifyAmpSettingChanged FINAL)
+    Q_PROPERTY(int TPSetting        READ getTPSetting           WRITE setTPSetting          NOTIFY notifyTPSettingChanged FINAL)
+    Q_PROPERTY(int WPSetting        READ getWPSetting           WRITE setWPSetting          NOTIFY notifyWPSettingChanged FINAL)
 
 public:
     explicit Production(int welderID = 0, QObject *parent = nullptr);
@@ -79,6 +84,21 @@ public:
     int getTriggertPressure() const;
     void setTriggertPressure(const int triggertPressure);
 
+    int getEnergySetting() const;
+    void setEnergySetting(const int energy);
+
+    int getAmpSetting() const;
+    void setAmpSetting(const int amp);
+
+    int getTPSetting() const;
+    void setTPSetting(const int tp);
+
+    int getWPSetting() const;
+    void setWPSetting(const int wp);
+
+    bool GetModelStatus() const;
+    void SetModelStatus(const bool status);
+
 private:
     int m_WelderID;
     DataBaseManager::DB_PRODUCTION  m_DBProduction;
@@ -103,6 +123,12 @@ signals:
     void notifyAmplitudeChanged();
     void notifyWeldPressureChanged();
     void notifyTriggertPressureChanged();
+
+    void notifyEnergySettingChanged();
+    void notifyAmpSettingChanged();
+    void notifyTPSettingChanged();
+    void notifyWPSettingChanged();
+
 
 };
 

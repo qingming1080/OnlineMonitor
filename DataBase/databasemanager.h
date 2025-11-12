@@ -19,6 +19,30 @@
 #define SYSTEM_TABLENAME            QString("system_conf")
 #define USER_TABLENAME              QString("user")
 
+class MANUAL_COLUMN
+{
+public:
+    enum COLUMN
+    {
+        ID                  = 0,    // Manual_ ID
+        WELDER_ID           = 1,    // 焊机ID
+        CREATE_TIME         = 2,    // 创建时间
+        CYCLE_COUNT         = 3,    // 循环总计
+        ENERGY              = 4,    // 能量
+        AMPLITUDE           = 5,
+        TRIGGER_PRESSURE    = 6,
+        WELD_PRESSURE       = 7,    // 压力
+        WELD_TIME           = 8,    // 焊接时间
+        PEAK_POWER          = 9,    // 功率
+        PRE_HEIGHT          = 10,   // 焊前高度
+        POST_HEIGHT         = 11,   // 焊后高度
+        ACTUAL_FORCE        = 12,   // 撕拉力
+        ACTUAL_RESIDUAL     = 13,   // 残留度
+        IS_SELECTED         = 14
+    };
+};
+
+
 class DataBaseManager : public QObject
 {
     Q_OBJECT
@@ -121,12 +145,13 @@ public:
 
     struct DB_MANUAL
     {
+        int Id;             // ID
         int WelderId;       // 焊机ID
-        int CreateTime; // 创建时间
-        int serial_number;  // 序号
+        QDateTime CreateTime;     // 创建时间
         int CycleCount;     // 循环总计
         int Energy;         // 能量
         int Amplitude;      // 振幅
+        int TriggerPressure;//
         int WeldPressure;   // 压力
         int WeldTime;       // 焊接时间
         int PeakPower;      // 功率
@@ -137,10 +162,10 @@ public:
         bool IsSelected;
         bool IsNewComming;
         //preset
-        int EnergySetting;
-        int AmplitudeSetting;
-        int WPressureSetting;
-        int TPressureSetting;
+        // int EnergySetting;
+        // int AmplitudeSetting;
+        // int WPressureSetting;
+        // int TPressureSetting;
     };
 
     struct ALPHA_BETA
@@ -173,7 +198,7 @@ public:
     {
         int id;                             // 模型id
         int WelderId;                       // 焊机id
-        QDateTime CreateTime;                 // 创建时间
+        QDateTime CreateTime;               // 创建时间
         int Energy;                         // 能量
         int Amplitude;                      // 振幅
         // int pressure;                    // 压力
@@ -187,6 +212,7 @@ public:
         POLYNOMIAL_COEFFICIENT Residual;    // 残留度
         CENTRALIZED_PROPERTY Centralized;
         int SampleCount;                    // 当前样本数
+        bool isAvailable;                   // Need to consider if the current model is available or not.
     };
 
     struct DB_PRODUCTION
@@ -236,6 +262,11 @@ public:
     bool updateRS232Configure(const int id, const DB_RS232 rs232);
     bool getRS232Configure(const int id, DB_RS232& rs232);
 
+    bool getManualRecords(const int welderID, QList<DB_MANUAL>& list);
+    bool removeManualRecords(const int welderID);
+    bool insertManualRecord(DB_MANUAL data);
+    bool updateManualRecord(const int id, const DB_MANUAL data);
+
     QList<DB_MODEL> getModelData();
     bool insertModelRecord(DB_MODEL model);
     bool removeModelRow(int id);
@@ -273,20 +304,6 @@ public:
     /// \return : 插入结果
     ///
     bool insertIORow(_IO_Data data);
-
-/////////////////////////manual////////////////////////////////
-/// 模型_只写 不清楚其他设备的模型
-    ///
-    /// \brief getManualData : 获取manual表格数据
-    /// \return : 数据
-    ///
-    QList<DB_MANUAL> getManualData(int welderID);
-
-    bool removeManualDevice(int deviceID);
-
-    bool insertManualRow(DB_MANUAL data);
-
-    bool existsManualRowByCycle(int cycleCount);
 
 /////////////////////////production////////////////////////////////
     ///
@@ -403,7 +420,7 @@ private:
     /// \param column : 列号
     /// \return : 列名
     ///
-    QString getManual_ColumnName(QmlEnum::MANUAL_COLUMN column);
+    QString getManual_ColumnName(MANUAL_COLUMN::COLUMN column);
 
     ///
     /// \brief getModel_ColumnName : 通过model列号获取列名

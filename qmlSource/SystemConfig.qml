@@ -721,8 +721,12 @@ Rectangle {
                     anchors.leftMargin: 23
                     model: WelderTypeModel
                     property int tmpIndex: DeviceManager.SelectedDeviceIndex
-                    currentIndex: DeviceManager.DeviceList[tmpIndex].DeviceObj.WelderType
+                    currentIndex: {
+                        console.debug("11111111111111111111: ", DeviceManager.DeviceList[tmpIndex].DeviceObj.WelderType)
+                        return DeviceManager.DeviceList[tmpIndex].DeviceObj.WelderType
+                    }
                     onAccepted: {
+                        console.debug("22222222222222222222: ", DeviceManager.DeviceList[tmpIndex].DeviceObj.WelderType)
                         DeviceManager.DeviceList[tmpIndex].DeviceObj.WelderType = currentIndex
                     }
                 }

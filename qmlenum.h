@@ -20,31 +20,7 @@ public:
     };
     Q_ENUM(NETWORK_COLUMN)
 
-    enum MANUAL_COLUMN
-    {
-        MANUAL_id              = 0,    // Manual_ ID
-        MANUAL_welder_id       = 1,    // 焊机ID
-        MANUAL_create_time     = 2,    // 创建时间
-        MANUAL_serial_number   = 3,    // 序号
-        MANUAL_cycle_count     = 4,    // 循环总计
-        MANUAL_energy          = 5,    // 能量
-        MANUAL_amplitude       = 6,    // 振幅
-        MANUAL_pressure        = 7,    // 压力
-        MANUAL_time            = 8,    // 焊接时间
-        MANUAL_power           = 9,    // 功率
-        MANUAL_pre_height      = 10,   // 焊前高度
-        MANUAL_post_height     = 11,   // 焊后高度
-        MANUAL_actual_force    = 12,   // 撕拉力
-        MANUAL_actual_degree   = 13,   // 残留度
-        MANUAL_isSelected,
-        MANUAL_isNewComming,
-        MANUAL_preEnergy,
-        MANUAL_preAmplitude,
-        MANUAL_preWP,
-        MANUAL_preTP,
 
-    };
-    Q_ENUM(MANUAL_COLUMN)
 
     enum SYSTEM_COLUMN
     {

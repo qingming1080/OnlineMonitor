@@ -71,7 +71,6 @@ int main(int argc, char *argv[])
     UtilityAppLauncher::getInstance()->startUtilityApp();
 
     LanguageManager LanguageManager;
-    Manual* manual = new Manual();
 
     QQmlApplicationEngine engine;
     QQmlContext* pQmlContext = engine.rootContext();
@@ -91,7 +90,6 @@ int main(int argc, char *argv[])
     pQmlContext->setContextProperty("ParityModel",      ParityModel::getInstance());
     pQmlContext->setContextProperty("WelderTypeModel",  WelderTypeModel::getInstance());
 
-    pQmlContext->setContextProperty("Manual", manual);
     pQmlContext->setContextProperty("ModbusClient",     HBModbusClient::getInstance());
     pQmlContext->setContextProperty("UtilityFunction",  UtilityFunction::getInstance());
 
@@ -99,6 +97,7 @@ int main(int argc, char *argv[])
     // qmlRegisterType<IO>("IO", 1, 0, "IO");
     qmlRegisterType<DeviceInformation>("DeviceObj", 1, 0, "DeviceObj");
     qmlRegisterType<Production>("ProductionObj", 1, 0, "ProductionObj");
+    qmlRegisterType<Manual>("ManualObj", 1, 0, "ManualObj");
     qmlRegisterType<Trend>("Trend",1,0,"Trend");
     qmlRegisterType<QmlEnum>("QmlEnum",1,0,"QmlEnum");
     qmlRegisterType<LanguageEnum>("LanguageEnum", 1, 0, "LanguageEnum");

@@ -7,6 +7,11 @@ Production::Production(int welderID, QObject *parent)
     m_iGoodCycleCount = 333;
     m_iDefectiveCycleCount = 1;
     m_iSuspectCycleCount = 2;
+    m_DBModel.isAvailable = false;
+    setEnergySetting(m_DBModel.Energy);
+    setAmpSetting(m_DBModel.Amplitude);
+    setTPSetting(m_DBModel.TriggerPressure);
+    setWPSetting(m_DBModel.WeldPressure);
 }
 
 QString Production::getGoodRate() const
@@ -194,7 +199,6 @@ void Production::setWeldPressure(const int weldPressure)
         m_DBProduction.WeldPressure = weldPressure;
         emit notifyWeldPressureChanged();
     }
-
 }
 
 int Production::getTriggertPressure() const
@@ -210,4 +214,70 @@ void Production::setTriggertPressure(const int triggertPressure)
         emit notifyTriggertPressureChanged();
     }
 
+}
+
+int Production::getEnergySetting() const
+{
+    return m_DBModel.Energy;
+}
+
+void Production::setEnergySetting(const int energy)
+{
+    if(m_DBModel.Energy != energy)
+    {
+        m_DBModel.Energy = energy;
+        emit notifyEnergySettingChanged();
+    }
+}
+
+int Production::getAmpSetting() const
+{
+    return m_DBModel.Amplitude;
+}
+
+void Production::setAmpSetting(const int amp)
+{
+    if(m_DBModel.Amplitude != amp)
+    {
+        m_DBModel.Amplitude = amp;
+        emit notifyAmpSettingChanged();
+    }
+}
+
+int Production::getTPSetting() const
+{
+    return m_DBModel.TriggerPressure;
+}
+
+void Production::setTPSetting(const int tp)
+{
+    if(m_DBModel.TriggerPressure != tp)
+    {
+        m_DBModel.TriggerPressure = tp;
+        emit notifyTPSettingChanged();
+    }
+}
+
+int Production::getWPSetting() const
+{
+    return m_DBModel.WeldPressure;
+}
+
+void Production::setWPSetting(const int wp)
+{
+    if(m_DBModel.WeldPressure != wp)
+    {
+        m_DBModel.WeldPressure = wp;
+        emit notifyWPSettingChanged();
+    }
+}
+
+bool Production::GetModelStatus() const
+{
+    return m_DBModel.isAvailable;
+}
+
+void Production::SetModelStatus(const bool status)
+{
+    m_DBModel.isAvailable = status;
 }

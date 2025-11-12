@@ -60,19 +60,26 @@ void ProvidenceEE::CalibrateSPCProcess(const QList<DataBaseManager::DB_MANUAL>& 
     for(int i = 0; i < sourceList.size(); i++)
 	{
         INSIGHT_PARAM InsightParam;
-        memcpy(&InsightParam, &sourceList[i], sizeof(INSIGHT_PARAM));
-		
-        GenericLearning::UpdateCurrentValue(GenericLearning::TIME, 		InsightParam.Time);
-        GenericLearning::UpdateCurrentValue(GenericLearning::POWER, 	InsightParam.Power);
-        GenericLearning::UpdateCurrentValue(GenericLearning::PREHEIGHT, InsightParam.Preheight);
-        GenericLearning::UpdateCurrentValue(GenericLearning::POSTHEIGHT,InsightParam.PostHeight);
-		
-		GenericLearning::UpdateProcessParameter();
-		
-		GenericLearning::GetProcessParam(GenericLearning::TIME, 		&ProcessParam[GenericLearning::TIME]);
-		GenericLearning::GetProcessParam(GenericLearning::POWER, 		&ProcessParam[GenericLearning::POWER]);
-		GenericLearning::GetProcessParam(GenericLearning::PREHEIGHT, 	&ProcessParam[GenericLearning::PREHEIGHT]);
-		GenericLearning::GetProcessParam(GenericLearning::POSTHEIGHT, 	&ProcessParam[GenericLearning::POSTHEIGHT]);
+
+        if(sourceList[i].IsSelected == true)
+        {
+            InsightParam.Power = sourceList[i].PeakPower;
+            InsightParam.Time = sourceList[i].WeldTime;
+            InsightParam.Preheight = sourceList[i].Preheight;
+            InsightParam.PostHeight = sourceList[i].PostHeight;
+
+            GenericLearning::UpdateCurrentValue(GenericLearning::TIME, 		InsightParam.Time);
+            GenericLearning::UpdateCurrentValue(GenericLearning::POWER, 	InsightParam.Power);
+            GenericLearning::UpdateCurrentValue(GenericLearning::PREHEIGHT, InsightParam.Preheight);
+            GenericLearning::UpdateCurrentValue(GenericLearning::POSTHEIGHT,InsightParam.PostHeight);
+
+            GenericLearning::UpdateProcessParameter();
+
+            GenericLearning::GetProcessParam(GenericLearning::TIME, 		&ProcessParam[GenericLearning::TIME]);
+            GenericLearning::GetProcessParam(GenericLearning::POWER, 		&ProcessParam[GenericLearning::POWER]);
+            GenericLearning::GetProcessParam(GenericLearning::PREHEIGHT, 	&ProcessParam[GenericLearning::PREHEIGHT]);
+            GenericLearning::GetProcessParam(GenericLearning::POSTHEIGHT, 	&ProcessParam[GenericLearning::POSTHEIGHT]);
+        }
 		
         // ++InsightFinish;
 	}

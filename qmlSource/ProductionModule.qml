@@ -18,13 +18,14 @@ Rectangle {
     property var proViews: []
     property int rect1: 1
     property int rect2: 1
-    property int swipeIndex: -1
+
+    property int currentIndex: DeviceManager.SelectedDeviceIndex
     property int equipmentCount: -1
     property int listSize: 0
-    property bool altitudeMode: DeviceManager.DeviceList[0].DeviceObj.HeightEncoderOption === 1 ? true:false
+    property bool altitudeMode: DeviceManager.DeviceList[0].DeviceObj.HeightEncoderOption === 1 ? true : false
     property bool switchingEquipment: false
     signal sigBtnSynchronization(var index,var time)
-    signal sigSwipeCurrIndex(var index)
+
     onRect1Changed: {
         sigBtnSynchronization(1,rect1)
     }
@@ -32,9 +33,6 @@ Rectangle {
         sigBtnSynchronization(2,rect2)
     }
 
-    onSwipeIndexChanged: {
-        sigSwipeCurrIndex(swipeIndex)
-    }
     function loadViewpro(viewName, component)
     {
         if(viewName === 3){
@@ -82,7 +80,7 @@ Rectangle {
             else
             {
                 mode = 0
-                loadViewpro(1,autopro)
+                loadViewpro(1, autopro)
             }
         }
     }
@@ -91,7 +89,7 @@ Rectangle {
         id: prostack
     }
     Component{
-        id:autopro
+        id: autopro
         Item{
             Connections{
                 target: window
@@ -190,7 +188,6 @@ Rectangle {
                     // if(mt1.text === "新建模型")
                     if(mt1.text === GlobalLanguageDefine.strNewModel)
                     {
-                        Manual.startReading()
                         popup.openPop(3)
                     }
                     // else if(mt1.text === "创建模型")
@@ -201,7 +198,6 @@ Rectangle {
                             loader.sourceComponent = mode1
                             loader1.sourceComponent = weld1
                             Manual.save()
-                            Manual.stopReading() 
                             console.log("Pressed, mt1.text:", mt1.text)
                             // mt1.text = "新建模型"
                             mt1.text = GlobalLanguageDefine.strNewModel
@@ -727,7 +723,7 @@ Rectangle {
     Component{
         id: multipro
         MultideviceProductionModule{
-            id:mupMode
+            id: mupMode
             width: 1280
             height: 740
             itemCount:DeviceManager.DeviceCounter
@@ -737,7 +733,7 @@ Rectangle {
     Component{
         id:swipe
         SwipeProductionModule{
-            id:mupMode
+            id: mupMode
             width: 1280
             height: 740
         }
