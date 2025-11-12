@@ -390,10 +390,11 @@ Dialog {
 
                 // 如果日期和时间有效，发出信号并关闭对话框
                 if (isValidDate) {
-                    timeSelected(year, month, day, hour, minute, second);  // 发出时间信号
+                    timeSelected(year, month, day, hour, minute, second);
+                    let dateTime = UtilityFunction.makeDateTime(year, month, day, hour, minute, second);
+                    ModbusClient.setSystemClock(dateTime);
                     timeDialog.close();  // 关闭对话框
                     //这里将年月日时间写入到
-
                 }
                 // ModbusClient.testAllFunctions()
                 // ModbusClient.setSysLedStatus(true)
@@ -401,7 +402,6 @@ Dialog {
                 // ModbusClient.setPilotLedStatus(true);
                 // ModbusClient.setReadyLedStatus(true);
                 // ModbusClient.setAlarmLedStatus(true);
-
                 // ModbusClient.setSystemClock(qDateTime.datetime)
             }
         }
