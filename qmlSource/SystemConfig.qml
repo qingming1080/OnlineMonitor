@@ -186,8 +186,8 @@ Rectangle {
                         else
                         {
                             footer.hideError()
-                            console.debug("111111111111111111: ", titleMaxProduction.text)
-                            DeviceManager.DeviceList[DeviceManager.SelectedDeviceIndex].DeviceObj.ProductionMaxBacth = titleMaxProduction.text
+                            console.debug("111111111111111111: ", maxProductionTextField.text)
+                            DeviceManager.DeviceList[DeviceManager.SelectedDeviceIndex].DeviceObj.ProductionMaxBacth = maxProductionTextField.text
                         }
                     }
                 }
@@ -721,13 +721,27 @@ Rectangle {
                     anchors.leftMargin: 23
                     model: WelderTypeModel
                     property int tmpIndex: DeviceManager.SelectedDeviceIndex
-                    currentIndex: {
-                        console.debug("11111111111111111111: ", DeviceManager.DeviceList[tmpIndex].DeviceObj.WelderType)
-                        return DeviceManager.DeviceList[tmpIndex].DeviceObj.WelderType
+                    currentIndex:
+                    {
+
+                    console.log("tmpIndex",tmpIndex)
+                    console.log("currentIndex",DeviceManager.DeviceList[tmpIndex].DeviceObj.WelderType)
+                    return DeviceManager.DeviceList[tmpIndex].DeviceObj.WelderType
+
                     }
-                    onAccepted: {
-                        console.debug("22222222222222222222: ", DeviceManager.DeviceList[tmpIndex].DeviceObj.WelderType)
-                        DeviceManager.DeviceList[tmpIndex].DeviceObj.WelderType = currentIndex
+                    onAccepted:
+                    {
+                        var value = model.get(currentIndex).value;
+                        console.log("value",value)
+                        DeviceManager.DeviceList[tmpIndex].DeviceObj.WelderType = value
+                    }
+                    Connections
+                    {
+                        target: WelderTypeModel
+                        function onNotifyWelderTypeIndexChanged()
+                        {
+                            com1.currentIndex = WelderTypeModel.WelderTypeIndex
+                        }
                     }
                 }
 
@@ -1210,7 +1224,7 @@ Rectangle {
                                 target: StopBitsModel
                                 function onNotifyStopBitsIndexChanged()
                                 {
-                                    comboStopBits.currentIndex = StopBitsModel.ParityBitsIndex
+                                    comboStopBits.currentIndex = StopBitsModel.StopBitsIndex
                                 }
                             }
                         }

@@ -81,14 +81,16 @@ void DeviceManager::setDeviceCounter(int counter)
 }
 void DeviceManager::setSelectedDeviceIndex(const int &index)
 {
+    if (index < 0 || index >= m_listDevices.size()) {
+        m_iSelectedDeviceIndex = -1;
+        emit notifySelectedDeviceIndexChanged();
+        return;
+    }
     int weldID = -1;
     m_iSelectedDeviceIndex = index;
-    if(index != -1)
-    {
-        weldID = m_listDevices[index]->GetWelderID();
-        NetworkModel::getInstance()->NotifySelectedDeviceIndexChanged(weldID);
-        RS232Model::getInstance()->NotifySelectedDeviceIndexChanged(weldID);
-    }
+    weldID = m_listDevices[index]->GetWelderID();
+    NetworkModel::getInstance()->NotifySelectedDeviceIndexChanged(weldID);
+    RS232Model::getInstance()->NotifySelectedDeviceIndexChanged(weldID);
     emit notifySelectedDeviceIndexChanged();
 }
 
@@ -231,7 +233,12 @@ bool DeviceManager::removeDevice()
     _ptrDev->RemoveDevice();
     m_listDevices.removeAt(m_iSelectedDeviceIndex);
     setDeviceCounter(m_listDevices.size());
-    setSelectedDeviceIndex(0);
+
+    if (m_listDevices.isEmpty())
+        setSelectedDeviceIndex(-1);
+    else
+        setSelectedDeviceIndex(0);
+
     return true;
 }
 

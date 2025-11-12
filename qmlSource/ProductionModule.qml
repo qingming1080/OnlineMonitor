@@ -70,7 +70,7 @@ Rectangle {
 
     Connections{
         target: DeviceManager
-        function notifyDeviceCounterChanged()
+        function onNotifyDeviceCounterChanged()
         {
             if(DeviceManager.DeviceCounter > 1)
             {
