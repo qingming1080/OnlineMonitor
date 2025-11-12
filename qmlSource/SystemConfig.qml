@@ -721,9 +721,27 @@ Rectangle {
                     anchors.leftMargin: 23
                     model: WelderTypeModel
                     property int tmpIndex: DeviceManager.SelectedDeviceIndex
-                    currentIndex: DeviceManager.DeviceList[tmpIndex].DeviceObj.WelderType
-                    onAccepted: {
-                        DeviceManager.DeviceList[tmpIndex].DeviceObj.WelderType = currentIndex
+                    currentIndex:
+                    {
+
+                    console.log("tmpIndex",tmpIndex)
+                    console.log("currentIndex",DeviceManager.DeviceList[tmpIndex].DeviceObj.WelderType)
+                    return DeviceManager.DeviceList[tmpIndex].DeviceObj.WelderType
+
+                    }
+                    onAccepted:
+                    {
+                        var value = model.get(currentIndex).value;
+                        console.log("value",value)
+                        DeviceManager.DeviceList[tmpIndex].DeviceObj.WelderType = value
+                    }
+                    Connections
+                    {
+                        target: WelderTypeModel
+                        function onNotifyWelderTypeIndexChanged()
+                        {
+                            com1.currentIndex = WelderTypeModel.WelderTypeIndex
+                        }
                     }
                 }
 

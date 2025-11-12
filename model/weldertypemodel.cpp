@@ -59,4 +59,28 @@ QVariant WelderTypeModel::get(int index) const
     result["value"] = m_listWelderTypes.at(index)["value"];
     return result;
 }
+int WelderTypeModel::getWelderTypeIndex() const
+{
+    return m_iCurrentWelderTypeIndex;
+}
+
+void WelderTypeModel::setWelderTypeIndex(const int &index)
+{
+    if(m_iCurrentWelderTypeIndex != index)
+    {
+        m_iCurrentWelderTypeIndex = index;
+        emit notifyWelderTypeIndexChanged();
+    }
+}
+
+int WelderTypeModel::indexOfValueRole(const int value) const
+{
+    for (int i = 0; i < m_listWelderTypes.size(); ++i) {
+        if (m_listWelderTypes.at(i)["value"].toInt() == value) {
+            return i;
+        }
+    }
+    return 0;
+
+}
 
