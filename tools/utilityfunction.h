@@ -16,6 +16,7 @@ public:
 
     qint64 toTimestamp(int year, int month, int day, int hour, int minute, int second);
     Q_INVOKABLE QString timestampToString(int timestamp);
+    Q_INVOKABLE QDateTime makeDateTime(int year, int month, int day, int hour, int minute, int second);
 
     Q_INVOKABLE static QString displayValue(int rawValue, double scale = 1.0, int decimals = 0);
 

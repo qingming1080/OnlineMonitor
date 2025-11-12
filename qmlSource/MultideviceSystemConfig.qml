@@ -20,9 +20,7 @@ Rectangle {
     signal signalWelderSelected(var index)
     radius: 5
     width: 281
-    // height: 504
-    height:404
-    // color: pRgb(43, 112, 173)
+    height: 504
     color: "#2B70AD"
     MouseArea{
         anchors.fill: parent
@@ -265,226 +263,163 @@ Rectangle {
         anchors.left: s7.right
         anchors.leftMargin: 5
     }
-    // Switch{
-    //     id:ctl
-    //     anchors.verticalCenter: s7.verticalCenter
-    //     anchors.left: s7.right
-    //     anchors.leftMargin: 5
-    //     indicator: Rectangle{
-    //         id:indicator
-    //         implicitWidth: 110
-    //         implicitHeight:27
-    //         x:ctl.leftPadding
-    //         y:parent.height / 2 - height / 2
-    //         border.width: 3
-    //         radius: 15
-    //         color: pRgb(232, 232, 232)
-    //         border.color: "#99ccff"
-    //         //小圆点
-    //         Rectangle{
-    //             id:smallRect
-    //             width: 55
-    //             height: 22
-    //             radius: 15
-    //             border.width: 3
-    //             color: "#2b70ad"
-    //             border.color: "#99ccff"
-    //             anchors.verticalCenter: parent.verticalCenter
-    //             //改变小圆点位置
-    //             NumberAnimation on x{
-    //                 to:smallRect.width
-    //                 running: suspiciousOption
-    //                 duration: 0
-    //             }
-    //             NumberAnimation on x{
-    //                 to:6
-    //                 running: !suspiciousOption
-    //                 duration: 0
-    //             }
-    //         }
-    //         Text {
-    //             anchors.left: parent.left
-    //             anchors.top: parent.top
-    //             anchors.topMargin: 5
-    //             anchors.leftMargin: 14
-    //             // text: qsTr("关闭")
-    //             text: GlobalLanguageDefine.strClose
-    //             color: suspiciousOption ? pRgb(43, 112, 173) : "#e5e6e7"
-    //             font.family: GlobalSystemDefine.fontBold
-    //             font.bold: true
-    //             font.pixelSize: 14
-    //         }
-    //         Text {
-    //             anchors.right: parent.right
-    //             anchors.top: parent.top
-    //             anchors.topMargin: 5
-    //             anchors.rightMargin: 14
-    //             // text: qsTr("启动")
-    //             text: GlobalLanguageDefine.strStart
-    //             color: suspiciousOption ? "#e5e6e7" : pRgb(43, 112, 173)
-    //             font.family: GlobalSystemDefine.fontBold
-    //             font.bold: true
-    //             font.pixelSize: 14
-    //         }
-    //     }
-    // }
-    // Text {
-    //     id: pinAlarmTitle
-    //     text:{
-    //         var pinName = ""
-    //         switch(currentIndex)
-    //         {
-    //         case 0:
-    //             pinName = "PIN1"
-    //             break;
-    //         case 1:
-    //             pinName = "PIN4"
-    //             break;
-    //         case 2:
-    //             pinName = "PIN7"
-    //             break;
-    //         case 3:
-    //             pinName = "PIN10"
-    //             break;
-    //         default:
-    //             break;
-    //         }
-    //         return pinName
-    //     }
-    //     color: pRgb(177, 213, 219)
-    //     font.family: GlobalSystemDefine.fontBold
-    //     font.bold: true
-    //     font.pixelSize: 16
-    //     verticalAlignment: Text.AlignVCenter
-    //     anchors.left: parent.left
-    //     anchors.leftMargin: 18
-    //     anchors.top: parent.top
-    //     anchors.topMargin: 380
-    // }
-    // Text {
-    //     id: pinResetTitle
-    //     text: {
-    //         var pinName = ""
-    //         switch(currentIndex)
-    //         {
-    //         case 0:
-    //             pinName = "PIN2"
-    //             break;
-    //         case 1:
-    //             pinName = "PIN5"
-    //             break;
-    //         case 2:
-    //             pinName = "PIN8"
-    //             break;
-    //         case 3:
-    //             pinName = "PIN11"
-    //             break;
-    //         default:
-    //             break;
-    //         }
-    //         return pinName
-    //     }
-    //     color: pRgb(177, 213, 219)
-    //     font.family: GlobalSystemDefine.fontBold
-    //     font.bold: true
-    //     font.pixelSize: 16
-    //     verticalAlignment: Text.AlignVCenter
-    //     anchors.left: pinAlarmTitle.left
-    //     anchors.top: pinAlarmTitle.bottom
-    //     anchors.topMargin: 15
-    // }
-    // Text {
-    //     id: pinSuspectTitle
-    //     text: {
-    //         var pinName = ""
-    //         switch(currentIndex)
-    //         {
-    //         case 0:
-    //             pinName = "PIN3"
-    //             break;
-    //         case 1:
-    //             pinName = "PIN6"
-    //             break;
-    //         case 2:
-    //             pinName = "PIN9"
-    //             break;
-    //         case 3:
-    //             pinName = "PIN12"
-    //             break;
-    //         default:
-    //             break;
-    //         }
-    //         return pinName
-    //     }
-    //     color: pRgb(177, 213, 219)
-    //     font.family: GlobalSystemDefine.fontBold
-    //     font.bold: true
-    //     font.pixelSize: 16
-    //     verticalAlignment: Text.AlignVCenter
-    //     anchors.left: pinResetTitle.left
-    //     anchors.top: pinResetTitle.bottom
-    //     anchors.topMargin: 15
-    // }
-    // Image {
-    //     id: pinAlarmIcon
-    //     source: "qrc:/images/icon_io_alarm"
-    //     anchors.left: pinAlarmTitle.right
-    //     anchors.leftMargin: 50
-    //     anchors.verticalCenter: pinAlarmTitle.verticalCenter
-    //     width: 22
-    //     height: 22
-    // }
-    // Image {
-    //     id: pinResetIcon
-    //     source: "qrc:/images/icon_io_reset.png"
-    //     anchors.left: pinAlarmIcon.left
-    //     anchors.verticalCenter: pinResetTitle.verticalCenter
-    //     width: 22
-    //     height: 22
-    // }
-    // Image {
-    //     id: pinSuspectIcon
-    //     source: suspiciousOption ? "qrc:/images/icon_io_suspicious_on.png" : "qrc:/images/icon_io_suspicious_off.png"
-    //     anchors.left: pinAlarmIcon.left
-    //     anchors.verticalCenter: pinSuspectTitle.verticalCenter
-    //     width: 22
-    //     height: 22
-    // }
-    // Text {
-    //     id: pinAlarmName
-    //     // text: qsTr("报警")
-    //     text: GlobalLanguageDefine.strAlarm
-    //     color: pRgb(177, 213, 219)
-    //     font.family: GlobalSystemDefine.fontBold
-    //     font.bold: true
-    //     font.pixelSize: 16
-    //     verticalAlignment: Text.AlignVCenter
-    //     anchors.top: pinAlarmTitle.top
-    //     anchors.left: pinAlarmIcon.right
-    //     anchors.leftMargin: 50
-    // }
-    // Text {
-    //     id: pinResetName
-    //     // text: qsTr("复位")
-    //     text: GlobalLanguageDefine.strReset
-    //     color: pRgb(177, 213, 219)
-    //     font.family: GlobalSystemDefine.fontBold
-    //     font.bold: true
-    //     font.pixelSize: 16
-    //     verticalAlignment: Text.AlignVCenter
-    //     anchors.top: pinResetTitle.top
-    //     anchors.left: pinAlarmName.left
-    // }
-    // Text {
-    //     id: pinSuspectName
-    //     // text: qsTr("待定")
-    //     text: GlobalLanguageDefine.strPending
-    //     color: pRgb(177, 213, 219)
-    //     font.family: GlobalSystemDefine.fontBold
-    //     font.bold: true
-    //     font.pixelSize: 16
-    //     verticalAlignment: Text.AlignVCenter
-    //     anchors.top: pinSuspectTitle.top
-    //     anchors.left: pinAlarmName.left
-    // }
+
+    Text {
+        id: pinAlarmTitle
+        text:{
+            var pinName = ""
+            switch(currentIndex)
+            {
+            case 0:
+                pinName = "PIN1"
+                break;
+            case 1:
+                pinName = "PIN4"
+                break;
+            case 2:
+                pinName = "PIN7"
+                break;
+            case 3:
+                pinName = "PIN10"
+                break;
+            default:
+                break;
+            }
+            return pinName
+        }
+        color: pRgb(177, 213, 219)
+        font.family: GlobalSystemDefine.fontBold
+        font.bold: true
+        font.pixelSize: 16
+        verticalAlignment: Text.AlignVCenter
+        anchors.left: s7.left
+        anchors.top: parent.top
+        anchors.topMargin: 380
+    }
+    Text {
+        id: pinResetTitle
+        text: {
+            var pinName = ""
+            switch(currentIndex)
+            {
+            case 0:
+                pinName = "PIN2"
+                break;
+            case 1:
+                pinName = "PIN5"
+                break;
+            case 2:
+                pinName = "PIN8"
+                break;
+            case 3:
+                pinName = "PIN11"
+                break;
+            default:
+                break;
+            }
+            return pinName
+        }
+        color: pRgb(177, 213, 219)
+        font.family: GlobalSystemDefine.fontBold
+        font.bold: true
+        font.pixelSize: 16
+        verticalAlignment: Text.AlignVCenter
+        anchors.left: pinAlarmTitle.left
+        anchors.top: pinAlarmTitle.bottom
+        anchors.topMargin: 15
+    }
+    Text {
+        id: pinSuspectTitle
+        text: {
+            var pinName = ""
+            switch(currentIndex)
+            {
+            case 0:
+                pinName = "PIN3"
+                break;
+            case 1:
+                pinName = "PIN6"
+                break;
+            case 2:
+                pinName = "PIN9"
+                break;
+            case 3:
+                pinName = "PIN12"
+                break;
+            default:
+                break;
+            }
+            return pinName
+        }
+        color: pRgb(177, 213, 219)
+        font.family: GlobalSystemDefine.fontBold
+        font.bold: true
+        font.pixelSize: 16
+        verticalAlignment: Text.AlignVCenter
+        anchors.left: pinResetTitle.left
+        anchors.top: pinResetTitle.bottom
+        anchors.topMargin: 15
+    }
+    Image {
+        id: pinAlarmIcon
+        source: "qrc:/images/icon_io_alarm"
+        anchors.left: pinAlarmTitle.right
+        anchors.leftMargin: 50
+        anchors.verticalCenter: pinAlarmTitle.verticalCenter
+        width: 22
+        height: 22
+    }
+    Image {
+        id: pinResetIcon
+        source: "qrc:/images/icon_io_reset.png"
+        anchors.left: pinAlarmIcon.left
+        anchors.verticalCenter: pinResetTitle.verticalCenter
+        width: 22
+        height: 22
+    }
+    Image {
+        id: pinSuspectIcon
+        source: suspiciousOption ? "qrc:/images/icon_io_suspicious_on.png" : "qrc:/images/icon_io_suspicious_off.png"
+        anchors.left: pinAlarmIcon.left
+        anchors.verticalCenter: pinSuspectTitle.verticalCenter
+        width: 22
+        height: 22
+    }
+    Text {
+        id: pinAlarmName
+        // text: qsTr("报警")
+        text: GlobalLanguageDefine.strAlarm
+        color: pRgb(177, 213, 219)
+        font.family: GlobalSystemDefine.fontBold
+        font.bold: true
+        font.pixelSize: 16
+        verticalAlignment: Text.AlignVCenter
+        anchors.top: pinAlarmTitle.top
+        anchors.left: pinAlarmIcon.right
+        anchors.leftMargin: 50
+    }
+    Text {
+        id: pinResetName
+        // text: qsTr("复位")
+        text: GlobalLanguageDefine.strReset
+        color: pRgb(177, 213, 219)
+        font.family: GlobalSystemDefine.fontBold
+        font.bold: true
+        font.pixelSize: 16
+        verticalAlignment: Text.AlignVCenter
+        anchors.top: pinResetTitle.top
+        anchors.left: pinAlarmName.left
+    }
+    Text {
+        id: pinSuspectName
+        // text: qsTr("待定")
+        text: GlobalLanguageDefine.strPending
+        color: pRgb(177, 213, 219)
+        font.family: GlobalSystemDefine.fontBold
+        font.bold: true
+        font.pixelSize: 16
+        verticalAlignment: Text.AlignVCenter
+        anchors.top: pinSuspectTitle.top
+        anchors.left: pinAlarmName.left
+    }
 }

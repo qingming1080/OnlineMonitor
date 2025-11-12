@@ -47,3 +47,9 @@ QString UtilityFunction::timestampToString(int timestamp)
     QDateTime dt = QDateTime::fromSecsSinceEpoch(timestamp, Qt::UTC);
     return dt.toString("yyyy-MM-dd HH:mm:ss");
 }
+
+Q_INVOKABLE QDateTime UtilityFunction::makeDateTime(int year, int month, int day, int hour, int minute, int second) {
+    QDate date(year, month, day);
+    QTime time(hour, minute, second);
+    return QDateTime(date, time);
+}
