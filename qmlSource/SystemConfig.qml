@@ -47,6 +47,15 @@ Rectangle {
         function onSigSysConfig(){
             Qt.callLater(configCheck)
         }
+        // function onSigStatusReset(){
+        //     musys.s1.color = pRgb(43, 112, 173)
+        //     musys.s2.color = pRgb(43, 112, 173)
+        //     musys.s3.color = pRgb(43, 112, 173)
+        //     musys.s4.color = pRgb(43, 112, 173)
+        // }
+        function onSigDelDevice(){
+            DeviceManager.removeDevice()
+        }
     }
 
     function configCheck(){
@@ -56,7 +65,15 @@ Rectangle {
         }
         else
         {
-            loadViewsys(2, musys)
+            if(DeviceManager.DeviceCounter === 1)
+            {
+                if(DeviceManager.DeviceList[0].WelderID === -1)
+                    loadViewsys(1, syscfg)
+            }
+            else
+            {
+                loadViewsys(2, musys)
+            }
         }
     }
 
@@ -192,7 +209,6 @@ Rectangle {
                         else
                         {
                             footer.hideError()
-                            console.debug("111111111111111111: ", maxProductionTextField.text)
                             DeviceManager.DeviceList[DeviceManager.SelectedDeviceIndex].DeviceObj.ProductionMaxBacth = maxProductionTextField.text
                         }
                     }
@@ -427,7 +443,6 @@ Rectangle {
                         }
                     }
                 }
-
 
                 Text {
                     id: titlePeelForceThreshold
@@ -1478,18 +1493,6 @@ Rectangle {
                 onSignalWelderSelected: {
                         selectDevice(index)
                         DeviceManager.SelectedDeviceIndex = index
-                }
-            }
-            Connections{
-                target: window
-                function onSigStatusReset(){
-                    s1.color = pRgb(43, 112, 173)
-                    s2.color = pRgb(43, 112, 173)
-                    s3.color = pRgb(43, 112, 173)
-                    s4.color = pRgb(43, 112, 173)
-                }
-                function onSigDelDevice(){
-                    DeviceManager.removeDevice()
                 }
             }
             Button{

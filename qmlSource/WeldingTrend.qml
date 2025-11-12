@@ -9,7 +9,8 @@ import LanguageEnum 1.0
 //焊接趋势
 Rectangle {
     color: pRgb(43, 112, 173)
-    property bool altitudeMode:false
+    property bool altitudeMode: false
+    property int currentIndex: DeviceManager.SelectedDeviceIndex
     // Connections{
     //     target: window
     //     function onSigUpdateUI(index){
@@ -79,7 +80,7 @@ Rectangle {
             font.family: GlobalSystemDefine.fontBold
         }
         Component.onCompleted: {
-            sigUpdateUI(swipeCurrIndex)
+            sigUpdateUI(currentIndex)
             chartUpdata()
         }
 
@@ -104,8 +105,8 @@ Rectangle {
 
         ValueAxis {
             id: myAxisX
-            min: DeviceManager.DeviceList[swipeCurrIndex].pTrend.idMinX
-            max: DeviceManager.DeviceList[swipeCurrIndex].pTrend.idMaxX
+            min: DeviceManager.DeviceList[currentIndex].pTrend.idMinX
+            max: DeviceManager.DeviceList[currentIndex].pTrend.idMaxX
             tickCount: 5
             labelsColor: "#a3c7d0"
             labelsFont.pixelSize: 12
@@ -115,8 +116,8 @@ Rectangle {
         }
         ValueAxis{
             id:myAxisY
-            min:DeviceManager.DeviceList[swipeCurrIndex].pTrend.beforeMinY
-            max:DeviceManager.DeviceList[swipeCurrIndex].pTrend.beforeMaxY
+            min:DeviceManager.DeviceList[currentIndex].pTrend.beforeMinY
+            max:DeviceManager.DeviceList[currentIndex].pTrend.beforeMaxY
             tickCount: 12
             labelsColor: "#a3c7d0"
             labelsFont.pixelSize: 12
@@ -129,8 +130,8 @@ Rectangle {
         }
         ValueAxis{
             id:myAxisY1
-            min:DeviceManager.DeviceList[swipeCurrIndex].pTrend.afterMinY
-            max:DeviceManager.DeviceList[swipeCurrIndex].pTrend.afterMaxY
+            min:DeviceManager.DeviceList[currentIndex].pTrend.afterMinY
+            max:DeviceManager.DeviceList[currentIndex].pTrend.afterMaxY
             tickCount:12
             labelsColor: "#a3c7d0"
             labelsFont.pixelSize: 12
@@ -143,8 +144,8 @@ Rectangle {
         }
         ValueAxis{
             id:myAxisY2
-            min:DeviceManager.DeviceList[swipeCurrIndex].pTrend.powerMinY
-            max:DeviceManager.DeviceList[swipeCurrIndex].pTrend.powerMaxY
+            min:DeviceManager.DeviceList[currentIndex].pTrend.powerMinY
+            max:DeviceManager.DeviceList[currentIndex].pTrend.powerMaxY
             tickCount: 12
             labelsColor: "#a3c7d0"
             labelsFont.pixelSize: 12
@@ -155,8 +156,8 @@ Rectangle {
         }
         ValueAxis{
             id:myAxisY3
-            min:DeviceManager.DeviceList[swipeCurrIndex].pTrend.timeMinY
-            max:DeviceManager.DeviceList[swipeCurrIndex].pTrend.timeMaxY
+            min:DeviceManager.DeviceList[currentIndex].pTrend.timeMinY
+            max:DeviceManager.DeviceList[currentIndex].pTrend.timeMaxY
             tickCount: 12
             labelsColor: "#a3c7d0"
             labelsFont.pixelSize: 12

@@ -106,7 +106,7 @@ bool Device::RemoveDevice()
     return m_ptrDevice->RemoveDevice();
 }
 
-int Device::GetWelderID() const
+int Device::getWelderID() const
 {
     return m_WelderID;
 }

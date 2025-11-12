@@ -52,7 +52,10 @@ bool DeviceManager::InitDeviceList()
             _obj = new Device(welderIdlist.at(i));
             m_listDevices.push_back(_obj);
         }
-        setDeviceCounter(m_listDevices.size());
+        if(m_listDevices.size() == 0)
+            addDevice();
+        else
+            setDeviceCounter(m_listDevices.size());
         bResult = true;
     }
     return bResult;
@@ -88,7 +91,7 @@ void DeviceManager::setSelectedDeviceIndex(const int &index)
     }
     int weldID = -1;
     m_iSelectedDeviceIndex = index;
-    weldID = m_listDevices[index]->GetWelderID();
+    weldID = m_listDevices[index]->getWelderID();
     NetworkModel::getInstance()->NotifySelectedDeviceIndexChanged(weldID);
     RS232Model::getInstance()->NotifySelectedDeviceIndexChanged(weldID);
     emit notifySelectedDeviceIndexChanged();
@@ -135,7 +138,7 @@ void DeviceManager::slotNotifyDeviceStatusChanged(int welderId, const DEVICE_STA
 {
     for(int i = 0; i < m_listDevices.size(); i++)
     {
-        int id = m_listDevices[i]->GetWelderID();
+        int id = m_listDevices[i]->getWelderID();
         if(id == welderId)
         {
             m_listDevices[i]->getDeviceObj()->setConnectState(status.IsDeviceStatus || status.IsDeviceDataStatus);
@@ -161,7 +164,7 @@ void DeviceManager::slotNotifyWeldResultComing(int welderId, const HBModbusClien
         Device* _objDevice = m_listDevices[i];
         Production* _objProduction = _objDevice->getProductionObj();
         Manual* _objManual = _objDevice->getManualObj();
-        if(welderId == _objDevice->GetWelderID())
+        if(welderId == _objDevice->getWelderID())
         {
             int energy = _objProduction->getEnergySetting();
             float energy_lower = static_cast<float>(0.95 * energy);
@@ -218,7 +221,7 @@ bool DeviceManager::addDevice()
     m_listDevices.append(_ptrDev);
     setDeviceCounter(m_listDevices.size());
     setSelectedDeviceIndex(m_listDevices.size() - 1);
-    qDebug() << "add Device";
+    qDebug() << "add Device" << m_iSelectedDeviceIndex;
     return true;
 }
 

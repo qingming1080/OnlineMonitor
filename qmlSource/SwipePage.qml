@@ -441,6 +441,7 @@ Rectangle {
                                 && DeviceManager.DeviceList
                                 && DeviceManager.DeviceList[currentIndex] !== undefined)
                         {
+                            console.debug("33333333333333333333")
                             return DeviceManager.DeviceList[currentIndex].ManualObj
                         } else {
                             console.debug("1111111111111")
