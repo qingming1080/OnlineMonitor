@@ -47,7 +47,6 @@ DeviceInformation::DeviceInformation(int welderID, QObject *parent)
         setResidualThreshold("90");
         m_DBConfigure.ConnectTypeId = DeviceInfoEnum::TCP_IP;
     }
-
     // QString text = QString("%1号设备_DeviceInformation_初始化耗时:%2ms").arg(welderID).arg(timer.elapsed());
     // emit SignalManager::getInstance()->signalAddRecord(QDateTime::currentDateTime(), text);
 }
@@ -74,12 +73,9 @@ int DeviceInformation::getWelderType() const
 
 void DeviceInformation::setWelderType(const int &type)
 {
-    int index = 0;
     if (m_DBConfigure.WelderType != type)
     {
         m_DBConfigure.WelderType = type;
-        index = WelderTypeModel::getInstance()->indexOfValueRole(m_DBConfigure.WelderType);
-        WelderTypeModel::getInstance()->setWelderTypeIndex(index);
         emit notifyWelderTypeChanged();
     }
 }

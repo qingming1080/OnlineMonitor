@@ -1,6 +1,7 @@
 import QtQuick 2.0
 import QtQuick.Controls 2.5
 import GlobalSystemDefine 1.0
+import QtQuick.Controls.Styles 1.4
 ComboBox{
     id: comboBox
     textRole: "key" // 指定显示的字段
@@ -56,26 +57,24 @@ ComboBox{
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
             }
-            MouseArea {
-                id: mouseArea
-                anchors.fill: parent
-                hoverEnabled: true
-                onEntered:  {
-                    item.color = pRgb(43, 112, 173)  // 悬浮时背景颜色
-                    tt.color = "white"
-                }
-                onExited: {
-                    item.color = "white"
-                    tt.color = pRgb(43, 112, 173)
-                }
-                onPressed: {
-                    comboBox.currentIndex = index
-                    comboBox.popup.visible = false
-                    accepted(currentIndex)
-                }
-            }
+            // MouseArea {
+            //     id: mouseArea
+            //     anchors.fill: parent
+            //     hoverEnabled: true
+            //     onEntered:  {
+            //         item.color = pRgb(43, 112, 173)  // 悬浮时背景颜色
+            //         tt.color = "white"
+            //     }
+            //     onExited: {
+            //         item.color = "white"
+            //         tt.color = pRgb(43, 112, 173)
+            //     }
+            //     onPressed: {
+            //         comboBox.currentIndex = index
+            //         comboBox.popup.visible = false
+            //         accepted(currentIndex)
+            //     }
+            // }
         }
     }
 }
-
-

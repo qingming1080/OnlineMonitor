@@ -24,16 +24,22 @@ Rectangle {
 
     function loadViewsys(viewName, component)
     {
-        loader1.pop()
-        if (sysViews[viewName]) {
-            // 如果视图已缓存，直接显示
-            loader1.push(sysViews[viewName]);
-        } else {
-            // 创建视图并缓存
-            var newItem = component.createObject(loader1);
-            sysViews[viewName] = newItem;
-            loader1.push(newItem);
-        }
+        // loader1.pop()
+        // if (sysViews[viewName]) {
+        //     // 如果视图已缓存，直接显示
+        //     loader1.push(sysViews[viewName]);
+        // } else {
+        //     // 创建视图并缓存
+        //     var newItem = component.createObject(loader1);
+        //     sysViews[viewName] = newItem;
+        //     loader1.push(newItem);
+        // }
+
+        loader1.clear()
+        var newItem = component.createObject(loader1);
+        sysViews[viewName] = newItem;
+        loader1.push(newItem);
+
     }
 
     Connections{
@@ -721,27 +727,10 @@ Rectangle {
                     anchors.leftMargin: 23
                     model: WelderTypeModel
                     property int tmpIndex: DeviceManager.SelectedDeviceIndex
-                    currentIndex:
+                    currentIndex: DeviceManager.DeviceList[tmpIndex].DeviceObj.WelderType
+                    onCurrentIndexChanged:
                     {
-
-                    console.log("tmpIndex",tmpIndex)
-                    console.log("currentIndex",DeviceManager.DeviceList[tmpIndex].DeviceObj.WelderType)
-                    return DeviceManager.DeviceList[tmpIndex].DeviceObj.WelderType
-
-                    }
-                    onAccepted:
-                    {
-                        var value = model.get(currentIndex).value;
-                        console.log("value",value)
-                        DeviceManager.DeviceList[tmpIndex].DeviceObj.WelderType = value
-                    }
-                    Connections
-                    {
-                        target: WelderTypeModel
-                        function onNotifyWelderTypeIndexChanged()
-                        {
-                            com1.currentIndex = WelderTypeModel.WelderTypeIndex
-                        }
+                        DeviceManager.DeviceList[tmpIndex].DeviceObj.WelderType = currentIndex
                     }
                 }
 
@@ -922,7 +911,7 @@ Rectangle {
                             y:55
                             model: NetworkModel
                             currentIndex: NetworkModel.EthIndex
-                            onAccepted: {
+                            onCurrentIndexChanged: {
                                 var value = model.get(currentIndex).Id;
                                 NetworkModel.ConnectTypeId = value
                             }
@@ -1128,7 +1117,7 @@ Rectangle {
                             y:40
                             model: RS232Model
                             currentIndex: RS232Model.ComIndex
-                            onAccepted: {
+                            onCurrentIndexChanged: {
                                 var value = model.get(currentIndex).Id;
                                 RS232Model.ConnectTypeId = value
                             }
@@ -1148,10 +1137,8 @@ Rectangle {
                             y:97
                             model: BaudRateModel
                             currentIndex: BaudRateModel.BaudRateIndex
-                            onAccepted: {
-                                console.debug("index: ", currentIndex)
+                            onCurrentIndexChanged: {
                                 var value = model.get(currentIndex).value;
-                                console.debug("value: ", value)
                                 RS232Model.BaudRate = value
                             }
                             Connections{
@@ -1170,10 +1157,8 @@ Rectangle {
                             y:151
                             model: DataBitsModel
                             currentIndex: DataBitsModel.DataBitsIndex
-                            onAccepted: {
-                                console.debug("index: ", currentIndex)
+                            onCurrentIndexChanged: {
                                 var value = model.get(currentIndex).value;
-                                console.debug("value: ", value)
                                 RS232Model.DataBits = value;
                             }
                             Connections{
@@ -1192,10 +1177,8 @@ Rectangle {
                             y:206
                             model: ParityModel
                             currentIndex: ParityModel.ParityBitsIndex
-                            onAccepted: {
-                                console.debug("index: ", currentIndex)
+                            onCurrentIndexChanged: {
                                 var value = model.get(currentIndex).value;
-                                console.debug("value: ", value)
                                 RS232Model.ParityBits = value;
                             }
                             Connections{
@@ -1214,10 +1197,8 @@ Rectangle {
                             y:265
                             model: StopBitsModel
                             currentIndex: StopBitsModel.StopBitsIndex
-                            onAccepted: {
-                                console.debug("index: ", currentIndex)
+                            onCurrentIndexChanged: {
                                 var value = model.get(currentIndex).value;
-                                console.debug("value: ", value)
                                 RS232Model.StopBits = value;
                             }
                             Connections{
