@@ -8,31 +8,6 @@ WelderTypeModel *WelderTypeModel::getInstance()
     return m_ptrInstance;
 }
 
-int WelderTypeModel::getWelderTypeIndex() const
-{
-    return m_iCurrentWelderTypeIndex;
-}
-
-void WelderTypeModel::setWelderTypeIndex(const int &index)
-{
-    if(m_iCurrentWelderTypeIndex != index)
-    {
-        m_iCurrentWelderTypeIndex = index;
-        emit notifyWelderTypeIndexChanged();
-    }
-}
-
-int WelderTypeModel::indexOfValueRole(const int value) const
-{
-    for (int i = 0; i < m_listWelderTypes.size(); ++i) {
-        if (m_listWelderTypes.at(i)["value"].toInt() == value) {
-            return i;
-        }
-    }
-    return 0;
-
-}
-
 WelderTypeModel::WelderTypeModel(QObject *parent)
     : QAbstractListModel{parent}
 {

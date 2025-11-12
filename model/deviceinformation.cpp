@@ -5,7 +5,6 @@
 #include "tools/utilityfunction.h"
 #include "networkmodel.h"
 #include "rs232model.h"
-#include "weldertypemodel.h"
 
 DeviceInformation::DeviceInformation(int welderID, QObject *parent)
     : QObject{parent}, m_WelderID(welderID)
@@ -74,12 +73,9 @@ int DeviceInformation::getWelderType() const
 
 void DeviceInformation::setWelderType(const int &type)
 {
-    int index = 0;
     if (m_DBConfigure.WelderType != type)
     {
         m_DBConfigure.WelderType = type;
-        index = WelderTypeModel::getInstance()->indexOfValueRole(m_DBConfigure.WelderType);
-        WelderTypeModel::getInstance()->setWelderTypeIndex(index);
         emit notifyWelderTypeChanged();
     }
 }
