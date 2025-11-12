@@ -436,21 +436,11 @@ Rectangle {
                     y:40
                     clip: true
                     model: {
-                        // Guard access: ensure index is valid and the list entry exists before dereferencing
-                        if (currentIndex >= 0 && currentIndex < deviceCount
-                                && DeviceManager.DeviceList
-                                && DeviceManager.DeviceList[currentIndex] !== undefined)
-                        {
-                            console.debug("33333333333333333333")
-                            return DeviceManager.DeviceList[currentIndex].ManualObj
-                        } else {
-                            console.debug("1111111111111")
+                        if (swipe.currentIndex >= 0 && swipe.currentIndex < swipe.deviceCount)
+                            return DeviceManager.DeviceList[swipe.currentIndex].ManualObj
+                        else
                             return 0
-                        }
                     }
-                    // onCountChanged:{
-                    //     listSize = taskplanView.count
-                    // }
                     delegate: Rectangle{
                         id: regionItem
                         height: 36
@@ -535,7 +525,7 @@ Rectangle {
                             anchors.leftMargin: altitudeMode ? 170 : 280
                             anchors.verticalCenter: parent.verticalCenter
                             font.pixelSize: 16
-                            text: UtilityFunction.displayValue(time,100,2) + GlobalLanguageDefine.strWeldTimeUnit
+                            text: UtilityFunction.displayValue(strWeldTimeUnit, 100, 2)
                             font.family: GlobalSystemDefine.fontBold
                             color: index % 2 !== 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
                         }
@@ -544,7 +534,7 @@ Rectangle {
                             anchors.leftMargin: altitudeMode ? 270 : 420
                             anchors.verticalCenter: parent.verticalCenter
                             font.pixelSize: 16
-                            text: UtilityFunction.displayValue(power) + GlobalLanguageDefine.strPowerUnit
+                            text: UtilityFunction.displayValue(power)
                             font.family: GlobalSystemDefine.fontBold
                             color: index % 2 !== 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
                         }
@@ -553,7 +543,7 @@ Rectangle {
                             anchors.leftMargin: 350
                             anchors.verticalCenter: parent.verticalCenter
                             font.pixelSize: 16
-                            text: UtilityFunction.displayValue(preheight,100,2) + GlobalLanguageDefine.strHeightUnit
+                            text: UtilityFunction.displayValue(preheight,100,2)
                             font.family: GlobalSystemDefine.fontBold
                             color: index % 2 !== 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
                             visible: altitudeMode
@@ -563,7 +553,7 @@ Rectangle {
                             anchors.leftMargin: 450
                             anchors.verticalCenter: parent.verticalCenter
                             font.pixelSize: 16
-                            text: UtilityFunction.displayValue(postheight,100,2) + GlobalLanguageDefine.strHeightUnit
+                            text: UtilityFunction.displayValue(postheight,100,2)
                             font.family: GlobalSystemDefine.fontBold
                             color: index % 2 !== 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
                             visible: altitudeMode
