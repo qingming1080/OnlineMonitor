@@ -45,7 +45,7 @@ Rectangle {
     Text {
         id: titleEnergy
         // text: qsTr("能量") + ": " + eqText3 + "J"
-        text: GlobalLanguageDefine.strEnergy + ": " + energy + GlobalLanguageDefine.strEnergyUnit
+        text: GlobalLanguageDefine.strEnergy+ "(J)" + ": " + energy
         font.family: GlobalSystemDefine.fontBold
         font.bold: true
         font.pixelSize: 16
@@ -58,7 +58,7 @@ Rectangle {
     Text {
         id: titleAmplitude
         // text: qsTr("振幅") + ": " + eqText3 + "J"
-        text: GlobalLanguageDefine.strAmplitude + ": " + amplitude + GlobalLanguageDefine.strAmplitudeUnit
+        text: GlobalLanguageDefine.strAmplitude + "(μm)" + ": " + amplitude
         font.family: GlobalSystemDefine.fontBold
         font.bold: true
         font.pixelSize: 16
@@ -70,7 +70,7 @@ Rectangle {
     }
     Text {
         id: titleWeldTime
-        text: GlobalLanguageDefine.strTime + ": " + weldTime + GlobalLanguageDefine.strWeldTimeUnit
+        text: GlobalLanguageDefine.strTime + "(s)" + ": " + weldTime
         font.family: GlobalSystemDefine.fontBold
         font.bold: true
         font.pixelSize:16
@@ -82,9 +82,7 @@ Rectangle {
     }
     Text {
         id: titlePower
-        // anchors.verticalCenter: imagePower.verticalCenter
-        // text: qsTr("功率") + ": " + eqText1 + "W"
-        text: GlobalLanguageDefine.strPower + ": " + peakPower + GlobalLanguageDefine.strPowerUnit
+        text: GlobalLanguageDefine.strPower + "(W)" + ": " + peakPower
         font.family: GlobalSystemDefine.fontBold
         font.bold: true
         font.pixelSize: 16
@@ -97,7 +95,7 @@ Rectangle {
     Text {
         id: titlePressure
         // text: qsTr("焊接压力") + ": " + eqText3 + "J"
-        text: GlobalLanguageDefine.strPressure + ": " + weldPressure + GlobalLanguageDefine.strPressureUnit
+        text: GlobalLanguageDefine.strWeldPressure + "(PSI)" + ": " + weldPressure
         font.family: GlobalSystemDefine.fontBold
         font.bold: true
         font.pixelSize: 16
@@ -110,7 +108,7 @@ Rectangle {
     Text {
         id: titleTP
         // text: qsTr("触发压力") + ": " + eqText3 + "J"
-        text: GlobalLanguageDefine.strTP + ": " + triggerPressure + GlobalLanguageDefine.strPressureUnit
+        text: GlobalLanguageDefine.strTriggerPressure + "(PSI)" + ": " + triggerPressure
         font.family: GlobalSystemDefine.fontBold
         font.bold: true
         font.pixelSize: 16

@@ -12,6 +12,7 @@ import DeviceObj            1.0
 import GlobalLanguageDefine 1.0
 import ProductionObj        1.0
 import ManualObj            1.0
+import ManualTable          1.0
 
 // import Manual 1.0
 
@@ -157,13 +158,14 @@ Rectangle {
             // else if(mt1.text === qsTr("创建模型"))
             else if(mt1.text === GlobalLanguageDefine.strCreateModel)
             {
-                console.debug("rowCount: ", Manual.rowCount())
-                console.debug("CurrentIndex: ", swipeCurrIndex)
-                if(DeviceManager.DeviceList[swipeCurrIndex].DeviceObj.MaxModelSamples <= Manual.rowCount())
+                console.debug("rowCount: ", DeviceManager.DeviceList[currentIndex].ManualObj.rowCount())
+                console.debug("CurrentIndex: ", currentIndex)
+                if(DeviceManager.DeviceList[currentIndex].ManualObj.rowCount() >=
+                        DeviceManager.DeviceList[currentIndex].DeviceObj.MaxModelSamples)
                 {
                     loader.sourceComponent = mode1
                     loader1.sourceComponent = weld1
-                    Manual.save()
+                    DeviceManager.DeviceList[currentIndex].ManualObj.saveData()
                     sigUpdateUI(0)
                     sigRecover()
                     createModel = false
@@ -201,12 +203,12 @@ Rectangle {
             font.family: GlobalSystemDefine.fontBold
         }
         onPressed: {
-            Manual.clearData()
+            DeviceManager.DeviceList[currentIndex].ManualObj.clearData()
         }
     }
     Loader{
         id:loader
-        asynchronous:true
+        asynchronous: true
         sourceComponent: mode1
     }
 
@@ -345,13 +347,13 @@ Rectangle {
                     }
                 }
                 Text{
-                    id: swipeSerialNumberText
+                    id: swipeCycleCountText
                     anchors.left: parent.left
-                    anchors.leftMargin: altitudeMode ? 110 : 150
+                    anchors.leftMargin: DeviceManager.DeviceList[currentIndex].DeviceObj.HeightEncoderOption === true ? 90 : 140
                     anchors.top: t1.top
                     font.pixelSize: 16
                     // text: qsTr("序号")
-                    text: GlobalLanguageDefine.strSerialNumber
+                    text: GlobalLanguageDefine.strCycleCount
                     font.family: GlobalSystemDefine.fontBold
                     color: pRgb(171, 206, 213)
                 }
@@ -359,10 +361,10 @@ Rectangle {
                     id: swipeWeldingTimeText
                     anchors.top: t1.top
                     anchors.left: parent.left
-                    anchors.leftMargin: altitudeMode ? 170 : 270
+                    anchors.leftMargin: DeviceManager.DeviceList[currentIndex].DeviceObj.HeightEncoderOption === true ? 160 : 260
                     font.pixelSize: 16
                     // text: qsTr("焊接时间")
-                    text: GlobalLanguageDefine.strWeldingTime
+                    text: GlobalLanguageDefine.strWeldingTime + "(s)"
                     font.family: GlobalSystemDefine.fontBold
                     color: pRgb(171, 206, 213)
                 }
@@ -370,10 +372,10 @@ Rectangle {
                     id: swipePowerText
                     anchors.top: t1.top
                     anchors.left: parent.left
-                    anchors.leftMargin:  altitudeMode ? 270 : 420
+                    anchors.leftMargin: DeviceManager.DeviceList[currentIndex].DeviceObj.HeightEncoderOption === true ? 250 : 400
                     font.pixelSize: 16
                     // text: qsTr("功率")
-                    text: GlobalLanguageDefine.strPower
+                    text: GlobalLanguageDefine.strPower + "(W)"
                     font.family: GlobalSystemDefine.fontBold
                     color: pRgb(171, 206, 213)
                 }
@@ -381,23 +383,23 @@ Rectangle {
                     id: swipePreHeightText
                     anchors.top: t1.top
                     anchors.left: parent.left
-                    anchors.leftMargin: 350
+                    anchors.leftMargin: 320
                     font.pixelSize: 16
-                    text: GlobalLanguageDefine.strPreWeldHeight
+                    text: GlobalLanguageDefine.strPreWeldHeight + "(mm)"
                     font.family: GlobalSystemDefine.fontBold
                     color: pRgb(171, 206, 213)
-                    visible: altitudeMode
+                    visible: DeviceManager.DeviceList[currentIndex].DeviceObj.HeightEncoderOption
                 }
                 Text{
                     id:swipePostHeightText
                     anchors.top: t1.top
                     anchors.left: parent.left
-                    anchors.leftMargin: 450
+                    anchors.leftMargin: 430
                     font.pixelSize: 16
-                    text: GlobalLanguageDefine.strPostWeldHeight
+                    text: GlobalLanguageDefine.strPostWeldHeight + "(mm)"
                     font.family: GlobalSystemDefine.fontBold
                     color: pRgb(171, 206, 213)
-                    visible: altitudeMode
+                    visible: DeviceManager.DeviceList[currentIndex].DeviceObj.HeightEncoderOption
                 }
                 Text{
                     id:t6
@@ -415,7 +417,7 @@ Rectangle {
                     y:11
                     font.pixelSize: 16
                     // text: qsTr("拉力")
-                    text: GlobalLanguageDefine.strTensile
+                    text: GlobalLanguageDefine.strTensile + "(N)"
                     font.family: GlobalSystemDefine.fontBold
                     color: pRgb(171, 206, 213)
                 }
@@ -425,7 +427,7 @@ Rectangle {
                     y:11
                     font.pixelSize: 16
                     // text: qsTr("残留度")
-                    text: GlobalLanguageDefine.strResidual
+                    text: GlobalLanguageDefine.strResidual + "(%)"
                     font.family: GlobalSystemDefine.fontBold
                     color: pRgb(171, 206, 213)
                 }
@@ -446,17 +448,6 @@ Rectangle {
                         height: 36
                         width: 840
                         color: index % 2 === 0 ? "#afc3d8" : "#2d71ae"
-                        // MouseArea {
-                        //     id: mouseArea
-                        //     anchors.fill: parent
-                        //     onPressed: {
-                        //         taskplanView.currentIndex = index
-                        //         presetEnergy              = Manual.data(Manual.index(index,0),QmlEnum.MANUAL_preEnergy)
-                        //         presetAmplitude           = Manual.data(Manual.index(index,0),QmlEnum.MANUAL_preAmplitude)
-                        //         presetWeldPressure        = Manual.data(Manual.index(index,0),QmlEnum.MANUAL_preWP)
-                        //         presetTriggerPressure     = Manual.data(Manual.index(index,0),QmlEnum.MANUAL_preTP)
-                        //     }
-                        // }
                         Button{
                             id: bt
                             x:840/8/2-width/2
@@ -469,51 +460,74 @@ Rectangle {
                                 Image {
                                     id:im1
                                     anchors.fill: parent
-                                    source: index % 2 !== 0 ? "qrc:/images/btn_lock_double_line.png" : "qrc:/images/btn_lock_single_line.png"
                                     fillMode: Image.PreserveAspectFit // 保持图片的宽高比，适应按钮大小
+                                    source: {
+                                        if(index % 2 !== 0)
+                                        {
+                                            if(is_selected === true)
+                                                return "qrc:/images/btn_lock_double_line.png"
+                                            else
+                                                return "qrc:/images/btn_unlock_double_line.png"
+                                        }
+                                        else
+                                        {
+                                            if(is_selected === true)
+                                                return "qrc:/images/btn_lock_single_line.png"
+                                            else
+                                                return "qrc:/images/btn_unlock_single_line.png"
+                                        }
+                                    }
                                 }
                             }
 
                             onPressed: {
-                                if(im1.source == "qrc:/images/btn_unlock_double_line.png"){
+                                var isSelect = false
+                                if(im1.source == "qrc:/images/btn_unlock_double_line.png")
+                                {
                                     im1.source = "qrc:/images/btn_lock_double_line.png"
+                                    isSelect = true
                                 }
-                                else if(im1.source == "qrc:/images/btn_lock_double_line.png"){
+                                else if(im1.source == "qrc:/images/btn_lock_double_line.png")
+                                {
                                     im1.source = "qrc:/images/btn_unlock_double_line.png"
+                                    isSelect = false
                                 }
-                                else if(im1.source == "qrc:/images/btn_lock_single_line.png"){
+                                else if(im1.source == "qrc:/images/btn_lock_single_line.png")
+                                {
                                     im1.source = "qrc:/images/btn_unlock_single_line.png"
+                                    isSelect = false
                                 }
-                                else if(im1.source == "qrc:/images/btn_unlock_single_line.png"){
+                                else if(im1.source == "qrc:/images/btn_unlock_single_line.png")
+                                {
                                     im1.source = "qrc:/images/btn_lock_single_line.png"
+                                    isSelect = true
                                 }
-                                Manual.setData(Manual.index(index, 0), isSelect, QmlEnum.MANUAL_COLUMN.MANUAL_selected)
+                                var manualObj = DeviceManager.DeviceList[swipe.currentIndex].ManualObj
+                                manualObj.setData(manualObj.index(index, 0), isSelect, ManualTable.IS_SELECTED)
                             }
                         }
                         Connections{
                             target: bt1
                             function onPressed(){
-                                if(index % 2 === 0){
-                                    if(im.source == "qrc:/images/btn_unlock_double_line.png"){
+                                if(index % 2 === 0)
+                                {
+                                    if(im.source == "qrc:/images/btn_unlock_double_line.png")
                                         im1.source = "qrc:/images/btn_unlock_single_line.png"
-                                    }
-                                    else{
+                                    else
                                         im1.source = "qrc:/images/btn_lock_single_line.png"
-                                    }
                                 }
-                                else{
-                                    if(im.source == "qrc:/images/btn_unlock_double_line.png"){
+                                else
+                                {
+                                    if(im.source == "qrc:/images/btn_unlock_double_line.png")
                                         im1.source = "qrc:/images/btn_unlock_double_line.png"
-                                    }
-                                    else{
+                                    else
                                         im1.source = "qrc:/images/btn_lock_double_line.png"
-                                    }
                                 }
                             }
                         }
                         Text{
                             anchors.left: parent.left
-                            anchors.leftMargin: altitudeMode ? 115 : 160
+                            anchors.leftMargin: DeviceManager.DeviceList[currentIndex].DeviceObj.HeightEncoderOption === true ? 115 : 160
                             anchors.verticalCenter: parent.verticalCenter
                             font.pixelSize: 16
                             text: cycle_count
@@ -522,19 +536,19 @@ Rectangle {
                         }
                         Text{
                             anchors.left: parent.left
-                            anchors.leftMargin: altitudeMode ? 170 : 280
+                            anchors.leftMargin: DeviceManager.DeviceList[currentIndex].DeviceObj.HeightEncoderOption === true ? 170 : 280
                             anchors.verticalCenter: parent.verticalCenter
                             font.pixelSize: 16
-                            text: UtilityFunction.displayValue(strWeldTimeUnit, 100, 2)
+                            text: weld_time
                             font.family: GlobalSystemDefine.fontBold
                             color: index % 2 !== 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
                         }
                         Text{
                             anchors.left: parent.left
-                            anchors.leftMargin: altitudeMode ? 270 : 420
+                            anchors.leftMargin: DeviceManager.DeviceList[currentIndex].DeviceObj.HeightEncoderOption === true ? 270 : 420
                             anchors.verticalCenter: parent.verticalCenter
                             font.pixelSize: 16
-                            text: UtilityFunction.displayValue(power)
+                            text: peak_power
                             font.family: GlobalSystemDefine.fontBold
                             color: index % 2 !== 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
                         }
@@ -543,26 +557,26 @@ Rectangle {
                             anchors.leftMargin: 350
                             anchors.verticalCenter: parent.verticalCenter
                             font.pixelSize: 16
-                            text: UtilityFunction.displayValue(preheight,100,2)
+                            text: preheight
                             font.family: GlobalSystemDefine.fontBold
                             color: index % 2 !== 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
-                            visible: altitudeMode
+                            visible: DeviceManager.DeviceList[swipe.currentIndex].DeviceObj.HeightEncoderOption
                         }
                         Text{
                             anchors.left: parent.left
                             anchors.leftMargin: 450
                             anchors.verticalCenter: parent.verticalCenter
                             font.pixelSize: 16
-                            text: UtilityFunction.displayValue(postheight,100,2)
+                            text: postheight
                             font.family: GlobalSystemDefine.fontBold
                             color: index % 2 !== 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
-                            visible: altitudeMode
+                            visible: DeviceManager.DeviceList[swipe.currentIndex].DeviceObj.HeightEncoderOption
                         }
                         Text{
                             anchors.verticalCenter: parent.verticalCenter
                             x:840/8*5 + 840/8/2-width/2
                             font.pixelSize: 16
-                            text: UtilityFunction.timestampToString(create_time).split(" ")[0]
+                            text: create_time
                             font.family: GlobalSystemDefine.fontBold
                             color: index % 2 !== 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
                         }
@@ -574,11 +588,10 @@ Rectangle {
                             x:840/8*6 + 840/8/2-width/2
                             horizontalAlignment: TextInput.AlignHCenter
                             verticalAlignment: TextInput.AlignVCenter
-                            //color: index % 2 === 0 ? pRgb(175, 195, 216) : "#014c8d"
                             color: index % 2 === 0 ? "#014c8d" : pRgb(175, 195, 216)
                             font.family: GlobalSystemDefine.fontBold
                             font.pixelSize: 16
-                            text:actual_force /*+ GlobalLanguageDefine.strActualForceUnit*/
+                            text: actual_force
                             inputMethodHints: Qt.ImhDigitsOnly
                             background: Rectangle{
                                 radius: 3
@@ -626,7 +639,7 @@ Rectangle {
                             color: index % 2 === 0 ? "#014c8d" : pRgb(175, 195, 216)
                             font.family: GlobalSystemDefine.fontBold
                             font.pixelSize: 16
-                            text:actual_degree /*+ GlobalLanguageDefine.strActualDegreeUnit*/
+                            text: actual_residual
                             inputMethodHints: Qt.ImhDigitsOnly
                             background: Rectangle{
                                 radius: 3

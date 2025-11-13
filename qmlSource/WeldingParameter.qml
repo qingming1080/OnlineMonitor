@@ -61,8 +61,8 @@ Rectangle {
         height: 25
     }
     Image {
-        id: imageWeldPressure
-        source: "qrc:/images/icon_wp.png"
+        id: imageTriggerPressure
+        source: "qrc:/images/icon_tp.png"
         anchors.top: imageAmplitude.bottom
         anchors.left: imageAmplitude.left
         anchors.topMargin: 12
@@ -70,10 +70,10 @@ Rectangle {
         height: 25
     }
     Image {
-        id: imageTP
-        source: "qrc:/images/icon_tp.png"
-        anchors.top: imageWeldPressure.bottom
-        anchors.left: imageWeldPressure.left
+        id: imageWeldPressure
+        source: "qrc:/images/icon_wp.png"
+        anchors.top: imageTriggerPressure.bottom
+        anchors.left: imageTriggerPressure.left
         anchors.topMargin: 12
         width: 25
         height: 25
@@ -82,9 +82,9 @@ Rectangle {
     Text {
         id: titleEnergy
         // text: qsTr("能量")
-        text: GlobalLanguageDefine.strEnergy + ": "
+        text: GlobalLanguageDefine.strEnergy + "(J)" + ": "
         height: 25
-        width: 50
+        width: 80
         font.family: GlobalSystemDefine.fontBold
         // font.bold: true
         font.pixelSize: LanguageManager.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 16 : 14
@@ -97,9 +97,9 @@ Rectangle {
     Text {
         id: titleAmplitude
         // text: qsTr("振幅")
-        text: GlobalLanguageDefine.strAmplitude + ": "
+        text: GlobalLanguageDefine.strAmplitude + "(μm)" + ": "
         height: 25
-        width: 50
+        width: 80
         font.family: GlobalSystemDefine.fontBold
         // font.bold: true
         font.pixelSize: LanguageManager.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 16 : 14
@@ -110,11 +110,25 @@ Rectangle {
         anchors.leftMargin: 10
     }
     Text {
+        id: titleTriggerPressure
+        text: GlobalLanguageDefine.strTriggerPressure + "(PSI)" + ": "
+        height: 25
+        width: 80
+        font.family: GlobalSystemDefine.fontBold
+        // font.bold: true
+        font.pixelSize: LanguageManager.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 16 : 14
+        color: pRgb(171, 206, 213)
+        verticalAlignment: Text.AlignVCenter
+        anchors.verticalCenter: imageTriggerPressure.verticalCenter
+        anchors.left: imageTriggerPressure.right
+        anchors.leftMargin: 10
+    }
+    Text {
         id: titleWeldPressure
         // text: qsTr("压力")
-        text: GlobalLanguageDefine.strWeldPressure + ": "
+        text: GlobalLanguageDefine.strWeldPressure + "(PSI)" + ": "
         height: 25
-        width: 50
+        width: 80
         font.family: GlobalSystemDefine.fontBold
         // font.bold: true
         font.pixelSize: LanguageManager.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 16 : 14
@@ -124,23 +138,9 @@ Rectangle {
         anchors.left: imageWeldPressure.right
         anchors.leftMargin: 10
     }
-    Text {
-        id: titleTP
-        text: GlobalLanguageDefine.strTP + ": "
-        height: 25
-        width: 50
-        font.family: GlobalSystemDefine.fontBold
-        // font.bold: true
-        font.pixelSize: LanguageManager.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 16 : 14
-        color: pRgb(171, 206, 213)
-        verticalAlignment: Text.AlignVCenter
-        anchors.verticalCenter: imageTP.verticalCenter
-        anchors.left: imageTP.right
-        anchors.leftMargin: 10
-    }
     TextField{
         id: fieldEnergy
-        width: 98
+        width: 80
         height: 28
         anchors.left: titleEnergy.right
         anchors.leftMargin:  38
@@ -156,7 +156,7 @@ Rectangle {
             border.width: 2
             border.color: "#99ccff"
         }
-        text: UtilityFunction.displayValue(presetEnergyValue)/* + GlobalLanguageDefine.strEnergyUnit*/
+        text: presetEnergyValue/* + GlobalLanguageDefine.strEnergyUnit*/
         MouseArea {
             anchors.fill: parent
             onPressed: {
@@ -174,7 +174,7 @@ Rectangle {
     }
     TextField{
         id: fieldAmplitude
-        width: 98
+        width: 80
         height: 28
         anchors.left: titleAmplitude.right
         anchors.leftMargin:  38
@@ -190,7 +190,7 @@ Rectangle {
             border.width: 2
             border.color: "#99ccff"
         }
-        text:UtilityFunction.displayValue(presetAmplitudeValue)/* + GlobalLanguageDefine.strAmplitudeUnit*/
+        text: presetAmplitudeValue/* + GlobalLanguageDefine.strAmplitudeUnit*/
         MouseArea {
             anchors.fill: parent
             onPressed: {
@@ -207,8 +207,42 @@ Rectangle {
          }
     }
     TextField{
+        id: fieldTriggerPressure
+        width: 80
+        height: 28
+        anchors.left: titleTriggerPressure.right
+        anchors.leftMargin: 38
+        anchors.verticalCenter: titleTriggerPressure.verticalCenter
+        horizontalAlignment: TextInput.AlignHCenter
+        color: pRgb(43, 112, 173)
+        font.family: GlobalSystemDefine.fontBold
+        font.bold: true
+        font.pixelSize: 16
+        inputMethodHints: Qt.ImhDigitsOnly
+        background: Rectangle{
+            radius: 6
+            border.width: 2
+            border.color: "#99ccff"
+        }
+        text: presetTriggerPressureValue
+        MouseArea {
+            anchors.fill: parent
+            onPressed: {
+                fieldTP.forceActiveFocus()
+                keyboardType = 0
+            }
+        }
+        onEditingFinished: {
+             var tpRegex = /^[0-9]+$/
+             if (!tpRegex.test(fieldTP.text))
+                 footer.showError(titleTriggerPressure.text + GlobalLanguageDefine.strInputInterger)
+             else
+                 footer.hideError()
+         }
+    }
+    TextField{
         id: fieldWeldPressure
-        width: 98
+        width: 80
         height:  28
         anchors.left: titleWeldPressure.right
         anchors.leftMargin: 38
@@ -224,7 +258,7 @@ Rectangle {
             border.width: 2
             border.color: "#99ccff"
         }
-        text: UtilityFunction.displayValue(presetWeldPressureValue,10,1)/* + GlobalLanguageDefine.strPressureUnit*/
+        text: presetWeldPressureValue/* + GlobalLanguageDefine.strPressureUnit*/
         MouseArea {
             anchors.fill: parent
             onPressed: {
@@ -240,38 +274,5 @@ Rectangle {
                  footer.hideError()
          }
     }
-    TextField{
-        id: fieldTP
-        width: /*mode === 1 ? 75:*/98
-        height: 28
-        anchors.left: titleTP.right
-        anchors.leftMargin: 38
-        anchors.verticalCenter: titleTP.verticalCenter
-        horizontalAlignment: TextInput.AlignHCenter
-        color: pRgb(43, 112, 173)
-        font.family: GlobalSystemDefine.fontBold
-        font.bold: true
-        font.pixelSize: 16
-        inputMethodHints: Qt.ImhDigitsOnly
-        background: Rectangle{
-            radius: 6
-            border.width: 2
-            border.color: "#99ccff"
-        }
-        text: UtilityFunction.displayValue(presetTriggerPressureValue,10,1)/* + GlobalLanguageDefine.strPressureUnit*/
-        MouseArea {
-            anchors.fill: parent
-            onPressed: {
-                fieldTP.forceActiveFocus()
-                keyboardType = 0
-            }
-        }
-        onEditingFinished: {
-             var tpRegex = /^[0-9]+$/
-             if (!tpRegex.test(fieldTP.text))
-                 footer.showError(titleTP.text + GlobalLanguageDefine.strInputInterger)
-             else
-                 footer.hideError()
-         }
-    }
+
 }

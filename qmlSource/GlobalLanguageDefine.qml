@@ -66,12 +66,10 @@ QtObject
     readonly property string strNewModel:               qsTr("新建模型")
     readonly property string strClearData:              qsTr("清除数据")
     readonly property string strSelectAll:              qsTr("全选")
-    readonly property string strSerialNumber:           qsTr("序号")
+    readonly property string strCycleCount:             qsTr("循环计数")
     readonly property string strWeldingTime:            qsTr("焊接时间")
     readonly property string strPower:                  qsTr("功率")
     readonly property string strEnergy:                 qsTr("能量")
-    readonly property string strWeldPressure:           qsTr("焊接压力")
-    readonly property string strTriggerPressure:        qsTr("触发压力")
     readonly property string strTimeUpper:              qsTr("时间上限")
     readonly property string strTimeLower:              qsTr("时间下限")
     readonly property string strPowerUpper:             qsTr("功率上限")
@@ -100,8 +98,8 @@ QtObject
     readonly property string strWeldingTrend:           qsTr("焊接趋势")
     readonly property string strYieldTrend:             qsTr("良率趋势")
     readonly property string strAmplitude:              qsTr("振幅")
-    readonly property string strPressure:               qsTr("焊接压力")
-    readonly property string strTP:                     qsTr("触发压力")
+    readonly property string strWeldPressure:           qsTr("焊接压力")
+    readonly property string strTriggerPressure:        qsTr("触发压力")
     readonly property string strPreWeldHeight:          qsTr("焊前高度")
     readonly property string strPostWeldHeight:         qsTr("焊后高度")
     readonly property string strParameterSetting:       qsTr("参数设置")
@@ -182,17 +180,6 @@ QtObject
     readonly property string strThursday:               qsTr("星期四")
     readonly property string strFriday:                 qsTr("星期五")
     readonly property string strSaturday:               qsTr("星期六")
-
-    //preset Unit
-
-    readonly property string strEnergyUnit:             qsTr("J")
-    readonly property string strAmplitudeUnit:          qsTr("μm")
-    readonly property string strPressureUnit:           qsTr("Psi")
-    readonly property string strPowerUnit:              qsTr("W")
-    readonly property string strHeightUnit:             qsTr("mm")
-    readonly property string strWeldTimeUnit:           qsTr("S")
-    readonly property string strActualDegreeUnit:       qsTr("%")
-    readonly property string strActualForceUnit:        qsTr("N")
 
     //ValidMessage
     readonly property string strInputInterger:          qsTr("请输入整数！")

@@ -5,9 +5,6 @@
 #include <QSqlDatabase>
 #include "qmlenum.h"
 #include "define.h"
-// #include "model/device.h"
-// #include "model/manual.h"
-// #include "model/production.h"
 
 #define CONFIGURATION_TABLENAME     QString("configuration")
 #define NETWORK_TABLENAME           QString("connection_network")
@@ -19,10 +16,11 @@
 #define SYSTEM_TABLENAME            QString("system_conf")
 #define USER_TABLENAME              QString("user")
 
-class MANUAL_COLUMN
+class MANUAL_TABLE : public QObject
 {
+    Q_OBJECT
 public:
-    enum COLUMN
+    enum MANUAL_COLUMN
     {
         ID                  = 0,    // Manual_ ID
         WELDER_ID           = 1,    // 焊机ID
@@ -40,6 +38,8 @@ public:
         ACTUAL_RESIDUAL     = 13,   // 残留度
         IS_SELECTED         = 14
     };
+    Q_ENUM(MANUAL_COLUMN)
+    explicit MANUAL_TABLE(QObject *parent = nullptr){Q_UNUSED(parent)}
 };
 
 
@@ -264,6 +264,7 @@ public:
 
     bool getManualRecords(const int welderID, QList<DB_MANUAL>& list);
     bool removeManualRecords(const int welderID);
+    bool removeManualRecord(const int id);
     bool insertManualRecord(DB_MANUAL data);
     bool updateManualRecord(const int id, const DB_MANUAL data);
 
@@ -420,7 +421,7 @@ private:
     /// \param column : 列号
     /// \return : 列名
     ///
-    QString getManual_ColumnName(MANUAL_COLUMN::COLUMN column);
+    QString getManual_ColumnName(MANUAL_TABLE::MANUAL_COLUMN column);
 
     ///
     /// \brief getModel_ColumnName : 通过model列号获取列名

@@ -102,6 +102,7 @@ int main(int argc, char *argv[])
     qmlRegisterType<QmlEnum>("QmlEnum",1,0,"QmlEnum");
     qmlRegisterType<LanguageEnum>("LanguageEnum", 1, 0, "LanguageEnum");
     qmlRegisterType<DeviceInfoEnum>("DeviceInfoEnum", 1, 0, "DeviceInfoEnum");
+    qmlRegisterType<MANUAL_TABLE>("ManualTable", 1, 0, "ManualTable");
 //    qmlRegisterType<LineChartItem>("CustomChart", 1, 0, "CustomChart");
 //    qmlRegisterType<TimeChartItem>("CustomTimeChart", 1, 0, "CustomTimeChart");
 

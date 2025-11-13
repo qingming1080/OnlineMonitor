@@ -4,6 +4,7 @@
 #include <QDebug>
 #include "tools/GenericLearning.h"
 #include "provienceEE/providenceEE.h"
+#include <algorithm>
 
 Manual::Manual(int welderID, QObject *parent)
     : QAbstractListModel{parent}, m_welderID(welderID)
@@ -31,35 +32,35 @@ QVariant Manual::data(const QModelIndex &index, int role) const
     DataBaseManager::DB_MANUAL data = m_listManualRecords.at(row);
     switch(role)
     {
-    case MANUAL_COLUMN::ID:
+    case MANUAL_TABLE::ID:
         return data.Id;
-    case MANUAL_COLUMN::WELDER_ID:
+    case MANUAL_TABLE::WELDER_ID:
         return data.WelderId;
-    case MANUAL_COLUMN::CREATE_TIME:
-        return data.CreateTime;
-    case MANUAL_COLUMN::CYCLE_COUNT:
+    case MANUAL_TABLE::CREATE_TIME:
+        return data.CreateTime.toString("hh:mm:ss");
+    case MANUAL_TABLE::CYCLE_COUNT:
         return data.CycleCount;
-    case MANUAL_COLUMN::ENERGY:
+    case MANUAL_TABLE::ENERGY:
         return data.Energy;
-    case MANUAL_COLUMN::AMPLITUDE:
+    case MANUAL_TABLE::AMPLITUDE:
         return data.Amplitude;
-    case MANUAL_COLUMN::TRIGGER_PRESSURE:
+    case MANUAL_TABLE::TRIGGER_PRESSURE:
         return data.TriggerPressure;
-    case MANUAL_COLUMN::WELD_PRESSURE:
+    case MANUAL_TABLE::WELD_PRESSURE:
         return data.WeldPressure;
-    case MANUAL_COLUMN::WELD_TIME:
-        return data.WeldTime;
-    case MANUAL_COLUMN::PEAK_POWER:
+    case MANUAL_TABLE::WELD_TIME:
+        return UtilityFunction::getInstance()->displayValue(data.WeldTime, 100, 2);
+    case MANUAL_TABLE::PEAK_POWER:
         return data.PeakPower;
-    case MANUAL_COLUMN::PRE_HEIGHT:
-        return data.Preheight;
-    case MANUAL_COLUMN::POST_HEIGHT:
-        return data.PostHeight;
-    case MANUAL_COLUMN::ACTUAL_FORCE:
+    case MANUAL_TABLE::PRE_HEIGHT:
+        return UtilityFunction::getInstance()->displayValue(data.Preheight, 100, 2);
+    case MANUAL_TABLE::POST_HEIGHT:
+        return UtilityFunction::getInstance()->displayValue(data.PostHeight, 100, 2);
+    case MANUAL_TABLE::ACTUAL_FORCE:
         return data.ActualForce;
-    case MANUAL_COLUMN::ACTUAL_RESIDUAL:
+    case MANUAL_TABLE::ACTUAL_RESIDUAL:
         return data.ActualResidual;
-    case MANUAL_COLUMN::IS_SELECTED:
+    case MANUAL_TABLE::IS_SELECTED:
         return data.IsSelected;
     default:
         return QVariant();
@@ -69,21 +70,21 @@ QVariant Manual::data(const QModelIndex &index, int role) const
 QHash<int, QByteArray> Manual::roleNames() const
 {
     QHash<int, QByteArray> roles;
-    roles[MANUAL_COLUMN::ID]               = "id";
-    roles[MANUAL_COLUMN::WELDER_ID]        = "welder_id";
-    roles[MANUAL_COLUMN::CREATE_TIME]      = "create_time";
-    roles[MANUAL_COLUMN::CYCLE_COUNT]      = "cycle_count";
-    roles[MANUAL_COLUMN::ENERGY]           = "energy";
-    roles[MANUAL_COLUMN::AMPLITUDE]        = "amplitude";
-    roles[MANUAL_COLUMN::TRIGGER_PRESSURE] = "trigger_pressure";
-    roles[MANUAL_COLUMN::WELD_PRESSURE]    = "weld_pressure";
-    roles[MANUAL_COLUMN::WELD_TIME]        = "weld_time";
-    roles[MANUAL_COLUMN::PEAK_POWER]       = "peak_power";
-    roles[MANUAL_COLUMN::PRE_HEIGHT]       = "preheight";
-    roles[MANUAL_COLUMN::POST_HEIGHT]      = "postheight";
-    roles[MANUAL_COLUMN::ACTUAL_FORCE]     = "actual_force";
-    roles[MANUAL_COLUMN::ACTUAL_RESIDUAL]  = "actual_residual";
-    roles[MANUAL_COLUMN::IS_SELECTED]      = "is_selected";
+    roles[MANUAL_TABLE::ID]               = "id";
+    roles[MANUAL_TABLE::WELDER_ID]        = "welder_id";
+    roles[MANUAL_TABLE::CREATE_TIME]      = "create_time";
+    roles[MANUAL_TABLE::CYCLE_COUNT]      = "cycle_count";
+    roles[MANUAL_TABLE::ENERGY]           = "energy";
+    roles[MANUAL_TABLE::AMPLITUDE]        = "amplitude";
+    roles[MANUAL_TABLE::TRIGGER_PRESSURE] = "trigger_pressure";
+    roles[MANUAL_TABLE::WELD_PRESSURE]    = "weld_pressure";
+    roles[MANUAL_TABLE::WELD_TIME]        = "weld_time";
+    roles[MANUAL_TABLE::PEAK_POWER]       = "peak_power";
+    roles[MANUAL_TABLE::PRE_HEIGHT]       = "preheight";
+    roles[MANUAL_TABLE::POST_HEIGHT]      = "postheight";
+    roles[MANUAL_TABLE::ACTUAL_FORCE]     = "actual_force";
+    roles[MANUAL_TABLE::ACTUAL_RESIDUAL]  = "actual_residual";
+    roles[MANUAL_TABLE::IS_SELECTED]      = "is_selected";
     return roles;
 }
 
@@ -96,40 +97,40 @@ bool Manual::setData(const QModelIndex &index, const QVariant &value, int role)
     int row = index.row();
     switch(role)
     {
-    case MANUAL_COLUMN::CYCLE_COUNT:
+    case MANUAL_TABLE::CYCLE_COUNT:
         m_listManualRecords[row].CycleCount = value.toInt();
         break;
-    case MANUAL_COLUMN::ENERGY:
+    case MANUAL_TABLE::ENERGY:
         m_listManualRecords[row].Energy = value.toInt();
         break;
-    case MANUAL_COLUMN::AMPLITUDE:
+    case MANUAL_TABLE::AMPLITUDE:
         m_listManualRecords[row].Amplitude = value.toInt();
         break;
-    case MANUAL_COLUMN::TRIGGER_PRESSURE:
+    case MANUAL_TABLE::TRIGGER_PRESSURE:
         m_listManualRecords[row].TriggerPressure = value.toInt();
         break;
-    case MANUAL_COLUMN::WELD_PRESSURE:
+    case MANUAL_TABLE::WELD_PRESSURE:
         m_listManualRecords[row].WeldPressure = value.toInt();
         break;
-    case MANUAL_COLUMN::WELD_TIME:
+    case MANUAL_TABLE::WELD_TIME:
         m_listManualRecords[row].WeldTime = value.toInt();
         break;
-    case MANUAL_COLUMN::PEAK_POWER:
+    case MANUAL_TABLE::PEAK_POWER:
         m_listManualRecords[row].PeakPower = value.toInt();
         break;
-    case MANUAL_COLUMN::PRE_HEIGHT:
+    case MANUAL_TABLE::PRE_HEIGHT:
         m_listManualRecords[row].Preheight = value.toInt();
         break;
-    case MANUAL_COLUMN::POST_HEIGHT:
+    case MANUAL_TABLE::POST_HEIGHT:
         m_listManualRecords[row].PostHeight = value.toInt();
         break;
-    case MANUAL_COLUMN::ACTUAL_FORCE:
+    case MANUAL_TABLE::ACTUAL_FORCE:
         m_listManualRecords[row].ActualForce = value.toInt();
         break;
-    case MANUAL_COLUMN::ACTUAL_RESIDUAL:
+    case MANUAL_TABLE::ACTUAL_RESIDUAL:
         m_listManualRecords[row].ActualResidual = value.toInt();
         break;
-    case MANUAL_COLUMN::IS_SELECTED:
+    case MANUAL_TABLE::IS_SELECTED:
         m_listManualRecords[row].IsSelected = value.toBool();
         emit dataChanged(index, index, {role});
         break;
@@ -152,8 +153,10 @@ void Manual::saveData()
             else
                 DataBaseManager::getInstance()->updateManualRecord(m_listManualRecords.at(i).Id, m_listManualRecords.at(i));
         }
+        else
+            DataBaseManager::getInstance()->removeManualRecord(m_listManualRecords.at(i).Id);
         QModelIndex idx = index(i);
-        emit dataChanged(idx, idx, {MANUAL_COLUMN::IS_SELECTED});
+        emit dataChanged(idx, idx, {MANUAL_TABLE::IS_SELECTED});
     }
 }
 
@@ -170,6 +173,12 @@ void Manual::loadData()
     beginResetModel();  // 通知 QML 模型发生变化
     m_listManualRecords.clear();
     DataBaseManager::getInstance()->getManualRecords(m_welderID, m_listManualRecords); // 重新加载数据
+
+    // Reverse the list so the newest records appear first in the model
+    if (!m_listManualRecords.isEmpty()) {
+        std::reverse(m_listManualRecords.begin(), m_listManualRecords.end());
+    }
+
     endResetModel();
 }
 
