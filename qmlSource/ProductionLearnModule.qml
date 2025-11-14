@@ -14,8 +14,6 @@ import ProductionObj        1.0
 import ManualObj            1.0
 import ManualTable          1.0
 
-// import Manual 1.0
-
 Rectangle {
     id: swipe
     color: pRgb(153, 204, 255)
@@ -25,139 +23,91 @@ Rectangle {
     property int currentIndex: DeviceManager.SelectedDeviceIndex
     property int deviceCount: DeviceManager.DeviceCounter
     property bool heightOption: (currentIndex < deviceCount) ? DeviceManager.DeviceList[currentIndex].DeviceObj.HeightEncoderOption : false
-    function newModel()
-    {
-        loader.sourceComponent = mode2
-        loader1.sourceComponent = weld2
-    }
 
-    Connections{
-        target: window
-        function onSigNewModel(){
-            newModel()
-            createModel = true
-        }
-    }
-    EquipmentInfor{
-        id:s1
-        x:42
-        y:35
-        width:  258
-        //TODO Need to have a double check
-        height: (mt1.text === "新建模型" || mt1.text === "New Model") ? 255 : 225
-        color: "#0c5696"
-        deviceName:{
-            if(currentIndex < deviceCount)
-                return DeviceManager.DeviceList[currentIndex].DeviceObj.WelderName
-            else
-                return ""
-        }
-        deviceType:{
-            if(currentIndex < deviceCount)
-                return DeviceManager.DeviceList[currentIndex].DeviceObj.WelderType === 0 ? "L20-VG" : "L20-TS"
-                return ""
-        }
-        connectionType:{
-            if(currentIndex < deviceCount)
-                return DeviceManager.DeviceList[currentIndex].DeviceObj.ConnectType === 1 ? "RS232" : "TCP/IP"
-            else
-                return ""
-        }
-        devcieStatus:{
-            if(currentIndex < deviceCount)
-            {
-                var connectState = DeviceManager.DeviceList[currentIndex].DeviceObj.ConnectState
-                return GlobalMessageDefine.getConnectState(connectState)
-            }
-            else
-            {
-                return ""
-            }
-        }
-    }
+    Rectangle {
+        id: singleProduction
+        anchors.left: parent.left
+        anchors.leftMargin: 30
+        anchors.top: parent.top
+        anchors.topMargin: 29
+        width: 1220
+        height: 664
+        color: pRgb(43, 112, 173)
+        radius: 5
 
-    Loader{
-        id:loader1
-        asynchronous: true
-        sourceComponent: weld1
-    }
-    Component{
-        id: weld1
-        Item {
-            WeldingResult{
-                id:s3
-                width: 258
-                height: 246
-                x:42
-                y:314
-                color: "#0c5696"
-                heightOption:       (currentIndex < deviceCount) ? DeviceManager.DeviceList[currentIndex].DeviceObj.HeightEncoderOption : false
-                energy:             (currentIndex < deviceCount) ? DeviceManager.DeviceList[currentIndex].ProductionObj.Energy : 0
-                amplitude:          (currentIndex < deviceCount) ? DeviceManager.DeviceList[currentIndex].ProductionObj.Amplitude : 0
-                weldPressure:       (currentIndex < deviceCount) ? DeviceManager.DeviceList[currentIndex].ProductionObj.WeldPressure : 0
-                triggerPressure:    (currentIndex < deviceCount) ? DeviceManager.DeviceList[currentIndex].ProductionObj.TriggertPressure : 0
-                peakPower:          (currentIndex < deviceCount) ? DeviceManager.DeviceList[currentIndex].ProductionObj.PeakPower : 0
-                weldTime:           (currentIndex < deviceCount) ? DeviceManager.DeviceList[currentIndex].ProductionObj.WeldTime : 0
-                preheight:          (currentIndex < deviceCount) ? DeviceManager.DeviceList[currentIndex].ProductionObj.Preheight : 0
-                postHeight:         (currentIndex < deviceCount) ? DeviceManager.DeviceList[currentIndex].ProductionObj.PostHeight : 0
-
-            }
-        }
-    }
-    Component{
-        id:weld2
-        Item {
-            WeldingParameter{
-                id: s3_1
-                width: 258
-                height: 236
-                x:42
-                y:274
-                color:  "#0c5696"
-                presetEnergy:           (currentIndex < deviceCount) ? DeviceManager.DeviceList[currentIndex].ManualObj.EnergySetting : "0"
-                presetAmplitude:        (currentIndex < deviceCount) ? DeviceManager.DeviceList[currentIndex].ManualObj.AmplitudeSetting : "0"
-                presetTriggerPressure:  (currentIndex < deviceCount) ? DeviceManager.DeviceList[currentIndex].ManualObj.TriggerPressureSetting : "0.0"
-                presetWeldPressure:     (currentIndex < deviceCount) ? DeviceManager.DeviceList[currentIndex].ManualObj.WeldPressureSetting : "0.0"
-            }
-        }
-    }
-    Button{
-        id:s4
-        x: 42
-        //TODO Need to have a double check
-        y: (mt1.text === "新建模型" || mt1.text === "New Model") ? 580 : 520
-        width:   258
-        height:  45
-        background: Rectangle{
-            radius: 6
-            color:  "#0c5696"
-        }
-        contentItem: Text {
-            id: mt1
-            text:
-            {
-                if(createModel)
-                    return GlobalLanguageDefine.strCreateModel // return qsTr("创建模型")
+        EquipmentInfor{
+            id: layoutDeviceInfo
+            x: 42
+            y: 35
+            width:  258
+            //TODO Need to have a double check
+            height: 225
+            color: "#0c5696"
+            deviceName:{
+                if(currentIndex < deviceCount)
+                    return DeviceManager.DeviceList[currentIndex].DeviceObj.WelderName
                 else
-                    return GlobalLanguageDefine.strNewModel // return qsTr("新建模型")
+                    return ""
             }
-            font.pixelSize:  17
-            color: pRgb(153, 204, 255)
-            anchors.centerIn: parent  // 确保文本在按钮内居中对齐
-            horizontalAlignment: Text.AlignHCenter
-            verticalAlignment: Text.AlignVCenter
-            font.family: GlobalSystemDefine.fontBold
+            deviceType:{
+                if(currentIndex < deviceCount)
+                    return DeviceManager.DeviceList[currentIndex].DeviceObj.WelderType === 0 ? "L20-VG" : "L20-TS"
+                    return ""
+            }
+            connectionType:{
+                if(currentIndex < deviceCount)
+                    return DeviceManager.DeviceList[currentIndex].DeviceObj.ConnectType === 1 ? "RS232" : "TCP/IP"
+                else
+                    return ""
+            }
+            devcieStatus:{
+                if(currentIndex < deviceCount)
+                {
+                    var connectState = DeviceManager.DeviceList[currentIndex].DeviceObj.ConnectState
+                    return GlobalMessageDefine.getConnectState(connectState)
+                }
+                else
+                {
+                    return ""
+                }
+            }
         }
-        onPressed: {
-            // if(mt1.text === qsTr("新建模型"))
-            if(mt1.text === GlobalLanguageDefine.strNewModel)
-            {
-                console.debug("Welder ID: ", currentIndex)
-                popup.openPop(2)
+
+        WeldingParameter{
+            id: s3_1
+            width: 258
+            height: 236
+            x:42
+            y:274
+            color:  "#0c5696"
+            presetEnergy:           (currentIndex < deviceCount) ? DeviceManager.DeviceList[currentIndex].ManualObj.EnergySetting : "0"
+            presetAmplitude:        (currentIndex < deviceCount) ? DeviceManager.DeviceList[currentIndex].ManualObj.AmplitudeSetting : "0"
+            presetTriggerPressure:  (currentIndex < deviceCount) ? DeviceManager.DeviceList[currentIndex].ManualObj.TriggerPressureSetting : "0.0"
+            presetWeldPressure:     (currentIndex < deviceCount) ? DeviceManager.DeviceList[currentIndex].ManualObj.WeldPressureSetting : "0.0"
+        }
+
+        Button{
+            id: s4
+            x: 42
+            //TODO Need to have a double check
+            y: 520
+            width:   258
+            height:  45
+            background: Rectangle{
+                radius: 6
+                color:  "#0c5696"
             }
-            // else if(mt1.text === qsTr("创建模型"))
-            else if(mt1.text === GlobalLanguageDefine.strCreateModel)
-            {
+            contentItem: Text {
+                id: mt1
+                text: GlobalLanguageDefine.strCreateModel // return qsTr("创建模型")
+                font.pixelSize:  17
+                color: pRgb(153, 204, 255)
+                anchors.centerIn: parent  // 确保文本在按钮内居中对齐
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
+                font.family: GlobalSystemDefine.fontBold
+            }
+            onPressed: {
                 console.debug("rowCount: ", DeviceManager.DeviceList[currentIndex].ManualObj.rowCount())
                 console.debug("CurrentIndex: ", currentIndex)
                 if(DeviceManager.DeviceList[currentIndex].ManualObj.rowCount() >=
@@ -176,124 +126,34 @@ Rectangle {
                 }
             }
         }
-    }
-    Button{
-        id:s5
-        anchors.left: s4.left
-        anchors.top: s4.bottom
-        anchors.topMargin:  10
-        width:   258
-        height:  45
-        // visible: (mt1.text === qsTr("创建模型")) ? true : false
-        visible: (mt1.text === GlobalLanguageDefine.strCreateModel) ? true : false
-        background: Rectangle{
-            radius: 6
-            border.color: pRgb(43, 112, 173)
-            color: "#0c5696"
+        Button{
+            id:s5
+            anchors.left: s4.left
+            anchors.top: s4.bottom
+            anchors.topMargin:  10
+            width:   258
+            height:  45
+            background: Rectangle{
+                radius: 6
+                border.color: pRgb(43, 112, 173)
+                color: "#0c5696"
+            }
+            contentItem: Text {
+                id:mt2
+                anchors.centerIn: parent
+                // text: qsTr("清除数据")
+                text: GlobalLanguageDefine.strClearData
+                font.pixelSize: 17
+                color: pRgb(153, 204, 255)
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
+                font.family: GlobalSystemDefine.fontBold
+            }
+            onPressed: {
+                DeviceManager.DeviceList[currentIndex].ManualObj.clearData()
+            }
         }
-        contentItem: Text {
-            id:mt2
-            anchors.centerIn: parent
-            // text: qsTr("清除数据")
-            text: GlobalLanguageDefine.strClearData
-            font.pixelSize: 17
-            color: pRgb(153, 204, 255)
-            horizontalAlignment: Text.AlignHCenter
-            verticalAlignment: Text.AlignVCenter
-            font.family: GlobalSystemDefine.fontBold
-        }
-        onPressed: {
-            DeviceManager.DeviceList[currentIndex].ManualObj.clearData()
-        }
-    }
-    Loader{
-        id:loader
-        asynchronous: true
-        sourceComponent: mode1
-    }
 
-    Component{
-        id: mode1
-        Item {
-            x:0
-            RealtimeYield{
-                id:s2
-                width:  300
-                height:  255
-                x: 329
-                y: 35
-                color:  "#0c5696"
-                revealing:{
-                    if(currentIndex < deviceCount)
-                        return DeviceManager.DeviceList[currentIndex].DeviceObj.SuspiciousOption
-                    else
-                        return true
-                }
-                eqText1:{
-                    if(currentIndex < deviceCount)
-                        return DeviceManager.DeviceList[currentIndex].ProductionObj.GoodCycleCount
-                    else
-                        return ""
-                }
-                eqText2:{
-                    if(currentIndex < deviceCount)
-                        return DeviceManager.DeviceList[currentIndex].ProductionObj.SuspectCycleCount
-                    else
-                        return ""
-                }
-                eqText3:{
-                    if(currentIndex < deviceCount)
-                        return DeviceManager.DeviceList[currentIndex].ProductionObj.DefectiveCycleCount
-                    else
-                        return ""
-                }
-                eqText4:{
-                    if(currentIndex < deviceCount)
-                    {
-                        return DeviceManager.DeviceList[currentIndex].ProductionObj.GoodCycleCount
-                                + DeviceManager.DeviceList[currentIndex].ProductionObj.SuspectCycleCount
-                                +DeviceManager.DeviceList[currentIndex].ProductionObj.DefectiveCycleCount
-                    }
-                    else{
-                        return ""
-                    }
-                }
-                eqText5:{
-                    if(currentIndex < deviceCount)
-                        return DeviceManager.DeviceList[currentIndex].ProductionObj.GoodRate
-                    else
-                        return ""
-                }
-            }
-            YieldTrend{
-                id:s6
-                width:  514
-                height:  255
-                x: 658
-                y: 35
-                color:  "#0c5696"
-                equiInforIndex:1
-            }
-            WeldingTrend{
-                id:s7
-                width:  502
-                height:  311
-                x: 329
-                y: 314
-                color:  "#0c5696"
-            }
-            AbnormalInfor{
-                id:s8
-                width:  313
-                height:  311
-                x: 858
-                y: 314
-                color:  "#0c5696"
-            }
-        }
-    }
-    Component{
-        id: mode2
         Item {
             Rectangle{
                 id:rect
@@ -679,5 +539,6 @@ Rectangle {
                 }
             }
         }
+
     }
 }

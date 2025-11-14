@@ -9,14 +9,14 @@
         <file>qmlSource/HistoryModel.qml</file>
         <file>qmlSource/Welcome.qml</file>
         <file>qmlSource/main.qml</file>
-        <file>qmlSource/MultideviceProductionModule.qml</file>
+        <file>qmlSource/ProductionMultiModule.qml</file>
         <file>qmlSource/MultideviceSystemConfig.qml</file>
-        <file>qmlSource/ProductionModule.qml</file>
+        <file>qmlSource/ProductionWindow.qml</file>
         <file>qmlSource/RealtimeYield.qml</file>
         <file>qmlSource/RootConfig.qml</file>
         <file>qmlSource/RootConfigView.qml</file>
-        <file>qmlSource/SwipePage.qml</file>
-        <file>qmlSource/SwipeProductionModule.qml</file>
+        <file>qmlSource/ProductionLearnModule.qml</file>
+        <file>qmlSource/ProductionSingleModule.qml</file>
         <file>qmlSource/SystemConfig.qml</file>
         <file>qmlSource/Header.qml</file>
         <file>qmlSource/WeldingParameter.qml</file>

@@ -758,7 +758,7 @@ Rectangle {
                 {
                     DeviceManager.SelectedDeviceIndex = 2
                 }
-                loadViewpro(3,swipe)
+                loadViewpro(3, swipe)
                 sigUpdateUI(3)
             }
         }

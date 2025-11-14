@@ -11,10 +11,11 @@ Rectangle {
     property string presetAmplitude: ""
     property string presetTriggerPressure: ""
     property string presetWeldPressure: ""
+    property int deviceCount: DeviceManager.DeviceCounter
 
     radius: 3
     Rectangle {
-           width:  equipmentCount == 1 ? 117 : 129
+           width:  deviceCount === 1 ? 117 : 129
            height: 35
            radius: 1
            anchors.left: parent.left

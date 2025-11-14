@@ -23,7 +23,6 @@ Window {
     property int mode: 0
     property int interFaceId: 0
     property int keyboardType: 0
-    property bool createModel: false
     property bool swipevis: false
     property bool isUSBAvailable: false
 
@@ -155,7 +154,12 @@ Window {
             width: showWidth
             Component.onCompleted:
             {
-                loadView(1, pro)
+                if(DeviceManager.DeviceList[0].WelderID === -1)
+                {
+                    loadView(3, sys)
+                }
+                else
+                    loadView(1, pro)
                 sigUpdateUI(0)
             }
         }
@@ -191,7 +195,7 @@ Window {
 
     Component{
         id:pro
-        ProductionModule{
+        ProductionWindow{
             id:s1
             width: 1280
             height: 740
