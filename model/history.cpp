@@ -143,15 +143,15 @@ QVariant History::data(const QModelIndex &index, int role) const
     case DataBaseManager::AMPLITUDE:
         return data.Amplitude;
     case DataBaseManager::WELD_PRESSURE:
-        return data.WeldPressure;
+        return UtilityFunction::getInstance()->RawValueToString(data.WeldPressure, 10, 1);
     case DataBaseManager::WELD_TIME:
-        return data.WeldTime;
+        return UtilityFunction::getInstance()->RawValueToString(data.WeldTime, 100, 2);
     case DataBaseManager::PEAK_POWER:
         return data.PeakPower;
     case DataBaseManager::PRE_HEIGHT:
-        return data.Preheight;
+        return UtilityFunction::getInstance()->RawValueToString(data.Preheight, 100, 2);
     case DataBaseManager::POST_HEIGHT:
-        return data.PostHeight;
+        return UtilityFunction::getInstance()->RawValueToString(data.PostHeight, 100, 2);
     case DataBaseManager::FORCE:
         return data.Force;
     case DataBaseManager::RESIDUAL:

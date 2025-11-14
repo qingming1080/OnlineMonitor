@@ -14,6 +14,7 @@ import DeviceInfoEnum       1.0
 Rectangle {
     id: layoutSystemConfig
     property var sysViews: []
+    property bool isInputValid: false
     Component.onCompleted: {
         loadViewsys(1, syscfg)
     }
@@ -56,6 +57,15 @@ Rectangle {
         function onSigDelDevice(){
             DeviceManager.removeDevice()
         }
+    }
+    Connections {
+        target: DeviceManager.DeviceList[DeviceManager.SelectedDeviceIndex].DeviceObj
+        function onErrorMessageChanged(msg) {
+               if (msg === "")
+                   footer.hideError()
+               else
+                   footer.showError(msg)
+           }
     }
 
     function configCheck(){
@@ -968,14 +978,18 @@ Rectangle {
                             }
                             property int tmpIndex: DeviceManager.SelectedDeviceIndex
                             text: NetworkModel.PortNumber
-                            onEditingFinished: {
+                            onTextChanged: {
                                 var portRegex = /^([0-9]|[1-9][0-9]{1,4}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])$/
                                 if (!portRegex.test(t5.text))
+                                {
                                     footer.showError(s17.text + GlobalLanguageDefine.strEnter0And65535)
+                                    isInputValid = false
+                                }
                                 else
                                 {
                                     footer.hideError()
                                     NetworkModel.PortNumber = t5.text
+                                    isInputValid = true
                                 }
                             }
 
@@ -1007,14 +1021,18 @@ Rectangle {
                                 }
                             }
                             text: NetworkModel.RemoteIP
-                            onEditingFinished: {
+                            onTextChanged: {
                                 var ipRegex = /^(25[0-5]|2[0-4]\d|1\d{2}|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d{2}|[1-9]?\d)){3}$/
                                 if (!ipRegex.test(t6.text))
+                                {
                                     footer.showError(s18.text + "请输入正确的IP地址")
+                                    isInputValid = false
+                                }
                                 else
                                 {
                                     footer.hideError()
                                     NetworkModel.RemoteIP = t6.text
+                                    isInputValid = true
                                 }
                             }
                         }
@@ -1047,14 +1065,18 @@ Rectangle {
                             }
 
                             text: NetworkModel.LocalIP
-                            onEditingFinished: {
+                            onTextChanged: {
                                 var ipRegex = /^(25[0-5]|2[0-4]\d|1\d{2}|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d{2}|[1-9]?\d)){3}$/
                                 if (!ipRegex.test(t7.text))
+                                {
                                     footer.showError(s19.text + "请输入正确的IP地址")
+                                    isInputValid = false
+                                }
                                 else
                                 {
                                     footer.hideError()
                                     NetworkModel.LocalIP = t7.text
+                                    isInputValid = true
                                 }
                             }
                         }
@@ -1254,6 +1276,7 @@ Rectangle {
                 anchors.leftMargin: 520
                 width: 243
                 height: 52
+                enabled: isInputValid
                 background: Rectangle{
                     radius: 6
                     color: pRgb(43, 112, 173)
@@ -1270,8 +1293,14 @@ Rectangle {
                     font.bold: true
                 }
                 onPressed: {
-                    DeviceManager.saveDevice()
-                    loadViewsys(2, musys)
+                    if(!DeviceManager.saveDevice())
+                    {
+                        return ""
+                    }else
+                    {
+                        footer.hideError()
+                        loadViewsys(2, musys)
+                    }
                 }
             }
         }

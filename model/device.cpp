@@ -167,8 +167,7 @@ void Device::setProductionObj(const Production *object)
 
 bool Device::SaveDevice()
 {
-    m_ptrDevice->SaveDevice();
-    return true;
+    return  m_ptrDevice->SaveDevice();
 }
 
 bool Device::RemoveDevice()

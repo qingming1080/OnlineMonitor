@@ -108,10 +108,14 @@ Rectangle {
                 font.family: GlobalSystemDefine.fontBold
             }
             onPressed: {
+                if(!DeviceManager.DeviceList[currentIndex].ManualObj.isSettingsValid())
+                {
+                    footer.showError(qsTr("请输入焊接参数！"))
+                    return
+                }
                 console.debug("rowCount: ", DeviceManager.DeviceList[currentIndex].ManualObj.rowCount())
                 console.debug("CurrentIndex: ", currentIndex)
-                if(DeviceManager.DeviceList[currentIndex].ManualObj.rowCount() >=
-                        DeviceManager.DeviceList[currentIndex].DeviceObj.MaxModelSamples)
+                if(DeviceManager.DeviceList[currentIndex].ManualObj.rowCount() >= DeviceManager.DeviceList[currentIndex].DeviceObj.MaxModelSamples)
                 {
                     loader.sourceComponent = mode1
                     loader1.sourceComponent = weld1
