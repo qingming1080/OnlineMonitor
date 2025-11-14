@@ -473,7 +473,7 @@ Rectangle {
             anchors.top: parent.top
             anchors.topMargin: 7
             font.pixelSize: 16
-            text: GlobalLanguageDefine.strSerialNumber
+            text: GlobalLanguageDefine.strCycleCount
             font.family: GlobalSystemDefine.fontBold
             font.bold: true
             color: pRgb(153, 204, 255)
@@ -482,7 +482,7 @@ Rectangle {
             id: historyDateText
             anchors.top: t1.top
             anchors.left: t1.right
-            anchors.leftMargin: LanguageManager.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 180 : 200
+            anchors.leftMargin: 200
             font.pixelSize: 16
             text: GlobalLanguageDefine.strDate
             font.family: GlobalSystemDefine.fontBold
@@ -493,9 +493,9 @@ Rectangle {
             id: historyEnergyeText
             anchors.top: historyDateText.top
             anchors.left: historyDateText.right
-            anchors.leftMargin: LanguageManager.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 150 : 100
+            anchors.leftMargin: LanguageManager.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 120 : 80
             font.pixelSize: 16
-            text: GlobalLanguageDefine.strEnergy
+            text: GlobalLanguageDefine.strEnergy + "(J)"
             font.family: GlobalSystemDefine.fontBold
             font.bold: true
             color: pRgb(153, 204, 255)
@@ -504,9 +504,9 @@ Rectangle {
             id: historyAmplitudeText
             anchors.top: historyEnergyeText.top
             anchors.left: historyEnergyeText.right
-            anchors.leftMargin: LanguageManager.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 100 : 70
+            anchors.leftMargin: LanguageManager.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 70 : 40
             font.pixelSize: 16
-            text: GlobalLanguageDefine.strAmplitude
+            text: GlobalLanguageDefine.strAmplitude + "(μm)"
             font.family: GlobalSystemDefine.fontBold
             font.bold: true
             color: pRgb(153, 204, 255)
@@ -515,9 +515,9 @@ Rectangle {
             id: historyPowerText
             anchors.top: historyAmplitudeText.top
             anchors.left: historyAmplitudeText.right
-            anchors.leftMargin: LanguageManager.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 100 : 60
+            anchors.leftMargin: LanguageManager.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 70 : 40
             font.pixelSize: 16
-            text: GlobalLanguageDefine.strPower
+            text: GlobalLanguageDefine.strPower + "(W)"
             font.family: GlobalSystemDefine.fontBold
             font.bold: true
             color: pRgb(153, 204, 255)
@@ -526,9 +526,9 @@ Rectangle {
             id: historyWeldTimeText
             anchors.top: historyPowerText.top
             anchors.left: historyPowerText.right
-            anchors.leftMargin: LanguageManager.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 100 : 80
+            anchors.leftMargin: LanguageManager.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 70 : 50
             font.pixelSize: 16
-            text: GlobalLanguageDefine.strTime
+            text: GlobalLanguageDefine.strTime + "(S)"
             font.family: GlobalSystemDefine.fontBold
             font.bold: true
             color: pRgb(153, 204, 255)
@@ -537,9 +537,9 @@ Rectangle {
             id: historyWeldPressureText
             anchors.top: historyWeldTimeText.top
             anchors.left: historyWeldTimeText.right
-            anchors.leftMargin: LanguageManager.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 100 : 70
+            anchors.leftMargin: LanguageManager.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 70 : 40
             font.pixelSize: 16
-            text: GlobalLanguageDefine.strPressure
+            text: GlobalLanguageDefine.strWeldPressure + "(Psi)"
             font.family: GlobalSystemDefine.fontBold
             font.bold: true
             color: pRgb(153, 204, 255)
@@ -548,7 +548,7 @@ Rectangle {
             id: historyWeldResultText
             anchors.top: historyWeldPressureText.top
             anchors.left: historyWeldPressureText.right
-            anchors.leftMargin: LanguageManager.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 100 : 60
+            anchors.leftMargin: LanguageManager.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 85 : 50
             font.pixelSize: 16
             text: GlobalLanguageDefine.strResult
             font.family: GlobalSystemDefine.fontBold
@@ -594,7 +594,7 @@ Rectangle {
                     id: historyDateValueText
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.left: parent.left
-                    anchors.leftMargin: LanguageManager.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 200 : 250
+                    anchors.leftMargin: LanguageManager.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 220 : 250
                     font.pixelSize: 16
                     text: UtilityFunction.timestampToString(create_time)
                     font.family: GlobalSystemDefine.fontBold
@@ -607,7 +607,7 @@ Rectangle {
                     anchors.left: parent.left
                     anchors.leftMargin: 447
                     font.pixelSize: 16
-                    text: UtilityFunction.displayValue(energy) +  GlobalLanguageDefine.strEnergyUnit
+                    text: energy
                     font.family: GlobalSystemDefine.fontBold
                     font.bold: true
                     color: index % 2 === 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
@@ -618,7 +618,7 @@ Rectangle {
                     anchors.left: parent.left
                     anchors.leftMargin: 580
                     font.pixelSize: 16
-                    text: UtilityFunction.displayValue(amplitude) + GlobalLanguageDefine.strAmplitudeUnit
+                    text: amplitude
                     font.family: GlobalSystemDefine.fontBold
                     font.bold: true
                     color: index % 2 === 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
@@ -629,7 +629,7 @@ Rectangle {
                     anchors.left: parent.left
                     anchors.leftMargin: 709
                     font.pixelSize: 16
-                    text: UtilityFunction.displayValue(power) + GlobalLanguageDefine.strPowerUnit
+                    text: power
                     font.family: GlobalSystemDefine.fontBold
                     font.bold: true
                     color: index % 2 === 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
@@ -640,7 +640,7 @@ Rectangle {
                     anchors.left: parent.left
                     anchors.leftMargin: 840
                     font.pixelSize: 16
-                    text: UtilityFunction.displayValue(time,100,2) + GlobalLanguageDefine.strWeldTimeUnit
+                    text: time
                     font.family: GlobalSystemDefine.fontBold
                     font.bold: true
                     color: index % 2 === 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
@@ -651,7 +651,7 @@ Rectangle {
                     anchors.left: parent.left
                     anchors.leftMargin: 975
                     font.pixelSize: 16
-                    text: UtilityFunction.displayValue(weld_pressure,10,1) + GlobalLanguageDefine.strPressureUnit
+                    text: weld_pressure
                     font.family: GlobalSystemDefine.fontBold
                     font.bold: true
                     color: index % 2 === 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
