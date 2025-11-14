@@ -159,10 +159,10 @@ Rectangle {
                         x: mode == 1 ? 50 : 29
                         y: mode == 1 ? 248 : 289
                         color: mode == 1 ? "#0c5696" : pRgb(43, 112, 173)
-                        presetEnergyValue:          DeviceManager.DeviceList[0].ProductionObj.Energy
-                        presetAmplitudeValue:       DeviceManager.DeviceList[0].ProductionObj.Amplitude
-                        presetWeldPressureValue:    DeviceManager.DeviceList[0].ProductionObj.WeldPressure
-                        presetTriggerPressureValue: DeviceManager.DeviceList[0].ProductionObj.TriggertPressure
+                        presetEnergy:          DeviceManager.DeviceList[0].ProductionObj.EnergySetting
+                        presetAmplitude:       DeviceManager.DeviceList[0].ProductionObj.AmplitudeSetting
+                        presetTriggerPressure: DeviceManager.DeviceList[0].ProductionObj.TriggertPressureSetting
+                        presetWeldPressure:    DeviceManager.DeviceList[0].ProductionObj.WeldPressureSetting
 
                     }
                 }

@@ -20,7 +20,7 @@ unsigned char  HBModbusClient::m_LastDiscreteds[DEV_DISCRETE_REGISTERS_COUNT * D
 unsigned short HBModbusClient::m_Holdings[SYS_HOLDING_REGISTERS_COUNT + DEV_HOLDING_REGISTERS_COUNT * DEV_COUNT] = {0};
 unsigned short HBModbusClient::m_Inputs[DEV_INPUT_REGISTERS_COUNT * DEV_COUNT] = {0};
 unsigned int HBModbusClient::m_iPreviousCycleCount[DEV_COUNT] = {0, 0, 0, 0};
-QVector<WELD_PRESET> HBModbusClient::m_lastPresets(DEV_COUNT);
+QVector<HBModbusClient::WELD_PRESET> HBModbusClient::m_lastPresets(DEV_COUNT);
 HBModbusClient* HBModbusClient::m_instance = nullptr;
 
 HBModbusClient::HBModbusClient( QObject *parent)
@@ -104,7 +104,7 @@ void HBModbusClient::readRegisters(QModbusDataUnit::RegisterType type,int startA
                         const QModbusDataUnit modbusDataUnit = reply->result();
 
 
-                        for (int i = 0; i < modbusDataUnit.valueCount(); ++i)
+                        for (unsigned int i = 0; i < modbusDataUnit.valueCount(); ++i)
                         {
                             const quint16 value = modbusDataUnit.value(i);
                             const int index = startAddress + i;

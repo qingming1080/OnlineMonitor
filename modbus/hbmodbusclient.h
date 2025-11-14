@@ -17,6 +17,14 @@ class HBModbusClient : public QObject
     Q_OBJECT
     Q_PROPERTY(bool ResetButtonStatus READ getResetButtonStatus WRITE setResetButtonStatus NOTIFY notifyResetButtonStatus FINAL)
 public:
+    struct WELD_PRESET
+    {
+        int     Energy;
+        int     Amplitude;
+        int     TriggerPressure;
+        int     WeldingPressure;
+    };
+
     struct MODBUS_WELD_RESULT
     {
         int         CycleCount;
@@ -59,6 +67,11 @@ public:
         SERIAL_PROPERTIES               SerialProperties;
     };
 
+    struct DEVICE_STATUS
+    {
+        bool    IsDeviceStatus;
+        bool    IsDeviceDataStatus;
+    };
 
 public:
     static HBModbusClient* getInstance();

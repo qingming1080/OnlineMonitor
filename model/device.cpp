@@ -4,16 +4,11 @@
 #include "model/manual.h"
 #include "model/trend.h"
 #include "model/production.h"
+#include "tools/utilityfunction.h"
 
-#include "signalmanager.h"
 #include <QDebug>
-#include <QElapsedTimer>
-#include "log/localrecord.h"
-
-/// TEST 2024_08_18
-#include "message.h"
-#include "define.h"
 #include <QPointF>
+#
 /// TEST 2024_08_18
 
 Device::Device(int welderID, QObject *parent)
@@ -54,6 +49,81 @@ int Device::getPlotIndex() const {
 
 void Device::incrementPlotIndex() {
     plotIndex++;
+}
+
+bool Device::IsProductionPresetChanged(const HBModbusClient::MODBUS_WELD_RESULT &data)
+{
+    bool bResult = false;
+    int energy = m_ptrProduction->getEnergySetting();
+    int amplitude = m_ptrProduction->getAmpSetting();
+    int triggerPressure = m_ptrProduction->getTPSetting();
+    int weldPressure = m_ptrProduction->getWPSetting();
+    float energy_lower = static_cast<float>(0.95 * energy);
+    float energy_upper = static_cast<float>(1.05 * energy);
+    if(amplitude != data.Amplitude)
+    {
+        m_ptrProduction->setModelStatus(false);
+        bResult = true;
+    }
+    else if(triggerPressure != data.TriggerPressure)
+    {
+        m_ptrProduction->setModelStatus(false);
+        bResult = true;
+    }
+    else if(weldPressure != data.WeldingPressure)
+    {
+        m_ptrProduction->setModelStatus(false);
+        bResult = true;
+    }
+    else if((energy != data.Energy) && (data.WeldAlarm == 0))
+    {
+        if((data.Energy < energy_lower) || (data.Energy > energy_upper))
+        {
+            m_ptrProduction->setModelStatus(false);
+            bResult = true;
+        }
+    }
+    else
+    {
+        bResult = false;
+    }
+    return bResult;
+}
+
+bool Device::IsProductionPresetChanged(const HBModbusClient::WELD_PRESET &data)
+{
+    bool bResult = false;
+    int energy = m_ptrProduction->getEnergySetting();
+    int amplitude = m_ptrProduction->getAmpSetting();
+    int triggerPressure = m_ptrProduction->getTPSetting();
+    int weldPressure = m_ptrProduction->getWPSetting();
+    float energy_lower = static_cast<float>(0.95 * energy);
+    float energy_upper = static_cast<float>(1.05 * energy);
+    if(amplitude != data.Amplitude)
+    {
+        m_ptrProduction->setModelStatus(false);
+        bResult = true;
+    }
+    else if(triggerPressure != data.TriggerPressure)
+    {
+        m_ptrProduction->setModelStatus(false);
+        bResult = true;
+    }
+    else if(weldPressure != data.WeldingPressure)
+    {
+        m_ptrProduction->setModelStatus(false);
+        bResult = true;
+    }
+    else if((data.Energy < energy_lower) || (data.Energy > energy_upper))
+    {
+        m_ptrProduction->setModelStatus(false);
+        bResult = true;
+    }
+    else
+    {
+        bResult = false;
+    }
+    return bResult;
 }
 
 DeviceInformation* Device::getDeviceObj() const
@@ -109,4 +179,63 @@ bool Device::RemoveDevice()
 int Device::getWelderID() const
 {
     return m_WelderID;
+}
+
+void Device::NotifyDeviceStatusChanged(const HBModbusClient::DEVICE_STATUS &status)
+{
+    m_ptrDevice->setConnectState(status.IsDeviceStatus || status.IsDeviceDataStatus);
+}
+
+void Device::NotifyWeldResultComing(const HBModbusClient::MODBUS_WELD_RESULT &data)
+{
+    if(m_ptrProduction->getModelStatus() == true)
+    {
+        if(IsProductionPresetChanged(data) == false)
+            m_ptrProduction->AppendNewRecordComming(data);
+        else
+        {
+            QString strEnergy = UtilityFunction::getInstance()->RawValueToString(data.Energy, 1, 0);
+            m_ptrManual->setEnergySetting(strEnergy);
+            QString strAmplitude = UtilityFunction::getInstance()->RawValueToString(data.Amplitude, 1, 0);
+            m_ptrManual->setAmplitudeSetting(strAmplitude);
+            QString strTriggerPressure = UtilityFunction::getInstance()->RawValueToString(data.TriggerPressure, 10, 1);
+            m_ptrManual->setTriggerPressureSetting(strTriggerPressure);
+            QString strWeldPressure = UtilityFunction::getInstance()->RawValueToString(data.WeldingPressure, 10, 1);
+            m_ptrManual->setWeldPressureSetting(strWeldPressure);
+            m_ptrManual->AppendNewRecordComming(data);
+        }
+    }
+    else
+    {
+        m_ptrManual->AppendNewRecordComming(data);
+    }
+}
+
+void Device::NotifyPresetSettingChanged(const HBModbusClient::WELD_PRESET &data)
+{
+    if(m_ptrProduction->getModelStatus() == true)
+    {
+        if(IsProductionPresetChanged(data) == true)
+        {
+            QString strEnergy = UtilityFunction::getInstance()->RawValueToString(data.Energy, 1, 0);
+            m_ptrManual->setEnergySetting(strEnergy);
+            QString strAmplitude = UtilityFunction::getInstance()->RawValueToString(data.Amplitude, 1, 0);
+            m_ptrManual->setAmplitudeSetting(strAmplitude);
+            QString strTriggerPressure = UtilityFunction::getInstance()->RawValueToString(data.TriggerPressure, 10, 1);
+            m_ptrManual->setTriggerPressureSetting(strTriggerPressure);
+            QString strWeldPressure = UtilityFunction::getInstance()->RawValueToString(data.WeldingPressure, 10, 1);
+            m_ptrManual->setWeldPressureSetting(strWeldPressure);
+        }
+    }
+    else
+    {
+        QString strEnergy = UtilityFunction::getInstance()->RawValueToString(data.Energy, 1, 0);
+        m_ptrManual->setEnergySetting(strEnergy);
+        QString strAmplitude = UtilityFunction::getInstance()->RawValueToString(data.Amplitude, 1, 0);
+        m_ptrManual->setAmplitudeSetting(strAmplitude);
+        QString strTriggerPressure = UtilityFunction::getInstance()->RawValueToString(data.TriggerPressure, 10, 1);
+        m_ptrManual->setTriggerPressureSetting(strTriggerPressure);
+        QString strWeldPressure = UtilityFunction::getInstance()->RawValueToString(data.WeldingPressure, 10, 1);
+        m_ptrManual->setWeldPressureSetting(strWeldPressure);
+    }
 }

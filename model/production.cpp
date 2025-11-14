@@ -272,12 +272,21 @@ void Production::setWPSetting(const int wp)
     }
 }
 
-bool Production::GetModelStatus() const
+bool Production::getModelStatus() const
 {
     return m_DBModel.isAvailable;
 }
 
-void Production::SetModelStatus(const bool status)
+void Production::setModelStatus(const bool status)
 {
-    m_DBModel.isAvailable = status;
+    if(m_DBModel.isAvailable != status)
+    {
+        m_DBModel.isAvailable = status;
+        emit notifyModelStatusChanged();
+    }
+}
+
+void Production::AppendNewRecordComming(const HBModbusClient::MODBUS_WELD_RESULT &data)
+{
+
 }

@@ -60,7 +60,6 @@ struct _Yield_TrendData
     }
 };
 
-
 struct DateTimeData
 {
     int year;
@@ -71,25 +70,9 @@ struct DateTimeData
     int second;
 };
 
-struct WELD_PRESET
-{
-    int     Energy;
-    int     Amplitude;
-    int     TriggerPressure;
-    int     WeldingPressure;
-};
-
 struct IO_STATUS
 {
     bool IOResetStatus;
 };
-
-struct DEVICE_STATUS
-{
-    bool    IsDeviceStatus;
-    bool    IsDeviceDataStatus;
-};
-
-
 
 #endif // DEFINE_H

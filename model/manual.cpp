@@ -1,5 +1,4 @@
 #include "manual.h"
-#include "DataBase/databasemanager.h"
 #include "tools/utilityfunction.h"
 #include <QDebug>
 #include "tools/GenericLearning.h"
@@ -10,6 +9,10 @@ Manual::Manual(int welderID, QObject *parent)
     : QAbstractListModel{parent}, m_welderID(welderID)
 {
     loadData();
+    setEnergySetting("0");
+    setAmplitudeSetting("0");
+    setTriggerPressureSetting("0");
+    setWeldPressureSetting("0");
 }
 
 Manual::~Manual()
@@ -49,13 +52,13 @@ QVariant Manual::data(const QModelIndex &index, int role) const
     case MANUAL_TABLE::WELD_PRESSURE:
         return data.WeldPressure;
     case MANUAL_TABLE::WELD_TIME:
-        return UtilityFunction::getInstance()->displayValue(data.WeldTime, 100, 2);
+        return UtilityFunction::getInstance()->RawValueToString(data.WeldTime, 100, 2);
     case MANUAL_TABLE::PEAK_POWER:
         return data.PeakPower;
     case MANUAL_TABLE::PRE_HEIGHT:
-        return UtilityFunction::getInstance()->displayValue(data.Preheight, 100, 2);
+        return UtilityFunction::getInstance()->RawValueToString(data.Preheight, 100, 2);
     case MANUAL_TABLE::POST_HEIGHT:
-        return UtilityFunction::getInstance()->displayValue(data.PostHeight, 100, 2);
+        return UtilityFunction::getInstance()->RawValueToString(data.PostHeight, 100, 2);
     case MANUAL_TABLE::ACTUAL_FORCE:
         return data.ActualForce;
     case MANUAL_TABLE::ACTUAL_RESIDUAL:
@@ -188,8 +191,8 @@ bool Manual::CalibrateModel()
         return false;
 #if RASPBERRY
     ProvidenceEE::GetInstance()->ResetProcess();
-    ProvidenceEE::GetInstance()->CalibrateSPCProcess(m_listManualData);
-    ProvidenceEE::GetInstance()->CalibrateAIProcess(m_listManualData);
+    ProvidenceEE::GetInstance()->CalibrateSPCProcess(m_listManualRecords);
+    ProvidenceEE::GetInstance()->CalibrateAIProcess(m_listManualRecords);
 
     GenericLearning::PROCESS_PARAM param[GenericLearning::TOTALPARA];
     GenericLearning::AI_POLYNOMIAL_COEFFICIENT coefficient[GenericLearning::STRENGTH_MAX];
@@ -237,14 +240,11 @@ bool Manual::CalibrateModel()
     return true;
 }
 
-void Manual::AppendNewRecordComming(const int welderId, const HBModbusClient::MODBUS_WELD_RESULT &data)
+void Manual::AppendNewRecordComming(const HBModbusClient::MODBUS_WELD_RESULT &data)
 {
-    if (welderId != m_welderID)
-        return;
-
     beginInsertRows(QModelIndex(), 0, 0);
     DataBaseManager::DB_MANUAL record;
-    record.WelderId       = welderId;
+    record.WelderId       = m_welderID;
     record.CycleCount     = data.CycleCount;
     record.Energy         = data.Energy;
     record.Amplitude      = data.Amplitude;
@@ -263,3 +263,68 @@ void Manual::AppendNewRecordComming(const int welderId, const HBModbusClient::MO
     endInsertRows();
 }
 
+QString Manual::getEnergySetting() const
+{
+    return QString::number(m_DBModel.Energy);
+}
+
+void Manual::setEnergySetting(const QString &value)
+{
+    bool isOK = false;
+    int iEnergy = value.toInt(&isOK);
+    if(isOK == false)
+        return;
+    if (m_DBModel.Energy != iEnergy)
+    {
+        m_DBModel.Energy = iEnergy;
+        emit notifyEnergySettingChanged();
+    }
+}
+
+QString Manual::getAmplitudeSetting() const
+{
+    return QString::number(m_DBModel.Amplitude);
+}
+
+void Manual::setAmplitudeSetting(const QString &value)
+{
+    bool isOK = false;
+    int iAmplitude = value.toInt(&isOK);
+    if(isOK == false)
+        return;
+    if (m_DBModel.Amplitude != iAmplitude)
+    {
+        m_DBModel.Amplitude = iAmplitude;
+        emit notifyAmplitudeSettingChanged();
+    }
+}
+
+QString Manual::getTriggerPressureSetting() const
+{
+    return UtilityFunction::getInstance()->RawValueToString(m_DBModel.TriggerPressure, 10.0, 1);
+}
+
+void Manual::setTriggerPressureSetting(const QString &value)
+{
+    int iTriggerPressure = UtilityFunction::getInstance()->StringToRawValue(value, 10.0);
+    if (m_DBModel.TriggerPressure != iTriggerPressure)
+    {
+        m_DBModel.TriggerPressure = iTriggerPressure;
+        emit notifyTriggerPressureSettingChanged();
+    }
+}
+
+QString Manual::getWeldPressureSetting() const
+{
+    return UtilityFunction::getInstance()->RawValueToString(m_DBModel.WeldPressure, 10.0, 1);
+}
+
+void Manual::setWeldPressureSetting(const QString &value)
+{
+    int iWeldPressure = UtilityFunction::getInstance()->StringToRawValue(value, 10.0);
+    if (m_DBModel.WeldPressure != iWeldPressure)
+    {
+        m_DBModel.WeldPressure = iWeldPressure;
+        emit notifyWeldPressureSettingChanged();
+    }
+}   

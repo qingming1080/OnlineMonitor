@@ -18,7 +18,8 @@ public:
     Q_INVOKABLE QString timestampToString(int timestamp);
     Q_INVOKABLE QDateTime makeDateTime(int year, int month, int day, int hour, int minute, int second);
 
-    Q_INVOKABLE static QString displayValue(int rawValue, double scale = 1.0, int decimals = 0);
+    QString RawValueToString(const int rawValue, const double scale = 1.0, const int decimals = 0);
+    int     StringToRawValue(const QString displayValue, const double scale = 1.0);
 
 private:
     explicit UtilityFunction(QObject *parent = nullptr);

@@ -86,12 +86,12 @@ Rectangle {
         Item {
             WeldingResult{
                 id:s3
-                width:  258
-                height:  246
+                width: 258
+                height: 246
                 x:42
                 y:314
                 color: "#0c5696"
-                altitudeMode:       (currentIndex < deviceCount) ? DeviceManager.DeviceList[currentIndex].DeviceObj.HeightEncoderOption : false
+                heightOption:       (currentIndex < deviceCount) ? DeviceManager.DeviceList[currentIndex].DeviceObj.HeightEncoderOption : false
                 energy:             (currentIndex < deviceCount) ? DeviceManager.DeviceList[currentIndex].ProductionObj.Energy : 0
                 amplitude:          (currentIndex < deviceCount) ? DeviceManager.DeviceList[currentIndex].ProductionObj.Amplitude : 0
                 weldPressure:       (currentIndex < deviceCount) ? DeviceManager.DeviceList[currentIndex].ProductionObj.WeldPressure : 0
@@ -108,16 +108,16 @@ Rectangle {
         id:weld2
         Item {
             WeldingParameter{
-                id:s3_1
-                width:  258
-                height:  236
+                id: s3_1
+                width: 258
+                height: 236
                 x:42
                 y:274
                 color:  "#0c5696"
-                // presetEnergyValue: Manual.data(Manual.index(taskplanView.currentIndex, 0), QmlEnum.MANUAL_preEnergy)
-                // presetAmplitudeValue: Manual.data(Manual.index(taskplanView.currentIndex, 0), QmlEnum.MANUAL_preAmplitude)
-                // presetWeldPressureValue: Manual.data(Manual.index(taskplanView.currentIndex, 0), QmlEnum.MANUAL_preWP)
-                // presetTriggerPressureValue: Manual.data(Manual.index(taskplanView.currentIndex, 0), QmlEnum.MANUAL_preTP)
+                presetEnergy:           (currentIndex < deviceCount) ? DeviceManager.DeviceList[currentIndex].ManualObj.EnergySetting : "0"
+                presetAmplitude:        (currentIndex < deviceCount) ? DeviceManager.DeviceList[currentIndex].ManualObj.AmplitudeSetting : "0"
+                presetTriggerPressure:  (currentIndex < deviceCount) ? DeviceManager.DeviceList[currentIndex].ManualObj.TriggerPressureSetting : "0.0"
+                presetWeldPressure:     (currentIndex < deviceCount) ? DeviceManager.DeviceList[currentIndex].ManualObj.WeldPressureSetting : "0.0"
             }
         }
     }

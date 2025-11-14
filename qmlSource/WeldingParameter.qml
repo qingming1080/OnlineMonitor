@@ -7,10 +7,11 @@ import LanguageEnum         1.0
 
 Rectangle {
     color: pRgb(43, 112, 173)
-    property int presetEnergyValue: 0
-    property int presetAmplitudeValue: 0
-    property int presetWeldPressureValue: 0
-    property int presetTriggerPressureValue: 0
+    property string presetEnergy: ""
+    property string presetAmplitude: ""
+    property string presetTriggerPressure: ""
+    property string presetWeldPressure: ""
+
     radius: 3
     Rectangle {
            width:  equipmentCount == 1 ? 117 : 129
@@ -156,7 +157,7 @@ Rectangle {
             border.width: 2
             border.color: "#99ccff"
         }
-        text: presetEnergyValue/* + GlobalLanguageDefine.strEnergyUnit*/
+        text: presetEnergy/* + GlobalLanguageDefine.strEnergyUnit*/
         MouseArea {
             anchors.fill: parent
             onPressed: {
@@ -190,7 +191,7 @@ Rectangle {
             border.width: 2
             border.color: "#99ccff"
         }
-        text: presetAmplitudeValue/* + GlobalLanguageDefine.strAmplitudeUnit*/
+        text: presetAmplitude/* + GlobalLanguageDefine.strAmplitudeUnit*/
         MouseArea {
             anchors.fill: parent
             onPressed: {
@@ -224,7 +225,7 @@ Rectangle {
             border.width: 2
             border.color: "#99ccff"
         }
-        text: presetTriggerPressureValue
+        text: presetTriggerPressure
         MouseArea {
             anchors.fill: parent
             onPressed: {
@@ -258,7 +259,7 @@ Rectangle {
             border.width: 2
             border.color: "#99ccff"
         }
-        text: presetWeldPressureValue/* + GlobalLanguageDefine.strPressureUnit*/
+        text: presetWeldPressure/* + GlobalLanguageDefine.strPressureUnit*/
         MouseArea {
             anchors.fill: parent
             onPressed: {

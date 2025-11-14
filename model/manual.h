@@ -10,6 +10,10 @@
 class Manual : public QAbstractListModel
 {
     Q_OBJECT
+    Q_PROPERTY(QString EnergySetting            READ getEnergySetting           WRITE setEnergySetting          NOTIFY notifyEnergySettingChanged FINAL)
+    Q_PROPERTY(QString AmplitudeSetting         READ getAmplitudeSetting        WRITE setAmplitudeSetting       NOTIFY notifyAmplitudeSettingChanged FINAL)
+    Q_PROPERTY(QString TriggerPressureSetting   READ getTriggerPressureSetting  WRITE setTriggerPressureSetting NOTIFY notifyTriggerPressureSettingChanged FINAL)
+    Q_PROPERTY(QString WeldPressureSetting      READ getWeldPressureSetting     WRITE setWeldPressureSetting    NOTIFY notifyWeldPressureSettingChanged FINAL)
 public:
     explicit Manual(int welderID = 0, QObject *parent = nullptr);
     ~Manual();
@@ -22,16 +26,28 @@ public:
     Q_INVOKABLE void saveData();
     Q_INVOKABLE void clearData();
     Q_INVOKABLE void loadData();
-    void AppendNewRecordComming(const int welderId, const HBModbusClient::MODBUS_WELD_RESULT &data);
 
+    void AppendNewRecordComming(const HBModbusClient::MODBUS_WELD_RESULT &data);
+
+    QString getEnergySetting() const;
+    void setEnergySetting(const QString &value);
+    QString getAmplitudeSetting() const;
+    void setAmplitudeSetting(const QString &value);
+    QString getTriggerPressureSetting() const;
+    void setTriggerPressureSetting(const QString &value);
+    QString getWeldPressureSetting() const;
+    void setWeldPressureSetting(const QString &value);
 private slots:
 
 signals:
-
+    void notifyEnergySettingChanged();
+    void notifyAmplitudeSettingChanged();
+    void notifyTriggerPressureSettingChanged();
+    void notifyWeldPressureSettingChanged();
 private:
     int m_welderID;
-    QList<DataBaseManager::DB_MANUAL> m_listManualRecords;
-
+    QList<DataBaseManager::DB_MANUAL>   m_listManualRecords;
+    DataBaseManager::DB_MODEL           m_DBModel;
     bool CalibrateModel();
 
 };

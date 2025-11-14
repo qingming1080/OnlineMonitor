@@ -682,7 +682,6 @@ bool DataBaseManager::insertManualRecord(DB_MANUAL data)
 
 bool DataBaseManager::updateManualRecord(const int id, const DB_MANUAL data)
 {
-    bool bResult = false;
     QSqlQuery query;
     QString execStr = QString(
                           "UPDATE %1 SET "

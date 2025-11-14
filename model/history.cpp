@@ -15,7 +15,6 @@
 #include <QObject>
 #include "csvexportworker.h"
 #include "tools/utilityfunction.h"
-#define RASPBERRY
 
 History* History::s_pHistory = nullptr;
 QString  History::m_USBDirectory = "";

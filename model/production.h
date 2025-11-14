@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include "DataBase/databasemanager.h"
+#include "modbus/hbmodbusclient.h"
 
 class Production : public QObject
 {
@@ -42,6 +43,7 @@ class Production : public QObject
     Q_PROPERTY(int TPSetting        READ getTPSetting           WRITE setTPSetting          NOTIFY notifyTPSettingChanged FINAL)
     Q_PROPERTY(int WPSetting        READ getWPSetting           WRITE setWPSetting          NOTIFY notifyWPSettingChanged FINAL)
 
+    Q_PROPERTY(bool ModelStatus     READ getModelStatus         WRITE setModelStatus        NOTIFY notifyModelStatusChanged FINAL)
 public:
     explicit Production(int welderID = 0, QObject *parent = nullptr);
 
@@ -96,8 +98,10 @@ public:
     int getWPSetting() const;
     void setWPSetting(const int wp);
 
-    bool GetModelStatus() const;
-    void SetModelStatus(const bool status);
+    bool getModelStatus() const;
+    void setModelStatus(const bool status);
+
+    void AppendNewRecordComming(const HBModbusClient::MODBUS_WELD_RESULT &data);
 
 private:
     int m_WelderID;
@@ -129,6 +133,7 @@ signals:
     void notifyTPSettingChanged();
     void notifyWPSettingChanged();
 
+    void notifyModelStatusChanged();
 
 };
 

@@ -35,7 +35,7 @@ Rectangle {
                 swipeCurrIndex = 0
             }
             swipevis = false
-            loadViewpro(2,multipro)
+            loadViewpro(2, multipro)
         }
         visible: !createModel
     }

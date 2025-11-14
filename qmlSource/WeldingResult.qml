@@ -12,7 +12,7 @@ Rectangle {
     property int peakPower: 0
     property int preheight: 0
     property int postHeight: 0
-    property bool altitudeMode:false
+    property bool heightOption:false
     property int powerY: 1
     property int imgY: 1
     property int imgtopMargin: 1
@@ -132,7 +132,7 @@ Rectangle {
         anchors.topMargin: 170
         anchors.left: parent.left
         anchors.leftMargin: 40
-        visible: altitudeMode
+        visible: heightOption
     }
 
     Text {
@@ -147,7 +147,7 @@ Rectangle {
         anchors.topMargin: 200
         anchors.left: parent.left
         anchors.leftMargin: 40
-        visible: altitudeMode
+        visible: heightOption
     }
 
     Image {
@@ -222,7 +222,7 @@ Rectangle {
         anchors.left: parent.left
         anchors.leftMargin: 10
         source: "qrc:/images/icon_preheight.png"
-        visible: altitudeMode
+        visible: heightOption
     }
     Image {
         id: imagePostheight
@@ -233,6 +233,6 @@ Rectangle {
         anchors.left: parent.left
         anchors.leftMargin: 10
         source: "qrc:/images/icon_postheight.png"
-        visible: altitudeMode
+        visible: heightOption
     }
 }

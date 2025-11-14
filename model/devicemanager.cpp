@@ -6,6 +6,7 @@
 #include "manual.h"
 #include "networkmodel.h"
 #include "rs232model.h"
+#include "tools/utilityfunction.h"
 
 DeviceManager* DeviceManager::m_ptrInstance = nullptr;
 DeviceManager *DeviceManager::getInstance()
@@ -29,8 +30,9 @@ DeviceManager::DeviceManager(QObject *parent)
     {
         qDebug() << "Failed to query device list from database! ";
     }
-    connect(HBModbusClient::getInstance(), &HBModbusClient::notifyDeviceStatusChanged, this, &DeviceManager::slotNotifyDeviceStatusChanged);
-    connect(HBModbusClient::getInstance(), &HBModbusClient::notifyWeldResultComing, this, &DeviceManager::slotNotifyWeldResultComing);
+    connect(HBModbusClient::getInstance(), &HBModbusClient::notifyDeviceStatusChanged,  this, &DeviceManager::slotNotifyDeviceStatusChanged);
+    connect(HBModbusClient::getInstance(), &HBModbusClient::notifyWeldResultComing,     this, &DeviceManager::slotNotifyWeldResultComing);
+    connect(HBModbusClient::getInstance(), &HBModbusClient::notifyPresetSettingChanged, this, &DeviceManager::slotNotifyPresetSettingChanged);
 }
 
 bool DeviceManager::InitDeviceList()
@@ -59,6 +61,11 @@ bool DeviceManager::InitDeviceList()
         bResult = true;
     }
     return bResult;
+}
+
+bool DeviceManager::IsManualPresetChanged()
+{
+
 }
 
 int DeviceManager::getSelectedDeviceIndex() const
@@ -134,14 +141,14 @@ QString DeviceManager::getHistoryName(int welderID)
     return "";
 }
 
-void DeviceManager::slotNotifyDeviceStatusChanged(int welderId, const DEVICE_STATUS &status)
+void DeviceManager::slotNotifyDeviceStatusChanged(int welderId, const HBModbusClient::DEVICE_STATUS &status)
 {
     for(int i = 0; i < m_listDevices.size(); i++)
     {
         int id = m_listDevices[i]->getWelderID();
         if(id == welderId)
         {
-            m_listDevices[i]->getDeviceObj()->setConnectState(status.IsDeviceStatus || status.IsDeviceDataStatus);
+            m_listDevices[i]->NotifyDeviceStatusChanged(status);
         }
     }
 }
@@ -161,55 +168,21 @@ void DeviceManager::slotNotifyWeldResultComing(int welderId, const HBModbusClien
              << " DateTime:" << data.DateTime.toString("yyyy-MM-dd hh:mm:ss");
     for(int i = 0; i < m_listDevices.size(); i++)
     {
-        Device* _objDevice = m_listDevices[i];
-        Production* _objProduction = _objDevice->getProductionObj();
-        Manual* _objManual = _objDevice->getManualObj();
-        if(welderId == _objDevice->getWelderID())
+        if(welderId == m_listDevices[i]->getWelderID())
         {
-            int energy = _objProduction->getEnergySetting();
-            float energy_lower = static_cast<float>(0.95 * energy);
-            float energy_upper = static_cast<float>(1.05 * energy);
-            int amplitude = _objProduction->getAmpSetting();
-            int triggerPressure = _objProduction->getTPSetting();
-            int weldPressure = _objProduction->getWPSetting();
-            if(amplitude != data.Amplitude)
-            {
-                _objProduction->SetModelStatus(false);
-                _objManual->clearData();
-            }
-            else if(triggerPressure != data.TriggerPressure)
-            {
-                _objProduction->SetModelStatus(false);
-                _objManual->clearData();
-            }
-            else if(weldPressure != data.WeldingPressure)
-            {
-                _objProduction->SetModelStatus(false);
-                _objManual->clearData();
-            }
-            else if(energy != data.Energy)
-            {
-                if((data.WeldAlarm == 0) && ((data.Energy < energy_lower) || (data.Energy > energy_upper)))
-                {
-                    _objProduction->SetModelStatus(false);
-                    _objManual->clearData();
-                }
-            }
-            else
-            {
-            }
-
-            if(_objProduction->GetModelStatus() == true)
-            {
-
-
-            }
-            else
-            {
-                _objManual->AppendNewRecordComming(welderId, data);
-            }
+            m_listDevices[i]->NotifyWeldResultComing(data);
         }
+    }
+}
 
+void DeviceManager::slotNotifyPresetSettingChanged(int welderId, const HBModbusClient::WELD_PRESET &data)
+{
+    for(int i = 0; i < m_listDevices.size(); i++)
+    {
+        if(welderId == m_listDevices[i]->getWelderID())
+        {
+            m_listDevices[i]->NotifyPresetSettingChanged(data);
+        }
     }
 }
 

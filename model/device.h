@@ -2,23 +2,11 @@
 #define DEVICE_H
 
 #include <QObject>
-
-// Forward declarations to avoid recursive includes in headers and reduce
-// precompiled-preamble recursion. Include concrete headers in the .cpp.
-class DeviceInformation;
-class IO;
-class Trend;
-class Manual;
-class System;
-class Production;
-
-// class DeviceInformation;
-// class IO;
-// class IOModel;
-// class Manual;
-// class System;
-// class Trend;
-
+#include "deviceinformation.h"
+#include "manual.h"
+#include "production.h"
+#include "trend.h"
+#include "modbus/hbmodbusclient.h"
 ///
 /// \brief The Device class : 单个设备
 ///
@@ -30,7 +18,7 @@ class Device : public QObject
     Q_PROPERTY(Manual* ManualObj                READ getManualObj       WRITE setManualObj      NOTIFY notifyManualObjChanged FINAL)        // Manual表格
     Q_PROPERTY(Production* ProductionObj        READ getProductionObj   WRITE setProductionObj  NOTIFY notifyProductionObjChanged FINAL)
     Q_PROPERTY(int WelderID                     READ getWelderID        CONSTANT)
-    Q_PROPERTY(Trend *pTrend                    READ pTrend CONSTANT)               // 折线
+    Q_PROPERTY(Trend *pTrend                    READ pTrend             CONSTANT)               // 折线
 public:
     explicit Device(int welderID = 0, QObject *parent = nullptr);
     ~Device();
@@ -41,13 +29,16 @@ public:
     void setManualObj(const Manual* object);
     Production* getProductionObj() const;
     void setProductionObj(const Production* object);
-    System* getSystemObj() const;
-    void setSystemObj(const System* object);
+
     bool SaveDevice();
     bool RemoveDevice();
     bool UpdateDevice();
 
     int getWelderID() const;
+
+    void NotifyDeviceStatusChanged(const HBModbusClient::DEVICE_STATUS &status);
+    void NotifyWeldResultComing(const HBModbusClient::MODBUS_WELD_RESULT& data);
+    void NotifyPresetSettingChanged(const HBModbusClient::WELD_PRESET& data);
 
     // Q_INVOKABLE IO *pIO() const;
     Q_INVOKABLE Trend *pTrend() const;
@@ -57,6 +48,10 @@ public:
     //获取和更新 plotIndex
     int getPlotIndex() const;
     void incrementPlotIndex();
+private:
+    bool IsProductionPresetChanged(const HBModbusClient::MODBUS_WELD_RESULT &data);
+    bool IsProductionPresetChanged(const HBModbusClient::WELD_PRESET &data);
+
 
 signals:
     void notifyProductionObjChanged();

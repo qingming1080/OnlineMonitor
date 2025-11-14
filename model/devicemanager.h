@@ -71,12 +71,14 @@ signals:
     void notifyDeviceCounterChanged();
 
 public slots:
-    void slotNotifyDeviceStatusChanged(int welderId, const DEVICE_STATUS &status);
+    void slotNotifyDeviceStatusChanged(int welderId, const HBModbusClient::DEVICE_STATUS &status);
     void slotNotifyWeldResultComing(int welderId, const HBModbusClient::MODBUS_WELD_RESULT& data);
+    void slotNotifyPresetSettingChanged(int welderId, const HBModbusClient::WELD_PRESET& data);
 
 private:
     explicit DeviceManager(QObject *parent = nullptr);
     bool InitDeviceList();
+    bool IsManualPresetChanged();
 private:
     static DeviceManager* m_ptrInstance;
     int m_iSelectedDeviceIndex;

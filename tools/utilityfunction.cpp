@@ -25,8 +25,18 @@ QString UtilityFunction::buildDateTimeString(const DateTimeData &data)
     return buildDateTime(data).toString("yyyy-MM-dd HH:mm:ss");
 }
 
-QString UtilityFunction::displayValue(int rawValue, double scale, int decimals){
+QString UtilityFunction::RawValueToString(const int rawValue, const double scale, const int decimals)
+{
     return QString::number(rawValue / scale, 'f', decimals);
+}
+
+int UtilityFunction::StringToRawValue(const QString displayValue, const double scale)
+{
+    bool isOK = false;
+    float fValue = displayValue.toFloat(&isOK);
+    if(isOK == false)
+        return 0;
+    return static_cast<int>(fValue * scale);
 }
 
 
