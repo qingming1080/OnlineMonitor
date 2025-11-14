@@ -224,6 +224,7 @@ bool DeviceManager::saveDevice()
         return false;
     else if(m_iSelectedDeviceIndex >= m_listDevices.size())
         return false;
-    m_listDevices[m_iSelectedDeviceIndex]->SaveDevice();
+    if (!m_listDevices[m_iSelectedDeviceIndex]->SaveDevice())
+        return false;
     return InitDeviceList();
 }

@@ -45,6 +45,7 @@ public:
     bool InitListManager();
     bool UpdateWelderID();
     int GetModbusDeviceID();
+    QString checkIPUnique(const QString &localIP, const QString &remoteIP, int currentWelderID);
 
 private:
     explicit NetworkModel(QObject *parent = nullptr);

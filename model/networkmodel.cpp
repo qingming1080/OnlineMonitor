@@ -294,3 +294,30 @@ int NetworkModel::indexOfEthRole(const int id) const
     }
     return 0;
 }
+
+QString NetworkModel::checkIPUnique(const QString &localIP, const QString &remoteIP, int ignoreWelderId)
+{
+    if (localIP == remoteIP)
+    {
+        qDebug() << "LocalIP and RemoteIP cannot be the same:" << localIP;
+        return QString("设备IP地址不能与本机IP地址相同: %1").arg(localIP);
+    }
+    for (auto iter = m_listManager.constBegin(); iter != m_listManager.constEnd(); ++iter)
+    {
+        if(iter.value().WelderId == ignoreWelderId)
+            continue;
+
+        if(iter.value().LocalIP == localIP)
+        {
+            qDebug() << "LocalIP 重复:" << localIP;
+            return QString("本地IP地址 %1 已存在").arg(localIP);
+        }
+
+        if(iter.value().RemoteIP == remoteIP)
+        {
+            qDebug() << "RemoteIP 重复:" << remoteIP;
+            return QString("设备IP地址 %1 已存在").arg(remoteIP);
+        }
+    }
+    return "";
+}

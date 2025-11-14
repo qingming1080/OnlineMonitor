@@ -137,7 +137,7 @@ Rectangle {
                         x: mode == 1 ? 50 : 29
                         y: mode == 1 ? 248 : 289
                         color: mode == 1 ? "#0c5696" : pRgb(43, 112, 173)
-                        altitudeMode:       DeviceManager.DeviceList[[0]] ? DeviceManager.DeviceList[[0]].DeviceObj.HeightEncoderOption : fasle
+                        heightOption:       DeviceManager.DeviceList[[0]] ? DeviceManager.DeviceList[[0]].DeviceObj.HeightEncoderOption : fasle
                         energy:             DeviceManager.DeviceList[[0]] ? DeviceManager.DeviceList[[0]].ProductionObj.Energy : 0
                         amplitude:          DeviceManager.DeviceList[[0]] ? DeviceManager.DeviceList[[0]].ProductionObj.Amplitude : 0
                         weldPressure:       DeviceManager.DeviceList[[0]] ? DeviceManager.DeviceList[[0]].ProductionObj.WeldPressure : 0

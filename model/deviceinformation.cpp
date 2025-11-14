@@ -299,6 +299,8 @@ void DeviceInformation::setAutoLearningCount(const QString &limit)
 
 bool DeviceInformation::SaveDevice()
 {
+    if(!validateConfigureSettings())
+        return false;
     if(m_DBConfigure.ConnectType == DeviceInfoEnum::TCP_IP)
     {
         m_DBConfigure.ConnectTypeId = NetworkModel::getInstance()->getConnectTypeId();
@@ -395,5 +397,28 @@ void DeviceInformation::InitModbusDevice()
         m_ModbusConfigure.SerialProperties.ParityBits = static_cast<QSerialPort::Parity>(RS232Model::getInstance()->getParityBits());
         m_ModbusConfigure.SerialProperties.StopBits = static_cast<QSerialPort::StopBits>(RS232Model::getInstance()->getStopBits());
     }
+}
+
+bool DeviceInformation::validateConfigureSettings()
+{
+    if(m_DBConfigure.WelderType == DeviceInfoEnum::L20_TS && m_DBConfigure.ConnectType != DeviceInfoEnum::RS232)
+    {
+        QString msg = QString("设备型号L20-TS，连接方式须使用RS232连接！");
+        emit errorMessageChanged(msg);
+        return false;
+    }
+
+    if(m_DBConfigure.ConnectType == DeviceInfoEnum::TCP_IP)
+    {
+        QString newLocalIP = NetworkModel::getInstance()->getLocalIP();
+        QString newRemoteIP = NetworkModel::getInstance()->getRemoteIP();
+        QString ipCheckMsg = NetworkModel::getInstance()->checkIPUnique(newLocalIP, newRemoteIP, m_WelderID);
+        if(!ipCheckMsg.isEmpty())
+        {
+            emit errorMessageChanged(ipCheckMsg);
+            return false;
+        }
+    }
+    return true;
 }
 

@@ -96,6 +96,7 @@ public:
     bool RemoveDevice();
 private:
     void InitModbusDevice();
+    bool validateConfigureSettings();
 signals:
     void notifyWelderNameChanged();
     void notifyWelderTypeChanged();
@@ -112,6 +113,8 @@ signals:
     void notifyForceThresholdChanged();
     void notifyResidualThresholdChanged();
     void notifyAutoLearningCountChanged();
+
+    void errorMessageChanged(const QString &msg);
 private:
     int m_WelderID;
     DataBaseManager::DB_CONFIGURE       m_DBConfigure;
