@@ -159,11 +159,10 @@ Rectangle {
                         x: mode == 1 ? 50 : 29
                         y: mode == 1 ? 248 : 289
                         color: mode == 1 ? "#0c5696" : pRgb(43, 112, 173)
-                        presetEnergy:          DeviceManager.DeviceList[0].ProductionObj.EnergySetting
-                        presetAmplitude:       DeviceManager.DeviceList[0].ProductionObj.AmplitudeSetting
-                        presetTriggerPressure: DeviceManager.DeviceList[0].ProductionObj.TriggertPressureSetting
-                        presetWeldPressure:    DeviceManager.DeviceList[0].ProductionObj.WeldPressureSetting
-
+                        presetEnergy:          DeviceManager.DeviceList[0].ManualObj.EnergySetting
+                        presetAmplitude:       DeviceManager.DeviceList[0].ManualObj.AmplitudeSetting
+                        presetTriggerPressure: DeviceManager.DeviceList[0].ManualObj.TriggertPressureSetting
+                        presetWeldPressure:    DeviceManager.DeviceList[0].ManualObj.WeldPressureSetting
                     }
                 }
             }
@@ -197,6 +196,11 @@ Rectangle {
                     // else if(mt1.text === "创建模型")
                     else if(mt1.text === GlobalLanguageDefine.strCreateModel)
                     {
+                        if(!DeviceManager.DeviceList[0].ManualObj.isSettingsValid())
+                        {
+                            footer.showError(qsTr("请输入焊接参数！"))
+                            return
+                        }
                         if(DeviceManager.DeviceList[0].DeviceObj.YieldRateLowerLimit <= listSize)
                         {
                             loader.sourceComponent = mode1

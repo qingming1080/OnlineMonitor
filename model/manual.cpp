@@ -185,6 +185,29 @@ void Manual::loadData()
     endResetModel();
 }
 
+bool Manual::isSettingsValid() const
+{
+    bool ok;
+
+    double energySetting = getEnergySetting().toDouble(&ok);
+    if (!ok || energySetting <= 0.0)
+        return false;
+
+    double amplitudeSetting = getAmplitudeSetting().toDouble(&ok);
+    if (!ok || amplitudeSetting <= 0.0)
+        return false;
+
+    double triggerPressureSetting = getTriggerPressureSetting().toDouble(&ok);
+    if (!ok || triggerPressureSetting <= 0.0)
+        return false;
+
+    double pressureSetting = getWeldPressureSetting().toDouble(&ok);
+    if (!ok || pressureSetting <= 0.0)
+        return false;
+
+    return true;
+}
+
 bool Manual::CalibrateModel()
 {
     if(m_listManualRecords.size() == 0)

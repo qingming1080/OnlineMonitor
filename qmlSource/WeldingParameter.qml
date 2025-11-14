@@ -170,7 +170,10 @@ Rectangle {
              if (!intRegex.test(fieldEnergy.text))
                  footer.showError(titleEnergy.text + GlobalLanguageDefine.strInputInterger)
              else
-                 footer.hideError()
+             {
+                footer.hideError()
+                DeviceManager.DeviceList[currentIndex].ManualObj.EnergySetting = fieldEnergy.text
+             }
          }
     }
     TextField{
@@ -204,7 +207,10 @@ Rectangle {
              if (!wpRegex.test(fieldAmplitude.text))
                  footer.showError(titleAmplitude.text + GlobalLanguageDefine.strInputInterger)
              else
-                 footer.hideError()
+             {
+                footer.hideError()
+                DeviceManager.DeviceList[currentIndex].ManualObj.AmplitudeSetting = fieldAmplitude.text
+             }
          }
     }
     TextField{
@@ -229,16 +235,19 @@ Rectangle {
         MouseArea {
             anchors.fill: parent
             onPressed: {
-                fieldTP.forceActiveFocus()
+                fieldTriggerPressure.forceActiveFocus()
                 keyboardType = 0
             }
         }
         onEditingFinished: {
              var tpRegex = /^[0-9]+$/
-             if (!tpRegex.test(fieldTP.text))
+             if (!tpRegex.test(fieldTriggerPressure.text))
                  footer.showError(titleTriggerPressure.text + GlobalLanguageDefine.strInputInterger)
              else
-                 footer.hideError()
+             {
+                footer.hideError()
+                DeviceManager.DeviceList[currentIndex].ManualObj.TriggerPressureSetting = fieldTriggerPressure.text
+             }
          }
     }
     TextField{
@@ -272,8 +281,10 @@ Rectangle {
              if (!wpRegex.test(fieldWeldPressure.text))
                  footer.showError(titleWeldPressure.text + GlobalLanguageDefine.strInputInterger)
              else
-                 footer.hideError()
+             {
+                footer.hideError()
+                DeviceManager.DeviceList[currentIndex].ManualObj.WeldPressureSetting = fieldWeldPressure.text
+            }
          }
     }
-
 }
