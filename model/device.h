@@ -7,6 +7,7 @@
 #include "production.h"
 #include "trend.h"
 #include "modbus/hbmodbusclient.h"
+#include "provienceEE/providenceEE.h"
 ///
 /// \brief The Device class : 单个设备
 ///
@@ -67,6 +68,7 @@ private:
     DeviceInformation*  m_ptrDevice;   // 设备信息
     Manual*             m_ptrManual;
     Production*         m_ptrProduction;
+    ProvidenceEE*       m_ptrProvidenceEE;
 
     Trend* m_ptrTrend;
     int plotIndex;  // 每个设备独有的 plotIndex

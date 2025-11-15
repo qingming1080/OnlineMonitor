@@ -4,6 +4,7 @@
 #include <QObject>
 #include "DataBase/databasemanager.h"
 #include "modbus/hbmodbusclient.h"
+#include "provienceEE/providenceEE.h"
 
 class Production : public QObject
 {
@@ -45,7 +46,7 @@ class Production : public QObject
 
     Q_PROPERTY(bool ModelStatus     READ getModelStatus         WRITE setModelStatus        NOTIFY notifyModelStatusChanged FINAL)
 public:
-    explicit Production(int welderID = 0, QObject *parent = nullptr);
+    explicit Production(int welderID = 0, ProvidenceEE* _providenceEE = nullptr, QObject *parent = nullptr);
 
     QString getGoodRate() const;
     void setGoodRate(const QString &rate);
@@ -112,6 +113,7 @@ private:
     int m_iDefectiveCycleCount;            // 次品
     int m_iSuspectCycleCount;              // 可疑
     int m_iTotalCycleCount;                // 总数
+    ProvidenceEE*                   m_ptrProvidenceEE;
 
 signals:
     void notifyGoodRateChanged();

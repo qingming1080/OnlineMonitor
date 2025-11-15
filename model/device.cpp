@@ -17,10 +17,11 @@ Device::Device(int welderID, QObject *parent)
     // QElapsedTimer timer;
     // timer.start();
 
-    m_ptrDevice     = new DeviceInformation(m_WelderID);
-    m_ptrManual     = new Manual(m_WelderID);
-    m_ptrProduction = new Production(m_WelderID);
-    m_ptrTrend      = new Trend(m_WelderID);
+    m_ptrProvidenceEE   = new ProvidenceEE(m_WelderID);
+    m_ptrDevice         = new DeviceInformation(m_WelderID);
+    m_ptrManual         = new Manual(m_WelderID, m_ptrProvidenceEE);
+    m_ptrProduction     = new Production(m_WelderID, m_ptrProvidenceEE);
+    m_ptrTrend          = new Trend(m_WelderID);
 
     // QString text = QString("%1号设备_Device_初始化共耗时:%2ms").arg(welderID).arg(timer.elapsed());
     //                    emit SignalManager::getInstance()->signalAddRecord(QDateTime::currentDateTime(), text);
@@ -28,14 +29,17 @@ Device::Device(int welderID, QObject *parent)
 
 Device::~Device()
 {
-    delete m_ptrDevice;
-    m_ptrDevice = nullptr;
+    delete m_ptrProvidenceEE;
+    m_ptrProvidenceEE = nullptr;
     delete m_ptrManual;
     m_ptrManual = nullptr;
     delete m_ptrProduction;
     m_ptrProduction = nullptr;
     delete m_ptrTrend;
     m_ptrTrend = nullptr;
+    delete m_ptrDevice;
+    m_ptrDevice = nullptr;
+
 }
 
 Trend *Device::pTrend() const

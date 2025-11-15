@@ -1,6 +1,6 @@
 #include "production.h"
-Production::Production(int welderID, QObject *parent)
-    :QObject{parent}, m_WelderID(welderID)
+Production::Production(int welderID, ProvidenceEE *_providenceEE, QObject *parent)
+    :QObject{parent}, m_WelderID(welderID), m_ptrProvidenceEE(_providenceEE)
 {
 
     m_iGoodRate = 90;

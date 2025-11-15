@@ -1,12 +1,10 @@
 #include "manual.h"
 #include "tools/utilityfunction.h"
 #include <QDebug>
-#include "tools/GenericLearning.h"
-#include "provienceEE/providenceEE.h"
 #include <algorithm>
 
-Manual::Manual(int welderID, QObject *parent)
-    : QAbstractListModel{parent}, m_welderID(welderID)
+Manual::Manual(int welderID, ProvidenceEE *_providenceEE, QObject *parent)
+    : QAbstractListModel{parent}, m_welderID(welderID), m_ptrProvidenceEE(_providenceEE)
 {
     loadData();
     setEnergySetting("0");
@@ -212,55 +210,97 @@ bool Manual::CalibrateModel()
 {
     if(m_listManualRecords.size() == 0)
         return false;
-#if RASPBERRY
-    ProvidenceEE::GetInstance()->ResetProcess();
-    ProvidenceEE::GetInstance()->CalibrateSPCProcess(m_listManualRecords);
-    ProvidenceEE::GetInstance()->CalibrateAIProcess(m_listManualRecords);
-
     GenericLearning::PROCESS_PARAM param[GenericLearning::TOTALPARA];
     GenericLearning::AI_POLYNOMIAL_COEFFICIENT coefficient[GenericLearning::STRENGTH_MAX];
     GenericLearning::CENTRALIZED_PROPERTY centralized;
-
-    ProvidenceEE::GetInstance()->GetSPCProcess(param);
-    ProvidenceEE::GetInstance()->GetAIProcess(&centralized, coefficient);
-
-    qDebug() << "Time.Alpha: " << param[GenericLearning::TIME].Alpha;
-    qDebug() << "Time.Beta: " << param[GenericLearning::TIME].Beta;
-    qDebug() << "Time.SampleCount: " << param[GenericLearning::TIME].SampleCount;
-    qDebug() << "Power.Alpha: " << param[GenericLearning::POWER].Alpha;
-    qDebug() << "Power.Beta: " << param[GenericLearning::POWER].Beta;
-    qDebug() << "Power.SampleCount: " << param[GenericLearning::POWER].SampleCount;
-    qDebug() << "Preheight.Alpha: " << param[GenericLearning::PREHEIGHT].Alpha;
-    qDebug() << "Preheight.Beta: " << param[GenericLearning::PREHEIGHT].Beta;
-    qDebug() << "Preheight.SampleCount: " << param[GenericLearning::PREHEIGHT].SampleCount;
-    qDebug() << "Postheight.Alpha: " << param[GenericLearning::POSTHEIGHT].Alpha;
-    qDebug() << "Postheight.Beta: " << param[GenericLearning::POSTHEIGHT].Beta;
-    qDebug() << "Postheight.SampleCount: " << param[GenericLearning::POSTHEIGHT].SampleCount;
-
-    qDebug() << "Centralized.ForceMean: " << centralized.ForceMean;
-    qDebug() << "Centralized.ResidualMean: " << centralized.ResidualMean;
-    qDebug() << "Centralized.PowerMean: " << centralized.PowerMean;
-    qDebug() << "Centralized.PowrStd: " << centralized.PowrStd;
-    qDebug() << "Centralized.TimeMean: " << centralized.TimeMean;
-    qDebug() << "Centralized.TimeStd: " << centralized.TimeStd;
-
-    qDebug() << "Strength0.P00: " << coefficient[GenericLearning::STRENGTH0].P00;
-    qDebug() << "Strength0.P01: " << coefficient[GenericLearning::STRENGTH0].P01;
-    qDebug() << "Strength0.P02: " << coefficient[GenericLearning::STRENGTH0].P02;
-    qDebug() << "Strength0.P10: " << coefficient[GenericLearning::STRENGTH0].P10;
-    qDebug() << "Strength0.P11: " << coefficient[GenericLearning::STRENGTH0].P11;
-    qDebug() << "Strength0.P20: " << coefficient[GenericLearning::STRENGTH0].P20;
-
-    qDebug() << "Strength1.P00: " << coefficient[GenericLearning::STRENGTH1].P00;
-    qDebug() << "Strength1.P01: " << coefficient[GenericLearning::STRENGTH1].P01;
-    qDebug() << "Strength1.P02: " << coefficient[GenericLearning::STRENGTH1].P02;
-    qDebug() << "Strength1.P10: " << coefficient[GenericLearning::STRENGTH1].P10;
-    qDebug() << "Strength1.P11: " << coefficient[GenericLearning::STRENGTH1].P11;
-    qDebug() << "Strength1.P20: " << coefficient[GenericLearning::STRENGTH1].P20;
-    qDebug()<< "444444444444444444";
+#if RASPBERRY
+    m_ptrProvidenceEE->ResetProcess();
+    m_ptrProvidenceEE->CalibrateSPCProcess(m_listManualRecords);
+    m_ptrProvidenceEE->CalibrateAIProcess(m_listManualRecords);
+    m_ptrProvidenceEE->GetSPCProcess(param);
+    m_ptrProvidenceEE->GetAIProcess(&centralized, coefficient);
 #endif
-    //TODO handle with Database
+    InitDBModel(param, coefficient, centralized);
     return true;
+}
+
+void Manual::InitDBModel(const GenericLearning::PROCESS_PARAM *_param, const GenericLearning::AI_POLYNOMIAL_COEFFICIENT *_coefficient, const GenericLearning::CENTRALIZED_PROPERTY centralized)
+{
+    m_DBModel.WeldTime.Alpha = _param[GenericLearning::TIME].Alpha;
+    m_DBModel.WeldTime.Beta = _param[GenericLearning::TIME].Beta;
+    m_DBModel.PeakPower.Alpha = _param[GenericLearning::POWER].Alpha;
+    m_DBModel.PeakPower.Beta = _param[GenericLearning::POWER].Beta;
+    m_DBModel.Preheight.Alpha = _param[GenericLearning::PREHEIGHT].Alpha;
+    m_DBModel.Preheight.Beta = _param[GenericLearning::PREHEIGHT].Beta;
+    m_DBModel.PostHeight.Alpha = _param[GenericLearning::POSTHEIGHT].Alpha;
+    m_DBModel.PostHeight.Beta = _param[GenericLearning::POSTHEIGHT].Beta;
+
+    m_DBModel.PeelForce.P00 = _coefficient[GenericLearning::STRENGTH0].P00;
+    m_DBModel.PeelForce.P01 = _coefficient[GenericLearning::STRENGTH0].P01;
+    m_DBModel.PeelForce.P02 = _coefficient[GenericLearning::STRENGTH0].P02;
+    m_DBModel.PeelForce.P10 = _coefficient[GenericLearning::STRENGTH0].P10;
+    m_DBModel.PeelForce.P11 = _coefficient[GenericLearning::STRENGTH0].P11;
+    m_DBModel.PeelForce.P20 = _coefficient[GenericLearning::STRENGTH0].P20;
+
+    m_DBModel.Residual.P00 = _coefficient[GenericLearning::STRENGTH1].P00;
+    m_DBModel.Residual.P01 = _coefficient[GenericLearning::STRENGTH1].P01;
+    m_DBModel.Residual.P02 = _coefficient[GenericLearning::STRENGTH1].P02;
+    m_DBModel.Residual.P10 = _coefficient[GenericLearning::STRENGTH1].P10;
+    m_DBModel.Residual.P11 = _coefficient[GenericLearning::STRENGTH1].P11;
+    m_DBModel.Residual.P20 = _coefficient[GenericLearning::STRENGTH1].P20;
+
+    m_DBModel.Centralized.TimeMean = centralized.TimeMean;
+    m_DBModel.Centralized.TimeStd = centralized.TimeStd;
+    m_DBModel.Centralized.PowerMean = centralized.PowerMean;
+    m_DBModel.Centralized.PowrStd = centralized.PowrStd;
+    m_DBModel.Centralized.ForceMean = centralized.ForceMean;
+    m_DBModel.Centralized.ResidualMean = centralized.ResidualMean;
+
+    m_DBModel.SampleCount = _param[GenericLearning::TIME].SampleCount;
+
+    m_DBModel.WelderId = m_welderID;                       // 焊机id
+    m_DBModel.CreateTime = QDateTime::currentDateTime();               // 创建时间
+    m_DBModel.Energy = GetEnergySetting();                         // 能量
+    m_DBModel.Amplitude = GetAmplitudeSetting();                      // 振幅
+    m_DBModel.TriggerPressure = GetTriggerPressureSetting();                // 焊接压力
+    m_DBModel.WeldPressure = GetWeldPressureSetting();                   // 触发压力
+    m_DBModel.isAvailable = true;
+
+    qDebug() << "PROCESS_PARAM: ";
+    qDebug() << " Time.Alpha: " << m_DBModel.WeldTime.Alpha
+             << " Time.Beta: " << m_DBModel.WeldTime.Beta
+             << " Power.Alpha: " << m_DBModel.PeakPower.Alpha
+             << " Power.Beta: " << m_DBModel.PeakPower.Beta
+             << " Preheight.Alpha: " << m_DBModel.Preheight.Alpha
+             << " Preheight.Beta: " << m_DBModel.Preheight.Beta
+             << " Postheight.Alpha: " << m_DBModel.PostHeight.Alpha
+             << " Postheight.Beta: " << m_DBModel.PostHeight.Beta;
+
+    qDebug() << "CENTRALIZED_PROPERTY: ";
+    qDebug() << " Centralized.ForceMean: " << m_DBModel.Centralized.ForceMean
+             << " Centralized.ResidualMean: " << m_DBModel.Centralized.ResidualMean
+             << " Centralized.PowerMean: " << m_DBModel.Centralized.PowerMean
+             << " Centralized.PowrStd: " << m_DBModel.Centralized.PowrStd
+             << " Centralized.TimeMean: " << m_DBModel.Centralized.TimeMean
+             << " Centralized.TimeStd: " << m_DBModel.Centralized.TimeStd;
+
+    qDebug() << "SAMPLE COUNT: " << m_DBModel.SampleCount;
+
+    qDebug() << "FORCE_COEFFICIENT: ";
+    qDebug() << " Strength0.P00: " << m_DBModel.PeelForce.P00
+             << " Strength0.P01: " << m_DBModel.PeelForce.P01
+             << " Strength0.P02: " << m_DBModel.PeelForce.P02
+             << " Strength0.P10: " << m_DBModel.PeelForce.P10
+             << " Strength0.P11: " << m_DBModel.PeelForce.P11
+             << " Strength0.P20: " << m_DBModel.PeelForce.P20;
+
+    qDebug() << "RESIDUAL_COEFFICIENT: ";
+    qDebug() << " Strength1.P00: " << m_DBModel.Residual.P00
+             << " Strength1.P01: " << m_DBModel.Residual.P01
+             << " Strength1.P02: " << m_DBModel.Residual.P02
+             << " Strength1.P10: " << m_DBModel.Residual.P10
+             << " Strength1.P11: " << m_DBModel.Residual.P11
+             << " Strength1.P20: " << m_DBModel.Residual.P20;
 }
 
 void Manual::AppendNewRecordComming(const HBModbusClient::MODBUS_WELD_RESULT &data)
@@ -291,6 +331,11 @@ QString Manual::getEnergySetting() const
     return QString::number(m_DBModel.Energy);
 }
 
+int Manual::GetEnergySetting() const
+{
+    return m_DBModel.Energy;
+}
+
 void Manual::setEnergySetting(const QString &value)
 {
     bool isOK = false;
@@ -307,6 +352,11 @@ void Manual::setEnergySetting(const QString &value)
 QString Manual::getAmplitudeSetting() const
 {
     return QString::number(m_DBModel.Amplitude);
+}
+
+int Manual::GetAmplitudeSetting() const
+{
+    return m_DBModel.Amplitude;
 }
 
 void Manual::setAmplitudeSetting(const QString &value)
@@ -327,6 +377,11 @@ QString Manual::getTriggerPressureSetting() const
     return UtilityFunction::getInstance()->RawValueToString(m_DBModel.TriggerPressure, 10.0, 1);
 }
 
+int Manual::GetTriggerPressureSetting() const
+{
+    return m_DBModel.TriggerPressure;
+}
+
 void Manual::setTriggerPressureSetting(const QString &value)
 {
     int iTriggerPressure = UtilityFunction::getInstance()->StringToRawValue(value, 10.0);
@@ -340,6 +395,11 @@ void Manual::setTriggerPressureSetting(const QString &value)
 QString Manual::getWeldPressureSetting() const
 {
     return UtilityFunction::getInstance()->RawValueToString(m_DBModel.WeldPressure, 10.0, 1);
+}
+
+int Manual::GetWeldPressureSetting() const
+{
+    return m_DBModel.WeldPressure;
 }
 
 void Manual::setWeldPressureSetting(const QString &value)

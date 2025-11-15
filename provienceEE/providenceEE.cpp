@@ -1,10 +1,6 @@
 #include "providenceEE.h"
-GenericLearning::PROCESS_PARAM ProvidenceEE::ProcessParam[GenericLearning::TOTALPARA];
-GenericLearning::AI_POLYNOMIAL_COEFFICIENT ProvidenceEE::PolynomialCoefficient[GenericLearning::STRENGTH_MAX];
-GenericLearning::CENTRALIZED_PROPERTY ProvidenceEE::CentralizedProperty;
-ProvidenceEE* ProvidenceEE::m_objProvidenceEE = nullptr;
-ProvidenceEE::ProvidenceEE(QObject *parent)
-    : QObject{parent}
+ProvidenceEE::ProvidenceEE(int welderID, QObject *parent)
+    : QObject{parent}, m_WelderID(welderID)
 {
 #if RASPBERRY
     GenericLearning::SetDebugMode(1);
@@ -131,9 +127,4 @@ void ProvidenceEE::GetAIProcess(GenericLearning::CENTRALIZED_PROPERTY *_centrali
         memcpy(_coefficient, PolynomialCoefficient, sizeof(GenericLearning::AI_POLYNOMIAL_COEFFICIENT) * GenericLearning::STRENGTH_MAX);
     }
 #endif
-}
-
-ProvidenceEE *ProvidenceEE::GetInstance()
-{
-    return (m_objProvidenceEE != nullptr) ? m_objProvidenceEE : (m_objProvidenceEE = new ProvidenceEE());
 }

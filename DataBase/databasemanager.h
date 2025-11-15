@@ -201,7 +201,6 @@ public:
         QDateTime CreateTime;               // 创建时间
         int Energy;                         // 能量
         int Amplitude;                      // 振幅
-        // int pressure;                    // 压力
         int TriggerPressure;                // 焊接压力
         int WeldPressure;                   // 触发压力
         ALPHA_BETA WeldTime;                // 焊机时间Alpha&Beta
