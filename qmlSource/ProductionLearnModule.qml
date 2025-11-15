@@ -196,17 +196,26 @@ Rectangle {
                         Image {
                             id:im
                             anchors.fill: parent
-                            source: "qrc:/images/btn_unlock_double_line.png"
+                            source: {
+                                if(DeviceManager.DeviceList[currentIndex].ManualObj.IsSelectedAll === false)
+                                    return "qrc:/images/btn_unlock_double_line.png"
+                                else
+                                    return "qrc:/images/btn_lock_double_line.png"
+                            }
                             fillMode: Image.PreserveAspectFit // 保持图片的宽高比，适应按钮大小
                         }
                     }
                     onPressed: {
                         tableFlag = true
-                        if(im.source == "qrc:/images/btn_unlock_double_line.png"){
+                        if(im.source == "qrc:/images/btn_unlock_double_line.png")
+                        {
                             im.source = "qrc:/images/btn_lock_double_line.png"
+                            DeviceManager.DeviceList[currentIndex].ManualObj.IsSelectedAll = true
                         }
-                        else{
+                        else
+                        {
                             im.source = "qrc:/images/btn_unlock_double_line.png"
+                            DeviceManager.DeviceList[currentIndex].ManualObj.IsSelectedAll = false
                         }
                     }
                 }

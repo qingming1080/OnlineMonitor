@@ -430,4 +430,28 @@ void Manual::setWeldPressureSetting(const QString &value)
         m_DBModel.WeldPressure = iWeldPressure;
         emit notifyWeldPressureSettingChanged();
     }
-}   
+}
+
+bool Manual::getIsSelectedAll() const
+{
+    for (const auto &record : m_listManualRecords)
+    {
+        if (!record.IsSelected)
+            return false;
+    }
+    return true;
+}
+
+void Manual::setIsSelectedAll(const bool &value)
+{
+    for (int i = 0; i < m_listManualRecords.size(); ++i)
+    {
+        if (m_listManualRecords[i].IsSelected != value)
+        {
+            m_listManualRecords[i].IsSelected = value;
+            QModelIndex idx = index(i);
+            emit dataChanged(idx, idx, {MANUAL_TABLE::IS_SELECTED});
+        }
+    }
+    emit notifyIsSelectedAllChanged();
+}
