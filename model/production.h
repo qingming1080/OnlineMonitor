@@ -23,28 +23,28 @@ class Production : public QObject
 
     /// 2024/04/07  焊接结果暴露
     // 焊接结果:功率
-    Q_PROPERTY(int PeakPower        READ getPeakPower           WRITE setPeakPower              NOTIFY notifyPeakPowerChanged)
+    Q_PROPERTY(QString PeakPower        READ getPeakPower           WRITE setPeakPower              NOTIFY notifyPeakPowerChanged)
     // 焊接结果:时间
-    Q_PROPERTY(int WeldTime         READ getWeldTime            WRITE setWeldTime               NOTIFY notifyWeldTimeChanged)
+    Q_PROPERTY(QString WeldTime         READ getWeldTime            WRITE setWeldTime               NOTIFY notifyWeldTimeChanged)
     // 焊接结果:能量
-    Q_PROPERTY(int Energy           READ getEnergy              WRITE setEnergy                 NOTIFY notifyEnergyChanged)
+    Q_PROPERTY(QString Energy           READ getEnergy              WRITE setEnergy                 NOTIFY notifyEnergyChanged)
     // 焊接结果:焊前高度
-    Q_PROPERTY(int Preheight        READ getPreheight           WRITE setPreheight              NOTIFY notifyPreheightChanged)
+    Q_PROPERTY(QString Preheight        READ getPreheight           WRITE setPreheight              NOTIFY notifyPreheightChanged)
     // 焊接结果:焊后高度
-    Q_PROPERTY(int PostHeight       READ getPostHeight          WRITE setPostHeight             NOTIFY notifyPostHeightChanged)
+    Q_PROPERTY(QString PostHeight       READ getPostHeight          WRITE setPostHeight             NOTIFY notifyPostHeightChanged)
 
-    Q_PROPERTY(int Amplitude        READ getAmplitude           WRITE setAmplitude              NOTIFY notifyAmplitudeChanged)
+    Q_PROPERTY(QString Amplitude        READ getAmplitude           WRITE setAmplitude              NOTIFY notifyAmplitudeChanged)
 
-    Q_PROPERTY(int WeldPressure     READ getWeldPressure        WRITE setWeldPressure           NOTIFY notifyWeldPressureChanged)
+    Q_PROPERTY(QString WeldPressure     READ getWeldPressure        WRITE setWeldPressure           NOTIFY notifyWeldPressureChanged)
 
-    Q_PROPERTY(int TriggertPressure READ getTriggertPressure    WRITE setTriggertPressure   NOTIFY notifyTriggertPressureChanged)
+    Q_PROPERTY(QString TriggertPressure READ getTriggertPressure    WRITE setTriggertPressure       NOTIFY notifyTriggertPressureChanged)
 
-    Q_PROPERTY(int EnergySetting    READ getEnergySetting       WRITE setEnergySetting      NOTIFY notifyEnergySettingChanged FINAL)
-    Q_PROPERTY(int AmpSetting       READ getAmpSetting          WRITE setAmpSetting         NOTIFY notifyAmpSettingChanged FINAL)
-    Q_PROPERTY(int TPSetting        READ getTPSetting           WRITE setTPSetting          NOTIFY notifyTPSettingChanged FINAL)
-    Q_PROPERTY(int WPSetting        READ getWPSetting           WRITE setWPSetting          NOTIFY notifyWPSettingChanged FINAL)
+    Q_PROPERTY(int EnergySetting        READ getEnergySetting       WRITE setEnergySetting          NOTIFY notifyEnergySettingChanged FINAL)
+    Q_PROPERTY(int AmpSetting           READ getAmpSetting          WRITE setAmpSetting             NOTIFY notifyAmpSettingChanged FINAL)
+    Q_PROPERTY(int TPSetting            READ getTPSetting           WRITE setTPSetting              NOTIFY notifyTPSettingChanged FINAL)
+    Q_PROPERTY(int WPSetting            READ getWPSetting           WRITE setWPSetting              NOTIFY notifyWPSettingChanged FINAL)
 
-    Q_PROPERTY(bool ModelStatus     READ getModelStatus         WRITE setModelStatus        NOTIFY notifyModelStatusChanged FINAL)
+    Q_PROPERTY(bool ModelStatus         READ getModelStatus         WRITE setModelStatus            NOTIFY notifyModelStatusChanged FINAL)
 public:
     explicit Production(int welderID = 0, ProvidenceEE* _providenceEE = nullptr, QObject *parent = nullptr);
 
@@ -63,29 +63,29 @@ public:
     QString getTotalCycleCount() const;
     void setTotalCycleCount(const QString &cycles);
 
-    int getPeakPower() const;
-    void setPeakPower(const int power);
+    QString getPeakPower() const;
+    void setPeakPower(const QString &power);
 
-    int  getWeldTime() const;
-    void setWeldTime(const int time);
+    QString  getWeldTime() const;
+    void setWeldTime(const QString &time);
 
-    int getEnergy() const;
-    void setEnergy(const int energy);
+    QString getEnergy() const;
+    void setEnergy(const QString &energy);
 
-    int getPreheight() const;
-    void setPreheight(const int height);
+    QString getPreheight() const;
+    void setPreheight(const QString &height);
 
-    int getPostHeight() const;
-    void setPostHeight(const int height);
+    QString getPostHeight() const;
+    void setPostHeight(const QString &height);
+    
+    QString getAmplitude() const;
+    void setAmplitude(const QString &amplitude);
 
-    int getAmplitude() const;
-    void setAmplitude(const int amplitude);
+    QString getWeldPressure() const;
+    void setWeldPressure(const QString& weldPressure);
 
-    int getWeldPressure() const;
-    void setWeldPressure(const int weldPressure);
-
-    int getTriggertPressure() const;
-    void setTriggertPressure(const int triggertPressure);
+    QString getTriggertPressure() const;
+    void setTriggertPressure(const QString& triggertPressure);
 
     int getEnergySetting() const;
     void setEnergySetting(const int energy);
@@ -95,7 +95,7 @@ public:
 
     int getTPSetting() const;
     void setTPSetting(const int tp);
-
+    
     int getWPSetting() const;
     void setWPSetting(const int wp);
 

@@ -42,6 +42,50 @@ public:
     explicit MANUAL_TABLE(QObject *parent = nullptr){Q_UNUSED(parent)}
 };
 
+class PRODUCTION_TABLE : public QObject
+{
+public:
+    enum PRODUCTION_COLUMN
+    {
+        ID           = 0,    // 生产ID
+        WELDER_ID    = 1,    // 焊机ID
+        CREATE_TIME  = 2,    // 创建时间
+        SERIAL_NUMBER           = 3,    // 序号Barcode
+        CYCLE_COUNT             = 4,    // 循环值
+        BATCH_COUNT             = 5,    // 生产值
+        ENERGY                  = 6,    // 能量
+        AMPLITUDE               = 7,    // 振幅
+        TRIGGER_PRESSURE        = 8,
+        WELD_PRESSURE           = 9,    // 压力
+        WELD_TIME               = 10,   // 焊接时间
+        PEAK_POWER              = 11,   // 功率
+        PRE_HEIGHT              = 12,   // 焊前高度
+        POST_HEIGHT             = 13,   // 焊后高度
+        FORCE                   = 14,   // 撕拉力
+        RESIDUAL                = 15,   // 残留度
+        FINAL_RESULT            = 16,   // 产品状态 0_合格 1_次品 2_可疑
+    };
+};
+
+class MODEL_TABLE : public QObject
+{
+public:
+    enum MODEL_COLUMN
+    {
+        ID = 0,
+        WELDER_ID = 1,
+        CREATE_TIME = 2,
+        ENERGY = 3,
+        AMPLITUDE = 4,
+        TRIGGER_PRESSURE = 5,
+        WELD_PRESSURE = 6,
+        ALPHA_BETA = 7,
+        COEFFICIENT = 8,
+        CENTRALIZED = 9,
+        SAMPLE_COUNT = 10,
+        AVAILABLE = 11
+    };
+};
 
 class DataBaseManager : public QObject
 {
@@ -65,29 +109,6 @@ public:
         AUTO_LEARN_COUNT,
         FORCE_THRESHOLD,
         RESIDUAL_THRESHOLD,
-
-    };
-
-    enum PRODUCTION_COLUMN
-    {
-        PRODUCTION_ID           = 0,    // 生产ID
-        PRODUCTION_WELDER_ID    = 1,    // 焊机ID
-        MODEL_ID                = 2,    // 模型ID
-        PRODUCTION_CREATE_TIME  = 3,    // 创建时间
-        SERIAL_NUMBER           = 4,    // 序号Barcode
-        CYCLE_COUNT             = 5,    // 循环值
-        BATCH_COUNT             = 6,    // 生产值
-        ENERGY                  = 7,    // 能量
-        AMPLITUDE               = 8,    // 振幅
-        TRIGGER_PRESSURE        = 9,
-        WELD_PRESSURE           = 10,    // 压力
-        WELD_TIME               = 11,   // 焊接时间
-        PEAK_POWER              = 12,   // 功率
-        PRE_HEIGHT              = 13,   // 焊前高度
-        POST_HEIGHT             = 14,   // 焊后高度
-        FORCE                   = 15,   // 撕拉力
-        RESIDUAL                = 16,   // 残留度
-        FINAL_RESULT            = 17,   // 产品状态 0_合格 1_次品 2_可疑
 
     };
 
@@ -161,11 +182,6 @@ public:
         int ActualResidual; // 残留度
         bool IsSelected;
         bool IsNewComming;
-        //preset
-        // int EnergySetting;
-        // int AmplitudeSetting;
-        // int WPressureSetting;
-        // int TPressureSetting;
     };
 
     struct ALPHA_BETA
@@ -267,10 +283,11 @@ public:
     bool insertManualRecord(DB_MANUAL data);
     bool updateManualRecord(const int id, const DB_MANUAL data);
 
-    QList<DB_MODEL> getModelData();
+    bool getModelRecords(QList<DB_MODEL>& list);
+    bool getModelRecord(const int welderID, DB_MODEL& model);
     bool insertModelRecord(DB_MODEL model);
-    bool removeModelRow(int id);
-    bool clearModel();
+    bool removeModelRecord(int id);
+    bool updateModelRecord(const int id, const DB_MODEL model);
 
 /////////////////////////io_data////////////////////////////////
 /// 只处理待定
@@ -384,57 +401,14 @@ signals:
 
 private:
     explicit DataBaseManager(QObject *parent = nullptr);
-
     void init();
-
-    ///
-    /// \brief getConfiguration_ColumnName : 通过Configuration列号获取列名
-    /// \param column : 列号
-    /// \return : 列名
-    ///
     QString getConfiguration_ColumnName(CONFIGURATION_COLUMN column);
-
-    ///
-    /// \brief getNetwork_ColumnName : 通过connection_network列号获取列名
-    /// \param column : 列号
-    /// \return : 列名
-    ///
     QString getNetwork_ColumnName(QmlEnum::NETWORK_COLUMN column);
-
-    ///
-    /// \brief getRS232_ColumnName : 通过connection_rs232列号获取列名
-    /// \param column : 列号
-    /// \return : 列名
-    ///
     QString getRS232_ColumnName(QmlEnum::RS232_COLUMN column);
-
-    ///
-    /// \brief getIO_ColumnName : 通过io_data列号获取列名
-    /// \param column : 列号
-    /// \return : 列名
-    ///
     QString getIO_ColumnName(QmlEnum::IO_COLUMN column);
-
-    ///
-    /// \brief getManuaal_ColumnName : 通过manual列号获取列名
-    /// \param column : 列号
-    /// \return : 列名
-    ///
     QString getManual_ColumnName(MANUAL_TABLE::MANUAL_COLUMN column);
-
-    ///
-    /// \brief getModel_ColumnName : 通过model列号获取列名
-    /// \param column : 列号
-    /// \return : 列名
-    ///
-    QString getModel_ColumnName(QmlEnum::MODEL_COLUMN column);
-
-    ///
-    /// \brief getProduction_ColumnName : 通过production列号获取列名
-    /// \param column : 列号
-    /// \return : 列名
-    ///
-    QString getProduction_ColumnName(PRODUCTION_COLUMN column);
+    QString getModel_ColumnName(MODEL_TABLE::MODEL_COLUMN column);
+    QString getProduction_ColumnName(PRODUCTION_TABLE::PRODUCTION_COLUMN column);
 
     ///
     /// \brief getSystem_ColumnName : 通过system_conf列号获取列名
@@ -447,6 +421,16 @@ private:
 
     QString getD2eviceInfo();
 
+    bool AlphaBeta2JsonFormat(const ALPHA_BETA WeldTime, const ALPHA_BETA PeakPower,
+                              const ALPHA_BETA Preheight, const ALPHA_BETA PostHeight, QString& strJson);
+    bool JsonFormat2AlphaBeta(const QString strJson, ALPHA_BETA& WeldTime,
+                              ALPHA_BETA& PeakPower, ALPHA_BETA& Preheight, ALPHA_BETA& PostHeight);
+
+    bool Coefficient2JsonFormat(const POLYNOMIAL_COEFFICIENT PeelForce, const POLYNOMIAL_COEFFICIENT Residual, QString& strJson);
+    bool JsonFormat2Coefficient(const QString strJson, POLYNOMIAL_COEFFICIENT& PeelForce, POLYNOMIAL_COEFFICIENT& Residual);
+
+    bool Centralized2JsonFormat(const CENTRALIZED_PROPERTY Centralized, QString& strJson);
+    bool JsonFormat2Centralized(const QString strJson, CENTRALIZED_PROPERTY& Centralized);
 private:
     static DataBaseManager* s_pDataBaseManager;
 

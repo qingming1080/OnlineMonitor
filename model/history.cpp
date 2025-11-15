@@ -124,39 +124,37 @@ QVariant History::data(const QModelIndex &index, int role) const
     DataBaseManager::DB_PRODUCTION data = m_data.at(row);
     switch(role)
     {
-    case DataBaseManager::PRODUCTION_ID:
+    case PRODUCTION_TABLE::ID:
         return data.ProductionID;
-    case DataBaseManager::PRODUCTION_WELDER_ID:
+    case PRODUCTION_TABLE::WELDER_ID:
         return data.WelderID;
-    case DataBaseManager::MODEL_ID:
-        return data.ModelID;
-    case DataBaseManager::PRODUCTION_CREATE_TIME:
+    case PRODUCTION_TABLE::CREATE_TIME:
         return data.CreateTime;
-    case DataBaseManager::SERIAL_NUMBER:
+    case PRODUCTION_TABLE::SERIAL_NUMBER:
         return data.SerialNumber;
-    case DataBaseManager::CYCLE_COUNT:
+    case PRODUCTION_TABLE::CYCLE_COUNT:
         return data.CycleCount;
-    case DataBaseManager::BATCH_COUNT:
+    case PRODUCTION_TABLE::BATCH_COUNT:
         return data.BatchCount;
-    case DataBaseManager::ENERGY:
+    case PRODUCTION_TABLE::ENERGY:
         return data.Energy;
-    case DataBaseManager::AMPLITUDE:
+    case PRODUCTION_TABLE::AMPLITUDE:
         return data.Amplitude;
-    case DataBaseManager::WELD_PRESSURE:
+    case PRODUCTION_TABLE::WELD_PRESSURE:
         return UtilityFunction::getInstance()->RawValueToString(data.WeldPressure, 10, 1);
-    case DataBaseManager::WELD_TIME:
+    case PRODUCTION_TABLE::WELD_TIME:
         return UtilityFunction::getInstance()->RawValueToString(data.WeldTime, 100, 2);
-    case DataBaseManager::PEAK_POWER:
+    case PRODUCTION_TABLE::PEAK_POWER:
         return data.PeakPower;
-    case DataBaseManager::PRE_HEIGHT:
+    case PRODUCTION_TABLE::PRE_HEIGHT:
         return UtilityFunction::getInstance()->RawValueToString(data.Preheight, 100, 2);
-    case DataBaseManager::POST_HEIGHT:
+    case PRODUCTION_TABLE::POST_HEIGHT:
         return UtilityFunction::getInstance()->RawValueToString(data.PostHeight, 100, 2);
-    case DataBaseManager::FORCE:
+    case PRODUCTION_TABLE::FORCE:
         return data.Force;
-    case DataBaseManager::RESIDUAL:
+    case PRODUCTION_TABLE::RESIDUAL:
         return data.Residual;;
-    case DataBaseManager::FINAL_RESULT:
+    case PRODUCTION_TABLE::FINAL_RESULT:
         return data.FinalResult;
     // case DataBaseManager::PRODUCTION_row_number:
     //     return row + 1;
@@ -170,24 +168,23 @@ QHash<int, QByteArray> History::roleNames() const
 {
     QHash<int, QByteArray> roles;
 
-    roles[DataBaseManager::PRODUCTION_ID]            = "id";
-    roles[DataBaseManager::PRODUCTION_WELDER_ID]     = "welder_id";
-    roles[DataBaseManager::MODEL_ID]                 = "model_id";
-    roles[DataBaseManager::PRODUCTION_CREATE_TIME]   = "create_time";
-    roles[DataBaseManager::SERIAL_NUMBER]            = "serial_number";
-    roles[DataBaseManager::CYCLE_COUNT]              = "cycle_count";
-    roles[DataBaseManager::BATCH_COUNT]              = "batch_count";
-    roles[DataBaseManager::ENERGY]                   = "energy";
-    roles[DataBaseManager::AMPLITUDE]                = "amplitude";
-    roles[DataBaseManager::WELD_PRESSURE]            = "weld_pressure";
-    roles[DataBaseManager::WELD_TIME]                = "time";
-    roles[DataBaseManager::PEAK_POWER]               = "power";
-    roles[DataBaseManager::PRE_HEIGHT]               = "pre_height";
-    roles[DataBaseManager::POST_HEIGHT]              = "post_height";
-    roles[DataBaseManager::FORCE]                    = "force";
-    roles[DataBaseManager::RESIDUAL]                 = "residual";
-    roles[DataBaseManager::TRIGGER_PRESSURE]         = "trigger_pressure";
-    roles[DataBaseManager::FINAL_RESULT]             = "final_result";
+    roles[PRODUCTION_TABLE::ID]            = "id";
+    roles[PRODUCTION_TABLE::WELDER_ID]     = "welder_id";
+    roles[PRODUCTION_TABLE::CREATE_TIME]   = "create_time";
+    roles[PRODUCTION_TABLE::SERIAL_NUMBER]            = "serial_number";
+    roles[PRODUCTION_TABLE::CYCLE_COUNT]              = "cycle_count";
+    roles[PRODUCTION_TABLE::BATCH_COUNT]              = "batch_count";
+    roles[PRODUCTION_TABLE::ENERGY]                   = "energy";
+    roles[PRODUCTION_TABLE::AMPLITUDE]                = "amplitude";
+    roles[PRODUCTION_TABLE::WELD_PRESSURE]            = "weld_pressure";
+    roles[PRODUCTION_TABLE::WELD_TIME]                = "time";
+    roles[PRODUCTION_TABLE::PEAK_POWER]               = "power";
+    roles[PRODUCTION_TABLE::PRE_HEIGHT]               = "pre_height";
+    roles[PRODUCTION_TABLE::POST_HEIGHT]              = "post_height";
+    roles[PRODUCTION_TABLE::FORCE]                    = "force";
+    roles[PRODUCTION_TABLE::RESIDUAL]                 = "residual";
+    roles[PRODUCTION_TABLE::TRIGGER_PRESSURE]         = "trigger_pressure";
+    roles[PRODUCTION_TABLE::FINAL_RESULT]             = "final_result";
     // roles[QmlEnum::PRODUCTION_COLUMN::PRODUCTION_row_number]               = "row_number";
 
     return roles;

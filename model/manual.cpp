@@ -7,10 +7,24 @@ Manual::Manual(int welderID, ProvidenceEE *_providenceEE, QObject *parent)
     : QAbstractListModel{parent}, m_welderID(welderID), m_ptrProvidenceEE(_providenceEE)
 {
     loadData();
-    setEnergySetting("0");
-    setAmplitudeSetting("0");
-    setTriggerPressureSetting("0");
-    setWeldPressureSetting("0");
+
+    if(DataBaseManager::getInstance()->getModelRecord(m_welderID, m_DBModel) == false)
+    {
+        m_DBModel.id = -1;
+        m_DBModel.isAvailable = false;
+        setEnergySetting("0");
+        setAmplitudeSetting("0");
+        setTriggerPressureSetting("0");
+        setWeldPressureSetting("0");
+    }
+    else
+    {
+        m_DBModel.isAvailable = true;
+        setEnergySetting(QString::number(m_DBModel.Energy));
+        setAmplitudeSetting(QString::number(m_DBModel.Amplitude));
+        setTriggerPressureSetting(QString::number(m_DBModel.TriggerPressure));
+        setWeldPressureSetting(QString::number(m_DBModel.WeldPressure));
+    }
 }
 
 Manual::~Manual()
@@ -158,6 +172,10 @@ void Manual::saveData()
             DataBaseManager::getInstance()->removeManualRecord(m_listManualRecords.at(i).Id);
         QModelIndex idx = index(i);
         emit dataChanged(idx, idx, {MANUAL_TABLE::IS_SELECTED});
+    }
+    if(DataBaseManager::getInstance()->updateModelRecord(m_DBModel.id, m_DBModel) == false)
+    {
+        DataBaseManager::getInstance()->insertModelRecord(m_DBModel);
     }
 }
 

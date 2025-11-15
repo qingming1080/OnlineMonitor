@@ -6,8 +6,10 @@
 #include <QSqlDriver>
 #include <QApplication>
 #include <QFile>
-#include "model/deviceinformation.h"
-#include "tools/utilityfunction.h"
+#include <QJsonObject>
+#include <QJsonDocument>
+#include <QJsonArray>
+#include <QJsonParseError>
 
 DataBaseManager* DataBaseManager::s_pDataBaseManager = nullptr;
 
@@ -730,11 +732,11 @@ bool DataBaseManager::updateManualRecord(const int id, const DB_MANUAL data)
     return true;
 }
 
-QList<DataBaseManager::DB_MODEL> DataBaseManager::getModelData()
+bool DataBaseManager::getModelRecords(QList<DB_MODEL>& list)
 {
-    QList<DB_MODEL> list;
     DB_MODEL data;
     QSqlQuery query;
+    QString strJson;
     // %1_表格名称
     QString execStr = QString("SELECT * FROM %1").arg(MODEL_TABLENAME);
     if (!query.exec(execStr))
@@ -744,110 +746,164 @@ QList<DataBaseManager::DB_MODEL> DataBaseManager::getModelData()
 
     while(query.next())
     {
-        data.id                 = query.value(QmlEnum::MODEL_id).toInt();
-        data.WelderId          = query.value(QmlEnum::MODEL_welder_id).toInt();
-        // data.CreateTime        = query.value(QmlEnum::MODEL_create_time).toString();
-        data.Energy             = query.value(QmlEnum::MODEL_energy).toInt();
-        data.Amplitude          = query.value(QmlEnum::MODEL_amplitude).toInt();
-        // data.pressure        = query.value(QmlEnum::MODEL_pressure).toInt();
-        data.TriggerPressure                 = query.value(QmlEnum::MODEL_tp).toInt();
-        data.WeldPressure                 = query.value(QmlEnum::MODEL_wp).toInt();
-        data.WeldTime.Alpha      = query.value(QmlEnum::MODEL_time_alpha).toInt();
-        data.WeldTime.Beta             = query.value(QmlEnum::MODEL_time_beta).toInt();
-        data.PeakPower.Alpha           = query.value(QmlEnum::MODEL_power_alpha).toInt();
-        data.PeakPower.Beta            = query.value(QmlEnum::MODEL_power_beta).toInt();
-        data.Preheight.Alpha      = query.value(QmlEnum::MODEL_pre_height_alpha).toInt();
-        data.Preheight.Beta       = query.value(QmlEnum::MODEL_pre_height_beta).toInt();
-        data.PostHeight.Alpha     = query.value(QmlEnum::MODEL_post_height_alpha).toInt();
-        data.PostHeight.Beta      = query.value(QmlEnum::MODEL_post_height_beta).toInt();
-        // data.force_alpha           = query.value(QmlEnum::MODEL_force_alpha).toInt();
-        // data.force_beta            = query.value(QmlEnum::MODEL_force_beta).toInt();
-        // data.residual_alpha        = query.value(QmlEnum::MODEL_residual_alpha).toInt();
-        // data.residual_beta         = query.value(QmlEnum::MODEL_residual_beta).toInt();
-        data.SampleCount  = query.value(QmlEnum::MODEL_current_sample_count).toInt();
-
+        data.id                 = query.value(MODEL_TABLE::ID).toInt();
+        data.WelderId           = query.value(MODEL_TABLE::WELDER_ID).toInt();
+        qint64 timeStamp        = query.value(MANUAL_TABLE::CREATE_TIME).toLongLong();
+        data.CreateTime         = QDateTime::fromSecsSinceEpoch(timeStamp, Qt::UTC);
+        data.Energy             = query.value(MODEL_TABLE::ENERGY).toInt();
+        data.Amplitude          = query.value(MODEL_TABLE::AMPLITUDE).toInt();
+        data.TriggerPressure    = query.value(MODEL_TABLE::TRIGGER_PRESSURE).toInt();
+        data.WeldPressure       = query.value(MODEL_TABLE::WELD_PRESSURE).toInt();
+        strJson                 = query.value(MODEL_TABLE::ALPHA_BETA).toString();
+        JsonFormat2AlphaBeta(strJson, data.WeldTime, data.PeakPower, data.Preheight, data.PostHeight);
+        strJson                 = query.value(MODEL_TABLE::COEFFICIENT).toString();
+        JsonFormat2Coefficient(strJson, data.PeelForce, data.Residual);
+        strJson                 = query.value(MODEL_TABLE::CENTRALIZED).toString();
+        JsonFormat2Centralized(strJson, data.Centralized);
+        data.SampleCount  = query.value(MODEL_TABLE::SAMPLE_COUNT).toInt();
+        data.isAvailable  = query.value(MODEL_TABLE::AVAILABLE).toBool();
         list.push_back(data);
     }
 
-    return list;
+    return !list.empty();
 }
 
-bool DataBaseManager::removeModelRow(int id)
+bool DataBaseManager::getModelRecord(const int welderID, DB_MODEL &model)
+{
+    QSqlQuery query;
+    QString strJson;
+    bool bResult = false;
+    // %1_表格名称
+    QString execStr = QString("SELECT * FROM %1 WHERE %2 = :welderID")
+                          .arg(MODEL_TABLENAME)
+                          .arg(welderID);
+    if (!query.exec(execStr))
+    {
+        qDebug() << "查询失败: " << query.lastError();
+    }
+
+    while(query.next())
+    {
+        model.id                 = query.value(MODEL_TABLE::ID).toInt();
+        model.WelderId           = query.value(MODEL_TABLE::WELDER_ID).toInt();
+        qint64 timeStamp        = query.value(MANUAL_TABLE::CREATE_TIME).toLongLong();
+        model.CreateTime         = QDateTime::fromSecsSinceEpoch(timeStamp, Qt::UTC);
+        model.Energy             = query.value(MODEL_TABLE::ENERGY).toInt();
+        model.Amplitude          = query.value(MODEL_TABLE::AMPLITUDE).toInt();
+        model.TriggerPressure    = query.value(MODEL_TABLE::TRIGGER_PRESSURE).toInt();
+        model.WeldPressure       = query.value(MODEL_TABLE::WELD_PRESSURE).toInt();
+        strJson                 = query.value(MODEL_TABLE::ALPHA_BETA).toString();
+        JsonFormat2AlphaBeta(strJson, model.WeldTime, model.PeakPower, model.Preheight, model.PostHeight);
+        strJson                 = query.value(MODEL_TABLE::COEFFICIENT).toString();
+        JsonFormat2Coefficient(strJson, model.PeelForce, model.Residual);
+        strJson                 = query.value(MODEL_TABLE::CENTRALIZED).toString();
+        JsonFormat2Centralized(strJson, model.Centralized);
+        model.SampleCount  = query.value(MODEL_TABLE::SAMPLE_COUNT).toInt();
+        model.isAvailable  = query.value(MODEL_TABLE::AVAILABLE).toBool();
+        bResult = true;
+    }
+    return bResult;
+}
+
+bool DataBaseManager::removeModelRecord(int id)
 {
     QSqlQuery query;
 
     // %1_表格名称 %2_ID字段名称
     QString execStr = QString("DELETE FROM %1 WHERE %2=:id")
-                          .arg(MODEL_TABLENAME, getModel_ColumnName(QmlEnum::MODEL_id));
+                          .arg(MODEL_TABLENAME, getModel_ColumnName(MODEL_TABLE::ID));
 
     // 绑定属性
     query.prepare(execStr);
     query.bindValue(":id", id);
-
     return query.exec();
 }
 
-bool DataBaseManager::clearModel()
+bool DataBaseManager::updateModelRecord(const int id, const DB_MODEL model)
 {
     QSqlQuery query;
-    QString execStr = QString("TRUNCATE TABLE %1").arg(MODEL_TABLENAME);
+    QString execStr = QString(
+                          "UPDATE %1 SET "
+                          "welder_id = :welder_id, "
+                          "create_time = :create_time, "
+                          "energy = :energy, "
+                          "amplitude = :amplitude, "
+                          "trigger_pressure = :trigger_pressure, "
+                          "weld_pressure = :weld_pressure, "
+                          "alpha_beta = :alpha_beta, "
+                          "coefficient = :coefficient, "
+                          "centralized = :centralized, "
+                          "sample_count = :sample_count, "
+                          "available = :available "
+                          "WHERE id = :id"
+                          ).arg(MANUAL_TABLENAME);
 
-    return query.exec(execStr);
+    if (!query.prepare(execStr)) {
+        qWarning() << "Failed to prepare SQL:" << query.lastError().text();
+        return false;
+    }
+
+    QString strJson;
+    query.bindValue(":welder_id",           model.WelderId);
+    query.bindValue(":create_time",         model.CreateTime.toSecsSinceEpoch());
+    query.bindValue(":energy",              model.Energy);
+    query.bindValue(":amplitude",           model.Amplitude);
+    query.bindValue(":trigger_pressure",    model.TriggerPressure);
+    query.bindValue(":weld_pressure",       model.WeldPressure);
+    AlphaBeta2JsonFormat(model.WeldTime, model.PeakPower, model.Preheight, model.PostHeight, strJson);
+    query.bindValue(":alpha_beta",          strJson);
+    Coefficient2JsonFormat(model.PeelForce, model.Residual, strJson);
+    query.bindValue(":coefficient",         strJson);
+    Centralized2JsonFormat(model.Centralized, strJson);
+    query.bindValue(":centralized",         strJson);
+    query.bindValue(":sample_count",        model.SampleCount);
+    query.bindValue(":available",           model.isAvailable);
+    query.bindValue(":id", id);
+    bool ret = query.exec();
+    if (!ret)
+    {
+        qWarning() << "Update Model failed:" << query.lastError().text();
+        qWarning() << "Executed query:" << query.lastQuery();
+        return false;
+    }
+    return true;
 }
 
 bool DataBaseManager::insertModelRecord(DB_MODEL model)
 {
-
+    QString strJson;
     QSqlQuery query;
     // %1_表格名称
     QString execStr = QString("INSERT INTO %1 values("
-                              // ":id"
                               ", :welder_id"
                               ", :create_time"
                               ", :energy"
                               ", :amplitude"
-                              // ", :pressure"
-                              ", :WP"
-                              ", :TP"
-                              ", :time_alpha"
-                              ", :time_beta"
-                              ", :power_alpha"
-                              ", :power_beta"
-                              ", :pre_height_alpha"
-                              ", :pre_height_beta"
-                              ", :post_height_alpha"
-                              ", :post_height_beta"
-                              ", :force_alpha"
-                              ", :force_beta"
-                              ", :residual_alpha"
-                              ", :residual_beta"
-                              ", :current_sample_count)")
+                              ", :trigger_pressure"
+                              ", :weld_pressure"
+                              ", :alpha_beta"
+                              ", :coefficient"
+                              ", :centralized"
+                              ", :sample_count"
+                              ", :available)")
                           .arg(MODEL_TABLENAME);
 
     // 绑定属性
     query.prepare(execStr);
-    // query.bindValue(":id", model.id);
     query.bindValue(":welder_id", model.WelderId);
-    query.bindValue(":create_time", model.CreateTime);
+    query.bindValue(":create_time", model.CreateTime.toSecsSinceEpoch());
     query.bindValue(":energy", model.Energy);
     query.bindValue(":amplitude", model.Amplitude);
-    // query.bindValue(":pressure", data.pressure);
-    query.bindValue(":pressure", model.TriggerPressure);
-    query.bindValue(":pressure", model.WeldPressure);
-    query.bindValue(":time_alpha", model.WeldTime.Alpha);
-    query.bindValue(":time_beta", model.WeldTime.Beta);
-    query.bindValue(":power_alpha", model.PeakPower.Alpha);
-    query.bindValue(":power_beta", model.PeakPower.Beta);
-    query.bindValue(":pre_height_alpha", model.Preheight.Alpha);
-    query.bindValue(":pre_height_beta", model.Preheight.Beta);
-    query.bindValue(":post_height_alpha", model.PostHeight.Alpha);
-    query.bindValue(":post_height_beta", model.PostHeight.Beta);
-    // query.bindValue(":force_alpha", data.force_alpha);
-    // query.bindValue(":force_beta", data.force_beta);
-    // query.bindValue(":residual_alpha", data.residual_alpha);
-    // query.bindValue(":residual_beta", data.residual_beta);
-    query.bindValue(":current_sample_count", model.SampleCount);
-
+    query.bindValue(":trigger_pressure", model.TriggerPressure);
+    query.bindValue(":weld_pressure", model.WeldPressure);
+    AlphaBeta2JsonFormat(model.WeldTime, model.PeakPower, model.Preheight, model.PostHeight, strJson);
+    query.bindValue(":alpha_beta", strJson);
+    Coefficient2JsonFormat(model.PeelForce, model.Residual, strJson);
+    query.bindValue(":coefficient", strJson);
+    Centralized2JsonFormat(model.Centralized, strJson);
+    query.bindValue(":centralized", strJson);
+    query.bindValue(":sample_count", model.SampleCount);
+    query.bindValue(":available", model.isAvailable);
     return query.exec();
 }
 
@@ -861,8 +917,8 @@ QList<DataBaseManager::DB_PRODUCTION> DataBaseManager::getProductionData(int wel
         // %1_表格名称
         QString execStr = QString("SELECT * FROM %1 WHERE %2 = :welderID AND %3 = :finalResult ORDER BY create_time DESC")
                               .arg(PRODUCTION_TABLENAME
-                                   , getProduction_ColumnName(PRODUCTION_WELDER_ID)
-                                   , getProduction_ColumnName(FINAL_RESULT));
+                                   , getProduction_ColumnName(PRODUCTION_TABLE::WELDER_ID)
+                                   , getProduction_ColumnName(PRODUCTION_TABLE::FINAL_RESULT));
 
         if (!exportAll) execStr += " LIMIT 150";
         query.prepare(execStr);
@@ -874,7 +930,7 @@ QList<DataBaseManager::DB_PRODUCTION> DataBaseManager::getProductionData(int wel
         // %1_表格名称
         QString execStr = QString("SELECT * FROM %1 WHERE %2 = :welderID ORDER BY create_time DESC")
                               .arg(PRODUCTION_TABLENAME
-                                   , getProduction_ColumnName(PRODUCTION_WELDER_ID));
+                                   , getProduction_ColumnName(PRODUCTION_TABLE::WELDER_ID));
 
         if (!exportAll) execStr += " LIMIT 150";
         query.prepare(execStr);
@@ -885,7 +941,7 @@ QList<DataBaseManager::DB_PRODUCTION> DataBaseManager::getProductionData(int wel
         // %1_表格名称
         QString execStr = QString("SELECT * FROM %1 WHERE %2 = :finalResult ORDER BY create_time DESC")
                               .arg(PRODUCTION_TABLENAME
-                                   , getProduction_ColumnName(FINAL_RESULT));
+                                   , getProduction_ColumnName(PRODUCTION_TABLE::FINAL_RESULT));
         if (!exportAll) execStr += " LIMIT 150";
         query.prepare(execStr);
         query.bindValue(":finalResult", finalResult-1);
@@ -895,7 +951,7 @@ QList<DataBaseManager::DB_PRODUCTION> DataBaseManager::getProductionData(int wel
         // %1_表格名称
         QString execStr = QString("SELECT * FROM %1 ORDER BY %2 DESC")
                               .arg(PRODUCTION_TABLENAME
-                                   , getProduction_ColumnName(PRODUCTION_CREATE_TIME));
+                                   , getProduction_ColumnName(PRODUCTION_TABLE::CREATE_TIME));
         if (!exportAll) execStr += " LIMIT 150";
         query.prepare(execStr);
     }
@@ -909,26 +965,23 @@ QList<DataBaseManager::DB_PRODUCTION> DataBaseManager::getProductionData(int wel
     {
         DB_PRODUCTION data;
         // data.id                       = query.value(QmlEnum::PRODUCTION_id).toInt();
-        data.WelderID                = query.value(PRODUCTION_WELDER_ID).toInt();
-        data.ModelID                 = query.value(MODEL_ID).toInt();
-        data.CreateTime              = query.value(PRODUCTION_CREATE_TIME).toInt();
-        data.SerialNumber            = query.value(SERIAL_NUMBER).toInt();
-        data.CycleCount              = query.value(CYCLE_COUNT).toInt();
-        data.BatchCount              = query.value(BATCH_COUNT).toInt();
-        data.Energy                  = query.value(ENERGY).toInt();
+        data.WelderID                = query.value(PRODUCTION_TABLE::WELDER_ID).toInt();
+        data.CreateTime              = query.value(PRODUCTION_TABLE::CREATE_TIME).toLongLong();
+        data.SerialNumber            = query.value(PRODUCTION_TABLE::SERIAL_NUMBER).toInt();
+        data.CycleCount              = query.value(PRODUCTION_TABLE::CYCLE_COUNT).toInt();
+        data.BatchCount              = query.value(PRODUCTION_TABLE::BATCH_COUNT).toInt();
+        data.Energy                  = query.value(PRODUCTION_TABLE::ENERGY).toInt();
+        data.Amplitude               = query.value(PRODUCTION_TABLE::AMPLITUDE).toInt();
+        data.WeldPressure            = query.value(PRODUCTION_TABLE::WELD_PRESSURE).toInt();
+        data.TriggertPressure        = query.value(PRODUCTION_TABLE::TRIGGER_PRESSURE).toInt();
+        data.WeldTime                = query.value(PRODUCTION_TABLE::WELD_TIME).toInt();
+        data.PeakPower               = query.value(PRODUCTION_TABLE::PEAK_POWER).toInt();
+        data.Preheight               = query.value(PRODUCTION_TABLE::PRE_HEIGHT).toInt();
+        data.PostHeight              = query.value(PRODUCTION_TABLE::POST_HEIGHT).toInt();
 
-        data.Amplitude               = query.value(AMPLITUDE).toInt();
-        data.WeldPressure            = query.value(WELD_PRESSURE).toInt();
-        data.TriggertPressure        = query.value(TRIGGER_PRESSURE).toInt();
-        data.WeldTime                = query.value(WELD_TIME).toInt();
-        data.PeakPower               = query.value(PEAK_POWER).toInt();
-        data.Preheight               = query.value(PRE_HEIGHT).toInt();
-        data.PostHeight              = query.value(POST_HEIGHT).toInt();
-
-        data.Force                   = query.value(FORCE).toInt();
-        data.Residual                = query.value(RESIDUAL).toInt();
-        data.FinalResult             = query.value(FINAL_RESULT).toInt();
-
+        data.Force                   = query.value(PRODUCTION_TABLE::FORCE).toInt();
+        data.Residual                = query.value(PRODUCTION_TABLE::RESIDUAL).toInt();
+        data.FinalResult             = query.value(PRODUCTION_TABLE::FINAL_RESULT).toInt();
         // 历史记录，最新的最先显示
         list.push_front(data);
     }
@@ -947,13 +1000,13 @@ _Yield_TrendData DataBaseManager::getYieldTrendData(int interVal, int welderID)
         QSqlQuery query;
         QString execStr = QString("SELECT * FROM %1 WHERE %2 = :welderID ORDER BY %3 DESC LIMIT 1")
                               .arg(PRODUCTION_TABLENAME
-                                   , getProduction_ColumnName(PRODUCTION_WELDER_ID)
-                                   , getProduction_ColumnName(PRODUCTION_CREATE_TIME));
+                                   , getProduction_ColumnName(PRODUCTION_TABLE::WELDER_ID)
+                                   , getProduction_ColumnName(PRODUCTION_TABLE::CREATE_TIME));
         query.prepare(execStr);
         query.bindValue(":welderID", welderID);
         if(query.exec() && query.next())
         {
-            endTime = query.value(PRODUCTION_CREATE_TIME).toDateTime();
+            endTime = query.value(PRODUCTION_TABLE::CREATE_TIME).toDateTime();
             startTime = endTime.addSecs(interVal);
             result.startTime = startTime.toString("yyyy-MM-dd hh:mm:ss");
             result.endTime   = endTime.toString("yyyy-MM-dd hh:mm:ss");
@@ -1053,7 +1106,7 @@ bool DataBaseManager::removeProductionRow(int id)
 
     // %1_表格名称 %2_ID字段名称
     QString execStr = QString("DELETE FROM %1 WHERE %2=:id")
-                          .arg(PRODUCTION_TABLENAME, getProduction_ColumnName(PRODUCTION_ID));
+                          .arg(PRODUCTION_TABLENAME, getProduction_ColumnName(PRODUCTION_TABLE::ID));
 
     // 绑定属性
     query.prepare(execStr);
@@ -1445,96 +1498,75 @@ QString DataBaseManager::getManual_ColumnName(MANUAL_TABLE::MANUAL_COLUMN column
     return "";
 }
 
-QString DataBaseManager::getModel_ColumnName(QmlEnum::MODEL_COLUMN column)
+QString DataBaseManager::getModel_ColumnName(MODEL_TABLE::MODEL_COLUMN column)
 {
     switch(column)
     {
-    case QmlEnum::MODEL_id:
+    case MODEL_TABLE::ID:
         return "id";
-    case QmlEnum::MODEL_welder_id:
+    case MODEL_TABLE::WELDER_ID:
         return "welder_id";
-    case QmlEnum::MODEL_create_time:
+    case MODEL_TABLE::CREATE_TIME:
         return "create_time";
-    case QmlEnum::MODEL_energy:
+    case MODEL_TABLE::ENERGY:
         return "energy";
-    case QmlEnum::MODEL_amplitude:
+    case MODEL_TABLE::AMPLITUDE:
         return "amplitude";
-    // case QmlEnum::MODEL_pressure:
-        return "pressure";
-    case QmlEnum::MODEL_tp:
-        return "tp";
-    case QmlEnum::MODEL_wp:
-        return "wp";
-    case QmlEnum::MODEL_time_alpha:
-        return "time_alpha";
-    case QmlEnum::MODEL_time_beta:
-        return "time_beta";
-    case QmlEnum::MODEL_power_alpha:
-        return "power_alpha";
-    case QmlEnum::MODEL_power_beta:
-        return "power_beta";
-    case QmlEnum::MODEL_pre_height_alpha:
-        return "pre_height_alpha";
-    case QmlEnum::MODEL_pre_height_beta:
-        return "pre_height_beta";
-    case QmlEnum::MODEL_post_height_alpha:
-        return "post_height_alpha";
-    case QmlEnum::MODEL_post_height_beta:
-        return "post_height_beta";
-    case QmlEnum::MODEL_force_alpha:
-        return "force_alpha";
-    case QmlEnum::MODEL_force_beta:
-        return "force_beta";
-    case QmlEnum::MODEL_residual_alpha:
-        return "residual_alpha";
-    case QmlEnum::MODEL_residual_beta:
-        return "residual_beta";
-    case QmlEnum::MODEL_current_sample_count:
-        return "current_sample_count";
+    case MODEL_TABLE::TRIGGER_PRESSURE:
+        return "trigger_pressure";
+    case MODEL_TABLE::WELD_PRESSURE:
+        return "weld_pressure";
+    case MODEL_TABLE::ALPHA_BETA:
+        return "alpha_beta";
+    case MODEL_TABLE::COEFFICIENT:
+        return "coefficient";
+    case MODEL_TABLE::CENTRALIZED:
+        return "centralized";
+    case MODEL_TABLE::SAMPLE_COUNT:
+        return "sample_count";
+    case MODEL_TABLE::AVAILABLE:
+        return "available";
     }
-
     return "";
 }
 
-QString DataBaseManager::getProduction_ColumnName(PRODUCTION_COLUMN column)
+QString DataBaseManager::getProduction_ColumnName(PRODUCTION_TABLE::PRODUCTION_COLUMN column)
 {
     switch(column)
     {
-    case PRODUCTION_ID:
+    case PRODUCTION_TABLE::ID:
         return "id";
-    case PRODUCTION_WELDER_ID:
+    case PRODUCTION_TABLE::WELDER_ID:
         return "welder_id";
-    case MODEL_ID:
-        return "model_id";
-    case PRODUCTION_CREATE_TIME:
+    case PRODUCTION_TABLE::CREATE_TIME:
         return "create_time";
-    case SERIAL_NUMBER:
+    case PRODUCTION_TABLE::SERIAL_NUMBER:
         return "serial_number";
-    case CYCLE_COUNT:
+    case PRODUCTION_TABLE::CYCLE_COUNT:
         return "cycle_count";
-    case BATCH_COUNT:
+    case PRODUCTION_TABLE::BATCH_COUNT:
         return "batch_count";
-    case ENERGY:
+    case PRODUCTION_TABLE::ENERGY:
         return "energy";
-    case AMPLITUDE:
+    case PRODUCTION_TABLE::AMPLITUDE:
         return "amplitude";
-    case WELD_PRESSURE:
+    case PRODUCTION_TABLE::WELD_PRESSURE:
         return "pressure";
-    case WELD_TIME:
+    case PRODUCTION_TABLE::WELD_TIME:
         return "time";
-    case PEAK_POWER:
+    case PRODUCTION_TABLE::PEAK_POWER:
         return "power";
-    case PRE_HEIGHT:
+    case PRODUCTION_TABLE::PRE_HEIGHT:
         return "pre_height";
-    case POST_HEIGHT:
+    case PRODUCTION_TABLE::POST_HEIGHT:
         return "post_height";
-    case FORCE:
+    case PRODUCTION_TABLE::FORCE:
         return "force";
-    case RESIDUAL:
+    case PRODUCTION_TABLE::RESIDUAL:
         return "residual";
-    case TRIGGER_PRESSURE:
+    case PRODUCTION_TABLE::TRIGGER_PRESSURE:
         return "trigger_pressure";
-    case FINAL_RESULT:
+    case PRODUCTION_TABLE::FINAL_RESULT:
         return "final_result";
     }
 
@@ -1562,6 +1594,224 @@ QString DataBaseManager::getSystem_ColumnName(QmlEnum::SYSTEM_COLUMN column)
     return "";
 }
 
+bool DataBaseManager::AlphaBeta2JsonFormat(const ALPHA_BETA WeldTime, const ALPHA_BETA PeakPower, const ALPHA_BETA Preheight, const ALPHA_BETA PostHeight, QString &strJson)
+{
+    auto makeObj = [](const ALPHA_BETA &ab) {
+        QJsonObject o;
+        o.insert("Alpha", ab.Alpha);
+        o.insert("Beta", ab.Beta);
+        return o;
+    };
+
+    // Use an array so JSON indices are 0,1,2,3 respectively:
+    // 0 -> WeldTime, 1 -> PeakPower, 2 -> Preheight, 3 -> PostHeight
+    QJsonArray arr;
+    arr.append(makeObj(WeldTime));
+    arr.append(makeObj(PeakPower));
+    arr.append(makeObj(Preheight));
+    arr.append(makeObj(PostHeight));
+
+    QJsonDocument doc(arr);
+    strJson = QString::fromUtf8(doc.toJson(QJsonDocument::Compact));
+    return true;
+}
+
+bool DataBaseManager::JsonFormat2AlphaBeta(const QString strJson, ALPHA_BETA &WeldTime, ALPHA_BETA &PeakPower, ALPHA_BETA &Preheight, ALPHA_BETA &PostHeight)
+{
+    if (strJson.isEmpty()) return false;
+
+    QJsonParseError err;
+    QJsonDocument doc = QJsonDocument::fromJson(strJson.toUtf8(), &err);
+    if (err.error != QJsonParseError::NoError) {
+        qDebug() << "JsonFormat2AlphaBeta: parse error:" << err.errorString();
+        return false;
+    }
+
+    if (!doc.isArray()) {
+        qDebug() << "JsonFormat2AlphaBeta: expected JSON array";
+        return false;
+    }
+
+    QJsonArray arr = doc.array();
+    if (arr.size() < 4) {
+        qDebug() << "JsonFormat2AlphaBeta: array size < 4";
+        return false;
+    }
+
+    auto parseAB = [](const QJsonValue &v, ALPHA_BETA &out) {
+        if (!v.isObject()) return false;
+        QJsonObject o = v.toObject();
+        // Use toDouble with fallback 0.0
+        out.Alpha = o.value("Alpha").toDouble(0.0);
+        out.Beta  = o.value("Beta").toDouble(0.0);
+        return true;
+    };
+
+    bool ok = true;
+    ok &= parseAB(arr.at(0), WeldTime);
+    ok &= parseAB(arr.at(1), PeakPower);
+    ok &= parseAB(arr.at(2), Preheight);
+    ok &= parseAB(arr.at(3), PostHeight);
+
+    if (!ok) {
+        qDebug() << "JsonFormat2AlphaBeta: one or more elements invalid";
+        return false;
+    }
+
+    return true;
+}
+
+bool DataBaseManager::Coefficient2JsonFormat(const POLYNOMIAL_COEFFICIENT PeelForce, const POLYNOMIAL_COEFFICIENT Residual, QString &strJson)
+{
+    auto makeObj = [](const POLYNOMIAL_COEFFICIENT &c) {
+        QJsonObject o;
+        o.insert("P00", c.P00);
+        o.insert("P10", c.P10);
+        o.insert("P01", c.P01);
+        o.insert("P20", c.P20);
+        o.insert("P11", c.P11);
+        o.insert("P02", c.P02);
+        return o;
+    };
+
+    QJsonArray arr;
+    arr.append(makeObj(PeelForce)); // index 0
+    arr.append(makeObj(Residual));  // index 1
+
+    QJsonDocument doc(arr);
+    strJson = QString::fromUtf8(doc.toJson(QJsonDocument::Compact));
+    return true;
+}
+
+bool DataBaseManager::JsonFormat2Coefficient(const QString strJson, POLYNOMIAL_COEFFICIENT &PeelForce, POLYNOMIAL_COEFFICIENT &Residual)
+{
+    if (strJson.isEmpty()) return false;
+
+    QJsonParseError err;
+    QJsonDocument doc = QJsonDocument::fromJson(strJson.toUtf8(), &err);
+    if (err.error != QJsonParseError::NoError) {
+        qDebug() << "JsonFormat2Coefficient: parse error:" << err.errorString();
+        return false;
+    }
+
+    if (!doc.isArray()) {
+        qDebug() << "JsonFormat2Coefficient: expected JSON array";
+        return false;
+    }
+
+    QJsonArray arr = doc.array();
+    if (arr.size() < 2) {
+        qDebug() << "JsonFormat2Coefficient: array size < 2";
+        return false;
+    }
+
+    auto parseC = [](const QJsonValue &v, POLYNOMIAL_COEFFICIENT &out) {
+        if (!v.isObject()) return false;
+        QJsonObject o = v.toObject();
+        out.P00 = o.value("P00").toDouble(0.0);
+        out.P10 = o.value("P10").toDouble(0.0);
+        out.P01 = o.value("P01").toDouble(0.0);
+        out.P20 = o.value("P20").toDouble(0.0);
+        out.P11 = o.value("P11").toDouble(0.0);
+        out.P02 = o.value("P02").toDouble(0.0);
+        return true;
+    };
+
+    bool ok = true;
+    ok &= parseC(arr.at(0), PeelForce);
+    ok &= parseC(arr.at(1), Residual);
+
+    if (!ok) {
+        qDebug() << "JsonFormat2Coefficient: one or more elements invalid";
+        return false;
+    }
+
+    return true;
+}
+
+bool DataBaseManager::Centralized2JsonFormat(const CENTRALIZED_PROPERTY Centralized, QString &strJson)
+{
+    // Use array indices so callers can rely on 0..5 mapping
+    // 0: TimeMean, 1: TimeStd, 2: PowerMean, 3: PowrStd, 4: ForceMean, 5: ResidualMean
+    QJsonArray arr;
+    QJsonObject o0; o0.insert("TimeMean", Centralized.TimeMean); 
+    QJsonObject o1; o1.insert("TimeStd", Centralized.TimeStd);
+    QJsonObject o2; o2.insert("PowerMean", Centralized.PowerMean); 
+    QJsonObject o3; o3.insert("PowrStd", Centralized.PowrStd);
+    QJsonObject o4; o4.insert("ForceMean", Centralized.ForceMean); 
+    QJsonObject o5; o5.insert("ResidualMean", Centralized.ResidualMean);
+
+    arr.append(o0);
+    arr.append(o1);
+    arr.append(o2);
+    arr.append(o3);
+    arr.append(o4);
+    arr.append(o5);
+
+    QJsonDocument doc(arr);
+    strJson = QString::fromUtf8(doc.toJson(QJsonDocument::Compact));
+    return true;
+}
+
+bool DataBaseManager::JsonFormat2Centralized(const QString strJson, CENTRALIZED_PROPERTY &Centralized)
+{
+    if (strJson.isEmpty()) return false;
+    QJsonParseError err;
+    QJsonDocument doc = QJsonDocument::fromJson(strJson.toUtf8(), &err);
+    if (err.error != QJsonParseError::NoError) {
+        qDebug() << "JsonFormat2Centralized: parse error:" << err.errorString();
+        return false;
+    }
+    if (!doc.isArray()) {
+        qDebug() << "JsonFormat2Centralized: expected JSON array";
+        return false;
+    }
+    QJsonArray arr = doc.array();
+    // Support two formats produced by different serializers:
+    // Format A (6 single-field objects):
+    //   arr[0]={"TimeMean":...}, arr[1]={"TimeStd":...}, arr[2]={"PowerMean":...}, arr[3]={"PowrStd":...}, arr[4]={"ForceMean":...}, arr[5]={"ResidualMean":...}
+    // Format B (3 two-field objects):
+    //   arr[0]={"TimeMean":...,"TimeStd":...}, arr[1]={"PowerMean":...,"PowrStd":...}, arr[2]={"ForceMean":...,"ResidualMean":...}
+
+    if (arr.size() >= 6) {
+        auto getSingle = [](const QJsonValue &v, const QString &key)->double {
+            if (v.isObject()) return v.toObject().value(key).toDouble(0.0);
+            if (v.isDouble()) return v.toDouble(0.0);
+            return 0.0;
+        };
+
+        Centralized.TimeMean    = getSingle(arr.at(0), "TimeMean");
+        Centralized.TimeStd     = getSingle(arr.at(1), "TimeStd");
+        Centralized.PowerMean   = getSingle(arr.at(2), "PowerMean");
+        Centralized.PowrStd     = getSingle(arr.at(3), "PowrStd");
+        Centralized.ForceMean   = getSingle(arr.at(4), "ForceMean");
+        Centralized.ResidualMean= getSingle(arr.at(5), "ResidualMean");
+        return true;
+    }
+
+    if (arr.size() >= 3) {
+        auto getD = [](const QJsonValue &v, const QString &key)->double{
+            if (!v.isObject()) return 0.0;
+            return v.toObject().value(key).toDouble(0.0);
+        };
+
+        QJsonValue v0 = arr.at(0);
+        QJsonValue v1 = arr.at(1);
+        QJsonValue v2 = arr.at(2);
+
+        Centralized.TimeMean = getD(v0, "TimeMean");
+        Centralized.TimeStd  = getD(v0, "TimeStd");
+        Centralized.PowerMean= getD(v1, "PowerMean");
+        Centralized.PowrStd  = getD(v1, "PowrStd");
+        Centralized.ForceMean= getD(v2, "ForceMean");
+        Centralized.ResidualMean = getD(v2, "ResidualMean");
+        return true;
+    }
+
+    qDebug() << "JsonFormat2Centralized: array size too small";
+    return false;
+}
+
 QList<DataBaseManager::DB_PRODUCTION> DataBaseManager::getAllTrendData(int welderID, int interVal, QDateTime startTime, QDateTime endTime)
 {
     QList<DB_PRODUCTION> list;
@@ -1569,10 +1819,10 @@ QList<DataBaseManager::DB_PRODUCTION> DataBaseManager::getAllTrendData(int welde
     QSqlQuery query;
     QString execStr = QString("SELECT * FROM %1 WHERE %2 BETWEEN '%3' AND '%4' AND %5 = '%6'")
                           .arg(PRODUCTION_TABLENAME
-                               , getProduction_ColumnName(PRODUCTION_CREATE_TIME)
+                               , getProduction_ColumnName(PRODUCTION_TABLE::CREATE_TIME)
                                , startTime.toString("yyyy-MM-dd hh:mm:ss")
                                , endTime.toString("yyyy-MM-dd hh:mm:ss")
-                               , getProduction_ColumnName(PRODUCTION_WELDER_ID)
+                               , getProduction_ColumnName(PRODUCTION_TABLE::WELDER_ID)
                                , QString::number(welderID));
 
     if(!query.exec(execStr))
@@ -1586,7 +1836,7 @@ QList<DataBaseManager::DB_PRODUCTION> DataBaseManager::getAllTrendData(int welde
         // 生产时间
         // data.CreateTime  = query.value(QmlEnum::PRODUCTION_create_time).toString();
         // 产品状态
-        data.FinalResult = query.value(FINAL_RESULT).toInt();
+        data.FinalResult = query.value(PRODUCTION_TABLE::FINAL_RESULT).toInt();
 
         list.push_back(data);
     }

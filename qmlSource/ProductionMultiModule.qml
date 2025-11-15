@@ -12,8 +12,8 @@ import ProductionObj        1.0
 //多设备生产界面
 Rectangle {
     color: pRgb(153, 204, 255)
-    property int itemCount: -1
-    property int swipeCurrIndex: -1
+    property int currentIndex: DeviceManager.SelectedDeviceIndex
+    property int deviceCount: DeviceManager.DeviceCounter
 
     Connections{
         target: mpro
@@ -27,7 +27,8 @@ Rectangle {
         }
     }
     function swichCount(){
-        if(itemCount == 2){
+        if(deviceCount == 2)
+        {
             r1.height = 581
             r2.height = 581
             r3.visible = false
@@ -50,7 +51,8 @@ Rectangle {
             s4.width = 289
             s4.height = 238
         }
-        else if(itemCount == 3){
+        else if(deviceCount == 3)
+        {
             r1.height = 581
             r2.height = 287
             r3.visible = false
@@ -73,7 +75,8 @@ Rectangle {
             s4.width = 277
             s4.height = 228
         }
-        else if(itemCount == 4){
+        else if(deviceCount == 4)
+        {
             r1.height = 287
             r2.height = 287
             r3.visible = true
@@ -99,9 +102,10 @@ Rectangle {
         }
     }
 
-    onItemCountChanged: {
+    onDeviceCountChanged: {
         swichCount()
     }
+
     Rectangle{
         id:r1
         x:28
@@ -246,7 +250,7 @@ Rectangle {
             onPressed: {
                 swipevis = true
                 DeviceManager.SelectedDeviceIndex = 0;
-                loadViewpro(3,swipe)
+                loadViewpro(3, singlePro)
                 sigUpdateUI(0)
             }
         }
@@ -398,7 +402,7 @@ Rectangle {
             onPressed: {
                 swipevis = true
                 DeviceManager.SelectedDeviceIndex = 1
-                loadViewpro(3,swipe)
+                loadViewpro(3, singlePro)
                 sigUpdateUI(1)
             }
         }

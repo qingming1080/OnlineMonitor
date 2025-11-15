@@ -101,7 +101,9 @@ QtObject
     readonly property string strWeldPressure:           qsTr("焊接压力")
     readonly property string strTriggerPressure:        qsTr("触发压力")
     readonly property string strPreWeldHeight:          qsTr("焊前高度")
+    readonly property string strShortPreheight:         qsTr("预高")
     readonly property string strPostWeldHeight:         qsTr("焊后高度")
+    readonly property string strShortPostHeight:        qsTr("终高")
     readonly property string strParameterSetting:       qsTr("参数设置")
     
     // 系统配置

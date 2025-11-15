@@ -28,7 +28,9 @@ DeviceInformation::DeviceInformation(int welderID, QObject *parent)
         setForceThreshold(QString::number(m_DBConfigure.ForceThreshold));
         setResidualThreshold(QString::number(m_DBConfigure.ResidualThreshold));
         InitModbusDevice();
+#if RASPBERRY
         HBModbusClient::getInstance()->setDeviceConfigure(m_WelderID, m_ModbusConfigure);
+#endif
     }
     else
     {

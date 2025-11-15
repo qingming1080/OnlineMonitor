@@ -146,6 +146,7 @@ Rectangle {
                 color:  "#0c5696"
                 equiInforIndex:1
             }
+
             WeldingTrend{
                 id:s7
                 width:  502
@@ -190,15 +191,6 @@ Rectangle {
             }
         }
     }
-    // SwipePage {
-    //     id:view
-    //     x:30
-    //     y:29
-    //     width: 1220
-    //     height: 664
-    //     color: pRgb(43, 112, 173)
-    //     radius: 5
-    // }
 
     Button{
         x:1206
@@ -213,11 +205,10 @@ Rectangle {
             }
         }
         onPressed: {
-            if(equipmentCount === 3){
-                swipeCurrIndex = 0
-            }
+            if(deviceCount === 3)
+                currentIndex = 0
             swipevis = false
-            loadViewpro(2, multipro)
+            loadViewpro(2, multiPro)
         }
         visible: (DeviceManager.DeviceCounter > 1) ? true : false
     }

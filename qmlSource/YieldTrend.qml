@@ -9,13 +9,14 @@ import LanguageEnum 1.0
 //import CustomTimeChart 1.0
 
 //良率趋势
-Rectangle {
+Rectangle
+{
     property var startTime: {
         if(!swipevis){
             Date.fromLocaleString(Qt.locale(), DeviceManager.DeviceList[equiInforIndex-1].pTrend.startTime, "yyyy-MM-dd hh:mm:ss")
         }
         else{
-            Date.fromLocaleString(Qt.locale(), DeviceManager.DeviceList[swipeCurrIndex].pTrend.startTime, "yyyy-MM-dd hh:mm:ss")
+            Date.fromLocaleString(Qt.locale(), DeviceManager.DeviceList[currentIndex].pTrend.startTime, "yyyy-MM-dd hh:mm:ss")
         }
     }
     property var endTime:{
@@ -23,11 +24,13 @@ Rectangle {
             Date.fromLocaleString(Qt.locale(), DeviceManager.DeviceList[equiInforIndex-1].pTrend.endTime, "yyyy-MM-dd hh:mm:ss")
         }
         else{
-            Date.fromLocaleString(Qt.locale(), DeviceManager.DeviceList[swipeCurrIndex].pTrend.endTime, "yyyy-MM-dd hh:mm:ss")
+            Date.fromLocaleString(Qt.locale(), DeviceManager.DeviceList[currentIndex].pTrend.endTime, "yyyy-MM-dd hh:mm:ss")
         }
     }
     property int equiInforIndex: 0
     property int updateCount: 0
+    color: pRgb(43, 112, 173)
+    radius: 3
     onVisibleChanged: {
         if(visible){
             enabled = true
@@ -37,15 +40,18 @@ Rectangle {
             enabled = false
         }
     }
-    Connections{
-        target: DeviceManager
-        function onUpDateBtns(){
-            updateBtn()
-        }
+
+    property int currentIndex: DeviceManager.SelectedDeviceIndex
+    onCurrentIndexChanged:{
+        updateBtn()
+        chartUpdata()
     }
+
     function updateBtn(){
-        if(swipevis){
-            if(DeviceManager.DeviceList[swipeCurrIndex].pTrend.yieldType === 0){
+        if(swipevis)
+        {
+            if(DeviceManager.DeviceList[currentIndex].pTrend.yieldType === 0)
+            {
                 bbbb.border.color = "#007dbc"
                 b.border.color = "#00488d"
                 bb.border.color = "#007dbc"
@@ -59,7 +65,8 @@ Rectangle {
                 bbb.color = "#007dbc"
                 bbbb.color = "#007dbc"
             }
-            else if(DeviceManager.DeviceList[swipeCurrIndex].pTrend.yieldType === 1){
+            else if(DeviceManager.DeviceList[currentIndex].pTrend.yieldType === 1)
+            {
                 bbbb.border.color = "#007dbc"
                 b.border.color = "#007dbc"
                 bb.border.color = "#00488d"
@@ -73,7 +80,8 @@ Rectangle {
                 bbb.color = "#007dbc"
                 bbbb.color = "#007dbc"
             }
-            else if(DeviceManager.DeviceList[swipeCurrIndex].pTrend.yieldType === 2){
+            else if(DeviceManager.DeviceList[currentIndex].pTrend.yieldType === 2)
+            {
                 bbbb.border.color = "#007dbc"
                 b.border.color = "#007dbc"
                 bb.border.color = "#007dbc"
@@ -87,7 +95,8 @@ Rectangle {
                 bbb.color = pRgb(177, 213, 219)
                 bbbb.color = "#007dbc"
             }
-            else if(DeviceManager.DeviceList[swipeCurrIndex].pTrend.yieldType === 3){
+            else if(DeviceManager.DeviceList[currentIndex].pTrend.yieldType === 3)
+            {
                 bbbb.border.color = "#00488d"
                 b.border.color = "#007dbc"
                 bb.border.color = "#007dbc"
@@ -103,11 +112,14 @@ Rectangle {
             }
         }
         else{
-            if(equipmentCount === 4){
+            if(deviceCount === 4)
+            {
                 return
             }
-            else if(equipmentCount === 1 || equipmentCount === 3){
-                if(DeviceManager.DeviceList[0].pTrend.yieldType === 0){
+            else if(deviceCount === 1 || deviceCount === 3)
+            {
+                if(DeviceManager.DeviceList[0].pTrend.yieldType === 0)
+                {
                     bbbb.border.color = "#007dbc"
                     b.border.color = "#00488d"
                     bb.border.color = "#007dbc"
@@ -121,7 +133,8 @@ Rectangle {
                     bbb.color = "#007dbc"
                     bbbb.color = "#007dbc"
                 }
-                else if(DeviceManager.DeviceList[0].pTrend.yieldType === 1){
+                else if(DeviceManager.DeviceList[0].pTrend.yieldType === 1)
+                {
                     bbbb.border.color = "#007dbc"
                     b.border.color = "#007dbc"
                     bb.border.color = "#00488d"
@@ -135,7 +148,8 @@ Rectangle {
                     bbb.color = "#007dbc"
                     bbbb.color = "#007dbc"
                 }
-                else if(DeviceManager.DeviceList[0].pTrend.yieldType === 2){
+                else if(DeviceManager.DeviceList[0].pTrend.yieldType === 2)
+                {
                     bbbb.border.color = "#007dbc"
                     b.border.color = "#007dbc"
                     bb.border.color = "#007dbc"
@@ -149,7 +163,8 @@ Rectangle {
                     bbb.color = pRgb(177, 213, 219)
                     bbbb.color = "#007dbc"
                 }
-                else if(DeviceManager.DeviceList[0].pTrend.yieldType === 3){
+                else if(DeviceManager.DeviceList[0].pTrend.yieldType === 3)
+                {
                     bbbb.border.color = "#00488d"
                     b.border.color = "#007dbc"
                     bb.border.color = "#007dbc"
@@ -164,9 +179,12 @@ Rectangle {
                     bbbb.color = pRgb(177, 213, 219)
                 }
             }
-            else if(equipmentCount === 2){
-                if(equiInforIndex === 1){
-                    if(DeviceManager.DeviceList[0].pTrend.yieldType === 0){
+            else if(deviceCount === 2)
+            {
+                if(equiInforIndex === 1)
+                {
+                    if(DeviceManager.DeviceList[0].pTrend.yieldType === 0)
+                    {
                         bbbb.border.color = "#007dbc"
                         b.border.color = "#00488d"
                         bb.border.color = "#007dbc"
@@ -180,7 +198,8 @@ Rectangle {
                         bbb.color = "#007dbc"
                         bbbb.color = "#007dbc"
                     }
-                    else if(DeviceManager.DeviceList[0].pTrend.yieldType === 1){
+                    else if(DeviceManager.DeviceList[0].pTrend.yieldType === 1)
+                    {
                         bbbb.border.color = "#007dbc"
                         b.border.color = "#007dbc"
                         bb.border.color = "#00488d"
@@ -194,7 +213,8 @@ Rectangle {
                         bbb.color = "#007dbc"
                         bbbb.color = "#007dbc"
                     }
-                    else if(DeviceManager.DeviceList[0].pTrend.yieldType === 2){
+                    else if(DeviceManager.DeviceList[0].pTrend.yieldType === 2)
+                    {
                         bbbb.border.color = "#007dbc"
                         b.border.color = "#007dbc"
                         bb.border.color = "#007dbc"
@@ -208,7 +228,8 @@ Rectangle {
                         bbb.color = pRgb(177, 213, 219)
                         bbbb.color = "#007dbc"
                     }
-                    else if(DeviceManager.DeviceList[0].pTrend.yieldType === 3){
+                    else if(DeviceManager.DeviceList[0].pTrend.yieldType === 3)
+                    {
                         bbbb.border.color = "#00488d"
                         b.border.color = "#007dbc"
                         bb.border.color = "#007dbc"
@@ -223,8 +244,10 @@ Rectangle {
                         bbbb.color = pRgb(177, 213, 219)
                     }
                 }
-                else if(equiInforIndex === 2){
-                    if(DeviceManager.DeviceList[1].pTrend.yieldType === 0){
+                else if(equiInforIndex === 2)
+                {
+                    if(DeviceManager.DeviceList[1].pTrend.yieldType === 0)
+                    {
                         bbbb.border.color = "#007dbc"
                         b.border.color = "#00488d"
                         bb.border.color = "#007dbc"
@@ -238,7 +261,8 @@ Rectangle {
                         bbb.color = "#007dbc"
                         bbbb.color = "#007dbc"
                     }
-                    else if(DeviceManager.DeviceList[1].pTrend.yieldType === 1){
+                    else if(DeviceManager.DeviceList[1].pTrend.yieldType === 1)
+                    {
                         bbbb.border.color = "#007dbc"
                         b.border.color = "#007dbc"
                         bb.border.color = "#00488d"
@@ -252,7 +276,8 @@ Rectangle {
                         bbb.color = "#007dbc"
                         bbbb.color = "#007dbc"
                     }
-                    else if(DeviceManager.DeviceList[1].pTrend.yieldType === 2){
+                    else if(DeviceManager.DeviceList[1].pTrend.yieldType === 2)
+                    {
                         bbbb.border.color = "#007dbc"
                         b.border.color = "#007dbc"
                         bb.border.color = "#007dbc"
@@ -266,7 +291,8 @@ Rectangle {
                         bbb.color = pRgb(177, 213, 219)
                         bbbb.color = "#007dbc"
                     }
-                    else if(DeviceManager.DeviceList[1].pTrend.yieldType === 3){
+                    else if(DeviceManager.DeviceList[1].pTrend.yieldType === 3)
+                    {
                         bbbb.border.color = "#00488d"
                         b.border.color = "#007dbc"
                         bb.border.color = "#007dbc"
@@ -284,6 +310,119 @@ Rectangle {
             }
         }
     }
+    function switchUpdate(index){
+        if(swipevis){
+            DeviceManager.DeviceList[currentIndex].pTrend.setYieldType(index)
+        }
+        else{
+            if(deviceCount === 1 || deviceCount === 3)
+            {
+                DeviceManager.DeviceList[0].pTrend.setYieldType(index)
+            }
+            else if(deviceCount === 2)
+            {
+                if(equiInforIndex === 1){
+                    DeviceManager.DeviceList[0].pTrend.setYieldType(index)
+                }
+                else if(equiInforIndex === 2){
+                    DeviceManager.DeviceList[1].pTrend.setYieldType(index)
+                }
+            }
+        }
+    }
+    function chartUpdata()
+    {
+        if(deviceCount === 1)
+        {
+            DeviceManager.DeviceList[0].pTrend.setYieldSeries((chart.series(lineSeries.name)))
+            return
+        }
+
+        if(swipevis){
+            if(deviceCount === 2)
+            {
+                if(currentIndex === 0)
+                {
+                    DeviceManager.DeviceList[0].pTrend.setYieldSeries((chart.series(lineSeries.name)))
+                    DeviceManager.DeviceList[1].pTrend.setYieldSeries(null)
+                }
+                else if(currentIndex === 1)
+                {
+                    DeviceManager.DeviceList[1].pTrend.setYieldSeries((chart.series(lineSeries.name)))
+                    DeviceManager.DeviceList[0].pTrend.setYieldSeries(null)
+                }
+
+            }
+            else if(deviceCount === 3){
+                if(currentIndex === 0){
+                    DeviceManager.DeviceList[0].pTrend.setYieldSeries((chart.series(lineSeries.name)))
+                    DeviceManager.DeviceList[1].pTrend.setYieldSeries(null)
+                    DeviceManager.DeviceList[2].pTrend.setYieldSeries(null)
+                }
+                else if(currentIndex === 1){
+                    DeviceManager.DeviceList[1].pTrend.setYieldSeries((chart.series(lineSeries.name)))
+                    DeviceManager.DeviceList[0].pTrend.setYieldSeries(null)
+                    DeviceManager.DeviceList[2].pTrend.setYieldSeries(null)
+                }
+                else if(currentIndex === 2){
+                    DeviceManager.DeviceList[2].pTrend.setYieldSeries((chart.series(lineSeries.name)))
+                    DeviceManager.DeviceList[0].pTrend.setYieldSeries(null)
+                    DeviceManager.DeviceList[1].pTrend.setYieldSeries(null)
+                }
+            }
+            else if(deviceCount === 4){
+                if(currentIndex === 0){
+                    DeviceManager.DeviceList[0].pTrend.setYieldSeries((chart.series(lineSeries.name)))
+                    DeviceManager.DeviceList[1].pTrend.setYieldSeries(null)
+                    DeviceManager.DeviceList[2].pTrend.setYieldSeries(null)
+                    DeviceManager.DeviceList[3].pTrend.setYieldSeries(null)
+                }
+                else if(currentIndex === 1){
+                    DeviceManager.DeviceList[1].pTrend.setYieldSeries((chart.series(lineSeries.name)))
+                    DeviceManager.DeviceList[0].pTrend.setYieldSeries(null)
+                    DeviceManager.DeviceList[2].pTrend.setYieldSeries(null)
+                    DeviceManager.DeviceList[3].pTrend.setYieldSeries(null)
+                }
+                else if(currentIndex === 2){
+                    DeviceManager.DeviceList[2].pTrend.setYieldSeries((chart.series(lineSeries.name)))
+                    DeviceManager.DeviceList[0].pTrend.setYieldSeries(null)
+                    DeviceManager.DeviceList[1].pTrend.setYieldSeries(null)
+                    DeviceManager.DeviceList[3].pTrend.setYieldSeries(null)
+                }
+                else if(currentIndex === 3){
+                    DeviceManager.DeviceList[3].pTrend.setYieldSeries((chart.series(lineSeries.name)))
+                    DeviceManager.DeviceList[0].pTrend.setYieldSeries(null)
+                    DeviceManager.DeviceList[1].pTrend.setYieldSeries(null)
+                    DeviceManager.DeviceList[2].pTrend.setYieldSeries(null)
+                }
+            }
+        }
+        else{
+            if(deviceCount === 2){
+                if(equiInforIndex === 1){
+                    DeviceManager.DeviceList[0].pTrend.setYieldSeries((chart.series(lineSeries.name)))
+                }
+                else if(equiInforIndex === 2){
+                    DeviceManager.DeviceList[1].pTrend.setYieldSeries((chart.series(lineSeries.name)))
+                }
+            }
+            else if(deviceCount === 3){
+                if(equiInforIndex === 1){
+                    DeviceManager.DeviceList[0].pTrend.setYieldSeries((chart.series(lineSeries.name)))
+                }
+                DeviceManager.DeviceList[1].pTrend.setYieldSeries(null)
+                DeviceManager.DeviceList[2].pTrend.setYieldSeries(null)
+            }
+            else if(deviceCount === 4){
+                DeviceManager.DeviceList[0].pTrend.setYieldSeries(null)
+                DeviceManager.DeviceList[1].pTrend.setYieldSeries(null)
+                DeviceManager.DeviceList[1].pTrend.setYieldSeries(null)
+                DeviceManager.DeviceList[3].pTrend.setYieldSeries(null)
+            }
+        }
+    }
+
+
     onHeightChanged: {
         if(height < 260){
             if(mode == 1){
@@ -304,8 +443,6 @@ Rectangle {
         }
     }
 
-    color: pRgb(43, 112, 173)
-    radius: 3
     Component.onCompleted: {
         bbbb.border.color = "#007dbc"
         b.border.color = "#00488d"
@@ -339,30 +476,13 @@ Rectangle {
         color: pRgb(174, 210, 216)
     }
 
-    function switchUpdate(index){
-        if(swipevis){
-            DeviceManager.DeviceList[swipeCurrIndex].pTrend.setYieldType(index)
-        }
-        else{
-            if(equipmentCount === 1 || equipmentCount === 3){
-                DeviceManager.DeviceList[0].pTrend.setYieldType(index)
-            }
-            else if(equipmentCount === 2){
-                if(equiInforIndex === 1){
-                    DeviceManager.DeviceList[0].pTrend.setYieldType(index)
-                }
-                else if(equiInforIndex === 2){
-                    DeviceManager.DeviceList[1].pTrend.setYieldType(index)
-                }
-            }
-        }
-    }
     Rectangle{
         id:btns
         width: 320
         height: 34
-        x:269
-        y:12
+        anchors.right: parent.right//269
+        anchors.rightMargin: 20
+        y: 12
         border.color: "#195f9f"
         border.width: 2
         radius: 4
@@ -479,7 +599,7 @@ Rectangle {
     property int timer: 0
 
     ChartView {
-        id:chart
+        id: chart
         anchors.top: line.bottom // 使图表的顶部与父项的顶部对齐
         width: 590
         height: 240
@@ -494,6 +614,7 @@ Rectangle {
         margins.bottom: 10
         legend.visible: false
         clip: true
+
         Component.onCompleted: {
             chartUpdata()
         }
@@ -537,99 +658,7 @@ Rectangle {
             useOpenGL: false
             pointsVisible: true
         }
-        Connections
-        {
-            target: DeviceManager
-            function onNotifySelectedDeviceIndexChanged(){
-                chartUpdata()
-            }
-        }
-        function chartUpdata(){
-            if(equipmentCount === 1){
-                DeviceManager.DeviceList[0].pTrend.setYieldSeries((chart.series(lineSeries.name)))
-                return
-            }
 
-            if(swipevis){
-                if(equipmentCount === 2){
-                    if(swipeCurrIndex === 0){
-                        DeviceManager.DeviceList[0].pTrend.setYieldSeries((chart.series(lineSeries.name)))
-                        DeviceManager.DeviceList[1].pTrend.setYieldSeries(null)
-                    }
-                    else if(swipeCurrIndex === 1){
-                        DeviceManager.DeviceList[1].pTrend.setYieldSeries((chart.series(lineSeries.name)))
-                        DeviceManager.DeviceList[0].pTrend.setYieldSeries(null)
-                    }
-
-                }
-                else if(equipmentCount === 3){
-                    if(swipeCurrIndex === 0){
-                        DeviceManager.DeviceList[0].pTrend.setYieldSeries((chart.series(lineSeries.name)))
-                        DeviceManager.DeviceList[1].pTrend.setYieldSeries(null)
-                        DeviceManager.DeviceList[2].pTrend.setYieldSeries(null)
-                    }
-                    else if(swipeCurrIndex === 1){
-                        DeviceManager.DeviceList[1].pTrend.setYieldSeries((chart.series(lineSeries.name)))
-                        DeviceManager.DeviceList[0].pTrend.setYieldSeries(null)
-                        DeviceManager.DeviceList[2].pTrend.setYieldSeries(null)
-                    }
-                    else if(swipeCurrIndex === 2){
-                        DeviceManager.DeviceList[2].pTrend.setYieldSeries((chart.series(lineSeries.name)))
-                        DeviceManager.DeviceList[0].pTrend.setYieldSeries(null)
-                        DeviceManager.DeviceList[1].pTrend.setYieldSeries(null)
-                    }
-                }
-                else if(equipmentCount === 4){
-                    if(swipeCurrIndex === 0){
-                        DeviceManager.DeviceList[0].pTrend.setYieldSeries((chart.series(lineSeries.name)))
-                        DeviceManager.DeviceList[1].pTrend.setYieldSeries(null)
-                        DeviceManager.DeviceList[2].pTrend.setYieldSeries(null)
-                        DeviceManager.DeviceList[3].pTrend.setYieldSeries(null)
-                    }
-                    else if(swipeCurrIndex === 1){
-                        DeviceManager.DeviceList[1].pTrend.setYieldSeries((chart.series(lineSeries.name)))
-                        DeviceManager.DeviceList[0].pTrend.setYieldSeries(null)
-                        DeviceManager.DeviceList[2].pTrend.setYieldSeries(null)
-                        DeviceManager.DeviceList[3].pTrend.setYieldSeries(null)
-                    }
-                    else if(swipeCurrIndex === 2){
-                        DeviceManager.DeviceList[2].pTrend.setYieldSeries((chart.series(lineSeries.name)))
-                        DeviceManager.DeviceList[0].pTrend.setYieldSeries(null)
-                        DeviceManager.DeviceList[1].pTrend.setYieldSeries(null)
-                        DeviceManager.DeviceList[3].pTrend.setYieldSeries(null)
-                    }
-                    else if(swipeCurrIndex === 3){
-                        DeviceManager.DeviceList[3].pTrend.setYieldSeries((chart.series(lineSeries.name)))
-                        DeviceManager.DeviceList[0].pTrend.setYieldSeries(null)
-                        DeviceManager.DeviceList[1].pTrend.setYieldSeries(null)
-                        DeviceManager.DeviceList[2].pTrend.setYieldSeries(null)
-                    }
-                }
-            }
-            else{
-                if(equipmentCount === 2){
-                    if(equiInforIndex === 1){
-                        DeviceManager.DeviceList[0].pTrend.setYieldSeries((chart.series(lineSeries.name)))
-                    }
-                    else if(equiInforIndex === 2){
-                        DeviceManager.DeviceList[1].pTrend.setYieldSeries((chart.series(lineSeries.name)))
-                    }
-                }
-                else if(equipmentCount === 3){
-                    if(equiInforIndex === 1){
-                        DeviceManager.DeviceList[0].pTrend.setYieldSeries((chart.series(lineSeries.name)))
-                    }
-                    DeviceManager.DeviceList[1].pTrend.setYieldSeries(null)
-                    DeviceManager.DeviceList[2].pTrend.setYieldSeries(null)
-                }
-                else if(equipmentCount === 4){
-                    DeviceManager.DeviceList[0].pTrend.setYieldSeries(null)
-                    DeviceManager.DeviceList[1].pTrend.setYieldSeries(null)
-                    DeviceManager.DeviceList[1].pTrend.setYieldSeries(null)
-                    DeviceManager.DeviceList[3].pTrend.setYieldSeries(null)
-                }
-            }
-        }
         onVisibleChanged: {
             if(visible){
                 chartUpdata()

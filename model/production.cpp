@@ -1,4 +1,5 @@
 #include "production.h"
+#include "tools/utilityfunction.h"
 Production::Production(int welderID, ProvidenceEE *_providenceEE, QObject *parent)
     :QObject{parent}, m_WelderID(welderID), m_ptrProvidenceEE(_providenceEE)
 {
@@ -7,11 +8,23 @@ Production::Production(int welderID, ProvidenceEE *_providenceEE, QObject *paren
     m_iGoodCycleCount = 333;
     m_iDefectiveCycleCount = 1;
     m_iSuspectCycleCount = 2;
-    m_DBModel.isAvailable = false;
-    setEnergySetting(m_DBModel.Energy);
-    setAmpSetting(m_DBModel.Amplitude);
-    setTPSetting(m_DBModel.TriggerPressure);
-    setWPSetting(m_DBModel.WeldPressure);
+    if(DataBaseManager::getInstance()->getModelRecord(m_WelderID, m_DBModel) == false)
+    {
+        setModelStatus(false);
+        setEnergySetting(0);
+        setAmpSetting(0);
+        setTPSetting(0);
+        setWPSetting(0);
+    }
+    else
+    {
+        setModelStatus(m_DBModel.isAvailable);
+        setEnergySetting(m_DBModel.Energy);
+        setAmpSetting(m_DBModel.Amplitude);
+        setTPSetting(m_DBModel.TriggerPressure);
+        setWPSetting(m_DBModel.WeldPressure);
+    }
+    memset(&m_DBProduction, 0, sizeof(DataBaseManager::DB_PRODUCTION));
 }
 
 QString Production::getGoodRate() const
@@ -102,118 +115,127 @@ void Production::setTotalCycleCount(const QString &count)
     }
 }
 
-int Production::getPeakPower() const
+QString Production::getPeakPower() const
 {
-    return m_DBProduction.PeakPower;
+    return QString::number(m_DBProduction.PeakPower);
 }
 
-void Production::setPeakPower(const int power)
+void Production::setPeakPower(const QString &power)
 {
-    if (m_DBProduction.PeakPower != power)
+    bool isOk = false;
+    int iPower = power.toInt(&isOk);
+    if (isOk && m_DBProduction.PeakPower != iPower)
     {
-        m_DBProduction.PeakPower = power;
+        m_DBProduction.PeakPower = iPower;
         emit notifyPeakPowerChanged();
     }
 }
 
-int Production::getWeldTime() const
+QString Production::getWeldTime() const
 {
-    return m_DBProduction.WeldTime;
+    return UtilityFunction::getInstance()->RawValueToString(m_DBProduction.WeldTime, 100, 2);
 }
 
-void Production::setWeldTime(const int time)
+void Production::setWeldTime(const QString &time)
 {
-    if (m_DBProduction.WeldTime != time)
+    int iTime = UtilityFunction::getInstance()->StringToRawValue(time, 100);
+    if (m_DBProduction.WeldTime != iTime)
     {
-        m_DBProduction.WeldTime = time;
+        m_DBProduction.WeldTime = iTime;
         emit notifyWeldTimeChanged();
     }   
 }
 
-int Production::getEnergy() const
+QString Production::getEnergy() const
 {
-    return m_DBProduction.Energy;
+    return QString::number(m_DBProduction.Energy);
 }
 
-void Production::setEnergy(const int energy)
+void Production::setEnergy(const QString &energy)
 {
-    if (m_DBProduction.Energy != energy)
+    bool isOk = false;
+    int iEnergy = energy.toInt(&isOk);
+    if (isOk && m_DBProduction.Energy != iEnergy)
     {
-        m_DBProduction.Energy = energy;
+        m_DBProduction.Energy = iEnergy;
         emit notifyEnergyChanged();
     }
 }
 
-int Production::getPreheight() const
+QString Production::getPreheight() const
 {
-    return m_DBProduction.Preheight;
+    return UtilityFunction::getInstance()->RawValueToString(m_DBProduction.Preheight, 100, 2);
 }
 
-void Production::setPreheight(const int height)
+void Production::setPreheight(const QString &height)
 {
-    if (m_DBProduction.Preheight != height)
+    int iPreheight = UtilityFunction::getInstance()->StringToRawValue(height, 100);
+    if (m_DBProduction.Preheight != iPreheight)
     {
-        m_DBProduction.Preheight = height;
+        m_DBProduction.Preheight = iPreheight;
         emit notifyPreheightChanged();
     }
 }
 
-int Production::getPostHeight() const
+QString Production::getPostHeight() const
 {
-    return m_DBProduction.PostHeight;
+    return UtilityFunction::getInstance()->RawValueToString(m_DBProduction.PostHeight, 100, 2);
 }
 
-void Production::setPostHeight(const int height)
+void Production::setPostHeight(const QString& height)
 {
-    if (m_DBProduction.PostHeight != height)
+    int iPostHeight = UtilityFunction::getInstance()->StringToRawValue(height, 100);
+    if (m_DBProduction.PostHeight != iPostHeight)
     {
-        m_DBProduction.PostHeight = height;
+        m_DBProduction.PostHeight = iPostHeight;
         emit notifyPostHeightChanged();
     }
 }
 
-int Production::getAmplitude() const
+QString Production::getAmplitude() const
 {
-    return m_DBProduction.Amplitude;
+    return QString::number(m_DBProduction.Amplitude);
 }
 
-void Production::setAmplitude(const int amplitude)
+void Production::setAmplitude(const QString &amplitude)
 {
-    if (m_DBProduction.Amplitude != amplitude)
+    bool isOk = false;
+    int iAmplitude = amplitude.toInt(&isOk);
+    if (isOk && m_DBProduction.Amplitude != iAmplitude)
     {
-        m_DBProduction.Amplitude = amplitude;
+        m_DBProduction.Amplitude = iAmplitude;
         emit notifyAmplitudeChanged();
     }
-
 }
 
-int Production::getWeldPressure() const
+QString Production::getWeldPressure() const
 {
-    return m_DBProduction.WeldPressure;
+    return UtilityFunction::getInstance()->RawValueToString(m_DBProduction.WeldPressure, 10.0, 1);
 }
 
-void Production::setWeldPressure(const int weldPressure)
+void Production::setWeldPressure(const QString& weldPressure)
 {
-    if (m_DBProduction.WeldPressure != weldPressure)
+    int iWeldPressure = UtilityFunction::getInstance()->StringToRawValue(weldPressure, 10.0);
+    if (m_DBProduction.WeldPressure != iWeldPressure)
     {
-        m_DBProduction.WeldPressure = weldPressure;
+        m_DBProduction.WeldPressure = iWeldPressure;
         emit notifyWeldPressureChanged();
     }
 }
 
-int Production::getTriggertPressure() const
+QString Production::getTriggertPressure() const
 {
-     return m_DBProduction.TriggertPressure;
+     return UtilityFunction::getInstance()->RawValueToString(m_DBProduction.TriggertPressure, 10.0, 1);
 }
 
-void Production::setTriggertPressure(const int triggertPressure)
+void Production::setTriggertPressure(const QString& triggertPressure)
 {
-    if (m_DBProduction.TriggertPressure != triggertPressure)
+    int iTriggertPressure = UtilityFunction::getInstance()->StringToRawValue(triggertPressure, 10.0);
+    if (m_DBProduction.TriggertPressure != iTriggertPressure)
     {
-        m_DBProduction.TriggertPressure = triggertPressure;
+        m_DBProduction.TriggertPressure = iTriggertPressure;
         emit notifyTriggertPressureChanged();
     }
-
 }
 
 int Production::getEnergySetting() const
