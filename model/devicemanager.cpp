@@ -34,6 +34,9 @@ DeviceManager::DeviceManager(QObject *parent)
     connect(HBModbusClient::getInstance(), &HBModbusClient::notifyWeldResultComing,     this, &DeviceManager::slotNotifyWeldResultComing);
     connect(HBModbusClient::getInstance(), &HBModbusClient::notifyPresetSettingChanged, this, &DeviceManager::slotNotifyPresetSettingChanged);
     connect(HBModbusClient::getInstance(), &HBModbusClient::connectionStateChanged, this, &DeviceManager::slotNotifyModbusStatusChanged);
+#if RASPBERRY
+    emit notifyConnectionStateChanged(true);
+#endif
 }
 
 bool DeviceManager::InitDeviceList()
@@ -189,12 +192,15 @@ void DeviceManager::slotNotifyPresetSettingChanged(int welderId, const HBModbusC
 
 void DeviceManager::slotNotifyModbusStatusChanged(const bool connected)
 {
-        if(connected)
+    if(connected == true)
+    {
         for(int i = 0; i < m_listDevices.size(); i++)
         {
             int targetWelderId = m_listDevices[i]->getWelderID();
             m_listDevices[i]->NotifyModbusStatusChanged(targetWelderId);
         }
+    }
+    emit notifyConnectionStateChanged(connected);
 }
 
 bool DeviceManager::addDevice()

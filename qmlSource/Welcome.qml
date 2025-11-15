@@ -49,16 +49,19 @@ Rectangle {
     }
 
     Connections {
-        target: ModbusClient
-        function onConnectionStateChanged(connected)
+        target: DeviceManager
+        function onNotifyConnectionStateChanged(connected)
         {
-            if (isRaspberry)
+            if (connected)
             {
-                if (connected)
-                    window.releaseWelcomeScreen()
-
-                else
-                    window.showWelcomeScreen()
+                loadingTimer.stop()
+                window.releaseWelcomeScreen()
+            }
+            else
+            {
+                loadingTimer.start()
+                loading = ""
+                window.showWelcomeScreen()
             }
         }
     }
@@ -66,16 +69,10 @@ Rectangle {
     Timer {
         id: loadingTimer
         interval: 1000
-        running: isRaspberry ? false : true
+        running: true
         repeat: true
         onTriggered: {
-            if (loading.length >= 3)
-            {
-                stop()
-                window.releaseWelcomeScreen()
-            }
-            else
-                loading += "."
+            loading += "."
         }
     }
 }

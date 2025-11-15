@@ -60,11 +60,6 @@ void myMessageHandler(QtMsgType type, const QMessageLogContext &context, const Q
 
 int main(int argc, char *argv[])
 {
-#ifdef RASPBERRY
-    bool isRaspberry = true;
-#else
-    bool isRaspberry = false;
-#endif
     qputenv("QT_IM_MODULE", QByteArray("qtvirtualkeyboard"));
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     // 安装自定义消息处理程序
@@ -98,7 +93,6 @@ int main(int argc, char *argv[])
 
     pQmlContext->setContextProperty("ModbusClient",     HBModbusClient::getInstance());
     pQmlContext->setContextProperty("UtilityFunction",  UtilityFunction::getInstance());
-    pQmlContext->setContextProperty("isRaspberry", isRaspberry);
 
     qmlRegisterType<Device>("Device", 1, 0, "Device");
     // qmlRegisterType<IO>("IO", 1, 0, "IO");
