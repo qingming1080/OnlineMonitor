@@ -104,6 +104,8 @@ public:
 
     void AppendNewRecordComming(const HBModbusClient::MODBUS_WELD_RESULT &data);
 
+    void SetModel(const DataBaseManager::DB_MODEL& model);
+
 private:
     int m_WelderID;
     DataBaseManager::DB_PRODUCTION  m_DBProduction;

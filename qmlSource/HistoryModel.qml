@@ -111,7 +111,6 @@ Rectangle {
             }
             onPressed: {
                 History.setDeviceID(0)
-                //History.setWelderID(0)
             }
         }
         Text {
@@ -146,7 +145,8 @@ Rectangle {
                 border.width: 2
             }
             onPressed: {
-                History.setDeviceID(1)
+                var welderID = DeviceManager.DeviceList[0].WelderID
+                History.setDeviceID(welderID)
             }
         }
         Text {
@@ -190,7 +190,8 @@ Rectangle {
                 }
             }
             onPressed: {
-                History.setDeviceID(2)
+                var welderID = DeviceManager.DeviceList[1].WelderID
+                History.setDeviceID(welderID)
             }
         }
         Text {
@@ -235,7 +236,8 @@ Rectangle {
                 }
             }
             onPressed: {
-                History.setDeviceID(3)
+                var welderID = DeviceManager.DeviceList[2].WelderID
+                History.setDeviceID(welderID)
             }
         }
         Text {
@@ -280,7 +282,8 @@ Rectangle {
                 }
             }
             onPressed: {
-                History.setDeviceID(4)
+                var welderID = DeviceManager.DeviceList[3].WelderID
+                History.setDeviceID(welderID)
             }
         }
         Text {

@@ -56,6 +56,7 @@ signals:
     void notifyAmplitudeSettingChanged();
     void notifyTriggerPressureSettingChanged();
     void notifyWeldPressureSettingChanged();
+    void notifyTrainingProcessFinished(DataBaseManager::DB_MODEL& model);
 private:
     int m_welderID;
     QList<DataBaseManager::DB_MANUAL>   m_listManualRecords;

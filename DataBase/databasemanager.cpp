@@ -1850,21 +1850,3 @@ QList<DataBaseManager::DB_PRODUCTION> DataBaseManager::getAllTrendData(int welde
 
     return list;
 }
-
-// QString DataBaseManager::getDeviceInfo()
-// {
-
-//     int DEV_ID;
-//     //焊机类型;
-//     int DEV_TYPE;// 0 VG, 1, TC, 2 2000X
-//     int CONNETID;// 0 Ethernet, 1 Serial, 2 analog
-//     int DEV_AVAILABLE; // 0 Close, 1 Open
-//     int DEV_IP;
-//     int LOCAL_IP;
-
-//      QSqlQuery query;
-
-//      QSqlQuery
-
-
-// }

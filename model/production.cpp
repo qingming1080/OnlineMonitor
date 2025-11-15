@@ -24,7 +24,7 @@ Production::Production(int welderID, ProvidenceEE *_providenceEE, QObject *paren
         setTPSetting(m_DBModel.TriggerPressure);
         setWPSetting(m_DBModel.WeldPressure);
     }
-    memset(&m_DBProduction, 0, sizeof(DataBaseManager::DB_PRODUCTION));
+    memset((void*)&m_DBProduction, 0, sizeof(DataBaseManager::DB_PRODUCTION));
     m_DBProduction.BatchCount = m_DBModel.BatchCount;
 }
 
@@ -336,6 +336,48 @@ void Production::AppendNewRecordComming(const HBModbusClient::MODBUS_WELD_RESULT
 
     DataBaseManager::getInstance()->insertProductionRow(m_DBProduction);
     DataBaseManager::getInstance()->updateModelRecord(m_DBModel.id, m_DBModel);
+}
 
+void Production::SetModel(const DataBaseManager::DB_MODEL &model)
+{
+    m_DBModel.id = model.id;
+    m_DBModel.WelderId = model.WelderId;
+    m_DBModel.CreateTime = model.CreateTime;
+    m_DBModel.Energy = model.Energy;
+    m_DBModel.Amplitude = model.Amplitude;
+    m_DBModel.TriggerPressure = model.TriggerPressure;
+    m_DBModel.WeldPressure = model.WeldPressure;
 
+    m_DBModel.WeldTime.Alpha = model.WeldTime.Alpha;
+    m_DBModel.WeldTime.Beta = model.WeldTime.Beta;
+    m_DBModel.PeakPower.Alpha = model.PeakPower.Alpha;
+    m_DBModel.PeakPower.Beta = model.PeakPower.Beta;
+    m_DBModel.Preheight.Alpha = model.Preheight.Alpha;
+    m_DBModel.Preheight.Beta = model.Preheight.Beta;
+    m_DBModel.PostHeight.Alpha = model.PostHeight.Alpha;
+    m_DBModel.PostHeight.Beta = model.PostHeight.Beta;
+
+    m_DBModel.PeelForce.P00 = model.PeelForce.P00;
+    m_DBModel.PeelForce.P10 = model.PeelForce.P10;
+    m_DBModel.PeelForce.P01 = model.PeelForce.P01;
+    m_DBModel.PeelForce.P20 = model.PeelForce.P20;
+    m_DBModel.PeelForce.P11 = model.PeelForce.P11;
+    m_DBModel.PeelForce.P02 = model.PeelForce.P02;
+    m_DBModel.Residual.P00 = model.Residual.P00;
+    m_DBModel.Residual.P10 = model.Residual.P10;
+    m_DBModel.Residual.P01 = model.Residual.P01;
+    m_DBModel.Residual.P20 = model.Residual.P20;
+    m_DBModel.Residual.P11 = model.Residual.P11;
+    m_DBModel.Residual.P02 = model.Residual.P02;
+
+    m_DBModel.Centralized.TimeMean = model.Centralized.TimeMean;
+    m_DBModel.Centralized.TimeStd = model.Centralized.TimeStd;
+    m_DBModel.Centralized.PowerMean = model.Centralized.PowerMean;
+    m_DBModel.Centralized.PowrStd = model.Centralized.PowrStd;
+    m_DBModel.Centralized.ForceMean = model.Centralized.ForceMean;
+    m_DBModel.Centralized.ResidualMean = model.Centralized.ResidualMean;
+    
+    m_DBModel.SampleCount = model.SampleCount;
+    m_DBModel.BatchCount = model.BatchCount;
+    m_DBModel.isAvailable = model.isAvailable;
 }

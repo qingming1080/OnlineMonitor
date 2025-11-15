@@ -63,6 +63,8 @@ signals:
     void pYieldTrendChanged();
 
     void pTrendChanged();
+public slots:
+    void slotNotifyTrainingProcessFinished(DataBaseManager::DB_MODEL& model);
 
 private:
     int m_WelderID;

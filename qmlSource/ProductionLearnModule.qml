@@ -122,7 +122,7 @@ Rectangle {
                     DeviceManager.DeviceList[currentIndex].ManualObj.saveData()
                     sigUpdateUI(0)
                     sigRecover()
-                    createModel = false
+                    loadViewpro(2, multiPro)
                 }
                 else
                 {

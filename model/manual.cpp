@@ -177,6 +177,7 @@ void Manual::saveData()
     {
         DataBaseManager::getInstance()->insertModelRecord(m_DBModel);
     }
+    emit notifyTrainingProcessFinished(m_DBModel);
 }
 
 void Manual::clearData()

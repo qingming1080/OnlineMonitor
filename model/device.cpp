@@ -23,6 +23,8 @@ Device::Device(int welderID, QObject *parent)
     m_ptrProduction     = new Production(m_WelderID, m_ptrProvidenceEE);
     m_ptrTrend          = new Trend(m_WelderID);
 
+    connect(m_ptrManual, &Manual::notifyTrainingProcessFinished, this, &Device::slotNotifyTrainingProcessFinished);
+
     // QString text = QString("%1号设备_Device_初始化共耗时:%2ms").arg(welderID).arg(timer.elapsed());
     //                    emit SignalManager::getInstance()->signalAddRecord(QDateTime::currentDateTime(), text);
 }
@@ -128,6 +130,11 @@ bool Device::IsProductionPresetChanged(const HBModbusClient::WELD_PRESET &data)
         bResult = false;
     }
     return bResult;
+}
+
+void Device::slotNotifyTrainingProcessFinished(DataBaseManager::DB_MODEL &model)
+{
+    m_ptrProduction->SetModel(model);
 }
 
 DeviceInformation* Device::getDeviceObj() const
