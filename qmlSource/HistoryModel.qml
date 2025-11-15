@@ -574,7 +574,7 @@ Rectangle {
                     anchors.leftMargin: 30
                     anchors.verticalCenter: parent.verticalCenter
                     font.pixelSize: 16
-                    text: DeviceManager.getHistoryName(welder_id)
+                    text: welder_name
                     font.family: GlobalSystemDefine.fontBold
                     font.bold: true
                     color: index % 2 === 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)

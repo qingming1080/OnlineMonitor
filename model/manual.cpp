@@ -275,6 +275,7 @@ void Manual::InitDBModel(const GenericLearning::PROCESS_PARAM *_param, const Gen
     m_DBModel.Centralized.ResidualMean = centralized.ResidualMean;
 
     m_DBModel.SampleCount = _param[GenericLearning::TIME].SampleCount;
+    m_DBModel.BatchCount = 0;
 
     m_DBModel.WelderId = m_welderID;                       // 焊机id
     m_DBModel.CreateTime = QDateTime::currentDateTime();               // 创建时间

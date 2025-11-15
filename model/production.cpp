@@ -25,6 +25,7 @@ Production::Production(int welderID, ProvidenceEE *_providenceEE, QObject *paren
         setWPSetting(m_DBModel.WeldPressure);
     }
     memset(&m_DBProduction, 0, sizeof(DataBaseManager::DB_PRODUCTION));
+    m_DBProduction.BatchCount = m_DBModel.BatchCount;
 }
 
 QString Production::getGoodRate() const
@@ -225,15 +226,15 @@ void Production::setWeldPressure(const QString& weldPressure)
 
 QString Production::getTriggertPressure() const
 {
-     return UtilityFunction::getInstance()->RawValueToString(m_DBProduction.TriggertPressure, 10.0, 1);
+     return UtilityFunction::getInstance()->RawValueToString(m_DBProduction.TriggerPressure, 10.0, 1);
 }
 
 void Production::setTriggertPressure(const QString& triggertPressure)
 {
     int iTriggertPressure = UtilityFunction::getInstance()->StringToRawValue(triggertPressure, 10.0);
-    if (m_DBProduction.TriggertPressure != iTriggertPressure)
+    if (m_DBProduction.TriggerPressure != iTriggertPressure)
     {
-        m_DBProduction.TriggertPressure = iTriggertPressure;
+        m_DBProduction.TriggerPressure = iTriggertPressure;
         emit notifyTriggertPressureChanged();
     }
 }
@@ -310,5 +311,31 @@ void Production::setModelStatus(const bool status)
 
 void Production::AppendNewRecordComming(const HBModbusClient::MODBUS_WELD_RESULT &data)
 {
+
+    // int FinalResult;                    // 产品状态 0_合格 1_次品 2_可疑
+
+    m_DBProduction.WelderID = m_WelderID;
+    m_DBProduction.CreateTime = data.DateTime.toSecsSinceEpoch();
+    m_DBProduction.SerialNumber = "NAN";
+    m_DBProduction.CycleCount = data.CycleCount;
+    m_DBProduction.BatchCount++;
+    m_DBProduction.Energy = data.Energy;
+    m_DBProduction.Amplitude = data.Amplitude;
+    m_DBProduction.TriggerPressure = data.TriggerPressure;
+    m_DBProduction.WeldPressure = data.WeldingPressure;
+    m_DBProduction.WeldTime = data.WeldTime;
+    m_DBProduction.PeakPower = data.PeakPower;
+    m_DBProduction.Preheight = data.Preheight;
+    m_DBProduction.PostHeight = data.PostHeight;
+    m_DBProduction.Force = 0;
+    m_DBProduction.Residual = 0;
+    if(data.WeldAlarm != 0)
+        m_DBProduction.FinalResult = 1;
+    else
+        m_DBProduction.FinalResult = 0;
+
+    DataBaseManager::getInstance()->insertProductionRow(m_DBProduction);
+    DataBaseManager::getInstance()->updateModelRecord(m_DBModel.id, m_DBModel);
+
 
 }

@@ -55,9 +55,6 @@ public:
 
     Q_INVOKABLE void setUserPassword(QString newPassword);
 
-    Q_INVOKABLE QString getHistoryName(int welderID);
-
-
     //manual
     // Q_INVOKABLE void startManualMode(int deviceID);  // 开启手动模式
     // Q_INVOKABLE void stopManualMode();              // 关闭手动模式

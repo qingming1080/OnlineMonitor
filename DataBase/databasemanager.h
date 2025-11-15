@@ -64,6 +64,7 @@ public:
         FORCE                   = 14,   // 撕拉力
         RESIDUAL                = 15,   // 残留度
         FINAL_RESULT            = 16,   // 产品状态 0_合格 1_次品 2_可疑
+        WELDER_NAME             = 17
     };
 };
 
@@ -83,7 +84,8 @@ public:
         COEFFICIENT = 8,
         CENTRALIZED = 9,
         SAMPLE_COUNT = 10,
-        AVAILABLE = 11
+        BATCH_COUNT = 11,
+        AVAILABLE = 12
     };
 };
 
@@ -227,6 +229,7 @@ public:
         POLYNOMIAL_COEFFICIENT Residual;    // 残留度
         CENTRALIZED_PROPERTY Centralized;
         int SampleCount;                    // 当前样本数
+        int BatchCount;                     //
         bool isAvailable;                   // Need to consider if the current model is available or not.
     };
 
@@ -234,15 +237,14 @@ public:
     {
         int ProductionID;
         int WelderID;                       //deviceID
-        int ModelID;                        // 模型ID
         int CreateTime;                     // 创建时间
-        int SerialNumber;                   // 序号Barcode
+        QString SerialNumber;               // 序号Barcode
         int CycleCount;                     // 循环值
         int BatchCount;                     // 生产值
         int Energy;                         // 能量
         int Amplitude;                      // 振幅
         int WeldPressure;                   // 压力
-        int TriggertPressure;
+        int TriggerPressure;
         int WeldTime;                       // 焊接时间
         int PeakPower;                      // 功率
         int Preheight;                      // 焊前高度
@@ -289,6 +291,11 @@ public:
     bool removeModelRecord(int id);
     bool updateModelRecord(const int id, const DB_MODEL model);
 
+    bool removeProductionRow(int id);
+    bool clearProduction();
+    bool insertProductionRow(DB_PRODUCTION data);
+    QList<DB_PRODUCTION> getProductionData(int welderID = 0, int finalResult = 0, bool exportAll = false);
+
 /////////////////////////io_data////////////////////////////////
 /// 只处理待定
     ///
@@ -322,14 +329,6 @@ public:
     ///
     bool insertIORow(_IO_Data data);
 
-/////////////////////////production////////////////////////////////
-    ///
-    /// \brief getWeldTrendData : 获取历史记录，取最新五百个
-    /// \param welderID : 焊机ID，为零则不区分焊机
-    /// \param finalResult : 生产状态 0_全部 1_合格 2_次品 3_可疑
-    /// \return
-    ///
-    QList<DB_PRODUCTION> getProductionData(int welderID = 0, int finalResult = 0, bool exportAll = false);
 
     ///
     /// \brief getWeldTrendData : 获取焊接趋势折线图，取最新五百个
@@ -346,23 +345,6 @@ public:
     ///
     _Yield_TrendData getYieldTrendData(int interVal, int welderID = 0);
 
-    ///
-    /// \brief removeProductionRow : 删除production表格一行数据
-    /// \param id : 生产id
-    /// \return : 删除结果
-    ///
-    bool removeProductionRow(int id);
-
-    bool clearProduction();
-
-    ///
-    /// \brief insertProductionRow : 插入production表格一行数据
-    /// \param data : 数据
-    /// \return : 插入结果
-    ///
-    bool insertProductionRow(DB_PRODUCTION data);
-
-    // bool saveProductionDataofModbus(Device* device, const QVector<quint16>& inputs, quint32 cycleCount, DateTimeData date);
 
 /////////////////////////system////////////////////////////////
 /// root界面

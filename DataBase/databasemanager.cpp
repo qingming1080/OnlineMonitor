@@ -761,6 +761,7 @@ bool DataBaseManager::getModelRecords(QList<DB_MODEL>& list)
         strJson                 = query.value(MODEL_TABLE::CENTRALIZED).toString();
         JsonFormat2Centralized(strJson, data.Centralized);
         data.SampleCount  = query.value(MODEL_TABLE::SAMPLE_COUNT).toInt();
+        data.BatchCount   = query.value(MODEL_TABLE::BATCH_COUNT).toInt();
         data.isAvailable  = query.value(MODEL_TABLE::AVAILABLE).toBool();
         list.push_back(data);
     }
@@ -799,6 +800,7 @@ bool DataBaseManager::getModelRecord(const int welderID, DB_MODEL &model)
         strJson                 = query.value(MODEL_TABLE::CENTRALIZED).toString();
         JsonFormat2Centralized(strJson, model.Centralized);
         model.SampleCount  = query.value(MODEL_TABLE::SAMPLE_COUNT).toInt();
+        model.BatchCount   = query.value(MODEL_TABLE::BATCH_COUNT).toInt();
         model.isAvailable  = query.value(MODEL_TABLE::AVAILABLE).toBool();
         bResult = true;
     }
@@ -834,6 +836,7 @@ bool DataBaseManager::updateModelRecord(const int id, const DB_MODEL model)
                           "coefficient = :coefficient, "
                           "centralized = :centralized, "
                           "sample_count = :sample_count, "
+                          "batch_count = :batch_count, "
                           "available = :available "
                           "WHERE id = :id"
                           ).arg(MANUAL_TABLENAME);
@@ -857,6 +860,7 @@ bool DataBaseManager::updateModelRecord(const int id, const DB_MODEL model)
     Centralized2JsonFormat(model.Centralized, strJson);
     query.bindValue(":centralized",         strJson);
     query.bindValue(":sample_count",        model.SampleCount);
+    query.bindValue(":batch_count",         model.BatchCount);
     query.bindValue(":available",           model.isAvailable);
     query.bindValue(":id", id);
     bool ret = query.exec();
@@ -885,6 +889,7 @@ bool DataBaseManager::insertModelRecord(DB_MODEL model)
                               ", :coefficient"
                               ", :centralized"
                               ", :sample_count"
+                              ", :batch_count"
                               ", :available)")
                           .arg(MODEL_TABLENAME);
 
@@ -903,6 +908,7 @@ bool DataBaseManager::insertModelRecord(DB_MODEL model)
     Centralized2JsonFormat(model.Centralized, strJson);
     query.bindValue(":centralized", strJson);
     query.bindValue(":sample_count", model.SampleCount);
+    query.bindValue(":batch_count", model.BatchCount);
     query.bindValue(":available", model.isAvailable);
     return query.exec();
 }
@@ -973,7 +979,7 @@ QList<DataBaseManager::DB_PRODUCTION> DataBaseManager::getProductionData(int wel
         data.Energy                  = query.value(PRODUCTION_TABLE::ENERGY).toInt();
         data.Amplitude               = query.value(PRODUCTION_TABLE::AMPLITUDE).toInt();
         data.WeldPressure            = query.value(PRODUCTION_TABLE::WELD_PRESSURE).toInt();
-        data.TriggertPressure        = query.value(PRODUCTION_TABLE::TRIGGER_PRESSURE).toInt();
+        data.TriggerPressure        = query.value(PRODUCTION_TABLE::TRIGGER_PRESSURE).toInt();
         data.WeldTime                = query.value(PRODUCTION_TABLE::WELD_TIME).toInt();
         data.PeakPower               = query.value(PRODUCTION_TABLE::PEAK_POWER).toInt();
         data.Preheight               = query.value(PRODUCTION_TABLE::PRE_HEIGHT).toInt();
@@ -1129,28 +1135,27 @@ bool DataBaseManager::insertProductionRow(DB_PRODUCTION data)
 
     // SQL 语句，不包括自增的 id 字段
     QString execStr = QString("INSERT INTO %1 ("
-                              "welder_id, model_id, create_time,cycle_count,"
-                              "energy, amplitude, pressure, time, power, pre_height, post_height, force, "
-                              "residual, good_rate, good_subtotal_cycles, suspect_subtotal_cycles, "
-                              "not_definite_cycles, final_result) VALUES ("
-                              ":welder_id, :model_id, :create_time, :cycle_count,"
-                              ":energy, :amplitude, :pressure, :time, :power, :pre_height, :post_height, :force, "
-                              ":residual, :good_rate, :good_subtotal_cycles, :suspect_subtotal_cycles, "
-                              ":not_definite_cycles, :final_result)").arg(PRODUCTION_TABLENAME);
+                              "welder_id, create_time, serial_number, cycle_count, batch_count"
+                              "energy, amplitude, trigger_pressure, weld_pressure, time, "
+                              "power, pre_height, post_height, force, residual, final_result) "
+                              "VALUES ("
+                              ":welder_id, :create_time, :serial_number, :cycle_count, :batch_count, "
+                              ":energy, :amplitude, :trigger_pressure, :weld_pressure, :time, "
+                              ":power, :pre_height, :post_height, :force, :residual, :final_result)").arg(PRODUCTION_TABLENAME);
 
     // 准备查询
     query.prepare(execStr);
 
     // 绑定参数
     query.bindValue(":welder_id", data.WelderID);
-    query.bindValue(":model_id", data.ModelID);
-    // query.bindValue(":create_time", data.CreateTime);
+    query.bindValue(":create_time", data.CreateTime);
     query.bindValue(":serial_number",data.SerialNumber);
     query.bindValue(":cycle_count", data.CycleCount);
     query.bindValue(":batch_count",data.BatchCount);
     query.bindValue(":energy", data.Energy);
     query.bindValue(":amplitude", data.Amplitude);
-    query.bindValue(":pressure", data.WeldPressure);
+    query.bindValue(":trigger_pressure", data.TriggerPressure);
+    query.bindValue(":weld_pressure", data.WeldPressure);
     query.bindValue(":time", data.WeldTime);
     query.bindValue(":power", data.PeakPower);
     query.bindValue(":pre_height", data.Preheight);
@@ -1173,25 +1178,25 @@ bool DataBaseManager::insertProductionRow(DB_PRODUCTION data)
         return false;
     }
 
-    // 获取最后插入的自增 id
-    int lastInsertedId = query.lastInsertId().toInt();
+    // // 获取最后插入的自增 id
+    // int lastInsertedId = query.lastInsertId().toInt();
 
-    // 更新 serial_number 和 batch_count
-    QSqlQuery updateQuery;
-    QString updateStr = QString("UPDATE %1 SET serial_number = :serial_number, batch_count = :batch_count WHERE id = :id")
-                            .arg(PRODUCTION_TABLENAME);
-    updateQuery.prepare(updateStr);
-    updateQuery.bindValue(":serial_number", lastInsertedId);
-    updateQuery.bindValue(":batch_count", lastInsertedId);
-    updateQuery.bindValue(":id", lastInsertedId);
+    // // 更新 serial_number 和 batch_count
+    // QSqlQuery updateQuery;
+    // QString updateStr = QString("UPDATE %1 SET serial_number = :serial_number, batch_count = :batch_count WHERE id = :id")
+    //                         .arg(PRODUCTION_TABLENAME);
+    // updateQuery.prepare(updateStr);
+    // updateQuery.bindValue(":serial_number", lastInsertedId);
+    // updateQuery.bindValue(":batch_count", lastInsertedId);
+    // updateQuery.bindValue(":id", lastInsertedId);
 
-    if (!updateQuery.exec()) {
-        qDebug() << "Update failed:" << updateQuery.lastError().text();
-        db.rollback(); // 回滚事务
-        return false;
-    }
+    // if (!updateQuery.exec()) {
+    //     qDebug() << "Update failed:" << updateQuery.lastError().text();
+    //     db.rollback(); // 回滚事务
+    //     return false;
+    // }
 
-    db.commit(); // 提交事务
+    // db.commit(); // 提交事务
     return true;
 }
 
@@ -1524,6 +1529,8 @@ QString DataBaseManager::getModel_ColumnName(MODEL_TABLE::MODEL_COLUMN column)
         return "centralized";
     case MODEL_TABLE::SAMPLE_COUNT:
         return "sample_count";
+    case MODEL_TABLE::BATCH_COUNT:
+        return "batch_count";
     case MODEL_TABLE::AVAILABLE:
         return "available";
     }

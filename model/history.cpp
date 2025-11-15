@@ -15,6 +15,7 @@
 #include <QObject>
 #include "csvexportworker.h"
 #include "tools/utilityfunction.h"
+#include "devicemanager.h"
 
 History* History::s_pHistory = nullptr;
 QString  History::m_USBDirectory = "";
@@ -29,15 +30,15 @@ History *History::getInstance()
 History::History(QObject *parent)
     : QAbstractListModel{parent}
 {
-    QElapsedTimer timer;
-    timer.start();
+    // QElapsedTimer timer;
+    // timer.start();
 
     m_data = DataBaseManager::getInstance()->getProductionData();
    // std::reverse(m_data.begin(), m_data.end());
 
 
-    QString text = QString("History_初始化共耗时:%1ms 加载%2条数据").arg(timer.elapsed()).arg(m_data.size());
-    emit SignalManager::getInstance()->signalAddRecord(QDateTime::currentDateTime(), text);
+    // QString text = QString("History_初始化共耗时:%1ms 加载%2条数据").arg(timer.elapsed()).arg(m_data.size());
+    // emit SignalManager::getInstance()->signalAddRecord(QDateTime::currentDateTime(), text);
 
     QString ConvertCSVPath      = QCoreApplication::applicationDirPath() + "/ConvertCSV.py";
 
@@ -57,20 +58,20 @@ int History::finalResult() const
 
 void History::setFinalResult(int newFinalResult)
 {
-    QElapsedTimer timer;
-    timer.start();
+    // QElapsedTimer timer;
+    // timer.start();
 
     if (m_finalResult == newFinalResult)
         return;
 
     m_finalResult = newFinalResult;
-    emit beginResetModel();
+    beginResetModel();
     m_data = DataBaseManager::getInstance()->getProductionData(m_deviceID, m_finalResult);
-    emit endResetModel();
+    endResetModel();
     emit finalResultChanged();
 
-    QString text = QString("History_修改筛选结果耗时:%1ms").arg(timer.elapsed());
-    emit SignalManager::getInstance()->signalAddRecord(QDateTime::currentDateTime(), text);
+    // QString text = QString("History_修改筛选结果耗时:%1ms").arg(timer.elapsed());
+    // emit SignalManager::getInstance()->signalAddRecord(QDateTime::currentDateTime(), text);
 }
 
 int History::deviceID() const
@@ -80,8 +81,8 @@ int History::deviceID() const
 
 void History::setDeviceID(int newDeviceID)
 {
-    QElapsedTimer timer;
-    timer.start();
+    // QElapsedTimer timer;
+    // timer.start();
 
     if (m_deviceID == newDeviceID)
         return;
@@ -104,8 +105,8 @@ void History::setDeviceID(int newDeviceID)
     endResetModel();
     emit deviceIDChanged();
 
-    QString text = QString("History_修改筛选设备耗时:%1ms").arg(timer.elapsed());
-    emit SignalManager::getInstance()->signalAddRecord(QDateTime::currentDateTime(), text);
+    // QString text = QString("History_修改筛选设备耗时:%1ms").arg(timer.elapsed());
+    // emit SignalManager::getInstance()->signalAddRecord(QDateTime::currentDateTime(), text);
 }
 
 
@@ -156,6 +157,21 @@ QVariant History::data(const QModelIndex &index, int role) const
         return data.Residual;;
     case PRODUCTION_TABLE::FINAL_RESULT:
         return data.FinalResult;
+    case PRODUCTION_TABLE::WELDER_NAME:
+    {
+        QList<Device*> devicelist = DeviceManager::getInstance()->getDeviceList();
+        QString welderName = "NAN";
+        for(int i = 0; i < devicelist.size(); i++)
+        {
+            Device* _ptrDevice = devicelist[i];
+            if(_ptrDevice->getWelderID() == data.WelderID)
+            {
+                welderName = _ptrDevice->getDeviceObj()->getWelderName();
+                break;
+            }
+        }
+        return welderName;
+    }
     // case DataBaseManager::PRODUCTION_row_number:
     //     return row + 1;
     default:
@@ -185,6 +201,7 @@ QHash<int, QByteArray> History::roleNames() const
     roles[PRODUCTION_TABLE::RESIDUAL]                 = "residual";
     roles[PRODUCTION_TABLE::TRIGGER_PRESSURE]         = "trigger_pressure";
     roles[PRODUCTION_TABLE::FINAL_RESULT]             = "final_result";
+    roles[PRODUCTION_TABLE::WELDER_NAME]              = "welder_name";
     // roles[QmlEnum::PRODUCTION_COLUMN::PRODUCTION_row_number]               = "row_number";
 
     return roles;
@@ -192,14 +209,14 @@ QHash<int, QByteArray> History::roleNames() const
 
 void History::setWelderID(int welderID)
 {
-    emit beginResetModel();
+    beginResetModel();
 
     if(welderID == 0)
         m_data = DataBaseManager::getInstance()->getProductionData();
     else
         m_data = DataBaseManager::getInstance()->getProductionData(welderID);
 
-    emit endResetModel();
+    endResetModel();
 }
 
 
@@ -261,7 +278,7 @@ bool History::exportData()
               << QString::number(exportList[i].Energy)
               << QString::number(exportList[i].Amplitude)
               << QString::number(exportList[i].WeldPressure)
-              << QString::number(exportList[i].TriggertPressure)
+              << QString::number(exportList[i].TriggerPressure)
               << QString::number(exportList[i].WeldTime)
               << QString::number(exportList[i].PeakPower)
               << QString::number(exportList[i].Preheight)

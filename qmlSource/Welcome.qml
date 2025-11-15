@@ -72,7 +72,15 @@ Rectangle {
         running: true
         repeat: true
         onTriggered: {
-            loading += "."
+            if(IsRaspberry === false)
+            {
+                stop()
+                window.releaseWelcomeScreen()
+            }
+            else
+            {
+                loading += "."
+            }
         }
     }
 }

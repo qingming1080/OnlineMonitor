@@ -34,9 +34,6 @@ DeviceManager::DeviceManager(QObject *parent)
     connect(HBModbusClient::getInstance(), &HBModbusClient::notifyWeldResultComing,     this, &DeviceManager::slotNotifyWeldResultComing);
     connect(HBModbusClient::getInstance(), &HBModbusClient::notifyPresetSettingChanged, this, &DeviceManager::slotNotifyPresetSettingChanged);
     connect(HBModbusClient::getInstance(), &HBModbusClient::connectionStateChanged, this, &DeviceManager::slotNotifyModbusStatusChanged);
-#if RASPBERRY
-    emit notifyConnectionStateChanged(true);
-#endif
 }
 
 bool DeviceManager::InitDeviceList()
@@ -133,16 +130,6 @@ int DeviceManager::getPasswordLevel(QString password)
 void DeviceManager::setUserPassword(QString newPassword)
 {
     DataBaseManager::getInstance()->setUserPassword(newPassword);
-}
-
-QString DeviceManager::getHistoryName(int welderID)
-{
-    // for(int i = 0; i < m_listDevices.size(); ++i)
-    // {
-    //     if(m_listDevices.at(i)->getDevInfoObject()->id() == welderID)
-    //         return m_listDevices.at(i)->getDevInfoObject()->name();
-    // }
-    return "";
 }
 
 void DeviceManager::slotNotifyDeviceStatusChanged(int welderId, const HBModbusClient::DEVICE_STATUS &status)

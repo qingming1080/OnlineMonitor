@@ -75,6 +75,14 @@ int main(int argc, char *argv[])
     QQmlApplicationEngine engine;
     QQmlContext* pQmlContext = engine.rootContext();
 
+    bool isRaspberry = false;
+
+#if RASPBERRY
+    isRaspberry = true;
+#else
+    isRaspberry = false;
+#endif
+
 
     pQmlContext->setContextProperty("LanguageManager", &LanguageManager);
     pQmlContext->setContextProperty("DeviceManager", DeviceManager::getInstance());
@@ -93,6 +101,7 @@ int main(int argc, char *argv[])
 
     pQmlContext->setContextProperty("ModbusClient",     HBModbusClient::getInstance());
     pQmlContext->setContextProperty("UtilityFunction",  UtilityFunction::getInstance());
+    pQmlContext->setContextProperty("IsRaspberry",      isRaspberry);
 
     qmlRegisterType<Device>("Device", 1, 0, "Device");
     // qmlRegisterType<IO>("IO", 1, 0, "IO");
@@ -104,6 +113,7 @@ int main(int argc, char *argv[])
     qmlRegisterType<LanguageEnum>("LanguageEnum", 1, 0, "LanguageEnum");
     qmlRegisterType<DeviceInfoEnum>("DeviceInfoEnum", 1, 0, "DeviceInfoEnum");
     qmlRegisterType<MANUAL_TABLE>("ManualTable", 1, 0, "ManualTable");
+
 //    qmlRegisterType<LineChartItem>("CustomChart", 1, 0, "CustomChart");
 //    qmlRegisterType<TimeChartItem>("CustomTimeChart", 1, 0, "CustomTimeChart");
 
