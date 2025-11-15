@@ -75,6 +75,7 @@ int main(int argc, char *argv[])
     QQmlApplicationEngine engine;
     QQmlContext* pQmlContext = engine.rootContext();
 
+
     pQmlContext->setContextProperty("LanguageManager", &LanguageManager);
     pQmlContext->setContextProperty("DeviceManager", DeviceManager::getInstance());
     pQmlContext->setContextProperty("History", History::getInstance());

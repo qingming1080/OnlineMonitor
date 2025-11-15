@@ -27,10 +27,6 @@ DeviceInformation::DeviceInformation(int welderID, QObject *parent)
         setAutoLearningCount(QString::number(m_DBConfigure.AutoLearnCount));
         setForceThreshold(QString::number(m_DBConfigure.ForceThreshold));
         setResidualThreshold(QString::number(m_DBConfigure.ResidualThreshold));
-        InitModbusDevice();
-#if RASPBERRY
-        HBModbusClient::getInstance()->setDeviceConfigure(m_WelderID, m_ModbusConfigure);
-#endif
     }
     else
     {
@@ -299,6 +295,22 @@ void DeviceInformation::setAutoLearningCount(const QString &limit)
     emit notifyAutoLearningCountChanged();
 }
 
+void DeviceInformation::setDeviceConfigure(int targetWelderId)
+{
+    DataBaseManager::getInstance()->getConfigurationDevice(targetWelderId, m_DBConfigure);
+    if(m_DBConfigure.ConnectType == DeviceInfoEnum::TCP_IP)
+    {
+        NetworkModel::getInstance()->NotifySelectedDeviceIndexChanged(targetWelderId);
+        InitModbusDevice();
+    }
+    else
+    {
+        RS232Model::getInstance()->NotifySelectedDeviceIndexChanged(targetWelderId);
+        InitModbusDevice();
+    }
+    HBModbusClient::getInstance()->setDeviceConfigure(targetWelderId, m_ModbusConfigure);
+}
+
 bool DeviceInformation::SaveDevice()
 {
     if(!validateConfigureSettings())
@@ -403,9 +415,17 @@ void DeviceInformation::InitModbusDevice()
 
 bool DeviceInformation::validateConfigureSettings()
 {
-    if(m_DBConfigure.WelderType == DeviceInfoEnum::L20_TS && m_DBConfigure.ConnectType != DeviceInfoEnum::RS232)
+    bool isL20_TS   = (m_DBConfigure.WelderType == DeviceInfoEnum::L20_TS);
+    bool isRS232    = (m_DBConfigure.ConnectType == DeviceInfoEnum::RS232);
+
+    if (isL20_TS != isRS232)
     {
-        QString msg = QString("设备型号L20-TS，连接方式须使用RS232连接！");
+        QString msg;
+        if (isL20_TS)
+            msg = "设备型号 L20-TS, 请选择 RS232 连接！";
+        else
+            msg = "使用 RS232 连接时，请选择设备型号为 L20-TS ！";
+
         emit errorMessageChanged(msg);
         return false;
     }

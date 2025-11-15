@@ -16,6 +16,7 @@ class HBModbusClient : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(bool ResetButtonStatus READ getResetButtonStatus WRITE setResetButtonStatus NOTIFY notifyResetButtonStatus FINAL)
+    Q_PROPERTY(bool connected READ isConnected NOTIFY connectionStateChanged)
 public:
     struct WELD_PRESET
     {
@@ -77,6 +78,8 @@ public:
     static HBModbusClient* getInstance();
     ~HBModbusClient();
 
+    bool isConnected() const;
+
     //LED
     Q_INVOKABLE void setLearnLedStatus(const bool condition);
     Q_INVOKABLE void setPilotLedStatus(const bool condition);
@@ -118,7 +121,7 @@ private:
     static constexpr int SERVER_PORT = 502;
 
 #ifdef RASPBERRY
-    static constexpr char LOCAL_IP[13] = "192.168.1.38";
+    static constexpr char LOCAL_IP[13] = "127.0.0.1";
 #else
     static constexpr char LOCAL_IP[13] = "127.0.0.1";
 #endif
@@ -310,8 +313,11 @@ signals:
 
     void notifyResetButtonStatus(const bool& status);
 
+    void connectionStateChanged(bool connected);
+
 public slots:
     void onPollingTimeoutEvent();
+    void onStateChanged(QModbusDevice::State state);
 
 private:
     static unsigned char    m_Coils[SYS_COILS_REGISTERS_COUNT + DEV_COILS_REGISTERS_COUNT * DEV_COUNT];
@@ -327,6 +333,7 @@ private:
     bool m_bFrontPanelResetButton;
     bool m_isFirstPresetParse = true;
     QMap<int, int> m_WelderDeviceMap; //welderId, deviceId
+    bool m_connected = false;
 };
 
 #endif // HBMODBUSCLIENT_H

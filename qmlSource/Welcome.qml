@@ -47,18 +47,32 @@ Rectangle {
         width: 221
         height: 70
     }
-    Timer {
-        interval: 1000
-        running: true
-        repeat: true
-        onTriggered:{
-            if(loading.length >= 3)
+
+    Connections {
+        target: DeviceManager
+        function onNotifyConnectionStateChanged(connected)
+        {
+            if (connected)
             {
-                stop()
+                loadingTimer.stop()
                 window.releaseWelcomeScreen()
             }
             else
-                loading += "."
+            {
+                loadingTimer.start()
+                loading = ""
+                window.showWelcomeScreen()
+            }
+        }
+    }
+
+    Timer {
+        id: loadingTimer
+        interval: 1000
+        running: true
+        repeat: true
+        onTriggered: {
+            loading += "."
         }
     }
 }

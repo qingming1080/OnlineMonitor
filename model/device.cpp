@@ -189,6 +189,11 @@ void Device::NotifyDeviceStatusChanged(const HBModbusClient::DEVICE_STATUS &stat
     m_ptrDevice->setConnectState(status.IsDeviceStatus || status.IsDeviceDataStatus);
 }
 
+void Device::NotifyModbusStatusChanged(int targetWelderId)
+{
+    m_ptrDevice->setDeviceConfigure(targetWelderId);
+}
+
 void Device::NotifyWeldResultComing(const HBModbusClient::MODBUS_WELD_RESULT &data)
 {
     if(m_ptrProduction->getModelStatus() == true)

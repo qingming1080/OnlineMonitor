@@ -14,7 +14,7 @@ import DeviceInfoEnum       1.0
 Rectangle {
     id: layoutSystemConfig
     property var sysViews: []
-    property bool isInputValid: false
+    property bool isInputValid: true
     Component.onCompleted: {
         loadViewsys(1, syscfg)
     }
@@ -61,10 +61,10 @@ Rectangle {
     Connections {
         target: DeviceManager.DeviceList[DeviceManager.SelectedDeviceIndex].DeviceObj
         function onErrorMessageChanged(msg) {
-               if (msg === "")
-                   footer.hideError()
-               else
-                   footer.showError(msg)
+            if (msg === "")
+                footer.hideError()
+            else
+                footer.showError(msg)
            }
     }
 
@@ -78,7 +78,9 @@ Rectangle {
             if(DeviceManager.DeviceCounter === 1)
             {
                 if(DeviceManager.DeviceList[0].WelderID === -1)
-                    loadViewsys(1, syscfg)
+                loadViewsys(1, syscfg)
+                else
+                loadViewsys(2, musys)
             }
             else
             {
@@ -1295,8 +1297,9 @@ Rectangle {
                 onPressed: {
                     if(!DeviceManager.saveDevice())
                     {
-                        return ""
-                    }else
+                        return
+                    }
+                    else
                     {
                         footer.hideError()
                         loadViewsys(2, musys)
