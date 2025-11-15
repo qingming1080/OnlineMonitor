@@ -40,6 +40,7 @@ public:
     void NotifyDeviceStatusChanged(const HBModbusClient::DEVICE_STATUS &status);
     void NotifyWeldResultComing(const HBModbusClient::MODBUS_WELD_RESULT& data);
     void NotifyPresetSettingChanged(const HBModbusClient::WELD_PRESET& data);
+    void NotifyModbusStatusChanged(int targetWelderId);
 
     // Q_INVOKABLE IO *pIO() const;
     Q_INVOKABLE Trend *pTrend() const;

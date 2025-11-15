@@ -27,10 +27,10 @@ HBModbusClient::HBModbusClient( QObject *parent)
     : QObject(parent){
 
     modbusClient = new QModbusTcpClient(this);
+    connect(modbusClient, &QModbusClient::stateChanged, this, &HBModbusClient::onStateChanged);
     connectToServer(QString(LOCAL_IP), SERVER_PORT);
-
     m_timer = new QTimer(this);
-    m_timer->setInterval(1000);
+    m_timer->setInterval(500);
     connect(m_timer, &QTimer::timeout, this, &HBModbusClient::onPollingTimeoutEvent);
     m_timer->start();
     m_WelderDeviceMap.clear();
@@ -50,6 +50,11 @@ HBModbusClient::~HBModbusClient()
         modbusClient->disconnectDevice();
         delete modbusClient;
     }
+}
+
+bool HBModbusClient::isConnected() const
+{
+    return m_connected;
 }
 
 bool HBModbusClient::connectToServer(const QString &host, int port)
@@ -86,7 +91,19 @@ void HBModbusClient::onPollingTimeoutEvent()
     }
     else
     {
+        if (!m_connected)
         modbusClient->connectDevice();
+    }
+}
+
+void HBModbusClient::onStateChanged(QModbusDevice::State state)
+{
+    bool newConnected = (state == QModbusDevice::ConnectedState);
+    if (m_connected != newConnected)
+    {
+        m_connected = newConnected;
+        qDebug() << "connectionStateChanged:" << m_connected;
+        emit connectionStateChanged(m_connected);
     }
 }
 

@@ -61,7 +61,12 @@ Window {
     //Only one time running
     function releaseWelcomeScreen()
     {
-        welcomeScreen.source = ""
+        welcomeScreen.visible = false
+    }
+
+    function showWelcomeScreen()
+    {
+        welcomeScreen.visible = true
     }
 
     // 动态加载和缓存视图
@@ -103,7 +108,6 @@ Window {
             }
         }
     }
-
     Connections
     {
         target: window

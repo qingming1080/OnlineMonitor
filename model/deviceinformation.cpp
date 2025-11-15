@@ -28,7 +28,6 @@ DeviceInformation::DeviceInformation(int welderID, QObject *parent)
         setForceThreshold(QString::number(m_DBConfigure.ForceThreshold));
         setResidualThreshold(QString::number(m_DBConfigure.ResidualThreshold));
         InitModbusDevice();
-        HBModbusClient::getInstance()->setDeviceConfigure(m_WelderID, m_ModbusConfigure);
     }
     else
     {
@@ -295,6 +294,22 @@ void DeviceInformation::setAutoLearningCount(const QString &limit)
         return;
     m_DBConfigure.AutoLearnCount = iLimit;
     emit notifyAutoLearningCountChanged();
+}
+
+void DeviceInformation::setDeviceConfigure(int targetWelderId)
+{
+    DataBaseManager::getInstance()->getConfigurationDevice(targetWelderId, m_DBConfigure);
+    if(m_DBConfigure.ConnectType == DeviceInfoEnum::TCP_IP)
+    {
+        NetworkModel::getInstance()->NotifySelectedDeviceIndexChanged(targetWelderId);
+        InitModbusDevice();
+    }
+    else
+    {
+        RS232Model::getInstance()->NotifySelectedDeviceIndexChanged(targetWelderId);
+        InitModbusDevice();
+    }
+    HBModbusClient::getInstance()->setDeviceConfigure(targetWelderId, m_ModbusConfigure);
 }
 
 bool DeviceInformation::SaveDevice()

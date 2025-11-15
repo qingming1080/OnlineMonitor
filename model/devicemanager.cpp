@@ -33,6 +33,7 @@ DeviceManager::DeviceManager(QObject *parent)
     connect(HBModbusClient::getInstance(), &HBModbusClient::notifyDeviceStatusChanged,  this, &DeviceManager::slotNotifyDeviceStatusChanged);
     connect(HBModbusClient::getInstance(), &HBModbusClient::notifyWeldResultComing,     this, &DeviceManager::slotNotifyWeldResultComing);
     connect(HBModbusClient::getInstance(), &HBModbusClient::notifyPresetSettingChanged, this, &DeviceManager::slotNotifyPresetSettingChanged);
+    connect(HBModbusClient::getInstance(), &HBModbusClient::connectionStateChanged, this, &DeviceManager::slotNotifyModbusStatusChanged);
 }
 
 bool DeviceManager::InitDeviceList()
@@ -184,6 +185,16 @@ void DeviceManager::slotNotifyPresetSettingChanged(int welderId, const HBModbusC
             m_listDevices[i]->NotifyPresetSettingChanged(data);
         }
     }
+}
+
+void DeviceManager::slotNotifyModbusStatusChanged(const bool connected)
+{
+        if(connected)
+        for(int i = 0; i < m_listDevices.size(); i++)
+        {
+            int targetWelderId = m_listDevices[i]->getWelderID();
+            m_listDevices[i]->NotifyModbusStatusChanged(targetWelderId);
+        }
 }
 
 bool DeviceManager::addDevice()

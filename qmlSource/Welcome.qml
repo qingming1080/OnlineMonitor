@@ -47,12 +47,29 @@ Rectangle {
         width: 221
         height: 70
     }
+
+    Connections {
+        target: ModbusClient
+        function onConnectionStateChanged(connected)
+        {
+            if (isRaspberry)
+            {
+                if (connected)
+                    window.releaseWelcomeScreen()
+
+                else
+                    window.showWelcomeScreen()
+            }
+        }
+    }
+
     Timer {
+        id: loadingTimer
         interval: 1000
-        running: true
+        running: isRaspberry ? false : true
         repeat: true
-        onTriggered:{
-            if(loading.length >= 3)
+        onTriggered: {
+            if (loading.length >= 3)
             {
                 stop()
                 window.releaseWelcomeScreen()

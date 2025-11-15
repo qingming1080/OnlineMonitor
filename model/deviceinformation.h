@@ -91,6 +91,7 @@ public:
     QString getAutoLearningCount() const;
     int GetAutoLearningCount() const;
     void setAutoLearningCount(const QString &limit);
+    void setDeviceConfigure(int targetWelderId);
 
     bool SaveDevice();
     bool RemoveDevice();
