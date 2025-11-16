@@ -222,7 +222,7 @@ bool NetworkModel::InitListManager()
 bool NetworkModel::UpdateWelderID()
 {
     QList<DataBaseManager::DB_CONFIGURE> configureList;
-    DataBaseManager::getInstance()->getAllConfigureationDevice(configureList);
+    DataBaseManager::getInstance()->getAllConfigurationDevice(configureList);
     for(int i = 0; i < configureList.count(); i++)
     {
         // qDebug() << "m_listManger[" << i <<"].ConnectType: " << configureList[i].ConnectType;

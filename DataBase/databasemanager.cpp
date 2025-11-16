@@ -47,7 +47,7 @@ bool DataBaseManager::getWelderID(QList<int> &IdList)
     qDebug() << execStr;
     if (!query.exec(execStr))
     {
-        qDebug() << "Configuration查询失败: " << query.lastError();
+        qDebug() << "getWelderID: " << query.lastError();
         return false;
     }
 
@@ -59,7 +59,7 @@ bool DataBaseManager::getWelderID(QList<int> &IdList)
     return true;
 }
 
-bool DataBaseManager::getAllConfigureationDevice(QList<DB_CONFIGURE> &list)
+bool DataBaseManager::getAllConfigurationDevice(QList<DB_CONFIGURE> &list)
 {
     bool bResult = false;
     list.clear();
@@ -68,7 +68,7 @@ bool DataBaseManager::getAllConfigureationDevice(QList<DB_CONFIGURE> &list)
 
     if (!query.exec(execStr))
     {
-        qDebug() << "Configuration查询失败: " << query.lastError();
+        qDebug() << "getAllConfigurationDevice: " << query.lastError();
         return false;
     }
 
@@ -110,7 +110,7 @@ bool DataBaseManager::getConfigurationDevice(const int welderID, DB_CONFIGURE &c
 
     if (!query.exec())
     {
-        qDebug() << "查询失败: " << query.lastError();
+        qDebug() << "getConfigurationDevice: " << query.lastError();
         return false;
     }
 
@@ -284,7 +284,7 @@ bool DataBaseManager::getAllNetworkConfigure(QList<DataBaseManager::DB_NETWORK>&
     QString execStr = QString("SELECT * FROM %1 WHERE %2 > 1").arg(NETWORK_TABLENAME, getNetwork_ColumnName(QmlEnum::NETWORK_id));
     if (!query.exec(execStr))
     {
-        qDebug() << "查询失败: " << query.lastError();
+        qDebug() << "getAllNetworkConfigure: " << query.lastError();
     }
 
     while(query.next())
@@ -355,7 +355,7 @@ bool DataBaseManager::getNetworkConfigure(const int id, DB_NETWORK& network)
 
     if (!query.exec(execStr))
     {
-        qDebug() << "查询失败: " << query.lastError();
+        qDebug() << "getNetworkConfigure: " << query.lastError();
         return bResult;  // 返回空的结果
     }
 
@@ -380,7 +380,7 @@ bool DataBaseManager::getAllRS232Configure(QList<DataBaseManager::DB_RS232>& lis
     QString execStr = QString("SELECT * FROM %1").arg(RS232_TABLENAME);
     if (!query.exec(execStr))
     {
-        qDebug() << "查询失败: " << query.lastError();
+        qDebug() << "getAllRS232Configure: " << query.lastError();
     }
     while(query.next())
     {
@@ -408,7 +408,7 @@ bool DataBaseManager::getRS232Configure(const int id, DB_RS232& rs232)
 
     if (!query.exec(execStr))
     {
-        qDebug() << "查询失败: " << query.lastError();
+        qDebug() << "getRS232Configure: " << query.lastError();
         return bResult;  // 返回空的结果
     }
 
@@ -463,7 +463,7 @@ QList<_IO_Data> DataBaseManager::getIOData(int welderID)
 
     if (!query.exec())
     {
-        qDebug() << "查询失败: " << query.lastError();
+        qDebug() << "getIOData: " << query.lastError();
     }
 
     while(query.next())
@@ -494,7 +494,7 @@ _IO_Data DataBaseManager::getIOAvailabel(int welderID)
 
     if (!query.exec())
     {
-        qDebug() << "查询失败: " << query.lastError();
+        qDebug() << "getIOAvailable: " << query.lastError();
     }
 
     while(query.next())
@@ -578,7 +578,7 @@ bool DataBaseManager::getManualRecords(int welderID, QList<DataBaseManager::DB_M
 
     if (!query.exec())
     {
-        qDebug() << "查询失败: " << query.lastError();
+        qDebug() << "getManualRecords: " << query.lastError();
     }
 
     while(query.next())
@@ -646,7 +646,7 @@ bool DataBaseManager::insertManualRecord(DB_MANUAL data)
                           "VALUES (:welder_id, :create_time, :cycle_count, "
                           ":energy, :amplitude, :trigger_pressure, weld_pressure, :time, :power, :pre_height, :post_height, "
                           ":actual_force, :actual_residual)"
-                          ).arg(MANUAL_TABLENAME);
+                          ).arg(MODEL_TABLENAME);
 
     query.prepare(execStr);
 
@@ -741,7 +741,7 @@ bool DataBaseManager::getModelRecords(QList<DB_MODEL>& list)
     QString execStr = QString("SELECT * FROM %1").arg(MODEL_TABLENAME);
     if (!query.exec(execStr))
     {
-        qDebug() << "查询失败: " << query.lastError();
+        qDebug() << "getModelRecords: " << query.lastError();
     }
 
     while(query.next())
@@ -774,13 +774,15 @@ bool DataBaseManager::getModelRecord(const int welderID, DB_MODEL &model)
     QSqlQuery query;
     QString strJson;
     bool bResult = false;
-    // %1_表格名称
+    // %1_表格名称 %2_列名称
     QString execStr = QString("SELECT * FROM %1 WHERE %2 = :welderID")
-                          .arg(MODEL_TABLENAME)
-                          .arg(welderID);
-    if (!query.exec(execStr))
+                          .arg(MODEL_TABLENAME, getModel_ColumnName(MODEL_TABLE::WELDER_ID));
+
+    query.prepare(execStr);
+    query.bindValue(":welderID", welderID);
+    if (!query.exec())
     {
-        qDebug() << "查询失败: " << query.lastError();
+        qDebug() << "getModelRecord: " << query.lastError();
     }
 
     while(query.next())
@@ -839,7 +841,7 @@ bool DataBaseManager::updateModelRecord(const int id, const DB_MODEL model)
                           "batch_count = :batch_count, "
                           "available = :available "
                           "WHERE id = :id"
-                          ).arg(MANUAL_TABLENAME);
+                          ).arg(MODEL_TABLENAME);
 
     if (!query.prepare(execStr)) {
         qWarning() << "Failed to prepare SQL:" << query.lastError().text();
@@ -877,20 +879,13 @@ bool DataBaseManager::insertModelRecord(DB_MODEL model)
 {
     QString strJson;
     QSqlQuery query;
-    // %1_表格名称
-    QString execStr = QString("INSERT INTO %1 values("
-                              ", :welder_id"
-                              ", :create_time"
-                              ", :energy"
-                              ", :amplitude"
-                              ", :trigger_pressure"
-                              ", :weld_pressure"
-                              ", :alpha_beta"
-                              ", :coefficient"
-                              ", :centralized"
-                              ", :sample_count"
-                              ", :batch_count"
-                              ", :available)")
+    // Insert specifying columns explicitly (exclude autoincrement id)
+    QString execStr = QString("INSERT INTO %1 ("
+                              "welder_id, create_time, energy, amplitude, trigger_pressure, weld_pressure, "
+                              "alpha_beta, coefficient, centralized, sample_count, batch_count, available) "
+                              "VALUES ("
+                              ":welder_id, :create_time, :energy, :amplitude, :trigger_pressure, :weld_pressure, "
+                              ":alpha_beta, :coefficient, :centralized, :sample_count, :batch_count, :available)")
                           .arg(MODEL_TABLENAME);
 
     // 绑定属性
@@ -910,7 +905,15 @@ bool DataBaseManager::insertModelRecord(DB_MODEL model)
     query.bindValue(":sample_count", model.SampleCount);
     query.bindValue(":batch_count", model.BatchCount);
     query.bindValue(":available", model.isAvailable);
-    return query.exec();
+
+    bool ret = query.exec();
+    if (!ret)
+    {
+        qWarning() << "Insert Model failed:" << query.lastError().text();
+        qWarning() << "Executed query:" << query.lastQuery();
+        return false;
+    }
+    return true;
 }
 
 QList<DataBaseManager::DB_PRODUCTION> DataBaseManager::getProductionData(int welderID, int finalResult, bool exportAll)
@@ -964,7 +967,7 @@ QList<DataBaseManager::DB_PRODUCTION> DataBaseManager::getProductionData(int wel
 
     if (!query.exec())
     {
-        qDebug() << "Production查询失败: " << query.lastError();
+        qDebug() << "getProductionData: " << query.lastError();
     }
 
     while(query.next())
@@ -1044,7 +1047,7 @@ _Yield_TrendData DataBaseManager::getYieldTrendData(int interVal, int welderID)
         QString time = tmpTime.toString("yyyy-MM-dd hh:mm:ss");
         if (!query.exec(execStr))
         {
-            qDebug() << "Production查询失败: " << query.lastError() << query.lastQuery();
+            qDebug() << "getProductionData: " << query.lastError() << query.lastQuery();
         }
         int produtcNum = 0;
         int goodNum = 0;
@@ -1248,7 +1251,7 @@ bool DataBaseManager::getSystemData(const int welderID, DataBaseManager::DB_SYST
 
     if (!query.exec())
     {
-        qDebug() << "查询失败: " << query.lastError();
+        qDebug() << "getSystemData: " << query.lastError();
     }
     if(query.next())
     {
@@ -1603,20 +1606,20 @@ QString DataBaseManager::getSystem_ColumnName(QmlEnum::SYSTEM_COLUMN column)
 
 bool DataBaseManager::AlphaBeta2JsonFormat(const ALPHA_BETA WeldTime, const ALPHA_BETA PeakPower, const ALPHA_BETA Preheight, const ALPHA_BETA PostHeight, QString &strJson)
 {
-    auto makeObj = [](const ALPHA_BETA &ab) {
-        QJsonObject o;
-        o.insert("Alpha", ab.Alpha);
-        o.insert("Beta", ab.Beta);
-        return o;
+    // Produce a compact representation: an array of 4 elements, each is [Alpha, Beta]
+    // e.g. [[a,b],[a,b],[a,b],[a,b]]
+    auto makePair = [](const ALPHA_BETA &ab) {
+        QJsonArray p;
+        p.append(ab.Alpha);
+        p.append(ab.Beta);
+        return p;
     };
 
-    // Use an array so JSON indices are 0,1,2,3 respectively:
-    // 0 -> WeldTime, 1 -> PeakPower, 2 -> Preheight, 3 -> PostHeight
     QJsonArray arr;
-    arr.append(makeObj(WeldTime));
-    arr.append(makeObj(PeakPower));
-    arr.append(makeObj(Preheight));
-    arr.append(makeObj(PostHeight));
+    arr.append(makePair(WeldTime));
+    arr.append(makePair(PeakPower));
+    arr.append(makePair(Preheight));
+    arr.append(makePair(PostHeight));
 
     QJsonDocument doc(arr);
     strJson = QString::fromUtf8(doc.toJson(QJsonDocument::Compact));
@@ -1644,14 +1647,22 @@ bool DataBaseManager::JsonFormat2AlphaBeta(const QString strJson, ALPHA_BETA &We
         qDebug() << "JsonFormat2AlphaBeta: array size < 4";
         return false;
     }
-
+    // Accept either the older object format {"Alpha":..,"Beta":..} or the new compact [alpha,beta]
     auto parseAB = [](const QJsonValue &v, ALPHA_BETA &out) {
-        if (!v.isObject()) return false;
-        QJsonObject o = v.toObject();
-        // Use toDouble with fallback 0.0
-        out.Alpha = o.value("Alpha").toDouble(0.0);
-        out.Beta  = o.value("Beta").toDouble(0.0);
-        return true;
+        if (v.isObject()) {
+            QJsonObject o = v.toObject();
+            out.Alpha = o.value("Alpha").toDouble(0.0);
+            out.Beta  = o.value("Beta").toDouble(0.0);
+            return true;
+        }
+        if (v.isArray()) {
+            QJsonArray a = v.toArray();
+            if (a.size() < 2) return false;
+            out.Alpha = a.at(0).toDouble(0.0);
+            out.Beta  = a.at(1).toDouble(0.0);
+            return true;
+        }
+        return false;
     };
 
     bool ok = true;
@@ -1670,20 +1681,22 @@ bool DataBaseManager::JsonFormat2AlphaBeta(const QString strJson, ALPHA_BETA &We
 
 bool DataBaseManager::Coefficient2JsonFormat(const POLYNOMIAL_COEFFICIENT PeelForce, const POLYNOMIAL_COEFFICIENT Residual, QString &strJson)
 {
-    auto makeObj = [](const POLYNOMIAL_COEFFICIENT &c) {
-        QJsonObject o;
-        o.insert("P00", c.P00);
-        o.insert("P10", c.P10);
-        o.insert("P01", c.P01);
-        o.insert("P20", c.P20);
-        o.insert("P11", c.P11);
-        o.insert("P02", c.P02);
-        return o;
+    // Compact format: each coefficient is an array in the order
+    // [P00, P10, P01, P20, P11, P02]
+    auto makeArray = [](const POLYNOMIAL_COEFFICIENT &c) {
+        QJsonArray a;
+        a.append(c.P00);
+        a.append(c.P10);
+        a.append(c.P01);
+        a.append(c.P20);
+        a.append(c.P11);
+        a.append(c.P02);
+        return a;
     };
 
     QJsonArray arr;
-    arr.append(makeObj(PeelForce)); // index 0
-    arr.append(makeObj(Residual));  // index 1
+    arr.append(makeArray(PeelForce)); // index 0
+    arr.append(makeArray(Residual));  // index 1
 
     QJsonDocument doc(arr);
     strJson = QString::fromUtf8(doc.toJson(QJsonDocument::Compact));
@@ -1711,17 +1724,31 @@ bool DataBaseManager::JsonFormat2Coefficient(const QString strJson, POLYNOMIAL_C
         qDebug() << "JsonFormat2Coefficient: array size < 2";
         return false;
     }
-
+    // Accept either object form {"P00":...,"P10":...} or compact array form [P00,P10,P01,P20,P11,P02]
     auto parseC = [](const QJsonValue &v, POLYNOMIAL_COEFFICIENT &out) {
-        if (!v.isObject()) return false;
-        QJsonObject o = v.toObject();
-        out.P00 = o.value("P00").toDouble(0.0);
-        out.P10 = o.value("P10").toDouble(0.0);
-        out.P01 = o.value("P01").toDouble(0.0);
-        out.P20 = o.value("P20").toDouble(0.0);
-        out.P11 = o.value("P11").toDouble(0.0);
-        out.P02 = o.value("P02").toDouble(0.0);
-        return true;
+        if (v.isObject()) {
+            QJsonObject o = v.toObject();
+            out.P00 = o.value("P00").toDouble(0.0);
+            out.P10 = o.value("P10").toDouble(0.0);
+            out.P01 = o.value("P01").toDouble(0.0);
+            out.P20 = o.value("P20").toDouble(0.0);
+            out.P11 = o.value("P11").toDouble(0.0);
+            out.P02 = o.value("P02").toDouble(0.0);
+            return true;
+        }
+        if (v.isArray()) {
+            QJsonArray a = v.toArray();
+            // Expect at least 6 elements in the compact format
+            if (a.size() < 6) return false;
+            out.P00 = a.at(0).toDouble(0.0);
+            out.P10 = a.at(1).toDouble(0.0);
+            out.P01 = a.at(2).toDouble(0.0);
+            out.P20 = a.at(3).toDouble(0.0);
+            out.P11 = a.at(4).toDouble(0.0);
+            out.P02 = a.at(5).toDouble(0.0);
+            return true;
+        }
+        return false;
     };
 
     bool ok = true;
@@ -1738,22 +1765,14 @@ bool DataBaseManager::JsonFormat2Coefficient(const QString strJson, POLYNOMIAL_C
 
 bool DataBaseManager::Centralized2JsonFormat(const CENTRALIZED_PROPERTY Centralized, QString &strJson)
 {
-    // Use array indices so callers can rely on 0..5 mapping
-    // 0: TimeMean, 1: TimeStd, 2: PowerMean, 3: PowrStd, 4: ForceMean, 5: ResidualMean
+    // Produce a compact numeric array: [TimeMean, TimeStd, PowerMean, PowrStd, ForceMean, ResidualMean]
     QJsonArray arr;
-    QJsonObject o0; o0.insert("TimeMean", Centralized.TimeMean); 
-    QJsonObject o1; o1.insert("TimeStd", Centralized.TimeStd);
-    QJsonObject o2; o2.insert("PowerMean", Centralized.PowerMean); 
-    QJsonObject o3; o3.insert("PowrStd", Centralized.PowrStd);
-    QJsonObject o4; o4.insert("ForceMean", Centralized.ForceMean); 
-    QJsonObject o5; o5.insert("ResidualMean", Centralized.ResidualMean);
-
-    arr.append(o0);
-    arr.append(o1);
-    arr.append(o2);
-    arr.append(o3);
-    arr.append(o4);
-    arr.append(o5);
+    arr.append(Centralized.TimeMean);
+    arr.append(Centralized.TimeStd);
+    arr.append(Centralized.PowerMean);
+    arr.append(Centralized.PowerStd);
+    arr.append(Centralized.ForceMean);
+    arr.append(Centralized.ResidualMean);
 
     QJsonDocument doc(arr);
     strJson = QString::fromUtf8(doc.toJson(QJsonDocument::Compact));
@@ -1774,49 +1793,28 @@ bool DataBaseManager::JsonFormat2Centralized(const QString strJson, CENTRALIZED_
         return false;
     }
     QJsonArray arr = doc.array();
-    // Support two formats produced by different serializers:
-    // Format A (6 single-field objects):
-    //   arr[0]={"TimeMean":...}, arr[1]={"TimeStd":...}, arr[2]={"PowerMean":...}, arr[3]={"PowrStd":...}, arr[4]={"ForceMean":...}, arr[5]={"ResidualMean":...}
-    // Format B (3 two-field objects):
-    //   arr[0]={"TimeMean":...,"TimeStd":...}, arr[1]={"PowerMean":...,"PowrStd":...}, arr[2]={"ForceMean":...,"ResidualMean":...}
-
-    if (arr.size() >= 6) {
-        auto getSingle = [](const QJsonValue &v, const QString &key)->double {
-            if (v.isObject()) return v.toObject().value(key).toDouble(0.0);
-            if (v.isDouble()) return v.toDouble(0.0);
-            return 0.0;
-        };
-
-        Centralized.TimeMean    = getSingle(arr.at(0), "TimeMean");
-        Centralized.TimeStd     = getSingle(arr.at(1), "TimeStd");
-        Centralized.PowerMean   = getSingle(arr.at(2), "PowerMean");
-        Centralized.PowrStd     = getSingle(arr.at(3), "PowrStd");
-        Centralized.ForceMean   = getSingle(arr.at(4), "ForceMean");
-        Centralized.ResidualMean= getSingle(arr.at(5), "ResidualMean");
-        return true;
+    // Strict mode: accept only a numeric array of exactly 6 elements:
+    // [TimeMean, TimeStd, PowerMean, PowrStd, ForceMean, ResidualMean]
+    if (arr.size() != 6) {
+        qDebug() << "JsonFormat2Centralized: expected array of 6 numeric elements, got" << arr.size();
+        return false;
     }
 
-    if (arr.size() >= 3) {
-        auto getD = [](const QJsonValue &v, const QString &key)->double{
-            if (!v.isObject()) return 0.0;
-            return v.toObject().value(key).toDouble(0.0);
-        };
-
-        QJsonValue v0 = arr.at(0);
-        QJsonValue v1 = arr.at(1);
-        QJsonValue v2 = arr.at(2);
-
-        Centralized.TimeMean = getD(v0, "TimeMean");
-        Centralized.TimeStd  = getD(v0, "TimeStd");
-        Centralized.PowerMean= getD(v1, "PowerMean");
-        Centralized.PowrStd  = getD(v1, "PowrStd");
-        Centralized.ForceMean= getD(v2, "ForceMean");
-        Centralized.ResidualMean = getD(v2, "ResidualMean");
-        return true;
+    for (int i = 0; i < 6; ++i) {
+        QJsonValue v = arr.at(i);
+        if (!v.isDouble()) {
+            qDebug() << "JsonFormat2Centralized: element" << i << "is not numeric";
+            return false;
+        }
     }
 
-    qDebug() << "JsonFormat2Centralized: array size too small";
-    return false;
+    Centralized.TimeMean     = arr.at(0).toDouble(0.0);
+    Centralized.TimeStd      = arr.at(1).toDouble(0.0);
+    Centralized.PowerMean    = arr.at(2).toDouble(0.0);
+    Centralized.PowerStd      = arr.at(3).toDouble(0.0);
+    Centralized.ForceMean    = arr.at(4).toDouble(0.0);
+    Centralized.ResidualMean = arr.at(5).toDouble(0.0);
+    return true;
 }
 
 QList<DataBaseManager::DB_PRODUCTION> DataBaseManager::getAllTrendData(int welderID, int interVal, QDateTime startTime, QDateTime endTime)

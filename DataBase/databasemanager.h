@@ -207,7 +207,7 @@ public:
         double TimeMean;
         double TimeStd;
         double PowerMean;
-        double PowrStd;
+        double PowerStd;
         double ForceMean;
         double ResidualMean;
     };
@@ -265,7 +265,7 @@ public:
 
 /////////////////////////configuration////////////////////////////////
     bool getWelderID(QList<int> &IdList);
-    bool getAllConfigureationDevice(QList<DataBaseManager::DB_CONFIGURE>& list);
+    bool getAllConfigurationDevice(QList<DataBaseManager::DB_CONFIGURE>& list);
     bool getConfigurationDevice(const int welderID, DB_CONFIGURE& configure);
     bool removeConfigurationDevice(const int welderID);
     bool insertConfigurationDevice(const DB_CONFIGURE configure);

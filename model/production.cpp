@@ -373,7 +373,7 @@ void Production::SetModel(const DataBaseManager::DB_MODEL &model)
     m_DBModel.Centralized.TimeMean = model.Centralized.TimeMean;
     m_DBModel.Centralized.TimeStd = model.Centralized.TimeStd;
     m_DBModel.Centralized.PowerMean = model.Centralized.PowerMean;
-    m_DBModel.Centralized.PowrStd = model.Centralized.PowrStd;
+    m_DBModel.Centralized.PowerStd = model.Centralized.PowerStd;
     m_DBModel.Centralized.ForceMean = model.Centralized.ForceMean;
     m_DBModel.Centralized.ResidualMean = model.Centralized.ResidualMean;
     

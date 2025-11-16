@@ -117,8 +117,6 @@ Rectangle {
                 console.debug("CurrentIndex: ", currentIndex)
                 if(DeviceManager.DeviceList[currentIndex].ManualObj.rowCount() >= DeviceManager.DeviceList[currentIndex].DeviceObj.MaxModelSamples)
                 {
-                    loader.sourceComponent = mode1
-                    loader1.sourceComponent = weld1
                     DeviceManager.DeviceList[currentIndex].ManualObj.saveData()
                     sigUpdateUI(0)
                     sigRecover()

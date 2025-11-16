@@ -173,9 +173,13 @@ void Manual::saveData()
         QModelIndex idx = index(i);
         emit dataChanged(idx, idx, {MANUAL_TABLE::IS_SELECTED});
     }
-    if(DataBaseManager::getInstance()->updateModelRecord(m_DBModel.id, m_DBModel) == false)
+    if(m_DBModel.id == -1)
     {
         DataBaseManager::getInstance()->insertModelRecord(m_DBModel);
+    }
+    else
+    {
+        DataBaseManager::getInstance()->updateModelRecord(m_DBModel.id, m_DBModel);
     }
     emit notifyTrainingProcessFinished(m_DBModel);
 }
@@ -271,7 +275,7 @@ void Manual::InitDBModel(const GenericLearning::PROCESS_PARAM *_param, const Gen
     m_DBModel.Centralized.TimeMean = centralized.TimeMean;
     m_DBModel.Centralized.TimeStd = centralized.TimeStd;
     m_DBModel.Centralized.PowerMean = centralized.PowerMean;
-    m_DBModel.Centralized.PowrStd = centralized.PowrStd;
+    m_DBModel.Centralized.PowerStd = centralized.PowerStd;
     m_DBModel.Centralized.ForceMean = centralized.ForceMean;
     m_DBModel.Centralized.ResidualMean = centralized.ResidualMean;
 
@@ -285,8 +289,7 @@ void Manual::InitDBModel(const GenericLearning::PROCESS_PARAM *_param, const Gen
     m_DBModel.TriggerPressure = GetTriggerPressureSetting();                // 焊接压力
     m_DBModel.WeldPressure = GetWeldPressureSetting();                   // 触发压力
     m_DBModel.isAvailable = true;
-
-    qDebug() << "PROCESS_PARAM: ";
+    qDebug() << "Set PROCESS_PARAM: ";
     qDebug() << " Time.Alpha: " << m_DBModel.WeldTime.Alpha
              << " Time.Beta: " << m_DBModel.WeldTime.Beta
              << " Power.Alpha: " << m_DBModel.PeakPower.Alpha
@@ -300,7 +303,7 @@ void Manual::InitDBModel(const GenericLearning::PROCESS_PARAM *_param, const Gen
     qDebug() << " Centralized.ForceMean: " << m_DBModel.Centralized.ForceMean
              << " Centralized.ResidualMean: " << m_DBModel.Centralized.ResidualMean
              << " Centralized.PowerMean: " << m_DBModel.Centralized.PowerMean
-             << " Centralized.PowrStd: " << m_DBModel.Centralized.PowrStd
+             << " Centralized.PowrStd: " << m_DBModel.Centralized.PowerStd
              << " Centralized.TimeMean: " << m_DBModel.Centralized.TimeMean
              << " Centralized.TimeStd: " << m_DBModel.Centralized.TimeStd;
 

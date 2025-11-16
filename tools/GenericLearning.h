@@ -59,7 +59,7 @@ public:
 		double TimeMean;
 		double TimeStd;
 		double PowerMean;
-		double PowrStd;
+        double PowerStd;
 		double ForceMean;
 		double ResidualMean;
 	};
