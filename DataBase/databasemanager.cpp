@@ -652,7 +652,7 @@ bool DataBaseManager::insertManualRecord(DB_MANUAL data)
     query.prepare(execStr);
 
     query.bindValue(":welder_id", data.WelderId);
-    query.bindValue(":create_time", data.CreateTime.toTime_t());
+    query.bindValue(":create_time", data.CreateTime.toSecsSinceEpoch());
     query.bindValue(":cycle_count", data.CycleCount);
     query.bindValue(":energy", data.Energy);
     query.bindValue(":amplitude", data.Amplitude);
