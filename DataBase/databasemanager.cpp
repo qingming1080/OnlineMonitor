@@ -642,16 +642,17 @@ bool DataBaseManager::insertManualRecord(DB_MANUAL data)
     QString execStr = QString(
                           "INSERT INTO %1 (welder_id, create_time, cycle_count, "
                           "energy, amplitude, trigger_pressure, weld_pressure, time, power, pre_height, post_height, "
-                          "actual_force, actual_degree) "
+                          "actual_force, actual_residual) "
                           "VALUES (:welder_id, :create_time, :cycle_count, "
-                          ":energy, :amplitude, :trigger_pressure, weld_pressure, :time, :power, :pre_height, :post_height, "
+                          ":energy, :amplitude, :trigger_pressure, :weld_pressure, :time, :power, :pre_height, :post_height, "
                           ":actual_force, :actual_residual)"
-                          ).arg(MODEL_TABLENAME);
+                          ).arg(MANUAL_TABLENAME);
+
 
     query.prepare(execStr);
 
     query.bindValue(":welder_id", data.WelderId);
-    query.bindValue(":create_time", data.CreateTime.toSecsSinceEpoch());
+    query.bindValue(":create_time", data.CreateTime.toTime_t());
     query.bindValue(":cycle_count", data.CycleCount);
     query.bindValue(":energy", data.Energy);
     query.bindValue(":amplitude", data.Amplitude);
