@@ -31,16 +31,32 @@ Device::Device(int welderID, QObject *parent)
 
 Device::~Device()
 {
-    delete m_ptrProvidenceEE;
-    m_ptrProvidenceEE = nullptr;
-    delete m_ptrManual;
-    m_ptrManual = nullptr;
-    delete m_ptrProduction;
-    m_ptrProduction = nullptr;
-    delete m_ptrTrend;
-    m_ptrTrend = nullptr;
-    delete m_ptrDevice;
-    m_ptrDevice = nullptr;
+    disconnect(m_ptrManual, &Manual::notifyTrainingProcessFinished, this, &Device::slotNotifyTrainingProcessFinished);
+    if(m_ptrManual != nullptr)
+    {
+        delete m_ptrManual;
+        m_ptrManual = nullptr;
+    }
+    if(m_ptrProduction != nullptr)
+    {
+        delete m_ptrProduction;
+        m_ptrProduction = nullptr;
+    }
+    if(m_ptrTrend != nullptr)
+    {
+        delete m_ptrTrend;
+        m_ptrTrend = nullptr;
+    }
+    if(m_ptrDevice != nullptr)
+    {
+        delete m_ptrDevice;
+        m_ptrDevice = nullptr;
+    }
+    if(m_ptrProvidenceEE != nullptr)
+    {
+        delete m_ptrProvidenceEE;
+        m_ptrProvidenceEE = nullptr;
+    }
 
 }
 
