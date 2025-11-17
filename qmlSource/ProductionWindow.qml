@@ -55,12 +55,35 @@ Rectangle {
         proViews[viewName] = newItem;
         prostack.push(newItem);
     }
+    onDeviceCountChanged: {
+        var isLearning = false;
+        for(var i = 0; i < deviceCount; i++)
+        {
+            if(DeviceManager.DeviceList[i].ProductionObj.ModelStatus === false)
+            {
+                DeviceManager.SelectedDeviceIndex = i;
+                loadViewpro(1, autoLearning)
+                isLearning = true;
+            }
+        }
+        if(isLearning === false)
+        {
+            if(DeviceManager.DeviceCounter > 1)
+            {
+                loadViewpro(2, multiPro)
+            }
+            else
+                loadViewpro(3, singlePro)
+        }
+    }
 
     Component.onCompleted: {
         if(DeviceManager.DeviceList[0].ProductionObj.ModelStatus === false)
             loadViewpro(1, autoLearning)
         else if(DeviceManager.DeviceCounter > 1)
+        {
             loadViewpro(2, multiPro)
+        }
         else
             loadViewpro(3, singlePro)
     }

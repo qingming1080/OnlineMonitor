@@ -233,7 +233,7 @@ Rectangle {
             y:298
             radius: 3
             color: "#0c5596"
-            equiInforIndex:1
+            equiInforIndex: 1
         }
         Button{
             width: 30
@@ -768,87 +768,4 @@ Rectangle {
         }
     }
 
-       // Button{
-       //     id:b1
-       //     x:195
-       //     y:654
-       //     width: 243
-       //     height: 52
-       //     background: Rectangle{
-       //         radius: 6
-       //         color: pRgb(43, 112, 173)
-       //     }
-       //     contentItem: Text {
-       //         id:mt1
-       //         anchors.centerIn: parent
-       //         text: "新建模型"
-       //         font.pixelSize: 20
-       //         color: pRgb(153, 204, 255)
-       //         horizontalAlignment: Text.AlignHCenter
-       //         verticalAlignment: Text.AlignVCenter
-       //         font.family: fontBold
-       //     }
-       //     onPressed: {
-       //         mt1.text = "创建模型"
-       //         mt2.text = "清除数据"
-       //     }
-       // }
-    // Button{
-    //     id:b2
-    //     width: 243
-    //     height: 52
-    //     x:228
-    //     y:654
-    //     background: Rectangle{
-    //         radius: 6
-    //         border.width: 2
-    //         border.color: pRgb(43, 112, 173)
-    //         color: itemCount === 4 ? pRgb(232, 232, 232) : pRgb(43, 112, 173)
-    //     }
-    //     contentItem: Text {
-    //         id:mt2
-    //         anchors.centerIn: parent
-    //         // text: qsTr("新增设备")
-    //         text: GlobalLanguageDefine.strAddDevice
-    //         font.pixelSize: 20
-    //         color: pRgb(153, 204, 255)
-    //         horizontalAlignment: Text.AlignHCenter
-    //         verticalAlignment: Text.AlignVCenter
-    //         font.family: GlobalSystemDefine.fontBold
-    //         font.bold: true
-    //     }
-    //     onPressed: {
-    //         // if(mt2.text === qsTr("新增设备"))
-    //         if(mt2.text === GlobalLanguageDefine.strAddDevice)
-    //         {
-    //             popup.openPop(8)
-    //         }
-    //     }
-    // }
-    // Button{
-    //     id:b3
-    //     width: 243
-    //     height: 52
-    //     x:813
-    //     y:654
-    //     background: Rectangle{
-    //         radius: 6
-    //         color: pRgb(43, 112, 173)
-    //     }
-    //     contentItem: Text {
-    //         id:mt3
-    //         anchors.centerIn: parent
-    //         // text: qsTr( "系统消息")
-    //         text: GlobalLanguageDefine.strSystemMessage
-    //         font.pixelSize: 20
-    //         color: pRgb(153, 204, 255)
-    //         horizontalAlignment: Text.AlignHCenter
-    //         verticalAlignment: Text.AlignVCenter
-    //         font.family: GlobalSystemDefine.fontBold
-    //         font.bold: true
-    //     }
-    //     onPressed: {
-    //         popup.openPop(6)
-    //     }
-    // }
 }
