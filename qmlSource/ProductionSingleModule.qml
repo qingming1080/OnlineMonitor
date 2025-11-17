@@ -5,8 +5,10 @@ import QtQml.Models 2.15
 import GlobalLanguageDefine 1.0
 import GlobalSystemDefine 1.0
 import GlobalMessageDefine 1.0
+import QmlEnum 1.0
 
 Rectangle {
+    readonly property int qmlscreenIndicator: QmlEnum.SINGLE_PRODUCTION_SCREEN
     property int currentIndex: DeviceManager.SelectedDeviceIndex
     property int deviceCount: DeviceManager.DeviceCounter
     property bool heightOption: (currentIndex < deviceCount) ? DeviceManager.DeviceList[currentIndex].DeviceObj.HeightEncoderOption : false

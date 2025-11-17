@@ -120,7 +120,7 @@ private:
 
     static constexpr int SERVER_PORT = 502;
 
-#ifdef RASPBERRY
+#if RASPBERRY
     static constexpr char LOCAL_IP[13] = "127.0.0.1";
 #else
     static constexpr char LOCAL_IP[13] = "127.0.0.1";

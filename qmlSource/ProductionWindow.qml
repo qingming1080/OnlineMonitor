@@ -77,6 +77,21 @@ Rectangle {
         }
     }
 
+    Connections{
+        target: DeviceManager
+        function onNotifyPresetChanged(index)
+        {
+            var learningScreen = QmlEnum.AUTO_LEARNING_SCREEEN
+            var objItem = prostack.find(function(item) {
+                return (item.qmlscreenIndicator === learningScreen)})
+            if(objItem === null)
+            {
+                DeviceManager.SelectedDeviceIndex = index;
+                loadViewpro(1, autoLearning)
+            }
+        }
+    }
+
     Component.onCompleted: {
         if(DeviceManager.DeviceList[0].ProductionObj.ModelStatus === false)
             loadViewpro(1, autoLearning)

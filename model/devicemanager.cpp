@@ -146,22 +146,25 @@ void DeviceManager::slotNotifyDeviceStatusChanged(int welderId, const HBModbusCl
 
 void DeviceManager::slotNotifyWeldResultComing(int welderId, const HBModbusClient::MODBUS_WELD_RESULT &data)
 {
-    qDebug() << "Modbus Weld Result & WeldID: " << welderId;
-    qDebug() << " Cycle Count：" << data.CycleCount
-             << " Energy:" << data.Energy
-             << " Amplitude:" << data.Amplitude
-             << " TP:" << data.TriggerPressure
-             << " WP:" << data.WeldingPressure
-             << " PeakPower:" << data.PeakPower
-             << " Preheight:" << data.Preheight
-             << " PostHeight:" << data.PostHeight
-             << " WeldAlarm: " << data.WeldAlarm
-             << " DateTime:" << data.DateTime.toString("yyyy-MM-dd hh:mm:ss");
+    // qDebug() << "Modbus Weld Result & WeldID: " << welderId;
+    // qDebug() << " Cycle Count：" << data.CycleCount
+    //          << " Energy:" << data.Energy
+    //          << " Amplitude:" << data.Amplitude
+    //          << " TP:" << data.TriggerPressure
+    //          << " WP:" << data.WeldingPressure
+    //          << " PeakPower:" << data.PeakPower
+    //          << " Preheight:" << data.Preheight
+    //          << " PostHeight:" << data.PostHeight
+    //          << " WeldAlarm: " << data.WeldAlarm
+    //          << " DateTime:" << data.DateTime.toString("yyyy-MM-dd hh:mm:ss");
     for(int i = 0; i < m_listDevices.size(); i++)
     {
         if(welderId == m_listDevices[i]->getWelderID())
         {
-            m_listDevices[i]->NotifyWeldResultComing(data);
+            if(m_listDevices[i]->NotifyWeldResultComing(data) == true)
+            {
+                emit notifyPresetChanged(i);
+            }
         }
     }
 }

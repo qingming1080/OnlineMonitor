@@ -19,6 +19,7 @@
 #include "model/stopbitsmodel.h"
 #include "model/paritymodel.h"
 #include "model/weldertypemodel.h"
+#include "model/historyenum.h"
 
 #include "DataBase/databasemanager.h"
 #include "log/localrecord.h"
@@ -113,6 +114,7 @@ int main(int argc, char *argv[])
     qmlRegisterType<LanguageEnum>("LanguageEnum", 1, 0, "LanguageEnum");
     qmlRegisterType<DeviceInfoEnum>("DeviceInfoEnum", 1, 0, "DeviceInfoEnum");
     qmlRegisterType<MANUAL_TABLE>("ManualTable", 1, 0, "ManualTable");
+    qmlRegisterType<HistoryEnum>("HistoryEnum", 1, 0, "HistoryEnum");
 
 //    qmlRegisterType<LineChartItem>("CustomChart", 1, 0, "CustomChart");
 //    qmlRegisterType<TimeChartItem>("CustomTimeChart", 1, 0, "CustomTimeChart");

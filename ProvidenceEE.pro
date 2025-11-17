@@ -84,6 +84,7 @@ HEADERS += \
     model/devicenames.h \
     model/exportworker.h \
     model/history.h \
+    model/historyenum.h \
     model/manual.h \
     model/message.h \
     model/networkmodel.h \

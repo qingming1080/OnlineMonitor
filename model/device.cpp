@@ -16,7 +16,7 @@ Device::Device(int welderID, QObject *parent)
 {
     // QElapsedTimer timer;
     // timer.start();
-
+    // Need to use auto pointer to manage these pointers?
     m_ptrProvidenceEE   = new ProvidenceEE(m_WelderID);
     m_ptrDevice         = new DeviceInformation(m_WelderID);
     m_ptrManual         = new Manual(m_WelderID, m_ptrProvidenceEE);
@@ -217,12 +217,18 @@ void Device::NotifyModbusStatusChanged(int targetWelderId)
     m_ptrDevice->setDeviceConfigure(targetWelderId);
 }
 
-void Device::NotifyWeldResultComing(const HBModbusClient::MODBUS_WELD_RESULT &data)
+bool Device::NotifyWeldResultComing(const HBModbusClient::MODBUS_WELD_RESULT &data)
 {
+    qDebug() << "New data coming";
+    bool isPresetChanged = false;
     if(m_ptrProduction->getModelStatus() == true)
     {
-        if(IsProductionPresetChanged(data) == false)
+        isPresetChanged = IsProductionPresetChanged(data);
+        if(isPresetChanged == false)
+        {
             m_ptrProduction->AppendNewRecordComming(data);
+            qDebug() << "Production data coming";
+        }
         else
         {
             QString strEnergy = UtilityFunction::getInstance()->RawValueToString(data.Energy, 1, 0);
@@ -234,12 +240,15 @@ void Device::NotifyWeldResultComing(const HBModbusClient::MODBUS_WELD_RESULT &da
             QString strWeldPressure = UtilityFunction::getInstance()->RawValueToString(data.WeldingPressure, 10, 1);
             m_ptrManual->setWeldPressureSetting(strWeldPressure);
             m_ptrManual->AppendNewRecordComming(data);
+            // qDebug() << "Preset has been Changed";
         }
     }
     else
     {
         m_ptrManual->AppendNewRecordComming(data);
+        // qDebug() << "Manual New data coming";
     }
+    return isPresetChanged;
 }
 
 void Device::NotifyPresetSettingChanged(const HBModbusClient::WELD_PRESET &data)

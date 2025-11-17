@@ -1139,7 +1139,7 @@ bool DataBaseManager::insertProductionRow(DB_PRODUCTION data)
 
     // SQL 语句，不包括自增的 id 字段
     QString execStr = QString("INSERT INTO %1 ("
-                              "welder_id, create_time, serial_number, cycle_count, batch_count"
+                              "welder_id, create_time, serial_number, cycle_count, batch_count, "
                               "energy, amplitude, trigger_pressure, weld_pressure, time, "
                               "power, pre_height, post_height, force, residual, final_result) "
                               "VALUES ("
@@ -1169,16 +1169,16 @@ bool DataBaseManager::insertProductionRow(DB_PRODUCTION data)
     query.bindValue(":final_result", data.FinalResult);
 
     // 调试输出
-    qDebug() << "SQL Query:" << execStr;
-    qDebug() << "Bound Values:" << query.boundValues();
+    // qDebug() << "SQL Query:" << execStr;
+    // qDebug() << "Bound Values:" << query.boundValues();
 
     // 执行插入并检查结果
-    QSqlDatabase db = QSqlDatabase::database();
-    db.transaction(); // 开启事务
+    // QSqlDatabase db = QSqlDatabase::database();
+    // db.transaction(); // 开启事务
 
     if (!query.exec()) {
         qDebug() << "Insert failed:" << query.lastError().text();
-        db.rollback(); // 回滚事务
+        // db.rollback(); // 回滚事务
         return false;
     }
 

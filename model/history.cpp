@@ -16,6 +16,7 @@
 #include "csvexportworker.h"
 #include "tools/utilityfunction.h"
 #include "devicemanager.h"
+#include "historyenum.h"
 
 History* History::s_pHistory = nullptr;
 QString  History::m_USBDirectory = "";
@@ -72,6 +73,32 @@ void History::setFinalResult(int newFinalResult)
 
     // QString text = QString("History_修改筛选结果耗时:%1ms").arg(timer.elapsed());
     // emit SignalManager::getInstance()->signalAddRecord(QDateTime::currentDateTime(), text);
+}
+
+void History::AppendNewRecordComming(const DataBaseManager::DB_PRODUCTION &data)
+{
+    beginResetModel();
+    if(deviceID() == 0)
+    {
+        if(finalResult() == HistoryEnum::ALL)
+            m_data.prepend(data);
+        else if(data.FinalResult == finalResult())
+            m_data.prepend(data);
+        else
+        {
+        }
+    }
+    else if(data.WelderID == deviceID())
+    {
+        if(finalResult() == HistoryEnum::ALL)
+            m_data.prepend(data);
+        else if(data.FinalResult == finalResult())
+            m_data.prepend(data);
+        else
+        {
+        }
+    }
+    endResetModel();
 }
 
 int History::deviceID() const

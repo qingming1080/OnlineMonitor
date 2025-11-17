@@ -8,10 +8,12 @@ import GlobalMessageDefine  1.0
 import DeviceInfoEnum       1.0
 import DeviceObj            1.0
 import ProductionObj        1.0
+import QmlEnum              1.0
 
 //多设备生产界面
 Rectangle {
     color: pRgb(153, 204, 255)
+    readonly property int qmlscreenIndicator: QmlEnum.MULTI_PRODUCTION_SCREEN
     property int currentIndex: DeviceManager.SelectedDeviceIndex
     property int deviceCount: DeviceManager.DeviceCounter
 

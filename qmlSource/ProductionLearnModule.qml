@@ -18,8 +18,8 @@ Rectangle {
     id: swipe
     color: pRgb(153, 204, 255)
     radius: 5
+    readonly property int qmlscreenIndicator: QmlEnum.AUTO_LEARNING_SCREEEN
     property int listSize: 0
-    // property int swipeCurrIndex: -1
     property int currentIndex: DeviceManager.SelectedDeviceIndex
     property int deviceCount: DeviceManager.DeviceCounter
     property bool heightOption: (currentIndex < deviceCount) ? DeviceManager.DeviceList[currentIndex].DeviceObj.HeightEncoderOption : false
@@ -120,7 +120,10 @@ Rectangle {
                     DeviceManager.DeviceList[currentIndex].ManualObj.saveData()
                     sigUpdateUI(0)
                     sigRecover()
-                    loadViewpro(2, multiPro)
+                    if(deviceCount === 1)
+                        loadViewpro(3, singlePro)
+                    else
+                        loadViewpro(2, multiPro)
                 }
                 else
                 {

@@ -166,7 +166,7 @@ void HBModbusClient::readRegisters(QModbusDataUnit::RegisterType type,int startA
 
                     } else
                     {
-                        qWarning() << errMsg << reply->errorString();
+                        // qWarning() << errMsg << reply->errorString();
                     }
 
                     reply->deleteLater();

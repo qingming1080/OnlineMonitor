@@ -30,6 +30,8 @@ public:
     Q_INVOKABLE int finalResult() const;
     Q_INVOKABLE void setFinalResult(int newFinalResult);
 
+    void AppendNewRecordComming(const DataBaseManager::DB_PRODUCTION &data);
+
     Q_INVOKABLE bool isAvailaleDiskUSB();
     Q_INVOKABLE bool exportData();
 

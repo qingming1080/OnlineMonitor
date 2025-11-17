@@ -1,5 +1,7 @@
 #include "production.h"
 #include "tools/utilityfunction.h"
+#include "history.h"
+#include "historyenum.h"
 Production::Production(int welderID, ProvidenceEE *_providenceEE, QObject *parent)
     :QObject{parent}, m_WelderID(welderID), m_ptrProvidenceEE(_providenceEE)
 {
@@ -24,7 +26,10 @@ Production::Production(int welderID, ProvidenceEE *_providenceEE, QObject *paren
         setTPSetting(m_DBModel.TriggerPressure);
         setWPSetting(m_DBModel.WeldPressure);
     }
-    memset((void*)&m_DBProduction, 0, sizeof(DataBaseManager::DB_PRODUCTION));
+    // Avoid using memset on structs that contain non-POD types (like QString).
+    // Zeroing object memory with memset breaks QString/Qt internals and causes crashes.
+    m_DBProduction = DataBaseManager::DB_PRODUCTION();
+    m_DBProduction.SerialNumber = QString();
     m_DBProduction.BatchCount = m_DBModel.BatchCount;
 }
 
@@ -319,6 +324,7 @@ void Production::AppendNewRecordComming(const HBModbusClient::MODBUS_WELD_RESULT
     m_DBProduction.SerialNumber = "NAN";
     m_DBProduction.CycleCount = data.CycleCount;
     m_DBProduction.BatchCount++;
+    m_DBModel.BatchCount++;
     m_DBProduction.Energy = data.Energy;
     m_DBProduction.Amplitude = data.Amplitude;
     m_DBProduction.TriggerPressure = data.TriggerPressure;
@@ -329,13 +335,14 @@ void Production::AppendNewRecordComming(const HBModbusClient::MODBUS_WELD_RESULT
     m_DBProduction.PostHeight = data.PostHeight;
     m_DBProduction.Force = 0;
     m_DBProduction.Residual = 0;
-    if(data.WeldAlarm != 0)
-        m_DBProduction.FinalResult = 1;
+    if(data.WeldAlarm == 0)
+        m_DBProduction.FinalResult = HistoryEnum::GOOD;
     else
-        m_DBProduction.FinalResult = 0;
+        m_DBProduction.FinalResult = HistoryEnum::SUSPECT;
 
     DataBaseManager::getInstance()->insertProductionRow(m_DBProduction);
     DataBaseManager::getInstance()->updateModelRecord(m_DBModel.id, m_DBModel);
+    History::getInstance()->AppendNewRecordComming(m_DBProduction);
 }
 
 void Production::SetModel(const DataBaseManager::DB_MODEL &model)

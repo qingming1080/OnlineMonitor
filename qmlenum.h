@@ -78,8 +78,11 @@ public:
     };
     Q_ENUM(MESSAGE)
 
-    enum SCREEN_INDEX{
-
+    enum SCREEN_INDEX
+    {
+        AUTO_LEARNING_SCREEEN = 0,
+        SINGLE_PRODUCTION_SCREEN,
+        MULTI_PRODUCTION_SCREEN
     };
     Q_ENUM(SCREEN_INDEX)
 

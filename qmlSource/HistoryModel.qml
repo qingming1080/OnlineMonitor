@@ -8,6 +8,7 @@ import GlobalLanguageDefine 1.0
 import GlobalSystemDefine 1.0
 import GlobalMessageDefine 1.0
 import LanguageEnum 1.0
+import HistoryEnum 1.0
 Rectangle {
     property int itemCount: DeviceManager.DeviceCounter
     property string buttonColor: "#0d988c"
@@ -110,7 +111,7 @@ Rectangle {
                 border.width: 2
             }
             onPressed: {
-                History.setDeviceID(0)
+                History.setDeviceID(HistoryEnum.ALL_WELDERS)
             }
         }
         Text {
@@ -333,7 +334,7 @@ Rectangle {
                 border.width: 2
             }
             onPressed: {
-                History.setFinalResult(0)
+                History.setFinalResult(HistoryEnum.ALL)
             }    
         }
         Text {
@@ -366,7 +367,7 @@ Rectangle {
                 border.width: 2
             }
             onPressed: {
-                History.setFinalResult(1)
+                History.setFinalResult(HistoryEnum.GOOD)
             }
         }
         Text {
@@ -399,7 +400,7 @@ Rectangle {
                 border.width: 2
             }
             onPressed: {
-                History.setFinalResult(3)
+                History.setFinalResult(HistoryEnum.SUSPECT)
             }
 
         }
@@ -433,7 +434,7 @@ Rectangle {
                 border.width: 2
             }
             onPressed: {
-                History.setFinalResult(2)
+                History.setFinalResult(HistoryEnum.DEFECT)
             }
         }
         Text {
@@ -531,7 +532,7 @@ Rectangle {
             anchors.left: historyPowerText.right
             anchors.leftMargin: LanguageManager.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 70 : 50
             font.pixelSize: 16
-            text: GlobalLanguageDefine.strTime + "(S)"
+            text: GlobalLanguageDefine.strTime + "(s)"
             font.family: GlobalSystemDefine.fontBold
             font.bold: true
             color: pRgb(153, 204, 255)
@@ -542,7 +543,7 @@ Rectangle {
             anchors.left: historyWeldTimeText.right
             anchors.leftMargin: LanguageManager.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 70 : 40
             font.pixelSize: 16
-            text: GlobalLanguageDefine.strWeldPressure + "(Psi)"
+            text: GlobalLanguageDefine.strWeldPressure + "(PSI)"
             font.family: GlobalSystemDefine.fontBold
             font.bold: true
             color: pRgb(153, 204, 255)
