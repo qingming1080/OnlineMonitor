@@ -252,9 +252,9 @@ void Trend::init()
 
 
     // 良率趋势刷新
-    m_yieldTimer = new QTimer;
-    connect(m_yieldTimer, &QTimer::timeout, this, &Trend::upYieldData);
-    m_yieldTimer->start(1000*60);
+    // m_yieldTimer = new QTimer;
+    // connect(m_yieldTimer, &QTimer::timeout, this, &Trend::upYieldData);
+    // m_yieldTimer->start(1000*60);
     upYieldData();
 
     // m_weldTimer = new QTimer(this);
