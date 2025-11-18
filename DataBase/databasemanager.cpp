@@ -1356,6 +1356,41 @@ void DataBaseManager::init()
     else
     {
         qDebug() << "Database Open Success";
+
+        // Configure SQLite pragmas for better reliability/performance on SD cards (Raspberry Pi)
+        QSqlQuery pragmaQ(m_database);
+
+        // Enable WAL mode (better write performance/concurrency). This returns the journal mode as result.
+        if (pragmaQ.exec("PRAGMA journal_mode = WAL;")) {
+            if (pragmaQ.next())
+                qDebug() << "PRAGMA journal_mode:" << pragmaQ.value(0).toString();
+            else
+                qDebug() << "PRAGMA journal_mode executed";
+        } else {
+            qDebug() << "PRAGMA journal_mode failed:" << pragmaQ.lastError().text();
+        }
+
+        // Reduce synchronous level from FULL to NORMAL to reduce fsync frequency (tradeoff durability vs speed)
+        if (!pragmaQ.exec("PRAGMA synchronous = NORMAL;")) {
+            qDebug() << "PRAGMA synchronous failed:" << pragmaQ.lastError().text();
+        } else {
+            qDebug() << "PRAGMA synchronous set to NORMAL";
+        }
+
+        // Busy timeout to wait for locks rather than failing immediately
+        if (!pragmaQ.exec("PRAGMA busy_timeout = 5000;")) {
+            qDebug() << "PRAGMA busy_timeout failed:" << pragmaQ.lastError().text();
+        } else {
+            qDebug() << "PRAGMA busy_timeout set to 5000ms";
+        }
+
+        // Use memory for temporary store to reduce disk writes
+        if (!pragmaQ.exec("PRAGMA temp_store = MEMORY;")) {
+            qDebug() << "PRAGMA temp_store failed:" << pragmaQ.lastError().text();
+        } else {
+            qDebug() << "PRAGMA temp_store set to MEMORY";
+        }
+
         // b_hasFeature = m_database.driver()->hasFeature(QSqlDriver::QuerySize);
         // qDebug() << "数据库是否允许获取行数" << b_hasFeature;
     }

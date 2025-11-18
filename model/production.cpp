@@ -25,12 +25,19 @@ Production::Production(int welderID, ProvidenceEE *_providenceEE, QObject *paren
         setAmpSetting(m_DBModel.Amplitude);
         setTPSetting(m_DBModel.TriggerPressure);
         setWPSetting(m_DBModel.WeldPressure);
+        _providenceEE->SetRelevantParam();
+        _providenceEE->SetProcessPara(m_DBModel);
+        _providenceEE->SetPolynomialCoefficient(m_DBModel);
+        _providenceEE->SetCentralized(m_DBModel);
+        _providenceEE->SetProcess();
     }
     // Avoid using memset on structs that contain non-POD types (like QString).
     // Zeroing object memory with memset breaks QString/Qt internals and causes crashes.
     m_DBProduction = DataBaseManager::DB_PRODUCTION();
     m_DBProduction.SerialNumber = QString();
     m_DBProduction.BatchCount = m_DBModel.BatchCount;
+    setGoodCycleCount("0");
+
 }
 
 QString Production::getGoodRate() const
@@ -54,6 +61,11 @@ QString Production::getGoodCycleCount() const
     return QString::number(m_iGoodCycleCount);
 }
 
+int Production::GetGoodCycleCount() const
+{
+    return m_iGoodCycleCount;
+}
+
 void Production::setGoodCycleCount(const QString &count)
 {
     bool isOk = false;
@@ -74,6 +86,11 @@ QString Production::getSuspectCycleCount() const
     return QString::number(m_iSuspectCycleCount);
 }
 
+int Production::GetSuspectCycleCount() const
+{
+    return m_iSuspectCycleCount;
+}
+
 void Production::setSuspectCycleCount(const QString &count)
 {
     bool isOk = false;
@@ -92,6 +109,11 @@ QString Production::getDefectiveCycleCount() const
     return QString::number(m_iDefectiveCycleCount);
 }
 
+int Production::GetDefectiveCycleCount() const
+{
+    return m_iDefectiveCycleCount;
+}
+
 void Production::setDefectiveCycleCount(const QString &count)
 {
     bool isOk = false;
@@ -108,6 +130,11 @@ void Production::setDefectiveCycleCount(const QString &count)
 QString Production::getTotalCycleCount() const
 {
     return QString::number(m_iTotalCycleCount);
+}
+
+int Production::GetTotalCycleCount() const
+{
+    return m_iTotalCycleCount;
 }
 
 void Production::setTotalCycleCount(const QString &count)
@@ -338,12 +365,65 @@ void Production::AppendNewRecordComming(const HBModbusClient::MODBUS_WELD_RESULT
     setPreheight(strPreheight);
     QString strPostHeight = UtilityFunction::getInstance()->RawValueToString(data.PostHeight, 100, 2);
     setPostHeight(strPostHeight);
-    m_DBProduction.Force = 0;
-    m_DBProduction.Residual = 0;
+
+    m_ptrProvidenceEE->UpdateNewComingValue(GenericLearning::TIME, m_DBProduction.WeldTime);
+    m_ptrProvidenceEE->UpdateNewComingValue(GenericLearning::POWER, m_DBProduction.PeakPower);
+    m_ptrProvidenceEE->UpdateNewComingValue(GenericLearning::PREHEIGHT, m_DBProduction.Preheight);
+    m_ptrProvidenceEE->UpdateNewComingValue(GenericLearning::POSTHEIGHT, m_DBProduction.PostHeight);
+
+    double peelForce;
+    double residule;
+    m_ptrProvidenceEE->PredictFromAIModel(GenericLearning::PEEL_FORCE,
+                                          m_DBProduction.WeldTime,
+                                          m_DBProduction.PeakPower,
+                                          peelForce);
+    m_DBProduction.Force = static_cast<int>(peelForce);
+    m_ptrProvidenceEE->PredictFromAIModel(GenericLearning::RESIDUAL,
+                                          m_DBProduction.WeldTime,
+                                          m_DBProduction.PeakPower,
+                                          residule);
+    m_DBProduction.Residual = static_cast<int>(residule);
     if(data.WeldAlarm == 0)
         m_DBProduction.FinalResult = HistoryEnum::GOOD;
     else
         m_DBProduction.FinalResult = HistoryEnum::SUSPECT;
+
+    if(m_DBProduction.FinalResult == HistoryEnum::GOOD)
+    {
+        if(m_ptrProvidenceEE->GetSPCGoodnessResult() == true)
+        {
+            if((m_DBProduction.Force < m_iForceThreshold) || (m_DBProduction.Residual < m_iResidualThreshold))
+                m_DBProduction.FinalResult = HistoryEnum::DEFECT;
+        }
+        else
+            m_DBProduction.FinalResult = HistoryEnum::SUSPECT;
+    }
+    int goodCount = GetGoodCycleCount();
+    int suspectCount = GetSuspectCycleCount();
+    int defectCount = GetDefectiveCycleCount();
+    int totalCount = GetTotalCycleCount();
+
+    switch(m_DBProduction.FinalResult)
+    {
+    case HistoryEnum::GOOD:
+        goodCount++;
+        break;
+    case HistoryEnum::SUSPECT:
+        suspectCount++;
+        break;
+    case HistoryEnum::DEFECT:
+        defectCount++;
+        break;
+    default:
+        break;
+    }
+    totalCount++;
+    setGoodCycleCount(QString::number(goodCount));
+    setSuspectCycleCount(QString::number(suspectCount));
+    setDefectiveCycleCount(QString::number(defectCount));
+    setTotalCycleCount(QString::number(totalCount));
+    int goodRate = static_cast<int>(goodCount / totalCount * 100);
+    setGoodRate(QString::number(goodRate));
 
     DataBaseManager::getInstance()->insertProductionRow(m_DBProduction);
     DataBaseManager::getInstance()->updateModelRecord(m_DBModel.id, m_DBModel);
@@ -393,3 +473,59 @@ void Production::SetModel(const DataBaseManager::DB_MODEL &model)
     m_DBModel.BatchCount = model.BatchCount;
     m_DBModel.isAvailable = model.isAvailable;
 }
+
+int Production::getProductionMaxBacth() const
+{
+    return m_DBModel.BatchCount;
+}
+
+int Production::getYieldRateLowerLimit() const
+{
+    return m_iGoodRate;
+}
+
+void Production::setProductionMaxBacth(const int maxBatch)
+{
+    if (m_DBModel.BatchCount != maxBatch)
+    {
+        m_DBModel.BatchCount = maxBatch;
+        emit notifyProductionMaxBacthChanged();
+    }
+}
+
+void Production::setYieldRateLowerLimit(const int limit)
+{
+    if (m_iGoodRate != limit)
+    {
+        m_iGoodRate = limit;
+        emit notifyYieldRateLowerLimitChanged();
+    }
+}
+
+int Production::getForceThreshold() const
+{
+    return m_iForceThreshold;
+}
+
+void Production::setForceThreshold(const int threshold)
+{
+    if (m_iForceThreshold != threshold)
+    {
+        m_iForceThreshold = threshold;
+        emit notifyForceThresholdChanged();
+    }
+}
+
+int Production::getResidualThreshold() const
+{
+    return m_iResidualThreshold;
+}
+
+void Production::setResidualThreshold(const int threshold)
+{
+    if (m_iResidualThreshold != threshold)
+    {
+        m_iResidualThreshold = threshold;
+        emit notifyResidualThresholdChanged();
+    }
+}   

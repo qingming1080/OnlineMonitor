@@ -45,6 +45,16 @@ class Production : public QObject
     Q_PROPERTY(int WPSetting            READ getWPSetting           WRITE setWPSetting              NOTIFY notifyWPSettingChanged FINAL)
 
     Q_PROPERTY(bool ModelStatus         READ getModelStatus         WRITE setModelStatus            NOTIFY notifyModelStatusChanged FINAL)
+
+    // 最大生产批量
+    Q_PROPERTY(int ProductionMaxBacth   READ getProductionMaxBacth  WRITE setProductionMaxBacth     NOTIFY notifyProductionMaxBacthChanged)
+
+    // 良率下限
+    Q_PROPERTY(int YieldRateLowerLimit  READ getYieldRateLowerLimit WRITE setYieldRateLowerLimit    NOTIFY notifyYieldRateLowerLimitChanged)
+
+    Q_PROPERTY(int ForceThreshold       READ getForceThreshold      WRITE setForceThreshold     NOTIFY notifyForceThresholdChanged FINAL)
+    Q_PROPERTY(int ResidualThreshold    READ getResidualThreshold   WRITE setResidualThreshold  NOTIFY notifyResidualThresholdChanged FINAL)
+
 public:
     explicit Production(int welderID = 0, ProvidenceEE* _providenceEE = nullptr, QObject *parent = nullptr);
 
@@ -52,15 +62,19 @@ public:
     void setGoodRate(const QString &rate);
 
     QString getGoodCycleCount() const;
+    int GetGoodCycleCount() const;
     void setGoodCycleCount(const QString &cycles);
 
     QString getSuspectCycleCount() const;
+    int GetSuspectCycleCount() const;
     void setSuspectCycleCount(const QString &cycles);
 
     QString getDefectiveCycleCount() const;
+    int GetDefectiveCycleCount() const;
     void setDefectiveCycleCount(const QString &cycles);
 
     QString getTotalCycleCount() const;
+    int GetTotalCycleCount() const;
     void setTotalCycleCount(const QString &cycles);
 
     QString getPeakPower() const;
@@ -102,6 +116,18 @@ public:
     bool getModelStatus() const;
     void setModelStatus(const bool status);
 
+    int getProductionMaxBacth() const;
+    void setProductionMaxBacth(const int maxBatch);
+
+    int getYieldRateLowerLimit() const;
+    void setYieldRateLowerLimit(const int limit);
+
+    int getForceThreshold() const;
+    void setForceThreshold(const int threshold);
+
+    int getResidualThreshold() const;
+    void setResidualThreshold(const int threshold);
+    
     void AppendNewRecordComming(const HBModbusClient::MODBUS_WELD_RESULT &data);
 
     void SetModel(const DataBaseManager::DB_MODEL& model);
@@ -115,6 +141,10 @@ private:
     int m_iDefectiveCycleCount;            // 次品
     int m_iSuspectCycleCount;              // 可疑
     int m_iTotalCycleCount;                // 总数
+    int m_iProductionMaxBacth;
+    int m_iYieldRateLowerLimit;
+    int m_iForceThreshold;
+    int m_iResidualThreshold;
     ProvidenceEE*                   m_ptrProvidenceEE;
 
 signals:
@@ -138,6 +168,12 @@ signals:
     void notifyWPSettingChanged();
 
     void notifyModelStatusChanged();
+
+    void notifyProductionMaxBacthChanged();
+    void notifyYieldRateLowerLimitChanged();
+
+    void notifyForceThresholdChanged();
+    void notifyResidualThresholdChanged();
 
 };
 

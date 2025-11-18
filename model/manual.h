@@ -12,11 +12,15 @@
 class Manual : public QAbstractListModel
 {
     Q_OBJECT
-    Q_PROPERTY(QString EnergySetting            READ getEnergySetting           WRITE setEnergySetting          NOTIFY notifyEnergySettingChanged FINAL)
-    Q_PROPERTY(QString AmplitudeSetting         READ getAmplitudeSetting        WRITE setAmplitudeSetting       NOTIFY notifyAmplitudeSettingChanged FINAL)
-    Q_PROPERTY(QString TriggerPressureSetting   READ getTriggerPressureSetting  WRITE setTriggerPressureSetting NOTIFY notifyTriggerPressureSettingChanged FINAL)
-    Q_PROPERTY(QString WeldPressureSetting      READ getWeldPressureSetting     WRITE setWeldPressureSetting    NOTIFY notifyWeldPressureSettingChanged FINAL)
-    Q_PROPERTY(bool IsSelectedAll               READ getIsSelectedAll           WRITE setIsSelectedAll          NOTIFY notifyIsSelectedAllChanged FINAL)
+    Q_PROPERTY(QString  EnergySetting            READ getEnergySetting           WRITE setEnergySetting          NOTIFY notifyEnergySettingChanged FINAL)
+    Q_PROPERTY(QString  AmplitudeSetting         READ getAmplitudeSetting        WRITE setAmplitudeSetting       NOTIFY notifyAmplitudeSettingChanged FINAL)
+    Q_PROPERTY(QString  TriggerPressureSetting   READ getTriggerPressureSetting  WRITE setTriggerPressureSetting NOTIFY notifyTriggerPressureSettingChanged FINAL)
+    Q_PROPERTY(QString  WeldPressureSetting      READ getWeldPressureSetting     WRITE setWeldPressureSetting    NOTIFY notifyWeldPressureSettingChanged FINAL)
+    Q_PROPERTY(bool     IsSelectedAll            READ getIsSelectedAll           WRITE setIsSelectedAll          NOTIFY notifyIsSelectedAllChanged FINAL)
+
+    // 学习样本数
+    Q_PROPERTY(int      MaxModelSamples          READ getMaxModelSamples         WRITE setMaxModelSamples        NOTIFY notifyMaxModelSamplesChanged)
+
 public:
     explicit Manual(int welderID = 0, ProvidenceEE* _providenceEE = nullptr, QObject *parent = nullptr);
     ~Manual();
@@ -47,6 +51,8 @@ public:
     void setWeldPressureSetting(const QString &value);
     bool getIsSelectedAll() const;
     void setIsSelectedAll(const bool &value);
+    int getMaxModelSamples() const;
+    void setMaxModelSamples(const int &value);
 private:
     bool CalibrateModel();
     void InitDBModel(const GenericLearning::PROCESS_PARAM* _param,
@@ -61,11 +67,13 @@ signals:
     void notifyWeldPressureSettingChanged();
     void notifyTrainingProcessFinished(DataBaseManager::DB_MODEL& model);
     void notifyIsSelectedAllChanged();
+    void notifyMaxModelSamplesChanged();
 private:
-    int m_welderID;
+    int m_WelderID;
     QList<DataBaseManager::DB_MANUAL>   m_listManualRecords;
     DataBaseManager::DB_MODEL           m_DBModel;
     ProvidenceEE*                       m_ptrProvidenceEE;
+    int m_iMaxModelSamples;
 };
 
 #endif // MANUAL_H

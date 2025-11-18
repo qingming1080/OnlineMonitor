@@ -4,11 +4,11 @@
 #include <algorithm>
 
 Manual::Manual(int welderID, ProvidenceEE *_providenceEE, QObject *parent)
-    : QAbstractListModel{parent}, m_welderID(welderID), m_ptrProvidenceEE(_providenceEE)
+    : QAbstractListModel{parent}, m_WelderID(welderID), m_ptrProvidenceEE(_providenceEE)
 {
     loadData();
 
-    if(DataBaseManager::getInstance()->getModelRecord(m_welderID, m_DBModel) == false)
+    if(DataBaseManager::getInstance()->getModelRecord(m_WelderID, m_DBModel) == false)
     {
         m_DBModel.id = -1;
         m_DBModel.isAvailable = false;
@@ -188,7 +188,7 @@ void Manual::clearData()
 {
     beginResetModel();
     m_listManualRecords.clear();
-    DataBaseManager::getInstance()->removeManualRecords(m_welderID);
+    DataBaseManager::getInstance()->removeManualRecords(m_WelderID);
     endResetModel();
 }
 
@@ -196,7 +196,7 @@ void Manual::loadData()
 {
     beginResetModel();  // 通知 QML 模型发生变化
     m_listManualRecords.clear();
-    DataBaseManager::getInstance()->getManualRecords(m_welderID, m_listManualRecords); // 重新加载数据
+    DataBaseManager::getInstance()->getManualRecords(m_WelderID, m_listManualRecords); // 重新加载数据
 
     // Reverse the list so the newest records appear first in the model
     if (!m_listManualRecords.isEmpty()) {
@@ -282,7 +282,7 @@ void Manual::InitDBModel(const GenericLearning::PROCESS_PARAM *_param, const Gen
     m_DBModel.SampleCount = _param[GenericLearning::TIME].SampleCount;
     m_DBModel.BatchCount = 0;
 
-    m_DBModel.WelderId = m_welderID;                       // 焊机id
+    m_DBModel.WelderId = m_WelderID;                       // 焊机id
     m_DBModel.CreateTime = QDateTime::currentDateTime();               // 创建时间
     m_DBModel.Energy = GetEnergySetting();                         // 能量
     m_DBModel.Amplitude = GetAmplitudeSetting();                      // 振幅
@@ -330,7 +330,7 @@ void Manual::AppendNewRecordComming(const HBModbusClient::MODBUS_WELD_RESULT &da
 {
     beginInsertRows(QModelIndex(), 0, 0);
     DataBaseManager::DB_MANUAL record;
-    record.WelderId       = m_welderID;
+    record.WelderId       = m_WelderID;
     record.CycleCount     = data.CycleCount;
     record.Energy         = data.Energy;
     record.Amplitude      = data.Amplitude;
@@ -457,4 +457,18 @@ void Manual::setIsSelectedAll(const bool &value)
         }
     }
     emit notifyIsSelectedAllChanged();
+}
+
+int Manual::getMaxModelSamples() const
+{
+    return m_iMaxModelSamples;
+}
+
+void Manual::setMaxModelSamples(const int &value)
+{
+    if (m_iMaxModelSamples != value)
+    {
+        m_iMaxModelSamples = value;
+        emit notifyMaxModelSamplesChanged();
+    }
 }

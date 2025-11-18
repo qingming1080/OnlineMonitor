@@ -11,12 +11,22 @@ class ProvidenceEE : public QObject
 public:
     explicit ProvidenceEE(int welderID = 0, QObject *parent = nullptr);
     void ResetProcess();
-    void SetProcess(const bool isTrained);
+    void SetProcess();
     void CalibrateSPCProcess(const QList<DataBaseManager::DB_MANUAL>& sourceList);
     void CalibrateAIProcess(const QList<DataBaseManager::DB_MANUAL>& sourceList);
     void SetRelevantParam();
     void GetSPCProcess(GenericLearning::PROCESS_PARAM* _param) const;
     void GetAIProcess(GenericLearning::CENTRALIZED_PROPERTY* _centralized, GenericLearning::AI_POLYNOMIAL_COEFFICIENT* _coefficient) const;
+
+    void UpdateNewComingValue(const GenericLearning::FACTOR_DEF factor, const int value);
+    void PredictFromAIModel(const GenericLearning::FACTOR_DEF factor, const int time, const int power, double &result);
+    bool GetSPCGoodnessResult();
+
+
+    void SetProcessPara(const DataBaseManager::DB_MODEL model);
+    void SetPolynomialCoefficient(const DataBaseManager::DB_MODEL model);
+    void SetCentralized(const DataBaseManager::DB_MODEL mode);
+
 private:
     struct INSIGHT_PARAM{
         int Time;
@@ -31,6 +41,7 @@ private:
     GenericLearning::CENTRALIZED_PROPERTY CentralizedProperty;
 private:
     int m_WelderID;
+    GenericLearning* _ptrLearningUtility;
 signals:
 };
 

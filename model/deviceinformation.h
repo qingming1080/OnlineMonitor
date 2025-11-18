@@ -49,12 +49,15 @@ public:
     void setWelderType(const int &type);
 
     QString getProductionMaxBacth() const;
+    int GetProductionMaxBacth() const;
     void setProductionMaxBacth(const QString &maxBacth);
 
     QString getMaxModelSamples() const;
+    int GetMaxModelSamples() const;
     void setMaxModelSamples(const QString &samples);
 
     QString getYieldRateLowerLimit() const;
+    int GetYieldRateLowerLimit() const;
     void setYieldRateLowerLimit(const QString &yieldRate);
 
     bool getHeightEncoderOption() const;

@@ -83,6 +83,11 @@ QString DeviceInformation::getProductionMaxBacth() const
     return QString::number(m_DBConfigure.ProductionBatch);
 }
 
+int DeviceInformation::GetProductionMaxBacth() const
+{
+    return m_DBConfigure.ProductionBatch;
+}
+
 void DeviceInformation::setProductionMaxBacth(const QString &maxBacth)
 {
     bool ok;
@@ -99,6 +104,11 @@ QString DeviceInformation::getMaxModelSamples() const
     return QString::number(m_DBConfigure.MaxModelSamples);
 }
 
+int DeviceInformation::GetMaxModelSamples() const
+{
+    return m_DBConfigure.MaxModelSamples;
+}
+
 void DeviceInformation::setMaxModelSamples(const QString &samples)
 {
     bool ok;
@@ -113,6 +123,11 @@ void DeviceInformation::setMaxModelSamples(const QString &samples)
 QString DeviceInformation::getYieldRateLowerLimit() const
 {
     return QString::number(m_DBConfigure.YieldRateLowerLimit);
+}
+
+int DeviceInformation::GetYieldRateLowerLimit() const
+{
+    return m_DBConfigure.YieldRateLowerLimit;
 }
 
 void DeviceInformation::setYieldRateLowerLimit(const QString &yieldRate)

@@ -221,6 +221,17 @@ bool Device::NotifyWeldResultComing(const HBModbusClient::MODBUS_WELD_RESULT &da
 {
     qDebug() << "New data coming";
     bool isPresetChanged = false;
+    int MaxModelSamples = m_ptrDevice->GetMaxModelSamples();
+    m_ptrManual->setMaxModelSamples(MaxModelSamples);
+    int ProductionMaxBacth = m_ptrDevice->GetProductionMaxBacth();
+    m_ptrProduction->setProductionMaxBacth(ProductionMaxBacth);
+    int YieldRateLowerLimit = m_ptrDevice->GetYieldRateLowerLimit();
+    m_ptrProduction->setYieldRateLowerLimit(YieldRateLowerLimit);
+    int ForceThreshold = m_ptrDevice->GetForceThreshold();
+    m_ptrProduction->setForceThreshold(ForceThreshold);
+    int Residual = m_ptrDevice->GetResidualThreshold();
+    m_ptrProduction->setResidualThreshold(Residual);
+
     if(m_ptrProduction->getModelStatus() == true)
     {
         isPresetChanged = IsProductionPresetChanged(data);
