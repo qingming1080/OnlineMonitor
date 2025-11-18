@@ -325,14 +325,19 @@ void Production::AppendNewRecordComming(const HBModbusClient::MODBUS_WELD_RESULT
     m_DBProduction.CycleCount = data.CycleCount;
     m_DBProduction.BatchCount++;
     m_DBModel.BatchCount++;
-    m_DBProduction.Energy = data.Energy;
-    m_DBProduction.Amplitude = data.Amplitude;
-    m_DBProduction.TriggerPressure = data.TriggerPressure;
-    m_DBProduction.WeldPressure = data.WeldingPressure;
-    m_DBProduction.WeldTime = data.WeldTime;
-    m_DBProduction.PeakPower = data.PeakPower;
-    m_DBProduction.Preheight = data.Preheight;
-    m_DBProduction.PostHeight = data.PostHeight;
+    setEnergy(QString::number(data.Energy));
+    setAmplitude(QString::number(data.Amplitude));
+    QString strTriggerPressure = UtilityFunction::getInstance()->RawValueToString(data.TriggerPressure, 10, 1);
+    setTriggertPressure(strTriggerPressure);
+    QString strWeldPressure = UtilityFunction::getInstance()->RawValueToString(data.WeldingPressure, 10, 1);
+    setWeldPressure(strWeldPressure);
+    QString strWeldTime = UtilityFunction::getInstance()->RawValueToString(data.WeldTime, 100, 2);
+    setWeldTime(strWeldTime);
+    setPeakPower(QString::number(data.PeakPower));
+    QString strPreheight = UtilityFunction::getInstance()->RawValueToString(data.Preheight, 100, 2);
+    setPreheight(strPreheight);
+    QString strPostHeight = UtilityFunction::getInstance()->RawValueToString(data.PostHeight, 100, 2);
+    setPostHeight(strPostHeight);
     m_DBProduction.Force = 0;
     m_DBProduction.Residual = 0;
     if(data.WeldAlarm == 0)
