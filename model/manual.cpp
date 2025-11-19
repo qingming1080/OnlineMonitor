@@ -3,8 +3,8 @@
 #include <QDebug>
 #include <algorithm>
 
-Manual::Manual(int welderID, ProvidenceEE *_providenceEE, QObject *parent)
-    : QAbstractListModel{parent}, m_WelderID(welderID), m_ptrProvidenceEE(_providenceEE)
+Manual::Manual(int welderID, QObject *parent)
+    : QAbstractListModel{parent}, m_WelderID(welderID)
 {
     loadData();
 

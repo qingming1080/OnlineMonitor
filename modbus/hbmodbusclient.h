@@ -123,7 +123,7 @@ private:
 #if RASPBERRY
     static constexpr char LOCAL_IP[13] = "127.0.0.1";
 #else
-    static constexpr char LOCAL_IP[13] = "127.0.0.1";
+    static constexpr char LOCAL_IP[13] = "192.168.1.38";
 #endif
 
     static unsigned int m_iPreviousCycleCount[DEV_COUNT];
@@ -309,7 +309,7 @@ signals:
 
     void notifyDeviceIOStatusChanged(int welderId, const IO_STATUS &status);
 
-    void notifyDeviceStatusChanged(int welderId, const DEVICE_STATUS &status);
+    void notifyDeviceStatusChanged(int welderId, DEVICE_STATUS status);
 
     void notifyResetButtonStatus(const bool& status);
 

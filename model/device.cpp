@@ -17,10 +17,9 @@ Device::Device(int welderID, QObject *parent)
     // QElapsedTimer timer;
     // timer.start();
     // Need to use auto pointer to manage these pointers?
-    m_ptrProvidenceEE   = new ProvidenceEE(m_WelderID);
     m_ptrDevice         = new DeviceInformation(m_WelderID);
-    m_ptrManual         = new Manual(m_WelderID, m_ptrProvidenceEE);
-    m_ptrProduction     = new Production(m_WelderID, m_ptrProvidenceEE);
+    m_ptrManual         = new Manual(m_WelderID);
+    m_ptrProduction     = new Production(m_WelderID);
     m_ptrTrend          = new Trend(m_WelderID);
 
     connect(m_ptrManual, &Manual::notifyTrainingProcessFinished, this, &Device::slotNotifyTrainingProcessFinished);
@@ -52,12 +51,6 @@ Device::~Device()
         delete m_ptrDevice;
         m_ptrDevice = nullptr;
     }
-    if(m_ptrProvidenceEE != nullptr)
-    {
-        delete m_ptrProvidenceEE;
-        m_ptrProvidenceEE = nullptr;
-    }
-
 }
 
 Trend *Device::pTrend() const

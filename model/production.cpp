@@ -2,8 +2,8 @@
 #include "tools/utilityfunction.h"
 #include "history.h"
 #include "historyenum.h"
-Production::Production(int welderID, ProvidenceEE *_providenceEE, QObject *parent)
-    :QObject{parent}, m_WelderID(welderID), m_ptrProvidenceEE(_providenceEE)
+Production::Production(int welderID, QObject *parent)
+    :QObject{parent}, m_WelderID(welderID)
 {
 
     m_iGoodRate = 90;
@@ -25,11 +25,6 @@ Production::Production(int welderID, ProvidenceEE *_providenceEE, QObject *paren
         setAmpSetting(m_DBModel.Amplitude);
         setTPSetting(m_DBModel.TriggerPressure);
         setWPSetting(m_DBModel.WeldPressure);
-        _providenceEE->SetRelevantParam();
-        _providenceEE->SetProcessPara(m_DBModel);
-        _providenceEE->SetPolynomialCoefficient(m_DBModel);
-        _providenceEE->SetCentralized(m_DBModel);
-        _providenceEE->SetProcess();
     }
     // Avoid using memset on structs that contain non-POD types (like QString).
     // Zeroing object memory with memset breaks QString/Qt internals and causes crashes.
@@ -366,19 +361,26 @@ void Production::AppendNewRecordComming(const HBModbusClient::MODBUS_WELD_RESULT
     QString strPostHeight = UtilityFunction::getInstance()->RawValueToString(data.PostHeight, 100, 2);
     setPostHeight(strPostHeight);
 
-    m_ptrProvidenceEE->UpdateNewComingValue(GenericLearning::TIME, m_DBProduction.WeldTime);
-    m_ptrProvidenceEE->UpdateNewComingValue(GenericLearning::POWER, m_DBProduction.PeakPower);
-    m_ptrProvidenceEE->UpdateNewComingValue(GenericLearning::PREHEIGHT, m_DBProduction.Preheight);
-    m_ptrProvidenceEE->UpdateNewComingValue(GenericLearning::POSTHEIGHT, m_DBProduction.PostHeight);
+
+    ProvidenceEE::getInstance()->SetRelevantParam();
+    ProvidenceEE::getInstance()->SetProcessPara(m_DBModel, true);
+    ProvidenceEE::getInstance()->SetPolynomialCoefficient(m_DBModel);
+    ProvidenceEE::getInstance()->SetCentralized(m_DBModel);
+    ProvidenceEE::getInstance()->SetProcess();
+
+    ProvidenceEE::getInstance()->UpdateNewComingValue(GenericLearning::TIME, m_DBProduction.WeldTime);
+    ProvidenceEE::getInstance()->UpdateNewComingValue(GenericLearning::POWER, m_DBProduction.PeakPower);
+    ProvidenceEE::getInstance()->UpdateNewComingValue(GenericLearning::PREHEIGHT, m_DBProduction.Preheight);
+    ProvidenceEE::getInstance()->UpdateNewComingValue(GenericLearning::POSTHEIGHT, m_DBProduction.PostHeight);
 
     double peelForce;
     double residule;
-    m_ptrProvidenceEE->PredictFromAIModel(GenericLearning::PEEL_FORCE,
+    ProvidenceEE::getInstance()->PredictFromAIModel(GenericLearning::PEEL_FORCE,
                                           m_DBProduction.WeldTime,
                                           m_DBProduction.PeakPower,
                                           peelForce);
     m_DBProduction.Force = static_cast<int>(peelForce);
-    m_ptrProvidenceEE->PredictFromAIModel(GenericLearning::RESIDUAL,
+    ProvidenceEE::getInstance()->PredictFromAIModel(GenericLearning::RESIDUAL,
                                           m_DBProduction.WeldTime,
                                           m_DBProduction.PeakPower,
                                           residule);
@@ -390,7 +392,7 @@ void Production::AppendNewRecordComming(const HBModbusClient::MODBUS_WELD_RESULT
 
     if(m_DBProduction.FinalResult == HistoryEnum::GOOD)
     {
-        if(m_ptrProvidenceEE->GetSPCGoodnessResult() == true)
+        if(ProvidenceEE::getInstance()->GetSPCGoodnessResult() == true)
         {
             if((m_DBProduction.Force < m_iForceThreshold) || (m_DBProduction.Residual < m_iResidualThreshold))
                 m_DBProduction.FinalResult = HistoryEnum::DEFECT;

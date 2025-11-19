@@ -59,45 +59,47 @@ public:
 		double TimeMean;
 		double TimeStd;
 		double PowerMean;
-        double PowerStd;
+		double PowerStd;
 		double ForceMean;
+		double ForceStd;
 		double ResidualMean;
+		double ResidualStd;
 	};
 private:
-    void displayCentralizedPropertyInfo();
-    void displayCoefficientInfo(const int tmpFactor);
-    int 	m_isDebugMode;
+	static void displayCentralizedPropertyInfo(); 
+	static void displayCoefficientInfo(const int tmpFactor);
+	static int 	m_isDebugMode;
 public:
-    int	ResetProcessParam();
-    int	GetProcessParam(FACTOR_DEF tmpFactor, PROCESS_PARAM* _param);
-    int	SetProcessParam(FACTOR_DEF tmpFactor, const PROCESS_PARAM param);
-    int	UpdateCurrentValue(FACTOR_DEF tmpFactor, const int value);
-    int	UpdateProcessParameter();
+	static int	ResetProcessParam();
+	static int	GetProcessParam(FACTOR_DEF tmpFactor, PROCESS_PARAM* _param);
+	static int	SetProcessParam(FACTOR_DEF tmpFactor, const PROCESS_PARAM param);
+	static int	UpdateCurrentValue(FACTOR_DEF tmpFactor, const int value);
+	static int	UpdateProcessParameter();
 	/****************************************************************/
 	/* generalRating range is 20% ~ 100% default 80%                */
 	/****************************************************************/
-    void SetGeneralFactorGoodnessRating(const double generalRating);
+	static void SetGeneralFactorGoodnessRating(const double generalRating);
 	/****************************************************************/
 	/* singleRating range is 20% ~ 100%  default 20%                */
 	/****************************************************************/
-    void SetSingleFactorGoodnessRating(const double singleRating);
+	static void SetSingleFactorGoodnessRating(const double singleRating);
 	/****************************************************************/
 	/* Specific Sigma range is 3 ~ 5  default 5               */
 	/****************************************************************/
-    void SetSpecificRangeSigmaSetting(const double sigmaSetting);
+	static void SetSpecificRangeSigmaSetting(const double sigmaSetting);
 	
-    bool GetGoodnessResult();
+	static bool GetGoodnessResult();
 	
 	//Following definitions are for AI algorithm
-    int AppendRawDataForAIModel(const int tmpFactor, const double value);
-    int ResetAIModel();
-    int TrainAIModel(const int tmpFactor);
-    int PredictFromAIModel(const int tmpFactor, const double time, const double power, double& value);
-    int GetAITrainedCoefficient(const int tmpFactor, GenericLearning::AI_POLYNOMIAL_COEFFICIENT& coefficient);
-    int SetAITrainedCoefficient(const int tmpFactor, const GenericLearning::AI_POLYNOMIAL_COEFFICIENT coefficient);
-    int GetAICentralizedProperty(GenericLearning::CENTRALIZED_PROPERTY& property);
-    int SetAICentralizedProperty(const GenericLearning::CENTRALIZED_PROPERTY property);
-    void SetDebugMode(const int isDebug);
-    int GetDebugMode();
+	static int AppendRawDataForAIModel(const int tmpFactor, const double value);
+	static int ResetAIModel();
+	static int TrainAIModel(const int tmpFactor);
+	static int PredictFromAIModel(const int tmpFactor, const double time, const double power, double& value);
+	static int GetAITrainedCoefficient(const int tmpFactor, GenericLearning::AI_POLYNOMIAL_COEFFICIENT& coefficient);
+	static int SetAITrainedCoefficient(const int tmpFactor, const GenericLearning::AI_POLYNOMIAL_COEFFICIENT coefficient);
+	static int GetAICentralizedProperty(GenericLearning::CENTRALIZED_PROPERTY& property);
+	static int SetAICentralizedProperty(const GenericLearning::CENTRALIZED_PROPERTY property);
+	static void SetDebugMode(const int isDebug);
+	static int GetDebugMode();
 };
 #endif

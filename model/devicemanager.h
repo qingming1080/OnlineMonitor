@@ -70,7 +70,7 @@ signals:
     void notifyPresetChanged(int selectedIndex);
 
 public slots:
-    void slotNotifyDeviceStatusChanged(int welderId, const HBModbusClient::DEVICE_STATUS &status);
+    void slotNotifyDeviceStatusChanged(int welderId, HBModbusClient::DEVICE_STATUS status);
     void slotNotifyWeldResultComing(int welderId, const HBModbusClient::MODBUS_WELD_RESULT& data);
     void slotNotifyPresetSettingChanged(int welderId, const HBModbusClient::WELD_PRESET& data);
     void slotNotifyModbusStatusChanged(const bool connected);

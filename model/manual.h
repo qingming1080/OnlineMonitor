@@ -22,7 +22,7 @@ class Manual : public QAbstractListModel
     Q_PROPERTY(int      MaxModelSamples          READ getMaxModelSamples         WRITE setMaxModelSamples        NOTIFY notifyMaxModelSamplesChanged)
 
 public:
-    explicit Manual(int welderID = 0, ProvidenceEE* _providenceEE = nullptr, QObject *parent = nullptr);
+    explicit Manual(int welderID = 0, QObject *parent = nullptr);
     ~Manual();
 
     virtual int rowCount(const QModelIndex &parent = QModelIndex()) const override;
@@ -72,7 +72,6 @@ private:
     int m_WelderID;
     QList<DataBaseManager::DB_MANUAL>   m_listManualRecords;
     DataBaseManager::DB_MODEL           m_DBModel;
-    ProvidenceEE*                       m_ptrProvidenceEE;
     int m_iMaxModelSamples;
 };
 

@@ -56,7 +56,7 @@ class Production : public QObject
     Q_PROPERTY(int ResidualThreshold    READ getResidualThreshold   WRITE setResidualThreshold  NOTIFY notifyResidualThresholdChanged FINAL)
 
 public:
-    explicit Production(int welderID = 0, ProvidenceEE* _providenceEE = nullptr, QObject *parent = nullptr);
+    explicit Production(int welderID = 0, QObject *parent = nullptr);
 
     QString getGoodRate() const;
     void setGoodRate(const QString &rate);
@@ -145,7 +145,6 @@ private:
     int m_iYieldRateLowerLimit;
     int m_iForceThreshold;
     int m_iResidualThreshold;
-    ProvidenceEE*                   m_ptrProvidenceEE;
 
 signals:
     void notifyGoodRateChanged();

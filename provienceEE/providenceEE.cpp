@@ -1,10 +1,10 @@
 #include "providenceEE.h"
-ProvidenceEE::ProvidenceEE(int welderID, QObject *parent)
-    : QObject{parent}, m_WelderID(welderID)
+ProvidenceEE* ProvidenceEE::m_ptrInstance = nullptr;
+ProvidenceEE::ProvidenceEE(QObject *parent)
+    : QObject{parent}
 {
 #if RASPBERRY
-    _ptrLearningUtility = new GenericLearning();
-    _ptrLearningUtility->SetDebugMode(1);
+    GenericLearning::SetDebugMode(1);
 
     SetRelevantParam();
 
@@ -13,33 +13,40 @@ ProvidenceEE::ProvidenceEE(int welderID, QObject *parent)
     ProcessParam[GenericLearning::PREHEIGHT].Enable = true;
     ProcessParam[GenericLearning::POSTHEIGHT].Enable = true;
 
-    _ptrLearningUtility->GetAICentralizedProperty(CentralizedProperty);
-    _ptrLearningUtility->GetAITrainedCoefficient(GenericLearning::PEEL_FORCE, 	PolynomialCoefficient[GenericLearning::STRENGTH0]);
-    _ptrLearningUtility->GetAITrainedCoefficient(GenericLearning::RESIDUAL, 	PolynomialCoefficient[GenericLearning::STRENGTH1]);
+    GenericLearning::GetAICentralizedProperty(CentralizedProperty);
+    GenericLearning::GetAITrainedCoefficient(GenericLearning::PEEL_FORCE, 	PolynomialCoefficient[GenericLearning::STRENGTH0]);
+    GenericLearning::GetAITrainedCoefficient(GenericLearning::RESIDUAL, 	PolynomialCoefficient[GenericLearning::STRENGTH1]);
 #endif
+}
+
+ProvidenceEE *ProvidenceEE::getInstance()
+{
+    if(m_ptrInstance == nullptr)
+        m_ptrInstance = new ProvidenceEE();
+    return m_ptrInstance;
 }
 
 void ProvidenceEE::ResetProcess()
 {
 #if RASPBERRY
-    _ptrLearningUtility->ResetProcessParam();
-    _ptrLearningUtility->ResetAIModel();
+    GenericLearning::ResetProcessParam();
+    GenericLearning::ResetAIModel();
 #endif
 }
 
 void ProvidenceEE::SetProcess()
 {
 #if RASPBERRY
-    _ptrLearningUtility->ResetProcessParam();
-    _ptrLearningUtility->ResetAIModel();
-    _ptrLearningUtility->SetProcessParam(GenericLearning::TIME, ProcessParam[GenericLearning::TIME]);
-    _ptrLearningUtility->SetProcessParam(GenericLearning::POWER, ProcessParam[GenericLearning::POWER]);
-    _ptrLearningUtility->SetProcessParam(GenericLearning::PREHEIGHT, ProcessParam[GenericLearning::PREHEIGHT]);
-    _ptrLearningUtility->SetProcessParam(GenericLearning::POSTHEIGHT, ProcessParam[GenericLearning::POSTHEIGHT]);
+    GenericLearning::ResetProcessParam();
+    GenericLearning::ResetAIModel();
+    GenericLearning::SetProcessParam(GenericLearning::TIME, ProcessParam[GenericLearning::TIME]);
+    GenericLearning::SetProcessParam(GenericLearning::POWER, ProcessParam[GenericLearning::POWER]);
+    GenericLearning::SetProcessParam(GenericLearning::PREHEIGHT, ProcessParam[GenericLearning::PREHEIGHT]);
+    GenericLearning::SetProcessParam(GenericLearning::POSTHEIGHT, ProcessParam[GenericLearning::POSTHEIGHT]);
 
-    _ptrLearningUtility->SetAICentralizedProperty(CentralizedProperty);
-    _ptrLearningUtility->SetAITrainedCoefficient(GenericLearning::PEEL_FORCE, 	PolynomialCoefficient[GenericLearning::STRENGTH0]);
-    _ptrLearningUtility->SetAITrainedCoefficient(GenericLearning::RESIDUAL, 	PolynomialCoefficient[GenericLearning::STRENGTH1]);
+    GenericLearning::SetAICentralizedProperty(CentralizedProperty);
+    GenericLearning::SetAITrainedCoefficient(GenericLearning::PEEL_FORCE, 	PolynomialCoefficient[GenericLearning::STRENGTH0]);
+    GenericLearning::SetAITrainedCoefficient(GenericLearning::RESIDUAL, 	PolynomialCoefficient[GenericLearning::STRENGTH1]);
 
 #endif
 }
@@ -47,49 +54,53 @@ void ProvidenceEE::SetProcess()
 void ProvidenceEE::CalibrateSPCProcess(const QList<DataBaseManager::DB_MANUAL>& sourceList)
 {
 #if RASPBERRY
-    _ptrLearningUtility->ResetProcessParam();
+    GenericLearning::ResetProcessParam();
     for(int i = 0; i < sourceList.size(); i++)
 	{
-        _ptrLearningUtility->UpdateCurrentValue(GenericLearning::TIME, 		sourceList[i].WeldTime);
-        _ptrLearningUtility->UpdateCurrentValue(GenericLearning::POWER, 	sourceList[i].PeakPower);
-        _ptrLearningUtility->UpdateCurrentValue(GenericLearning::PREHEIGHT, sourceList[i].Preheight);
-        _ptrLearningUtility->UpdateCurrentValue(GenericLearning::POSTHEIGHT,sourceList[i].PostHeight);
+        GenericLearning::UpdateCurrentValue(GenericLearning::TIME, 		sourceList[i].WeldTime);
+        GenericLearning::UpdateCurrentValue(GenericLearning::POWER, 	sourceList[i].PeakPower);
+        GenericLearning::UpdateCurrentValue(GenericLearning::PREHEIGHT, sourceList[i].Preheight);
+        GenericLearning::UpdateCurrentValue(GenericLearning::POSTHEIGHT,sourceList[i].PostHeight);
 
-        _ptrLearningUtility->UpdateProcessParameter();
+        GenericLearning::UpdateProcessParameter();
 
-        _ptrLearningUtility->GetProcessParam(GenericLearning::TIME, 		&ProcessParam[GenericLearning::TIME]);
-        _ptrLearningUtility->GetProcessParam(GenericLearning::POWER, 		&ProcessParam[GenericLearning::POWER]);
-        _ptrLearningUtility->GetProcessParam(GenericLearning::PREHEIGHT, 	&ProcessParam[GenericLearning::PREHEIGHT]);
-        _ptrLearningUtility->GetProcessParam(GenericLearning::POSTHEIGHT, 	&ProcessParam[GenericLearning::POSTHEIGHT]);
+        GenericLearning::GetProcessParam(GenericLearning::TIME, 		&ProcessParam[GenericLearning::TIME]);
+        GenericLearning::GetProcessParam(GenericLearning::POWER, 		&ProcessParam[GenericLearning::POWER]);
+        GenericLearning::GetProcessParam(GenericLearning::PREHEIGHT, 	&ProcessParam[GenericLearning::PREHEIGHT]);
+        GenericLearning::GetProcessParam(GenericLearning::POSTHEIGHT, 	&ProcessParam[GenericLearning::POSTHEIGHT]);
 	}
+#else
+    Q_UNUSED(sourceList)
 #endif
 }
 
 void ProvidenceEE::CalibrateAIProcess(const QList<DataBaseManager::DB_MANUAL> &sourceList)
 {
 #if RASPBERRY
-    _ptrLearningUtility->ResetAIModel();
+    GenericLearning::ResetAIModel();
     for(int i = 0; i < sourceList.size(); i++)
     {
-        _ptrLearningUtility->AppendRawDataForAIModel(GenericLearning::TIME,			sourceList[i].WeldTime);
-        _ptrLearningUtility->AppendRawDataForAIModel(GenericLearning::POWER,		sourceList[i].PeakPower);
-        _ptrLearningUtility->AppendRawDataForAIModel(GenericLearning::PEEL_FORCE,	sourceList[i].ActualForce);
-        _ptrLearningUtility->AppendRawDataForAIModel(GenericLearning::RESIDUAL,		sourceList[i].ActualResidual);
+        GenericLearning::AppendRawDataForAIModel(GenericLearning::TIME,			sourceList[i].WeldTime);
+        GenericLearning::AppendRawDataForAIModel(GenericLearning::POWER,		sourceList[i].PeakPower);
+        GenericLearning::AppendRawDataForAIModel(GenericLearning::PEEL_FORCE,	sourceList[i].ActualForce);
+        GenericLearning::AppendRawDataForAIModel(GenericLearning::RESIDUAL,		sourceList[i].ActualResidual);
     }
-    _ptrLearningUtility->TrainAIModel(GenericLearning::PEEL_FORCE);
-    _ptrLearningUtility->TrainAIModel(GenericLearning::RESIDUAL);
-    _ptrLearningUtility->GetAICentralizedProperty(CentralizedProperty);
-    _ptrLearningUtility->GetAITrainedCoefficient(GenericLearning::PEEL_FORCE, 	PolynomialCoefficient[GenericLearning::STRENGTH0]);
-    _ptrLearningUtility->GetAITrainedCoefficient(GenericLearning::RESIDUAL, 	PolynomialCoefficient[GenericLearning::STRENGTH1]);
+    GenericLearning::TrainAIModel(GenericLearning::PEEL_FORCE);
+    GenericLearning::TrainAIModel(GenericLearning::RESIDUAL);
+    GenericLearning::GetAICentralizedProperty(CentralizedProperty);
+    GenericLearning::GetAITrainedCoefficient(GenericLearning::PEEL_FORCE, 	PolynomialCoefficient[GenericLearning::STRENGTH0]);
+    GenericLearning::GetAITrainedCoefficient(GenericLearning::RESIDUAL, 	PolynomialCoefficient[GenericLearning::STRENGTH1]);
+#else
+    Q_UNUSED(sourceList)
 #endif
 }
 
 void ProvidenceEE::SetRelevantParam()
 {
 #if RASPBERRY
-    _ptrLearningUtility->SetGeneralFactorGoodnessRating(80);
-    _ptrLearningUtility->SetSingleFactorGoodnessRating(20);
-    _ptrLearningUtility->SetSpecificRangeSigmaSetting(5);
+    GenericLearning::SetGeneralFactorGoodnessRating(80);
+    GenericLearning::SetSingleFactorGoodnessRating(20);
+    GenericLearning::SetSpecificRangeSigmaSetting(5);
 #endif
 }
 
@@ -100,6 +111,8 @@ void ProvidenceEE::GetSPCProcess(GenericLearning::PROCESS_PARAM* _param) const
     {
         memcpy(_param, ProcessParam, sizeof(GenericLearning::PROCESS_PARAM) * GenericLearning::TOTALPARA);
     }
+#else
+    Q_UNUSED(_param)
 #endif
 }
 
@@ -111,31 +124,44 @@ void ProvidenceEE::GetAIProcess(GenericLearning::CENTRALIZED_PROPERTY *_centrali
         memcpy(_centralized, &CentralizedProperty, sizeof(GenericLearning::CENTRALIZED_PROPERTY));
         memcpy(_coefficient, PolynomialCoefficient, sizeof(GenericLearning::AI_POLYNOMIAL_COEFFICIENT) * GenericLearning::STRENGTH_MAX);
     }
+#else
+    Q_UNUSED(_centralized)
+    Q_UNUSED(_coefficient)
 #endif
 }
 
 void ProvidenceEE::UpdateNewComingValue(const GenericLearning::FACTOR_DEF factor, const int value)
 {
 #if RASPBERRY
-    _ptrLearningUtility->UpdateCurrentValue(factor, value);
+    GenericLearning::UpdateCurrentValue(factor, value);
+#else
+    Q_UNUSED(factor)
+    Q_UNUSED(value)
 #endif
 }
 
 void ProvidenceEE::PredictFromAIModel(const GenericLearning::FACTOR_DEF factor, const int time, const int power, double &result)
 {
 #if RASPBERRY
-    _ptrLearningUtility->PredictFromAIModel(factor, time, power, result);
+    GenericLearning::PredictFromAIModel(factor, time, power, result);
+#else
+    Q_UNUSED(factor)
+    Q_UNUSED(time)
+    Q_UNUSED(power)
+    Q_UNUSED(result)
 #endif
 }
 
 bool ProvidenceEE::GetSPCGoodnessResult()
 {
 #if RASPBERRY
-    return _ptrLearningUtility->GetGoodnessResult();
+    return GenericLearning::GetGoodnessResult();
+#else
+    return true;
 #endif
 }
 
-void ProvidenceEE::SetProcessPara(const DataBaseManager::DB_MODEL model)
+void ProvidenceEE::SetProcessPara(const DataBaseManager::DB_MODEL model, const bool isHeightEncoderEnabled)
 {
     ProcessParam[GenericLearning::TIME].Alpha = model.WeldTime.Alpha;
     ProcessParam[GenericLearning::TIME].Beta = model.WeldTime.Beta;             
@@ -147,11 +173,11 @@ void ProvidenceEE::SetProcessPara(const DataBaseManager::DB_MODEL model)
     ProcessParam[GenericLearning::POWER].SampleCount = model.SampleCount;
     ProcessParam[GenericLearning::PREHEIGHT].Alpha = model.Preheight.Alpha;
     ProcessParam[GenericLearning::PREHEIGHT].Beta = model.Preheight.Beta;
-    ProcessParam[GenericLearning::PREHEIGHT].Enable = true;
+    ProcessParam[GenericLearning::PREHEIGHT].Enable = isHeightEncoderEnabled;
     ProcessParam[GenericLearning::PREHEIGHT].SampleCount = model.SampleCount;
     ProcessParam[GenericLearning::POSTHEIGHT].Alpha = model.PostHeight.Alpha;
     ProcessParam[GenericLearning::POSTHEIGHT].Beta = model.PostHeight.Beta;
-    ProcessParam[GenericLearning::POSTHEIGHT].Enable = true;
+    ProcessParam[GenericLearning::POSTHEIGHT].Enable = isHeightEncoderEnabled;
     ProcessParam[GenericLearning::POSTHEIGHT].SampleCount = model.SampleCount;
 }
 
