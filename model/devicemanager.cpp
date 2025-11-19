@@ -66,7 +66,7 @@ bool DeviceManager::InitDeviceList()
 
 bool DeviceManager::IsManualPresetChanged()
 {
-
+    return true;
 }
 
 int DeviceManager::getSelectedDeviceIndex() const

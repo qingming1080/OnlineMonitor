@@ -379,6 +379,7 @@ bool DeviceInformation::SaveDevice()
         RS232Model::getInstance()->UpdateWelderID();
     }
     InitModbusDevice();
+    HBModbusClient::getInstance()->removeDeviceConfigure(m_WelderID, m_ModbusConfigure);
     HBModbusClient::getInstance()->setDeviceConfigure(m_WelderID, m_ModbusConfigure);
     return true;
 }
