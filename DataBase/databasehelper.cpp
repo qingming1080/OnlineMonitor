@@ -1,8 +1,7 @@
 #include "databasehelper.h"
 #include <QMutexLocker>
 #include "databasehelper.h"
-
-static DataBaseHelper* m_instance = nullptr;
+#include "signalmanager.h"
 
 /*!
  * \brief 构造函数
@@ -60,6 +59,8 @@ void DataBaseHelper::processOperation()
             QMutexLocker locker(&m_mutex);
             production = m_insertOperationQueue.dequeue();
         }
+
+        emit SignalManager::getInstance()->signalAddRecord(QDateTime::currentDateTime(), QString("id: %1").arg(production.CycleCount));
         DataBaseManager::getInstance()->insertProductionRow(production);
     }
 
