@@ -6,6 +6,7 @@
 #include "qmlenum.h"
 #include "define.h"
 
+
 #define CONFIGURATION_TABLENAME     QString("configuration")
 #define NETWORK_TABLENAME           QString("connection_network")
 #define RS232_TABLENAME             QString("connection_rs232")
@@ -16,6 +17,7 @@
 #define SYSTEM_TABLENAME            QString("system_conf")
 #define USER_TABLENAME              QString("user")
 
+class DataBaseHelper;
 class MANUAL_TABLE : public QObject
 {
     Q_OBJECT
@@ -263,6 +265,8 @@ public:
 
     void closeTransaction();
 
+    DataBaseHelper *getDataBaseHelper() const;
+
 /////////////////////////configuration////////////////////////////////
     bool getWelderID(QList<int> &IdList);
     bool getAllConfigurationDevice(QList<DataBaseManager::DB_CONFIGURE>& list);
@@ -417,7 +421,7 @@ private:
     static DataBaseManager* s_pDataBaseManager;
 
     QSqlDatabase m_database;
-
+    DataBaseHelper *m_databaseHelper;
     bool b_hasFeature{false};      // 支持读取表格行列数量全视觉之眼系统
 };
 

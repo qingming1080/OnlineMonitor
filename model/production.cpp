@@ -2,6 +2,9 @@
 #include "tools/utilityfunction.h"
 #include "history.h"
 #include "historyenum.h"
+
+#include "DataBase/databasehelper.h"
+
 Production::Production(int welderID, QObject *parent)
     :QObject{parent}, m_WelderID(welderID)
 {
@@ -33,6 +36,10 @@ Production::Production(int welderID, QObject *parent)
     m_DBProduction.BatchCount = m_DBModel.BatchCount;
     setGoodCycleCount("0");
 
+#ifdef REMARK_FWC
+    connect(this, &Production::signalAppendOperation, DataBaseManager::getInstance()->getDataBaseHelper(),
+            &DataBaseHelper::appendOperation);
+#endif
 }
 
 QString Production::getGoodRate() const
@@ -429,8 +436,12 @@ void Production::AppendNewRecordComming(const HBModbusClient::MODBUS_WELD_RESULT
 
     // TODO need to move these two line code into movetothread process.
     // need to emit signal to device manager the record insert into qlist
+#ifdef REMARK_FWC
+    emit signalAppendOperation(m_DBProduction, m_DBModel);
+#else
     DataBaseManager::getInstance()->insertProductionRow(m_DBProduction);
     DataBaseManager::getInstance()->updateModelRecord(m_DBModel.id, m_DBModel);
+#endif
     // *************************************************************************
 
     History::getInstance()->AppendNewRecordComming(m_DBProduction);

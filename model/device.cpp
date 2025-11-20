@@ -17,12 +17,18 @@ Device::Device(int welderID, QObject *parent)
     // QElapsedTimer timer;
     // timer.start();
     // TODO Need to use smart pointer to manage these pointers?
+#ifndef REMARK_FWC
     m_ptrDevice         = new DeviceInformation(m_WelderID);
     m_ptrManual         = new Manual(m_WelderID);
     m_ptrProduction     = new Production(m_WelderID);
     m_ptrTrend          = new Trend(m_WelderID);
-
-    connect(m_ptrManual, &Manual::notifyTrainingProcessFinished, this, &Device::slotNotifyTrainingProcessFinished);
+#else
+    m_ptrDevice = std::make_shared<DeviceInformation>(m_WelderID);
+    m_ptrManual = std::make_shared<Manual>(m_WelderID);
+    m_ptrProduction = std::make_shared<Production>(m_WelderID);
+    m_ptrTrend = std::make_shared<Trend>(m_WelderID);
+#endif
+    connect(m_ptrManual.get(), &Manual::notifyTrainingProcessFinished, this, &Device::slotNotifyTrainingProcessFinished);
 
     // QString text = QString("%1号设备_Device_初始化共耗时:%2ms").arg(welderID).arg(timer.elapsed());
     //                    emit SignalManager::getInstance()->signalAddRecord(QDateTime::currentDateTime(), text);
@@ -30,7 +36,8 @@ Device::Device(int welderID, QObject *parent)
 
 Device::~Device()
 {
-    disconnect(m_ptrManual, &Manual::notifyTrainingProcessFinished, this, &Device::slotNotifyTrainingProcessFinished);
+    disconnect(m_ptrManual.get(), &Manual::notifyTrainingProcessFinished, this, &Device::slotNotifyTrainingProcessFinished);
+#ifndef REMARK_FWC
     if(m_ptrManual != nullptr)
     {
         delete m_ptrManual;
@@ -51,11 +58,16 @@ Device::~Device()
         delete m_ptrDevice;
         m_ptrDevice = nullptr;
     }
+#endif
 }
 
 Trend *Device::pTrend() const
 {
+#ifdef REMARK_FWC
+    return m_ptrTrend.get();
+#else
     return m_ptrTrend;
+#endif
 }
 
 int Device::getPlotIndex() const {
@@ -148,41 +160,66 @@ void Device::slotNotifyTrainingProcessFinished(DataBaseManager::DB_MODEL &model)
 
 DeviceInformation* Device::getDeviceObj() const
 {
+#ifndef REMARK_FWC
     return m_ptrDevice;
+#else
+    return m_ptrDevice.get();
+#endif
 }
 
 void Device::setDeviceObj(const DeviceInformation *object)
 {
+#ifndef REMARK_FWC
     if (m_ptrDevice != object) {
         m_ptrDevice = const_cast<DeviceInformation*>(object);
         emit notifyDeviceObjChanged();
     }
+#else
+
+#endif
 }
 
 Manual *Device::getManualObj() const
 {
+#ifndef REMARK_FWC
     return m_ptrManual;
+#else
+    return m_ptrManual.get();
+#endif
 }
 
 void Device::setManualObj(const Manual *object)
 {
+#ifndef REMARK_FWC
     if (m_ptrManual != object) {
         m_ptrManual = const_cast<Manual*>(object);
         emit notifyManualObjChanged();
     }
+#else
+
+#endif
 }
 
 Production *Device::getProductionObj() const
 {
+#ifndef REMARK_FWC
     return m_ptrProduction;
+#else
+    return m_ptrProduction.get();
+#endif
 }
 
 void Device::setProductionObj(const Production *object)
 {
+#ifndef REMARK_FWC
     if (m_ptrProduction != object) {
         m_ptrProduction = const_cast<Production*>(object);
         emit notifyProductionObjChanged();
     }
+
+#else
+
+#endif
 }
 
 bool Device::SaveDevice()
