@@ -16,7 +16,7 @@ Device::Device(int welderID, QObject *parent)
 {
     // QElapsedTimer timer;
     // timer.start();
-    // Need to use auto pointer to manage these pointers?
+    // TODO Need to use smart pointer to manage these pointers?
     m_ptrDevice         = new DeviceInformation(m_WelderID);
     m_ptrManual         = new Manual(m_WelderID);
     m_ptrProduction     = new Production(m_WelderID);
