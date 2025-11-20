@@ -427,8 +427,12 @@ void Production::AppendNewRecordComming(const HBModbusClient::MODBUS_WELD_RESULT
     int goodRate = static_cast<int>(goodCount / totalCount * 100);
     setGoodRate(QString::number(goodRate));
 
+    // TODO need to move these two line code into movetothread process.
+    // need to emit signal to device manager the record insert into qlist
     DataBaseManager::getInstance()->insertProductionRow(m_DBProduction);
     DataBaseManager::getInstance()->updateModelRecord(m_DBModel.id, m_DBModel);
+    // *************************************************************************
+
     History::getInstance()->AppendNewRecordComming(m_DBProduction);
 }
 

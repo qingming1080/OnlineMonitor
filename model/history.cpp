@@ -377,6 +377,7 @@ bool History::ExportToCSV(const QString& filePath, const QStringList& headers, c
 
 void History::ExportToCSVAsync(QStringList &localfiles)
 {
+    // TODO It is the referece for the database records insert for production.
     if(!m_exportThread)
     {
         m_exportThread = new QThread(this);
