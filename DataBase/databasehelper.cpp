@@ -60,7 +60,7 @@ void DataBaseHelper::processOperation()
             production = m_insertOperationQueue.dequeue();
         }
 
-        emit SignalManager::getInstance()->signalAddRecord(QDateTime::currentDateTime(), QString("id: %1").arg(production.CycleCount));
+        //emit SignalManager::getInstance()->signalAddRecord(QDateTime::currentDateTime(), QString("id: %1").arg(production.CycleCount));
         DataBaseManager::getInstance()->insertProductionRow(production);
     }
 
