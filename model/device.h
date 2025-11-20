@@ -68,12 +68,21 @@ public slots:
 
 private:
     int m_WelderID;
+
+#ifndef REMARK_FWC
     DeviceInformation*  m_ptrDevice;   // 设备信息
     Manual*             m_ptrManual;
     Production*         m_ptrProduction;
     ProvidenceEE*       m_ptrProvidenceEE;
 
     Trend* m_ptrTrend;
+#else
+    std::shared_ptr<DeviceInformation> m_ptrDevice;
+    std::shared_ptr<Manual> m_ptrManual;
+    std::shared_ptr<Production> m_ptrProduction;
+    std::shared_ptr<ProvidenceEE> m_ptrProvidenceEE;
+    std::shared_ptr<Trend> m_ptrTrend;
+#endif
     int plotIndex;  // 每个设备独有的 plotIndex
 
 };

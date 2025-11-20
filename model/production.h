@@ -174,6 +174,8 @@ signals:
     void notifyForceThresholdChanged();
     void notifyResidualThresholdChanged();
 
+    void signalAppendOperation(const DataBaseManager::DB_PRODUCTION &insertOperation,
+                               const DataBaseManager::DB_MODEL &updateOperation);
 };
 
 #endif // PRODUCTION_H

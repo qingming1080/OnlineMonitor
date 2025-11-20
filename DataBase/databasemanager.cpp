@@ -11,6 +11,9 @@
 #include <QJsonArray>
 #include <QJsonParseError>
 
+#include "DataBase/databasehelper.h"
+
+
 DataBaseManager* DataBaseManager::s_pDataBaseManager = nullptr;
 
 DataBaseManager *DataBaseManager::getInstance()
@@ -34,6 +37,11 @@ void DataBaseManager::openTransaction()
 void DataBaseManager::closeTransaction()
 {
     m_database.commit();
+}
+
+DataBaseHelper *DataBaseManager::getDataBaseHelper() const
+{
+    return m_databaseHelper;
 }
 
 bool DataBaseManager::getWelderID(QList<int> &IdList)
@@ -1324,6 +1332,7 @@ DataBaseManager::DataBaseManager(QObject *parent)
 
 void DataBaseManager::init()
 {
+    m_databaseHelper = new DataBaseHelper(this);
 
     QString dbName = "onlinemonitor.db";
     QString dbPath = QCoreApplication::applicationDirPath() + "/" + dbName;
