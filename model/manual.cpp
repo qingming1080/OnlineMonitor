@@ -237,11 +237,11 @@ bool Manual::CalibrateModel()
     GenericLearning::AI_POLYNOMIAL_COEFFICIENT coefficient[GenericLearning::STRENGTH_MAX];
     GenericLearning::CENTRALIZED_PROPERTY centralized;
 #if RASPBERRY
-    m_ptrProvidenceEE->ResetProcess();
-    m_ptrProvidenceEE->CalibrateSPCProcess(m_listManualRecords);
-    m_ptrProvidenceEE->CalibrateAIProcess(m_listManualRecords);
-    m_ptrProvidenceEE->GetSPCProcess(param);
-    m_ptrProvidenceEE->GetAIProcess(&centralized, coefficient);
+    ProvidenceEE::getInstance()->ResetProcess();
+    ProvidenceEE::getInstance()->CalibrateSPCProcess(m_listManualRecords);
+    ProvidenceEE::getInstance()->CalibrateAIProcess(m_listManualRecords);
+    ProvidenceEE::getInstance()->GetSPCProcess(param);
+    ProvidenceEE::getInstance()->GetAIProcess(&centralized, coefficient);
 #endif
     InitDBModel(param, coefficient, centralized);
     return true;
