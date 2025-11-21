@@ -1,7 +1,6 @@
 #include "databasehelper.h"
 #include <QMutexLocker>
 #include "databasehelper.h"
-#include "signalmanager.h"
 
 /*!
  * \brief 构造函数
@@ -40,7 +39,7 @@ void DataBaseHelper::appendOperation(const DataBaseManager::DB_PRODUCTION &inser
 {
     QMutexLocker locker(&m_mutex);
     m_insertOperationQueue.append(insertOperation);
-    m_updateOperationQueue.append(updateOperation);
+    m_updateOperation = updateOperation;
 
     if (!m_timer->isActive())
         m_timer->start(5000);
@@ -59,23 +58,11 @@ void DataBaseHelper::processOperation()
             QMutexLocker locker(&m_mutex);
             production = m_insertOperationQueue.dequeue();
         }
-
-        //emit SignalManager::getInstance()->signalAddRecord(QDateTime::currentDateTime(), QString("id: %1").arg(production.CycleCount));
         DataBaseManager::getInstance()->insertProductionRow(production);
+        DataBaseManager::getInstance()->updateModelRecord(m_updateOperation.id, m_updateOperation);
     }
 
-    // 更新操作
-    if (!m_updateOperationQueue.isEmpty())
-    {
-        DataBaseManager::DB_MODEL production;
-        {
-            QMutexLocker locker(&m_mutex);
-            production = m_updateOperationQueue.dequeue();
-        }
-        DataBaseManager::getInstance()->updateModelRecord(production.id, production);
-    }
-
-    if (m_insertOperationQueue.isEmpty() || m_updateOperationQueue.isEmpty())
+    if (m_insertOperationQueue.isEmpty())
         m_timer->stop();
 }
 
