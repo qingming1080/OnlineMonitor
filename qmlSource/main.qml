@@ -62,6 +62,12 @@ Window {
     function releaseWelcomeScreen()
     {
         welcomeScreen.visible = false
+        if(DeviceManager.DeviceList[0].WelderID === -1)
+        {
+            loadView(3, sys)
+        }
+        else
+            loadView(1, pro)
     }
 
     function showWelcomeScreen()
@@ -156,16 +162,16 @@ Window {
             anchors.bottom: parent.bottom
             anchors.left: parent.left
             width: showWidth
-            Component.onCompleted:
-            {
-                if(DeviceManager.DeviceList[0].WelderID === -1)
-                {
-                    loadView(3, sys)
-                }
-                else
-                    loadView(1, pro)
-                sigUpdateUI(0)
-            }
+            // Component.onCompleted:
+            // {
+            //     if(DeviceManager.DeviceList[0].WelderID === -1)
+            //     {
+            //         loadView(3, sys)
+            //     }
+            //     else
+            //         loadView(1, pro)
+            //     sigUpdateUI(0)
+            // }
         }
     }
     Footer

@@ -54,6 +54,16 @@ Rectangle {
         var newItem = component.createObject(prostack);
         proViews[viewName] = newItem;
         prostack.push(newItem);
+        if( viewName === 2 || viewName === 3)
+        {
+            ModbusClient.setPilotLedStatus(true)
+            ModbusClient.setLearnLedStatus(false)
+        }
+        else
+        {
+            ModbusClient.setPilotLedStatus(false)
+            ModbusClient.setLearnLedStatus(true)
+        }
     }
     onDeviceCountChanged: {
         var isLearning = false;
