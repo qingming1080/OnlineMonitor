@@ -13,18 +13,18 @@ Rectangle {
     property int currentIndex: DeviceManager.SelectedDeviceIndex
     property int deviceCount: DeviceManager.DeviceCounter;
     property int currentWelderId: DeviceManager.DeviceList[currentIndex].WelderID
+    property Device objDevice: DeviceManager.DeviceList[currentIndex]
     onCurrentIndexChanged:{
         chartUpdate()
     }
 
     Connections{
-        target: DeviceManager.DeviceList[currentIndex]
+        target: objDevice
         function onNotifyWeldTrendChanged(weldID)
         {
             if(weldID === currentWelderId)
             {
                 chartUpdate()
-                console.debug("111111111111111111111111")
             }
         }
     }
