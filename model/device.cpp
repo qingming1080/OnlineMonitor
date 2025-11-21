@@ -283,6 +283,7 @@ bool Device::NotifyWeldResultComing(const HBModbusClient::MODBUS_WELD_RESULT &da
             QString strWeldPressure = UtilityFunction::getInstance()->RawValueToString(data.WeldingPressure, 10, 1);
             m_ptrManual->setWeldPressureSetting(strWeldPressure);
             m_ptrManual->AppendNewRecordComming(data);
+            emit notifyPresetChanged(m_WelderID);
             // qDebug() << "Preset has been Changed";
         }
     }

@@ -183,10 +183,7 @@ void DeviceManager::slotNotifyWeldResultComing(int welderId, const HBModbusClien
     {
         if(welderId == m_listDevices[i]->getWelderID())
         {
-            if(m_listDevices[i]->NotifyWeldResultComing(data) == true)
-            {
-                emit notifyPresetChanged(i);
-            }
+            m_listDevices[i]->NotifyWeldResultComing(data);
         }
     }
 }

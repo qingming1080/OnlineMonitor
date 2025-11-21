@@ -62,6 +62,7 @@ signals:
     void pYieldTrendChanged();
 
     void notifyWeldTrendChanged(int weldID);
+    void notifyPresetChanged(int weldID);
 public slots:
     void slotNotifyTrainingProcessFinished(DataBaseManager::DB_MODEL& model);
 

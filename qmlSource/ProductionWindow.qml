@@ -21,7 +21,7 @@ Rectangle {
 
     property int currentIndex: DeviceManager.SelectedDeviceIndex
     property int deviceCount: DeviceManager.DeviceCounter
-
+    property Device objDevice: DeviceManager.DeviceList[currentIndex]
     signal sigBtnSynchronization(var index,var time)
 
     onRect1Changed: {
@@ -88,16 +88,22 @@ Rectangle {
     }
 
     Connections{
-        target: DeviceManager
-        function onNotifyPresetChanged(index)
+        target: objDevice
+        function onNotifyPresetChanged(welderID)
         {
             var learningScreen = QmlEnum.AUTO_LEARNING_SCREEEN
             var objItem = prostack.find(function(item) {
                 return (item.qmlscreenIndicator === learningScreen)})
             if(objItem === null)
             {
-                DeviceManager.SelectedDeviceIndex = index;
-                loadViewpro(1, autoLearning)
+                for(var i = 0; i < deviceCount; i++)
+                {
+                    if(DeviceManager.DeviceList[i].WelderID === welderID)
+                    {
+                        DeviceManager.SelectedDeviceIndex = i;
+                        loadViewpro(1, autoLearning)
+                    }
+                }
             }
         }
     }

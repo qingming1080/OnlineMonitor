@@ -67,8 +67,6 @@ signals:
     void notifySelectedDeviceIndexChanged();
     void notifyDeviceCounterChanged();
     void notifyConnectionStateChanged(bool);
-    void notifyPresetChanged(int selectedIndex);
-
 public slots:
     void slotNotifyDeviceStatusChanged(int welderId, HBModbusClient::DEVICE_STATUS status);
     void slotNotifyWeldResultComing(int welderId, const HBModbusClient::MODBUS_WELD_RESULT& data);
