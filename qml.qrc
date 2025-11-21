@@ -32,5 +32,12 @@
         <file>qmlSource/ValidMessage.qml</file>
         <file>qmlSource/Footer.qml</file>
         <file>qmlSource/Loading.qml</file>
+        <file>qmlSource/BransonPrimaryNumpad.qml</file>
+        <file>qmlSource/BransonStyle.qml</file>
+        <file>qmlSource/BransonTextField.qml</file>
+        <file>qmlSource/BransonNumKeyboard.qml</file>
+        <file>qmlSource/BransonPrimaryButton.qml</file>
+        <file>qmlSource/BransonFunctionKeyboard.qml</file>
+        <file>qmlSource/BransonDigitalKeyboard.qml</file>
     </qresource>
 </RCC>

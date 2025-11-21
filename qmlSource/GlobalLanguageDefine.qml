@@ -17,6 +17,10 @@ QtObject
     readonly property string strSystemConfigSuccess:    qsTr("系统配置成功!")
     readonly property string strLoading:                qsTr("载入中")
     readonly property string strRomveDevice:            qsTr("是否删除当前设备")
+             property string qmltextMinimun:            qsTr("Min")
+             property string qmltextMaximum:            qsTr("Max")
+             property string qmltextDone:               qsTr("DONE")
+             property string qmltextCancel:             qsTr("CANCEL")
     
     // 异常信息相关
     readonly property string strSuspiciousAppeared:     qsTr("出现可疑品")
@@ -200,4 +204,122 @@ QtObject
     readonly property string strNoUSB:                  qsTr("未插入U盘")
     readonly property string strUSBConnected:           qsTr("U盘已插入")
 
+
+    enum EnumKeyboard{
+        Delete,
+        Clear,
+        Login,
+        FaceLogin,
+        PasswordLogin
+    }
+
+    function numberToString(decimals_num, realValue)
+    {
+        var strValue = realValue.toFixed(decimals_num)
+        return strValue
+    }
+
+    function decimalsNumber(decimals_num, text_input)
+    {
+        var contrast = text_input.text
+        /*Number of decimal points*/
+        var num = contrast.split('.').length - 1
+        if(num === 1)
+            var position = contrast.indexOf(".");
+
+        if(decimals_num === 0)
+        {
+            text_input.maximumLength = 8
+            if(num >= 1)
+            {
+                /*Limit when the number of decimal points is greater than 1*/
+                text_input.remove(text_input.cursorPosition - 1, text_input.cursorPosition)
+            }
+        }
+        else
+        {
+            /*Limit total length*/
+            if(position + 1 + decimals_num <= 8)
+            {
+                /*The number of digits before the decimal point
+                  plus the number of digits after the decimal point is
+                  the total length of the restriction*/
+                text_input.maximumLength = position + 1 + decimals_num
+            }
+            else
+                text_input.maximumLength = 8
+        }
+        return text_input.text
+    }
+
+    function handleWithDigitalKeyInput(data, text_input, suffix)
+    {
+        Qt.inputMethod.hide()
+        if(data === GlobalLanguageDefine.EnumKeyboard.Clear)
+            text_input.remove(0, text_input.cursorPosition)
+        else if(data === GlobalLanguageDefine.EnumKeyboard.Delete)
+        {
+            if(text_input.isSelectedAll === true)
+                text_input.remove(0, text_input.cursorPosition)
+            else
+                text_input.remove(text_input.cursorPosition - 1, text_input.cursorPosition)
+        }
+        else
+        {
+            var strInputText = text_input.text
+            if(text_input.isSelectedAll === true)
+                strInputText = data
+            else
+                strInputText += data
+            if(GlobalLanguageDefine.isValidData(strInputText, suffix) === true)
+            {
+                text_input.text = strInputText
+            }
+        }
+        text_input.isSelectedAll = false
+    }
+
+    function isValidData(strInputText, strUnit)
+    {
+        var validator = /^\d{0,6}?$/
+        var bResult = false
+        if(strUnit.toUpperCase() === "S")
+        {
+            validator = /^\d{0,6}(\.\d{0,3})?$/
+        }
+        else if(strUnit.toUpperCase() === "%")
+        {
+            validator = /^\d{0,3}?$/
+        }
+        else if(strUnit.toUpperCase() === "W")
+        {
+            validator = /^\d{0,4}?$/
+        }
+        else if(strUnit.toUpperCase() === "MM" || strUnit.toUpperCase() === "MM/S2" || strUnit.toUpperCase() === "MM/S")
+        {
+            validator = /^\d{0,3}(\.\d{0,2})?$/
+        }
+        else if(strUnit.toUpperCase() === "IN" || strUnit.toUpperCase() === "IN/S2" || strUnit.toUpperCase() === "IN/S")
+        {
+            validator = /^\d{0,2}(\.\d{0,4})?$/
+        }
+        else if(strUnit.toUpperCase() === "IPV4" || strUnit.toUpperCase() === "IPV6")
+        {
+            return true
+        }
+        else
+        {
+            validator = /^\d{0,7}(\.\d{0,2})?$/
+        }
+
+        if (validator.test(strInputText))
+        {
+            bResult = true
+        }
+        else
+        {
+            bResult = false
+        }
+        return bResult
+    }
 }
