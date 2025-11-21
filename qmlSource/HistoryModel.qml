@@ -11,6 +11,7 @@ import LanguageEnum 1.0
 import HistoryEnum 1.0
 Rectangle {
     property int itemCount: DeviceManager.DeviceCounter
+    property bool isUSBAvailable: false
     property string buttonColor: "#0d988c"
 
     Connections {
@@ -702,7 +703,7 @@ Rectangle {
         anchors.leftMargin: 25
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 40
-        text: window.isUSBAvailable ? GlobalLanguageDefine.strUSBConnected : GlobalLanguageDefine.strNoUSB
+        text: isUSBAvailable ? GlobalLanguageDefine.strUSBConnected : GlobalLanguageDefine.strNoUSB
         color: "#E8E8E8"
         font.family: GlobalSystemDefine.fontBold
         font.bold: true
@@ -715,7 +716,7 @@ Rectangle {
         anchors.top: usbVisableText.top
         anchors.right: parent.right
         anchors.rightMargin: 35
-        visible: window.isUSBAvailable
+        visible: isUSBAvailable
         background: Rectangle{
             radius: 6
             color: pRgb(43, 112, 173)
@@ -742,6 +743,18 @@ Rectangle {
             {
                 // window.showDialog(qsTr("提示"), qsTr("无法开始导出，未找到可用的U盘"))
             }
+        }
+    }
+
+    Timer
+    {
+        id: timer
+        interval: 2000
+        repeat: true
+        running: true
+        onTriggered:
+        {
+            isUSBAvailable = History.isAvailaleDiskUSB()
         }
     }
 

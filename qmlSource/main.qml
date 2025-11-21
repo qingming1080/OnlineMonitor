@@ -24,7 +24,6 @@ Window {
     property int interFaceId: 0
     property int keyboardType: 0
     property bool swipevis: false
-    property bool isUSBAvailable: false
 
     function pRgb(r, g, b){
         var ret = (r << 16 | g << 8 | b)
@@ -288,18 +287,6 @@ Window {
         {
             VirtualKeyboardSettings.wordCandidateList.alwaysVisible = true
             VirtualKeyboardSettings.activeLocales = ["en_US","zh_CN"/*,"ja_JP"*/]   // 英语、中文、日语 (若不设置,则语言就有很多种)
-        }
-    }
-
-    Timer
-    {
-        id: timer
-        interval: 2000
-        repeat: true
-        running: true
-        onTriggered:
-        {
-            isUSBAvailable = History.isAvailaleDiskUSB()
         }
     }
 }
