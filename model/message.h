@@ -17,6 +17,7 @@ class Message : public QAbstractListModel
 public:
     static Message* getInstance();
 
+
     Q_INVOKABLE int rowCount(const QModelIndex &parent = QModelIndex()) const;
     Q_INVOKABLE QVariant data(const QModelIndex &index, int role) const;
     Q_INVOKABLE QHash<int, QByteArray> roleNames() const;

@@ -152,20 +152,26 @@ Rectangle {
         font.family: GlobalSystemDefine.fontBold
         font.bold: true
         font.pixelSize: 16
-        inputMethodHints: Qt.ImhDigitsOnly
+        signal signalClickedEvent()
         background: Rectangle{
             radius: 6
             border.width: 2
             border.color: "#99ccff"
         }
         text: presetEnergy/* + GlobalLanguageDefine.strEnergyUnit*/
+
         MouseArea {
             anchors.fill: parent
             onPressed: {
-                fieldEnergy.forceActiveFocus()
                 keyboardType = 0
+                window.showPrimaryNumpad(qsTr("请输入能量值"), " ", 3, 0, 999999,
+                    fieldEnergy.text, fieldEnergy, function(val)
+                {
+                    fieldEnergy.text = val;
+                })
             }
         }
+
         onEditingFinished: {
              var intRegex = /^[0-9]+$/
              if (!intRegex.test(fieldEnergy.text))
@@ -196,13 +202,19 @@ Rectangle {
             border.color: "#99ccff"
         }
         text: presetAmplitude/* + GlobalLanguageDefine.strAmplitudeUnit*/
+
         MouseArea {
             anchors.fill: parent
             onPressed: {
-                fieldAmplitude.forceActiveFocus()
                 keyboardType = 0
+                window.showPrimaryNumpad(qsTr("请输入振幅值"), " ", 3, 0, 999999,
+                    fieldAmplitude.text, fieldAmplitude, function(val)
+                {
+                    fieldAmplitude.text = val;
+                })
             }
         }
+
         onEditingFinished: {
              var wpRegex = /^[0-9]+$/
              if (!wpRegex.test(fieldAmplitude.text))
@@ -233,13 +245,19 @@ Rectangle {
             border.color: "#99ccff"
         }
         text: presetTriggerPressure
+
         MouseArea {
             anchors.fill: parent
             onPressed: {
-                fieldTriggerPressure.forceActiveFocus()
                 keyboardType = 0
+                window.showPrimaryNumpad(qsTr("请输入触发压力值"), " ", 3, 0, 999999,
+                    fieldTriggerPressure.text, fieldTriggerPressure, function(val)
+                {
+                    fieldTriggerPressure.text = val;
+                })
             }
         }
+
         onEditingFinished: {
              var tpRegex = /^[0-9]+$/
              if (!tpRegex.test(fieldTriggerPressure.text))
@@ -270,13 +288,19 @@ Rectangle {
             border.color: "#99ccff"
         }
         text: presetWeldPressure/* + GlobalLanguageDefine.strPressureUnit*/
+
         MouseArea {
             anchors.fill: parent
             onPressed: {
-                fieldWeldPressure.forceActiveFocus()
                 keyboardType = 0
+                window.showPrimaryNumpad(qsTr("请输入焊接压力值"), " ", 3, 0, 999999,
+                    fieldWeldPressure.text, fieldWeldPressure, function(val)
+                {
+                    fieldWeldPressure.text = val;
+                })
             }
         }
+
         onEditingFinished: {
              var wpRegex = /^[0-9]+$/
              if (!wpRegex.test(fieldWeldPressure.text))

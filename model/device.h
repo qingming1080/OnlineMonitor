@@ -54,7 +54,6 @@ private:
     bool IsProductionPresetChanged(const HBModbusClient::MODBUS_WELD_RESULT &data);
     bool IsProductionPresetChanged(const HBModbusClient::WELD_PRESET &data);
 
-
 signals:
     void notifyProductionObjChanged();
     void notifyDeviceObjChanged();
@@ -63,6 +62,7 @@ signals:
     void pYieldTrendChanged();
 
     void pTrendChanged();
+
 public slots:
     void slotNotifyTrainingProcessFinished(DataBaseManager::DB_MODEL& model);
 

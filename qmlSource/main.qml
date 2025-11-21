@@ -37,8 +37,9 @@ Window {
 
     Component.onCompleted: {
         // 调用函数来禁用控制台打印
-       disableConsoleLog();
+        disableConsoleLog();
     }
+
 
     // 缓存已加载的视图
     property var cachedViews: []
@@ -61,13 +62,18 @@ Window {
     //Only one time running
     function releaseWelcomeScreen()
     {
+        inputPannelID.y = window.height
         welcomeScreen.visible = false
+
         if(DeviceManager.DeviceList[0].WelderID === -1)
         {
             loadView(3, sys)
         }
         else
             loadView(1, pro)
+
+        inputPannelID.visible = true;
+
     }
 
     function showWelcomeScreen()
@@ -90,6 +96,7 @@ Window {
             cachedViews[viewName] = newItem;
             stackView.push(newItem);
         }
+
     }
 
     function showLoading(isShow)
@@ -173,13 +180,14 @@ Window {
             //     sigUpdateUI(0)
             // }
         }
+        Footer
+        {
+            id: footer
+            anchors.left: parent.left
+            anchors.bottom: parent.bottom
+        }
     }
-    Footer
-    {
-          id: footer
-          anchors.left: parent.left
-          anchors.bottom: parent.bottom
-    }
+
     MessageDialog
     {
         id: mesDialog
@@ -257,7 +265,7 @@ Window {
         x: window.width/2-inputPannelID.width/2
         y: window.height      // 默认让其处于窗口最下方,貌似隐藏一样
         width: /*keyboardType === 0 ? 400 :*/ window.width
-        visible: true       // 一直显示
+        visible: false       // 一直显示
         states: State
         {
             name: "visible"
@@ -265,7 +273,7 @@ Window {
             PropertyChanges
             {
                 target: inputPannelID
-                y: window.height-inputPannelID.height
+                y: window.height - inputPannelID.height
             }
         }
 
@@ -291,6 +299,31 @@ Window {
         }
     }
 
+    function showPrimaryNumpad(strTitle, strUnit, iDecimals, realMinimum, realMaximum, strCurrentValue, targetObj, onConfirmCallback)
+    {
+        primaryNumpad.headertext = strTitle
+        primaryNumpad.suffix = strUnit
+        primaryNumpad.decimals = iDecimals
+        primaryNumpad.minimumValue = realMinimum
+        primaryNumpad.maximumValue = realMaximum
+        primaryNumpad.value = strCurrentValue
+        primaryNumpad.targetTextField = targetObj
+        primaryNumpad.confirmCallback = onConfirmCallback
+        primaryNumpad.visible = true
+        primaryNumpad.selectAll()
+    }
+
+    /*KeyBoard*/
+    BransonPrimaryNumpad
+    {
+        id:primaryNumpad
+        visible: false
+        anchors.centerIn: parent
+        width: mainWindow.showWidth
+        height: mainWindow.showHeight
+        z: 2
+    }
+
     Timer
     {
         id: timer
@@ -303,6 +336,7 @@ Window {
         }
     }
 }
+
 
 
 
