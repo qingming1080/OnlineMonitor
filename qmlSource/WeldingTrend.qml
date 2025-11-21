@@ -1,214 +1,45 @@
 ﻿import QtQuick 2.0
 import QtCharts 2.15
-import Device 1.0
-import Trend 1.0
+import Device               1.0
+import TrendObj             1.0
 import GlobalLanguageDefine 1.0
-import GlobalSystemDefine 1.0
-import LanguageEnum 1.0
+import GlobalSystemDefine   1.0
+import LanguageEnum         1.0
 //import CustomChart 1.0
 //焊接趋势
 Rectangle {
     color: pRgb(43, 112, 173)
-    property bool altitudeMode: false
+    property bool optionHeightEncoder: false
     property int currentIndex: DeviceManager.SelectedDeviceIndex
+    property int deviceCount: DeviceManager.DeviceCounter;
+    property int currentWelderId: DeviceManager.DeviceList[currentIndex].WelderID
     onCurrentIndexChanged:{
-        chartUpdata()
+        chartUpdate()
     }
 
-    function chartUpdata()
-    {
-        if(deviceCount === 1)
+    Connections{
+        target: DeviceManager.DeviceList[currentIndex]
+        function onNotifyWeldTrendChanged(weldID)
         {
-            DeviceManager.DeviceList[0].pTrend.setFrontSeries((chartView.series(lineSeries2.name)))
-            DeviceManager.DeviceList[0].pTrend.setBackSeries((chartView.series(lineSeries3.name)))
-            DeviceManager.DeviceList[0].pTrend.setTimeSeries((chartView.series(lineSeries1.name)))
-            DeviceManager.DeviceList[0].pTrend.setPowerSeries((chartView.series(lineSeries.name)))
+            if(weldID === currentWelderId)
+            {
+                chartUpdate()
+                console.debug("111111111111111111111111")
+            }
+        }
+    }
+
+    function chartUpdate()
+    {
+        for(var i = 0; i < deviceCount; i++)
+        {
+            DeviceManager.DeviceList[i].TrendObj.setPreheightSeries((chartView.series(lineSeriesPreheight.name)))
+            DeviceManager.DeviceList[i].TrendObj.setPostHeightSeries((chartView.series(lineSeriesPostHeight.name)))
+            DeviceManager.DeviceList[i].TrendObj.setWeldTimeSeries((chartView.series(lineSeriesWeldTime.name)))
+            DeviceManager.DeviceList[i].TrendObj.setPeakPowerSeries((chartView.series(lineSeriesPeakPower.name)))
             return
         }
-        if(swipevis){
-            if(deviceCount === 2)
-            {
-                if(currentIndex === 0)
-                {
-                    DeviceManager.DeviceList[0].pTrend.setFrontSeries((chartView.series(lineSeries2.name)))
-                    DeviceManager.DeviceList[0].pTrend.setBackSeries((chartView.series(lineSeries3.name)))
-                    DeviceManager.DeviceList[0].pTrend.setTimeSeries((chartView.series(lineSeries1.name)))
-                    DeviceManager.DeviceList[0].pTrend.setPowerSeries((chartView.series(lineSeries.name)))
-
-                    DeviceManager.DeviceList[1].pTrend.setFrontSeries(null)
-                    DeviceManager.DeviceList[1].pTrend.setBackSeries(null)
-                    DeviceManager.DeviceList[1].pTrend.setTimeSeries(null)
-                    DeviceManager.DeviceList[1].pTrend.setPowerSeries(null)
-                }
-                else if(currentIndex === 1)
-                {
-                    DeviceManager.DeviceList[1].pTrend.setFrontSeries((chartView.series(lineSeries2.name)))
-                    DeviceManager.DeviceList[1].pTrend.setBackSeries((chartView.series(lineSeries3.name)))
-                    DeviceManager.DeviceList[1].pTrend.setTimeSeries((chartView.series(lineSeries1.name)))
-                    DeviceManager.DeviceList[1].pTrend.setPowerSeries((chartView.series(lineSeries.name)))
-
-                    DeviceManager.DeviceList[0].pTrend.setFrontSeries(null)
-                    DeviceManager.DeviceList[0].pTrend.setBackSeries(null)
-                    DeviceManager.DeviceList[0].pTrend.setTimeSeries(null)
-                    DeviceManager.DeviceList[0].pTrend.setPowerSeries(null)
-                }
-
-            }
-            else if(deviceCount === 3)
-            {
-                if(currentIndex === 0)
-                {
-                    DeviceManager.DeviceList[0].pTrend.setFrontSeries((chartView.series(lineSeries2.name)))
-                    DeviceManager.DeviceList[0].pTrend.setBackSeries((chartView.series(lineSeries3.name)))
-                    DeviceManager.DeviceList[0].pTrend.setTimeSeries((chartView.series(lineSeries1.name)))
-                    DeviceManager.DeviceList[0].pTrend.setPowerSeries((chartView.series(lineSeries.name)))
-
-                    DeviceManager.DeviceList[1].pTrend.setFrontSeries(null)
-                    DeviceManager.DeviceList[1].pTrend.setBackSeries(null)
-                    DeviceManager.DeviceList[1].pTrend.setTimeSeries(null)
-                    DeviceManager.DeviceList[1].pTrend.setPowerSeries(null)
-                    DeviceManager.DeviceList[2].pTrend.setFrontSeries(null)
-                    DeviceManager.DeviceList[2].pTrend.setBackSeries(null)
-                    DeviceManager.DeviceList[2].pTrend.setTimeSeries(null)
-                    DeviceManager.DeviceList[2].pTrend.setPowerSeries(null)
-                }
-                else if(currentIndex === 1)
-                {
-                    DeviceManager.DeviceList[1].pTrend.setFrontSeries((chartView.series(lineSeries2.name)))
-                    DeviceManager.DeviceList[1].pTrend.setBackSeries((chartView.series(lineSeries3.name)))
-                    DeviceManager.DeviceList[1].pTrend.setTimeSeries((chartView.series(lineSeries1.name)))
-                    DeviceManager.DeviceList[1].pTrend.setPowerSeries((chartView.series(lineSeries.name)))
-
-                    DeviceManager.DeviceList[0].pTrend.setFrontSeries(null)
-                    DeviceManager.DeviceList[0].pTrend.setBackSeries(null)
-                    DeviceManager.DeviceList[0].pTrend.setTimeSeries(null)
-                    DeviceManager.DeviceList[0].pTrend.setPowerSeries(null)
-                    DeviceManager.DeviceList[2].pTrend.setFrontSeries(null)
-                    DeviceManager.DeviceList[2].pTrend.setBackSeries(null)
-                    DeviceManager.DeviceList[2].pTrend.setTimeSeries(null)
-                    DeviceManager.DeviceList[2].pTrend.setPowerSeries(null)
-                }
-                else if(currentIndex === 2)
-                {
-                    DeviceManager.DeviceList[2].pTrend.setFrontSeries((chartView.series(lineSeries2.name)))
-                    DeviceManager.DeviceList[2].pTrend.setBackSeries((chartView.series(lineSeries3.name)))
-                    DeviceManager.DeviceList[2].pTrend.setTimeSeries((chartView.series(lineSeries1.name)))
-                    DeviceManager.DeviceList[2].pTrend.setPowerSeries((chartView.series(lineSeries.name)))
-
-                    DeviceManager.DeviceList[1].pTrend.setFrontSeries(null)
-                    DeviceManager.DeviceList[1].pTrend.setBackSeries(null)
-                    DeviceManager.DeviceList[1].pTrend.setTimeSeries(null)
-                    DeviceManager.DeviceList[1].pTrend.setPowerSeries(null)
-                    DeviceManager.DeviceList[0].pTrend.setFrontSeries(null)
-                    DeviceManager.DeviceList[0].pTrend.setBackSeries(null)
-                    DeviceManager.DeviceList[0].pTrend.setTimeSeries(null)
-                    DeviceManager.DeviceList[0].pTrend.setPowerSeries(null)
-                }
-            }
-            else if(deviceCount === 4)
-            {
-                if(currentIndex === 0)
-                {
-                    DeviceManager.DeviceList[0].pTrend.setFrontSeries((chartView.series(lineSeries2.name)))
-                    DeviceManager.DeviceList[0].pTrend.setBackSeries((chartView.series(lineSeries3.name)))
-                    DeviceManager.DeviceList[0].pTrend.setTimeSeries((chartView.series(lineSeries1.name)))
-                    DeviceManager.DeviceList[0].pTrend.setPowerSeries((chartView.series(lineSeries.name)))
-
-                    DeviceManager.DeviceList[1].pTrend.setFrontSeries(null)
-                    DeviceManager.DeviceList[1].pTrend.setBackSeries(null)
-                    DeviceManager.DeviceList[1].pTrend.setTimeSeries(null)
-                    DeviceManager.DeviceList[1].pTrend.setPowerSeries(null)
-                    DeviceManager.DeviceList[2].pTrend.setFrontSeries(null)
-                    DeviceManager.DeviceList[2].pTrend.setBackSeries(null)
-                    DeviceManager.DeviceList[2].pTrend.setTimeSeries(null)
-                    DeviceManager.DeviceList[2].pTrend.setPowerSeries(null)
-                    DeviceManager.DeviceList[3].pTrend.setFrontSeries(null)
-                    DeviceManager.DeviceList[3].pTrend.setBackSeries(null)
-                    DeviceManager.DeviceList[3].pTrend.setTimeSeries(null)
-                    DeviceManager.DeviceList[3].pTrend.setPowerSeries(null)
-                }
-                else if(currentIndex === 1)
-                {
-                    DeviceManager.DeviceList[1].pTrend.setFrontSeries((chartView.series(lineSeries2.name)))
-                    DeviceManager.DeviceList[1].pTrend.setBackSeries((chartView.series(lineSeries3.name)))
-                    DeviceManager.DeviceList[1].pTrend.setTimeSeries((chartView.series(lineSeries1.name)))
-                    DeviceManager.DeviceList[1].pTrend.setPowerSeries((chartView.series(lineSeries.name)))
-
-                    DeviceManager.DeviceList[0].pTrend.setFrontSeries(null)
-                    DeviceManager.DeviceList[0].pTrend.setBackSeries(null)
-                    DeviceManager.DeviceList[0].pTrend.setTimeSeries(null)
-                    DeviceManager.DeviceList[0].pTrend.setPowerSeries(null)
-                    DeviceManager.DeviceList[2].pTrend.setFrontSeries(null)
-                    DeviceManager.DeviceList[2].pTrend.setBackSeries(null)
-                    DeviceManager.DeviceList[2].pTrend.setTimeSeries(null)
-                    DeviceManager.DeviceList[2].pTrend.setPowerSeries(null)
-                    DeviceManager.DeviceList[3].pTrend.setFrontSeries(null)
-                    DeviceManager.DeviceList[3].pTrend.setBackSeries(null)
-                    DeviceManager.DeviceList[3].pTrend.setTimeSeries(null)
-                    DeviceManager.DeviceList[3].pTrend.setPowerSeries(null)
-                }
-                else if(currentIndex === 2)
-                {
-                    DeviceManager.DeviceList[2].pTrend.setFrontSeries((chartView.series(lineSeries2.name)))
-                    DeviceManager.DeviceList[2].pTrend.setBackSeries((chartView.series(lineSeries3.name)))
-                    DeviceManager.DeviceList[2].pTrend.setTimeSeries((chartView.series(lineSeries1.name)))
-                    DeviceManager.DeviceList[2].pTrend.setPowerSeries((chartView.series(lineSeries.name)))
-
-                    DeviceManager.DeviceList[1].pTrend.setFrontSeries(null)
-                    DeviceManager.DeviceList[1].pTrend.setBackSeries(null)
-                    DeviceManager.DeviceList[1].pTrend.setTimeSeries(null)
-                    DeviceManager.DeviceList[1].pTrend.setPowerSeries(null)
-                    DeviceManager.DeviceList[0].pTrend.setFrontSeries(null)
-                    DeviceManager.DeviceList[0].pTrend.setBackSeries(null)
-                    DeviceManager.DeviceList[0].pTrend.setTimeSeries(null)
-                    DeviceManager.DeviceList[0].pTrend.setPowerSeries(null)
-                    DeviceManager.DeviceList[3].pTrend.setFrontSeries(null)
-                    DeviceManager.DeviceList[3].pTrend.setBackSeries(null)
-                    DeviceManager.DeviceList[3].pTrend.setTimeSeries(null)
-                    DeviceManager.DeviceList[3].pTrend.setPowerSeries(null)
-                }
-                else if(currentIndex === 3)
-                {
-                    DeviceManager.DeviceList[3].pTrend.setFrontSeries((chartView.series(lineSeries2.name)))
-                    DeviceManager.DeviceList[3].pTrend.setBackSeries((chartView.series(lineSeries3.name)))
-                    DeviceManager.DeviceList[3].pTrend.setTimeSeries((chartView.series(lineSeries1.name)))
-                    DeviceManager.DeviceList[3].pTrend.setPowerSeries((chartView.series(lineSeries.name)))
-
-                    DeviceManager.DeviceList[1].pTrend.setFrontSeries(null)
-                    DeviceManager.DeviceList[1].pTrend.setBackSeries(null)
-                    DeviceManager.DeviceList[1].pTrend.setTimeSeries(null)
-                    DeviceManager.DeviceList[1].pTrend.setPowerSeries(null)
-                    DeviceManager.DeviceList[2].pTrend.setFrontSeries(null)
-                    DeviceManager.DeviceList[2].pTrend.setBackSeries(null)
-                    DeviceManager.DeviceList[2].pTrend.setTimeSeries(null)
-                    DeviceManager.DeviceList[2].pTrend.setPowerSeries(null)
-                    DeviceManager.DeviceList[0].pTrend.setFrontSeries(null)
-                    DeviceManager.DeviceList[0].pTrend.setBackSeries(null)
-                    DeviceManager.DeviceList[0].pTrend.setTimeSeries(null)
-                    DeviceManager.DeviceList[0].pTrend.setPowerSeries(null)
-                }
-            }
-        }
     }
-
-
-    // Connections{
-    //     target: window
-    //     function onSigUpdateUI(index){
-    //         if(index === 0){
-    //             altitudeMode = altitudeModel1
-    //         }
-    //         else if(index === 1){
-    //             altitudeMode = altitudeModel2
-    //         }
-    //         else if(index === 2){
-    //             altitudeMode = altitudeModel3
-    //         }
-    //         else if(index === 3){
-    //             altitudeMode = altitudeModel4
-    //         }
-    //     }
-    // }
 
     radius: 3
     Text {
@@ -227,17 +58,6 @@ Rectangle {
         width: 97
         color: pRgb(174, 210, 216)
     }
-    property int timer: 0
-    //    CustomChart {
-    //        id:chartView
-    //        anchors.fill: parent
-    //        fillColor: "transparent"
-    //        width: parent.width // 使图表的宽度等于父项的宽度
-    //        height: parent.height // 使图表的高度等于父项的高度
-    //        anchors.top: parent.top // 使图表的顶部与父项的顶部对齐
-    //        anchors.right: parent.right // 使图表的右侧与父项的右侧对齐
-    //        anchors.topMargin: 10
-    //    }
 
     ChartView {
         id: chartView
@@ -260,34 +80,15 @@ Rectangle {
             labelColor: "#a3c7d0"
             font.family: GlobalSystemDefine.fontBold
         }
-        Component.onCompleted: {
-            sigUpdateUI(currentIndex)
-            chartUpdata()
-        }
-
-        Component.onDestruction: {
-            // DeviceManager.DeviceList[0].pTrend.setFrontSeries(null)
-            // DeviceManager.DeviceList[0].pTrend.setBackSeries(null)
-            // DeviceManager.DeviceList[0].pTrend.setTimeSeries(null)
-            // DeviceManager.DeviceList[0].pTrend.setPowerSeries(null)
-            // DeviceManager.DeviceList[1].pTrend.setFrontSeries(null)
-            // DeviceManager.DeviceList[1].pTrend.setBackSeries(null)
-            // DeviceManager.DeviceList[1].pTrend.setTimeSeries(null)
-            // DeviceManager.DeviceList[1].pTrend.setPowerSeries(null)
-            // DeviceManager.DeviceList[2].pTrend.setFrontSeries(null)
-            // DeviceManager.DeviceList[2].pTrend.setBackSeries(null)
-            // DeviceManager.DeviceList[2].pTrend.setTimeSeries(null)
-            // DeviceManager.DeviceList[2].pTrend.setPowerSeries(null)
-            // DeviceManager.DeviceList[3].pTrend.setFrontSeries(null)
-            // DeviceManager.DeviceList[3].pTrend.setBackSeries(null)
-            // DeviceManager.DeviceList[3].pTrend.setTimeSeries(null)
-            // DeviceManager.DeviceList[3].pTrend.setPowerSeries(null)
+        Component.onCompleted:
+        {
+            chartUpdate()
         }
 
         ValueAxis {
-            id: myAxisX
-            min: DeviceManager.DeviceList[currentIndex].pTrend.idMinX
-            max: DeviceManager.DeviceList[currentIndex].pTrend.idMaxX
+            id: cycleCount
+            min: DeviceManager.DeviceList[currentIndex].TrendObj.CountMinX
+            max: DeviceManager.DeviceList[currentIndex].TrendObj.CountMaxX
             tickCount: 5
             labelsColor: "#a3c7d0"
             labelsFont.pixelSize: 12
@@ -296,9 +97,9 @@ Rectangle {
             gridVisible:false
         }
         ValueAxis{
-            id:myAxisY
-            min:DeviceManager.DeviceList[currentIndex].pTrend.beforeMinY
-            max:DeviceManager.DeviceList[currentIndex].pTrend.beforeMaxY
+            id: preHeight
+            min: DeviceManager.DeviceList[currentIndex].TrendObj.PreheightMinY
+            max: DeviceManager.DeviceList[currentIndex].TrendObj.PreheightMaxY
             tickCount: 12
             labelsColor: "#a3c7d0"
             labelsFont.pixelSize: 12
@@ -307,12 +108,12 @@ Rectangle {
             labelFormat: '%.2f'
             gridVisible:false
             color:"#1398fa"
-            visible: altitudeMode
+            visible: (currentIndex < 0) ? false : DeviceManager.DeviceList[currentIndex].DeviceObj.HeightEncoderOption
         }
         ValueAxis{
-            id:myAxisY1
-            min:DeviceManager.DeviceList[currentIndex].pTrend.afterMinY
-            max:DeviceManager.DeviceList[currentIndex].pTrend.afterMaxY
+            id: postHeight
+            min: DeviceManager.DeviceList[currentIndex].TrendObj.PostHeightMinY
+            max: DeviceManager.DeviceList[currentIndex].TrendObj.PostHeightMaxY
             tickCount:12
             labelsColor: "#a3c7d0"
             labelsFont.pixelSize: 12
@@ -321,12 +122,12 @@ Rectangle {
             labelFormat: '%.2f'
             gridVisible:false
             color:"#ccb2f8"
-            visible: altitudeMode
+            visible: (currentIndex < 0) ? false : DeviceManager.DeviceList[currentIndex].DeviceObj.HeightEncoderOption
         }
         ValueAxis{
-            id:myAxisY2
-            min:DeviceManager.DeviceList[currentIndex].pTrend.powerMinY
-            max:DeviceManager.DeviceList[currentIndex].pTrend.powerMaxY
+            id: peakPower
+            min: DeviceManager.DeviceList[currentIndex].TrendObj.PeakPowerMinY
+            max: DeviceManager.DeviceList[currentIndex].TrendObj.PeakPowerMaxY
             tickCount: 12
             labelsColor: "#a3c7d0"
             labelsFont.pixelSize: 12
@@ -336,9 +137,9 @@ Rectangle {
             color:"#d5b989"
         }
         ValueAxis{
-            id:myAxisY3
-            min:DeviceManager.DeviceList[currentIndex].pTrend.timeMinY
-            max:DeviceManager.DeviceList[currentIndex].pTrend.timeMaxY
+            id: weldTime
+            min: DeviceManager.DeviceList[currentIndex].TrendObj.WeldTimeMinY
+            max: DeviceManager.DeviceList[currentIndex].TrendObj.WeldTimeMaxY
             tickCount: 12
             labelsColor: "#a3c7d0"
             labelsFont.pixelSize: 12
@@ -348,51 +149,52 @@ Rectangle {
             color:"#cd9caa"
         }
         LineSeries {
-            id:lineSeries
+            id:lineSeriesPeakPower
             // name: "功率"
             name: GlobalLanguageDefine.strPower
-            axisX: myAxisX
-            axisY:myAxisY2
+            axisX: cycleCount
+            axisY: peakPower
             color: "#d5b989"
             width: 1
 
         }
         LineSeries {
-            id:lineSeries1
+            id:lineSeriesWeldTime
             // name: "时间"
             name: GlobalLanguageDefine.strTime
-            axisX: myAxisX
-            axisY:myAxisY3
+            axisX: cycleCount
+            axisY: weldTime
             color: "#cd9caa"
             width: 1
 
         }
         LineSeries {
-            id:lineSeries2
+            id: lineSeriesPreheight
             // name: "焊前高度"
             name: GlobalLanguageDefine.strPreWeldHeight
-            axisX: myAxisX
-            axisY:myAxisY
+            axisX: cycleCount
+            axisY: preHeight
             color: "#1398fa"
             width: 1
-            visible: altitudeMode
+            visible: (currentIndex < 0) ? false : DeviceManager.DeviceList[currentIndex].DeviceObj.HeightEncoderOption
 
         }
         LineSeries {
-            id:lineSeries3
+            id:lineSeriesPostHeight
             // name: "焊后高度"
             name: GlobalLanguageDefine.strPostWeldHeight
-            axisX: myAxisX
-            axisY:myAxisY1
+            axisX: cycleCount
+            axisY: postHeight
             color: "#ccb2f8"
             width: 1
-            visible: altitudeMode
+            visible: (currentIndex < 0) ? false : DeviceManager.DeviceList[currentIndex].DeviceObj.HeightEncoderOption
 
         }
 
         onVisibleChanged: {
-            if(visible){
-                chartUpdata()
+            if(visible)
+            {
+                chartUpdate()
             }
         }
     }

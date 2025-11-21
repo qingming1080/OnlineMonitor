@@ -250,7 +250,7 @@ Rectangle {
                 }
             }
             onPressed: {
-                swipevis = true
+                isSingleDevice = true
                 DeviceManager.SelectedDeviceIndex = 0;
                 loadViewpro(3, singlePro)
                 sigUpdateUI(0)
@@ -402,7 +402,7 @@ Rectangle {
                 }
             }
             onPressed: {
-                swipevis = true
+                isSingleDevice = true
                 DeviceManager.SelectedDeviceIndex = 1
                 loadViewpro(3, singlePro)
                 sigUpdateUI(1)
@@ -579,7 +579,7 @@ Rectangle {
                 }
             }
             onPressed: {
-                swipevis = true
+                isSingleDevice = true
                 DeviceManager.SelectedDeviceIndex = 2
                 loadViewpro(3,swipe)
                 sigUpdateUI(2)
@@ -755,7 +755,7 @@ Rectangle {
                 }
             }
             onPressed: {
-                swipevis = true
+                isSingleDevice = true
                 if(DeviceManager.DeviceCounter === 4)
                 {
                     DeviceManager.SelectedDeviceIndex = 3

@@ -209,7 +209,7 @@ Rectangle {
         onPressed: {
             if(deviceCount === 3)
                 currentIndex = 0
-            swipevis = false
+            isSingleDevice = false
             loadViewpro(2, multiPro)
         }
         visible: (DeviceManager.DeviceCounter > 1) ? true : false

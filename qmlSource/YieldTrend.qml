@@ -2,7 +2,7 @@
 import QtQuick.Controls 2.5
 import QtCharts 2.15
 import Device 1.0
-import Trend 1.0
+import TrendObj 1.0
 import GlobalLanguageDefine 1.0
 import GlobalSystemDefine 1.0
 import LanguageEnum 1.0
@@ -12,7 +12,7 @@ import LanguageEnum 1.0
 Rectangle
 {
     property var startTime: {
-        if(!swipevis){
+        if(!isSingleDevice){
             Date.fromLocaleString(Qt.locale(), DeviceManager.DeviceList[equiInforIndex-1].pTrend.startTime, "yyyy-MM-dd hh:mm:ss")
         }
         else{
@@ -20,7 +20,7 @@ Rectangle
         }
     }
     property var endTime:{
-        if(!swipevis){
+        if(!isSingleDevice){
             Date.fromLocaleString(Qt.locale(), DeviceManager.DeviceList[equiInforIndex-1].pTrend.endTime, "yyyy-MM-dd hh:mm:ss")
         }
         else{
@@ -48,7 +48,7 @@ Rectangle
     }
 
     function updateBtn(){
-        if(swipevis)
+        if(isSingleDevice)
         {
             if(DeviceManager.DeviceList[currentIndex].pTrend.yieldType === 0)
             {
@@ -310,8 +310,9 @@ Rectangle
             }
         }
     }
-    function switchUpdate(index){
-        if(swipevis){
+    function switchUpdate(index)
+    {
+        if(isSingleDevice){
             DeviceManager.DeviceList[currentIndex].pTrend.setYieldType(index)
         }
         else{
@@ -321,10 +322,12 @@ Rectangle
             }
             else if(deviceCount === 2)
             {
-                if(equiInforIndex === 1){
+                if(equiInforIndex === 1)
+                {
                     DeviceManager.DeviceList[0].pTrend.setYieldType(index)
                 }
-                else if(equiInforIndex === 2){
+                else if(equiInforIndex === 2)
+                {
                     DeviceManager.DeviceList[1].pTrend.setYieldType(index)
                 }
             }
@@ -338,7 +341,7 @@ Rectangle
             return
         }
 
-        if(swipevis){
+        if(isSingleDevice){
             if(deviceCount === 2)
             {
                 if(currentIndex === 0)

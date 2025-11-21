@@ -19,7 +19,7 @@ class Device : public QObject
     Q_PROPERTY(Manual* ManualObj                READ getManualObj       WRITE setManualObj      NOTIFY notifyManualObjChanged FINAL)        // Manual表格
     Q_PROPERTY(Production* ProductionObj        READ getProductionObj   WRITE setProductionObj  NOTIFY notifyProductionObjChanged FINAL)
     Q_PROPERTY(int WelderID                     READ getWelderID        CONSTANT)
-    Q_PROPERTY(Trend *pTrend                    READ pTrend             CONSTANT)               // 折线
+    Q_PROPERTY(Trend* TrendObj                  READ getTrend           CONSTANT)               // 折线
 public:
     explicit Device(int welderID = 0, QObject *parent = nullptr);
     ~Device();
@@ -43,7 +43,7 @@ public:
     void NotifyModbusStatusChanged(int targetWelderId);
 
     // Q_INVOKABLE IO *pIO() const;
-    Q_INVOKABLE Trend *pTrend() const;
+    Trend* getTrend() const;
 
     // Q_INVOKABLE void test();
 
@@ -62,7 +62,7 @@ signals:
 
     void pYieldTrendChanged();
 
-    void pTrendChanged();
+    void notifyWeldTrendChanged(int weldID);
 public slots:
     void slotNotifyTrainingProcessFinished(DataBaseManager::DB_MODEL& model);
 

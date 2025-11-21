@@ -23,7 +23,7 @@ Window {
     property int mode: 0
     property int interFaceId: 0
     property int keyboardType: 0
-    property bool swipevis: false
+    property bool isSingleDevice: false
     property bool isUSBAvailable: false
 
     function pRgb(r, g, b){

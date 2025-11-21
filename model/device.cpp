@@ -61,7 +61,7 @@ Device::~Device()
 #endif
 }
 
-Trend *Device::pTrend() const
+Trend *Device::getTrend() const
 {
 #ifdef REMARK_FWC
     return m_ptrTrend.get();
@@ -268,6 +268,8 @@ bool Device::NotifyWeldResultComing(const HBModbusClient::MODBUS_WELD_RESULT &da
         if(isPresetChanged == false)
         {
             m_ptrProduction->AppendNewRecordComming(data);
+            m_ptrTrend->AppendWeldPoint(data.CycleCount, data.PeakPower, data.WeldTime, data.Preheight, data.PostHeight);
+            emit notifyWeldTrendChanged(m_WelderID);
             qDebug() << "Production data coming";
         }
         else

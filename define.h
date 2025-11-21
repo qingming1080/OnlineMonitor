@@ -17,29 +17,6 @@ struct _IO_Data
     int signal;     // 信号    0:alarm  1:reset 2:not_definite
 };
 
-// 焊接趋势数据结构
-struct _Weld_TrendData
-{
-    // X轴
-    int id_X_Max{0};
-    int id_X_Min{0};
-    // 焊前高度 Y轴
-    int before_Y_Max{0};
-    int before_Y_Min{0};
-    // 焊后高度 Y轴
-    int after_Y_Max{0};
-    int after_Y_Min{0};
-    // 时间 Y轴
-    QString time_Y_Max;
-    QString time_Y_Min;
-    // 功率
-    int power_Y_Max{0};
-    int power_Y_Min{0};
-
-    // 数据
-    // QList<DB_PRODUCTION> data;
-};
-
 // 良率趋势数据结构
 struct _Yield_TrendData
 {

@@ -6,25 +6,19 @@
 #include "signalmanager.h"
 #include <QDebug>
 #include <QElapsedTimer>
-#include "log/localrecord.h"
-#include "devicemanager.h"
+// #include "log/localrecord.h"
+// #include "devicemanager.h"
 #include <QPointF>
 Trend::Trend(int welderID, QObject *parent)
     : QObject{parent}, m_welderID(welderID)
 {
-    QElapsedTimer timer;
-    timer.start();
-
     init();
-
-    QString text = QString("%1号设备_Trend_初始化耗时:%2ms").arg(welderID).arg(timer.elapsed());
-    emit SignalManager::getInstance()->signalAddRecord(QDateTime::currentDateTime(), text);
 }
 
 void Trend::upYieldData()
 {
-    QElapsedTimer timer;
-    timer.start();
+    // QElapsedTimer timer;
+    // timer.start();
 
     if(m_yieldType == 0)
         m_yieldData = DataBaseManager::getInstance()->getYieldTrendData(0-60*60, m_welderID);  // 一个小时 60s*60m
@@ -37,98 +31,87 @@ void Trend::upYieldData()
 
     setYieldTrendData();
 
-    QString text = QString("%1号设备_Trend_良率趋势图刷新耗时:%2ms").arg(m_welderID).arg(timer.elapsed());
-    emit SignalManager::getInstance()->signalAddRecord(QDateTime::currentDateTime(), text);
+    // QString text = QString("%1号设备_Trend_良率趋势图刷新耗时:%2ms").arg(m_welderID).arg(timer.elapsed());
+    // emit SignalManager::getInstance()->signalAddRecord(QDateTime::currentDateTime(), text);
 }
 
 void Trend::upWeldData()
 {
-    if(m_pFrontSeries){
-        m_pFrontSeries->replace(m_frontData);
+    if(m_pPreheightSeries){
+        m_pPreheightSeries->replace(m_PreheightData);
     }
-    if(m_pBackSeries){
-        m_pBackSeries->replace(m_backData);
+    if(m_pPostHeightSeries){
+        m_pPostHeightSeries->replace(m_PostHeightData);
     }
-    if(m_pTimeSeries){
-        m_pTimeSeries->replace(m_timeData);
+    if(m_pWeldTimeSeries){
+        m_pWeldTimeSeries->replace(m_WeldTimeData);
     }
-    if(m_pPowerSeries){
-        m_pPowerSeries->replace(m_powerData);
+    if(m_pPeakPowerSeries){
+        m_pPeakPowerSeries->replace(m_PeakPowerData);
     }
 }
 
-
-void Trend::setWeldTrendData(_Weld_TrendData result)
+void Trend::setWeldTrendData(WELD_TREND result)
 {
-    m_idMaxX = result.id_X_Max;
-    m_idMinX = result.id_X_Min;
-    emit idMaxXChanged();
-    emit idMinXChanged();
+    setCountMaxX(result.Count_X_Max);
+    setCountMinX(result.Count_X_Min);
 
-    m_beforeMaxY = result.before_Y_Max;
-    m_beforeMinY = result.before_Y_Min;
-    emit beforeMaxYChanged();
-    emit beforeMinYChanged();
+    setPreheightMaxY(result.Preheight_Y_Max);
+    setPreheightMinY(result.Preheight_Y_Min);
 
-    m_afterMaxY = result.after_Y_Max;
-    m_afterMinY = result.after_Y_Min;
-    emit afterMaxYChanged();
-    emit afterMinYChanged();
+    setPostHeightMaxY(result.PostHeight_Y_Max);
+    setPostHeightMinY(result.PostHeight_Y_Min);
 
-    m_timeMaxY = result.time_Y_Max.toDouble();
-    m_timeMinY = result.time_Y_Min.toDouble();
-    emit timeMaxYChanged();
-    emit timeMinYChanged();
+    setWeldTimeMaxY(result.WeldTime_Y_Max);
+    setWeldTimeMinY(result.WeldTime_Y_Min);
 
-    m_powerMaxY = result.power_Y_Max;
-    m_powerMinY = result.power_Y_Min;
-    emit powerMaxYChanged();
-    emit powerMinYChanged();
+    setPeakPowerMaxY(result.PeakPower_Y_Max);
+    setPeakPowerMinY(result.PeakPower_Y_Min);
 }
 
-void Trend::appendWeldPoint(quint16 power, quint16 time, quint16 preHeight, quint16 postHeight)
+void Trend::AppendWeldPoint(const int cycleCount, const int power, const int time, const int preHeight, const int postHeight)
 {
-    constexpr int kAxisMax = 150;
+    constexpr int kAxisMax = 256;
 
-    double preHeightDouble  = preHeight / 100.0;
+    double preheightDouble  = preHeight / 100.0;
     double postHeightDouble = postHeight / 100.0;
     double timeDouble       = time / 100.0;
     double powerDouble      = static_cast<double>(power);
 
-    int xMin = (m_plotIndex >= kAxisMax) ? (m_plotIndex - kAxisMax + 1) : 0;
-    int xMax = (m_plotIndex >= kAxisMax) ? (m_plotIndex) : kAxisMax;
-
-    setIdMinX(xMin);
-    setIdMaxX(xMax);
-
-    auto appendWithLimit = [&](QVector<QPointF>& vec, double yValue) {
-        vec.append(QPointF(m_plotIndex, yValue));
+    auto appendWithLimit = [&](QVector<QPointF>& vec, int xCount, double yValue)
+    {
+        vec.append(QPointF(xCount, yValue));
         if (vec.size() > kAxisMax)
             vec.removeFirst();
     };
 
-    appendWithLimit(m_frontData, preHeightDouble);
-    appendWithLimit(m_backData, postHeightDouble);
-    appendWithLimit(m_timeData, timeDouble);
-    appendWithLimit(m_powerData, powerDouble);
+    appendWithLimit(m_PreheightData,    cycleCount, preheightDouble);
+    appendWithLimit(m_PostHeightData,   cycleCount, postHeightDouble);
+    appendWithLimit(m_WeldTimeData,     cycleCount, timeDouble);
+    appendWithLimit(m_PeakPowerData,    cycleCount, powerDouble);
 
-    auto updateSeries = [&](QXYSeries* series, double yValue)
+    int xMin = m_WeldTimeData.at(0).x();
+    int size = m_WeldTimeData.size();
+    int xMax = m_WeldTimeData.at(size - 1).x();
+    setCountMinX(xMin);
+    setCountMaxX(xMax);
+
+    auto updateSeries = [&](QXYSeries* series, int xCount, double yValue)
     {
         if (series)
         {
-            series->append(m_plotIndex, yValue);
+            series->append(xCount, yValue);
             if (series->count() > kAxisMax)
                 series->remove(0);
         }
     };
 
-    updateSeries(m_pFrontSeries, preHeightDouble);
-    updateSeries(m_pBackSeries,  postHeightDouble);
-    updateSeries(m_pTimeSeries,  timeDouble);
-    updateSeries(m_pPowerSeries, powerDouble);
+    updateSeries(m_pPreheightSeries,    cycleCount, preheightDouble);
+    updateSeries(m_pPostHeightSeries,   cycleCount, postHeightDouble);
+    updateSeries(m_pWeldTimeSeries,     cycleCount, timeDouble);
+    updateSeries(m_pPeakPowerSeries,    cycleCount, powerDouble);
 
     updateYAxisRanges();
-    ++m_plotIndex;
 }
 
 void Trend::updateYAxisRanges()
@@ -143,27 +126,27 @@ void Trend::updateYAxisRanges()
         }
     };
 
-    double beforeMinY, beforeMaxY;
-    double afterMinY,  afterMaxY;
-    double timeMinY,   timeMaxY;
-    double powerMinY,  powerMaxY;
+    double PreheightMinY, PreheightMaxY;
+    double PostHeightMinY,  PostHeightMaxY;
+    double WeldTimeMinY,   WeldTimeMaxY;
+    double PeakPowerMinY,  PeakPowerMaxY;
 
-    calcRange(m_frontData, beforeMinY, beforeMaxY);
-    calcRange(m_backData,  afterMinY,  afterMaxY);
-    calcRange(m_timeData,  timeMinY,   timeMaxY);
-    calcRange(m_powerData, powerMinY,  powerMaxY);
+    calcRange(m_PreheightData, PreheightMinY, PreheightMaxY);
+    calcRange(m_PostHeightData,  PostHeightMinY,  PostHeightMaxY);
+    calcRange(m_WeldTimeData,  WeldTimeMinY,   WeldTimeMaxY);
+    calcRange(m_PeakPowerData, PeakPowerMinY,  PeakPowerMaxY);
 
-    setBeforeMaxY(beforeMaxY + 2);
-    setBeforeMinY(qMax(0.0, beforeMinY - 2));
+    setPreheightMaxY(5.0);
+    setPreheightMinY(0.0);
 
-    setAfterMaxY(afterMaxY + 2);
-    setAfterMinY(qMax(0.0, afterMinY - 2));
+    setPostHeightMaxY(5.0);
+    setPostHeightMinY(0.0);
 
-    setTimeMaxY(timeMaxY + 0.5);
-    setTimeMinY(qMax(0.0, timeMinY - 0.5));
+    setWeldTimeMaxY(5.0);
+    setWeldTimeMinY(0.0);
 
-    setPowerMaxY(powerMaxY + 10);
-    setPowerMinY(qMax(0.0, powerMinY - 10));
+    setPeakPowerMaxY(PeakPowerMaxY + 200.0);
+    setPeakPowerMinY(qMax(0.0, PeakPowerMinY - 200));
 }
 
 void Trend::setYieldTrendData()
@@ -203,33 +186,32 @@ void Trend::setYieldSeries(QAbstractSeries *series)
     // qDebug() << QString("I_WANT_TEST 设备%1 设置折线").arg(m_welderID) << m_pYieldSeries;
 }
 
-void Trend::setFrontSeries(QAbstractSeries *series)
+void Trend::setPreheightSeries(QAbstractSeries *series)
 {
-    m_pFrontSeries = static_cast<QXYSeries*>(series);
-    if(m_pFrontSeries)
-        m_pFrontSeries->replace(m_frontData);
-    // qDebug() << QString("I_WANT_TEST 设备%1 焊前高度").arg(m_welderID) << m_pFrontSeries;
+    m_pPreheightSeries = static_cast<QXYSeries*>(series);
+    if(m_pPreheightSeries)
+        m_pPreheightSeries->replace(m_PreheightData);
 }
 
-void Trend::setBackSeries(QAbstractSeries *series)
+void Trend::setPostHeightSeries(QAbstractSeries *series)
 {
-    m_pBackSeries = static_cast<QXYSeries*>(series);
-    if(m_pBackSeries)
-        m_pBackSeries->replace(m_backData);
+    m_pPostHeightSeries = static_cast<QXYSeries*>(series);
+    if(m_pPostHeightSeries)
+        m_pPostHeightSeries->replace(m_PostHeightData);
 }
 
-void Trend::setTimeSeries(QAbstractSeries *series)
+void Trend::setWeldTimeSeries(QAbstractSeries *series)
 {
-    m_pTimeSeries = static_cast<QXYSeries*>(series);
-    if(m_pTimeSeries)
-        m_pTimeSeries->replace(m_timeData);
+    m_pWeldTimeSeries = static_cast<QXYSeries*>(series);
+    if(m_pWeldTimeSeries)
+        m_pWeldTimeSeries->replace(m_WeldTimeData);
 }
 
-void Trend::setPowerSeries(QAbstractSeries *series)
+void Trend::setPeakPowerSeries(QAbstractSeries *series)
 {
-    m_pPowerSeries = static_cast<QXYSeries*>(series);
-    if(m_pPowerSeries)
-        m_pPowerSeries->replace(m_powerData);
+    m_pPeakPowerSeries = static_cast<QXYSeries*>(series);
+    if(m_pPeakPowerSeries)
+        m_pPeakPowerSeries->replace(m_PeakPowerData);
 }
 
 QString Trend::startTime() const
@@ -247,8 +229,8 @@ void Trend::setStartTime(const QString &newStartTime)
 
 void Trend::init()
 {
-    QElapsedTimer tm;
-    tm.start();
+    // QElapsedTimer tm;
+    // tm.start();
 
 
     // 良率趋势刷新
@@ -298,132 +280,132 @@ void Trend::setYieldType(int newYieldType)
     upYieldData();
 }
 
-int Trend::powerMinY() const
+int Trend::getPeakPowerMinY() const
 {
-    return m_powerMinY;
+    return m_PeakPowerMinY;
 }
 
-void Trend::setPowerMinY(int newPowerMinY)
+void Trend::setPeakPowerMinY(int power)
 {
-    if (m_powerMinY == newPowerMinY)
+    if (m_PeakPowerMinY == power)
         return;
-    m_powerMinY = newPowerMinY;
-    emit powerMinYChanged();
+    m_PeakPowerMinY = power;
+    emit notifyPeakPowerMinYChanged();
 }
 
-int Trend::powerMaxY() const
+int Trend::getPeakPowerMaxY() const
 {
-    return m_powerMaxY;
+    return m_PeakPowerMaxY;
 }
 
-void Trend::setPowerMaxY(int newPowerMaxY)
+void Trend::setPeakPowerMaxY(int power)
 {
-    if (m_powerMaxY == newPowerMaxY)
+    if (m_PeakPowerMaxY == power)
         return;
-    m_powerMaxY = newPowerMaxY;
-    emit powerMaxYChanged();
+    m_PeakPowerMaxY = power;
+    emit notifyPeakPowerMaxYChanged();
 }
 
-double Trend::timeMinY() const
+float Trend::getWeldTimeMinY() const
 {
-    return m_timeMinY;
+    return m_WeldTimeMinY;
 }
 
-void Trend::setTimeMinY(double newTimeMinY)
+void Trend::setWeldTimeMinY(float time)
 {
-    if (qFuzzyCompare(m_timeMinY, newTimeMinY))
+    if (qFuzzyCompare(m_WeldTimeMinY, time))
         return;
-    m_timeMinY = newTimeMinY;
-    emit timeMinYChanged();
+    m_WeldTimeMinY = time;
+    emit notifyWeldTimeMinYChanged();
 }
 
-double Trend::timeMaxY() const
+float Trend::getWeldTimeMaxY() const
 {
-    return m_timeMaxY;
+    return m_WeldTimeMaxY;
 }
 
-void Trend::setTimeMaxY(double newTimeMaxY)
+void Trend::setWeldTimeMaxY(float time)
 {
-    if (qFuzzyCompare(m_timeMaxY, newTimeMaxY))
+    if (qFuzzyCompare(m_WeldTimeMaxY, time))
         return;
-    m_timeMaxY = newTimeMaxY;
-    emit timeMaxYChanged();
+    m_WeldTimeMaxY = time;
+    emit notifyWeldTimeMaxYChanged();
 }
 
-int Trend::afterMinY() const
+float Trend::getPostHeightMinY() const
 {
-    return m_afterMinY;
+    return m_PostHeightMinY;
 }
 
-void Trend::setAfterMinY(int newAfterMinY)
+void Trend::setPostHeightMinY(const float height)
 {
-    if (m_afterMinY == newAfterMinY)
+    if (m_PostHeightMinY == height)
         return;
-    m_afterMinY = newAfterMinY;
-    emit afterMinYChanged();
+    m_PostHeightMinY = height;
+    emit notifyPostHeightMinYChanged();
 }
 
-int Trend::afterMaxY() const
+float Trend::getPostHeightMaxY() const
 {
-    return m_afterMaxY;
+    return m_PostHeightMaxY;
 }
 
-void Trend::setAfterMaxY(int newAfterMaxY)
+void Trend::setPostHeightMaxY(const float height)
 {
-    if (m_afterMaxY == newAfterMaxY)
+    if (m_PostHeightMaxY == height)
         return;
-    m_afterMaxY = newAfterMaxY;
-    emit afterMaxYChanged();
+    m_PostHeightMaxY = height;
+    emit notifyPostHeightMaxYChanged();
 }
 
-int Trend::beforeMinY() const
+float Trend::getPreheightMinY() const
 {
-    return m_beforeMinY;
+    return m_PreheightMinY;
 }
 
-void Trend::setBeforeMinY(int newBeforeMinY)
+void Trend::setPreheightMinY(const float height)
 {
-    if (m_beforeMinY == newBeforeMinY)
+    if (m_PreheightMinY == height)
         return;
-    m_beforeMinY = newBeforeMinY;
-    emit beforeMinYChanged();
+    m_PreheightMinY = height;
+    emit notifyPreheightMinYChanged();
 }
 
-int Trend::beforeMaxY() const
+float Trend::getPreheightMaxY() const
 {
-    return m_beforeMaxY;
+    return m_PreheightMaxY;
 }
 
-void Trend::setBeforeMaxY(int newBeforeMaxY)
+void Trend::setPreheightMaxY(const float height)
 {
-    if (m_beforeMaxY == newBeforeMaxY)
+    if (m_PreheightMaxY == height)
         return;
-    m_beforeMaxY = newBeforeMaxY;
-    emit beforeMaxYChanged();
+    m_PreheightMaxY = height;
+    emit notifyPreheightMaxYChanged();
 }
 
-int Trend::idMaxX() const
+int Trend::getCountMaxX() const
 {
-    return m_idMaxX;
+    return m_CountMaxX;
 }
 
-void Trend::setIdMaxX(int newIdMaxX)
+void Trend::setCountMaxX(const int count)
 {
-    if (m_idMaxX == newIdMaxX)
+    if (m_CountMaxX == count)
         return;
-    m_idMaxX = newIdMaxX;
-    emit idMaxXChanged();
+    m_CountMaxX = count;
+    emit notifyCountMaxXChanged();
 }
 
-int Trend::idMinX() const
+int Trend::getCountMinX() const
 {
-    return m_idMinX;
+    return m_CountMinX;
 }
 
-void Trend::setIdMinX(int newIdMinX)
+void Trend::setCountMinX(const int count)
 {
-    if (m_idMinX == newIdMinX)
+    if (m_CountMinX == count)
         return;
-    m_idMinX = newIdMinX;
-    emit idMinXChanged();
+    m_CountMinX = count;
+    emit notifyCountMinXChanged();
 }
