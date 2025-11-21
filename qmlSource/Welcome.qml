@@ -7,6 +7,7 @@ Rectangle {
     width: 1280
     height: 60
     property string loading: ""
+    property bool isConnected: false
     Image {
         id: imgname
         width: 229
@@ -52,10 +53,15 @@ Rectangle {
         target: DeviceManager
         function onNotifyConnectionStateChanged(connected)
         {
+            isConnected = connected
             if (connected)
             {
-                loadingTimer.stop()
-                window.releaseWelcomeScreen()
+                loading = ""
+                ModbusClient.setLearnLedStatus(true);
+                ModbusClient.setPilotLedStatus(true);
+                ModbusClient.setReadyLedStatus(true);
+                ModbusClient.setAlarmLedStatus(true);
+                loading = ""
             }
             else
             {
@@ -79,6 +85,15 @@ Rectangle {
             }
             else
             {
+                if((isConnected == true) && (loading.length > 5))
+                {
+                    stop()
+                    ModbusClient.setLearnLedStatus(false);
+                    ModbusClient.setPilotLedStatus(false);
+                    ModbusClient.setReadyLedStatus(false);
+                    ModbusClient.setAlarmLedStatus(false);
+                    window.releaseWelcomeScreen()
+                }
                 loading += "."
             }
         }

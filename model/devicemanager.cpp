@@ -134,21 +134,35 @@ void DeviceManager::setUserPassword(QString newPassword)
 
 void DeviceManager::slotNotifyDeviceStatusChanged(int welderId, HBModbusClient::DEVICE_STATUS status)
 {
-    qDebug() << "WeldID： " << welderId;
-    qDebug() << "status: " << status.IsDeviceDataStatus;
-    qDebug() << "status1: " << status.IsDeviceStatus;
+    // qDebug() << "WeldID： " << welderId;
+    // qDebug() << "status: " << status.IsDeviceDataStatus;
+    // qDebug() << "status1: " << status.IsDeviceStatus;
     for(int i = 0; i < m_listDevices.size(); i++)
     {
         int id = m_listDevices[i]->getWelderID();
         if(id == welderId)
         {
+
             if(m_listDevices[i]->getDeviceObj()->getWelderType() == DeviceInfoEnum::RS232)
             {
                 status.IsDeviceStatus = true;
-                status.IsDeviceStatus = true;
+                status.IsDeviceDataStatus = true;
             }
             m_listDevices[i]->NotifyDeviceStatusChanged(status);
         }
+    }
+    bool bResult = true;
+    for(int i = 0; i < m_listDevices.size(); i++)
+    {
+        if(m_listDevices[i]->getDeviceObj()->getConnectState() == false)
+        {
+            bResult = false;
+            break;
+        }
+    }
+    if(bResult == true)
+    {
+        HBModbusClient::getInstance()->setReadyLedStatus(true);
     }
 }
 

@@ -11,7 +11,7 @@
 
 
 /*!
- * \brief The DataBaseHelper class 数据库操作
+ * \brief The DataBaseHelper class 数据库操作队列处理
  */
 class DataBaseHelper : public QObject
 {
@@ -37,7 +37,7 @@ private:
     QTimer *m_timer;
     QThread *m_thread;
     QQueue<DataBaseManager::DB_PRODUCTION> m_insertOperationQueue;
-    QQueue<DataBaseManager::DB_MODEL> m_updateOperationQueue;
+    DataBaseManager::DB_MODEL m_updateOperation;
 };
 
 #endif // DATABASEHELPER_H

@@ -215,7 +215,7 @@ void HBModbusClient::WriteCoils(int startAddress, const QVector<quint8>& values)
         for (int i = 0; i < values.size(); ++i)
         {
             writeUnit.setValue(i, values[i]);
-            qDebug() << "WriteCoils success, addr:" << startAddress << "values:" << values;
+            // qDebug() << "WriteCoils success, addr:" << startAddress << "values:" << values;
         }
         if (auto *reply = modbusClient->sendWriteRequest(writeUnit, 1))
         {
@@ -388,8 +388,7 @@ void HBModbusClient::setSystemClock(const QDateTime &datetime)
     rtcValues.append(time.hour());
     rtcValues.append(time.minute());
     rtcValues.append(time.second());
-
-        qDebug() << "写入RTC寄存器值:" << rtcValues;
+    // qDebug() << "写入RTC寄存器值:" << rtcValues;
     WriteHoldingRegisters(SYS_RTC_YY, rtcValues);
 }
 
