@@ -8,7 +8,7 @@ Rectangle {
     property string eqText2: ""
     property string eqText3: ""
     property string eqText4: ""
-    property string eqText5: ""
+    property real   eqText5: 0.0
     property bool revealing: false
     onHeightChanged: {
         if(height < 260 && height > 230){
@@ -98,6 +98,6 @@ Rectangle {
         id: yuan
         x:150
         y:58
-        value:eqText5
+        value: eqText5
     }
 }

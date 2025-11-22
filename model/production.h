@@ -10,7 +10,7 @@ class Production : public QObject
     Q_OBJECT
     /// 2024/04/07  实时良率暴露
     // 实时良率
-    Q_PROPERTY(QString GoodRate             READ getGoodRate            WRITE setGoodRate               NOTIFY notifyGoodRateChanged)
+    Q_PROPERTY(float GoodRate               READ getGoodRate            WRITE setGoodRate               NOTIFY notifyGoodRateChanged)
     // 合格
     Q_PROPERTY(QString GoodCycleCount       READ getGoodCycleCount      WRITE setGoodCycleCount         NOTIFY notifyGoodCycleCountChanged)
     // 可疑
@@ -57,8 +57,8 @@ class Production : public QObject
 public:
     explicit Production(int welderID = 0, QObject *parent = nullptr);
 
-    QString getGoodRate() const;
-    void setGoodRate(const QString &rate);
+    float getGoodRate() const;
+    void setGoodRate(const float &rate);
 
     QString getGoodCycleCount() const;
     int GetGoodCycleCount() const;
@@ -135,7 +135,7 @@ private:
     int m_WelderID;
     DataBaseManager::DB_PRODUCTION  m_DBProduction;
     DataBaseManager::DB_MODEL       m_DBModel;
-    int m_iGoodRate;                       // 良率
+    float m_iGoodRate;                     // 良率
     int m_iGoodCycleCount;                 // 合格
     int m_iDefectiveCycleCount;            // 次品
     int m_iSuspectCycleCount;              // 可疑

@@ -87,6 +87,16 @@ bool Device::IsProductionPresetChanged(const HBModbusClient::MODBUS_WELD_RESULT 
     int weldPressure = m_ptrProduction->getWPSetting();
     float energy_lower = static_cast<float>(0.95 * energy);
     float energy_upper = static_cast<float>(1.05 * energy);
+
+    if(data.Amplitude == 0)
+        return bResult;
+    if(data.TriggerPressure == 0)
+        return bResult;
+    if(data.WeldingPressure == 0)
+        return bResult;
+    if(data.Energy == 0)
+        return bResult;
+
     if(amplitude != data.Amplitude)
     {
         m_ptrProduction->setModelStatus(false);
@@ -126,6 +136,14 @@ bool Device::IsProductionPresetChanged(const HBModbusClient::WELD_PRESET &data)
     int weldPressure = m_ptrProduction->getWPSetting();
     float energy_lower = static_cast<float>(0.95 * energy);
     float energy_upper = static_cast<float>(1.05 * energy);
+    if(data.Amplitude == 0)
+        return bResult;
+    if(data.TriggerPressure == 0)
+        return bResult;
+    if(data.WeldingPressure == 0)
+        return bResult;
+    if(data.Energy == 0)
+        return bResult;
     if(amplitude != data.Amplitude)
     {
         m_ptrProduction->setModelStatus(false);
@@ -176,7 +194,7 @@ void Device::setDeviceObj(const DeviceInformation *object)
         emit notifyDeviceObjChanged();
     }
 #else
-
+    Q_UNUSED(object);
 #endif
 }
 
@@ -197,7 +215,7 @@ void Device::setManualObj(const Manual *object)
         emit notifyManualObjChanged();
     }
 #else
-
+    Q_UNUSED(object)
 #endif
 }
 
@@ -219,7 +237,7 @@ void Device::setProductionObj(const Production *object)
     }
 
 #else
-
+    Q_UNUSED(object)
 #endif
 }
 
@@ -271,7 +289,7 @@ bool Device::NotifyWeldResultComing(const HBModbusClient::MODBUS_WELD_RESULT &da
             m_ptrProduction->AppendNewRecordComming(data);
             m_ptrTrend->AppendWeldPoint(data.CycleCount, data.PeakPower, data.WeldTime, data.Preheight, data.PostHeight);
             emit notifyWeldTrendChanged(m_WelderID);
-            qDebug() << "Production data coming";
+            // qDebug() << "Production data coming";
         }
         else
         {
@@ -284,7 +302,6 @@ bool Device::NotifyWeldResultComing(const HBModbusClient::MODBUS_WELD_RESULT &da
             QString strWeldPressure = UtilityFunction::getInstance()->RawValueToString(data.WeldingPressure, 10, 1);
             m_ptrManual->setWeldPressureSetting(strWeldPressure);
             m_ptrManual->AppendNewRecordComming(data);
-            emit notifyPresetChanged(m_WelderID);
             // qDebug() << "Preset has been Changed";
         }
     }
@@ -310,6 +327,7 @@ void Device::NotifyPresetSettingChanged(const HBModbusClient::WELD_PRESET &data)
             m_ptrManual->setTriggerPressureSetting(strTriggerPressure);
             QString strWeldPressure = UtilityFunction::getInstance()->RawValueToString(data.WeldingPressure, 10, 1);
             m_ptrManual->setWeldPressureSetting(strWeldPressure);
+            emit notifyPresetChanged(m_WelderID);
         }
     }
     else
@@ -322,5 +340,6 @@ void Device::NotifyPresetSettingChanged(const HBModbusClient::WELD_PRESET &data)
         m_ptrManual->setTriggerPressureSetting(strTriggerPressure);
         QString strWeldPressure = UtilityFunction::getInstance()->RawValueToString(data.WeldingPressure, 10, 1);
         m_ptrManual->setWeldPressureSetting(strWeldPressure);
+        emit notifyPresetChanged(m_WelderID);
     }
 }

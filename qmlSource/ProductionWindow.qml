@@ -95,9 +95,7 @@ Rectangle {
         if(DeviceManager.DeviceList[0].ProductionObj.ModelStatus === false)
             loadViewpro(1, autoLearning)
         else if(DeviceManager.DeviceCounter > 1)
-        {
             loadViewpro(2, multiPro)
-        }
         else
             loadViewpro(3, singlePro)
     }

@@ -125,7 +125,7 @@ Rectangle {
             labelsFont.bold: true
             labelFormat: "%.2f"
             gridVisible: false
-            color:"#ccb2f8"
+            color:"#B388FF"
             visible: (currentIndex < 0) ? false : DeviceManager.DeviceList[currentIndex].DeviceObj.HeightEncoderOption
         }
         ValueAxis{
@@ -138,7 +138,7 @@ Rectangle {
             labelsFont.bold: true
             labelFormat: "%d"
             gridVisible:false
-            color:"#d5b989"
+            color:"#FFDF65"
         }
         ValueAxis{
             id: weldTime
@@ -150,7 +150,7 @@ Rectangle {
             labelsFont.bold: true
             labelFormat: "%.2f"
             gridVisible: false
-            color:"#cd9caa"
+            color:"#A0CF67"
         }
         LineSeries {
             id: lineSeriesPeakPower
@@ -158,8 +158,8 @@ Rectangle {
             name: GlobalLanguageDefine.strPower
             axisX: cycleCount
             axisY: peakPower
-            color: "#d5b989"
-            width: 1
+            color: "#FFDF65"
+            width: 2
 
         }
         LineSeries {
@@ -168,8 +168,8 @@ Rectangle {
             name: GlobalLanguageDefine.strTime
             axisX: cycleCount
             axisY: weldTime
-            color: "#cd9caa"
-            width: 1
+            color: "#A0CF67"
+            width: 2
 
         }
         LineSeries {
@@ -179,7 +179,7 @@ Rectangle {
             axisX: cycleCount
             axisY: preHeight
             color: "#1398fa"
-            width: 1
+            width: 2
             visible: (currentIndex < 0) ? false : DeviceManager.DeviceList[currentIndex].DeviceObj.HeightEncoderOption
 
         }
@@ -189,8 +189,8 @@ Rectangle {
             name: GlobalLanguageDefine.strPostWeldHeight
             axisX: cycleCount
             axisY: postHeight
-            color: "#ccb2f8"
-            width: 1
+            color: "#B388FF"
+            width: 2
             visible: (currentIndex < 0) ? false : DeviceManager.DeviceList[currentIndex].DeviceObj.HeightEncoderOption
         }
 

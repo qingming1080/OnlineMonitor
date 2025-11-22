@@ -4,7 +4,7 @@ ProvidenceEE::ProvidenceEE(QObject *parent)
     : QObject{parent}
 {
 #if RASPBERRY
-    GenericLearning::SetDebugMode(1);
+    GenericLearning::SetDebugMode(0);
 
     SetRelevantParam();
 

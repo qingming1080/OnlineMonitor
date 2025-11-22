@@ -9,10 +9,12 @@ Production::Production(int welderID, QObject *parent)
     :QObject{parent}, m_WelderID(welderID)
 {
 
-    m_iGoodRate = 90;
-    m_iGoodCycleCount = 333;
-    m_iDefectiveCycleCount = 1;
-    m_iSuspectCycleCount = 2;
+    m_iGoodRate = 0.0;
+    m_iGoodCycleCount = 0;
+    m_iDefectiveCycleCount = 0;
+    m_iSuspectCycleCount = 0;
+    m_iTotalCycleCount = 0;
+    m_DBModel.isAvailable = false;
     if(DataBaseManager::getInstance()->getModelRecord(m_WelderID, m_DBModel) == false)
     {
         setModelStatus(false);
@@ -20,6 +22,7 @@ Production::Production(int welderID, QObject *parent)
         setAmpSetting(0);
         setTPSetting(0);
         setWPSetting(0);
+        m_DBModel = DataBaseManager::DB_MODEL();
     }
     else
     {
@@ -42,18 +45,16 @@ Production::Production(int welderID, QObject *parent)
 #endif
 }
 
-QString Production::getGoodRate() const
+float Production::getGoodRate() const
 {
-    return QString::number(m_iGoodRate);
+    return m_iGoodRate;
 }
 
-void Production::setGoodRate(const QString &rate)
+void Production::setGoodRate(const float &rate)
 {
-    bool isOk;
-    int iRate = rate.toInt(&isOk);
-    if (isOk && m_iGoodRate != iRate)
+    if (m_iGoodRate != rate)
     {
-        m_iGoodRate = iRate;
+        m_iGoodRate = rate;
         emit notifyGoodRateChanged();
     }
 }
@@ -75,10 +76,6 @@ void Production::setGoodCycleCount(const QString &count)
     if (isOk && m_iGoodCycleCount != iCount)
     {
         m_iGoodCycleCount = iCount;
-        m_iTotalCycleCount = m_iGoodCycleCount + m_iDefectiveCycleCount + m_iSuspectCycleCount;
-        setTotalCycleCount(QString::number(m_iTotalCycleCount));
-        m_iGoodCycleCount = static_cast<int>(m_iGoodCycleCount / m_iTotalCycleCount * 100);
-        setGoodRate(QString::number(m_iGoodCycleCount));
         emit notifyGoodCycleCountChanged();
     }
 }
@@ -100,8 +97,6 @@ void Production::setSuspectCycleCount(const QString &count)
     if (isOk && m_iSuspectCycleCount != iCount)
     {
         m_iSuspectCycleCount = iCount;
-        m_iTotalCycleCount = m_iGoodCycleCount + m_iDefectiveCycleCount + m_iSuspectCycleCount;
-        setTotalCycleCount(QString::number(m_iTotalCycleCount));
         emit notifySuspectCycleCountChanged();
     }
 }
@@ -123,8 +118,6 @@ void Production::setDefectiveCycleCount(const QString &count)
     if (isOk && m_iDefectiveCycleCount != iCount)
     {
         m_iDefectiveCycleCount = iCount;
-        m_iTotalCycleCount = m_iGoodCycleCount + m_iDefectiveCycleCount + m_iSuspectCycleCount;
-        setTotalCycleCount(QString::number(m_iTotalCycleCount));
         emit notifyDefectiveCycleCountChanged();
     }
 }
@@ -401,8 +394,8 @@ void Production::AppendNewRecordComming(const HBModbusClient::MODBUS_WELD_RESULT
     {
         if(ProvidenceEE::getInstance()->GetSPCGoodnessResult() == true)
         {
-            if((m_DBProduction.Force < m_iForceThreshold) || (m_DBProduction.Residual < m_iResidualThreshold))
-                m_DBProduction.FinalResult = HistoryEnum::DEFECT;
+            // if((m_DBProduction.Force < m_iForceThreshold) || (m_DBProduction.Residual < m_iResidualThreshold))
+            //     m_DBProduction.FinalResult = HistoryEnum::DEFECT;
         }
         else
             m_DBProduction.FinalResult = HistoryEnum::SUSPECT;
@@ -431,8 +424,10 @@ void Production::AppendNewRecordComming(const HBModbusClient::MODBUS_WELD_RESULT
     setSuspectCycleCount(QString::number(suspectCount));
     setDefectiveCycleCount(QString::number(defectCount));
     setTotalCycleCount(QString::number(totalCount));
-    int goodRate = static_cast<int>(goodCount / totalCount * 100);
-    setGoodRate(QString::number(goodRate));
+    float goodRate = 0.0;
+    if(totalCount != 0)
+        goodRate = static_cast<float>(goodCount) / totalCount * 100;
+    setGoodRate(goodRate);
 
     // TODO need to move these two line code into movetothread process.
     // need to emit signal to device manager the record insert into qlist

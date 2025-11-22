@@ -138,29 +138,37 @@ void Trend::updateYAxisRanges()
     // calcRange(m_WeldTimeData,  WeldTimeMinY,   WeldTimeMaxY);
     // calcRange(m_PeakPowerData, PeakPowerMinY,  PeakPowerMaxY);
 
-    PreheightMaxY = m_DBModel.Preheight.Alpha + 7 * m_DBModel.Preheight.Beta;
+    PreheightMaxY = m_DBModel.Preheight.Alpha + 5 * m_DBModel.Preheight.Beta;
     PreheightMaxY /= 100;
-    PreheightMinY = qMax(0.0, (m_DBModel.Preheight.Alpha - 7 * m_DBModel.Preheight.Beta));
+    PreheightMaxY *= 1.25;
+    PreheightMinY = qMax(0.0, (m_DBModel.Preheight.Alpha - 5 * m_DBModel.Preheight.Beta));
     PreheightMinY /= 100;
+    PreheightMinY *= 0.75;
     setPreheightMaxY(PreheightMaxY);
     setPreheightMinY(PreheightMinY);
 
-    PostHeightMaxY = m_DBModel.PostHeight.Alpha + 7 * m_DBModel.PostHeight.Beta;
+    PostHeightMaxY = m_DBModel.PostHeight.Alpha + 5 * m_DBModel.PostHeight.Beta;
     PostHeightMaxY /= 100;
-    PostHeightMinY = qMax(0.0, m_DBModel.PostHeight.Alpha - 7 * m_DBModel.PostHeight.Beta);
+    PostHeightMaxY *= 1.25;
+    PostHeightMinY = qMax(0.0, m_DBModel.PostHeight.Alpha - 5 * m_DBModel.PostHeight.Beta);
     PostHeightMinY /= 100;
+    PostHeightMinY *= 0.75;
     setPostHeightMaxY(PostHeightMaxY);
     setPostHeightMinY(PostHeightMinY);
 
-    WeldTimeMaxY = m_DBModel.WeldTime.Alpha + 7 * m_DBModel.WeldTime.Beta;
+    WeldTimeMaxY = m_DBModel.WeldTime.Alpha + 5 * m_DBModel.WeldTime.Beta;
     WeldTimeMaxY /= 100;
-    WeldTimeMinY = qMax(0.0, m_DBModel.WeldTime.Alpha - 7 * m_DBModel.WeldTime.Beta);
+    WeldTimeMaxY *= 1.25;
+    WeldTimeMinY = qMax(0.0, m_DBModel.WeldTime.Alpha - 5 * m_DBModel.WeldTime.Beta);
     WeldTimeMinY /= 100;
+    WeldTimeMinY *= 0.75;
     setWeldTimeMaxY(WeldTimeMaxY);
     setWeldTimeMinY(WeldTimeMinY);
 
-    PeakPowerMaxY = m_DBModel.PeakPower.Alpha + 7 * m_DBModel.PeakPower.Beta;
-    PeakPowerMinY = qMax(0.0, m_DBModel.PeakPower.Alpha - 7 * m_DBModel.PeakPower.Beta);
+    PeakPowerMaxY = m_DBModel.PeakPower.Alpha + 5 * m_DBModel.PeakPower.Beta;
+    PeakPowerMaxY *= 1.25;
+    PeakPowerMinY = qMax(0.0, m_DBModel.PeakPower.Alpha - 5 * m_DBModel.PeakPower.Beta);
+    PeakPowerMinY *= 0.75;
     setPeakPowerMaxY(PeakPowerMaxY);
     setPeakPowerMinY(PeakPowerMinY);
 }
