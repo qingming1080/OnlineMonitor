@@ -124,9 +124,7 @@ Rectangle {
                 eqText4:{
                     if(currentIndex < deviceCount)
                     {
-                        return DeviceManager.DeviceList[currentIndex].ProductionObj.GoodCycleCount
-                                + DeviceManager.DeviceList[currentIndex].ProductionObj.SuspectCycleCount
-                                +DeviceManager.DeviceList[currentIndex].ProductionObj.DefectiveCycleCount
+                        return DeviceManager.DeviceList[currentIndex].ProductionObj.TotalCycleCount
                     }
                     else{
                         return ""
