@@ -159,8 +159,9 @@ bool DataBaseManager::removeConfigurationDevice(const int welderID)
     return ret;
 }
 
-bool DataBaseManager::insertConfigurationDevice(const DB_CONFIGURE configure)
+int DataBaseManager::insertConfigurationDevice(const DB_CONFIGURE configure)
 {
+    int iWelderId = -1;
     QSqlQuery query;
     // %1_表格名称
     QString execStr = QString("INSERT INTO %1 ("
@@ -215,10 +216,14 @@ bool DataBaseManager::insertConfigurationDevice(const DB_CONFIGURE configure)
      query.bindValue(":force_threshold", configure.ForceThreshold);
      query.bindValue(":residual_threshold", configure.ResidualThreshold);
     bool ret = query.exec();
-    if (!ret) {
+    if (!ret)
+    {
         qWarning() << "Insert configuration failed:" << query.lastError().text();
+        iWelderId = -1;
     }
-    return ret;
+    else
+        iWelderId = query.lastInsertId().toInt();
+    return iWelderId;
 }
 
 bool DataBaseManager::updateConfigurationDevice(const int welderID, const DB_CONFIGURE configure)

@@ -291,7 +291,7 @@ public:
     bool getAllConfigurationDevice(QList<DataBaseManager::DB_CONFIGURE>& list);
     bool getConfigurationDevice(const int welderID, DB_CONFIGURE& configure);
     bool removeConfigurationDevice(const int welderID);
-    bool insertConfigurationDevice(const DB_CONFIGURE configure);
+    int insertConfigurationDevice(const DB_CONFIGURE configure);
     bool updateConfigurationDevice(const int welderID, const DB_CONFIGURE configure);
 
     bool getAllNetworkConfigure(QList<DataBaseManager::DB_NETWORK>& list);

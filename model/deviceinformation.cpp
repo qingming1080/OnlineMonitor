@@ -341,8 +341,8 @@ bool DeviceInformation::SaveDevice()
 
     if(m_WelderID == -1)
     {
-        DataBaseManager::getInstance()->insertConfigurationDevice(m_DBConfigure);
-        qDebug() << "Insert a new Device Info";
+        m_WelderID = DataBaseManager::getInstance()->insertConfigurationDevice(m_DBConfigure);
+        qDebug() << "Insert a new Device Info WelderID: " << m_WelderID;
     }
     else
     {
