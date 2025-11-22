@@ -27,5 +27,6 @@
         <file>images/icon_tp.png</file>
         <file>images/icon_weldtime.png</file>
         <file>images/icon_postheight.png</file>
+        <file>images/crossMark.svg</file>
     </qresource>
 </RCC>

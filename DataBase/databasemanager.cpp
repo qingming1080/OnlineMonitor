@@ -1007,9 +1007,9 @@ QList<DataBaseManager::DB_PRODUCTION> DataBaseManager::getProductionData(int wel
     return list;
 }
 
-_Yield_TrendData DataBaseManager::getYieldTrendData(int interVal, int welderID)
+DataBaseManager::DB_YIELD_TREND DataBaseManager::getYieldTrendData(int interVal, int welderID)
 {
-    _Yield_TrendData result;
+    DB_YIELD_TREND result;
 
     // 获取最新设备生产记录时间
     QDateTime endTime;
@@ -1024,7 +1024,8 @@ _Yield_TrendData DataBaseManager::getYieldTrendData(int interVal, int welderID)
         query.bindValue(":welderID", welderID);
         if(query.exec() && query.next())
         {
-            endTime = query.value(PRODUCTION_TABLE::CREATE_TIME).toDateTime();
+            int timeStamp = query.value(PRODUCTION_TABLE::CREATE_TIME).toLongLong();
+            endTime = QDateTime::fromSecsSinceEpoch(timeStamp, Qt::UTC);
             startTime = endTime.addSecs(interVal);
             result.startTime = startTime.toString("yyyy-MM-dd hh:mm:ss");
             result.endTime   = endTime.toString("yyyy-MM-dd hh:mm:ss");

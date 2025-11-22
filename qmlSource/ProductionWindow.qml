@@ -33,23 +33,6 @@ Rectangle {
 
     function loadViewpro(viewName, component)
     {
-        // if(viewName === 3){
-        //     switchingEquipment = true
-        // }
-        // else{
-        //     switchingEquipment = false
-        // }
-
-        // prostack.pop()
-        // if (proViews[viewName]) {
-        //     // 如果视图已缓存，直接显示
-        //     prostack.push(proViews[viewName]);
-        // } else {
-        //     // 创建视图并缓存
-        //     var newItem = component.createObject(prostack);
-        //     proViews[viewName] = newItem;
-        //     prostack.push(newItem);
-        // }
         prostack.clear();
         var newItem = component.createObject(prostack);
         proViews[viewName] = newItem;

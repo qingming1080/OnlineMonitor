@@ -61,19 +61,25 @@ Rectangle {
 
     ChartView {
         id: chartView
-        width: parent.width // 使图表的宽度等于父项的宽度
-        height: parent.height // 使图表的高度等于父项的高度
+        // width: parent.width // 使图表的宽度等于父项的宽度
+        // height: parent.height // 使图表的高度等于父项的高度
         anchors.top: parent.top // 使图表的顶部与父项的顶部对齐
+        anchors.topMargin: -5
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: -5
         anchors.right: parent.right // 使图表的右侧与父项的右侧对齐
+        anchors.rightMargin: -5
+        anchors.left: parent.left
+        anchors.leftMargin: -5
         antialiasing: true
         backgroundColor: "transparent"
         titleColor: "red"
         titleFont.family: GlobalSystemDefine.fontBold
         titleFont.pixelSize: 20
-        margins.left: 10
-        margins.right: 10
-        margins.top: 10
-        margins.bottom: 10
+        margins.left: 0
+        margins.right: 0
+        margins.top: 0
+        margins.bottom: 0
         legend {
             font.pixelSize: 16
             font.bold: true
@@ -93,19 +99,18 @@ Rectangle {
             labelsColor: "#a3c7d0"
             labelsFont.pixelSize: 12
             labelsFont.bold: true
-            labelFormat: '%d'
+            labelFormat: "%d"
             gridVisible:false
         }
         ValueAxis{
             id: preHeight
             min: DeviceManager.DeviceList[currentIndex].TrendObj.PreheightMinY
             max: DeviceManager.DeviceList[currentIndex].TrendObj.PreheightMaxY
-            tickCount: 12
+            tickCount: 5
             labelsColor: "#a3c7d0"
             labelsFont.pixelSize: 12
             labelsFont.bold: true
-            //labelFormat: '%d'
-            labelFormat: '%.2f'
+            labelFormat: "%.2f"
             gridVisible:false
             color:"#1398fa"
             visible: (currentIndex < 0) ? false : DeviceManager.DeviceList[currentIndex].DeviceObj.HeightEncoderOption
@@ -114,13 +119,12 @@ Rectangle {
             id: postHeight
             min: DeviceManager.DeviceList[currentIndex].TrendObj.PostHeightMinY
             max: DeviceManager.DeviceList[currentIndex].TrendObj.PostHeightMaxY
-            tickCount:12
+            tickCount: 5
             labelsColor: "#a3c7d0"
             labelsFont.pixelSize: 12
             labelsFont.bold: true
-            //labelFormat: '%d'
-            labelFormat: '%.2f'
-            gridVisible:false
+            labelFormat: "%.2f"
+            gridVisible: false
             color:"#ccb2f8"
             visible: (currentIndex < 0) ? false : DeviceManager.DeviceList[currentIndex].DeviceObj.HeightEncoderOption
         }
@@ -128,11 +132,11 @@ Rectangle {
             id: peakPower
             min: DeviceManager.DeviceList[currentIndex].TrendObj.PeakPowerMinY
             max: DeviceManager.DeviceList[currentIndex].TrendObj.PeakPowerMaxY
-            tickCount: 12
+            tickCount: 5
             labelsColor: "#a3c7d0"
             labelsFont.pixelSize: 12
             labelsFont.bold: true
-            labelFormat: '%d'
+            labelFormat: "%d"
             gridVisible:false
             color:"#d5b989"
         }
@@ -140,16 +144,16 @@ Rectangle {
             id: weldTime
             min: DeviceManager.DeviceList[currentIndex].TrendObj.WeldTimeMinY
             max: DeviceManager.DeviceList[currentIndex].TrendObj.WeldTimeMaxY
-            tickCount: 12
+            tickCount: 5
             labelsColor: "#a3c7d0"
             labelsFont.pixelSize: 12
             labelsFont.bold: true
-            labelFormat: '%.2f'
-            gridVisible:false
+            labelFormat: "%.2f"
+            gridVisible: false
             color:"#cd9caa"
         }
         LineSeries {
-            id:lineSeriesPeakPower
+            id: lineSeriesPeakPower
             // name: "功率"
             name: GlobalLanguageDefine.strPower
             axisX: cycleCount
@@ -159,7 +163,7 @@ Rectangle {
 
         }
         LineSeries {
-            id:lineSeriesWeldTime
+            id: lineSeriesWeldTime
             // name: "时间"
             name: GlobalLanguageDefine.strTime
             axisX: cycleCount
@@ -180,7 +184,7 @@ Rectangle {
 
         }
         LineSeries {
-            id:lineSeriesPostHeight
+            id: lineSeriesPostHeight
             // name: "焊后高度"
             name: GlobalLanguageDefine.strPostWeldHeight
             axisX: cycleCount
@@ -188,7 +192,6 @@ Rectangle {
             color: "#ccb2f8"
             width: 1
             visible: (currentIndex < 0) ? false : DeviceManager.DeviceList[currentIndex].DeviceObj.HeightEncoderOption
-
         }
 
         onVisibleChanged: {

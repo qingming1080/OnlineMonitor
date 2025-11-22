@@ -96,7 +96,6 @@ Window {
             cachedViews[viewName] = newItem;
             stackView.push(newItem);
         }
-
     }
 
     function showLoading(isShow)
@@ -109,6 +108,20 @@ Window {
     function showDialog(title, text)
     {
         mesDialog.openFor(title,text)
+    }
+
+    function showPrimaryNumpad(strTitle, strUnit, iDecimals, realMinimum, realMaximum, strCurrentValue, targetObj, onConfirmCallback)
+    {
+        primaryNumpad.headertext = strTitle
+        primaryNumpad.suffix = strUnit
+        primaryNumpad.decimals = iDecimals
+        primaryNumpad.minimumValue = realMinimum
+        primaryNumpad.maximumValue = realMaximum
+        primaryNumpad.value = strCurrentValue
+        primaryNumpad.targetTextField = targetObj
+        primaryNumpad.confirmCallback = onConfirmCallback
+        primaryNumpad.visible = true
+        primaryNumpad.selectAll()
     }
 
     Connections {
@@ -169,16 +182,6 @@ Window {
             anchors.bottom: parent.bottom
             anchors.left: parent.left
             width: showWidth
-            // Component.onCompleted:
-            // {
-            //     if(DeviceManager.DeviceList[0].WelderID === -1)
-            //     {
-            //         loadView(3, sys)
-            //     }
-            //     else
-            //         loadView(1, pro)
-            //     sigUpdateUI(0)
-            // }
         }
         Footer
         {
@@ -299,28 +302,14 @@ Window {
         }
     }
 
-    function showPrimaryNumpad(strTitle, strUnit, iDecimals, realMinimum, realMaximum, strCurrentValue, targetObj, onConfirmCallback)
-    {
-        primaryNumpad.headertext = strTitle
-        primaryNumpad.suffix = strUnit
-        primaryNumpad.decimals = iDecimals
-        primaryNumpad.minimumValue = realMinimum
-        primaryNumpad.maximumValue = realMaximum
-        primaryNumpad.value = strCurrentValue
-        primaryNumpad.targetTextField = targetObj
-        primaryNumpad.confirmCallback = onConfirmCallback
-        primaryNumpad.visible = true
-        primaryNumpad.selectAll()
-    }
-
     /*KeyBoard*/
     BransonPrimaryNumpad
     {
         id:primaryNumpad
         visible: false
         anchors.centerIn: parent
-        width: mainWindow.showWidth
-        height: mainWindow.showHeight
+        width: parent.width
+        height: parent.height
         z: 2
     }
 }

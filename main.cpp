@@ -116,9 +116,6 @@ int main(int argc, char *argv[])
     qmlRegisterType<MANUAL_TABLE>("ManualTable", 1, 0, "ManualTable");
     qmlRegisterType<HistoryEnum>("HistoryEnum", 1, 0, "HistoryEnum");
 
-//    qmlRegisterType<LineChartItem>("CustomChart", 1, 0, "CustomChart");
-//    qmlRegisterType<TimeChartItem>("CustomTimeChart", 1, 0, "CustomTimeChart");
-
     qmlRegisterSingletonType(QUrl("qrc:/qmlSource/GlobalLanguageDefine.qml"),   "GlobalLanguageDefine", 1,  0,  "GlobalLanguageDefine");
     qmlRegisterSingletonType(QUrl("qrc:/qmlSource/BransonStyle.qml"),               "Style",                1, 0, "Style");
     qmlRegisterSingletonType(QUrl("qrc:/qmlSource/GlobalSystemDefine.qml"),     "GlobalSystemDefine",   1,  0,  "GlobalSystemDefine");

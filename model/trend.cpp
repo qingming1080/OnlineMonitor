@@ -10,8 +10,12 @@
 // #include "devicemanager.h"
 #include <QPointF>
 Trend::Trend(int welderID, QObject *parent)
-    : QObject{parent}, m_welderID(welderID)
+    : QObject{parent}, m_WelderID(welderID)
 {
+    if(DataBaseManager::getInstance()->getModelRecord(m_WelderID, m_DBModel) == false)
+    {
+        m_DBModel = DataBaseManager::DB_MODEL();
+    }
     init();
 }
 
@@ -21,13 +25,13 @@ void Trend::upYieldData()
     // timer.start();
 
     if(m_yieldType == 0)
-        m_yieldData = DataBaseManager::getInstance()->getYieldTrendData(0-60*60, m_welderID);  // 一个小时 60s*60m
+        m_yieldData = DataBaseManager::getInstance()->getYieldTrendData(0-60*60, m_WelderID);  // 一个小时 60s*60m
     else if(m_yieldType == 1)
-        m_yieldData = DataBaseManager::getInstance()->getYieldTrendData(0-60*60*24, m_welderID);   // 一天  60s*60m*24h
+        m_yieldData = DataBaseManager::getInstance()->getYieldTrendData(0-60*60*24, m_WelderID);   // 一天  60s*60m*24h
     else if(m_yieldType == 2)
-        m_yieldData = DataBaseManager::getInstance()->getYieldTrendData(0-60*60*24*7, m_welderID); // 七天
+        m_yieldData = DataBaseManager::getInstance()->getYieldTrendData(0-60*60*24*7, m_WelderID); // 七天
     else if(m_yieldType == 3)
-        m_yieldData = DataBaseManager::getInstance()->getYieldTrendData(0-60*60*24*30, m_welderID); // 三十天
+        m_yieldData = DataBaseManager::getInstance()->getYieldTrendData(0-60*60*24*30, m_WelderID); // 三十天
 
     setYieldTrendData();
 
@@ -71,8 +75,6 @@ void Trend::setWeldTrendData(WELD_TREND result)
 
 void Trend::AppendWeldPoint(const int cycleCount, const int power, const int time, const int preHeight, const int postHeight)
 {
-    constexpr int kAxisMax = 256;
-
     double preheightDouble  = preHeight / 100.0;
     double postHeightDouble = postHeight / 100.0;
     double timeDouble       = time / 100.0;
@@ -81,7 +83,7 @@ void Trend::AppendWeldPoint(const int cycleCount, const int power, const int tim
     auto appendWithLimit = [&](QVector<QPointF>& vec, int xCount, double yValue)
     {
         vec.append(QPointF(xCount, yValue));
-        if (vec.size() > kAxisMax)
+        if (vec.size() > X_AXIS_MAX)
             vec.removeFirst();
     };
 
@@ -101,7 +103,7 @@ void Trend::AppendWeldPoint(const int cycleCount, const int power, const int tim
         if (series)
         {
             series->append(xCount, yValue);
-            if (series->count() > kAxisMax)
+            if (series->count() > X_AXIS_MAX)
                 series->remove(0);
         }
     };
@@ -116,37 +118,89 @@ void Trend::AppendWeldPoint(const int cycleCount, const int power, const int tim
 
 void Trend::updateYAxisRanges()
 {
-    auto calcRange = [](const QVector<QPointF>& data, double& minVal, double& maxVal) {
-        if (data.isEmpty()) return;
-        minVal = maxVal = data.first().y();
-        for (const QPointF& p : data)
-        {
-            minVal = qMin(minVal, p.y());
-            maxVal = qMax(maxVal, p.y());
-        }
-    };
+    // auto calcRange = [](const QVector<QPointF>& data, double& minVal, double& maxVal) {
+    //     if (data.isEmpty()) return;
+    //     minVal = maxVal = data.first().y();
+    //     for (const QPointF& p : data)
+    //     {
+    //         minVal = qMin(minVal, p.y());
+    //         maxVal = qMax(maxVal, p.y());
+    //     }
+    // };
 
     double PreheightMinY, PreheightMaxY;
     double PostHeightMinY,  PostHeightMaxY;
     double WeldTimeMinY,   WeldTimeMaxY;
     double PeakPowerMinY,  PeakPowerMaxY;
 
-    calcRange(m_PreheightData, PreheightMinY, PreheightMaxY);
-    calcRange(m_PostHeightData,  PostHeightMinY,  PostHeightMaxY);
-    calcRange(m_WeldTimeData,  WeldTimeMinY,   WeldTimeMaxY);
-    calcRange(m_PeakPowerData, PeakPowerMinY,  PeakPowerMaxY);
+    // calcRange(m_PreheightData, PreheightMinY, PreheightMaxY);
+    // calcRange(m_PostHeightData,  PostHeightMinY,  PostHeightMaxY);
+    // calcRange(m_WeldTimeData,  WeldTimeMinY,   WeldTimeMaxY);
+    // calcRange(m_PeakPowerData, PeakPowerMinY,  PeakPowerMaxY);
 
-    setPreheightMaxY(5.0);
-    setPreheightMinY(0.0);
+    PreheightMinY = qMax(0.0, (m_DBModel.Preheight.Alpha - 5 * m_DBModel.Preheight.Beta));
+    PreheightMaxY = m_DBModel.Preheight.Alpha + 5 * m_DBModel.Preheight.Beta;
+    setPreheightMaxY(PreheightMaxY);
+    setPreheightMinY(PreheightMinY);
 
-    setPostHeightMaxY(5.0);
-    setPostHeightMinY(0.0);
+    PostHeightMaxY = m_DBModel.PostHeight.Alpha + 5 * m_DBModel.PostHeight.Beta;
+    PostHeightMinY = qMax(0.0, m_DBModel.PostHeight.Alpha - 5 * m_DBModel.PostHeight.Beta);
+    setPostHeightMaxY(PostHeightMaxY);
+    setPostHeightMinY(PostHeightMinY);
 
-    setWeldTimeMaxY(5.0);
-    setWeldTimeMinY(0.0);
+    WeldTimeMaxY = m_DBModel.WeldTime.Alpha + 5 * m_DBModel.WeldTime.Beta;
+    WeldTimeMinY = qMax(0.0, m_DBModel.WeldTime.Alpha - 5 * m_DBModel.WeldTime.Beta);
+    setWeldTimeMaxY(WeldTimeMaxY);
+    setWeldTimeMinY(WeldTimeMinY);
 
-    setPeakPowerMaxY(PeakPowerMaxY + 200.0);
-    setPeakPowerMinY(qMax(0.0, PeakPowerMinY - 200));
+    PeakPowerMaxY = m_DBModel.PeakPower.Alpha + 5 * m_DBModel.PeakPower.Beta;
+    PeakPowerMinY = qMax(0.0, m_DBModel.PeakPower.Alpha - 5 * m_DBModel.PeakPower.Beta);
+    setPeakPowerMaxY(PeakPowerMaxY);
+    setPeakPowerMinY(PeakPowerMinY);
+}
+
+void Trend::SetModel(const DataBaseManager::DB_MODEL &model)
+{
+    m_DBModel.id = model.id;
+    m_DBModel.WelderId = model.WelderId;
+    m_DBModel.CreateTime = model.CreateTime;
+    m_DBModel.Energy = model.Energy;
+    m_DBModel.Amplitude = model.Amplitude;
+    m_DBModel.TriggerPressure = model.TriggerPressure;
+    m_DBModel.WeldPressure = model.WeldPressure;
+
+    m_DBModel.WeldTime.Alpha = model.WeldTime.Alpha;
+    m_DBModel.WeldTime.Beta = model.WeldTime.Beta;
+    m_DBModel.PeakPower.Alpha = model.PeakPower.Alpha;
+    m_DBModel.PeakPower.Beta = model.PeakPower.Beta;
+    m_DBModel.Preheight.Alpha = model.Preheight.Alpha;
+    m_DBModel.Preheight.Beta = model.Preheight.Beta;
+    m_DBModel.PostHeight.Alpha = model.PostHeight.Alpha;
+    m_DBModel.PostHeight.Beta = model.PostHeight.Beta;
+
+    m_DBModel.PeelForce.P00 = model.PeelForce.P00;
+    m_DBModel.PeelForce.P10 = model.PeelForce.P10;
+    m_DBModel.PeelForce.P01 = model.PeelForce.P01;
+    m_DBModel.PeelForce.P20 = model.PeelForce.P20;
+    m_DBModel.PeelForce.P11 = model.PeelForce.P11;
+    m_DBModel.PeelForce.P02 = model.PeelForce.P02;
+    m_DBModel.Residual.P00 = model.Residual.P00;
+    m_DBModel.Residual.P10 = model.Residual.P10;
+    m_DBModel.Residual.P01 = model.Residual.P01;
+    m_DBModel.Residual.P20 = model.Residual.P20;
+    m_DBModel.Residual.P11 = model.Residual.P11;
+    m_DBModel.Residual.P02 = model.Residual.P02;
+
+    m_DBModel.Centralized.TimeMean = model.Centralized.TimeMean;
+    m_DBModel.Centralized.TimeStd = model.Centralized.TimeStd;
+    m_DBModel.Centralized.PowerMean = model.Centralized.PowerMean;
+    m_DBModel.Centralized.PowerStd = model.Centralized.PowerStd;
+    m_DBModel.Centralized.ForceMean = model.Centralized.ForceMean;
+    m_DBModel.Centralized.ResidualMean = model.Centralized.ResidualMean;
+
+    m_DBModel.SampleCount = model.SampleCount;
+    m_DBModel.BatchCount = model.BatchCount;
+    m_DBModel.isAvailable = model.isAvailable;
 }
 
 void Trend::setYieldTrendData()
@@ -238,6 +292,16 @@ void Trend::init()
     // connect(m_yieldTimer, &QTimer::timeout, this, &Trend::upYieldData);
     // m_yieldTimer->start(1000*60);
     upYieldData();
+    setWeldTimeMinY(0.00);
+    setWeldTimeMaxY(5.00);
+    setPeakPowerMinY(0);
+    setPeakPowerMaxY(10000);
+    setPreheightMinY(0.00);
+    setPreheightMaxY(15.00);
+    setPostHeightMinY(0.00);
+    setPostHeightMaxY(15.00);
+    setCountMinX(0);
+    setCountMaxX(X_AXIS_MAX);
 
     // m_weldTimer = new QTimer(this);
     // connect(m_weldTimer, &QTimer::timeout, this, &Trend::upWeldData);

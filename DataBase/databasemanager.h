@@ -256,6 +256,25 @@ public:
         int FinalResult;                    // 产品状态 0_合格 1_次品 2_可疑
     };
 
+    // 良率趋势数据结构
+    struct DB_YIELD_TREND
+    {
+        // 开始时间
+        QString startTime;
+        // 结束时间
+        QString endTime;
+        QList<QPointF> points;
+        DB_YIELD_TREND& operator= (const DB_YIELD_TREND& other)
+        {
+            this->points.clear();
+            this->startTime = other.startTime;
+            this->endTime   = other.endTime;
+            for(int i = 0; i < other.points.count(); ++i)
+                this->points.push_back(other.points.at(i));
+            return *this;
+        }
+    };
+
 public:
     static DataBaseManager* getInstance();
 
@@ -300,6 +319,8 @@ public:
     bool insertProductionRow(DB_PRODUCTION data);
     QList<DB_PRODUCTION> getProductionData(int welderID = 0, int finalResult = 0, bool exportAll = false);
 
+    DB_YIELD_TREND getYieldTrendData(int interVal, int welderID = 0);
+
 /////////////////////////io_data////////////////////////////////
 /// 只处理待定
     ///
@@ -340,15 +361,6 @@ public:
     /// \return
     ///
 //    _Weld_TrendData getWeldTrendData(int welderID = 0);
-
-    ///
-    /// \brief getYieldTrendData : 获取良率趋势折线图,取最新五百个
-    /// \param interVal : 时间间隔 前推多少秒
-    /// \param welderID : 焊机ID，为零则不区分焊机
-    /// \return
-    ///
-    _Yield_TrendData getYieldTrendData(int interVal, int welderID = 0);
-
 
 /////////////////////////system////////////////////////////////
 /// root界面

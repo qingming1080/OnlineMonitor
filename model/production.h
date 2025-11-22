@@ -4,7 +4,6 @@
 #include <QObject>
 #include "DataBase/databasemanager.h"
 #include "modbus/hbmodbusclient.h"
-#include "provienceEE/providenceEE.h"
 
 class Production : public QObject
 {
@@ -130,7 +129,7 @@ public:
     
     void AppendNewRecordComming(const HBModbusClient::MODBUS_WELD_RESULT &data);
 
-    void SetModel(const DataBaseManager::DB_MODEL& model);
+    virtual void SetModel(const DataBaseManager::DB_MODEL& model);
 
 private:
     int m_WelderID;

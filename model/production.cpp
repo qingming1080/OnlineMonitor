@@ -2,7 +2,7 @@
 #include "tools/utilityfunction.h"
 #include "history.h"
 #include "historyenum.h"
-
+#include "provienceEE/providenceEE.h"
 #include "DataBase/databasehelper.h"
 
 Production::Production(int welderID, QObject *parent)

@@ -156,6 +156,7 @@ bool Device::IsProductionPresetChanged(const HBModbusClient::WELD_PRESET &data)
 void Device::slotNotifyTrainingProcessFinished(DataBaseManager::DB_MODEL &model)
 {
     m_ptrProduction->SetModel(model);
+    m_ptrTrend->SetModel(model);
 }
 
 DeviceInformation* Device::getDeviceObj() const

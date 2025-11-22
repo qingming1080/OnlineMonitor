@@ -3,10 +3,9 @@
 
 #include <QObject>
 #include <QStandardItemModel>
-#include "define.h"
-
 #include <QtCharts>
 #include <QXYSeries>
+#include "DataBase/databasemanager.h"
 
 class Trend : public QObject
 {
@@ -53,8 +52,7 @@ public:
     explicit Trend(int welderID = 0, QObject *parent = nullptr);
 
     void AppendWeldPoint(const int cycleCount, const int power, const int time, const int preHeight, const int postHeight);
-    void updateYAxisRanges();
-
+    virtual void SetModel(const DataBaseManager::DB_MODEL& model);
 
     // 更新良率趋势
     void upYieldData();
@@ -142,9 +140,11 @@ private:
     void setWeldTrendData(WELD_TREND data);
 
     void setYieldTrendData();
+    void updateYAxisRanges();
 
 private:
-    const int m_welderID;
+    static constexpr int X_AXIS_MAX = 256;
+    int m_WelderID;
 
     // 焊接趋势 X轴范围
     int m_CountMinX;
@@ -171,7 +171,7 @@ private:
     QTimer* m_weldTimer;
     QTimer* m_yieldTimer;
 
-    _Yield_TrendData m_yieldData;
+    DataBaseManager::DB_YIELD_TREND m_yieldData;
     QVector<QPointF> m_PreheightData;
     QVector<QPointF> m_PostHeightData;
     QVector<QPointF> m_WeldTimeData;
@@ -183,18 +183,7 @@ private:
     QXYSeries* m_pWeldTimeSeries = nullptr;
     QXYSeries* m_pPeakPowerSeries = nullptr;
 
-// public:
-//     _Yield_TrendData m_yieldData;
-//     QVector<QPointF> m_frontData;
-//     QVector<QPointF> m_backData;
-//     QVector<QPointF> m_timeData;
-//     QVector<QPointF> m_powerData;
-
-//     QXYSeries* m_pYieldSeries = nullptr;
-//     QXYSeries* m_pFrontSeries = nullptr;
-//     QXYSeries* m_pBackSeries = nullptr;
-//     QXYSeries* m_pTimeSeries = nullptr;
-//     QXYSeries* m_pPowerSeries = nullptr;
+    DataBaseManager::DB_MODEL       m_DBModel;
 };
 
 #endif // TREND_H
