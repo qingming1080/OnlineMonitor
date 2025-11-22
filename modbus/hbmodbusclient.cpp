@@ -265,18 +265,18 @@ void HBModbusClient::ParseWeldResult()
             QTime time = QTime(hour, minute, second);
             data.DateTime = QDateTime(date, time);
 
-            qDebug() << "[ParseWeldResult] Device:" << i
-                     << "CycleCount:" << data.CycleCount
-                     << "Energy:" << data.Energy
-                     << "Amplitude:" << data.Amplitude
-                     << "TriggerPressure:" << data.TriggerPressure
-                     << "WeldingPressure:" << data.WeldingPressure
-                     << "WeldTime:" << data.WeldTime
-                     << "PeakPower:" << data.PeakPower
-                     << "Preheight:" << data.Preheight
-                     << "PostHeight:" << data.PostHeight
-                     << "WeldAlarm:" << data.WeldAlarm
-                     << "DateTime:" << data.DateTime.toString("yyyy-MM-dd HH:mm:ss");
+            // qDebug() << "[ParseWeldResult] Device:" << i
+            //          << "CycleCount:" << data.CycleCount
+            //          << "Energy:" << data.Energy
+            //          << "Amplitude:" << data.Amplitude
+            //          << "TriggerPressure:" << data.TriggerPressure
+            //          << "WeldingPressure:" << data.WeldingPressure
+            //          << "WeldTime:" << data.WeldTime
+            //          << "PeakPower:" << data.PeakPower
+            //          << "Preheight:" << data.Preheight
+            //          << "PostHeight:" << data.PostHeight
+            //          << "WeldAlarm:" << data.WeldAlarm
+            //          << "DateTime:" << data.DateTime.toString("yyyy-MM-dd HH:mm:ss");
 
             for(auto iter = m_WelderDeviceMap.begin(); iter != m_WelderDeviceMap.end(); iter++)
             {
@@ -310,11 +310,11 @@ void HBModbusClient::ParsePresetSetting()
 
         if (changed)
         {
-            qDebug() << "[ParsePresetSetting] Device:" << i
-                     << "Energy:" << weldPreset.Energy
-                     << "Amplitude:" << weldPreset.Amplitude
-                     << "TriggerPressure:" << weldPreset.TriggerPressure
-                     << "WeldingPressure:" << weldPreset.WeldingPressure;
+            // qDebug() << "[ParsePresetSetting] Device:" << i
+            //          << "Energy:" << weldPreset.Energy
+            //          << "Amplitude:" << weldPreset.Amplitude
+            //          << "TriggerPressure:" << weldPreset.TriggerPressure
+            //          << "WeldingPressure:" << weldPreset.WeldingPressure;
             for(auto iter = m_WelderDeviceMap.begin(); iter != m_WelderDeviceMap.end(); iter++)
             {
                 if(iter.value() == i)

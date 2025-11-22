@@ -164,24 +164,20 @@ Rectangle {
             anchors.fill: parent
             onPressed: {
                 keyboardType = 0
-                window.showPrimaryNumpad(qsTr("请输入能量值"), " ", 3, 0, 999999,
-                    fieldEnergy.text, fieldEnergy, function(val)
+                window.showPrimaryNumpad(titleEnergy.text, " ", 3, 0, 999999, fieldEnergy.text, fieldEnergy, function(val)
                 {
                     fieldEnergy.text = val;
+                    var intRegex = /^[0-9]+$/
+                    if (!intRegex.test(fieldEnergy.text))
+                        footer.showError(titleEnergy.text + GlobalLanguageDefine.strInputInterger)
+                    else
+                    {
+                       footer.hideError()
+                       DeviceManager.DeviceList[currentIndex].ManualObj.EnergySetting = fieldEnergy.text
+                    }
                 })
             }
         }
-
-        onEditingFinished: {
-             var intRegex = /^[0-9]+$/
-             if (!intRegex.test(fieldEnergy.text))
-                 footer.showError(titleEnergy.text + GlobalLanguageDefine.strInputInterger)
-             else
-             {
-                footer.hideError()
-                DeviceManager.DeviceList[currentIndex].ManualObj.EnergySetting = fieldEnergy.text
-             }
-         }
     }
     TextField{
         id: fieldAmplitude
@@ -207,24 +203,20 @@ Rectangle {
             anchors.fill: parent
             onPressed: {
                 keyboardType = 0
-                window.showPrimaryNumpad(qsTr("请输入振幅值"), " ", 3, 0, 999999,
-                    fieldAmplitude.text, fieldAmplitude, function(val)
+                window.showPrimaryNumpad(titleAmplitude.text, " ", 3, 0, 999999, fieldAmplitude.text, fieldAmplitude, function(val)
                 {
-                    fieldAmplitude.text = val;
+                     fieldAmplitude.text = val;
+                     var wpRegex = /^[0-9]+$/
+                     if (!wpRegex.test(fieldAmplitude.text))
+                         footer.showError(titleAmplitude.text + GlobalLanguageDefine.strInputInterger)
+                     else
+                     {
+                         footer.hideError()
+                         DeviceManager.DeviceList[currentIndex].ManualObj.AmplitudeSetting = fieldAmplitude.text
+                     }
                 })
             }
         }
-
-        onEditingFinished: {
-             var wpRegex = /^[0-9]+$/
-             if (!wpRegex.test(fieldAmplitude.text))
-                 footer.showError(titleAmplitude.text + GlobalLanguageDefine.strInputInterger)
-             else
-             {
-                footer.hideError()
-                DeviceManager.DeviceList[currentIndex].ManualObj.AmplitudeSetting = fieldAmplitude.text
-             }
-         }
     }
     TextField{
         id: fieldTriggerPressure
@@ -250,24 +242,20 @@ Rectangle {
             anchors.fill: parent
             onPressed: {
                 keyboardType = 0
-                window.showPrimaryNumpad(qsTr("请输入触发压力值"), " ", 3, 0, 999999,
-                    fieldTriggerPressure.text, fieldTriggerPressure, function(val)
+                window.showPrimaryNumpad(titleTriggerPressure.text, " ", 3, 0, 999999, fieldTriggerPressure.text, fieldTriggerPressure, function(val)
                 {
                     fieldTriggerPressure.text = val;
+                    var tpRegex = /^[0-9]+$/
+                    if (!tpRegex.test(fieldTriggerPressure.text))
+                        footer.showError(titleTriggerPressure.text + GlobalLanguageDefine.strInputInterger)
+                    else
+                    {
+                       footer.hideError()
+                       DeviceManager.DeviceList[currentIndex].ManualObj.TriggerPressureSetting = fieldTriggerPressure.text
+                    }
                 })
             }
         }
-
-        onEditingFinished: {
-             var tpRegex = /^[0-9]+$/
-             if (!tpRegex.test(fieldTriggerPressure.text))
-                 footer.showError(titleTriggerPressure.text + GlobalLanguageDefine.strInputInterger)
-             else
-             {
-                footer.hideError()
-                DeviceManager.DeviceList[currentIndex].ManualObj.TriggerPressureSetting = fieldTriggerPressure.text
-             }
-         }
     }
     TextField{
         id: fieldWeldPressure
@@ -293,23 +281,19 @@ Rectangle {
             anchors.fill: parent
             onPressed: {
                 keyboardType = 0
-                window.showPrimaryNumpad(qsTr("请输入焊接压力值"), " ", 3, 0, 999999,
-                    fieldWeldPressure.text, fieldWeldPressure, function(val)
+                window.showPrimaryNumpad(fieldWeldPressure.text, " ", 3, 0, 999999, fieldWeldPressure.text, fieldWeldPressure, function(val)
                 {
                     fieldWeldPressure.text = val;
+                    var wpRegex = /^[0-9]+$/
+                    if (!wpRegex.test(fieldWeldPressure.text))
+                        footer.showError(titleWeldPressure.text + GlobalLanguageDefine.strInputInterger)
+                    else
+                    {
+                        footer.hideError()
+                        DeviceManager.DeviceList[currentIndex].ManualObj.WeldPressureSetting = fieldWeldPressure.text
+                    }
                 })
             }
         }
-
-        onEditingFinished: {
-             var wpRegex = /^[0-9]+$/
-             if (!wpRegex.test(fieldWeldPressure.text))
-                 footer.showError(titleWeldPressure.text + GlobalLanguageDefine.strInputInterger)
-             else
-             {
-                footer.hideError()
-                DeviceManager.DeviceList[currentIndex].ManualObj.WeldPressureSetting = fieldWeldPressure.text
-            }
-         }
     }
 }

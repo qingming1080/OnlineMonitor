@@ -208,20 +208,23 @@ Rectangle {
                     MouseArea {
                         anchors.fill: parent
                         onPressed: {
-                            maxProductionTextField.forceActiveFocus()
                             keyboardType = 0
-                        }
-                    }
-                    onEditingFinished: {
-                        var maxProductionRegex = /^(?:[2-9]\d{4}|[1-9]\d{5}|1000000)$/
-                        if (!maxProductionRegex.test(maxProductionTextField.text))
-                        {
-                            footer.showError(titleMaxProduction.text + GlobalLanguageDefine.strMaxProductionLimit)
-                        }
-                        else
-                        {
-                            footer.hideError()
-                            DeviceManager.DeviceList[DeviceManager.SelectedDeviceIndex].DeviceObj.ProductionMaxBacth = maxProductionTextField.text
+                            window.showPrimaryNumpad(titleMaxProduction.text, " ", 3, 0, 999999, maxProductionTextField.text, maxProductionTextField, function(val)
+                            {
+                                maxProductionTextField.text = val;
+                                var maxProductionRegex = /^(?:[2-9]\d{4}|[1-9]\d{5}|1000000)$/
+                                if (!maxProductionRegex.test(maxProductionTextField.text))
+                                {
+                                    footer.showError(titleMaxProduction.text + GlobalLanguageDefine.strMaxProductionLimit)
+                                    isInputValid = false
+                                }
+                                else
+                                {
+                                    footer.hideError()
+                                    DeviceManager.DeviceList[DeviceManager.SelectedDeviceIndex].DeviceObj.ProductionMaxBacth = maxProductionTextField.text
+                                    isInputValid = true
+                                }
+                            })
                         }
                     }
                 }
@@ -261,8 +264,23 @@ Rectangle {
                     MouseArea {
                         anchors.fill: parent
                         onPressed: {
-                            learningSamplesTextField.forceActiveFocus()
                             keyboardType = 0
+                            window.showPrimaryNumpad(titleLearningSamples.text, " ", 3, 0, 999999, learningSamplesTextField.text, learningSamplesTextField, function(val)
+                            {
+                                learningSamplesTextField.text = val;
+                                var learningSamplesRegex = /^(1[0-9]|20)$/
+                                if (!learningSamplesRegex.test(learningSamplesTextField.text))
+                                {
+                                    footer.showError(titleLearningSamples.text + GlobalLanguageDefine.strLearnSampleLimit)
+                                    isInputValid = false
+                                }
+                                else
+                                {
+                                    footer.hideError()
+                                    DeviceManager.DeviceList[DeviceManager.SelectedDeviceIndex].DeviceObj.MaxModelSamples = learningSamplesTextField.text
+                                    isInputValid = true
+                                }
+                            })
                         }
                     }
                     text:{
@@ -271,16 +289,6 @@ Rectangle {
                             return ""
                         else
                             DeviceManager.DeviceList[index].DeviceObj.MaxModelSamples
-                    }
-                    onEditingFinished: {
-                        var learningSamplesRegex = /^(1[0-9]|20)$/
-                        if (!learningSamplesRegex.test(learningSamplesTextField.text))
-                            footer.showError(titleLearningSamples.text + GlobalLanguageDefine.strLearnSampleLimit)
-                        else
-                        {
-                            footer.hideError()
-                            DeviceManager.DeviceList[DeviceManager.SelectedDeviceIndex].DeviceObj.MaxModelSamples = learningSamplesTextField.text
-                        }
                     }
                 }
                 Text {
@@ -316,28 +324,32 @@ Rectangle {
                         border.width: 3
                         border.color: "#99ccff"
                     }
-                    MouseArea {
-                        anchors.fill: parent
-                        onPressed: {
-                            yieldLowerLimitTextField.forceActiveFocus()
-                            keyboardType = 0
-                        }
-                    }
                     text:{
                         if(tmpIndex === -1)
                             return ""
                         else
                             DeviceManager.DeviceList[tmpIndex].DeviceObj.YieldRateLowerLimit
-
                     }
-                    onEditingFinished: {
-                        var yieldLowerLimitRegex = /^[1-9][0-9]*$/
-                        if (!yieldLowerLimitRegex.test(yieldLowerLimitTextField.text))
-                            footer.showError(titleYieldLowerLimit.text + GlobalLanguageDefine.strInputInterger)
-                        else
-                        {
-                            footer.hideError()
-                            DeviceManager.DeviceList[tmpIndex].DeviceObj.YieldRateLowerLimit = yieldLowerLimitTextField.text
+                    MouseArea {
+                        anchors.fill: parent
+                        onPressed: {
+                            keyboardType = 0
+                            window.showPrimaryNumpad(titleYieldLowerLimit.text, " ", 3, 0, 999999, yieldLowerLimitTextField.text, yieldLowerLimitTextField, function(val)
+                            {
+                                yieldLowerLimitTextField.text = val;
+                                var yieldLowerLimitRegex = /^9[0-9]$/
+                                if (!yieldLowerLimitRegex.test(yieldLowerLimitTextField.text))
+                                {
+                                    footer.showError(titleYieldLowerLimit.text + GlobalLanguageDefine.strYieldRateLimit)
+                                    isInputValid = false
+                                }
+                                else
+                                {
+                                    footer.hideError()
+                                    DeviceManager.DeviceList[DeviceManager.SelectedDeviceIndex].DeviceObj.YieldRateLowerLimit = yieldLowerLimitTextField.text
+                                    isInputValid = true
+                                }
+                            })
                         }
                     }
                 }
@@ -377,8 +389,23 @@ Rectangle {
                     MouseArea {
                         anchors.fill: parent
                         onPressed: {
-                            t7.forceActiveFocus()
                             keyboardType = 0
+                            window.showPrimaryNumpad(s7.text, " ", 3, 0, 999999, t7.text, t7, function(val)
+                            {
+                                t7.text = val;
+                                var automaticLearningLimitRegex = /^[1-9][0-9]*$/
+                                if (!automaticLearningLimitRegex.test(t7.text))
+                                {
+                                    footer.showError(s7.text + GlobalLanguageDefine.strInputInterger)
+                                    isInputValid = false
+                                }
+                                else
+                                {
+                                    footer.hideError()
+                                    DeviceManager.DeviceList[DeviceManager.SelectedDeviceIndex].DeviceObj.AutoLearningCount = t7.text
+                                    isInputValid = true
+                                }
+                            })
                         }
                     }
                     text:{
@@ -386,17 +413,6 @@ Rectangle {
                             return ""
                         else
                             return DeviceManager.DeviceList[tmpIndex].DeviceObj.AutoLearningCount
-                    }
-
-                    onEditingFinished: {
-                        var portRegex = /^[1-9][0-9]*$/
-                        if (!portRegex.test(t7.text))
-                            footer.showError(s7.text + GlobalLanguageDefine.strInputInterger)
-                        else
-                        {
-                            footer.hideError()
-                            DeviceManager.DeviceList[tmpIndex].DeviceObj.AutoLearningCount = t7.text
-                        }
                     }
                 }
 
@@ -430,13 +446,7 @@ Rectangle {
                         border.width: 3
                         border.color: "#99ccff"
                     }
-                    MouseArea {
-                        anchors.fill: parent
-                        onPressed: {
-                            t8.forceActiveFocus()
-                            keyboardType = 0
-                        }
-                    }
+
                     property int tmpIndex: DeviceManager.SelectedDeviceIndex
                     text:{
                         if(tmpIndex === -1)
@@ -444,14 +454,27 @@ Rectangle {
                         else
                             DeviceManager.DeviceList[tmpIndex].DeviceObj.ResidualThreshold
                     }
-                    onEditingFinished: {
-                        var ipRegex = /^[1-9][0-9]*$/
-                        if (!ipRegex.test(t8.text))
-                            footer.showError(s8.text + GlobalLanguageDefine.strInputInterger)
-                        else
-                        {
-                            footer.hideError()
-                            DeviceManager.DeviceList[tmpIndex].DeviceObj.ResidualThreshold = s8.text
+
+                    MouseArea {
+                        anchors.fill: parent
+                        onPressed: {
+                            keyboardType = 0
+                            window.showPrimaryNumpad(s8.text, " ", 3, 0, 999999, t8.text, t8, function(val)
+                            {
+                                t8.text = val;
+                                var residualThresholdRegex = /^[1-9][0-9]*$/
+                                if (!residualThresholdRegex.test(t8.text))
+                                {
+                                    footer.showError(s8.text + GlobalLanguageDefine.strInputInterger)
+                                    isInputValid = false
+                                }
+                                else
+                                {
+                                    footer.hideError()
+                                    DeviceManager.DeviceList[DeviceManager.SelectedDeviceIndex].DeviceObj.ResidualThreshold = t8.text
+                                    isInputValid = true
+                                }
+                            })
                         }
                     }
                 }
@@ -486,13 +509,6 @@ Rectangle {
                         border.width: 3
                         border.color: "#99ccff"
                     }
-                    MouseArea {
-                        anchors.fill: parent
-                        onPressed: {
-                            peelForceThresholdField.forceActiveFocus()
-                            keyboardType = 0
-                        }
-                    }
                     property int tmpIndex: DeviceManager.SelectedDeviceIndex
                     text:{
                         if(tmpIndex === -1)
@@ -500,14 +516,26 @@ Rectangle {
                         else
                             return DeviceManager.DeviceList[tmpIndex].DeviceObj.ForceThreshold
                     }
-                    onEditingFinished: {
-                        var portRegex = /^[1-9][0-9]*$/
-                        if (!portRegex.test(peelForceThresholdField.text))
-                            footer.showError(titlePeelForceThreshold.text + GlobalLanguageDefine.strInputInterger)
-                        else
-                        {
-                            footer.hideError()
-                            DeviceManager.DeviceList[tmpIndex].DeviceObj.ForceThreshold = peelForceThresholdField.text
+                    MouseArea {
+                        anchors.fill: parent
+                        onPressed: {
+                            keyboardType = 0
+                            window.showPrimaryNumpad(titlePeelForceThreshold.text, " ", 3, 0, 999999, peelForceThresholdField.text, peelForceThresholdField, function(val)
+                            {
+                                peelForceThresholdField.text = val;
+                                var peelForceThresholdRegex = /^[1-9][0-9]*$/
+                                if (!peelForceThresholdRegex.test(t8.text))
+                                {
+                                    footer.showError(titlePeelForceThreshold.text + GlobalLanguageDefine.strInputInterger)
+                                    isInputValid = false
+                                }
+                                else
+                                {
+                                    footer.hideError()
+                                    DeviceManager.DeviceList[DeviceManager.SelectedDeviceIndex].DeviceObj.ForceThreshold = peelForceThresholdField.text
+                                    isInputValid = true
+                                }
+                            })
                         }
                     }
                 }
@@ -728,7 +756,7 @@ Rectangle {
                         else
                         {
                             footer.hideError()
-                            DeviceManager.DeviceList[tmpIndex].DeviceObj.WelderName = t4.text
+                            DeviceManager.DeviceList[DeviceManager.SelectedDeviceIndex].DeviceObj.WelderName = t4.text
                         }
                     }
                 }
@@ -971,30 +999,30 @@ Rectangle {
                                 border.width: 3
                                 border.color: "#99ccff"
                             }
+                            property int tmpIndex: DeviceManager.SelectedDeviceIndex
+                            text: NetworkModel.PortNumber
                             MouseArea {
                                 anchors.fill: parent
                                 onPressed: {
-                                    t5.forceActiveFocus()
                                     keyboardType = 0
+                                    window.showPrimaryNumpad(s17.text, " ", 3, 0, 999999, t5.text, t5, function(val)
+                                    {
+                                        t5.text = val;
+                                        var portRegex = /^([0-9]|[1-9][0-9]{1,4}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])$/
+                                        if (!portRegex.test(t5.text))
+                                        {
+                                            footer.showError(s17.text + GlobalLanguageDefine.strEnter0And65535)
+                                            isInputValid = false
+                                        }
+                                        else
+                                        {
+                                            footer.hideError()
+                                            NetworkModel.PortNumber = t5.text
+                                            isInputValid = true
+                                        }
+                                    })
                                 }
                             }
-                            property int tmpIndex: DeviceManager.SelectedDeviceIndex
-                            text: NetworkModel.PortNumber
-                            onTextChanged: {
-                                var portRegex = /^([0-9]|[1-9][0-9]{1,4}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])$/
-                                if (!portRegex.test(t5.text))
-                                {
-                                    footer.showError(s17.text + GlobalLanguageDefine.strEnter0And65535)
-                                    isInputValid = false
-                                }
-                                else
-                                {
-                                    footer.hideError()
-                                    NetworkModel.PortNumber = t5.text
-                                    isInputValid = true
-                                }
-                            }
-
                         }
                         TextField{
                             id:t6
@@ -1009,32 +1037,33 @@ Rectangle {
                             font.family: GlobalSystemDefine.fontBold
                             font.bold: true
                             font.pixelSize: 18
-                            inputMethodHints: Qt.ImhDigitsOnly
+                            // inputMethodHints: Qt.ImhDigitsOnly
                             background: Rectangle{
                                 radius: 6
                                 border.width: 3
                                 border.color: "#99ccff"
                             }
+                            text: NetworkModel.RemoteIP
                             MouseArea {
                                 anchors.fill: parent
                                 onPressed: {
-                                    t6.forceActiveFocus()
                                     keyboardType = 0
-                                }
-                            }
-                            text: NetworkModel.RemoteIP
-                            onTextChanged: {
-                                var ipRegex = /^(25[0-5]|2[0-4]\d|1\d{2}|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d{2}|[1-9]?\d)){3}$/
-                                if (!ipRegex.test(t6.text))
-                                {
-                                    footer.showError(s18.text + "请输入正确的IP地址")
-                                    isInputValid = false
-                                }
-                                else
-                                {
-                                    footer.hideError()
-                                    NetworkModel.RemoteIP = t6.text
-                                    isInputValid = true
+                                    window.showPrimaryNumpad(s18.text, "IPV4", 0, 0, 999999, t6.text, t6, function(val)
+                                    {
+                                        t6.text = val;
+                                        var ipRegex = /^(25[0-5]|2[0-4]\d|1\d{2}|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d{2}|[1-9]?\d)){3}$/
+                                        if (!ipRegex.test(t6.text))
+                                        {
+                                            footer.showError(s18.text + GlobalLanguageDefine.strEnterValidIPAddress)
+                                            isInputValid = false
+                                        }
+                                        else
+                                        {
+                                            footer.hideError()
+                                            NetworkModel.RemoteIP = t6.text
+                                            isInputValid = true
+                                        }
+                                    })
                                 }
                             }
                         }
@@ -1058,27 +1087,27 @@ Rectangle {
                                 border.color: "#99ccff"
                             }
 
+                            text: NetworkModel.LocalIP
                             MouseArea {
                                 anchors.fill: parent
                                 onPressed: {
-                                    t7.forceActiveFocus()
                                     keyboardType = 0
-                                }
-                            }
-
-                            text: NetworkModel.LocalIP
-                            onTextChanged: {
-                                var ipRegex = /^(25[0-5]|2[0-4]\d|1\d{2}|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d{2}|[1-9]?\d)){3}$/
-                                if (!ipRegex.test(t7.text))
-                                {
-                                    footer.showError(s19.text + "请输入正确的IP地址")
-                                    isInputValid = false
-                                }
-                                else
-                                {
-                                    footer.hideError()
-                                    NetworkModel.LocalIP = t7.text
-                                    isInputValid = true
+                                    window.showPrimaryNumpad(s19.text, "IPV4", 3, 0, 999999, t7.text, t7, function(val)
+                                    {
+                                        t7.text = val;
+                                        var ipRegex = /^(25[0-5]|2[0-4]\d|1\d{2}|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d{2}|[1-9]?\d)){3}$/
+                                        if (!ipRegex.test(t7.text))
+                                        {
+                                            footer.showError(s19.text + GlobalLanguageDefine.strEnterValidIPAddress)
+                                            isInputValid = false
+                                        }
+                                        else
+                                        {
+                                            footer.hideError()
+                                            NetworkModel.LocalIP = t7.text
+                                            isInputValid = true
+                                        }
+                                    })
                                 }
                             }
                         }
