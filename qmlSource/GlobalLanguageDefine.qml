@@ -219,8 +219,13 @@ QtObject
         return strValue
     }
 
-    function decimalsNumber(decimals_num, text_input)
+    function decimalsNumber(decimals_num, text_input, suffix)
     {
+        if(suffix === "IPV4" || suffix === "IPV6")
+        {
+            text_input.maximumLength = 15;
+            return text_input.text;
+        }
         var contrast = text_input.text
         /*Number of decimal points*/
         var num = contrast.split('.').length - 1

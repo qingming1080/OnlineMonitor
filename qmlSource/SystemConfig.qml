@@ -1092,7 +1092,7 @@ Rectangle {
                                 anchors.fill: parent
                                 onPressed: {
                                     keyboardType = 0
-                                    window.showPrimaryNumpad(s19.text, " ", 3, 0, 999999, t7.text, t7, function(val)
+                                    window.showPrimaryNumpad(s19.text, "IPV4", 3, 0, 999999, t7.text, t7, function(val)
                                     {
                                         t7.text = val;
                                         var ipRegex = /^(25[0-5]|2[0-4]\d|1\d{2}|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d{2}|[1-9]?\d)){3}$/

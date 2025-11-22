@@ -32,7 +32,7 @@ Button {
     contentItem: Text {
         text: functionbutton.text
         font{
-            family: Style.regular.name
+            family: GlobalSystemDefine.fontBold
             pixelSize: fontSize
             capitalization: Font.AllUppercase
         }

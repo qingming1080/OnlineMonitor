@@ -83,7 +83,7 @@ Item {
                 text: headertext
                 color: Style.whiteFontColor
                 font{
-                    family: "宋体"
+                    family: GlobalSystemDefine.fontBold
                     pixelSize: Math.round(Style.style2 * Style.scaleHint)
                 }
             }
@@ -137,7 +137,7 @@ Item {
                 onlyForNumpad: true
                 onTextChanged:
                 {
-                    GlobalLanguageDefine.decimalsNumber(decimals,input)
+                    GlobalLanguageDefine.decimalsNumber(decimals,input, suffix)
                 }
             }
             Text {
@@ -149,7 +149,7 @@ Item {
                 anchors.topMargin: Math.round(4 * Style.scaleHint)
                 color: Style.blackFontColor
                 font.pixelSize: Math.round(Style.style4 * Style.scaleHint)
-                font.family: Style.regular.name
+                font.family: GlobalSystemDefine.fontBold
             }
             Label {
                 id: labelMin
@@ -158,7 +158,7 @@ Item {
                 anchors.left: input.left
                 anchors.topMargin: Math.round(2 * Style.scaleHint)
                 font.pixelSize: Math.round(Style.style3 * Style.scaleHint)
-                font.family: Style.regular.name
+                font.family: GlobalSystemDefine.fontBold
                 color: Style.blueFontColor
             }
             Text {
@@ -168,7 +168,7 @@ Item {
                 anchors.left: labelMin.right
                 anchors.leftMargin:  Math.round(5 * Style.scaleHint)
                 font.pixelSize: Math.round(Style.style3 * Style.scaleHint)
-                font.family: Style.regular.name
+                font.family: GlobalSystemDefine.fontBold
                 color: Style.blueFontColor
 
             }
@@ -179,7 +179,7 @@ Item {
                 anchors.right: txtMax.left
                 anchors.rightMargin: Math.round(5 * Style.scaleHint)
                 font.pixelSize: Math.round(Style.style3 * Style.scaleHint)
-                font.family: Style.regular.name
+                font.family: GlobalSystemDefine.fontBold
                 color: Style.blueFontColor
             }
             Text {
@@ -189,7 +189,7 @@ Item {
                 anchors.topMargin: Math.round(2 * Style.scaleHint)
                 anchors.right:  input.right
                 font.pixelSize: Math.round(Style.style3 * Style.scaleHint)
-                font.family: Style.regular.name
+                font.family: GlobalSystemDefine.fontBold
                 color: Style.blueFontColor
 
             }
@@ -213,7 +213,7 @@ Item {
             anchors.left: root.left
             anchors.leftMargin: Math.round(60 * Style.scaleHint)
             text: GlobalLanguageDefine.qmltextCancel
-            font.family: Style.regular.name
+            font.family: GlobalSystemDefine.fontBold
             buttonColor: Style.backgroundColor
             textColor: "#000000"
             onClicked:
@@ -232,7 +232,7 @@ Item {
             anchors.left: cancel.right
             anchors.leftMargin: Math.round(20 * Style.scaleHint)
             text: GlobalLanguageDefine.qmltextDone
-            font.family: Style.regular.name
+            font.family: GlobalSystemDefine.fontBold
             onClicked:
             {
                 primaryNumpad.visible = false
