@@ -138,18 +138,24 @@ void Trend::updateYAxisRanges()
     // calcRange(m_WeldTimeData,  WeldTimeMinY,   WeldTimeMaxY);
     // calcRange(m_PeakPowerData, PeakPowerMinY,  PeakPowerMaxY);
 
-    PreheightMinY = qMax(0.0, (m_DBModel.Preheight.Alpha - 5 * m_DBModel.Preheight.Beta));
     PreheightMaxY = m_DBModel.Preheight.Alpha + 5 * m_DBModel.Preheight.Beta;
+    PreheightMaxY /= 100;
+    PreheightMinY = qMax(0.0, (m_DBModel.Preheight.Alpha - 5 * m_DBModel.Preheight.Beta));
+    PreheightMinY /= 100;
     setPreheightMaxY(PreheightMaxY);
     setPreheightMinY(PreheightMinY);
 
     PostHeightMaxY = m_DBModel.PostHeight.Alpha + 5 * m_DBModel.PostHeight.Beta;
+    PostHeightMaxY /= 100;
     PostHeightMinY = qMax(0.0, m_DBModel.PostHeight.Alpha - 5 * m_DBModel.PostHeight.Beta);
+    PostHeightMinY /= 100;
     setPostHeightMaxY(PostHeightMaxY);
     setPostHeightMinY(PostHeightMinY);
 
     WeldTimeMaxY = m_DBModel.WeldTime.Alpha + 5 * m_DBModel.WeldTime.Beta;
+    WeldTimeMaxY /= 100;
     WeldTimeMinY = qMax(0.0, m_DBModel.WeldTime.Alpha - 5 * m_DBModel.WeldTime.Beta);
+    WeldTimeMinY /= 100;
     setWeldTimeMaxY(WeldTimeMaxY);
     setWeldTimeMinY(WeldTimeMinY);
 
