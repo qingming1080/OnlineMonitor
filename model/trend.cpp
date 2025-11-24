@@ -19,26 +19,6 @@ Trend::Trend(int welderID, QObject *parent)
     init();
 }
 
-void Trend::upYieldData()
-{
-    // QElapsedTimer timer;
-    // timer.start();
-
-    if(m_yieldType == 0)
-        m_yieldData = DataBaseManager::getInstance()->getYieldTrendData(0-60*60, m_WelderID);  // 一个小时 60s*60m
-    else if(m_yieldType == 1)
-        m_yieldData = DataBaseManager::getInstance()->getYieldTrendData(0-60*60*24, m_WelderID);   // 一天  60s*60m*24h
-    else if(m_yieldType == 2)
-        m_yieldData = DataBaseManager::getInstance()->getYieldTrendData(0-60*60*24*7, m_WelderID); // 七天
-    else if(m_yieldType == 3)
-        m_yieldData = DataBaseManager::getInstance()->getYieldTrendData(0-60*60*24*30, m_WelderID); // 三十天
-
-    setYieldTrendData();
-
-    // QString text = QString("%1号设备_Trend_良率趋势图刷新耗时:%2ms").arg(m_welderID).arg(timer.elapsed());
-    // emit SignalManager::getInstance()->signalAddRecord(QDateTime::currentDateTime(), text);
-}
-
 void Trend::upWeldData()
 {
     if(m_pPreheightSeries){
@@ -219,10 +199,10 @@ void Trend::SetModel(const DataBaseManager::DB_MODEL &model)
 
 void Trend::setYieldTrendData()
 {
-    m_startTime = m_yieldData.startTime;
-    m_endTime   = m_yieldData.endTime;
-    emit startTimeChanged();
-    emit endTimeChanged();
+    m_StartTime = m_YieldData.startTime;
+    m_EndTime   = m_YieldData.endTime;
+    emit notifyStartTimeChanged();
+    emit notifyEndTimeChanged();
     emit SignalManager::getInstance()->changeYieldTrendData();
     emit signalYieldTrendChanged();
 
@@ -231,19 +211,6 @@ void Trend::setYieldTrendData()
         // m_pYieldSeries->replace(m_yieldData.points);
         // qDebug() << "I_WANT_TEST 刷新折线" << m_pYieldSeries << m_yieldData.points.count() << m_startTime << m_endTime;
     }
-}
-
-QString Trend::endTime() const
-{
-    return m_endTime;
-}
-
-void Trend::setEndTime(const QString &newEndTime)
-{
-    if (m_endTime == newEndTime)
-        return;
-    m_endTime = newEndTime;
-    emit endTimeChanged();
 }
 
 void Trend::setYieldSeries(QAbstractSeries *series)
@@ -282,19 +249,6 @@ void Trend::setPeakPowerSeries(QAbstractSeries *series)
         m_pPeakPowerSeries->replace(m_PeakPowerData);
 }
 
-QString Trend::startTime() const
-{
-    return m_startTime;
-}
-
-void Trend::setStartTime(const QString &newStartTime)
-{
-    if (m_startTime == newStartTime)
-        return;
-    m_startTime = newStartTime;
-    emit startTimeChanged();
-}
-
 void Trend::init()
 {
     // QElapsedTimer tm;
@@ -320,42 +274,6 @@ void Trend::init()
     // m_weldTimer = new QTimer(this);
     // connect(m_weldTimer, &QTimer::timeout, this, &Trend::upWeldData);
     // m_weldTimer->start(1000 * 1);  // 每2秒刷新一次焊接数据
-}
-
-int Trend::yieldType() const
-{
-    return m_yieldType;
-}
-
-void Trend::setYieldType(int newYieldType)
-{
-    if (m_yieldType == newYieldType)
-        return;
-    m_yieldType = newYieldType;
-    emit yieldTypeChanged();
-    // emit DeviceManager::getInstance()->upDateBtns();
-
-    m_endTime = QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss");
-    if(m_yieldType == 0){
-        QDateTime time = QDateTime::currentDateTime().addSecs(-3600);
-        m_startTime = time.toString("yyyy-MM-dd hh:mm:ss");
-    }
-    else if(m_yieldType == 1){
-        QDateTime time = QDateTime::currentDateTime().addDays(-1);
-        m_startTime = time.toString("yyyy-MM-dd hh:mm:ss");
-    }
-    else if(m_yieldType == 2){
-        QDateTime time = QDateTime::currentDateTime().addDays(-7);
-        m_startTime = time.toString("yyyy-MM-dd hh:mm:ss");
-    }
-    else if(m_yieldType == 3){
-        QDateTime time = QDateTime::currentDateTime().addDays(-30);
-        m_startTime = time.toString("yyyy-MM-dd hh:mm:ss");
-    }
-
-    emit startTimeChanged();
-    emit endTimeChanged();
-    upYieldData();
 }
 
 int Trend::getPeakPowerMinY() const
@@ -486,4 +404,83 @@ void Trend::setCountMinX(const int count)
         return;
     m_CountMinX = count;
     emit notifyCountMinXChanged();
+}
+
+void Trend::upYieldData()
+{
+    if(m_YieldType == 0)
+        m_YieldData = DataBaseManager::getInstance()->getYieldTrendData(0-60*60, m_WelderID);  // 一个小时 60s*60m
+    else if(m_YieldType == 1)
+        m_YieldData = DataBaseManager::getInstance()->getYieldTrendData(0-60*60*24, m_WelderID);   // 一天  60s*60m*24h
+    else if(m_YieldType == 2)
+        m_YieldData = DataBaseManager::getInstance()->getYieldTrendData(0-60*60*24*7, m_WelderID); // 七天
+    else if(m_YieldType == 3)
+        m_YieldData = DataBaseManager::getInstance()->getYieldTrendData(0-60*60*24*30, m_WelderID); // 三十天
+
+    setYieldTrendData();
+}
+
+int Trend::getYieldType() const
+{
+    return m_YieldType;
+}
+
+void Trend::setYieldType(int type)
+{
+    if (m_YieldType == type)
+        return;
+    m_YieldType = type;
+    emit notifyYieldTypeChanged();
+
+    m_EndTime = QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss");
+    if(m_YieldType == 0)
+    {
+        QDateTime time = QDateTime::currentDateTime().addSecs(-3600);
+        m_StartTime = time.toString("yyyy-MM-dd hh:mm:ss");
+    }
+    else if(m_YieldType == 1)
+    {
+        QDateTime time = QDateTime::currentDateTime().addDays(-1);
+        m_StartTime = time.toString("yyyy-MM-dd hh:mm:ss");
+    }
+    else if(m_YieldType == 2)
+    {
+        QDateTime time = QDateTime::currentDateTime().addDays(-7);
+        m_StartTime = time.toString("yyyy-MM-dd hh:mm:ss");
+    }
+    else if(m_YieldType == 3)
+    {
+        QDateTime time = QDateTime::currentDateTime().addDays(-30);
+        m_StartTime = time.toString("yyyy-MM-dd hh:mm:ss");
+    }
+
+    emit notifyStartTimeChanged();
+    emit notifyEndTimeChanged();
+    upYieldData();
+}
+
+QString Trend::getStartTime() const
+{
+    return m_StartTime;
+}
+
+void Trend::setStartTime(const QString& time)
+{
+    if (m_StartTime == time)
+        return;
+    m_StartTime = time;
+    emit notifyStartTimeChanged();
+}
+
+QString Trend::getEndTime() const
+{
+    return m_EndTime;
+}
+
+void Trend::setEndTime(const QString& time)
+{
+    if (m_EndTime == time)
+        return;
+    m_EndTime = time;
+    emit notifyEndTimeChanged();
 }

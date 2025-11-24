@@ -489,9 +489,26 @@ void HBModbusClient::setDeviceConfigure(const int welderId, const MODBUS_CONFIGU
     }
     else
     {
-        if(m_WelderDeviceMap.size() < DEV_COUNT)
+        int deviceId = -1;
+        if(m_WelderDeviceMap.size() <= DEV_COUNT)
         {
-            int deviceId = m_WelderDeviceMap.size();
+            for(int i = 0; i < DEV_COUNT; i++)
+            {
+                deviceId = -1;
+                for(iter = m_WelderDeviceMap.begin(); iter != m_WelderDeviceMap.end(); iter++)
+                {
+                    if(i == iter.value())
+                    {
+                        deviceId = i;
+                        break;
+                    }
+                }
+                if(deviceId == -1)
+                {
+                    deviceId = i;
+                    break;
+                }
+            }
             m_WelderDeviceMap.insert(welderId, deviceId);
             base = DEV_TYPE + deviceId * DEV_HOLDING_REGISTERS_COUNT;
         }

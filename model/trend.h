@@ -11,23 +11,23 @@ class Trend : public QObject
 {
     Q_OBJECT
     // 折线图范围
-    Q_PROPERTY(int CountMinX READ getCountMinX WRITE setCountMinX NOTIFY notifyCountMinXChanged)
-    Q_PROPERTY(int CountMaxX READ getCountMaxX WRITE setCountMaxX NOTIFY notifyCountMaxXChanged)
-    Q_PROPERTY(float PreheightMaxY READ getPreheightMaxY WRITE setPreheightMaxY NOTIFY notifyPreheightMaxYChanged)
-    Q_PROPERTY(float PreheightMinY READ getPreheightMinY WRITE setPreheightMinY NOTIFY notifyPreheightMinYChanged)
-    Q_PROPERTY(float PostHeightMaxY READ getPostHeightMaxY WRITE setPostHeightMaxY NOTIFY notifyPostHeightMaxYChanged)
-    Q_PROPERTY(float PostHeightMinY READ getPostHeightMinY WRITE setPostHeightMinY NOTIFY notifyPostHeightMinYChanged)
-    Q_PROPERTY(float WeldTimeMaxY READ getWeldTimeMaxY WRITE setWeldTimeMaxY NOTIFY notifyWeldTimeMaxYChanged)
-    Q_PROPERTY(float WeldTimeMinY READ getWeldTimeMinY WRITE setWeldTimeMinY NOTIFY notifyWeldTimeMinYChanged)
-    Q_PROPERTY(int PeakPowerMaxY READ getPeakPowerMaxY WRITE setPeakPowerMaxY NOTIFY notifyPeakPowerMaxYChanged)
-    Q_PROPERTY(int PeakPowerMinY READ getPeakPowerMinY WRITE setPeakPowerMinY NOTIFY notifyPeakPowerMinYChanged)
-    Q_PROPERTY(int yieldType READ yieldType WRITE setYieldType NOTIFY yieldTypeChanged)
-    Q_PROPERTY(QString startTime READ startTime WRITE setStartTime NOTIFY startTimeChanged FINAL)
-    Q_PROPERTY(QString endTime READ endTime WRITE setEndTime NOTIFY endTimeChanged FINAL)
+    Q_PROPERTY(int CountMinX        READ getCountMinX       WRITE setCountMinX      NOTIFY notifyCountMinXChanged)
+    Q_PROPERTY(int CountMaxX        READ getCountMaxX       WRITE setCountMaxX      NOTIFY notifyCountMaxXChanged)
+    Q_PROPERTY(float PreheightMaxY  READ getPreheightMaxY   WRITE setPreheightMaxY  NOTIFY notifyPreheightMaxYChanged)
+    Q_PROPERTY(float PreheightMinY  READ getPreheightMinY   WRITE setPreheightMinY  NOTIFY notifyPreheightMinYChanged)
+    Q_PROPERTY(float PostHeightMaxY READ getPostHeightMaxY  WRITE setPostHeightMaxY NOTIFY notifyPostHeightMaxYChanged)
+    Q_PROPERTY(float PostHeightMinY READ getPostHeightMinY  WRITE setPostHeightMinY NOTIFY notifyPostHeightMinYChanged)
+    Q_PROPERTY(float WeldTimeMaxY   READ getWeldTimeMaxY    WRITE setWeldTimeMaxY   NOTIFY notifyWeldTimeMaxYChanged)
+    Q_PROPERTY(float WeldTimeMinY   READ getWeldTimeMinY    WRITE setWeldTimeMinY   NOTIFY notifyWeldTimeMinYChanged)
+    Q_PROPERTY(int PeakPowerMaxY    READ getPeakPowerMaxY   WRITE setPeakPowerMaxY  NOTIFY notifyPeakPowerMaxYChanged)
+    Q_PROPERTY(int PeakPowerMinY    READ getPeakPowerMinY   WRITE setPeakPowerMinY  NOTIFY notifyPeakPowerMinYChanged)
+    Q_PROPERTY(int YieldType        READ getYieldType       WRITE setYieldType      NOTIFY notifyYieldTypeChanged)
+    Q_PROPERTY(QString StartTime    READ getStartTime       WRITE setStartTime      NOTIFY notifyStartTimeChanged FINAL)
+    Q_PROPERTY(QString EndTime      READ getEndTime         WRITE setEndTime        NOTIFY notifyEndTimeChanged FINAL)
 
-    /// TEST 2024_08_18
-    friend class Device;
-    /// TEST 2024_08_18
+    // /// TEST 2024_08_18
+    // friend class Device;
+    // / TEST 2024_08_18
 public:
     // 焊接趋势数据结构
     struct WELD_TREND
@@ -89,14 +89,14 @@ public:
     Q_INVOKABLE int getPeakPowerMinY() const;
     Q_INVOKABLE void setPeakPowerMinY(int power);
 
-    Q_INVOKABLE int yieldType() const;
-    Q_INVOKABLE void setYieldType(int newYieldType);
+    Q_INVOKABLE int getYieldType() const;
+    Q_INVOKABLE void setYieldType(int type);
 
-    Q_INVOKABLE QString startTime() const;
-    Q_INVOKABLE void setStartTime(const QString &newStartTime);
+    Q_INVOKABLE QString getStartTime() const;
+    Q_INVOKABLE void setStartTime(const QString& time);
 
-    Q_INVOKABLE QString endTime() const;
-    Q_INVOKABLE void setEndTime(const QString &newEndTime = nullptr);
+    Q_INVOKABLE QString getEndTime() const;
+    Q_INVOKABLE void setEndTime(const QString& time);
 
 
     Q_INVOKABLE void setYieldSeries(QAbstractSeries *series);
@@ -126,11 +126,11 @@ signals:
 
     void notifyPeakPowerMinYChanged();
 
-    void yieldTypeChanged();
+    void notifyYieldTypeChanged();
 
-    void startTimeChanged();
+    void notifyStartTimeChanged();
 
-    void endTimeChanged();
+    void notifyEndTimeChanged();
 
     void signalYieldTrendChanged();
 
@@ -161,21 +161,6 @@ private:
     // 焊接功率 Y轴范围
     int m_PeakPowerMaxY;
     int m_PeakPowerMinY;
-    // 良率趋势 X轴范围
-    QString m_startTime;
-    QString m_endTime;
-
-    // 良率趋势时间类型 0_小时 1_1天 2_7天 3_30天
-    int m_yieldType{0};
-
-    QTimer* m_weldTimer;
-    QTimer* m_yieldTimer;
-
-    DataBaseManager::DB_YIELD_TREND m_yieldData;
-    QVector<QPointF> m_PreheightData;
-    QVector<QPointF> m_PostHeightData;
-    QVector<QPointF> m_WeldTimeData;
-    QVector<QPointF> m_PeakPowerData;
 
     QXYSeries* m_pYieldSeries = nullptr;
     QXYSeries* m_pPreheightSeries = nullptr;
@@ -183,6 +168,20 @@ private:
     QXYSeries* m_pWeldTimeSeries = nullptr;
     QXYSeries* m_pPeakPowerSeries = nullptr;
 
+    QVector<QPointF> m_PreheightData;
+    QVector<QPointF> m_PostHeightData;
+    QVector<QPointF> m_WeldTimeData;
+    QVector<QPointF> m_PeakPowerData;
+
+    // 良率趋势 X轴范围
+    QString m_StartTime;
+    QString m_EndTime;
+    // 良率趋势时间类型 0_小时 1_1天 2_7天 3_30天
+    int m_YieldType{0};
+    QTimer* m_weldTimer;
+    QTimer* m_yieldTimer;
+
+    DataBaseManager::DB_YIELD_TREND m_YieldData;
     DataBaseManager::DB_MODEL       m_DBModel;
 };
 

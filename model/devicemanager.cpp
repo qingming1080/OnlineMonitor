@@ -43,12 +43,6 @@ bool DeviceManager::InitDeviceList()
     if(DataBaseManager::getInstance()->getWelderID(welderIdlist) == true)
     {
         Device* _obj = nullptr;
-        // for(int i = 0; i < m_listDevices.size(); i++)
-        // {
-        //     _obj = m_listDevices[i];
-        //     _obj->deleteLater();
-        //     _obj = nullptr;
-        // }
         m_listDevices.clear();
         for(int i = 0; i < welderIdlist.size(); i++)
         {
@@ -252,5 +246,5 @@ bool DeviceManager::saveDevice()
         return false;
     if (!m_listDevices[m_iSelectedDeviceIndex]->SaveDevice())
         return false;
-    return InitDeviceList();
+    return true;
 }

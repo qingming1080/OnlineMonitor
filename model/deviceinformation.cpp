@@ -371,12 +371,14 @@ bool DeviceInformation::SaveDevice()
         NetworkModel::getInstance()->UpdateDatabase();
         NetworkModel::getInstance()->InitListManager();
         NetworkModel::getInstance()->UpdateWelderID();
+        NetworkModel::getInstance()->NotifySelectedDeviceIndexChanged(m_WelderID);
     }
     else
     {
         RS232Model::getInstance()->UpdateDatabase();
         RS232Model::getInstance()->InitListManager();
         RS232Model::getInstance()->UpdateWelderID();
+        RS232Model::getInstance()->NotifySelectedDeviceIndexChanged(m_WelderID);
     }
     InitModbusDevice();
     HBModbusClient::getInstance()->removeDeviceConfigure(m_WelderID, m_ModbusConfigure);
