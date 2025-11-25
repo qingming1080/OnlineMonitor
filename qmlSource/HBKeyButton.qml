@@ -49,7 +49,7 @@ Button{
         border.width:  1
         border.color: buttonColor
         radius: radiusWidth
-        // layer.enabled: digiaal.pressed ? false: true
+        layer.enabled: digiaal.pressed ? false: true
         layer.effect: DropShadow{
             anchors.fill: primaryRect
             horizontalOffset: digiaal.pressed ? 0 : 3

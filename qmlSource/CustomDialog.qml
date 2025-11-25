@@ -138,7 +138,7 @@ Popup {
                 }
                 onFocusChanged: {
                     if(focus){
-                        keyboardType = 1
+                        window.showFullKeyboard(t1)
                     }
                 }
             }
@@ -284,7 +284,7 @@ Popup {
                 }
                 onFocusChanged: {
                     if(focus){
-                        keyboardType = 1
+                        // keyboardType = 1
                     }
                 }
             }
@@ -671,5 +671,4 @@ Popup {
             }
         }
     }
-
 }

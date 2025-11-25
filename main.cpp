@@ -61,7 +61,7 @@ void myMessageHandler(QtMsgType type, const QMessageLogContext &context, const Q
 
 int main(int argc, char *argv[])
 {
-    qputenv("QT_IM_MODULE", QByteArray("qtvirtualkeyboard"));
+    qputenv("QT_IM_MODULE", QByteArray("none"));
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     // 安装自定义消息处理程序
     // qInstallMessageHandler(myMessageHandler);
