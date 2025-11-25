@@ -476,10 +476,12 @@ void Trend::upYieldData()
         }
         else if (ts >= slotEnd && resultList.size() >= 59)
         {
-            // past last slot
+            resultList.append(trendData);
             break;
         }
     }
+    if(resultList.size() == 0)
+        resultList.append(trendData);
 
     m_YieldData.startTime = QDateTime::fromSecsSinceEpoch(resultList.at(0).TimeStamp).toString("yyyy-MM-dd hh:mm:ss");
     m_YieldData.endTime = QDateTime::fromSecsSinceEpoch(resultList.at(resultList.size() - 1).TimeStamp).toString("yyyy-MM-dd hh:mm:ss");
