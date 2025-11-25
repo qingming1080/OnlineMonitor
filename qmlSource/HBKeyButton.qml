@@ -29,6 +29,8 @@ Button{
     property string textColor: "#FFFFFF"
     property string shadowColor: "#80000000"
     property alias name: digiaal.text
+    enabled: true
+
     /*Number in numeric keyboard*/
     contentItem: Text {
         text: digiaal.text

@@ -48,7 +48,7 @@ Button {
         implicitHeight: minHeight
         color: functionbutton.buttonColor
         radius: radiusWidth
-        layer.enabled: functionbutton.pressed ? false : true
+        // layer.enabled: functionbutton.pressed ? false : true
         layer.effect: DropShadow{
             source: buttonRect
             anchors.fill: buttonRect
