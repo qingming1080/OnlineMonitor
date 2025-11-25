@@ -490,16 +490,24 @@ Rectangle {
                                 anchors.fill: parent
                                 onPressed: {
                                     textField.forceActiveFocus()
-                                    keyboardType = 0
+                                    window.showPrimaryNumpad(textField.text, " ", 3, 0, 999999, textField.text, textField, function(val)
+                                    {
+                                        textField.text = val;
+                                        var intRegex = /^[0-9]+$/
+                                        if (!intRegex.test(textField.text))
+                                            footer.showError(t7.text + GlobalLanguageDefine.strInputInterger)
+                                        else
+                                        {
+                                            footer.hideError()
+                                            DeviceManager.DeviceList[swipe.currentIndex].ManualObj.setData(
+                                                        DeviceManager.DeviceList[swipe.currentIndex].ManualObj.index(index, 0),
+                                                        parseInt(textField.text),
+                                                        ManualTable.ACTUAL_FORCE
+                                                        )
+                                        }
+                                    })
                                 }
                             }
-                            onEditingFinished: {
-                                 var intRegex = /^[0-9]+$/
-                                 if (!intRegex.test(textField.text))
-                                     footer.showError(t7.text + GlobalLanguageDefine.strInputInterger)
-                                 else
-                                     footer.hideError()
-                             }
                         }
                         TextField{
                             id: textField1
@@ -538,16 +546,24 @@ Rectangle {
                                 anchors.fill: parent
                                 onPressed: {
                                     textField1.forceActiveFocus()
-                                    keyboardType = 0
+                                    window.showPrimaryNumpad(t8.text, " ", 3, 0, 999999, textField1.text, textField1, function(val)
+                                    {
+                                        textField1.text = val;
+                                        var intRegex = /^[0-9]+$/
+                                        if (!intRegex.test(textField1.text))
+                                            footer.showError(t8.text + GlobalLanguageDefine.strInputInterger)
+                                        else
+                                        {
+                                            footer.hideError()
+                                            DeviceManager.DeviceList[swipe.currentIndex].ManualObj.setData(
+                                                        DeviceManager.DeviceList[swipe.currentIndex].ManualObj.index(index, 0),
+                                                        parseInt(textField1.text),
+                                                        ManualTable.ACTUAL_RESIDUAL
+                                                        )
+                                        }
+                                    })
                                 }
                             }
-                            onEditingFinished: {
-                                 var intRegex = /^[0-9]+$/
-                                 if (!intRegex.test(textField1.text))
-                                     footer.showError(t8.text + GlobalLanguageDefine.strInputInterger)
-                                 else
-                                     footer.hideError()
-                             }
                         }
                     }
                 }

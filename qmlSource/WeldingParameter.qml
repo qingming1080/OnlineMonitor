@@ -277,7 +277,7 @@ Rectangle {
         MouseArea {
             anchors.fill: parent
             onPressed: {
-                window.showPrimaryNumpad(fieldWeldPressure.text, " ", 3, 0, 999999, fieldWeldPressure.text, fieldWeldPressure, function(val)
+                window.showPrimaryNumpad(titleWeldPressure.text, " ", 3, 0, 999999, fieldWeldPressure.text, fieldWeldPressure, function(val)
                 {
                     fieldWeldPressure.text = val;
                     var wpRegex = /^[0-9]+$/
