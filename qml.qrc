@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/">
-        <file>qmlSource/AbnormalInfor.qml</file>
+        <file>qmlSource/AbnormalMessage.qml</file>
         <file>qmlSource/CustomBtn.qml</file>
         <file>qmlSource/CustomComboBox.qml</file>
         <file>qmlSource/CustomDialog.qml</file>

@@ -1181,79 +1181,13 @@ bool DataBaseManager::insertProductionRow(DB_PRODUCTION data)
     query.bindValue(":force", data.Force);
     query.bindValue(":residual", data.Residual);
     query.bindValue(":final_result", data.FinalResult);
-
-    // 调试输出
-    // qDebug() << "SQL Query:" << execStr;
-    // qDebug() << "Bound Values:" << query.boundValues();
-
-    // 执行插入并检查结果
-    // QSqlDatabase db = QSqlDatabase::database();
-    // db.transaction(); // 开启事务
-
     if (!query.exec()) {
         qDebug() << "Insert failed:" << query.lastError().text();
         // db.rollback(); // 回滚事务
         return false;
     }
-
-    // // 获取最后插入的自增 id
-    // int lastInsertedId = query.lastInsertId().toInt();
-
-    // // 更新 serial_number 和 batch_count
-    // QSqlQuery updateQuery;
-    // QString updateStr = QString("UPDATE %1 SET serial_number = :serial_number, batch_count = :batch_count WHERE id = :id")
-    //                         .arg(PRODUCTION_TABLENAME);
-    // updateQuery.prepare(updateStr);
-    // updateQuery.bindValue(":serial_number", lastInsertedId);
-    // updateQuery.bindValue(":batch_count", lastInsertedId);
-    // updateQuery.bindValue(":id", lastInsertedId);
-
-    // if (!updateQuery.exec()) {
-    //     qDebug() << "Update failed:" << updateQuery.lastError().text();
-    //     db.rollback(); // 回滚事务
-    //     return false;
-    // }
-
-    // db.commit(); // 提交事务
     return true;
 }
-
-// bool DataBaseManager::saveProductionDataofModbus(Device *device, const QVector<quint16> &inputs, quint32 cycleCount, DateTimeData date)
-// {
-        // if (!device) return false;
-
-        // int deviceId = device->getDevInfoObject()->id();
-
-        // _Production_Data record;
-
-        // record.welder_id                            = deviceId;
-        // record.create_time                          = UtilityFunction::buildDateTimeString(date);
-        // record.cycle_count                          = cycleCount;
-        // record.serial_number                        = cycleCount;                                   //循环值
-        // record.batch_count                          = cycleCount;                                   //生产值
-        // QString modelStr = device->getDevInfoObject()->model();
-        // if (modelStr == "L20-VG") record.model_id = 1;
-        // else if (modelStr == "L20-TS") record.model_id = 2;
-        // else record.model_id = 0;
-
-        // record.energy                               = inputs[HBModbusClient::DEV_ENERGY];
-        // record.amplitude                            = inputs[HBModbusClient::DEV_AMPLITUDE];
-        // record.pressure                             = inputs[HBModbusClient::DEV_WP];         //welde pressure
-        // record.power                                = inputs[HBModbusClient::DEV_POWER];
-        // record.time                                 = inputs[HBModbusClient::DEV_TIME];
-        // record.pre_height                           = inputs[HBModbusClient::DEV_PRE_HEIGHT];
-        // record.post_height                          = inputs[HBModbusClient::DEV_POST_HEIGHT];
-        // record.force                                = 100;                          //TODO
-        // record.residual                             = 100;                          //TODO
-        // record.good_rate                            = 88;                           //TODO
-        // record.good_subtotal_cycles                 = 88;                           //TODO
-        // record.suspect_subtotal_cycles              = 88;                           //TODO
-        // record.not_definite_cycles                  = 88;                           //TODO
-        // record.final_result                         = 88;                           //TODO
-
-        // return insertProductionRow(record);
-//         return true;
-// }
 
 bool DataBaseManager::getSystemData(const int welderID, DataBaseManager::DB_SYSTEM& system)
 {
@@ -1876,8 +1810,8 @@ QList<DataBaseManager::DB_PRODUCTION> DataBaseManager::getAllTrendData(int welde
     QString execStr = QString("SELECT * FROM %1 WHERE %2 BETWEEN '%3' AND '%4' AND %5 = '%6'")
                           .arg(PRODUCTION_TABLENAME
                                , getProduction_ColumnName(PRODUCTION_TABLE::CREATE_TIME)
-                               , startTime.toString("yyyy-MM-dd hh:mm:ss")
-                               , endTime.toString("yyyy-MM-dd hh:mm:ss")
+                               , QString::number(startTime.toSecsSinceEpoch())
+                               , QString::number(endTime.toSecsSinceEpoch())
                                , getProduction_ColumnName(PRODUCTION_TABLE::WELDER_ID)
                                , QString::number(welderID));
 
@@ -1890,7 +1824,7 @@ QList<DataBaseManager::DB_PRODUCTION> DataBaseManager::getAllTrendData(int welde
     {
         DB_PRODUCTION data;
         // 生产时间
-        // data.CreateTime  = query.value(QmlEnum::PRODUCTION_create_time).toString();
+        data.CreateTime  = query.value(PRODUCTION_TABLE::CREATE_TIME).toLongLong();
         // 产品状态
         data.FinalResult = query.value(PRODUCTION_TABLE::FINAL_RESULT).toInt();
 

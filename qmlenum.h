@@ -64,19 +64,7 @@ public:
     };
     Q_ENUM(SIGNAL_IO)
 
-    enum MESSAGE{
-        MESSAGE_suspicious = 0,         // 出现可疑品
-        MESSAGE_defective  = 1,         // 出现次品
-        MESSAGE_noConnect  = 2,         // 未连接
-        MESSAGE_lowerValue = 3,         // 良率下降至下限值
-        MESSAGE_defectiveOften = 4,     // 频繁出现次品
-        MESSAGE_suspiciousOften = 5,    // 频繁出现可疑品
-        MESSAGE_upperValue = 6,         // 自动学习次数超过上限值
-        MESSAGE_studyOver   = 7,        // 自动学习已完成
-        MESSAGE_touchSuccess = 8,       // 创建模型已完成
-        MESSAGE_setupComplete = 9,      //设备已连接
-    };
-    Q_ENUM(MESSAGE)
+
 
     enum SCREEN_INDEX
     {

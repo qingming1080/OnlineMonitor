@@ -4,6 +4,7 @@
 #include "historyenum.h"
 #include "provienceEE/providenceEE.h"
 #include "DataBase/databasehelper.h"
+#include "message.h"
 
 Production::Production(int welderID, QObject *parent)
     :QObject{parent}, m_WelderID(welderID)
@@ -412,8 +413,10 @@ void Production::AppendNewRecordComming(const HBModbusClient::MODBUS_WELD_RESULT
         break;
     case HistoryEnum::SUSPECT:
         suspectCount++;
+        Message::getInstance()->addMessage(m_WelderID, MESSAGE_ENUM::SUSPICIOUS);
         break;
     case HistoryEnum::DEFECT:
+        Message::getInstance()->addMessage(m_WelderID, MESSAGE_ENUM::DEFECTIVE);
         defectCount++;
         break;
     default:

@@ -235,6 +235,26 @@ delete_type当该字段值为1时表示删除，删除当前配置的设备信�
 #### 4.2. 点击保存后不此页面隐藏，在进入页面需要输入admin密码
 #### 4.3. ROOT标题放置最左段，当进入页面是显示标题，保存后隐藏
 
+### 5. Nov. 19, 2025 Issues addressed
+#### 5.1 System Configure.
+1. 设备状态不刷新，
+2. 设备保存，modbus device ID 会被改变， 设备号不对
+3. 删除设备保存设备crash
+4. IP输入框 not user experience
+5. 
+#### 5.2 Generate Model 
+1. Generate model crash Manual - > Create Model 
+2. 
+
+#### 5.3 Modbus Server Weld Time need to keep 3 decimals. （fixed）
+
+#### 5.4 C++ all the objects shall be changed to auto pointer.
+#### 5.5 C++ need to add the list to save weld result before database inserting.
+
+
+
+
+
 
 
 

@@ -135,15 +135,15 @@ Rectangle {
                 }
             }
             YieldTrend{
-                id:s6
+                id: s6
                 width:  514
                 height:  255
                 x: 658
                 y: 35
                 color:  "#0c5696"
-                equiInforIndex:1
+                deviceIndex: currentIndex
+                isSingleDevice: true
             }
-
             WeldingTrend{
                 id:s7
                 width:  502
@@ -152,7 +152,7 @@ Rectangle {
                 y: 314
                 color:  "#0c5696"
             }
-            AbnormalInfor{
+            AbnormalMessage{
                 id:s8
                 width:  313
                 height:  311
@@ -204,7 +204,7 @@ Rectangle {
         onPressed: {
             if(deviceCount === 3)
                 currentIndex = 0
-            isSingleDevice = false
+            s6.isSingleDevice = false
             loadViewpro(2, multiPro)
         }
         visible: (DeviceManager.DeviceCounter > 1) ? true : false

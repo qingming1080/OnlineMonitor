@@ -13,7 +13,8 @@ Message *Message::getInstance()
 
 int Message::rowCount(const QModelIndex &parent) const
 {
-    return m_data.size();
+    Q_UNUSED(parent)
+    return m_MessageData.size();
 }
 
 QVariant Message::data(const QModelIndex &index, int role) const
@@ -22,11 +23,11 @@ QVariant Message::data(const QModelIndex &index, int role) const
         return QVariant();
 
     if(role == 0)
-        return m_data.at(index.row()).welderID;
+        return m_MessageData.at(index.row()).WelderID;
     else if(role == 1)
-        return m_data.at(index.row()).messageType;
+        return m_MessageData.at(index.row()).MessageType;
     else if(role == 2)
-        return m_data.at(index.row()).time;
+        return m_MessageData.at(index.row()).TimeStamp;
 
     return QVariant();
 }
@@ -42,49 +43,19 @@ QHash<int, QByteArray> Message::roleNames() const
     return roles;
 }
 
-// void Message::addMessage(int welderID, QmlEnum::MESSAGE state)
-// {
-//     beginInsertRows(QModelIndex(), rowCount(), rowCount());
-//     Message_Data data{welderID, state, QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss")};
-//     m_data.push_back(data);
-//     endInsertRows();
-
-//     // 只保留三十条信息，删除多余短暂消息
-//     for(int i = 0; i < m_data.size() && m_data.size() >= 30; ++i)
-//     {
-//         if(m_data.at(i).messageType == QmlEnum::MESSAGE_suspicious
-//             || m_data.at(i).messageType == QmlEnum::MESSAGE_defective
-//             || m_data.at(i).messageType == QmlEnum::MESSAGE_studyOver
-//             || m_data.at(i).messageType == QmlEnum::MESSAGE_touchSuccess)
-//         {
-//             beginRemoveRows(QModelIndex(), i, i);
-//             m_data.removeAt(i);
-//             endRemoveRows();
-//             i--;
-//         }
-//     }
-// }
-
-void Message::addMessage(int welderID, QmlEnum::MESSAGE state)
+void Message::addMessage(int welderID, MESSAGE_ENUM::MESSAGE_TYPE type)
 {
     beginInsertRows(QModelIndex(), 0, 0);  // 插入新行到第一行
-    Message_Data data{welderID, state, QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss")};
-    m_data.insert(0, data);  // 插入到 m_data 的开头
+    MESSAGE_DATA data{welderID, type, QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss")};
+    m_MessageData.prepend(data);  // 插入到 m_data 的开头
     endInsertRows();
 
-    // 只保留三十条信息，删除多余短暂消息
-    for(int i = 0; i < m_data.size() && m_data.size() > 30; ++i)
+    while(m_MessageData.size() > 30)
     {
-        if(m_data.at(i).messageType == QmlEnum::MESSAGE_suspicious
-            || m_data.at(i).messageType == QmlEnum::MESSAGE_defective
-            || m_data.at(i).messageType == QmlEnum::MESSAGE_studyOver
-            || m_data.at(i).messageType == QmlEnum::MESSAGE_touchSuccess)
-        {
-            beginRemoveRows(QModelIndex(), i, i);
-            m_data.removeAt(i);
-            endRemoveRows();
-            i--;  // 删除一条记录后，需要调整索引
-        }
+        int lastIndex = m_MessageData.size() - 1;
+        beginRemoveRows(QModelIndex(), lastIndex, lastIndex);
+        m_MessageData.pop_back();
+        endRemoveRows();
     }
 }
 

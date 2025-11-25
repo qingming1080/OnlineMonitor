@@ -2,6 +2,7 @@ pragma Singleton //we indicate that this QML Type is a singleton
 import QtQuick 2.12
 import QmlEnum 1.0
 import DeviceInfoEnum 1.0
+import MessageEnum 1.0
 QtObject
 {
     id: globalMessageDefine
@@ -11,36 +12,36 @@ QtObject
         var str = time + GlobalLanguageDefine.strDevice + welderID
         switch(messageType)
         {
-        case QmlEnum.MESSAGE_suspicious:
+        case MessageEnum.SUSPICIOUS:
             str += GlobalLanguageDefine.strSuspiciousAppeared;
             break;
-        case QmlEnum.MESSAGE_defective:
+        case MessageEnum.DEFECTIVE:
             str += GlobalLanguageDefine.strDefectiveAppeared;
             break;
-        case QmlEnum.MESSAGE_noConnect:
+        case MessageEnum.DEVICE_DISCONNECTED:
             str += GlobalLanguageDefine.strDisConnected;
             break;
-        case QmlEnum.MESSAGE_lowerValue:
+        case MessageEnum.YIELD_LOWER_LIMIT:
             str += GlobalLanguageDefine.strYieldDropToLimit;
             break;
-        case QmlEnum.MESSAGE_defectiveOften:
+        case MessageEnum.DEFECTIVE_OFTEN:
             str += GlobalLanguageDefine.strFrequentDefective;
             break;
-        case QmlEnum.MESSAGE_suspiciousOften:
+        case MessageEnum.SUSPICIOUS_OFTEN:
             str += GlobalLanguageDefine.strFrequentSuspicious;
             break;
-        case QmlEnum.MESSAGE_upperValue:
+        case MessageEnum.LEARNING_UPPER_LIMIT:
             str += GlobalLanguageDefine.strAutoLearnExceedLimit;
             break;
         //TODO definition needs to be changed
-        case QmlEnum.MESSAGE_studyOver:
+        case MessageEnum.LEARNING_COMPLETED:
             str += GlobalLanguageDefine.strAutoLearnCompleted;
             break;
         //TODO Need to do a double check
-        case QmlEnum.MESSAGE_touchSuccess:
+        case MessageEnum.MODEL_ESTABLISHED:
             str += GlobalLanguageDefine.strModelCreationCompleted;
             break;
-        case QmlEnum.MESSAGE_setupComplete:
+        case MessageEnum.DEVICE_CONNECTED:
             str += GlobalLanguageDefine.strSetupComplete;
             break;
         default:

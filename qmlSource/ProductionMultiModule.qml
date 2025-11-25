@@ -226,14 +226,15 @@ Rectangle {
             }
         }
         YieldTrend{
-            id:s5
+            id: s5
             width: 545
             height: 254
             x:28
             y:298
             radius: 3
             color: "#0c5596"
-            equiInforIndex: 1
+            deviceIndex: 0
+            isSingleDevice: false
         }
         Button{
             width: 30
@@ -248,7 +249,7 @@ Rectangle {
                 }
             }
             onPressed: {
-                isSingleDevice = true
+                s5.isSingleDevice = true
                 DeviceManager.SelectedDeviceIndex = 0;
                 loadViewpro(3, singlePro)
                 sigUpdateUI(0)
@@ -378,14 +379,15 @@ Rectangle {
             }
         }
         YieldTrend{
-            id:s6
+            id: s6
             width: 545
             height: 254
             x:28
             y:298
             radius: 3
             color: "#0c5596"
-            equiInforIndex:2
+            deviceIndex: 1
+            isSingleDevice: false
         }
         Button{
             width: 30
@@ -400,7 +402,7 @@ Rectangle {
                 }
             }
             onPressed: {
-                isSingleDevice = true
+                s6.isSingleDevice = true
                 DeviceManager.SelectedDeviceIndex = 1
                 loadViewpro(3, singlePro)
                 sigUpdateUI(1)

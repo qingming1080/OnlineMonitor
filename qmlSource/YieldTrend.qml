@@ -11,27 +11,20 @@ import LanguageEnum 1.0
 //良率趋势
 Rectangle
 {
-    property int equiInforIndex: 0
-    property int updateCount: 0
+    property bool isSingleDevice: false
+    property int deviceIndex: 0
+    property int deviceCount: DeviceManager.DeviceCounter
     property var startTime: {
-        if(!isSingleDevice)
-        {
-            Date.fromLocaleString(Qt.locale(), DeviceManager.DeviceList[equiInforIndex-1].TrendObj.StartTime, "yyyy-MM-dd hh:mm:ss")
-        }
+        if(deviceIndex < deviceCount)
+            return Date.fromLocaleString(Qt.locale(), DeviceManager.DeviceList[deviceIndex].TrendObj.StartTime, "yyyy-MM-dd hh:mm:ss")
         else
-        {
-            Date.fromLocaleString(Qt.locale(), DeviceManager.DeviceList[currentIndex].TrendObj.StartTime, "yyyy-MM-dd hh:mm:ss")
-        }
+            return ""
     }
-    property var endTime:{
-        if(!isSingleDevice)
-        {
-            Date.fromLocaleString(Qt.locale(), DeviceManager.DeviceList[equiInforIndex-1].TrendObj.EndTime, "yyyy-MM-dd hh:mm:ss")
-        }
+    property var endTime: {
+        if(deviceIndex < deviceCount)
+            return Date.fromLocaleString(Qt.locale(), DeviceManager.DeviceList[deviceIndex].TrendObj.EndTime, "yyyy-MM-dd hh:mm:ss")
         else
-        {
-            Date.fromLocaleString(Qt.locale(), DeviceManager.DeviceList[currentIndex].TrendObj.EndTime, "yyyy-MM-dd hh:mm:ss")
-        }
+            return ""
     }
 
     color: pRgb(43, 112, 173)
@@ -46,13 +39,13 @@ Rectangle
         }
     }
 
-    property int currentIndex: DeviceManager.SelectedDeviceIndex
-    onCurrentIndexChanged:{
+    onDeviceIndexChanged:{
         updateBtn()
         chartUpdata()
     }
 
-    function updateBtn(){
+    function updateBtn()
+    {
         if(isSingleDevice)
         {
             if(DeviceManager.DeviceList[currentIndex].TrendObj.YieldType === 0)
@@ -186,7 +179,7 @@ Rectangle
             }
             else if(deviceCount === 2)
             {
-                if(equiInforIndex === 1)
+                if(deviceIndex === 0)
                 {
                     if(DeviceManager.DeviceList[0].TrendObj.YieldType === 0)
                     {
@@ -249,7 +242,7 @@ Rectangle
                         bbbb.color = pRgb(177, 213, 219)
                     }
                 }
-                else if(equiInforIndex === 2)
+                else if(deviceIndex === 1)
                 {
                     if(DeviceManager.DeviceList[1].TrendObj.YieldType === 0)
                     {
@@ -315,30 +308,33 @@ Rectangle
             }
         }
     }
+
     function switchUpdate(index)
     {
-        if(isSingleDevice){
-            DeviceManager.DeviceList[currentIndex].TrendObj.setYieldType(index)
+        if(isSingleDevice)
+        {
+            DeviceManager.DeviceList[deviceIndex].TrendObj.YieldType = index
         }
         else
         {
             if(deviceCount === 1 || deviceCount === 3)
             {
-                DeviceManager.DeviceList[0].TrendObj.setYieldType(index)
+                DeviceManager.DeviceList[0].TrendObj.YieldType = index
             }
             else if(deviceCount === 2)
             {
-                if(equiInforIndex === 1)
+                if(deviceIndex === 0)
                 {
-                    DeviceManager.DeviceList[0].TrendObj.setYieldType(index)
+                    DeviceManager.DeviceList[0].TrendObj.YieldType = index
                 }
-                else if(equiInforIndex === 2)
+                else if(deviceIndex === 1)
                 {
-                    DeviceManager.DeviceList[1].TrendObj.setYieldType(index)
+                    DeviceManager.DeviceList[1].TrendObj.YieldType = index
                 }
             }
         }
     }
+
     function chartUpdata()
     {
         if(deviceCount === 1)
@@ -347,7 +343,8 @@ Rectangle
             return
         }
 
-        if(isSingleDevice){
+        if(isSingleDevice)
+        {
             if(deviceCount === 2)
             {
                 if(currentIndex === 0)
@@ -362,18 +359,22 @@ Rectangle
                 }
 
             }
-            else if(deviceCount === 3){
-                if(currentIndex === 0){
+            else if(deviceCount === 3)
+            {
+                if(deviceIndex === 0)
+                {
                     DeviceManager.DeviceList[0].TrendObj.setYieldSeries((chart.series(lineSeries.name)))
                     DeviceManager.DeviceList[1].TrendObj.setYieldSeries(null)
                     DeviceManager.DeviceList[2].TrendObj.setYieldSeries(null)
                 }
-                else if(currentIndex === 1){
+                else if(deviceIndex === 1)
+                {
                     DeviceManager.DeviceList[1].TrendObj.setYieldSeries((chart.series(lineSeries.name)))
                     DeviceManager.DeviceList[0].TrendObj.setYieldSeries(null)
                     DeviceManager.DeviceList[2].TrendObj.setYieldSeries(null)
                 }
-                else if(currentIndex === 2){
+                else if(deviceIndex === 2)
+                {
                     DeviceManager.DeviceList[2].TrendObj.setYieldSeries((chart.series(lineSeries.name)))
                     DeviceManager.DeviceList[0].TrendObj.setYieldSeries(null)
                     DeviceManager.DeviceList[1].TrendObj.setYieldSeries(null)
@@ -381,28 +382,28 @@ Rectangle
             }
             else if(deviceCount === 4)
             {
-                if(currentIndex === 0)
+                if(deviceIndex === 0)
                 {
                     DeviceManager.DeviceList[0].TrendObj.setYieldSeries((chart.series(lineSeries.name)))
                     DeviceManager.DeviceList[1].TrendObj.setYieldSeries(null)
                     DeviceManager.DeviceList[2].TrendObj.setYieldSeries(null)
                     DeviceManager.DeviceList[3].TrendObj.setYieldSeries(null)
                 }
-                else if(currentIndex === 1)
+                else if(deviceIndex === 1)
                 {
                     DeviceManager.DeviceList[1].TrendObj.setYieldSeries((chart.series(lineSeries.name)))
                     DeviceManager.DeviceList[0].TrendObj.setYieldSeries(null)
                     DeviceManager.DeviceList[2].TrendObj.setYieldSeries(null)
                     DeviceManager.DeviceList[3].TrendObj.setYieldSeries(null)
                 }
-                else if(currentIndex === 2)
+                else if(deviceIndex === 2)
                 {
                     DeviceManager.DeviceList[2].TrendObj.setYieldSeries((chart.series(lineSeries.name)))
                     DeviceManager.DeviceList[0].TrendObj.setYieldSeries(null)
                     DeviceManager.DeviceList[1].TrendObj.setYieldSeries(null)
                     DeviceManager.DeviceList[3].TrendObj.setYieldSeries(null)
                 }
-                else if(currentIndex === 3)
+                else if(deviceIndex === 3)
                 {
                     DeviceManager.DeviceList[3].TrendObj.setYieldSeries((chart.series(lineSeries.name)))
                     DeviceManager.DeviceList[0].TrendObj.setYieldSeries(null)
@@ -412,22 +413,28 @@ Rectangle
             }
         }
         else{
-            if(deviceCount === 2){
-                if(equiInforIndex === 1){
+            if(deviceCount === 2)
+            {
+                if(deviceIndex === 1)
+                {
                     DeviceManager.DeviceList[0].TrendObj.setYieldSeries((chart.series(lineSeries.name)))
                 }
-                else if(equiInforIndex === 2){
+                else if(deviceIndex === 2)
+                {
                     DeviceManager.DeviceList[1].TrendObj.setYieldSeries((chart.series(lineSeries.name)))
                 }
             }
-            else if(deviceCount === 3){
-                if(equiInforIndex === 1){
+            else if(deviceCount === 3)
+            {
+                if(deviceIndex === 1)
+                {
                     DeviceManager.DeviceList[0].TrendObj.setYieldSeries((chart.series(lineSeries.name)))
                 }
                 DeviceManager.DeviceList[1].TrendObj.setYieldSeries(null)
                 DeviceManager.DeviceList[2].TrendObj.setYieldSeries(null)
             }
-            else if(deviceCount === 4){
+            else if(deviceCount === 4)
+            {
                 DeviceManager.DeviceList[0].TrendObj.setYieldSeries(null)
                 DeviceManager.DeviceList[1].TrendObj.setYieldSeries(null)
                 DeviceManager.DeviceList[1].TrendObj.setYieldSeries(null)
@@ -648,10 +655,10 @@ Rectangle
             labelsColor: "#a3c7d0"
             labelsFont.pixelSize: 12
             labelsFont.bold: true
-            gridVisible:false
+            gridVisible: false
         }
         ValueAxis{
-            id:myAxisY
+            id: myAxisY
             min:0
             max:100
             tickCount: 3
@@ -666,7 +673,7 @@ Rectangle
         LineSeries {
             id:lineSeries
             axisX: myAxisX
-            axisY:myAxisY
+            axisY: myAxisY
             color: "#1398fa"
             width: 1
             useOpenGL: false
