@@ -2,7 +2,7 @@
 #include <QTimer>
 #include "DataBase/databasemanager.h"
 #include <QDateTime>
-
+#include "historyenum.h"
 #include "signalmanager.h"
 #include <QDebug>
 #include <QElapsedTimer>
@@ -208,7 +208,7 @@ void Trend::setYieldTrendData()
 
     if(m_pYieldSeries)
     {
-        // m_pYieldSeries->replace(m_yieldData.points);
+        m_pYieldSeries->replace(m_YieldData.points);
         // qDebug() << "I_WANT_TEST 刷新折线" << m_pYieldSeries << m_yieldData.points.count() << m_startTime << m_endTime;
     }
 }
@@ -408,15 +408,98 @@ void Trend::setCountMinX(const int count)
 
 void Trend::upYieldData()
 {
-    if(m_YieldType == 0)
-        m_YieldData = DataBaseManager::getInstance()->getYieldTrendData(0-60*60, m_WelderID);  // 一个小时 60s*60m
-    else if(m_YieldType == 1)
-        m_YieldData = DataBaseManager::getInstance()->getYieldTrendData(0-60*60*24, m_WelderID);   // 一天  60s*60m*24h
-    else if(m_YieldType == 2)
-        m_YieldData = DataBaseManager::getInstance()->getYieldTrendData(0-60*60*24*7, m_WelderID); // 七天
-    else if(m_YieldType == 3)
-        m_YieldData = DataBaseManager::getInstance()->getYieldTrendData(0-60*60*24*30, m_WelderID); // 三十天
+    int duration = 60 * 60;
+    DataBaseManager::DB_PRODUCTION production;
+    if(DataBaseManager::getInstance()->getProductionLastRecord(m_WelderID, production) == false)
+        return;
+    switch(m_YieldType)
+    {
+    case 0:
+        duration = ONE_HOUR; // 一个小时 60s*60m
+        break;
+    case 1:
+        duration = ONE_DAY;   // 一天  60s*60m*24h
+        break;
+    case 2:
+        duration = SEVEN_DAYS; // 七天
+        break;
+    case 3:
+        duration = ONE_MONTH; // 三十天
+        break;
+    default:
+        duration = ONE_HOUR; // 一个小时 60s*60m
+        break;
+    }
 
+    qint64 startTime = production.CreateTime - duration;
+    if(startTime < 0)
+        return;
+    quint64 endTime = production.CreateTime;
+    QList<DataBaseManager::DB_PRODUCTION> productionList;
+    DataBaseManager::getInstance()->getProductionRecords(m_WelderID, startTime, endTime, productionList);
+    if (productionList.isEmpty())
+        return;
+    qDebug() << "StartTime: " << QDateTime::fromSecsSinceEpoch(startTime).toString("yyyy-MM-dd hh:mm:ss");
+    qDebug() << "End Time: " << QDateTime::fromSecsSinceEpoch(endTime).toString("yyyy-MM-dd hh:mm:ss");
+    int SecondStep = duration / 60; // seconds per timeslot
+
+    QList<SLOT_DATA> resultList;     // 60个时间段每个时间段的生产总数列表
+
+    // Ensure records are in ascending time order
+    std::sort(productionList.begin(), productionList.end(), [](const DataBaseManager::DB_PRODUCTION &a, const DataBaseManager::DB_PRODUCTION &b){
+        return a.CreateTime < b.CreateTime;
+    });
+
+    qint64 slotStart = static_cast<qint64>(productionList.at(0).CreateTime);
+    qint64 slotEnd = slotStart + SecondStep;
+    SLOT_DATA trendData;
+    // trendData.TimeStamp = QDateTime::fromSecsSinceEpoch(slotStart, Qt::UTC);
+    trendData.TimeStamp = slotStart;
+    for (int i = 0; i < productionList.size(); ++i)
+    {
+        qint64 ts = static_cast<qint64>(productionList.at(i).CreateTime);
+        int finalResult = productionList.at(i).FinalResult;
+
+        if (ts >= slotStart && ts < slotEnd)
+        {
+            trendData.TotalNumber++;
+            if (finalResult == HistoryEnum::GOOD)
+                trendData.GoodNumber++;
+        }
+        else if (ts >= slotEnd && resultList.size() < 60)
+        {
+            resultList.append(trendData);
+            slotStart = slotEnd;
+            slotEnd += SecondStep;
+            // trendData.TimeStamp = QDateTime::fromSecsSinceEpoch(slotStart, Qt::UTC);
+            trendData.TimeStamp = slotStart;
+        }
+        else if (ts >= slotEnd && resultList.size() >= 59)
+        {
+            // past last slot
+            break;
+        }
+    }
+
+    m_YieldData.startTime = QDateTime::fromSecsSinceEpoch(resultList.at(0).TimeStamp).toString("yyyy-MM-dd hh:mm:ss");
+    m_YieldData.endTime = QDateTime::fromSecsSinceEpoch(resultList.at(resultList.size() - 1).TimeStamp).toString("yyyy-MM-dd hh:mm:ss");
+
+    qDebug() << "Yield StartTime: " << m_YieldData.startTime;
+    qDebug() << "Yield End Time: " <<  m_YieldData.endTime;
+
+    // 开始计算每个时间段的良率
+    for (int i = 0; i < resultList.size(); ++i)
+    {
+        int total = resultList.at(i).TotalNumber;
+        int good_num = resultList.at(i).GoodNumber;
+        QPointF pos;
+        if (total == 0)
+            pos.ry() = 0;
+        else
+            pos.ry() = static_cast<float>(good_num / total * 100);
+        pos.rx() = QDateTime::fromSecsSinceEpoch(resultList.at(i).TimeStamp).toMSecsSinceEpoch();
+        m_YieldData.points.push_back(pos);
+    }
     setYieldTrendData();
 }
 

@@ -11,23 +11,20 @@ class Trend : public QObject
 {
     Q_OBJECT
     // 折线图范围
-    Q_PROPERTY(int CountMinX        READ getCountMinX       WRITE setCountMinX      NOTIFY notifyCountMinXChanged)
-    Q_PROPERTY(int CountMaxX        READ getCountMaxX       WRITE setCountMaxX      NOTIFY notifyCountMaxXChanged)
-    Q_PROPERTY(float PreheightMaxY  READ getPreheightMaxY   WRITE setPreheightMaxY  NOTIFY notifyPreheightMaxYChanged)
-    Q_PROPERTY(float PreheightMinY  READ getPreheightMinY   WRITE setPreheightMinY  NOTIFY notifyPreheightMinYChanged)
-    Q_PROPERTY(float PostHeightMaxY READ getPostHeightMaxY  WRITE setPostHeightMaxY NOTIFY notifyPostHeightMaxYChanged)
-    Q_PROPERTY(float PostHeightMinY READ getPostHeightMinY  WRITE setPostHeightMinY NOTIFY notifyPostHeightMinYChanged)
-    Q_PROPERTY(float WeldTimeMaxY   READ getWeldTimeMaxY    WRITE setWeldTimeMaxY   NOTIFY notifyWeldTimeMaxYChanged)
-    Q_PROPERTY(float WeldTimeMinY   READ getWeldTimeMinY    WRITE setWeldTimeMinY   NOTIFY notifyWeldTimeMinYChanged)
-    Q_PROPERTY(int PeakPowerMaxY    READ getPeakPowerMaxY   WRITE setPeakPowerMaxY  NOTIFY notifyPeakPowerMaxYChanged)
-    Q_PROPERTY(int PeakPowerMinY    READ getPeakPowerMinY   WRITE setPeakPowerMinY  NOTIFY notifyPeakPowerMinYChanged)
-    Q_PROPERTY(int YieldType        READ getYieldType       WRITE setYieldType      NOTIFY notifyYieldTypeChanged)
-    Q_PROPERTY(QString StartTime    READ getStartTime       WRITE setStartTime      NOTIFY notifyStartTimeChanged FINAL)
-    Q_PROPERTY(QString EndTime      READ getEndTime         WRITE setEndTime        NOTIFY notifyEndTimeChanged FINAL)
+    Q_PROPERTY(int CountMinX        READ getCountMinX       WRITE setCountMinX      NOTIFY notifyCountMinXChanged       FINAL)
+    Q_PROPERTY(int CountMaxX        READ getCountMaxX       WRITE setCountMaxX      NOTIFY notifyCountMaxXChanged       FINAL)
+    Q_PROPERTY(float PreheightMaxY  READ getPreheightMaxY   WRITE setPreheightMaxY  NOTIFY notifyPreheightMaxYChanged   FINAL)
+    Q_PROPERTY(float PreheightMinY  READ getPreheightMinY   WRITE setPreheightMinY  NOTIFY notifyPreheightMinYChanged   FINAL)
+    Q_PROPERTY(float PostHeightMaxY READ getPostHeightMaxY  WRITE setPostHeightMaxY NOTIFY notifyPostHeightMaxYChanged  FINAL)
+    Q_PROPERTY(float PostHeightMinY READ getPostHeightMinY  WRITE setPostHeightMinY NOTIFY notifyPostHeightMinYChanged  FINAL)
+    Q_PROPERTY(float WeldTimeMaxY   READ getWeldTimeMaxY    WRITE setWeldTimeMaxY   NOTIFY notifyWeldTimeMaxYChanged    FINAL)
+    Q_PROPERTY(float WeldTimeMinY   READ getWeldTimeMinY    WRITE setWeldTimeMinY   NOTIFY notifyWeldTimeMinYChanged    FINAL)
+    Q_PROPERTY(int PeakPowerMaxY    READ getPeakPowerMaxY   WRITE setPeakPowerMaxY  NOTIFY notifyPeakPowerMaxYChanged   FINAL)
+    Q_PROPERTY(int PeakPowerMinY    READ getPeakPowerMinY   WRITE setPeakPowerMinY  NOTIFY notifyPeakPowerMinYChanged   FINAL)
+    Q_PROPERTY(int YieldType        READ getYieldType       WRITE setYieldType      NOTIFY notifyYieldTypeChanged       FINAL)
+    Q_PROPERTY(QString StartTime    READ getStartTime       WRITE setStartTime      NOTIFY notifyStartTimeChanged       FINAL)
+    Q_PROPERTY(QString EndTime      READ getEndTime         WRITE setEndTime        NOTIFY notifyEndTimeChanged         FINAL)
 
-    // /// TEST 2024_08_18
-    // friend class Device;
-    // / TEST 2024_08_18
 public:
     // 焊接趋势数据结构
     struct WELD_TREND
@@ -47,6 +44,32 @@ public:
         // 功率
         int PeakPower_Y_Max{0};
         int PeakPower_Y_Min{0};
+    };
+
+    // 良率趋势数据结构
+    struct YIELD_TREND
+    {
+        // 开始时间
+        QString startTime;
+        // 结束时间
+        QString endTime;
+        QList<QPointF> points;
+        YIELD_TREND& operator= (const YIELD_TREND& other)
+        {
+            this->points.clear();
+            this->startTime = other.startTime;
+            this->endTime   = other.endTime;
+            for(int i = 0; i < other.points.count(); ++i)
+                this->points.push_back(other.points.at(i));
+            return *this;
+        }
+    };
+
+    struct SLOT_DATA
+    {
+        int TotalNumber;
+        int GoodNumber;
+        quint64 TimeStamp;
     };
 public:
     explicit Trend(int welderID = 0, QObject *parent = nullptr);
@@ -144,6 +167,10 @@ private:
 
 private:
     static constexpr int X_AXIS_MAX = 256;
+    static constexpr int ONE_HOUR = 60 * 60;
+    static constexpr int ONE_DAY = 60 * 60 * 24;
+    static constexpr int SEVEN_DAYS = 60 * 60 * 24 * 7;
+    static constexpr int ONE_MONTH = 60 * 60 * 24 * 30;
     int m_WelderID;
 
     // 焊接趋势 X轴范围
@@ -181,7 +208,7 @@ private:
     QTimer* m_weldTimer;
     QTimer* m_yieldTimer;
 
-    DataBaseManager::DB_YIELD_TREND m_YieldData;
+    YIELD_TREND                     m_YieldData;
     DataBaseManager::DB_MODEL       m_DBModel;
 };
 

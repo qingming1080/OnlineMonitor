@@ -48,7 +48,7 @@ Rectangle
     {
         if(isSingleDevice)
         {
-            if(DeviceManager.DeviceList[currentIndex].TrendObj.YieldType === 0)
+            if(DeviceManager.DeviceList[deviceIndex].TrendObj.YieldType === 0)
             {
                 bbbb.border.color = "#007dbc"
                 b.border.color = "#00488d"
@@ -63,7 +63,7 @@ Rectangle
                 bbb.color = "#007dbc"
                 bbbb.color = "#007dbc"
             }
-            else if(DeviceManager.DeviceList[currentIndex].TrendObj.YieldType === 1)
+            else if(DeviceManager.DeviceList[deviceIndex].TrendObj.YieldType === 1)
             {
                 bbbb.border.color = "#007dbc"
                 b.border.color = "#007dbc"
@@ -78,7 +78,7 @@ Rectangle
                 bbb.color = "#007dbc"
                 bbbb.color = "#007dbc"
             }
-            else if(DeviceManager.DeviceList[currentIndex].TrendObj.YieldType === 2)
+            else if(DeviceManager.DeviceList[deviceIndex].TrendObj.YieldType === 2)
             {
                 bbbb.border.color = "#007dbc"
                 b.border.color = "#007dbc"
@@ -93,7 +93,7 @@ Rectangle
                 bbb.color = pRgb(177, 213, 219)
                 bbbb.color = "#007dbc"
             }
-            else if(DeviceManager.DeviceList[currentIndex].TrendObj.YieldType === 3)
+            else if(DeviceManager.DeviceList[deviceIndex].TrendObj.YieldType === 3)
             {
                 bbbb.border.color = "#00488d"
                 b.border.color = "#007dbc"
@@ -524,6 +524,7 @@ Rectangle
             }
             onPressed: {
                 switchUpdate(0)
+                updateBtn()
             }
             contentItem: Text {
                 id:t1
@@ -550,6 +551,7 @@ Rectangle
             }
             onPressed: {
                 switchUpdate(1)
+                updateBtn()
             }
             contentItem: Text {
                 id:t2
@@ -576,6 +578,7 @@ Rectangle
             }
             onPressed: {
                 switchUpdate(2)
+                updateBtn()
             }
             contentItem: Text {
                 id:t3
@@ -602,6 +605,7 @@ Rectangle
             }
             onPressed: {
                 switchUpdate(3)
+                updateBtn()
             }
             contentItem: Text {
                 id:t4
@@ -622,17 +626,19 @@ Rectangle
     ChartView {
         id: chart
         anchors.top: line.bottom // 使图表的顶部与父项的顶部对齐
-        width: 590
+        anchors.left: parent.left
+        anchors.leftMargin: -10
+        width: 585
         height: 240
         antialiasing: true
         backgroundColor: "transparent"
         titleColor: "red"
         titleFont.family: GlobalSystemDefine.fontBold
         titleFont.pixelSize: 20
-        margins.left: 10
+        margins.left: 0
         margins.right: 10
-        margins.top: 10
-        margins.bottom: 10
+        margins.top: 0
+        margins.bottom: 0
         legend.visible: false
         clip: true
 
@@ -649,7 +655,7 @@ Rectangle
         DateTimeAxis {
             id: myAxisX
             format: "MM-dd hh:mm" // 时间格式
-            tickCount: 5
+            tickCount: 3
             min: startTime
             max: endTime
             labelsColor: "#a3c7d0"

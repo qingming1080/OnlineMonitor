@@ -239,7 +239,7 @@ public:
     {
         int ProductionID;
         int WelderID;                       //deviceID
-        int CreateTime;                     // 创建时间
+        quint64 CreateTime;                     // 创建时间
         QString SerialNumber;               // 序号Barcode
         int CycleCount;                     // 循环值
         int BatchCount;                     // 生产值
@@ -255,26 +255,6 @@ public:
         int Residual;                       // 残留度
         int FinalResult;                    // 产品状态 0_合格 1_次品 2_可疑
     };
-
-    // 良率趋势数据结构
-    struct DB_YIELD_TREND
-    {
-        // 开始时间
-        QString startTime;
-        // 结束时间
-        QString endTime;
-        QList<QPointF> points;
-        DB_YIELD_TREND& operator= (const DB_YIELD_TREND& other)
-        {
-            this->points.clear();
-            this->startTime = other.startTime;
-            this->endTime   = other.endTime;
-            for(int i = 0; i < other.points.count(); ++i)
-                this->points.push_back(other.points.at(i));
-            return *this;
-        }
-    };
-
 public:
     static DataBaseManager* getInstance();
 
@@ -319,7 +299,8 @@ public:
     bool insertProductionRow(DB_PRODUCTION data);
     QList<DB_PRODUCTION> getProductionData(int welderID = 0, int finalResult = 0, bool exportAll = false);
 
-    DB_YIELD_TREND getYieldTrendData(int interVal, int welderID = 0);
+    bool getProductionLastRecord(const int welderID, DB_PRODUCTION& production);
+    bool getProductionRecords(const int welderID, const quint64 startTime, const quint64 endTime, QList<DB_PRODUCTION> &list);
 
 /////////////////////////io_data////////////////////////////////
 /// 只处理待定
@@ -414,8 +395,6 @@ private:
     /// \return : 列名
     ///
     QString getSystem_ColumnName(QmlEnum::SYSTEM_COLUMN column);
-
-    QList<DB_PRODUCTION> getAllTrendData(int welderID, int interVal, QDateTime startTime, QDateTime endTime);
 
     QString getD2eviceInfo();
 

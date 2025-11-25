@@ -10,6 +10,7 @@
 #include <QJsonDocument>
 #include <QJsonArray>
 #include <QJsonParseError>
+#include <algorithm>
 
 #include "DataBase/databasehelper.h"
 
@@ -1012,116 +1013,90 @@ QList<DataBaseManager::DB_PRODUCTION> DataBaseManager::getProductionData(int wel
     return list;
 }
 
-DataBaseManager::DB_YIELD_TREND DataBaseManager::getYieldTrendData(int interVal, int welderID)
+bool DataBaseManager::getProductionLastRecord(const int welderID, DB_PRODUCTION& production)
 {
-    DB_YIELD_TREND result;
+    QSqlQuery query;
+    QString execStr = QString("SELECT * FROM %1 WHERE %2 = :welderID ORDER BY %3 DESC LIMIT 1")
+                          .arg(PRODUCTION_TABLENAME
+                               , getProduction_ColumnName(PRODUCTION_TABLE::WELDER_ID)
+                               , getProduction_ColumnName(PRODUCTION_TABLE::CREATE_TIME));
 
-    // 获取最新设备生产记录时间
-    QDateTime endTime;
-    QDateTime startTime;
-    {
-        QSqlQuery query;
-        QString execStr = QString("SELECT * FROM %1 WHERE %2 = :welderID ORDER BY %3 DESC LIMIT 1")
-                              .arg(PRODUCTION_TABLENAME
-                                   , getProduction_ColumnName(PRODUCTION_TABLE::WELDER_ID)
-                                   , getProduction_ColumnName(PRODUCTION_TABLE::CREATE_TIME));
-        query.prepare(execStr);
-        query.bindValue(":welderID", welderID);
-        if(query.exec() && query.next())
-        {
-            int timeStamp = query.value(PRODUCTION_TABLE::CREATE_TIME).toLongLong();
-            endTime = QDateTime::fromSecsSinceEpoch(timeStamp, Qt::UTC);
-            startTime = endTime.addSecs(interVal);
-            result.startTime = startTime.toString("yyyy-MM-dd hh:mm:ss");
-            result.endTime   = endTime.toString("yyyy-MM-dd hh:mm:ss");
-        }
-        else
-        {
-            qDebug() << "DataBaseManager::getYieldTrendData() 获取最新生产时间失败" << query.lastError();
-            return result;
-        }
+    query.prepare(execStr);
+    query.bindValue(":welderID", welderID);
+
+    if (!query.exec()) {
+        qDebug() << "getProductionLastRecord: query failed:" << query.lastError();
+        return false;
     }
 
-#ifdef false
-    QDateTime currentTime = startTime;
-    int timeInterVal = -interVal / 60;
-
-    // 分段计算每个时间段的良率
-    for(int i = 0; i < 60; ++i)
-    {
-        QDateTime tmpTime = currentTime.addSecs(timeInterVal);
-        QSqlQuery query;
-        QString execStr = QString("SELECT * FROM %1 WHERE %2 BETWEEN '%3' AND '%4' AND %5 = '%6'")
-                                       .arg(PRODUCTION_TABLENAME
-                                                              , getProduction_ColumnName(QmlEnum::PRODUCTION_create_time)
-                                                              , currentTime.toString("yyyy-MM-dd hh:mm:ss")
-                                                              , tmpTime.toString("yyyy-MM-dd hh:mm:ss")
-                                                              , getProduction_ColumnName(QmlEnum::PRODUCTION_welder_id)
-                                                              , QString::number(welderID));
-        // 当前分段的结束时间点
-        QString time = tmpTime.toString("yyyy-MM-dd hh:mm:ss");
-        if (!query.exec(execStr))
-        {
-            qDebug() << "getProductionData: " << query.lastError() << query.lastQuery();
-        }
-        int produtcNum = 0;
-        int goodNum = 0;
-        while(query.next())
-        {
-            produtcNum++;
-            if(query.value(QmlEnum::PRODUCTION_final_result).toInt() == 0)
-                goodNum++;
-        }
-        QPair<int, QString> pair;
-        pair.first = produtcNum==0?0:(double(goodNum)/produtcNum) * 100;
-        pair.second = time;
-        result.points.push_back(pair);
-        currentTime = tmpTime;
-    }
-#endif
-    // 缓存数据
-    QList<DB_PRODUCTION> list = getAllTrendData(welderID, interVal, startTime, endTime);
-    int timeInterVal = -interVal / 60;
-    QList<int> production_num_list;     // 60个时间段每个时间段的生产总数列表
-    QList<int> good_num_list;           // 60个时间段每个时间段的良品总数列表
-    for(int i = 0; i < 60; ++i)
-    {
-        production_num_list.push_back(0);
-        good_num_list.push_back(0);
+    if (!query.next()) {
+        // no record
+        return false;
     }
 
-    // 开始计算每个时间段的生产总数与良品总数
-    // for(int i = 0; i < list.size(); ++i)
-    // {
-    //     QDateTime creatTime = list.at(i).CreateTime;
-    //     int finalResult = list.at(i).FinalResult;
+    // Fill output struct from the row
+    production.ProductionID  = query.value(PRODUCTION_TABLE::ID).toInt();
+    production.WelderID      = query.value(PRODUCTION_TABLE::WELDER_ID).toInt();
+    production.CreateTime    = query.value(PRODUCTION_TABLE::CREATE_TIME).toLongLong();
+    production.SerialNumber  = query.value(PRODUCTION_TABLE::SERIAL_NUMBER).toString();
+    production.CycleCount    = query.value(PRODUCTION_TABLE::CYCLE_COUNT).toInt();
+    production.BatchCount    = query.value(PRODUCTION_TABLE::BATCH_COUNT).toInt();
+    production.Energy        = query.value(PRODUCTION_TABLE::ENERGY).toInt();
+    production.Amplitude     = query.value(PRODUCTION_TABLE::AMPLITUDE).toInt();
+    production.WeldPressure  = query.value(PRODUCTION_TABLE::WELD_PRESSURE).toInt();
+    production.TriggerPressure = query.value(PRODUCTION_TABLE::TRIGGER_PRESSURE).toInt();
+    production.WeldTime      = query.value(PRODUCTION_TABLE::WELD_TIME).toInt();
+    production.PeakPower     = query.value(PRODUCTION_TABLE::PEAK_POWER).toInt();
+    production.Preheight     = query.value(PRODUCTION_TABLE::PRE_HEIGHT).toInt();
+    production.PostHeight    = query.value(PRODUCTION_TABLE::POST_HEIGHT).toInt();
+    production.Force         = query.value(PRODUCTION_TABLE::FORCE).toInt();
+    production.Residual      = query.value(PRODUCTION_TABLE::RESIDUAL).toInt();
+    production.FinalResult   = query.value(PRODUCTION_TABLE::FINAL_RESULT).toInt();
+    return true;
+}
 
-    //     int timeslot_index = startTime.secsTo(creatTime)/60;
-    //     if(timeslot_index >= 0 && timeslot_index < 60)
-    //     {
-    //         production_num_list[timeslot_index]++;
-    //         if(finalResult == 0)
-    //         {
-    //             good_num_list[timeslot_index]++;
-    //         }
-    //     }
-    // }
+bool DataBaseManager::getProductionRecords(const int welderID, const quint64 startTime, const quint64 endTime, QList<DB_PRODUCTION> &list)
+{
+    list.clear();
+    QSqlQuery query;
+    QString execStr = QString("SELECT * FROM %1 WHERE %2 BETWEEN '%3' AND '%4' AND %5 = '%6'")
+                          .arg(PRODUCTION_TABLENAME
+                               , getProduction_ColumnName(PRODUCTION_TABLE::CREATE_TIME)
+                               , QString::number(startTime)
+                               , QString::number(endTime)
+                               , getProduction_ColumnName(PRODUCTION_TABLE::WELDER_ID)
+                               , QString::number(welderID));
 
-    // 开始计算每个时间段的良率
-    for(int i = 0; i < 60; ++i)
+    if(!query.exec(execStr))
     {
-        int production_num = production_num_list.at(i);
-        int good_num = good_num_list.at(i);
-        QPointF pos;
-        if(production_num == 0)
-            pos.ry() = 0;
-        else
-            pos.ry() = int(double(good_num)/production_num * 100);
-        pos.rx() = startTime.addSecs(timeInterVal * i).toMSecsSinceEpoch();
-        result.points.push_back(pos);
+        qDebug() << "Trend获取失败 " << welderID << query.lastError();
+        return false;
     }
 
-    return result;
+    while(query.next())
+    {
+        DB_PRODUCTION production;
+        production.ProductionID  = query.value(PRODUCTION_TABLE::ID).toInt();
+        production.WelderID      = query.value(PRODUCTION_TABLE::WELDER_ID).toInt();
+        production.CreateTime    = query.value(PRODUCTION_TABLE::CREATE_TIME).toLongLong();
+        production.SerialNumber  = query.value(PRODUCTION_TABLE::SERIAL_NUMBER).toString();
+        production.CycleCount    = query.value(PRODUCTION_TABLE::CYCLE_COUNT).toInt();
+        production.BatchCount    = query.value(PRODUCTION_TABLE::BATCH_COUNT).toInt();
+        production.Energy        = query.value(PRODUCTION_TABLE::ENERGY).toInt();
+        production.Amplitude     = query.value(PRODUCTION_TABLE::AMPLITUDE).toInt();
+        production.WeldPressure  = query.value(PRODUCTION_TABLE::WELD_PRESSURE).toInt();
+        production.TriggerPressure = query.value(PRODUCTION_TABLE::TRIGGER_PRESSURE).toInt();
+        production.WeldTime      = query.value(PRODUCTION_TABLE::WELD_TIME).toInt();
+        production.PeakPower     = query.value(PRODUCTION_TABLE::PEAK_POWER).toInt();
+        production.Preheight     = query.value(PRODUCTION_TABLE::PRE_HEIGHT).toInt();
+        production.PostHeight    = query.value(PRODUCTION_TABLE::POST_HEIGHT).toInt();
+        production.Force         = query.value(PRODUCTION_TABLE::FORCE).toInt();
+        production.Residual      = query.value(PRODUCTION_TABLE::RESIDUAL).toInt();
+        production.FinalResult   = query.value(PRODUCTION_TABLE::FINAL_RESULT).toInt();
+        list.push_back(production);
+    }
+
+    return !list.empty();
 }
 
 bool DataBaseManager::removeProductionRow(int id)
@@ -1563,6 +1538,10 @@ QString DataBaseManager::getProduction_ColumnName(PRODUCTION_TABLE::PRODUCTION_C
         return "trigger_pressure";
     case PRODUCTION_TABLE::FINAL_RESULT:
         return "final_result";
+    case PRODUCTION_TABLE::WELDER_NAME:
+        return "";
+    default:
+        return "";
     }
 
     return "";
@@ -1800,36 +1779,4 @@ bool DataBaseManager::JsonFormat2Centralized(const QString strJson, CENTRALIZED_
     Centralized.ForceMean    = arr.at(4).toDouble(0.0);
     Centralized.ResidualMean = arr.at(5).toDouble(0.0);
     return true;
-}
-
-QList<DataBaseManager::DB_PRODUCTION> DataBaseManager::getAllTrendData(int welderID, int interVal, QDateTime startTime, QDateTime endTime)
-{
-    QList<DB_PRODUCTION> list;
-
-    QSqlQuery query;
-    QString execStr = QString("SELECT * FROM %1 WHERE %2 BETWEEN '%3' AND '%4' AND %5 = '%6'")
-                          .arg(PRODUCTION_TABLENAME
-                               , getProduction_ColumnName(PRODUCTION_TABLE::CREATE_TIME)
-                               , QString::number(startTime.toSecsSinceEpoch())
-                               , QString::number(endTime.toSecsSinceEpoch())
-                               , getProduction_ColumnName(PRODUCTION_TABLE::WELDER_ID)
-                               , QString::number(welderID));
-
-    if(!query.exec(execStr))
-    {
-        qDebug() << "Trend获取失败 " << welderID << query.lastError();
-    }
-
-    while(query.next())
-    {
-        DB_PRODUCTION data;
-        // 生产时间
-        data.CreateTime  = query.value(PRODUCTION_TABLE::CREATE_TIME).toLongLong();
-        // 产品状态
-        data.FinalResult = query.value(PRODUCTION_TABLE::FINAL_RESULT).toInt();
-
-        list.push_back(data);
-    }
-
-    return list;
 }
