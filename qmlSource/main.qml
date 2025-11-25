@@ -119,10 +119,13 @@ Window {
     }
     function showFullKeyboard(textField)
     {
-        currentField = textField
-        inputPannelID.active = true
-        inputPannelID.visible = true
-        inputPannelID.pinyinBuffer = ""
+        if (textField) {
+            currentField = textField
+            textField.focus = true
+            textField.selectAll()
+            inputPannelID.active = true
+            inputPannelID.pinyinBuffer = ""
+        }
     }
 
     Connections {
@@ -254,15 +257,32 @@ Window {
         id: popup
         width: 567
         height: 271
-        anchors.centerIn: parent
+        y: window.width / 7
+        x: window.height / 2 - 50
+        onSigInputFieldFocusChanged: {
+            if (focused)
+            {
+                window.currentField = textField
+                Qt.callLater(function()
+                {
+                    inputPannelID.active = true
+                    inputPannelID.pinyinBuffer = ""
+                })
+            }
+            else
+            {
+                inputPannelID.active = false
+            }
+        }
     }
 
     HBKeyboard
     {
         id: inputPannelID
-        z: 99
+        z: 999  // 确保虚拟键盘在所有元素之上，包括弹窗
         width: window.width
         visible: false
+        y: window.height  // 初始位置在屏幕底部下方
         states: State
         {
             name: "visible"
@@ -274,7 +294,6 @@ Window {
                 visible: true
             }
         }
-
         transitions: Transition
         {
             from: ""
@@ -290,18 +309,41 @@ Window {
                 }
             }
         }
-        onKeyPressed: if(currentField) currentField.insert(currentField.cursorPosition, key)
-        onBackspace: {
-            if (currentField) {
-                if (currentField.cursorPosition > 0) {
-                    var pos = currentField.cursorPosition
-                    currentField.text = currentField.text.slice(0, pos - 1) + currentField.text.slice(pos)
-                    currentField.cursorPosition = pos - 1
+        onKeyPressed:
+        {
+            if(currentField)
+            {
+                currentField.text = currentField.text + key
+                currentField.cursorPosition = currentField.text.length
+            }
+        }
+        onBackspace:
+        {
+            if (currentField)
+            {
+                if (currentField.text.length > 0)
+                {
+                    currentField.text = currentField.text.slice(0, -1)
+                    currentField.cursorPosition = currentField.text.length
                 }
             }
         }
-        onEnter: inputPannelID.active = false
-        onSpace: if (currentField) currentField.insert(currentField.cursorPosition, " ")
+        onEnter:
+        {
+            inputPannelID.active = false
+            if (currentField)
+            {
+                currentField.focus = false
+            }
+        }
+        onSpace:
+        {
+            if (currentField)
+            {
+                currentField.text = currentField.text + " "
+                currentField.cursorPosition = currentField.text.length
+            }
+        }
     }
 
 

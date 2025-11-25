@@ -732,9 +732,9 @@ Rectangle {
                     }
                     MouseArea {
                         anchors.fill: parent
-                        onPressed: {
+                        onPressed:
+                        {
                             t4.forceActiveFocus()
-                            // keyboardType = 1
                         }
                     }
                     property int tmpIndex: DeviceManager.SelectedDeviceIndex
@@ -744,14 +744,23 @@ Rectangle {
                         else
                             return DeviceManager.DeviceList[tmpIndex].DeviceObj.WelderName
                     }
-                    onEditingFinished: {
-                        var nameRegex = /^[\u4e00-\u9fa5A-Za-z0-9]+$/
-                        if (!nameRegex.test(t4.text))
-                            footer.showError(s14.text + GlobalLanguageDefine.strDeviceNameRule)
-                        else
+                    onFocusChanged: {
+                        if (focus)
                         {
+                            window.showFullKeyboard(t4)
+                        }
+                    }
+                    onTextChanged: {
+                        var nameRegex = /^[\u4e00-\u9fa5A-Za-z0-9]+$/
+                        if (!nameRegex.test(text))
+                        {
+                            footer.showError(s14.text + GlobalLanguageDefine.strDeviceNameRule)
+                        } else {
                             footer.hideError()
-                            DeviceManager.DeviceList[DeviceManager.SelectedDeviceIndex].DeviceObj.WelderName = t4.text
+                            if (tmpIndex !== -1)
+                            {
+                                DeviceManager.DeviceList[tmpIndex].DeviceObj.WelderName = text
+                            }
                         }
                     }
                 }

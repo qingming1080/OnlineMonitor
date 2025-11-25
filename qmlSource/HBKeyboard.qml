@@ -3,10 +3,11 @@ import QtQuick.Controls 2.15
 import Style 1.0
 Rectangle {
     id: keyboard
-    width: Math.round(800 * Style.scaleHint)
+    width: window.width  // 与主窗口同宽
     // height: Math.round(280 * Style.scaleHint)
-    height: Math.round(240 * Style.scaleHint)
+    height: Math.round(340 * Style.scaleHint)
     color: "#1E1E1E"
+    // color: "transparent"
 
     // property color skinColor: skinIndex === 0 ? "#1E1E1E" : (skinIndex === 1 ? "#D8D8D8" : "#190724")
     // property int skinIndex: 0
@@ -15,11 +16,11 @@ Rectangle {
     property bool isChinese: false
     property bool isAlphabet: true
 
-    readonly property int heightSize:           Math.round(50 * Style.scaleHint)
-    readonly property int rowWidthSize:         Math.round(55 * Style.scaleHint)
-    readonly property int enterRowWidthSize:    Math.round(95 * Style.scaleHint)
-    readonly property int abcRowWidthSize:      Math.round(95 * Style.scaleHint)
-    readonly property int fontsize: Math.round(Style.style6 * Style.scaleHint)
+    readonly property int heightSize:           Math.round(70 * Style.scaleHint)
+    readonly property int rowWidthSize:         Math.round(80 * Style.scaleHint)
+    readonly property int enterRowWidthSize:    Math.round(140 * Style.scaleHint)
+    readonly property int abcRowWidthSize:      Math.round(140 * Style.scaleHint)
+    readonly property int fontsize: Math.round(Style.style7 * Style.scaleHint)
     signal keyPressed(var key)
     signal backspace()
     signal enter()
@@ -36,12 +37,12 @@ Rectangle {
         return candidateList.slice(start, end);
     }
 
-    onIsChineseChanged:{
-        if(isChinese === true)
-            keyboard.height = Math.round(280 * Style.scaleHint)
-        else
-            keyboard.height = Math.round(240 * Style.scaleHint)
-    }
+    // onIsChineseChanged:{
+    //     if(isChinese === true)
+    //         keyboard.height = Math.round(280 * Style.scaleHint)
+    //     else
+    //         keyboard.height = Math.round(240 * Style.scaleHint)
+    // }
 
     // 主键盘区
     Column {
@@ -49,7 +50,7 @@ Rectangle {
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.bottom: parent.bottom
         anchors.bottomMargin: Math.round(10 * Style.scaleHint)
-        spacing: Math.round(5 * Style.scaleHint)
+        spacing: Math.round(10 * Style.scaleHint)
 
         // Row {
         //     anchors.horizontalCenter: parent.horizontalCenter
@@ -68,7 +69,7 @@ Rectangle {
 
         Row {
             id: fristRow
-            spacing: Math.round(5 * Style.scaleHint)
+            spacing: Math.round(8 * Style.scaleHint)
             anchors.horizontalCenter: parent.horizontalCenter
             Repeater {
                 model: {
@@ -91,7 +92,9 @@ Rectangle {
                     implicitWidth: rowWidthSize
                     implicitHeight: heightSize
                     fontSize: fontsize
-                    onClicked: keyboard.handleLetter(text)
+                    onClicked: {
+                        keyboard.handleLetter(text)
+                    }
                 }
             }
             HBKeyButton {
@@ -99,13 +102,15 @@ Rectangle {
                 implicitWidth: rowWidthSize
                 implicitHeight: heightSize
                 fontSize: fontsize
-                onClicked: keyboard.handleBackspace()
+                onClicked: {
+                    keyboard.handleBackspace()
+                }
             }
         }
 
         Row {
             id: secondRow
-            spacing: Math.round(5 * Style.scaleHint)
+            spacing: Math.round(8 * Style.scaleHint)
             anchors.horizontalCenter: parent.horizontalCenter
             Repeater {
                 model: {
@@ -133,7 +138,7 @@ Rectangle {
 
         Row {
             id: thirdRow
-            spacing: Math.round(5 * Style.scaleHint)
+            spacing: Math.round(8 * Style.scaleHint)
             anchors.horizontalCenter: parent.horizontalCenter
             HBKeyButton {
                 text: keyboard.upperCase ? "A/a" : "A/a"
@@ -200,7 +205,7 @@ Rectangle {
         // 第五排：skin, abc, ,, 空格, ., CH, Enter
         Row {
             id: fourthRow
-            spacing: Math.round(5 * Style.scaleHint)
+            spacing: Math.round(8 * Style.scaleHint)
             anchors.horizontalCenter: parent.horizontalCenter
             HBKeyButton {
                 text: (keyboard.isAlphabet === true) ? "&123" : "ABC"
@@ -268,7 +273,7 @@ Rectangle {
         visible: isChinese
         Row {
             anchors.fill: parent
-            spacing: Math.round(5 * Style.scaleHint)
+            spacing: Math.round(8 * Style.scaleHint)
             // 左翻页按钮
             HBKeyButton {
                 visible: keyboard.candidateList.length > keyboard.candidatesPerPage && keyboard.candidatePage > 0
@@ -329,7 +334,6 @@ Rectangle {
             {
                 if (keyboard.pinyinBuffer.length > 0 && keyboard.candidateList.length > 0)
                 {
-                    // 自动上屏第一个候选
                     keyboard.keyPressed(keyboard.candidateList[0])
                     keyboard.pinyinBuffer = ""
                     keyboard.candidateList = []
@@ -411,7 +415,14 @@ Rectangle {
     {
         if (keyboard.pinyinBuffer.length > 0)
         {
-            keyboard.candidateList = PinyinDict.getCandidates(keyboard.pinyinBuffer)
+            if (typeof PinyinDict !== 'undefined')
+            {
+                keyboard.candidateList = PinyinDict.getCandidates(keyboard.pinyinBuffer)
+            }
+            else
+            {
+                keyboard.candidateList = []
+            }
         }
         else
         {

@@ -20,13 +20,12 @@
 #include "model/paritymodel.h"
 #include "model/weldertypemodel.h"
 #include "model/historyenum.h"
-
 #include "DataBase/databasemanager.h"
 #include "log/localrecord.h"
-#include "model/devicenames.h"
 #include "LanguageManager/languageManager.h"
 #include "tools/utilityapplauncher.h"
 #include "tools/utilityfunction.h"
+#include "KeyBoard/pinyindict.h"
 
 //modbus
 #include "modbus/hbmodbusclient.h"
@@ -103,6 +102,8 @@ int main(int argc, char *argv[])
     pQmlContext->setContextProperty("ModbusClient",     HBModbusClient::getInstance());
     pQmlContext->setContextProperty("UtilityFunction",  UtilityFunction::getInstance());
     pQmlContext->setContextProperty("IsRaspberry",      isRaspberry);
+    PinyinDict pinyinDict;
+    pQmlContext->setContextProperty("PinyinDict", &pinyinDict);
 
     qmlRegisterType<Device>("Device", 1, 0, "Device");
     // qmlRegisterType<IO>("IO", 1, 0, "IO");

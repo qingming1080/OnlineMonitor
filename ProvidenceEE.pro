@@ -19,6 +19,7 @@ DEFINES += REMARK_FWC
 SOURCES += \
         DataBase/databasehelper.cpp \
         DataBase/databasemanager.cpp \
+        KeyBoard/pinyindict.cpp \
         LanguageManager/languageManager.cpp \
         fileobject.cpp \
         log/localrecord.cpp \
@@ -52,6 +53,7 @@ SOURCES += \
 RESOURCES += qml.qrc \
     databaseSource.qrc \
     fonts.qrc \
+    hanzilib.qrc \
     images.qrc \
     languageTranslation.qrc \
     misc.qrc
@@ -70,6 +72,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 HEADERS += \
     DataBase/databasehelper.h \
     DataBase/databasemanager.h \
+    KeyBoard/pinyindict.h \
     LanguageManager/languageManager.h \
     define.h \
     fileobject.h \

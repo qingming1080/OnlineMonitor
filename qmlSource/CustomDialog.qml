@@ -10,11 +10,14 @@ Popup {
     id:customPopup
     width: 567
     height: 271
-    modal: true
+    modal: false
     padding:0
     closePolicy:Popup.CloseOnEscape
+    z: 100  // 确保弹窗在主窗口内容上方，但在虚拟键盘下方
     property int id: 0
     signal sigDataClear()
+    signal sigInputFieldFocusChanged(var textField, bool focused)
+    
     function openPop(index){//1输入密码(配置) 2输入密码(新建模型) 3输入密码(新建模型单设备)
         //4语言 5采样 6系统消息 7修改密码 8新增设备 9删除设备 10系统保存 11输入范围
         id = index
@@ -129,17 +132,25 @@ Popup {
                 font.family: GlobalSystemDefine.fontBold
                 font.bold: true
                 font.pixelSize: 20
-
+                selectByMouse: false
+                persistentSelection: true
+                clip: true
                 //设置密码输入的字符为星号（*）
                 echoMode: TextInput.Password //密码模式，输入的字符变成星号
-
                 background: Rectangle{
                     radius: 6
+                    border.color: t1.focus ? "#004b8d" : "#cccccc"
+                    border.width: t1.focus ? 2 : 1
                 }
-                onFocusChanged: {
-                    if(focus){
-                        window.showFullKeyboard(t1)
-                    }
+                
+                onFocusChanged:
+                {
+                    customPopup.sigInputFieldFocusChanged(t1, focus)
+                }
+
+                onTextChanged:
+                {
+                    cursorPosition = text.length
                 }
             }
             Connections{
@@ -282,10 +293,14 @@ Popup {
                 background: Rectangle{
                     radius: 6
                 }
-                onFocusChanged: {
-                    if(focus){
-                        // keyboardType = 1
-                    }
+                onFocusChanged:
+                {
+                    customPopup.sigInputFieldFocusChanged(t1, focus)
+                }
+
+                onTextChanged:
+                {
+                    cursorPosition = text.length
                 }
             }
             Button{
