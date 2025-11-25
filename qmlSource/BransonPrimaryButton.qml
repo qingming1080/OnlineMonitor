@@ -48,7 +48,7 @@ Button {
         implicitHeight: parent.height > maxHeight ? maxHeight : parent.height
         color: buttonColor
         radius: radiusWidth
-        layer.enabled: primaryButton.pressed ? false : true
+        // layer.enabled: primaryButton.pressed ? false : true
         layer.effect: DropShadow {
             horizontalOffset: primaryButton.pressed ? 0 : 3
             verticalOffset: primaryButton.pressed ? 0 : 3

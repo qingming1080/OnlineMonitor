@@ -163,7 +163,6 @@ Rectangle {
         MouseArea {
             anchors.fill: parent
             onPressed: {
-                keyboardType = 0
                 window.showPrimaryNumpad(titleEnergy.text, " ", 3, 0, 999999, fieldEnergy.text, fieldEnergy, function(val)
                 {
                     fieldEnergy.text = val;
@@ -202,7 +201,6 @@ Rectangle {
         MouseArea {
             anchors.fill: parent
             onPressed: {
-                keyboardType = 0
                 window.showPrimaryNumpad(titleAmplitude.text, " ", 3, 0, 999999, fieldAmplitude.text, fieldAmplitude, function(val)
                 {
                      fieldAmplitude.text = val;
@@ -241,7 +239,6 @@ Rectangle {
         MouseArea {
             anchors.fill: parent
             onPressed: {
-                keyboardType = 0
                 window.showPrimaryNumpad(titleTriggerPressure.text, " ", 3, 0, 999999, fieldTriggerPressure.text, fieldTriggerPressure, function(val)
                 {
                     fieldTriggerPressure.text = val;
@@ -280,8 +277,7 @@ Rectangle {
         MouseArea {
             anchors.fill: parent
             onPressed: {
-                keyboardType = 0
-                window.showPrimaryNumpad(fieldWeldPressure.text, " ", 3, 0, 999999, fieldWeldPressure.text, fieldWeldPressure, function(val)
+                window.showPrimaryNumpad(titleWeldPressure.text, " ", 3, 0, 999999, fieldWeldPressure.text, fieldWeldPressure, function(val)
                 {
                     fieldWeldPressure.text = val;
                     var wpRegex = /^[0-9]+$/

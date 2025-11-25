@@ -2,9 +2,7 @@
 import QtQuick.Window 2.12
 import QtQuick.Window 2.3
 import QtQuick.Layouts 1.12
-import QtQuick.VirtualKeyboard 2.2
 import QtQuick.Controls 2.5
-import QtQuick.VirtualKeyboard.Settings 2.2
 import "."
 import Device 1.0
 import DeviceObj    1.0
@@ -22,8 +20,8 @@ Window {
     property int showHeight: 800
     property int mode: 0
     property int interFaceId: 0
-    property int keyboardType: 0
     property bool isUSBAvailable: false
+    property var currentField: null
 
     function pRgb(r, g, b){
         var ret = (r << 16 | g << 8 | b)
@@ -61,7 +59,6 @@ Window {
     //Only one time running
     function releaseWelcomeScreen()
     {
-        inputPannelID.y = window.height
         welcomeScreen.visible = false
 
         if(DeviceManager.DeviceList[0].WelderID === -1)
@@ -70,9 +67,6 @@ Window {
         }
         else
             loadView(1, pro)
-
-        inputPannelID.visible = true;
-
     }
 
     function showWelcomeScreen()
@@ -121,6 +115,16 @@ Window {
         primaryNumpad.confirmCallback = onConfirmCallback
         primaryNumpad.visible = true
         primaryNumpad.selectAll()
+    }
+    function showFullKeyboard(textField)
+    {
+        if (textField) {
+            currentField = textField
+            textField.focus = true
+            textField.selectAll()
+            inputPannelID.active = true
+            inputPannelID.pinyinBuffer = ""
+        }
     }
 
     Connections {
@@ -252,22 +256,32 @@ Window {
         id: popup
         width: 567
         height: 271
-        anchors.centerIn: parent
+        y: window.width / 7
+        x: window.height / 2 - 50
+        onSigInputFieldFocusChanged: {
+            if (focused)
+            {
+                window.currentField = textField
+                Qt.callLater(function()
+                {
+                    inputPannelID.active = true
+                    inputPannelID.pinyinBuffer = ""
+                })
+            }
+            else
+            {
+                inputPannelID.active = false
+            }
+        }
     }
 
-    Binding {
-        id:bin
-        target: inputPannelID.keyboard.style
-        property: 'keyboardDesignWidth'
-    }
-    InputPanel
+    HBKeyboard
     {
         id: inputPannelID
-        z: 99
-        x: window.width/2-inputPannelID.width/2
-        y: window.height      // 默认让其处于窗口最下方,貌似隐藏一样
-        width: /*keyboardType === 0 ? 400 :*/ window.width
-        visible: false       // 一直显示
+        z: 999  // 确保虚拟键盘在所有元素之上，包括弹窗
+        width: window.width
+        visible: false
+        y: window.height  // 初始位置在屏幕底部下方
         states: State
         {
             name: "visible"
@@ -276,9 +290,9 @@ Window {
             {
                 target: inputPannelID
                 y: window.height - inputPannelID.height
+                visible: true
             }
         }
-
         transitions: Transition
         {
             from: ""
@@ -290,16 +304,47 @@ Window {
                 {
                     properties: "y"
                     duration: 250
-                    easing.type: Easing.InOutQuad
+                    easing.type: Easing.OutQuart
                 }
             }
         }
-        Component.onCompleted:
+        onKeyPressed:
         {
-            VirtualKeyboardSettings.wordCandidateList.alwaysVisible = true
-            VirtualKeyboardSettings.activeLocales = ["en_US","zh_CN"/*,"ja_JP"*/]   // 英语、中文、日语 (若不设置,则语言就有很多种)
+            if(currentField)
+            {
+                currentField.text = currentField.text + key
+                currentField.cursorPosition = currentField.text.length
+            }
+        }
+        onBackspace:
+        {
+            if (currentField)
+            {
+                if (currentField.text.length > 0)
+                {
+                    currentField.text = currentField.text.slice(0, -1)
+                    currentField.cursorPosition = currentField.text.length
+                }
+            }
+        }
+        onEnter:
+        {
+            inputPannelID.active = false
+            if (currentField)
+            {
+                currentField.focus = false
+            }
+        }
+        onSpace:
+        {
+            if (currentField)
+            {
+                currentField.text = currentField.text + " "
+                currentField.cursorPosition = currentField.text.length
+            }
         }
     }
+
 
     /*KeyBoard*/
     BransonPrimaryNumpad

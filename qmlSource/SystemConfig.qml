@@ -208,7 +208,6 @@ Rectangle {
                     MouseArea {
                         anchors.fill: parent
                         onPressed: {
-                            keyboardType = 0
                             window.showPrimaryNumpad(titleMaxProduction.text, " ", 3, 0, 999999, maxProductionTextField.text, maxProductionTextField, function(val)
                             {
                                 maxProductionTextField.text = val;
@@ -264,7 +263,6 @@ Rectangle {
                     MouseArea {
                         anchors.fill: parent
                         onPressed: {
-                            keyboardType = 0
                             window.showPrimaryNumpad(titleLearningSamples.text, " ", 3, 0, 999999, learningSamplesTextField.text, learningSamplesTextField, function(val)
                             {
                                 learningSamplesTextField.text = val;
@@ -330,10 +328,10 @@ Rectangle {
                         else
                             DeviceManager.DeviceList[tmpIndex].DeviceObj.YieldRateLowerLimit
                     }
+
                     MouseArea {
                         anchors.fill: parent
                         onPressed: {
-                            keyboardType = 0
                             window.showPrimaryNumpad(titleYieldLowerLimit.text, " ", 3, 0, 999999, yieldLowerLimitTextField.text, yieldLowerLimitTextField, function(val)
                             {
                                 yieldLowerLimitTextField.text = val;
@@ -389,7 +387,6 @@ Rectangle {
                     MouseArea {
                         anchors.fill: parent
                         onPressed: {
-                            keyboardType = 0
                             window.showPrimaryNumpad(s7.text, " ", 3, 0, 999999, t7.text, t7, function(val)
                             {
                                 t7.text = val;
@@ -458,7 +455,6 @@ Rectangle {
                     MouseArea {
                         anchors.fill: parent
                         onPressed: {
-                            keyboardType = 0
                             window.showPrimaryNumpad(s8.text, " ", 3, 0, 999999, t8.text, t8, function(val)
                             {
                                 t8.text = val;
@@ -519,7 +515,6 @@ Rectangle {
                     MouseArea {
                         anchors.fill: parent
                         onPressed: {
-                            keyboardType = 0
                             window.showPrimaryNumpad(titlePeelForceThreshold.text, " ", 3, 0, 999999, peelForceThresholdField.text, peelForceThresholdField, function(val)
                             {
                                 peelForceThresholdField.text = val;
@@ -737,9 +732,9 @@ Rectangle {
                     }
                     MouseArea {
                         anchors.fill: parent
-                        onPressed: {
+                        onPressed:
+                        {
                             t4.forceActiveFocus()
-                            keyboardType = 1
                         }
                     }
                     property int tmpIndex: DeviceManager.SelectedDeviceIndex
@@ -749,14 +744,23 @@ Rectangle {
                         else
                             return DeviceManager.DeviceList[tmpIndex].DeviceObj.WelderName
                     }
-                    onEditingFinished: {
-                        var nameRegex = /^[\u4e00-\u9fa5A-Za-z0-9]+$/
-                        if (!nameRegex.test(t4.text))
-                            footer.showError(s14.text + GlobalLanguageDefine.strDeviceNameRule)
-                        else
+                    onFocusChanged: {
+                        if (focus)
                         {
+                            window.showFullKeyboard(t4)
+                        }
+                    }
+                    onTextChanged: {
+                        var nameRegex = /^[\u4e00-\u9fa5A-Za-z0-9]+$/
+                        if (!nameRegex.test(text))
+                        {
+                            footer.showError(s14.text + GlobalLanguageDefine.strDeviceNameRule)
+                        } else {
                             footer.hideError()
-                            DeviceManager.DeviceList[DeviceManager.SelectedDeviceIndex].DeviceObj.WelderName = t4.text
+                            if (tmpIndex !== -1)
+                            {
+                                DeviceManager.DeviceList[tmpIndex].DeviceObj.WelderName = text
+                            }
                         }
                     }
                 }
@@ -1004,7 +1008,6 @@ Rectangle {
                             MouseArea {
                                 anchors.fill: parent
                                 onPressed: {
-                                    keyboardType = 0
                                     window.showPrimaryNumpad(s17.text, " ", 3, 0, 999999, t5.text, t5, function(val)
                                     {
                                         t5.text = val;
@@ -1047,7 +1050,6 @@ Rectangle {
                             MouseArea {
                                 anchors.fill: parent
                                 onPressed: {
-                                    keyboardType = 0
                                     window.showPrimaryNumpad(s18.text, "IPV4", 0, 0, 999999, t6.text, t6, function(val)
                                     {
                                         t6.text = val;
@@ -1091,7 +1093,6 @@ Rectangle {
                             MouseArea {
                                 anchors.fill: parent
                                 onPressed: {
-                                    keyboardType = 0
                                     window.showPrimaryNumpad(s19.text, "IPV4", 3, 0, 999999, t7.text, t7, function(val)
                                     {
                                         t7.text = val;

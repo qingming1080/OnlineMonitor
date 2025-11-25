@@ -20,13 +20,12 @@
 #include "model/paritymodel.h"
 #include "model/weldertypemodel.h"
 #include "model/historyenum.h"
-
 #include "DataBase/databasemanager.h"
 #include "log/localrecord.h"
-#include "model/devicenames.h"
 #include "LanguageManager/languageManager.h"
 #include "tools/utilityapplauncher.h"
 #include "tools/utilityfunction.h"
+#include "KeyBoard/pinyindict.h"
 
 //modbus
 #include "modbus/hbmodbusclient.h"
@@ -61,7 +60,7 @@ void myMessageHandler(QtMsgType type, const QMessageLogContext &context, const Q
 
 int main(int argc, char *argv[])
 {
-    qputenv("QT_IM_MODULE", QByteArray("qtvirtualkeyboard"));
+    qputenv("QT_IM_MODULE", QByteArray("none"));
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     // 安装自定义消息处理程序
     // qInstallMessageHandler(myMessageHandler);
@@ -83,6 +82,8 @@ int main(int argc, char *argv[])
 #else
     isRaspberry = false;
 #endif
+
+
     pQmlContext->setContextProperty("LanguageManager", &LanguageManager);
     pQmlContext->setContextProperty("DeviceManager", DeviceManager::getInstance());
     pQmlContext->setContextProperty("History", History::getInstance());
@@ -101,6 +102,8 @@ int main(int argc, char *argv[])
     pQmlContext->setContextProperty("ModbusClient",     HBModbusClient::getInstance());
     pQmlContext->setContextProperty("UtilityFunction",  UtilityFunction::getInstance());
     pQmlContext->setContextProperty("IsRaspberry",      isRaspberry);
+    PinyinDict pinyinDict;
+    pQmlContext->setContextProperty("PinyinDict", &pinyinDict);
 
     qmlRegisterType<Device>("Device", 1, 0, "Device");
     // qmlRegisterType<IO>("IO", 1, 0, "IO");

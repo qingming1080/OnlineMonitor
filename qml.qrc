@@ -39,5 +39,7 @@
         <file>qmlSource/BransonPrimaryButton.qml</file>
         <file>qmlSource/BransonFunctionKeyboard.qml</file>
         <file>qmlSource/BransonDigitalKeyboard.qml</file>
+        <file>qmlSource/HBKeyboard.qml</file>
+        <file>qmlSource/HBKeyButton.qml</file>
     </qresource>
 </RCC>
