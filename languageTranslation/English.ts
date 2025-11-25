@@ -267,13 +267,13 @@
         <location filename="../qmlSource/GlobalLanguageDefine.qml" line="73"/>
         <location filename="../qmlSource/GlobalLanguageDefine.qml" line="103"/>
         <source>焊接压力</source>
-        <translation>Weld Pressure</translation>
+        <translation>WP</translation>
     </message>
     <message>
         <location filename="../qmlSource/GlobalLanguageDefine.qml" line="74"/>
         <location filename="../qmlSource/GlobalLanguageDefine.qml" line="104"/>
         <source>触发压力</source>
-        <translation>Trigger Pressure</translation>
+        <translation>TP</translation>
     </message>
     <message>
         <location filename="../qmlSource/GlobalLanguageDefine.qml" line="75"/>
@@ -393,7 +393,7 @@
     <message>
         <location filename="../qmlSource/GlobalLanguageDefine.qml" line="102"/>
         <source>振幅</source>
-        <translation>Amplitude</translation>
+        <translation>AMP</translation>
     </message>
     <message>
         <location filename="../qmlSource/GlobalLanguageDefine.qml" line="188"/>
