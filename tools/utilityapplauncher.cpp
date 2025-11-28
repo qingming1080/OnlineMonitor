@@ -27,6 +27,8 @@ void UtilityAppLauncher::onProcessError(QProcess::ProcessError error)
     qWarning() << "UtilityApp 标准输出:\n" << m_process->readAllStandardOutput();
     qWarning() << "UtilityApp 标准错误:\n" << m_process->readAllStandardError();
     QTimer::singleShot(2000, this, [this](){ startUtilityApp(); });
+#else
+    Q_UNUSED(error)
 #endif
 }
 
@@ -37,6 +39,9 @@ void UtilityAppLauncher::onProcessFinished(int exitCode, QProcess::ExitStatus ex
     qWarning() << "UtilityApp 标准输出:\n" << m_process->readAllStandardOutput();
     qWarning() << "UtilityApp 标准错误:\n" << m_process->readAllStandardError();
     QTimer::singleShot(2000, this, [this](){ startUtilityApp(); });
+#else
+    Q_UNUSED(exitCode)
+    Q_UNUSED(exitStatus)
 #endif
 }
 

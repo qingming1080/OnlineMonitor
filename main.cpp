@@ -33,7 +33,9 @@
 // 自定义消息处理程序
 void myMessageHandler(QtMsgType type, const QMessageLogContext &context, const QString &msg)
 {
-    /// TEST 2024_08_18
+    Q_UNUSED(type)
+    Q_UNUSED(context)
+    Q_UNUSED(msg)
     // 过滤掉你不想显示的消息
     switch (type)
     {
