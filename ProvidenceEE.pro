@@ -32,7 +32,6 @@ SOURCES += \
         model/device.cpp \
         model/deviceinformation.cpp \
         model/devicemanager.cpp \
-        model/devicenames.cpp \
         model/exportworker.cpp \
         model/history.cpp \
         model/manual.cpp \
@@ -86,7 +85,6 @@ HEADERS += \
     model/deviceinfoenum.h \
     model/deviceinformation.h \
     model/devicemanager.h \
-    model/devicenames.h \
     model/exportworker.h \
     model/history.h \
     model/historyenum.h \
