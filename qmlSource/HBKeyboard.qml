@@ -1,6 +1,7 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
 import Style 1.0
+import GlobalSystemDefine 1.0
 Rectangle {
     id: keyboard
     width: window.width  // 与主窗口同宽
@@ -282,7 +283,7 @@ Rectangle {
                 implicitWidth: heightSize
                 anchors.verticalCenter: parent.verticalCenter
                 buttonColor: "#333333"
-                fontFamily: "宋体"
+                fontFamily: GlobalSystemDefine.fontBold
                 onClicked: keyboard.candidatePage--
             }
             // 候选词
@@ -294,7 +295,7 @@ Rectangle {
                     implicitWidth: heightSize
                     anchors.verticalCenter: parent.verticalCenter
                     buttonColor: "#333333"
-                    fontFamily: "宋体"
+                    fontFamily: GlobalSystemDefine.fontBold
                     onClicked: keyboard.selectCandidate(text)
                 }
             }
@@ -306,7 +307,7 @@ Rectangle {
                 implicitWidth: heightSize
                 anchors.verticalCenter: parent.verticalCenter
                 buttonColor: "#333333"
-                fontFamily: "宋体"
+                fontFamily: GlobalSystemDefine.fontBold
                 onClicked: keyboard.candidatePage++
             }
             // 显示拼音缓冲

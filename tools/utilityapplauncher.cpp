@@ -57,10 +57,15 @@ void UtilityAppLauncher::startUtilityApp()
 {
 #ifdef RASPBERRY
     // // 仅在树莓派（Linux）下运行指定路径
-    QString program = "sudo /opt/UtilityApp/bin/UtilityApp -platform xbc";
+    QString program = "sudo";
+    QStringList arguments;
+    arguments.append("/opt/UtilityApp/bin/UtilityApp");
+    arguments.append("-platform");
+    arguments.append("xbc");
+
     if (m_process->state() == QProcess::NotRunning) {
         // m_process->start("sudo",{program,"-platform","xbc"});
-        m_process->start(program);
+        m_process->start(program, arguments);
         if (!m_process->waitForStarted(2000)) {
             qWarning() << "UtilityApp 启动失败:" << m_process->errorString();
         } else {
