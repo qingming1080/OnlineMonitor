@@ -122,7 +122,7 @@ int main(int argc, char *argv[])
     qmlRegisterSingletonType(QUrl("qrc:/qmlSource/GlobalSystemDefine.qml"),     "GlobalSystemDefine",   1,  0,  "GlobalSystemDefine");
     qmlRegisterSingletonType(QUrl("qrc:/qmlSource/GlobalMessageDefine.qml"),    "GlobalMessageDefine",  1,  0,  "GlobalMessageDefine");
 
-    //启动modbus服务器进程
+    //Launch modbus server after the client ready
     UtilityAppLauncher::getInstance()->startUtilityApp();
 
     const QUrl url(QStringLiteral("qrc:/qmlSource/main.qml"));
