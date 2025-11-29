@@ -39,11 +39,13 @@ Rectangle {
         prostack.push(newItem);
         if( viewName === 2 || viewName === 3)
         {
+            DeviceManager.DeviceList[currentIndex].ProductionObj.ModelStatus = true
             ModbusClient.setPilotLedStatus(true)
             ModbusClient.setLearnLedStatus(false)
         }
         else
         {
+            DeviceManager.DeviceList[currentIndex].ProductionObj.ModelStatus = false
             ModbusClient.setPilotLedStatus(false)
             ModbusClient.setLearnLedStatus(true)
         }
