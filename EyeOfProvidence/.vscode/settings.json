@@ -1,0 +1,14 @@
+{
+    "files.associations": {
+        "cmath": "cpp",
+        "algorithm": "cpp",
+        "xstring": "cpp",
+        "xutility": "cpp",
+        "xlocale": "cpp",
+        "system_error": "cpp",
+        "initializer_list": "cpp",
+        "type_traits": "cpp",
+        "ios": "cpp",
+        "xiosbase": "cpp"
+    }
+}

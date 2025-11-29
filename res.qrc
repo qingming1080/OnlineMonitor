@@ -1,8 +1,0 @@
-<RCC>
-    <qresource prefix="/">
-        <file>languagePackages/English.qm</file>
-        <file>languagePackages/SimplifiedChinese.qm</file>
-        <file>languagePackages/English.ts</file>
-        <file>languagePackages/SimplifiedChinese.ts</file>
-    </qresource>
-</RCC>

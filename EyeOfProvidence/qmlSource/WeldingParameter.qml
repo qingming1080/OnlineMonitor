@@ -1,0 +1,295 @@
+﻿import QtQuick 2.0
+import QtQuick.Controls 2.15
+import GlobalLanguageDefine 1.0
+import GlobalSystemDefine 1.0
+import LanguageEnum         1.0
+//焊接参数
+
+Rectangle {
+    color: pRgb(43, 112, 173)
+    property string presetEnergy: ""
+    property string presetAmplitude: ""
+    property string presetTriggerPressure: ""
+    property string presetWeldPressure: ""
+    property int deviceCount: DeviceManager.DeviceCounter
+
+    radius: 3
+    Rectangle {
+           width:  deviceCount === 1 ? 117 : 129
+           height: 35
+           radius: 1
+           anchors.left: parent.left
+           anchors.top: parent.top
+           color: "transparent"
+
+           Text {
+               // text: qsTr("焊接参数")
+               id: weldingParameterText
+               text: GlobalLanguageDefine.strWeldingParameter
+               font.family: GlobalSystemDefine.fontBold
+               font.bold: true
+               font.pixelSize: LanguageManager.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 20 : 18
+               color: pRgb(153, 204, 255)
+               anchors.left: parent.left
+               anchors.leftMargin: 17
+               anchors.top: parent.top
+               anchors.topMargin: 10
+           }
+
+           Rectangle{
+               anchors.top: weldingParameterText.bottom
+               anchors.topMargin: 5
+               height: 1
+               width: 97
+               color: pRgb(174, 210, 216)
+           }
+       }
+
+    Image {
+        id: imageEnergy
+        source: "qrc:/images/icon_energy.png"
+        x: 17
+        y: 70
+        width: 25
+        height: 25
+    }
+    Image {
+        id: imageAmplitude
+        source: "qrc:/images/icon_amplitude.png"
+        anchors.top: imageEnergy.bottom
+        anchors.left: imageEnergy.left
+        anchors.topMargin: 12
+        width: 25
+        height: 25
+    }
+    Image {
+        id: imageTriggerPressure
+        source: "qrc:/images/icon_tp.png"
+        anchors.top: imageAmplitude.bottom
+        anchors.left: imageAmplitude.left
+        anchors.topMargin: 12
+        width: 25
+        height: 25
+    }
+    Image {
+        id: imageWeldPressure
+        source: "qrc:/images/icon_wp.png"
+        anchors.top: imageTriggerPressure.bottom
+        anchors.left: imageTriggerPressure.left
+        anchors.topMargin: 12
+        width: 25
+        height: 25
+    }
+
+    Text {
+        id: titleEnergy
+        // text: qsTr("能量")
+        text: GlobalLanguageDefine.strEnergy + "(J)" + ": "
+        height: 25
+        width: 80
+        font.family: GlobalSystemDefine.fontBold
+        // font.bold: true
+        font.pixelSize: LanguageManager.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 16 : 14
+        color: pRgb(171, 206, 213)
+        verticalAlignment: Text.AlignVCenter
+        anchors.verticalCenter: imageEnergy.verticalCenter
+        anchors.left: imageEnergy.right
+        anchors.leftMargin: 10
+    }
+    Text {
+        id: titleAmplitude
+        // text: qsTr("振幅")
+        text: GlobalLanguageDefine.strAmplitude + "(μm)" + ": "
+        height: 25
+        width: 80
+        font.family: GlobalSystemDefine.fontBold
+        // font.bold: true
+        font.pixelSize: LanguageManager.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 16 : 14
+        color: pRgb(171, 206, 213)
+        verticalAlignment: Text.AlignVCenter
+        anchors.verticalCenter: imageAmplitude.verticalCenter
+        anchors.left: imageAmplitude.right
+        anchors.leftMargin: 10
+    }
+    Text {
+        id: titleTriggerPressure
+        text: GlobalLanguageDefine.strTriggerPressure + "(PSI)" + ": "
+        height: 25
+        width: 80
+        font.family: GlobalSystemDefine.fontBold
+        // font.bold: true
+        font.pixelSize: LanguageManager.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 16 : 14
+        color: pRgb(171, 206, 213)
+        verticalAlignment: Text.AlignVCenter
+        anchors.verticalCenter: imageTriggerPressure.verticalCenter
+        anchors.left: imageTriggerPressure.right
+        anchors.leftMargin: 10
+    }
+    Text {
+        id: titleWeldPressure
+        // text: qsTr("压力")
+        text: GlobalLanguageDefine.strWeldPressure + "(PSI)" + ": "
+        height: 25
+        width: 80
+        font.family: GlobalSystemDefine.fontBold
+        // font.bold: true
+        font.pixelSize: LanguageManager.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 16 : 14
+        color: pRgb(171, 206, 213)
+        verticalAlignment: Text.AlignVCenter
+        anchors.verticalCenter: imageWeldPressure.verticalCenter
+        anchors.left: imageWeldPressure.right
+        anchors.leftMargin: 10
+    }
+    TextField{
+        id: fieldEnergy
+        width: 80
+        height: 28
+        anchors.left: titleEnergy.right
+        anchors.leftMargin:  38
+        anchors.verticalCenter: titleEnergy.verticalCenter
+        horizontalAlignment: TextInput.AlignHCenter
+        color: pRgb(43, 112, 173)
+        font.family: GlobalSystemDefine.fontBold
+        font.bold: true
+        font.pixelSize: 16
+        signal signalClickedEvent()
+        background: Rectangle{
+            radius: 6
+            border.width: 2
+            border.color: "#99ccff"
+        }
+        text: presetEnergy/* + GlobalLanguageDefine.strEnergyUnit*/
+
+        MouseArea {
+            anchors.fill: parent
+            onPressed: {
+                window.showPrimaryNumpad(titleEnergy.text, " ", 3, 0, 999999, fieldEnergy.text, fieldEnergy, function(val)
+                {
+                    fieldEnergy.text = val;
+                    var intRegex = /^[0-9]+$/
+                    if (!intRegex.test(fieldEnergy.text))
+                        footer.showError(titleEnergy.text + GlobalLanguageDefine.strInputInterger)
+                    else
+                    {
+                       footer.hideError()
+                       DeviceManager.DeviceList[currentIndex].ManualObj.EnergySetting = fieldEnergy.text
+                    }
+                })
+            }
+        }
+    }
+    TextField{
+        id: fieldAmplitude
+        width: 80
+        height: 28
+        anchors.left: titleAmplitude.right
+        anchors.leftMargin:  38
+        anchors.verticalCenter: titleAmplitude.verticalCenter
+        horizontalAlignment: TextInput.AlignHCenter
+        color: pRgb(43, 112, 173)
+        font.family: GlobalSystemDefine.fontBold
+        font.bold: true
+        font.pixelSize: 16
+        inputMethodHints: Qt.ImhDigitsOnly
+        background: Rectangle{
+            radius: 6
+            border.width: 2
+            border.color: "#99ccff"
+        }
+        text: presetAmplitude/* + GlobalLanguageDefine.strAmplitudeUnit*/
+
+        MouseArea {
+            anchors.fill: parent
+            onPressed: {
+                window.showPrimaryNumpad(titleAmplitude.text, " ", 3, 0, 999999, fieldAmplitude.text, fieldAmplitude, function(val)
+                {
+                     fieldAmplitude.text = val;
+                     var wpRegex = /^[0-9]+$/
+                     if (!wpRegex.test(fieldAmplitude.text))
+                         footer.showError(titleAmplitude.text + GlobalLanguageDefine.strInputInterger)
+                     else
+                     {
+                         footer.hideError()
+                         DeviceManager.DeviceList[currentIndex].ManualObj.AmplitudeSetting = fieldAmplitude.text
+                     }
+                })
+            }
+        }
+    }
+    TextField{
+        id: fieldTriggerPressure
+        width: 80
+        height: 28
+        anchors.left: titleTriggerPressure.right
+        anchors.leftMargin: 38
+        anchors.verticalCenter: titleTriggerPressure.verticalCenter
+        horizontalAlignment: TextInput.AlignHCenter
+        color: pRgb(43, 112, 173)
+        font.family: GlobalSystemDefine.fontBold
+        font.bold: true
+        font.pixelSize: 16
+        inputMethodHints: Qt.ImhDigitsOnly
+        background: Rectangle{
+            radius: 6
+            border.width: 2
+            border.color: "#99ccff"
+        }
+        text: presetTriggerPressure
+
+        MouseArea {
+            anchors.fill: parent
+            onPressed: {
+                window.showPrimaryNumpad(titleTriggerPressure.text, " ", 3, 0, 999999, fieldTriggerPressure.text, fieldTriggerPressure, function(val)
+                {
+                    fieldTriggerPressure.text = val;
+                    var tpRegex = /^[0-9]+$/
+                    if (!tpRegex.test(fieldTriggerPressure.text))
+                        footer.showError(titleTriggerPressure.text + GlobalLanguageDefine.strInputInterger)
+                    else
+                    {
+                       footer.hideError()
+                       DeviceManager.DeviceList[currentIndex].ManualObj.TriggerPressureSetting = fieldTriggerPressure.text
+                    }
+                })
+            }
+        }
+    }
+    TextField{
+        id: fieldWeldPressure
+        width: 80
+        height:  28
+        anchors.left: titleWeldPressure.right
+        anchors.leftMargin: 38
+        anchors.verticalCenter: titleWeldPressure.verticalCenter
+        horizontalAlignment: TextInput.AlignHCenter
+        color: pRgb(43, 112, 173)
+        font.family: GlobalSystemDefine.fontBold
+        font.bold: true
+        font.pixelSize: 16
+        inputMethodHints: Qt.ImhDigitsOnly
+        background: Rectangle{
+            radius: 6
+            border.width: 2
+            border.color: "#99ccff"
+        }
+        text: presetWeldPressure/* + GlobalLanguageDefine.strPressureUnit*/
+
+        MouseArea {
+            anchors.fill: parent
+            onPressed: {
+                window.showPrimaryNumpad(titleWeldPressure.text, " ", 3, 0, 999999, fieldWeldPressure.text, fieldWeldPressure, function(val)
+                {
+                    fieldWeldPressure.text = val;
+                    var wpRegex = /^[0-9]+$/
+                    if (!wpRegex.test(fieldWeldPressure.text))
+                        footer.showError(titleWeldPressure.text + GlobalLanguageDefine.strInputInterger)
+                    else
+                    {
+                        footer.hideError()
+                        DeviceManager.DeviceList[currentIndex].ManualObj.WeldPressureSetting = fieldWeldPressure.text
+                    }
+                })
+            }
+        }
+    }
+}

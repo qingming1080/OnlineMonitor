@@ -1,8 +1,0 @@
-<RCC>
-    <qresource prefix="/">
-        <file>misc/ConvertCSV.py</file>
-        <file>misc/ConvertExcel.py</file>
-        <file>misc/ConvertPDF.py</file>
-        <file>misc/ConvertTxt.py</file>
-    </qresource>
-</RCC>

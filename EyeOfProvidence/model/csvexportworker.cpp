@@ -1,0 +1,72 @@
+#include "csvexportworker.h"
+
+CSVExportWorker::CSVExportWorker(const QStringList &localfiles, const QString USBDirectory)
+{
+    m_LocalFiles.clear();
+    m_LocalFiles = localfiles;
+    m_USBDirectory = USBDirectory;
+}
+
+void CSVExportWorker::exportToFile()
+{
+    bool bResult = true;
+    QString message;
+    QString localAppDirectory, targetDirectory;
+    if(m_LocalFiles.size() == 0)
+        bResult = false;
+    else
+    {
+        for(int i = 0; i < m_LocalFiles.size(); i++)
+        {
+            localAppDirectory = m_LocalFiles.at(i);
+            bResult = QFile::exists(localAppDirectory);
+            if(bResult == false)
+                break;
+            QString tmpStr = m_LocalFiles.at(i);
+            bResult = GetTargetDirectory(tmpStr, targetDirectory);
+            if(bResult == false)
+                break;
+            targetDirectory += ".csv";
+            ExportToCSV(localAppDirectory, m_USBDirectory);
+            emit exportPrograss(i, m_LocalFiles.size());
+        }
+    }
+    if(bResult == true)
+        message = "Successed to copy " + localAppDirectory + " to " + m_USBDirectory + "/" + targetDirectory;
+    DeleteLocalCSVFiles();
+    emit exportFinished(bResult, message);
+}
+
+bool CSVExportWorker::ExportToCSV(const QString localDirectory, const QString targetDirectory)
+{
+    bool bResult = false;
+    // 创建 QProcess 对象
+    QProcess process;
+
+    // 设置要执行的命令
+    QString program = "python3"; // 你可以替换为其他 Linux 命令
+    QStringList arguments; // 这里可以添加命令参数，例如 "-l" 或其他
+    qDebug() << "localDirectly: " << localDirectory;
+    qDebug() << "targetDirectory: " << targetDirectory;
+    arguments.append("ConvertCSV.py");
+    arguments.append(localDirectory);
+    arguments.append(targetDirectory);
+
+    // 启动进程
+    process.start(program, arguments);
+
+    // 等待进程结束
+    process.waitForFinished(30000);
+
+    // 获取命令输出
+    QString output = process.readAllStandardOutput();
+    qDebug() << output;
+    QString error = process.readAllStandardError();
+    qDebug() << error;
+
+    // 输出结果
+    if (!output.isEmpty())
+        bResult = true;
+    return bResult;
+}
+
