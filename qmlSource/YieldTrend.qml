@@ -211,7 +211,7 @@ Rectangle
                         bbb.color = "#007dbc"
                         bbbb.color = "#007dbc"
                     }
-                    else if(DeviceManager.DeviceList[0].TrendOb.YieldType === 2)
+                    else if(DeviceManager.DeviceList[0].TrendObj.YieldType === 2)
                     {
                         bbbb.border.color = "#007dbc"
                         b.border.color = "#007dbc"

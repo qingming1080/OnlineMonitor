@@ -33,6 +33,7 @@
 // 自定义消息处理程序
 void myMessageHandler(QtMsgType type, const QMessageLogContext &context, const QString &msg)
 {
+    Q_UNUSED(type)
     Q_UNUSED(context)
     Q_UNUSED(msg)
     // 过滤掉你不想显示的消息
@@ -67,9 +68,6 @@ int main(int argc, char *argv[])
     // qInstallMessageHandler(myMessageHandler);
     QApplication app(argc, argv);
     LocalRecord::getInstance()->start();
-
-    //启动modbus服务器进程
-    UtilityAppLauncher::getInstance()->startUtilityApp();
 
     LanguageManager LanguageManager;
 
@@ -123,6 +121,9 @@ int main(int argc, char *argv[])
     qmlRegisterSingletonType(QUrl("qrc:/qmlSource/BransonStyle.qml"),               "Style",                1, 0, "Style");
     qmlRegisterSingletonType(QUrl("qrc:/qmlSource/GlobalSystemDefine.qml"),     "GlobalSystemDefine",   1,  0,  "GlobalSystemDefine");
     qmlRegisterSingletonType(QUrl("qrc:/qmlSource/GlobalMessageDefine.qml"),    "GlobalMessageDefine",  1,  0,  "GlobalMessageDefine");
+
+    //启动modbus服务器进程
+    UtilityAppLauncher::getInstance()->startUtilityApp();
 
     const QUrl url(QStringLiteral("qrc:/qmlSource/main.qml"));
 
