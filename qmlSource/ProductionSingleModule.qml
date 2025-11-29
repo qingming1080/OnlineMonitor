@@ -17,7 +17,6 @@ Rectangle {
     Connections{
         target: window
         function onSigNewModel(){
-            DeviceManager.DeviceList[currentIndex].ProductionObj.ModelStatus = false
             loadViewpro(1, autoLearning)
         }
     }
