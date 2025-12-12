@@ -19,7 +19,7 @@ Popup {
     signal sigInputFieldFocusChanged(var textField, bool focused)
     
     function openPop(index){//1输入密码(配置) 2输入密码(新建模型) 3输入密码(新建模型单设备)
-        //4语言 5采样 6系统消息 7修改密码 8新增设备 9删除设备 10系统保存 11输入范围
+        //4语言 5采样 6系统消息 7修改密码 8新增设备 9删除设备 10系统保存
         id = index
         if(index === 1 || index === 2 || index === 3 || index === 8 )
         {
@@ -46,14 +46,8 @@ Popup {
         else if(index === 10){
             popload.sourceComponent = sysConfig
             open()
-        }
-        else if(index === 11){
-            popload.sourceComponent = scope
-            open()
-        }        else if(index === 11){
-            popload.sourceComponent = scope
-            open()
-        }        else if(index === 12){
+        }        
+        else if(index === 12){
             popload.sourceComponent = deleteDevice
             open()
         }
@@ -108,7 +102,7 @@ Popup {
             y:33
             width: 567
             height: 236
-            color: "#b1d5db"
+            color: "#99CCFF"
             Text {
                 anchors.horizontalCenter: parent.horizontalCenter
                 y:49
@@ -220,7 +214,7 @@ Popup {
             y:33
             width: 567
             height: 236
-            color: "#b1d5db"
+            color: "#99CCFF"
             Text {
                 anchors.horizontalCenter: parent.horizontalCenter
                 y:49
@@ -266,7 +260,7 @@ Popup {
             y:33
             width: 567
             height: 236
-            color: "#b1d5db"
+            color: "#99CCFF"
             Text {
                 anchors.horizontalCenter: parent.horizontalCenter
                 y:49
@@ -337,7 +331,7 @@ Popup {
             y:33
             width: 567
             height: 236
-            color: "#b1d5db"
+            color: "#99CCFF"
             Text {
                 anchors.horizontalCenter: parent.horizontalCenter
                 y:49
@@ -376,89 +370,6 @@ Popup {
             }
         }
     }
-    Component{
-        id:scope
-        Rectangle{
-            y:33
-            width: 567
-            height: 236
-            color: "#b1d5db"
-            Text {
-                anchors.horizontalCenter: parent.horizontalCenter
-                y:49
-                // text: qsTr("输入范围错误请重新输入!")
-                text: GlobalLanguageDefine.strInputRangeError
-                font.pixelSize: 20
-                color: "#004b8d"
-                horizontalAlignment: Text.AlignHCenter
-                verticalAlignment: Text.AlignVCenter
-                font.family: GlobalSystemDefine.fontBold
-                font.bold: true
-            }
-            Text {
-                anchors.horizontalCenter: parent.horizontalCenter
-                y:69
-                // text: qsTr("最大生产批量上下限（2w-100w）")
-                text: GlobalLanguageDefine.strMaxProductionLimit
-                font.pixelSize: 20
-                color: "#004b8d"
-                horizontalAlignment: Text.AlignHCenter
-                verticalAlignment: Text.AlignVCenter
-                font.family: GlobalSystemDefine.fontBold
-                font.bold: true
-            }
-            Text {
-                anchors.horizontalCenter: parent.horizontalCenter
-                y:89
-                // text: qsTr("学习样本数上下限（10~20个）")
-                text: GlobalLanguageDefine.strLearnSampleLimit
-                font.pixelSize: 20
-                color: "#004b8d"
-                horizontalAlignment: Text.AlignHCenter
-                verticalAlignment: Text.AlignVCenter
-                font.family: GlobalSystemDefine.fontBold
-                font.bold: true
-            }
-            Text {
-                anchors.horizontalCenter: parent.horizontalCenter
-                y:109
-                // text: qsTr("良率下限区间（90-99）")
-                text:GlobalLanguageDefine.strYieldRateLimit
-                font.pixelSize: 20
-                color: "#004b8d"
-                horizontalAlignment: Text.AlignHCenter
-                verticalAlignment: Text.AlignVCenter
-                font.family: GlobalSystemDefine.fontBold
-                font.bold: true
-            }
-            Button{
-                id:s4
-                x:170
-                y:165
-                width: 243
-                height: 52
-                background: Rectangle{
-                    radius: 6
-                    color: pRgb(43, 112, 173)
-                }
-                contentItem: Text {
-                    id: mt1
-                    // text: qsTr("确认")
-                    text: GlobalLanguageDefine.strOK
-                    font.pixelSize: mode == 1 ? 17:20
-                    color: pRgb(153, 204, 255)
-                    anchors.centerIn: parent  // 确保文本在按钮内居中对齐
-                    horizontalAlignment: Text.AlignHCenter
-                    verticalAlignment: Text.AlignVCenter
-                    font.family: GlobalSystemDefine.fontBold
-                    font.bold: true
-                }
-                onPressed: {
-                    close()
-                }
-            }
-        }
-    }
 
     Component{
         id:language
@@ -466,7 +377,7 @@ Popup {
             y:33
             width: 567
             height: 236
-            color: "#b1d5db"
+            color: "#99CCFF"
             Text {
                 id: s1
                 x:262
@@ -566,7 +477,7 @@ Popup {
             y:33
             width: 567
             height: 236
-            color: "#b1d5db"
+            color: "#99CCFF"
             ListView{
                 id: taskplanView
                 width: 260

@@ -331,7 +331,7 @@
     <message>
         <location filename="../qmlSource/GlobalLanguageDefine.qml" line="206"/>
         <source>系统时间设置成功已生效！</source>
-        <translation>he system time has been successfully updated！</translation>
+        <translation>The system time has been successfully updated！</translation>
     </message>
     <message>
         <location filename="../qmlSource/GlobalLanguageDefine.qml" line="222"/>

@@ -30,10 +30,11 @@ Item {
     Rectangle {
           anchors.fill: parent
           anchors.margins: -100
-          // color: "#b1d5db"
           color: "#99CCFF"
           radius:5
           z: -1
+          border.width: 2
+          border.color: "#004b8d"
           Rectangle
           {
               color:"#004b8d"
