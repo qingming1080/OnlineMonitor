@@ -21,9 +21,9 @@ Rectangle {
             console.debug("message", message)
             window.showLoading(false)
             if(success === true)
-                window.showDialog(qsTr("提示"),qsTr("导出数据已完成"))
+                window.showDialog(GlobalLanguageDefine.strNotification,GlobalLanguageDefine.strExportIsOk)
             else
-                window.showDialog(qsTr("提示"),qsTr("没有找到可以使用的U盘或尝试再次导出"))
+                window.showDialog(GlobalLanguageDefine.strNotification,GlobalLanguageDefine.strExportFailed)
         }
     }
 

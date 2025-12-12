@@ -187,6 +187,25 @@ QtObject
     readonly property string strFriday:                 qsTr("星期五")
     readonly property string strSaturday:               qsTr("星期六")
 
+    //Month
+    readonly property string strJanuary:                qsTr("一月")
+    readonly property string strFebruary:               qsTr("二月")
+    readonly property string strMarch:                  qsTr("三月")
+    readonly property string strApril:                  qsTr("四月")
+    readonly property string strMay:                    qsTr("五月")
+    readonly property string strJune:                   qsTr("六月")
+    readonly property string strJuly:                   qsTr("七月")
+    readonly property string strAugust:                 qsTr("八月")
+    readonly property string strSeptember:              qsTr("九月")
+    readonly property string strOctober:                qsTr("十月")
+    readonly property string strNovember:               qsTr("十一月")
+    readonly property string strDecember:               qsTr("十二月")
+
+
+    readonly property string strNotification:           qsTr("提示")
+    readonly property string strSetSystemTimeSucess:    qsTr("系统时间设置成功已生效！")
+
+
     //ValidMessage
     readonly property string strInputInterger:          qsTr("请输入整数！")
     readonly property string strEnter0And65535:         qsTr("请输入0~65535之间的数！")
@@ -203,7 +222,8 @@ QtObject
     readonly property string strExportButton:           qsTr("数据导出")
     readonly property string strNoUSB:                  qsTr("未插入U盘")
     readonly property string strUSBConnected:           qsTr("U盘已插入")
-
+    readonly property string strExportIsOk:             qsTr("导出数据已完成!")
+    readonly property string strExportFailed:           qsTr("没有找到可以使用的U盘或尝试再次导出")
 
     enum EnumKeyboard{
         Delete,

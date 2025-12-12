@@ -61,18 +61,22 @@ Rectangle  {
         MouseArea {
             anchors.fill: parent
             cursorShape: Qt.PointingHandCursor
-            onClicked: footer.openTimeDialog()
+            onClicked:
+            {
+                  dateTimeSetting.visible = true
+            }
         }
     }
 
-    TimeSettingDialog {
-          id: timeDialog
-          onTimeSelected: (year, month, day, hour, minute, second) => {
-              let date = new Date(year, month - 1, day, hour, minute, second)
-              footer.currentTime = date.toLocaleString()
-              footer.timeSelected(year, month, day, hour, minute, second)
-          }
-      }
+    HBDateTimeSetting
+    {
+        id: dateTimeSetting
+        anchors.right: parent.right
+        anchors.bottom: parent.bottom
+        anchors.rightMargin: 260
+        anchors.bottomMargin: 230
+        visible:false
+    }
 
     Timer
     {
@@ -81,12 +85,5 @@ Rectangle  {
         repeat: true
         running: true
         onTriggered: footer.currentTime = GlobalMessageDefine.getCurrentTime()
-    }
-
-    signal timeSelected(int year, int month, int day, int hour, int minute, int second)
-
-    function openTimeDialog()
-    {
-          timeDialog.open()
     }
 }
