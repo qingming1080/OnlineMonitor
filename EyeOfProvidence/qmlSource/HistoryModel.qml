@@ -65,7 +65,6 @@ Rectangle {
         x:27
         y:22
         width: 1222
-        // height: 677
         height: 616
         color: "#007dbc"
         radius: 3
@@ -453,12 +452,11 @@ Rectangle {
     }
     Rectangle{
         width: 1220
-        // height: 605
         height: 510
         anchors.top: top.bottom
         anchors.left: top.left
         anchors.leftMargin: 1
-        color: "#004b8d"
+        color: "#99CCFF"
         Text{
             id:t1
             anchors.left: parent.left
@@ -469,7 +467,7 @@ Rectangle {
             text: GlobalLanguageDefine.strDeviceName
             font.family: GlobalSystemDefine.fontBold
             font.bold: true
-            color: pRgb(153, 204, 255)
+            color: "#0068a8"
         }
         Text{
             id: serialNumberText
@@ -481,7 +479,7 @@ Rectangle {
             text: GlobalLanguageDefine.strCycleCount
             font.family: GlobalSystemDefine.fontBold
             font.bold: true
-            color: pRgb(153, 204, 255)
+            color: "#0068a8"
         }
         Text{
             id: historyDateText
@@ -492,7 +490,7 @@ Rectangle {
             text: GlobalLanguageDefine.strDate
             font.family: GlobalSystemDefine.fontBold
             font.bold: true
-            color: pRgb(153, 204, 255)
+            color: "#0068a8"
         }
         Text{
             id: historyEnergyeText
@@ -503,67 +501,66 @@ Rectangle {
             text: GlobalLanguageDefine.strEnergy + "(J)"
             font.family: GlobalSystemDefine.fontBold
             font.bold: true
-            color: pRgb(153, 204, 255)
+            color: "#0068a8"
         }
         Text{
             id: historyAmplitudeText
             anchors.top: historyEnergyeText.top
             anchors.left: historyEnergyeText.right
-            anchors.leftMargin: LanguageManager.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 70 : 40
+            anchors.leftMargin: LanguageManager.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 70 : 50
             font.pixelSize: 16
             text: GlobalLanguageDefine.strAmplitude + "(μm)"
             font.family: GlobalSystemDefine.fontBold
             font.bold: true
-            color: pRgb(153, 204, 255)
+            color: "#0068a8"
         }
         Text{
             id: historyPowerText
             anchors.top: historyAmplitudeText.top
             anchors.left: historyAmplitudeText.right
-            anchors.leftMargin: LanguageManager.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 70 : 40
+            anchors.leftMargin: LanguageManager.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 70 : 50
             font.pixelSize: 16
             text: GlobalLanguageDefine.strPower + "(W)"
             font.family: GlobalSystemDefine.fontBold
             font.bold: true
-            color: pRgb(153, 204, 255)
+            color: "#0068a8"
         }
         Text{
             id: historyWeldTimeText
             anchors.top: historyPowerText.top
             anchors.left: historyPowerText.right
-            anchors.leftMargin: LanguageManager.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 70 : 50
+            anchors.leftMargin: LanguageManager.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 70 : 80
             font.pixelSize: 16
             text: GlobalLanguageDefine.strTime + "(s)"
             font.family: GlobalSystemDefine.fontBold
             font.bold: true
-            color: pRgb(153, 204, 255)
+            color: "#0068a8"
         }
         Text{
             id: historyWeldPressureText
             anchors.top: historyWeldTimeText.top
             anchors.left: historyWeldTimeText.right
-            anchors.leftMargin: LanguageManager.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 70 : 40
+            anchors.leftMargin: LanguageManager.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 70 : 70
             font.pixelSize: 16
             text: GlobalLanguageDefine.strWeldPressure + "(PSI)"
             font.family: GlobalSystemDefine.fontBold
             font.bold: true
-            color: pRgb(153, 204, 255)
+            color: "#0068a8"
         }
         Text{
             id: historyWeldResultText
             anchors.top: historyWeldPressureText.top
             anchors.left: historyWeldPressureText.right
-            anchors.leftMargin: LanguageManager.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 85 : 50
+            anchors.leftMargin: LanguageManager.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 85 : 100
             font.pixelSize: 16
             text: GlobalLanguageDefine.strResult
             font.family: GlobalSystemDefine.fontBold
             font.bold: true
-            color: pRgb(153, 204, 255)
+            color: "#0068a8"
         }
         ListView{
             id: taskplanView
             width: 1220
-            // height: 560
             height: 510
             y:35
             clip: true

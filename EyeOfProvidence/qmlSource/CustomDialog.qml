@@ -103,6 +103,8 @@ Popup {
             width: 567
             height: 236
             color: "#99CCFF"
+            border.width: 2
+            border.color: "#004b8d"
             Text {
                 anchors.horizontalCenter: parent.horizontalCenter
                 y:49
@@ -215,6 +217,8 @@ Popup {
             width: 567
             height: 236
             color: "#99CCFF"
+            border.width: 2
+            border.color: "#004b8d"
             Text {
                 anchors.horizontalCenter: parent.horizontalCenter
                 y:49
@@ -261,6 +265,8 @@ Popup {
             width: 567
             height: 236
             color: "#99CCFF"
+            border.width: 2
+            border.color: "#004b8d"
             Text {
                 anchors.horizontalCenter: parent.horizontalCenter
                 y:49
@@ -332,6 +338,8 @@ Popup {
             width: 567
             height: 236
             color: "#99CCFF"
+            border.width: 2
+            border.color: "#004b8d"
             Text {
                 anchors.horizontalCenter: parent.horizontalCenter
                 y:49
@@ -378,6 +386,8 @@ Popup {
             width: 567
             height: 236
             color: "#99CCFF"
+            border.width: 2
+            border.color: "#004b8d"
             Text {
                 id: s1
                 x:262
@@ -555,7 +565,9 @@ Popup {
             y:33
             width: 567
             height: 236
-            color: "#b1d5db"
+            color: "#99CCFF"
+            border.width: 2
+            border.color: "#004b8d"
             Text {
                 x:223
                 y:49
