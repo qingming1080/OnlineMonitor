@@ -11,9 +11,6 @@
 #include "tools/utilityfunction.h"
 #include "define.h"
 
-
-constexpr char HBModbusClient::LOCAL_IP[13];
-constexpr int HBModbusClient::SERVER_PORT;
 unsigned char HBModbusClient::m_Coils[SYS_COILS_REGISTERS_COUNT + DEV_COILS_REGISTERS_COUNT * DEV_COUNT] = {0};
 unsigned char HBModbusClient::m_Discreteds[DEV_DISCRETE_REGISTERS_COUNT * DEV_COUNT] = {0};
 unsigned char  HBModbusClient::m_LastDiscreteds[DEV_DISCRETE_REGISTERS_COUNT * DEV_COUNT];

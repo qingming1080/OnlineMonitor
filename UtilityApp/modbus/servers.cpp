@@ -11,8 +11,8 @@
 #include "app/gpioapp.h"
 #define MODBUS_DEBUG 1
 QList<hbServer*>* ModbusServers::_ServerList = nullptr;
-constexpr char ModbusServers::LOCAL_IP[13];
-constexpr int ModbusServers::SERVER_PORT;
+// constexpr char ModbusServers::LOCAL_IP[13];
+// constexpr int ModbusServers::SERVER_PORT;
 unsigned char ModbusServers::m_Coils[SYS_COILS_REGISTERS_COUNT + DEV_COILS_REGISTERS_COUNT * DEV_COUNT] = {0};
 unsigned char ModbusServers::m_Discreteds[DEV_DISCRETE_REGISTERS_COUNT * DEV_COUNT] = {0};
 unsigned short ModbusServers::m_Holdings[SYS_HOLDING_REGISTERS_COUNT + DEV_HOLDING_REGISTERS_COUNT * DEV_COUNT] = {0};
@@ -124,7 +124,7 @@ void ModbusServers::slotWeldResultRead(int iDev, Common *_protocol)
 
     _protocol->GetWeldResult(&weldResult);
     _protocol->GetWeldSetting(&weldSetting);
-    int address = ModbusServers::DEV_CYCLE_COUNT_H + iDev * DEV_INPUT_REGISTERS_COUNT;
+    int address = DEV_CYCLE_COUNT_H + iDev * DEV_INPUT_REGISTERS_COUNT;
     m_Inputs[address] = (weldResult.CycleCount>>16) & 0xFFFF;
     _ServerList->at(0)->setData(QModbusDataUnit::InputRegisters, address, m_Inputs[address]);
 
@@ -190,7 +190,7 @@ void ModbusServers::slotWeldResultRead(int iDev, Common *_protocol)
     m_Inputs[address] = time.second();
     _ServerList->at(0)->setData(QModbusDataUnit::InputRegisters, address, m_Inputs[address]);
 
-    address = ModbusServers::DEV_ENERGY_SET + iDev * DEV_HOLDING_REGISTERS_COUNT;
+    address = DEV_ENERGY_SET + iDev * DEV_HOLDING_REGISTERS_COUNT;
     m_Holdings[address] = weldSetting.Energy;
     _ServerList->at(0)->setData(QModbusDataUnit::HoldingRegisters, address, m_Holdings[address]);
 
@@ -245,7 +245,7 @@ void ModbusServers::slotWeldResultRead(int iDev, Common *_protocol)
 void ModbusServers::slotDeviceStatus(int iDev, bool status)
 {
     m_mutexDeviceStatus.lock();
-    int address = ModbusServers::DEV_DATA_STATUE + iDev * DEV_DISCRETE_REGISTERS_COUNT;
+    int address = DEV_DATA_STATUE + iDev * DEV_DISCRETE_REGISTERS_COUNT;
     if(status == true)
         m_Discreteds[address] = ON;
     else
@@ -256,7 +256,7 @@ void ModbusServers::slotDeviceStatus(int iDev, bool status)
 
 void ModbusServers::slotButtonReset(bool status)
 {
-    int address = ModbusServers::SYS_BTN_R_BIT4;
+    int address = SYS_BTN_R_BIT4;
     if(status == true)
         m_Coils[address] = ON;
     else
@@ -267,7 +267,7 @@ void ModbusServers::slotButtonReset(bool status)
 void ModbusServers::slotIOReset(int iDev, bool status)
 {
     m_mutexIOStatus.lock();
-    int address = ModbusServers::DEV_RESET_BIT2 + iDev * DEV_COILS_REGISTERS_COUNT;
+    int address = DEV_RESET_BIT2 + iDev * DEV_COILS_REGISTERS_COUNT;
     if(status == true)
         m_Coils[address] = ON;
     else
@@ -294,7 +294,7 @@ int ModbusServers::setDeviceRegisters(int address)
     SerialApp::SERIAL_DEV       serialDevice;
     for(int j = 0; j < DEV_COUNT; j++)
     {
-        if(address == (ModbusServers::DEV_TYPE + j * DEV_HOLDING_REGISTERS_COUNT))
+        if(address == (DEV_TYPE + j * DEV_HOLDING_REGISTERS_COUNT))
         {
             machineDevice.Type = static_cast<InterfaceApp::DEVICE_TYPE>(m_Holdings[index]);
             index++;
@@ -360,7 +360,7 @@ int ModbusServers::setPresetRegisters(int address)
     Proxy* _proxy = Proxy::GetInstance();
     for(int j = 0; j < DEV_COUNT; j++)
     {
-        if(address == (ModbusServers::DEV_ENERGY_SET + j * DEV_HOLDING_REGISTERS_COUNT))
+        if(address == (DEV_ENERGY_SET + j * DEV_HOLDING_REGISTERS_COUNT))
         {
             weldSetting.Energy = m_Holdings[index];
             index++;
@@ -399,7 +399,7 @@ int ModbusServers::setRTCRegisters(int address)
     int index = address;
     SystemClock::DATE_TIME datetime;
     Proxy* _proxy = Proxy::GetInstance();
-    if(address == ModbusServers::SYS_RTC_YY)
+    if(address == SYS_RTC_YY)
     {
         datetime.Year = m_Holdings[index];
         index++;
@@ -424,7 +424,7 @@ int ModbusServers::setLEDRegisters(int address)
     int index = address;
     GpioApp::LED led;
     Proxy* _proxy = Proxy::GetInstance();
-    if(address == ModbusServers::SYS_LED_L_BIT0)
+    if(address == SYS_LED_L_BIT0)
     {
         led.LED_Bits.LED_Learning = m_Coils[index];
         index++;
@@ -447,7 +447,7 @@ int ModbusServers::setIORegisters(int address)
     Proxy* _proxy = Proxy::GetInstance();
     for(int j = 0; j < DEV_COUNT; j++)
     {
-        if(address == (ModbusServers::DEV_REJECT_BIT0 + j * DEV_COILS_REGISTERS_COUNT))
+        if(address == (DEV_REJECT_BIT0 + j * DEV_COILS_REGISTERS_COUNT))
         {
             gpio.IO_Bits.IO_Reject = m_Coils[index];
             index++;
