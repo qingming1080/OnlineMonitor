@@ -5,6 +5,7 @@
 #include "provienceEE/providenceEE.h"
 #include "DataBase/databasehelper.h"
 #include "message.h"
+#include "modbus/hbmodbusclient.h"
 
 Production::Production(int welderID, QObject *parent)
     :QObject{parent}, m_WelderID(welderID)
@@ -98,6 +99,8 @@ void Production::setSuspectCycleCount(const QString &count)
     if (isOk && m_iSuspectCycleCount != iCount)
     {
         m_iSuspectCycleCount = iCount;
+        HBModbusClient::getInstance()->setAlarmLedStatus(true);
+        HBModbusClient::getInstance()->setDeviceIOStatusSuspect(m_WelderID,true);
         emit notifySuspectCycleCountChanged();
     }
 }
@@ -119,6 +122,8 @@ void Production::setDefectiveCycleCount(const QString &count)
     if (isOk && m_iDefectiveCycleCount != iCount)
     {
         m_iDefectiveCycleCount = iCount;
+        HBModbusClient::getInstance()->setAlarmLedStatus(true);
+        HBModbusClient::getInstance()->setDeviceIOStatusReject(m_WelderID,true);
         emit notifyDefectiveCycleCountChanged();
     }
 }

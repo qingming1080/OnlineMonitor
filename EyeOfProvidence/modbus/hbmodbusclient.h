@@ -291,6 +291,8 @@ private:
 
     void ParseDeviceIOResetStatus();
 
+    void resetAllDeviceIOStatus();
+
     void updateLedStatus(int ledIndex, bool condition);
 
     void readRegisters(QModbusDataUnit::RegisterType type,int startAddress, int count, const char* errMsg);

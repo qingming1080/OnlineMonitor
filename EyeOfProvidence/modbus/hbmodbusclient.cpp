@@ -366,10 +366,27 @@ void HBModbusClient::ParseDeviceIOResetStatus()
         {
             if(iter.value() == i)
             {
+                int welderId = iter.key();
+                if (IOStatus.IOResetStatus)
+                {
+                    setDeviceIOStatusReject(welderId, false);
+                    setDeviceIOStatusSuspect(welderId, false);
+                }
                 emit notifyDeviceIOStatusChanged(iter.key(), IOStatus);
                 break;
             }
         }
+    }
+}
+
+void HBModbusClient::resetAllDeviceIOStatus()
+{
+    for (auto iter = m_WelderDeviceMap.constBegin(); iter != m_WelderDeviceMap.constEnd(); ++iter)
+    {
+        int welderId = iter.key();
+
+        setDeviceIOStatusReject(welderId, false);
+        setDeviceIOStatusSuspect(welderId, false);
     }
 }
 
@@ -435,7 +452,7 @@ Q_INVOKABLE void HBModbusClient::setDeviceIOStatusReject(int welderId, bool cond
         return;
     if (deviceId < 0 || deviceId > (DEV_COUNT - 1))
         return;
-    int base = SYS_COILS_REGISTERS_COUNT + deviceId * DEV_COILS_REGISTERS_COUNT;;
+    int base = SYS_COILS_REGISTERS_COUNT + deviceId * DEV_COILS_REGISTERS_COUNT;
     int rejectAddress = base + DEV_REJECT_BIT0 - SYS_COILS_REGISTERS_COUNT;
 
     QVector<quint8> value(1, condition ? 1 : 0);
@@ -452,7 +469,7 @@ Q_INVOKABLE void HBModbusClient::setDeviceIOStatusSuspect(int welderId, bool con
         return;
     if (deviceId < 0 || deviceId > (DEV_COUNT - 1))
         return;
-    int base = SYS_COILS_REGISTERS_COUNT + (deviceId - 1) * DEV_COILS_REGISTERS_COUNT;;
+    int base = SYS_COILS_REGISTERS_COUNT + deviceId  * DEV_COILS_REGISTERS_COUNT;
     int suspectAddress = base + DEV_SUSPECT_BIT1 - SYS_COILS_REGISTERS_COUNT;
 
     QVector<quint8> value(1, condition ? 1 : 0);
@@ -470,6 +487,11 @@ void HBModbusClient::setResetButtonStatus(const bool status)
     if(status != m_bFrontPanelResetButton)
     {
         m_bFrontPanelResetButton = status;
+        if(m_bFrontPanelResetButton)
+        {
+            setAlarmLedStatus(false);
+            resetAllDeviceIOStatus();
+        }
         emit notifyResetButtonStatus(status);
     }
 }
