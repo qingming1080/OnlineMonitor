@@ -81,22 +81,22 @@
     <message>
         <location filename="../qmlSource/GlobalLanguageDefine.qml" line="20"/>
         <source>Min</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../qmlSource/GlobalLanguageDefine.qml" line="21"/>
         <source>Max</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../qmlSource/GlobalLanguageDefine.qml" line="22"/>
         <source>DONE</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../qmlSource/GlobalLanguageDefine.qml" line="23"/>
         <source>CANCEL</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../qmlSource/GlobalLanguageDefine.qml" line="29"/>
@@ -766,7 +766,7 @@
         <location filename="../qmlSource/GlobalLanguageDefine.qml" line="41"/>
         <location filename="../qmlSource/GlobalLanguageDefine.qml" line="147"/>
         <source>自动学习上限</source>
-        <translation>Auto Learning Upper Limit</translation>
+        <translation>Auto Learning Limit</translation>
     </message>
     <message>
         <location filename="../qmlSource/GlobalLanguageDefine.qml" line="73"/>

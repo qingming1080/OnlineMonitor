@@ -99,8 +99,6 @@ void Production::setSuspectCycleCount(const QString &count)
     if (isOk && m_iSuspectCycleCount != iCount)
     {
         m_iSuspectCycleCount = iCount;
-        HBModbusClient::getInstance()->setAlarmLedStatus(true);
-        HBModbusClient::getInstance()->setDeviceIOStatusSuspect(m_WelderID,true);
         emit notifySuspectCycleCountChanged();
     }
 }
@@ -122,8 +120,6 @@ void Production::setDefectiveCycleCount(const QString &count)
     if (isOk && m_iDefectiveCycleCount != iCount)
     {
         m_iDefectiveCycleCount = iCount;
-        HBModbusClient::getInstance()->setAlarmLedStatus(true);
-        HBModbusClient::getInstance()->setDeviceIOStatusReject(m_WelderID,true);
         emit notifyDefectiveCycleCountChanged();
     }
 }
@@ -406,6 +402,7 @@ void Production::AppendNewRecordComming(const HBModbusClient::MODBUS_WELD_RESULT
         else
             m_DBProduction.FinalResult = HistoryEnum::SUSPECT;
     }
+
     int goodCount = GetGoodCycleCount();
     int suspectCount = GetSuspectCycleCount();
     int defectCount = GetDefectiveCycleCount();
@@ -418,15 +415,20 @@ void Production::AppendNewRecordComming(const HBModbusClient::MODBUS_WELD_RESULT
         break;
     case HistoryEnum::SUSPECT:
         suspectCount++;
+        HBModbusClient::getInstance()->setAlarmLedStatus(true);
+        HBModbusClient::getInstance()->setDeviceIOStatusSuspect(m_WelderID,true);
         Message::getInstance()->addMessage(m_WelderID, MESSAGE_ENUM::SUSPICIOUS);
         break;
     case HistoryEnum::DEFECT:
+        HBModbusClient::getInstance()->setAlarmLedStatus(true);
+        HBModbusClient::getInstance()->setDeviceIOStatusReject(m_WelderID,true);
         Message::getInstance()->addMessage(m_WelderID, MESSAGE_ENUM::DEFECTIVE);
         defectCount++;
         break;
     default:
         break;
     }
+
     totalCount++;
     setGoodCycleCount(QString::number(goodCount));
     setSuspectCycleCount(QString::number(suspectCount));
