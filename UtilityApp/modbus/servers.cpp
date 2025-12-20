@@ -33,8 +33,8 @@ ModbusServers::ModbusServers(QObject *parent)
     connect(EthernetApp::GetInstance(), &EthernetApp::signalWeldResultReady, this, &ModbusServers::slotWeldResultRead);
     connect(SerialApp::GetInstance(), &SerialApp::signalWeldResultReady, this, &ModbusServers::slotWeldResultRead);
 
-    // connect(EthernetApp::GetInstance(), &EthernetApp::signalDeviceStatus, this, &ModbusServers::slotDeviceStatus);
-    // connect(SerialApp::GetInstance(), &SerialApp::signalDeviceStatus, this, &ModbusServers::slotDeviceStatus);
+    connect(EthernetApp::GetInstance(), &EthernetApp::signalDeviceStatus, this, &ModbusServers::slotDeviceStatus);
+    connect(SerialApp::GetInstance(), &SerialApp::signalDeviceStatus, this, &ModbusServers::slotDeviceStatus);
 
     connect(GpioApp::GetInstance(), &GpioApp::signalButtonReset, this, &ModbusServers::slotButtonReset);
     connect(GpioApp::GetInstance(), &GpioApp::signalIOReset,     this, &ModbusServers::slotIOReset);
