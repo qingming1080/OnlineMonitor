@@ -3,7 +3,7 @@
 #include "definition.h"
 #include "../app/gpioapp.h"
 #include <QDebug>
-QList<int, Proxy::MACHINE_DEVICE>        Proxy::m_listDevice;
+QMap<int, Proxy::MACHINE_DEVICE>        Proxy::m_listDevice;
 Proxy* Proxy::_Proxy = nullptr;
 bool Proxy::m_isRunning = false;
 QMutex Proxy::m_mutexMachine;
@@ -33,14 +33,14 @@ int Proxy::UpdateMachineList(const int devNum, const MACHINE_DEVICE *_dev)
     machine.IsOpen = _dev->IsOpen;
     machine.Protocol = _dev->Protocol;
     machine.Type = _dev->Type;
-    if(devNum < m_listDevice.size())
+    if(m_listDevice.contains(devNum) == true)
     {
         m_listDevice[devNum].IsOpen = machine.IsOpen;
         m_listDevice[devNum].Protocol = machine.Protocol;
         m_listDevice[devNum].Type = machine.Type;
     }
     else
-        m_listDevice.push_back(machine);
+        m_listDevice.insert(devNum, machine);
     m_mutexMachine.unlock();
     return OK;
 }
@@ -48,7 +48,7 @@ int Proxy::UpdateMachineList(const int devNum, const MACHINE_DEVICE *_dev)
 int Proxy::UpdateEthernetList(const int devNum, const void *_dev)
 {
     int iResult = ERROR;
-    if(devNum < m_listDevice.size())
+    if(m_listDevice.contains(devNum) == true)
     {
         if(m_listDevice[devNum].IsOpen == false)
             EthernetApp::GetInstance()->Close(devNum);
@@ -69,7 +69,7 @@ int Proxy::UpdateEthernetList(const int devNum, const void *_dev)
 int Proxy::UpdateSerialList(const int devNum, const void *_dev)
 {
     int iResult = ERROR;
-    if(devNum < m_listDevice.size())
+    if(m_listDevice.contains(devNum) == true)
     {
         if(m_listDevice[devNum].IsOpen == false)
             SerialApp::GetInstance()->Close(devNum);
@@ -89,7 +89,7 @@ int Proxy::UpdateSerialList(const int devNum, const void *_dev)
 
 int Proxy::UpdateWeldSettings(const int devNum, const Common::WELD_SETTING* _setting)
 {
-    if(devNum < m_listDevice.size())
+    if(m_listDevice.contains(devNum) == true)
     {
         switch(m_listDevice[devNum].Type)
         {
