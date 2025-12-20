@@ -32,7 +32,7 @@ ModbusServers::ModbusServers(QObject *parent)
     connect(SerialApp::GetInstance(), &SerialApp::signalWeldResultReady, this, &ModbusServers::slotWeldResultRead);
 
     connect(EthernetApp::GetInstance(), &EthernetApp::signalDeviceStatus, this, &ModbusServers::slotDeviceStatus);
-    connect(SerialApp::GetInstance(), &SerialApp::signalDeviceStatus, this, &ModbusServers::slotDeviceStatus);
+    // connect(SerialApp::GetInstance(), &SerialApp::signalDeviceStatus, this, &ModbusServers::slotDeviceStatus);
 
     connect(GpioApp::GetInstance(), &GpioApp::signalButtonReset, this, &ModbusServers::slotButtonReset);
     connect(GpioApp::GetInstance(), &GpioApp::signalIOReset,     this, &ModbusServers::slotIOReset);
@@ -248,6 +248,7 @@ void ModbusServers::slotDeviceStatus(int iDev, bool status)
         m_Discreteds[address] = ON;
     else
         m_Discreteds[address] = OFF;
+    qDebug() << "22222222222222222222: " << m_Discreteds[address];
     _ServerList->at(0)->setData(QModbusDataUnit::DiscreteInputs, address, m_Discreteds[address]);
     m_mutexDeviceStatus.unlock();
 }
