@@ -45,11 +45,15 @@ public:
     // Q_INVOKABLE IO *pIO() const;
     Trend* getTrend() const;
 
-    // Q_INVOKABLE void test();
+    //IO Status
+    bool isIORejectStatus() const;
+    void setIORejectStatus(bool status);
 
-    //获取和更新 plotIndex
-    int getPlotIndex() const;
-    void incrementPlotIndex();
+    bool isIOSuspectStatus() const;
+    void setIOSuspectStatus(bool status);
+
+    bool isIOResetStatus() const;
+    void setIOResetStatus(bool status);
 private:
     bool IsProductionPresetChanged(const HBModbusClient::MODBUS_WELD_RESULT &data);
     bool IsProductionPresetChanged(const HBModbusClient::WELD_PRESET &data);
@@ -63,12 +67,19 @@ signals:
 
     void notifyWeldTrendChanged(int weldID);
     void notifyPresetChanged(int weldID);
+
+    void notifyIOSuspectChanged();
+    void notifyIORejectChanged();
+    void notifyIOResetChanged();
 public slots:
     void slotNotifyTrainingProcessFinished(DataBaseManager::DB_MODEL& model);
 
 private:
     int m_WelderID;
 
+    bool isIOReject  = false;
+    bool isIOSuspect = false;
+    bool isIOReset   = false;
 #ifndef REMARK_FWC
     DeviceInformation*  m_ptrDevice;   // 设备信息
     Manual*             m_ptrManual;
@@ -83,8 +94,6 @@ private:
     std::shared_ptr<ProvidenceEE> m_ptrProvidenceEE;
     std::shared_ptr<Trend> m_ptrTrend;
 #endif
-    int plotIndex;  // 每个设备独有的 plotIndex
-
 };
 
 #endif // DEVICE_H

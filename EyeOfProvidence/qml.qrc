@@ -23,7 +23,6 @@
         <file>qmlSource/WeldingResult.qml</file>
         <file>qmlSource/WeldingTrend.qml</file>
         <file>qmlSource/YieldTrend.qml</file>
-        <file>qmlSource/TimeSettingDialog.qml</file>
         <file>qmlSource/ParameterSettingDialog.qml</file>
         <file>qmlSource/GlobalSystemDefine.qml</file>
         <file>qmlSource/GlobalLanguageDefine.qml</file>
@@ -41,5 +40,9 @@
         <file>qmlSource/BransonDigitalKeyboard.qml</file>
         <file>qmlSource/HBKeyboard.qml</file>
         <file>qmlSource/HBKeyButton.qml</file>
+        <file>qmlSource/HBCalendar.qml</file>
+        <file>qmlSource/HBDateTimeSetting.qml</file>
+        <file>qmlSource/HBTextField.qml</file>
+        <file>qmlSource/HBPrimaryButton.qml</file>
     </qresource>
 </RCC>

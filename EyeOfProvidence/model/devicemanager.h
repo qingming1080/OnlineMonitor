@@ -59,8 +59,8 @@ public:
     // Q_INVOKABLE void startManualMode(int deviceID);  // 开启手动模式
     // Q_INVOKABLE void stopManualMode();              // 关闭手动模式
     // QList<QString> manualDataList() const;          // 获取手动模式数据
-
-    // void syncDevicesToModbus();
+    bool resetDeviceIO(int welderId);
+    bool resetAllDevices();
 
 signals:
     void notifyDeviceListChanged();
@@ -72,11 +72,15 @@ public slots:
     void slotNotifyWeldResultComing(int welderId, const HBModbusClient::MODBUS_WELD_RESULT& data);
     void slotNotifyPresetSettingChanged(int welderId, const HBModbusClient::WELD_PRESET& data);
     void slotNotifyModbusStatusChanged(const bool connected);
+    void slotNotifyResetButtonChanged(const bool ResetButtonStatus);
+    void slotNotifyDeviceIOStatusChanged(int welderId, const HBModbusClient::IO_STATUS &status);
 
 private:
     explicit DeviceManager(QObject *parent = nullptr);
     bool InitDeviceList();
     bool IsManualPresetChanged();
+    bool resetDevices(const QList<Device*>& devices);
+    void UpdateAlarmLEDStatus();
 private:
     static DeviceManager* m_ptrInstance;
     int m_iSelectedDeviceIndex;

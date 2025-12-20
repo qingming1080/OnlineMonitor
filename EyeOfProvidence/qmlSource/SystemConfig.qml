@@ -966,8 +966,10 @@ Rectangle {
                             id: com2
                             width: 243
                             height: 40
-                            x:233
-                            y:55
+                            anchors.top: s16.top
+                            anchors.topMargin: -5
+                            anchors.left: s16.right
+                            anchors.leftMargin: 120
                             model: NetworkModel
                             currentIndex: NetworkModel.EthIndex
                             onCurrentIndexChanged: {

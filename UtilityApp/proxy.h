@@ -42,7 +42,7 @@ private:
     static constexpr int ETH_DEVS = 4;
     static constexpr int SER_DEVS = 2;
 
-    static QList<MACHINE_DEVICE>        m_listDevice;
+    static QMap<int, MACHINE_DEVICE>        m_listDevice;
 
     static Proxy* _Proxy;
 

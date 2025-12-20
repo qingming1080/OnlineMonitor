@@ -179,7 +179,7 @@ Rectangle {
                     id:t1
                     x:840/7/2+5-width/2
                     y:11
-                    font.pixelSize: 16
+                    font.pixelSize: heightOption ? 10 : 16
                     // text: qsTr("全选")
                     text: GlobalLanguageDefine.strSelectAll
                     font.family: GlobalSystemDefine.fontBold
@@ -225,7 +225,7 @@ Rectangle {
                     anchors.left: parent.left
                     anchors.leftMargin: DeviceManager.DeviceList[currentIndex].DeviceObj.HeightEncoderOption === true ? 90 : 140
                     anchors.top: t1.top
-                    font.pixelSize: 16
+                    font.pixelSize: heightOption ? 10 : 16
                     // text: qsTr("序号")
                     text: GlobalLanguageDefine.strCycleCount
                     font.family: GlobalSystemDefine.fontBold
@@ -236,7 +236,7 @@ Rectangle {
                     anchors.top: t1.top
                     anchors.left: parent.left
                     anchors.leftMargin: DeviceManager.DeviceList[currentIndex].DeviceObj.HeightEncoderOption === true ? 160 : 260
-                    font.pixelSize: 16
+                    font.pixelSize: heightOption ? 10 : 16
                     // text: qsTr("焊接时间")
                     text: GlobalLanguageDefine.strWeldingTime + "(s)"
                     font.family: GlobalSystemDefine.fontBold
@@ -247,7 +247,7 @@ Rectangle {
                     anchors.top: t1.top
                     anchors.left: parent.left
                     anchors.leftMargin: DeviceManager.DeviceList[currentIndex].DeviceObj.HeightEncoderOption === true ? 250 : 400
-                    font.pixelSize: 16
+                    font.pixelSize: heightOption ? 10 : 16
                     // text: qsTr("功率")
                     text: GlobalLanguageDefine.strPower + "(W)"
                     font.family: GlobalSystemDefine.fontBold
@@ -258,7 +258,7 @@ Rectangle {
                     anchors.top: t1.top
                     anchors.left: parent.left
                     anchors.leftMargin: 320
-                    font.pixelSize: 16
+                    font.pixelSize: heightOption ? 10 : 16
                     text: GlobalLanguageDefine.strPreWeldHeight + "(mm)"
                     font.family: GlobalSystemDefine.fontBold
                     color: pRgb(171, 206, 213)
@@ -269,7 +269,7 @@ Rectangle {
                     anchors.top: t1.top
                     anchors.left: parent.left
                     anchors.leftMargin: 430
-                    font.pixelSize: 16
+                    font.pixelSize: heightOption ? 10 : 16
                     text: GlobalLanguageDefine.strPostWeldHeight + "(mm)"
                     font.family: GlobalSystemDefine.fontBold
                     color: pRgb(171, 206, 213)
@@ -279,7 +279,7 @@ Rectangle {
                     id:t6
                     x:840/8*5 + 840/8/2-width/2
                     y:11
-                    font.pixelSize: 16
+                    font.pixelSize: heightOption ? 10 : 16
                     // text: qsTr("日期")
                     text: GlobalLanguageDefine.strDate
                     font.family: GlobalSystemDefine.fontBold
@@ -289,7 +289,7 @@ Rectangle {
                     id:t7
                     x:840/8*6 + 840/8/2-width/2
                     y:11
-                    font.pixelSize: 16
+                    font.pixelSize: heightOption ? 10 : 16
                     // text: qsTr("拉力")
                     text: GlobalLanguageDefine.strTensile + "(N)"
                     font.family: GlobalSystemDefine.fontBold
@@ -299,7 +299,7 @@ Rectangle {
                     id:t8
                     x:840/8*7 + 840/8/2-width/2
                     y:11
-                    font.pixelSize: 16
+                    font.pixelSize: heightOption ? 10 : 16
                     // text: qsTr("残留度")
                     text: GlobalLanguageDefine.strResidual + "(%)"
                     font.family: GlobalSystemDefine.fontBold

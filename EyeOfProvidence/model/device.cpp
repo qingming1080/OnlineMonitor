@@ -12,7 +12,7 @@
 /// TEST 2024_08_18
 
 Device::Device(int welderID, QObject *parent)
-    : QObject{parent}, m_WelderID(welderID),plotIndex(0)
+    : QObject{parent}, m_WelderID(welderID)
 {
     // QElapsedTimer timer;
     // timer.start();
@@ -70,12 +70,46 @@ Trend *Device::getTrend() const
 #endif
 }
 
-int Device::getPlotIndex() const {
-    return plotIndex;
+bool Device::isIORejectStatus() const
+{
+    return isIOReject;
 }
 
-void Device::incrementPlotIndex() {
-    plotIndex++;
+void Device::setIORejectStatus(bool status)
+{
+    if(isIOReject != status)
+    {
+        isIOReject = status;
+        void notifyIOResetChanged();
+    }
+}
+
+bool Device::isIOSuspectStatus() const
+{
+    return isIOSuspect;
+}
+
+void Device::setIOSuspectStatus(bool status)
+{
+    if(isIOSuspect != status)
+    {
+        isIOSuspect = status;
+        void notifyIOSuspectChanged();
+    }
+}
+
+bool Device::isIOResetStatus() const
+{
+    return isIOReset;
+}
+
+void Device::setIOResetStatus(bool status)
+{
+    if(isIOReset != status)
+    {
+        isIOReset = status;
+        void notifyIOResetChanged();
+    }
 }
 
 bool Device::IsProductionPresetChanged(const HBModbusClient::MODBUS_WELD_RESULT &data)

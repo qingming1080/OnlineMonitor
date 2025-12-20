@@ -34,6 +34,8 @@ DeviceManager::DeviceManager(QObject *parent)
     connect(HBModbusClient::getInstance(), &HBModbusClient::notifyWeldResultComing,     this, &DeviceManager::slotNotifyWeldResultComing);
     connect(HBModbusClient::getInstance(), &HBModbusClient::notifyPresetSettingChanged, this, &DeviceManager::slotNotifyPresetSettingChanged);
     connect(HBModbusClient::getInstance(), &HBModbusClient::connectionStateChanged, this, &DeviceManager::slotNotifyModbusStatusChanged);
+    connect(HBModbusClient::getInstance(), &HBModbusClient::notifyResetButtonChanged, this,&DeviceManager::slotNotifyResetButtonChanged);
+    connect(HBModbusClient::getInstance(), &HBModbusClient::notifyDeviceIOStatusChanged, this,&DeviceManager::slotNotifyDeviceIOStatusChanged);
 }
 
 bool DeviceManager::InitDeviceList()
@@ -61,6 +63,36 @@ bool DeviceManager::InitDeviceList()
 bool DeviceManager::IsManualPresetChanged()
 {
     return true;
+}
+
+bool DeviceManager::resetDevices(const QList<Device*>& devices)
+{
+    for(auto device : devices)
+    {
+        int welderId = device->getWelderID();
+        HBModbusClient::getInstance()->setDeviceIOStatusReject(welderId, false);
+        HBModbusClient::getInstance()->setDeviceIOStatusSuspect(welderId, false);
+        device->setIORejectStatus(false);
+        device->setIOSuspectStatus(false);
+    }
+    UpdateAlarmLEDStatus();
+    return true;
+}
+
+void DeviceManager::UpdateAlarmLEDStatus()
+{
+    bool isAbnormal =  false;
+    for(auto device : m_listDevices)
+    {
+        if(device->isIORejectStatus() || device->isIOSuspectStatus())
+        {
+            isAbnormal = true;
+            break;
+        }
+    }
+
+    HBModbusClient::getInstance()->setAlarmLedStatus(isAbnormal);
+
 }
 
 int DeviceManager::getSelectedDeviceIndex() const
@@ -124,6 +156,28 @@ int DeviceManager::getPasswordLevel(QString password)
 void DeviceManager::setUserPassword(QString newPassword)
 {
     DataBaseManager::getInstance()->setUserPassword(newPassword);
+}
+
+bool DeviceManager::resetDeviceIO(int welderId)
+{
+    for(auto device : m_listDevices)
+    {
+        if(device->getWelderID() == welderId)
+        {
+            resetDevices({device});
+            return true;
+        }
+    }
+    return false;
+}
+
+bool DeviceManager::resetAllDevices()
+{
+    if(m_listDevices.isEmpty())
+        return false;
+
+    resetDevices(m_listDevices);
+    return true;
 }
 
 void DeviceManager::slotNotifyDeviceStatusChanged(int welderId, HBModbusClient::DEVICE_STATUS status)
@@ -206,6 +260,33 @@ void DeviceManager::slotNotifyModbusStatusChanged(const bool connected)
     emit notifyConnectionStateChanged(connected);
 }
 
+void DeviceManager::slotNotifyResetButtonChanged(const bool ResetButtonStatus)
+{
+    if(ResetButtonStatus == true)
+    {
+        resetAllDevices();
+    }
+}
+
+void DeviceManager::slotNotifyDeviceIOStatusChanged(int welderId, const HBModbusClient::IO_STATUS &status)
+{
+    for(auto device : m_listDevices)
+    {
+        if(device->getWelderID() == welderId)
+        {
+            device->setIORejectStatus(status.IsRejectStatus);
+            device->setIOSuspectStatus(status.IsSuspectStatus);
+            device->setIOResetStatus(status.IsResetStatus);
+            break;
+        }
+    }
+
+    if(status.IsResetStatus)
+    {
+        resetDeviceIO(welderId);
+    }
+}
+
 bool DeviceManager::addDevice()
 {
     if(m_listDevices.size() == 4)
@@ -234,7 +315,6 @@ bool DeviceManager::removeDevice()
         setSelectedDeviceIndex(-1);
     else
         setSelectedDeviceIndex(0);
-
     return true;
 }
 
