@@ -248,7 +248,6 @@ void ModbusServers::slotDeviceStatus(int iDev, bool status)
         m_Discreteds[address] = ON;
     else
         m_Discreteds[address] = OFF;
-    qDebug() << "22222222222222222222: " << m_Discreteds[address];
     _ServerList->at(0)->setData(QModbusDataUnit::DiscreteInputs, address, m_Discreteds[address]);
     m_mutexDeviceStatus.unlock();
 }

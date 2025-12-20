@@ -242,7 +242,6 @@ void EthernetApp::timerEvent(QTimerEvent *event)
             else
                 status = false;
             emit signalDeviceStatus(iter->DevNum, status);
-            qDebug()<< "Ethernet: " << status;
             iter++;
         }
     }
