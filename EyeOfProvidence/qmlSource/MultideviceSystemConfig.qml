@@ -135,6 +135,7 @@ Rectangle {
         // text: qsTr("设备状态") + ": " + eqText4
         text: {
             var str = GlobalLanguageDefine.strDeviceStatus + ": "
+            var isConnected = DeviceManager.DeviceList[currentIndex].DeviceObj.ConnectState
             str += GlobalMessageDefine.getConnectState(isConnected)
             return str
         }
