@@ -16,7 +16,7 @@
 class HBModbusClient : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(bool ResetButtonStatus READ getResetButtonStatus WRITE setResetButtonStatus NOTIFY notifyResetButtonStatus FINAL)
+    Q_PROPERTY(bool ResetButtonStatus READ getResetButtonStatus WRITE setResetButtonStatus NOTIFY notifyResetButtonChanged FINAL)
     Q_PROPERTY(bool connected READ isConnected NOTIFY connectionStateChanged)
 public:
     struct WELD_PRESET
@@ -73,6 +73,13 @@ public:
     {
         bool    IsDeviceStatus;
         bool    IsDeviceDataStatus;
+    };
+
+    struct IO_STATUS
+    {
+        bool IsRejectStatus;
+        bool IsSuspectStatus;
+        bool IsResetStatus;
     };
 
 public:
@@ -156,9 +163,7 @@ private:
 
     void ParseResetButton();
 
-    void ParseDeviceIOResetStatus();
-
-    void resetAllDeviceIOStatus();
+    void ParseDeviceIOStatus();
 
     void updateLedStatus(int ledIndex, bool condition);
 
@@ -180,7 +185,7 @@ signals:
 
     void notifyDeviceStatusChanged(int welderId, DEVICE_STATUS status);
 
-    void notifyResetButtonStatus(const bool& status);
+    void notifyResetButtonChanged(const bool& status);
 
     void connectionStateChanged(bool connected);
 

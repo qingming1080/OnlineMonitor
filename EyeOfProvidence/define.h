@@ -27,9 +27,4 @@ struct DateTimeData
     int second;
 };
 
-struct IO_STATUS
-{
-    bool IOResetStatus;
-};
-
 #endif // DEFINE_H

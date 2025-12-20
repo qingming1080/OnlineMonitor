@@ -155,7 +155,7 @@ void HBModbusClient::readRegisters(QModbusDataUnit::RegisterType type,int startA
                             break;
                         case QModbusDataUnit::Coils:
                             ParseResetButton();
-                            ParseDeviceIOResetStatus();
+                            ParseDeviceIOStatus();
                             break;
                         default:
                             break;
@@ -351,39 +351,24 @@ void HBModbusClient::ParseResetButton()
     setResetButtonStatus(bResetButtonStatus);
 }
 
-void HBModbusClient::ParseDeviceIOResetStatus()
+void HBModbusClient::ParseDeviceIOStatus()
 {
     int base = 0;
     IO_STATUS IOStatus;
     for (int i = 0; i < DEV_COUNT; ++i)
     {
         base = SYS_COILS_REGISTERS_COUNT + i * DEV_COILS_REGISTERS_COUNT;
-        IOStatus.IOResetStatus = m_Coils[base + DEV_RESET_BIT2 - SYS_COILS_REGISTERS_COUNT];
+        IOStatus.IsRejectStatus   = m_Coils[base + DEV_REJECT_BIT0 - SYS_COILS_REGISTERS_COUNT];
+        IOStatus.IsSuspectStatus  = m_Coils[base + DEV_SUSPECT_BIT1 - SYS_COILS_REGISTERS_COUNT];
+        IOStatus.IsResetStatus    = m_Coils[base + DEV_RESET_BIT2 - SYS_COILS_REGISTERS_COUNT];
         for(auto iter = m_WelderDeviceMap.begin(); iter != m_WelderDeviceMap.end(); iter++)
         {
             if(iter.value() == i)
             {
-                int welderId = iter.key();
-                if (IOStatus.IOResetStatus)
-                {
-                    setDeviceIOStatusReject(welderId, false);
-                    setDeviceIOStatusSuspect(welderId, false);
-                }
                 emit notifyDeviceIOStatusChanged(iter.key(), IOStatus);
                 break;
             }
         }
-    }
-}
-
-void HBModbusClient::resetAllDeviceIOStatus()
-{
-    for (auto iter = m_WelderDeviceMap.constBegin(); iter != m_WelderDeviceMap.constEnd(); ++iter)
-    {
-        int welderId = iter.key();
-
-        setDeviceIOStatusReject(welderId, false);
-        setDeviceIOStatusSuspect(welderId, false);
     }
 }
 
@@ -484,12 +469,7 @@ void HBModbusClient::setResetButtonStatus(const bool status)
     if(status != m_bFrontPanelResetButton)
     {
         m_bFrontPanelResetButton = status;
-        if(m_bFrontPanelResetButton)
-        {
-            setAlarmLedStatus(false);
-            resetAllDeviceIOStatus();
-        }
-        emit notifyResetButtonStatus(status);
+        emit notifyResetButtonChanged(status);
     }
 }
 
