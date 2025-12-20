@@ -181,14 +181,16 @@ bool DeviceManager::resetAllDevices()
 
 void DeviceManager::slotNotifyDeviceStatusChanged(int welderId, HBModbusClient::DEVICE_STATUS status)
 {
-    // qDebug() << "WeldID： " << welderId;
-    // qDebug() << "IsDeviceDataStatus: " << status.IsDeviceDataStatus;
-    // qDebug() << "IsDeviceStatus: " << status.IsDeviceStatus;
     for(int i = 0; i < m_listDevices.size(); i++)
     {
         if(m_listDevices[i]->getWelderID() == welderId)
         {
-             m_listDevices[i]->NotifyDeviceStatusChanged(status);
+            if(m_listDevices[i]->getDeviceObj()->getWelderType() == DeviceInfoEnum::RS232)
+            {
+                status.IsDeviceStatus = true;
+                status.IsDeviceDataStatus = true;
+            }
+            m_listDevices[i]->NotifyDeviceStatusChanged(status);
         }
     }
     bool bResult = true;
