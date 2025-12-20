@@ -66,7 +66,7 @@ int SerialApp::Init(const void *_dev)
         if(iter->_ptrProtocol != nullptr)
         {
             delete iter->_ptrProtocol;
-            iter->_ptrProtocol;
+            iter->_ptrProtocol = nullptr;
         }
         iter++;
     }
