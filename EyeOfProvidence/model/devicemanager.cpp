@@ -92,7 +92,6 @@ void DeviceManager::UpdateAlarmLEDStatus()
     }
 
     HBModbusClient::getInstance()->setAlarmLedStatus(isAbnormal);
-
 }
 
 int DeviceManager::getSelectedDeviceIndex() const
@@ -183,20 +182,13 @@ bool DeviceManager::resetAllDevices()
 void DeviceManager::slotNotifyDeviceStatusChanged(int welderId, HBModbusClient::DEVICE_STATUS status)
 {
     // qDebug() << "WeldID： " << welderId;
-    // qDebug() << "status: " << status.IsDeviceDataStatus;
-    // qDebug() << "status1: " << status.IsDeviceStatus;
+    // qDebug() << "IsDeviceDataStatus: " << status.IsDeviceDataStatus;
+    // qDebug() << "IsDeviceStatus: " << status.IsDeviceStatus;
     for(int i = 0; i < m_listDevices.size(); i++)
     {
-        int id = m_listDevices[i]->getWelderID();
-        if(id == welderId)
+        if(m_listDevices[i]->getWelderID() == welderId)
         {
-
-            if(m_listDevices[i]->getDeviceObj()->getWelderType() == DeviceInfoEnum::RS232)
-            {
-                status.IsDeviceStatus = true;
-                status.IsDeviceDataStatus = true;
-            }
-            m_listDevices[i]->NotifyDeviceStatusChanged(status);
+             m_listDevices[i]->NotifyDeviceStatusChanged(status);
         }
     }
     bool bResult = true;
@@ -208,7 +200,7 @@ void DeviceManager::slotNotifyDeviceStatusChanged(int welderId, HBModbusClient::
             break;
         }
     }
-    if(bResult == true)
+    if(bResult)
     {
         HBModbusClient::getInstance()->setReadyLedStatus(true);
     }
