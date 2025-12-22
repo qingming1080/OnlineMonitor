@@ -250,7 +250,7 @@ int SerialApp::Attach(const int iDev, const int ProtocolType, const void *_dev)
     dev.ComIndex = reinterpret_cast<const SERIAL_DEV*>(_dev)->ComIndex;
     switch(ProtocolType)
     {
-    case Common::TC:
+    case Common::TC_RS232:
         dev._ptrProtocol = new TouchScreen();
         break;
     default:

@@ -8,9 +8,10 @@ class Common
 public:
     enum DEVICE_PROTOCOL_TYPE
     {
-        VG = 0,
-        TC,
-        DP2000X
+        VG_TCP = 0,
+        TC_RS232,
+        DP2000X_TCP,
+        DP2000X_RS232
     };
 
     struct QUAL_WINDOW

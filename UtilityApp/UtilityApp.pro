@@ -15,6 +15,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 INCLUDEPATH += $$PWD/../HBCommon
 HEADERS += $$PWD/../HBCommon/ModbusDefine.h \
+    protocol/tcpip2000x.h
 
 SOURCES += \
         app/ethernetapp.cpp \
@@ -33,6 +34,7 @@ SOURCES += \
         modbus/hbserver.cpp \
         modbus/servers.cpp \
         protocol/common.cpp \
+        protocol/tcpip2000x.cpp \
         protocol/touchscreen.cpp \
         protocol/versagraphic.cpp \
         proxy.cpp \

@@ -164,8 +164,10 @@ int EthernetApp::Attach(const int iDev, const int ProtocolType, const void *_dev
     dev.SocketIndex = getSocketIndex();
     switch(ProtocolType)
     {
-    case Common::VG:
+    case Common::VG_TCP:
         dev._ptrProtocol = new Versagraphic();
+        break;
+    case Common::DP2000X_TCP:
         break;
     default:
         dev._ptrProtocol = new Versagraphic();
