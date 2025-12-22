@@ -14,25 +14,25 @@ int GpioApp::SetLEDs(const void *_LED)
     if(_LED == nullptr)
         return ERROR;
     const LED* _obj = reinterpret_cast<const LED*>(_LED);
-    qDebug() << "Learning: " << _obj->LED_Bits.LED_Learning;
+    qDebug() << "Learning LED: " << _obj->LED_Bits.LED_Learning;
     int status = _obj->LED_Bits.LED_Learning;
     if(status == ON)
         GPIO::GetInstance()->SetLearning(OFF);
     else
         GPIO::GetInstance()->SetLearning(ON);
-    qDebug() << "Pilot Run: " << _obj->LED_Bits.LED_PilotRun;
+    qDebug() << "Pilot Run LED: " << _obj->LED_Bits.LED_PilotRun;
     status = _obj->LED_Bits.LED_PilotRun;
     if(status == ON)
         GPIO::GetInstance()->SetPilotRun(OFF);
     else
         GPIO::GetInstance()->SetPilotRun(ON);
-    qDebug() << "Ready: " << _obj->LED_Bits.LED_Ready;
+    qDebug() << "Ready LED: " << _obj->LED_Bits.LED_Ready;
     status = _obj->LED_Bits.LED_Ready;
     if(status == ON)
         GPIO::GetInstance()->SetReady(OFF);
     else
         GPIO::GetInstance()->SetReady(ON);
-    qDebug() << "Alarm: " << _obj->LED_Bits.LED_Alarm;
+    qDebug() << "Alarm LED: " << _obj->LED_Bits.LED_Alarm;
     status = _obj->LED_Bits.LED_Alarm;
     if(status == ON)
         GPIO::GetInstance()->SetAlarm(OFF);

@@ -24,8 +24,6 @@ ModbusServers::ModbusServers(QObject *parent)
     : QObject{parent}
 {
     _ServerList = new QList<hbServer*>();
-
-
     hbServer* tmpServer = new hbServer();
     tmpServer->setServerAddress(ETH_0);
     _ServerList->append(tmpServer);
@@ -34,7 +32,7 @@ ModbusServers::ModbusServers(QObject *parent)
     connect(SerialApp::GetInstance(), &SerialApp::signalWeldResultReady, this, &ModbusServers::slotWeldResultRead);
 
     connect(EthernetApp::GetInstance(), &EthernetApp::signalDeviceStatus, this, &ModbusServers::slotDeviceStatus);
-    connect(SerialApp::GetInstance(), &SerialApp::signalDeviceStatus, this, &ModbusServers::slotDeviceStatus);
+    // connect(SerialApp::GetInstance(), &SerialApp::signalDeviceStatus, this, &ModbusServers::slotDeviceStatus);
 
     connect(GpioApp::GetInstance(), &GpioApp::signalButtonReset, this, &ModbusServers::slotButtonReset);
     connect(GpioApp::GetInstance(), &GpioApp::signalIOReset,     this, &ModbusServers::slotIOReset);
@@ -54,10 +52,10 @@ ModbusServers::~ModbusServers()
 void ModbusServers::Init()
 {
     QModbusDataUnitMap reg;
-    reg.insert(QModbusDataUnit::Coils, {QModbusDataUnit::Coils, 0, SYS_COILS_REGISTERS_COUNT + DEV_COILS_REGISTERS_COUNT * DEV_COUNT});
-    reg.insert(QModbusDataUnit::DiscreteInputs, {QModbusDataUnit::DiscreteInputs, 0, DEV_DISCRETE_REGISTERS_COUNT * DEV_COUNT});
-    reg.insert(QModbusDataUnit::HoldingRegisters, { QModbusDataUnit::HoldingRegisters, 0, SYS_HOLDING_REGISTERS_COUNT + DEV_HOLDING_REGISTERS_COUNT *  DEV_COUNT});
-    reg.insert(QModbusDataUnit::InputRegisters, { QModbusDataUnit::InputRegisters, 0, DEV_INPUT_REGISTERS_COUNT * DEV_COUNT });
+    reg.insert(QModbusDataUnit::Coils,              {QModbusDataUnit::Coils,            0, SYS_COILS_REGISTERS_COUNT + DEV_COILS_REGISTERS_COUNT * DEV_COUNT});
+    reg.insert(QModbusDataUnit::DiscreteInputs,     {QModbusDataUnit::DiscreteInputs,   0, DEV_DISCRETE_REGISTERS_COUNT * DEV_COUNT});
+    reg.insert(QModbusDataUnit::HoldingRegisters,   {QModbusDataUnit::HoldingRegisters, 0, SYS_HOLDING_REGISTERS_COUNT + DEV_HOLDING_REGISTERS_COUNT *  DEV_COUNT});
+    reg.insert(QModbusDataUnit::InputRegisters,     {QModbusDataUnit::InputRegisters,   0, DEV_INPUT_REGISTERS_COUNT * DEV_COUNT });
     _ServerList->at(0)->setMap(reg);
     _ServerList->at(0)->Listen(SERVER_PORT, QString(LOCAL_IP));
 

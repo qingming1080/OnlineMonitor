@@ -69,7 +69,7 @@ int Proxy::UpdateEthernetList(const int devNum, const void *_dev)
 int Proxy::UpdateSerialList(const int devNum, const void *_dev)
 {
     int iResult = ERROR;
-    if(devNum < m_listDevice.size())
+    if(m_listDevice.contains(devNum) == true)
     {
         if(m_listDevice[devNum].IsOpen == false)
             SerialApp::GetInstance()->Close(devNum);
@@ -89,7 +89,7 @@ int Proxy::UpdateSerialList(const int devNum, const void *_dev)
 
 int Proxy::UpdateWeldSettings(const int devNum, const Common::WELD_SETTING* _setting)
 {
-    if(devNum < m_listDevice.size())
+    if(m_listDevice.contains(devNum) == true)
     {
         switch(m_listDevice[devNum].Type)
         {
