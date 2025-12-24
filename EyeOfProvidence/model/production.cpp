@@ -416,12 +416,12 @@ void Production::AppendNewRecordComming(const HBModbusClient::MODBUS_WELD_RESULT
     case HistoryEnum::SUSPECT:
         suspectCount++;
         HBModbusClient::getInstance()->setAlarmLedStatus(true);
-        HBModbusClient::getInstance()->setDeviceIOStatusSuspect(m_WelderID,true);
+        HBModbusClient::getInstance()->setDeviceIOStatusSuspect(m_WelderID, true);
         Message::getInstance()->addMessage(m_WelderID, MESSAGE_ENUM::SUSPICIOUS);
         break;
     case HistoryEnum::DEFECT:
         HBModbusClient::getInstance()->setAlarmLedStatus(true);
-        HBModbusClient::getInstance()->setDeviceIOStatusReject(m_WelderID,true);
+        HBModbusClient::getInstance()->setDeviceIOStatusReject(m_WelderID, true);
         Message::getInstance()->addMessage(m_WelderID, MESSAGE_ENUM::DEFECTIVE);
         defectCount++;
         break;

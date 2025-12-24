@@ -199,26 +199,18 @@ void Trend::SetModel(const DataBaseManager::DB_MODEL &model)
 
 void Trend::setYieldTrendData()
 {
-    m_StartTime = m_YieldData.startTime;
-    m_EndTime   = m_YieldData.endTime;
-    emit notifyStartTimeChanged();
-    emit notifyEndTimeChanged();
-    emit SignalManager::getInstance()->changeYieldTrendData();
-    emit signalYieldTrendChanged();
-
     if(m_pYieldSeries)
     {
         m_pYieldSeries->replace(m_YieldData.points);
-        // qDebug() << "I_WANT_TEST 刷新折线" << m_pYieldSeries << m_yieldData.points.count() << m_startTime << m_endTime;
+        qDebug() << "I_WANT_TEST 刷新折线" << m_pYieldSeries << m_YieldData.points.count() << m_StartTime << m_EndTime;
     }
 }
 
 void Trend::setYieldSeries(QAbstractSeries *series)
 {
     m_pYieldSeries = static_cast<QXYSeries*>(series);
-    setYieldTrendData();
-
-    // qDebug() << QString("I_WANT_TEST 设备%1 设置折线").arg(m_welderID) << m_pYieldSeries;
+    if(m_pYieldSeries)
+        m_pYieldSeries->replace(m_YieldData.points);
 }
 
 void Trend::setPreheightSeries(QAbstractSeries *series)
@@ -272,7 +264,7 @@ void Trend::init()
     setCountMaxX(X_AXIS_MAX);
 
     // m_weldTimer = new QTimer(this);
-    // connect(m_weldTimer, &QTimer::timeout, this, &Trend::upWeldData);
+    // connect(m_weldTimer, &QTimer::timeout, this, &Trend::upYieldData);
     // m_weldTimer->start(1000 * 1);  // 每2秒刷新一次焊接数据
 }
 
@@ -439,8 +431,8 @@ void Trend::upYieldData()
     DataBaseManager::getInstance()->getProductionRecords(m_WelderID, startTime, endTime, productionList);
     if (productionList.isEmpty())
         return;
-    qDebug() << "StartTime: " << QDateTime::fromSecsSinceEpoch(startTime).toString("yyyy-MM-dd hh:mm:ss");
-    qDebug() << "End Time: " << QDateTime::fromSecsSinceEpoch(endTime).toString("yyyy-MM-dd hh:mm:ss");
+    // qDebug() << "StartTime: " << QDateTime::fromSecsSinceEpoch(startTime).toString("yyyy-MM-dd hh:mm:ss");
+    // qDebug() << "End Time: " << QDateTime::fromSecsSinceEpoch(endTime).toString("yyyy-MM-dd hh:mm:ss");
     int SecondStep = duration / 60; // seconds per timeslot
 
     QList<SLOT_DATA> resultList;     // 60个时间段每个时间段的生产总数列表
@@ -453,8 +445,9 @@ void Trend::upYieldData()
     qint64 slotStart = static_cast<qint64>(productionList.at(0).CreateTime);
     qint64 slotEnd = slotStart + SecondStep;
     SLOT_DATA trendData;
-    // trendData.TimeStamp = QDateTime::fromSecsSinceEpoch(slotStart, Qt::UTC);
     trendData.TimeStamp = slotStart;
+    trendData.TotalNumber = 0;
+    trendData.GoodNumber = 0;
     for (int i = 0; i < productionList.size(); ++i)
     {
         qint64 ts = static_cast<qint64>(productionList.at(i).CreateTime);
@@ -471,10 +464,9 @@ void Trend::upYieldData()
             resultList.append(trendData);
             slotStart = slotEnd;
             slotEnd += SecondStep;
-            // trendData.TimeStamp = QDateTime::fromSecsSinceEpoch(slotStart, Qt::UTC);
             trendData.TimeStamp = slotStart;
         }
-        else if (ts >= slotEnd && resultList.size() >= 59)
+        else if (ts >= slotEnd && resultList.size() >= 60)
         {
             resultList.append(trendData);
             break;
@@ -486,9 +478,12 @@ void Trend::upYieldData()
     m_YieldData.startTime = QDateTime::fromSecsSinceEpoch(resultList.at(0).TimeStamp).toString("yyyy-MM-dd hh:mm:ss");
     m_YieldData.endTime = QDateTime::fromSecsSinceEpoch(resultList.at(resultList.size() - 1).TimeStamp).toString("yyyy-MM-dd hh:mm:ss");
 
-    qDebug() << "Yield StartTime: " << m_YieldData.startTime;
-    qDebug() << "Yield End Time: " <<  m_YieldData.endTime;
+    setStartTime(m_YieldData.startTime);
+    setEndTime(m_YieldData.endTime);
+    // qDebug() << "Yield StartTime: " << m_YieldData.startTime;
+    // qDebug() << "Yield End Time: " <<  m_YieldData.endTime;
 
+    m_YieldData.points.clear();
     // 开始计算每个时间段的良率
     for (int i = 0; i < resultList.size(); ++i)
     {
@@ -496,13 +491,18 @@ void Trend::upYieldData()
         int good_num = resultList.at(i).GoodNumber;
         QPointF pos;
         if (total == 0)
+        {
             pos.ry() = 0;
+        }
         else
-            pos.ry() = static_cast<float>(good_num / total * 100);
+        {
+            pos.ry() = static_cast<float>(good_num * 100 / total);
+            // qDebug() << "pos.ry: " << pos.ry() << good_num << total;
+        }
         pos.rx() = QDateTime::fromSecsSinceEpoch(resultList.at(i).TimeStamp).toMSecsSinceEpoch();
         m_YieldData.points.push_back(pos);
     }
-    setYieldTrendData();
+    emit notifyYieldTrendChanged();
 }
 
 int Trend::getYieldType() const
@@ -539,8 +539,8 @@ void Trend::setYieldType(int type)
         m_StartTime = time.toString("yyyy-MM-dd hh:mm:ss");
     }
 
-    emit notifyStartTimeChanged();
-    emit notifyEndTimeChanged();
+    // emit notifyStartTimeChanged();
+    // emit notifyEndTimeChanged();
     upYieldData();
 }
 

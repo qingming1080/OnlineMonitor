@@ -12,7 +12,7 @@ import LanguageEnum 1.0
 Rectangle
 {
     property bool isSingleDevice: false
-    property int deviceIndex: 0
+    property int deviceIndex: DeviceManager.SelectedDeviceIndex
     property int deviceCount: DeviceManager.DeviceCounter
     property var startTime: {
         if(deviceIndex < deviceCount)
@@ -26,6 +26,7 @@ Rectangle
         else
             return ""
     }
+    property TrendObj objTrend: DeviceManager.DeviceList[currentIndex].TrendObj
 
     color: pRgb(43, 112, 173)
     radius: 3
@@ -42,6 +43,14 @@ Rectangle
     onDeviceIndexChanged:{
         updateBtn()
         chartUpdata()
+    }
+
+    Connections{
+        target: objTrend
+        function onNotifyYieldTrendChanged()
+        {
+            chartUpdata()
+        }
     }
 
     function updateBtn()
@@ -665,8 +674,8 @@ Rectangle
         }
         ValueAxis{
             id: myAxisY
-            min:0
-            max:100
+            min: 0
+            max: 100
             tickCount: 3
             labelsColor: "#a3c7d0"
             labelsFont.pixelSize: 16
@@ -686,11 +695,11 @@ Rectangle
             pointsVisible: true
         }
 
-        onVisibleChanged: {
-            if(visible){
-                chartUpdata()
-            }
-        }
+        // onVisibleChanged: {
+        //     if(visible){
+        //         chartUpdata()
+        //     }
+        // }
     }
 }
 

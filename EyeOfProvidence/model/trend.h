@@ -155,7 +155,7 @@ signals:
 
     void notifyEndTimeChanged();
 
-    void signalYieldTrendChanged();
+    void notifyYieldTrendChanged();
 
 private:
     void init();
