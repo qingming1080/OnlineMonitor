@@ -138,7 +138,7 @@ QtObject
     readonly property string strPending:                qsTr("待定")
     readonly property string strAlarm:                  qsTr("报警")
     readonly property string strReset:                  qsTr("复位")
-    readonly property string strFresh:                  qsTr("刷新")
+    readonly property string strRefresh:                  qsTr("刷新")
     
     // 系统参数配置
     readonly property string strSystemParamConfig:      qsTr("系统参数配置")

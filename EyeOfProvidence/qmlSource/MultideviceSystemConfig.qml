@@ -429,7 +429,7 @@ Rectangle {
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 10
         anchors.horizontalCenter: parent.horizontalCenter
-        text: GlobalLanguageDefine.strFresh
+        text: GlobalLanguageDefine.strRefresh
         onPressed: {
             signalFreshConnected(currentIndex)
         }
