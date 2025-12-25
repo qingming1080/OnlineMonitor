@@ -2,7 +2,7 @@
 #include "../utility/utility.h"
 #include "../definition.h"
 #include <QDebug>
-void Versagraphic::ParseResultString2Data(const QString strData)
+int Versagraphic::ParseResultString2Data(const QString strData)
 {
     double doubleTemp;
     Utility *_Utility = Utility::GetInstance();
@@ -26,11 +26,11 @@ void Versagraphic::ParseResultString2Data(const QString strData)
     }
 
     if(list.size() == 0)
-        return;
+        return ERROR;
     bool iResult = false;
     QString(list[0]).toInt(&iResult);
     if(iResult == false)
-        return;
+        return ERROR;
 
     m_mapWeldData.clear();
     int indexWeldData = 0;
@@ -229,12 +229,14 @@ void Versagraphic::ParseResultString2Data(const QString strData)
     }
 
     //TODO signal emit
+    return OK;
 }
 
 Versagraphic::Versagraphic() {}
 
 int Versagraphic::ParseWeldResult(QString weldResult)
 {
+    int iResult = ERROR;
     QStringList listWeldResult = weldResult.split("\r\n");
     QString strTemp = "";
     for(int i = 0; i < listWeldResult.size(); i++)
@@ -253,7 +255,7 @@ int Versagraphic::ParseWeldResult(QString weldResult)
 
     if(listWeldResult.size() > 0)
     {
-        ParseResultString2Data(listWeldResult[0]);
+        iResult = ParseResultString2Data(listWeldResult[0]);
     }
-    return OK;
+    return iResult;
 }

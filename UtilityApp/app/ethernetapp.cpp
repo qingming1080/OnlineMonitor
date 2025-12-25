@@ -71,8 +71,8 @@ void EthernetApp::slotParseWeldResult(int iDev, QString strResult)
     {
         if(m_mapEthernetDev[iDev]._ptrProtocol != nullptr)
         {
-            m_mapEthernetDev[iDev]._ptrProtocol->ParseWeldResult(strResult);
-            emit signalWeldResultReady(iDev, m_mapEthernetDev[iDev]._ptrProtocol);
+            if(m_mapEthernetDev[iDev]._ptrProtocol->ParseWeldResult(strResult) == OK)
+                emit signalWeldResultReady(iDev, m_mapEthernetDev[iDev]._ptrProtocol);
         }
     }
     m_mutexWeldResult.unlock();
