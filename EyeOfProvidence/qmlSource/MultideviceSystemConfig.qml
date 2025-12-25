@@ -18,9 +18,10 @@ Rectangle {
     property alias backgroundColor: multiDeviceConfigure.color
 
     signal signalWelderSelected(var index)
+    signal signalFreshConnected(var index)
     radius: 5
     width: 281
-    height: 504
+    height: 550
     color: "#2B70AD"
     MouseArea{
         anchors.fill: parent
@@ -422,5 +423,15 @@ Rectangle {
         verticalAlignment: Text.AlignVCenter
         anchors.top: pinSuspectTitle.top
         anchors.left: pinAlarmName.left
+    }
+
+    HBPrimaryButton {
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: 10
+        anchors.horizontalCenter: parent.horizontalCenter
+        text: GlobalLanguageDefine.strFresh
+        onPressed: {
+            signalFreshConnected(currentIndex)
+        }
     }
 }

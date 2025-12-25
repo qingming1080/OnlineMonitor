@@ -1417,6 +1417,11 @@ Rectangle {
                         selectDevice(index)
                         DeviceManager.SelectedDeviceIndex = index
                 }
+                onSignalFreshConnected: {
+                    selectDevice(index)
+                    DeviceManager.SelectedDeviceIndex = index
+                    DeviceManager.saveDevice()
+                }
             }
             MultideviceSystemConfig{
                 id:s2
@@ -1463,6 +1468,11 @@ Rectangle {
                 onSignalWelderSelected: {
                         selectDevice(index)
                         DeviceManager.SelectedDeviceIndex = index
+                }
+                onSignalFreshConnected: {
+                    selectDevice(index)
+                    DeviceManager.SelectedDeviceIndex = index
+                    DeviceManager.saveDevice()
                 }
             }
             MultideviceSystemConfig{
@@ -1511,6 +1521,11 @@ Rectangle {
                         selectDevice(index)
                         DeviceManager.SelectedDeviceIndex = index
                 }
+                onSignalFreshConnected: {
+                    selectDevice(index)
+                    DeviceManager.SelectedDeviceIndex = index
+                    DeviceManager.saveDevice()
+                }
             }
             MultideviceSystemConfig{
                 id:s4
@@ -1557,6 +1572,11 @@ Rectangle {
                 onSignalWelderSelected: {
                         selectDevice(index)
                         DeviceManager.SelectedDeviceIndex = index
+                }
+                onSignalFreshConnected: {
+                    selectDevice(index)
+                    DeviceManager.SelectedDeviceIndex = index
+                    DeviceManager.saveDevice()
                 }
             }
             Button{

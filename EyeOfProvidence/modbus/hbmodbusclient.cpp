@@ -434,8 +434,8 @@ Q_INVOKABLE void HBModbusClient::setDeviceIOStatusReject(int welderId, bool cond
         return;
     if (deviceId < 0 || deviceId > (DEV_COUNT - 1))
         return;
-    int base = SYS_COILS_REGISTERS_COUNT + deviceId * DEV_COILS_REGISTERS_COUNT;
-    int rejectAddress = base + DEV_REJECT_BIT0 - SYS_COILS_REGISTERS_COUNT;
+    int base = END_OF_SYS_COILS_REGISTERS + deviceId * DEV_COILS_REGISTERS_COUNT;
+    int rejectAddress = base + (DEV_REJECT_BIT0 - END_OF_SYS_COILS_REGISTERS);
 
     QVector<quint8> value(1, condition ? 1 : 0);
     WriteCoils(rejectAddress, value);
