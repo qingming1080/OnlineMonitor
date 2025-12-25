@@ -104,12 +104,10 @@ void SerialApp::timerEvent(QTimerEvent *event)
             if(_objThread[iter->ComIndex]->isRunning() == OK)
             {
                 emit signalDeviceStatus(iter->DevNum, true);
-                qDebug()<< "RS232: " << true;
             }
             else
             {
                 emit signalDeviceStatus(iter->DevNum, false);
-                qDebug()<< "RS232: " << false;
             }
 
             iter++;

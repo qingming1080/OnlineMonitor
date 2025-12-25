@@ -343,7 +343,7 @@ void Manual::AppendNewRecordComming(const HBModbusClient::MODBUS_WELD_RESULT &da
     record.ActualForce    = 0;
     record.ActualResidual = 0;
     record.CreateTime     = data.DateTime;
-    record.IsSelected     = false;
+    record.IsSelected     = true;
     record.IsNewComming   = true;
 
     m_listManualRecords.prepend(record);
