@@ -292,7 +292,7 @@ int Device::getWelderID() const
 
 void Device::NotifyDeviceStatusChanged(const HBModbusClient::DEVICE_STATUS &status)
 {
-    m_ptrDevice->setConnectState(status.IsDeviceStatus || status.IsDeviceDataStatus);
+    m_ptrDevice->setConnectState(status.IsDeviceStatus && status.IsDeviceDataStatus);
 }
 
 void Device::NotifyModbusStatusChanged(int targetWelderId)

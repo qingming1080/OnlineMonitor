@@ -131,6 +131,7 @@ void DeviceManager::setUserPassword(QString newPassword)
 
 void DeviceManager::slotNotifyDeviceStatusChanged(int welderId, HBModbusClient::DEVICE_STATUS status)
 {
+    static bool isReady = false;
     for(int i = 0; i < m_listDevices.size(); i++)
     {
         if(m_listDevices[i]->getWelderID() == welderId)
@@ -154,7 +155,19 @@ void DeviceManager::slotNotifyDeviceStatusChanged(int welderId, HBModbusClient::
     }
     if(bResult)
     {
-        HBModbusClient::getInstance()->setReadyLedStatus(true);
+        if(isReady == false)
+        {
+            HBModbusClient::getInstance()->setReadyLedStatus(true);
+            isReady = true;
+        }
+    }
+    else
+    {
+        if(isReady == true)
+        {
+            HBModbusClient::getInstance()->setReadyLedStatus(false);
+            isReady = false;
+        }
     }
 }
 
