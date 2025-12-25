@@ -23,6 +23,36 @@ Rectangle {
     property int currentIndex: DeviceManager.SelectedDeviceIndex
     property int deviceCount: DeviceManager.DeviceCounter
     property bool heightOption: (currentIndex < deviceCount) ? DeviceManager.DeviceList[currentIndex].DeviceObj.HeightEncoderOption : false
+    property ManualObj manualObj: (currentIndex < deviceCount) ? DeviceManager.DeviceList[currentIndex].DeviceObj : null
+
+    Connections{
+        target: manualObj
+        function onNotifyCurrentSamplesChanged()
+        {
+            if(manualObj.CurrentSamples >= manualObj.MaxModelSamples)
+            {
+                if(!manualObj.isSettingsValid())
+                {
+                    footer.showError(qsTr("请输入焊接参数！"))
+                    return
+                }
+                manualObj.saveData()
+                sigUpdateUI(0)
+                sigRecover()
+                if(deviceCount === 1)
+                    loadViewpro(3, singlePro)
+                else
+                    loadViewpro(2, multiPro)
+            }
+        }
+    }
+
+    Component.onCompleted: {
+        if(manualObj !== null)
+        {
+            manualObj.CurrentSamples = 0;
+        }
+    }
 
     Rectangle {
         id: singleProduction
@@ -70,6 +100,13 @@ Rectangle {
                 {
                     return ""
                 }
+            }
+            isLearning: true
+            sampleCount: {
+                if (swipe.currentIndex >= 0 && swipe.currentIndex < swipe.deviceCount)
+                    return DeviceManager.DeviceList[swipe.currentIndex].ManualObj.rowCount()
+                else
+                    return 0
             }
         }
 

@@ -20,7 +20,7 @@ class Manual : public QAbstractListModel
 
     // 学习样本数
     Q_PROPERTY(int      MaxModelSamples          READ getMaxModelSamples         WRITE setMaxModelSamples        NOTIFY notifyMaxModelSamplesChanged)
-
+    Q_PROPERTY(int      CurrentSamples           READ getCurrentSamples          WRITE setCurrentSamples         NOTIFY notifyCurrentSamplesChanged)
 public:
     explicit Manual(int welderID = 0, QObject *parent = nullptr);
     ~Manual();
@@ -53,6 +53,8 @@ public:
     void setIsSelectedAll(const bool &value);
     int getMaxModelSamples() const;
     void setMaxModelSamples(const int &value);
+    int getCurrentSamples() const;
+    void setCurrentSamples(const int &value);
 private:
     bool CalibrateModel();
     void InitDBModel(const GenericLearning::PROCESS_PARAM* _param,
@@ -68,11 +70,13 @@ signals:
     void notifyTrainingProcessFinished(DataBaseManager::DB_MODEL& model);
     void notifyIsSelectedAllChanged();
     void notifyMaxModelSamplesChanged();
+    void notifyCurrentSamplesChanged();
 private:
     int m_WelderID;
     QList<DataBaseManager::DB_MANUAL>   m_listManualRecords;
     DataBaseManager::DB_MODEL           m_DBModel;
     int m_iMaxModelSamples;
+    int m_iCurrentSamples;
 };
 
 #endif // MANUAL_H
