@@ -7,6 +7,7 @@
 #include "networkmodel.h"
 #include "rs232model.h"
 #include "tools/utilityfunction.h"
+#include "message.h"
 
 DeviceManager* DeviceManager::m_ptrInstance = nullptr;
 DeviceManager *DeviceManager::getInstance()
@@ -207,7 +208,8 @@ void DeviceManager::slotNotifyResetButtonChanged(const bool ResetButtonStatus)
 {
     if(ResetButtonStatus == true)
     {
-        // resetAllDevices();
+        HBModbusClient::getInstance()->setAlarmLedStatus(false);
+        Message::getInstance()->clearMessages();
     }
 }
 
