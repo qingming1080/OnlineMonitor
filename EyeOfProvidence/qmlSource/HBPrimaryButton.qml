@@ -21,7 +21,6 @@ Button {
     readonly property string qmltextPrimary: qsTr("PRIMARY")
     id: primaryButton
     text: qmltextPrimary
-
     property int minWidth: 140
     property int maxHeight: 40
     property int radiusWidth: 4
@@ -30,6 +29,8 @@ Button {
     property color shadowColor: "#80000000"
     property color pressedColor: "#AFC3D8"
     property int fontSize: Math.round(Style.style6 * Style.scaleHint)
+    width: 140
+    height: 40
     contentItem: Text {
         text: qsTr(primaryButton.text)
         font{

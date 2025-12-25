@@ -8,18 +8,47 @@ Rectangle {
     property string deviceType: ""
     property string connectionType: ""
     property string devcieStatus: ""
+    property int    sampleCount: 0
+    property bool   isLearning: false
     color: pRgb(43, 112, 173)
     radius: 3
-    Text {
-        // text: qsTr("设备信息")
-        text: GlobalLanguageDefine.strEquipmentInfo
-        font.family: GlobalSystemDefine.fontBold
-        font.bold: true
-        font.pixelSize: LanguageManager.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 20 : 18
-        color: pRgb(153, 204, 255)
-        x:17
-        y:9
+    width:  258
+    //TODO Need to have a double check
+    height: 255
+    Item{
+        anchors.left: parent.left
+        anchors.top: parent.top
+        width: parent.width
+        height: 40
+        Text {
+            id: titleDeviceInfo
+            // text: qsTr("设备信息")
+            text: GlobalLanguageDefine.strEquipmentInfo
+            font.family: GlobalSystemDefine.fontBold
+            font.bold: true
+            font.pixelSize: LanguageManager.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 20 : 18
+            color: pRgb(153, 204, 255)
+            height: parent.height
+            anchors.left: parent.left
+            anchors.leftMargin: 17
+            anchors.top: parent.top
+            anchors.topMargin: 9
+        }
+
+        Text {
+            text: GlobalLanguageDefine.strSample + ": " + sampleCount
+            font.family: GlobalSystemDefine.fontBold
+            font.bold: true
+            font.pixelSize: LanguageManager.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 20 : 18
+            color: pRgb(153, 204, 255)
+            anchors.top: titleDeviceInfo.top
+            anchors.right: parent.right
+            anchors.rightMargin: 10
+            height: parent.height
+            visible: isLearning
+        }
     }
+
 
     //    CustomComboBox{
     //        id:com1

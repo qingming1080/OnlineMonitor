@@ -25,6 +25,7 @@ Manual::Manual(int welderID, QObject *parent)
         setTriggerPressureSetting(QString::number(m_DBModel.TriggerPressure));
         setWeldPressureSetting(QString::number(m_DBModel.WeldPressure));
     }
+    setCurrentSamples(0);
 }
 
 Manual::~Manual()
@@ -347,6 +348,10 @@ void Manual::AppendNewRecordComming(const HBModbusClient::MODBUS_WELD_RESULT &da
 
     m_listManualRecords.prepend(record);
     endInsertRows();
+
+    int samples = getCurrentSamples();
+    samples++;
+    setCurrentSamples(samples);
 }
 
 QString Manual::getEnergySetting() const
@@ -470,5 +475,19 @@ void Manual::setMaxModelSamples(const int &value)
     {
         m_iMaxModelSamples = value;
         emit notifyMaxModelSamplesChanged();
+    }
+}
+
+int Manual::getCurrentSamples() const
+{
+    return m_iCurrentSamples;
+}
+
+void Manual::setCurrentSamples(const int &value)
+{
+    if(m_iCurrentSamples != value)
+    {
+        m_iCurrentSamples = value;
+        emit notifyCurrentSamplesChanged();
     }
 }
