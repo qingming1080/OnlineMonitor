@@ -59,6 +59,15 @@ void Message::addMessage(int welderID, MESSAGE_ENUM::MESSAGE_TYPE type)
     }
 }
 
+void Message::clearMessages()
+{
+    if (m_MessageData.isEmpty())
+        return;
+
+    beginRemoveRows(QModelIndex(), 0, m_MessageData.size() - 1);
+    m_MessageData.clear();
+    endRemoveRows();
+}
 
 Message::Message(QObject *parent)
     : QAbstractListModel{parent}

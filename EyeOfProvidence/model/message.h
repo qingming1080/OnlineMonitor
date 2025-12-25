@@ -51,6 +51,7 @@ public:
     /// \param state : 产品状态
     ///
     Q_INVOKABLE void addMessage(int welderID, MESSAGE_ENUM::MESSAGE_TYPE type);
+    Q_INVOKABLE void clearMessages();
 
 private:
     explicit Message(QObject *parent = nullptr);

@@ -23,12 +23,13 @@ Rectangle {
     property int currentIndex: DeviceManager.SelectedDeviceIndex
     property int deviceCount: DeviceManager.DeviceCounter
     property bool heightOption: (currentIndex < deviceCount) ? DeviceManager.DeviceList[currentIndex].DeviceObj.HeightEncoderOption : false
-    property ManualObj manualObj: (currentIndex < deviceCount) ? DeviceManager.DeviceList[currentIndex].DeviceObj : null
+    property ManualObj manualObj: (currentIndex < deviceCount) ? DeviceManager.DeviceList[currentIndex].ManualObj : null
 
     Connections{
         target: manualObj
         function onNotifyCurrentSamplesChanged()
         {
+            layoutDeviceInfo.sampleCount = manualObj.CurrentSamples
             if(manualObj.CurrentSamples >= manualObj.MaxModelSamples)
             {
                 if(!manualObj.isSettingsValid())
@@ -104,7 +105,7 @@ Rectangle {
             isLearning: true
             sampleCount: {
                 if (swipe.currentIndex >= 0 && swipe.currentIndex < swipe.deviceCount)
-                    return DeviceManager.DeviceList[swipe.currentIndex].ManualObj.rowCount()
+                    return DeviceManager.DeviceList[swipe.currentIndex].ManualObj.CurrentSamples
                 else
                     return 0
             }
