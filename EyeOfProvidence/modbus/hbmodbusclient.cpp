@@ -424,7 +424,7 @@ void HBModbusClient::updateLedStatus(int ledIndex, bool condition)
     m_Coils[SYS_LED_L_BIT0 + ledIndex] = values[ledIndex];
 }
 
-Q_INVOKABLE void HBModbusClient::setDeviceIOStatusReject(int welderId, bool condition)
+Q_INVOKABLE void HBModbusClient::setDeviceIOStatus(int welderId, bool reject, bool suspect)
 {
     int deviceId = -1;
     auto iter = m_WelderDeviceMap.find(welderId);
@@ -437,26 +437,10 @@ Q_INVOKABLE void HBModbusClient::setDeviceIOStatusReject(int welderId, bool cond
     int base = END_OF_SYS_COILS_REGISTERS + deviceId * DEV_COILS_REGISTERS_COUNT;
     int rejectAddress = base + (DEV_REJECT_BIT0 - END_OF_SYS_COILS_REGISTERS);
 
-    QVector<quint8> value(1, condition ? 1 : 0);
-    WriteCoils(rejectAddress, value);
-}
-
-Q_INVOKABLE void HBModbusClient::setDeviceIOStatusSuspect(int welderId, bool condition)
-{
-    int deviceId = -1;
-    auto iter = m_WelderDeviceMap.find(welderId);
-    if(iter != m_WelderDeviceMap.end())
-        deviceId = iter.value();
-    else
-        return;
-    if (deviceId < 0 || deviceId > (DEV_COUNT - 1))
-        return;
-    int base = SYS_COILS_REGISTERS_COUNT + deviceId  * DEV_COILS_REGISTERS_COUNT;
-    int suspectAddress = base + DEV_SUSPECT_BIT1 - SYS_COILS_REGISTERS_COUNT;
-
-    QVector<quint8> value(1, condition ? 1 : 0);
-    WriteCoils(suspectAddress, value);
-
+    QVector<quint8> values(2);
+    values[0] = reject  ? 1 : 0;
+    values[1] = suspect ? 1 : 0;
+    WriteCoils(rejectAddress, values);
 }
 
 void HBModbusClient::setMesConfig(const QVector<quint16> mesHostValues)
@@ -696,8 +680,8 @@ void HBModbusClient::testAllFunctions()
         // 2. 测试 IO
         for(int deviceId = 1; deviceId <= DEV_COUNT; ++deviceId)
         {
-            setDeviceIOStatusReject(deviceId, true);
-            setDeviceIOStatusSuspect(deviceId, true);
+            // setDeviceIOStatusReject(deviceId, true);
+            // setDeviceIOStatusSuspect(deviceId, true);
         }
         qDebug() << "[Test] IO状态已设置为 true";
 
