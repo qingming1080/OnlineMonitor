@@ -65,35 +65,6 @@ bool DeviceManager::IsManualPresetChanged()
     return true;
 }
 
-bool DeviceManager::resetDevices(const QList<Device*>& devices)
-{
-    for(auto device : devices)
-    {
-        int welderId = device->getWelderID();
-        HBModbusClient::getInstance()->setDeviceIOStatusReject(welderId, false);
-        HBModbusClient::getInstance()->setDeviceIOStatusSuspect(welderId, false);
-        device->setIORejectStatus(false);
-        device->setIOSuspectStatus(false);
-    }
-    UpdateAlarmLEDStatus();
-    return true;
-}
-
-void DeviceManager::UpdateAlarmLEDStatus()
-{
-    bool isAbnormal =  false;
-    for(auto device : m_listDevices)
-    {
-        if(device->isIORejectStatus() || device->isIOSuspectStatus())
-        {
-            isAbnormal = true;
-            break;
-        }
-    }
-
-    HBModbusClient::getInstance()->setAlarmLedStatus(isAbnormal);
-}
-
 int DeviceManager::getSelectedDeviceIndex() const
 {
     return m_iSelectedDeviceIndex;
@@ -155,28 +126,6 @@ int DeviceManager::getPasswordLevel(QString password)
 void DeviceManager::setUserPassword(QString newPassword)
 {
     DataBaseManager::getInstance()->setUserPassword(newPassword);
-}
-
-bool DeviceManager::resetDeviceIO(int welderId)
-{
-    for(auto device : m_listDevices)
-    {
-        if(device->getWelderID() == welderId)
-        {
-            resetDevices({device});
-            return true;
-        }
-    }
-    return false;
-}
-
-bool DeviceManager::resetAllDevices()
-{
-    if(m_listDevices.isEmpty())
-        return false;
-
-    resetDevices(m_listDevices);
-    return true;
 }
 
 void DeviceManager::slotNotifyDeviceStatusChanged(int welderId, HBModbusClient::DEVICE_STATUS status)
@@ -258,7 +207,7 @@ void DeviceManager::slotNotifyResetButtonChanged(const bool ResetButtonStatus)
 {
     if(ResetButtonStatus == true)
     {
-        resetAllDevices();
+        // resetAllDevices();
     }
 }
 
@@ -277,7 +226,7 @@ void DeviceManager::slotNotifyDeviceIOStatusChanged(int welderId, const HBModbus
 
     if(status.IsResetStatus)
     {
-        resetDeviceIO(welderId);
+        // resetDeviceIO(welderId);
     }
 }
 

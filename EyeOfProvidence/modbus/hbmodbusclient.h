@@ -95,8 +95,7 @@ public:
     Q_INVOKABLE void setAlarmLedStatus(const bool condition);
 
     //IO
-    Q_INVOKABLE void setDeviceIOStatusReject(const int welderId, const bool condition);
-    Q_INVOKABLE void setDeviceIOStatusSuspect(const int welderId, const bool condition);
+    Q_INVOKABLE void setDeviceIOStatus(const int welderId, bool reject, bool suspect);
 
     //RTC
     Q_INVOKABLE void setSystemClock(const QDateTime &datetime);

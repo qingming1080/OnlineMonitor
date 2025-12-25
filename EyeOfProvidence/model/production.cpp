@@ -342,7 +342,6 @@ void Production::AppendNewRecordComming(const HBModbusClient::MODBUS_WELD_RESULT
 {
 
     // int FinalResult;                    // 产品状态 0_合格 1_次品 2_可疑
-
     m_DBProduction.WelderID = m_WelderID;
     m_DBProduction.CreateTime = data.DateTime.toSecsSinceEpoch();
     m_DBProduction.SerialNumber = "NAN";
@@ -407,21 +406,22 @@ void Production::AppendNewRecordComming(const HBModbusClient::MODBUS_WELD_RESULT
     int suspectCount = GetSuspectCycleCount();
     int defectCount = GetDefectiveCycleCount();
     int totalCount = GetTotalCycleCount();
-
     switch(m_DBProduction.FinalResult)
     {
+
     case HistoryEnum::GOOD:
         goodCount++;
+        HBModbusClient::getInstance()->setDeviceIOStatus(m_WelderID, false, false);
         break;
     case HistoryEnum::SUSPECT:
         suspectCount++;
         HBModbusClient::getInstance()->setAlarmLedStatus(true);
-        HBModbusClient::getInstance()->setDeviceIOStatusSuspect(m_WelderID, true);
+        HBModbusClient::getInstance()->setDeviceIOStatus(m_WelderID, false, true);
         Message::getInstance()->addMessage(m_WelderID, MESSAGE_ENUM::SUSPICIOUS);
         break;
     case HistoryEnum::DEFECT:
         HBModbusClient::getInstance()->setAlarmLedStatus(true);
-        HBModbusClient::getInstance()->setDeviceIOStatusReject(m_WelderID, true);
+        HBModbusClient::getInstance()->setDeviceIOStatus(m_WelderID, true, false);
         Message::getInstance()->addMessage(m_WelderID, MESSAGE_ENUM::DEFECTIVE);
         defectCount++;
         break;

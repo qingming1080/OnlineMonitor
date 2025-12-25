@@ -4,7 +4,6 @@
 #include <QObject>
 #include <QMap>
 #include "device.h"
-#include "define.h"
 #include "modbus/hbmodbusclient.h"
 
 ///
@@ -59,9 +58,6 @@ public:
     // Q_INVOKABLE void startManualMode(int deviceID);  // 开启手动模式
     // Q_INVOKABLE void stopManualMode();              // 关闭手动模式
     // QList<QString> manualDataList() const;          // 获取手动模式数据
-    bool resetDeviceIO(int welderId);
-    bool resetAllDevices();
-
 signals:
     void notifyDeviceListChanged();
     void notifySelectedDeviceIndexChanged();
@@ -79,8 +75,6 @@ private:
     explicit DeviceManager(QObject *parent = nullptr);
     bool InitDeviceList();
     bool IsManualPresetChanged();
-    bool resetDevices(const QList<Device*>& devices);
-    void UpdateAlarmLEDStatus();
 private:
     static DeviceManager* m_ptrInstance;
     int m_iSelectedDeviceIndex;
