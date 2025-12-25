@@ -670,17 +670,20 @@ Rectangle {
                         var strResult = GlobalLanguageDefine.strSuspicious
                         switch(final_result)
                         {
-                        case 1:
+                        case HistoryEnum.GOOD:
                             // strResult = qsTr("良品")
                             strResult = GlobalLanguageDefine.strGood
                             break;
-                        case 2:
+                        case HistoryEnum.DEFECT:
                             // strResult = qsTr("次品")
                             strResult = GlobalLanguageDefine.strDefective
                             break;
-                        default:
+                        case HistoryEnum.SUSPECT:
                             // strResult = qsTr("可疑")
                             strResult = GlobalLanguageDefine.strSuspicious
+                            break;
+                        default:
+                            strResult = ""
                             break;
                         }
                         return strResult;
