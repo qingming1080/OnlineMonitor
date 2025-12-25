@@ -92,6 +92,7 @@ public:
     Q_INVOKABLE void setLearnLedStatus(const bool condition);
     Q_INVOKABLE void setPilotLedStatus(const bool condition);
     Q_INVOKABLE void setReadyLedStatus(const bool condition);
+    bool             getReadyLedStatus() const;
     Q_INVOKABLE void setAlarmLedStatus(const bool condition);
 
     //IO
