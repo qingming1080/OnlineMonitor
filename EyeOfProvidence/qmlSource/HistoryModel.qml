@@ -670,11 +670,11 @@ Rectangle {
                         var strResult = GlobalLanguageDefine.strSuspicious
                         switch(final_result)
                         {
-                        case 0:
+                        case 1:
                             // strResult = qsTr("良品")
                             strResult = GlobalLanguageDefine.strGood
                             break;
-                        case 1:
+                        case 2:
                             // strResult = qsTr("次品")
                             strResult = GlobalLanguageDefine.strDefective
                             break;
