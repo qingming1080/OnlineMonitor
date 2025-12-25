@@ -191,6 +191,7 @@ void Manual::clearData()
     m_listManualRecords.clear();
     DataBaseManager::getInstance()->removeManualRecords(m_WelderID);
     endResetModel();
+    setCurrentSamples(0);
 }
 
 void Manual::loadData()

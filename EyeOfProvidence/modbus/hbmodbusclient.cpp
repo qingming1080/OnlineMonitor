@@ -421,7 +421,7 @@ void HBModbusClient::updateLedStatus(int ledIndex, bool condition)
 
     values[ledIndex] = condition ? 1 : 0;
     WriteCoils(SYS_LED_L_BIT0, values);
-    m_Coils[SYS_LED_L_BIT0 + ledIndex] = values[ledIndex];
+    m_Coils[ledIndex] = condition ? 1 : 0;
 }
 
 Q_INVOKABLE void HBModbusClient::setDeviceIOStatus(int welderId, bool reject, bool suspect)
