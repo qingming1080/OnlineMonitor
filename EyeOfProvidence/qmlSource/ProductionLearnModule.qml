@@ -13,6 +13,7 @@ import GlobalLanguageDefine 1.0
 import ProductionObj        1.0
 import ManualObj            1.0
 import ManualTable          1.0
+import LanguageEnum         1.0
 
 Rectangle {
     id: swipe
@@ -217,7 +218,7 @@ Rectangle {
                     id:t1
                     x:840/7/2+5-width/2
                     y:11
-                    font.pixelSize: heightOption ? 10 : 16
+                    font.pixelSize: heightOption ? 12 : 16
                     // text: qsTr("全选")
                     text: GlobalLanguageDefine.strSelectAll
                     font.family: GlobalSystemDefine.fontBold
@@ -261,9 +262,10 @@ Rectangle {
                 Text{
                     id: swipeCycleCountText
                     anchors.left: parent.left
-                    anchors.leftMargin: DeviceManager.DeviceList[currentIndex].DeviceObj.HeightEncoderOption === true ? 90 : 140
+                    anchors.leftMargin: LanguageManager.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ?
+                                            (heightOption ? 100 : 140) : (heightOption ? 85 : 140)
                     anchors.top: t1.top
-                    font.pixelSize: heightOption ? 10 : 16
+                    font.pixelSize: heightOption ? 12 : 16
                     // text: qsTr("序号")
                     text: GlobalLanguageDefine.strCycleCount
                     font.family: GlobalSystemDefine.fontBold
@@ -273,8 +275,8 @@ Rectangle {
                     id: swipeWeldingTimeText
                     anchors.top: t1.top
                     anchors.left: parent.left
-                    anchors.leftMargin: DeviceManager.DeviceList[currentIndex].DeviceObj.HeightEncoderOption === true ? 160 : 260
-                    font.pixelSize: heightOption ? 10 : 16
+                    anchors.leftMargin: heightOption ? 160 : 260
+                    font.pixelSize: heightOption ? 12 : 16
                     // text: qsTr("焊接时间")
                     text: GlobalLanguageDefine.strWeldingTime + "(s)"
                     font.family: GlobalSystemDefine.fontBold
@@ -284,8 +286,8 @@ Rectangle {
                     id: swipePowerText
                     anchors.top: t1.top
                     anchors.left: parent.left
-                    anchors.leftMargin: DeviceManager.DeviceList[currentIndex].DeviceObj.HeightEncoderOption === true ? 250 : 400
-                    font.pixelSize: heightOption ? 10 : 16
+                    anchors.leftMargin: heightOption ? 250 : 400
+                    font.pixelSize: heightOption ? 12 : 16
                     // text: qsTr("功率")
                     text: GlobalLanguageDefine.strPower + "(W)"
                     font.family: GlobalSystemDefine.fontBold
@@ -296,28 +298,28 @@ Rectangle {
                     anchors.top: t1.top
                     anchors.left: parent.left
                     anchors.leftMargin: 320
-                    font.pixelSize: heightOption ? 10 : 16
+                    font.pixelSize: heightOption ? 12 : 16
                     text: GlobalLanguageDefine.strPreWeldHeight + "(mm)"
                     font.family: GlobalSystemDefine.fontBold
                     color: pRgb(171, 206, 213)
-                    visible: DeviceManager.DeviceList[currentIndex].DeviceObj.HeightEncoderOption
+                    visible: heightOption
                 }
                 Text{
                     id:swipePostHeightText
                     anchors.top: t1.top
                     anchors.left: parent.left
                     anchors.leftMargin: 430
-                    font.pixelSize: heightOption ? 10 : 16
+                    font.pixelSize: heightOption ? 12 : 16
                     text: GlobalLanguageDefine.strPostWeldHeight + "(mm)"
                     font.family: GlobalSystemDefine.fontBold
                     color: pRgb(171, 206, 213)
-                    visible: DeviceManager.DeviceList[currentIndex].DeviceObj.HeightEncoderOption
+                    visible: heightOption
                 }
                 Text{
                     id:t6
                     x:840/8*5 + 840/8/2-width/2
                     y:11
-                    font.pixelSize: heightOption ? 10 : 16
+                    font.pixelSize: heightOption ? 12 : 16
                     // text: qsTr("日期")
                     text: GlobalLanguageDefine.strDate
                     font.family: GlobalSystemDefine.fontBold
@@ -327,7 +329,7 @@ Rectangle {
                     id:t7
                     x:840/8*6 + 840/8/2-width/2
                     y:11
-                    font.pixelSize: heightOption ? 10 : 16
+                    font.pixelSize: heightOption ? 12 : 16
                     // text: qsTr("拉力")
                     text: GlobalLanguageDefine.strTensile + "(N)"
                     font.family: GlobalSystemDefine.fontBold
@@ -337,7 +339,7 @@ Rectangle {
                     id:t8
                     x:840/8*7 + 840/8/2-width/2
                     y:11
-                    font.pixelSize: heightOption ? 10 : 16
+                    font.pixelSize: heightOption ? 12 : 16
                     // text: qsTr("残留度")
                     text: GlobalLanguageDefine.strResidual + "(%)"
                     font.family: GlobalSystemDefine.fontBold
@@ -448,7 +450,7 @@ Rectangle {
                         }
                         Text{
                             anchors.left: parent.left
-                            anchors.leftMargin: DeviceManager.DeviceList[currentIndex].DeviceObj.HeightEncoderOption === true ? 170 : 280
+                            anchors.leftMargin: DeviceManager.DeviceList[currentIndex].DeviceObj.HeightEncoderOption === true ? 180 : 280
                             anchors.verticalCenter: parent.verticalCenter
                             font.pixelSize: 16
                             text: weld_time
