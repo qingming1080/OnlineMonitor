@@ -248,7 +248,6 @@ Rectangle {
                 anchors.topMargin: 40
                 anchors.bottom: parent.bottom
                 color: pRgb(43, 112, 173)
-                visible: false
             }
             Item {
                 id: listHeader
@@ -346,7 +345,7 @@ Rectangle {
                     text: GlobalLanguageDefine.strPreWeldHeight + "(mm)"
                     font.family: GlobalSystemDefine.fontBold
                     color: pRgb(171, 206, 213)
-                    visible: DeviceManager.DeviceList[currentIndex].DeviceObj.HeightEncoderOption
+                    visible: heightOption
                 }
                 Text{
                     id: txtPostHeight
@@ -357,7 +356,7 @@ Rectangle {
                     text: GlobalLanguageDefine.strPostWeldHeight + "(mm)"
                     font.family: GlobalSystemDefine.fontBold
                     color: pRgb(171, 206, 213)
-                    visible: DeviceManager.DeviceList[currentIndex].DeviceObj.HeightEncoderOption
+                    visible: heightOption
                 }
                 Text{
                     id: txtDateTime
@@ -630,7 +629,7 @@ Rectangle {
                                                     ManualTable.ACTUAL_FORCE
                                                     )
                                     }
-                                })
+                                }
                             }
                         }
                     }

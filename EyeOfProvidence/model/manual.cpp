@@ -22,8 +22,10 @@ Manual::Manual(int welderID, QObject *parent)
         m_DBModel.isAvailable = true;
         setEnergySetting(QString::number(m_DBModel.Energy));
         setAmplitudeSetting(QString::number(m_DBModel.Amplitude));
-        setTriggerPressureSetting(QString::number(m_DBModel.TriggerPressure));
-        setWeldPressureSetting(QString::number(m_DBModel.WeldPressure));
+        QString strTP = UtilityFunction::getInstance()->RawValueToString(m_DBModel.TriggerPressure, 10, 1);
+        QString strWP = UtilityFunction::getInstance()->RawValueToString(m_DBModel.WeldPressure, 10, 1);
+        setTriggerPressureSetting(strTP);
+        setWeldPressureSetting(strWP);
     }
     setCurrentSamples(0);
 }

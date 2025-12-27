@@ -406,6 +406,11 @@ Q_INVOKABLE void HBModbusClient::setReadyLedStatus(bool condition)
     updateLedStatus(SYS_LED_R_BIT2, condition);
 }
 
+bool HBModbusClient::getReadyLedStatus() const
+{
+    return (m_Coils[SYS_LED_R_BIT2] == 1) ? true : false;
+}
+
 Q_INVOKABLE void HBModbusClient::setAlarmLedStatus(bool condition)
 {
     updateLedStatus(SYS_LED_A_BIT3, condition);

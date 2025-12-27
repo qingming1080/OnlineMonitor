@@ -944,10 +944,10 @@ QList<DataBaseManager::DB_PRODUCTION> DataBaseManager::getProductionData(int wel
                                    , getProduction_ColumnName(PRODUCTION_TABLE::WELDER_ID)
                                    , getProduction_ColumnName(PRODUCTION_TABLE::FINAL_RESULT));
 
-        if (!exportAll) execStr += " LIMIT 150";
+        if (!exportAll) execStr += " LIMIT 500";
         query.prepare(execStr);
         query.bindValue(":welderID", welderID);
-        query.bindValue(":finalResult", finalResult-1);
+        query.bindValue(":finalResult", finalResult);
     }
     else if(welderID != 0)
     {
@@ -956,7 +956,7 @@ QList<DataBaseManager::DB_PRODUCTION> DataBaseManager::getProductionData(int wel
                               .arg(PRODUCTION_TABLENAME
                                    , getProduction_ColumnName(PRODUCTION_TABLE::WELDER_ID));
 
-        if (!exportAll) execStr += " LIMIT 150";
+        if (!exportAll) execStr += " LIMIT 500";
         query.prepare(execStr);
         query.bindValue(":welderID", welderID);
     }
@@ -966,9 +966,9 @@ QList<DataBaseManager::DB_PRODUCTION> DataBaseManager::getProductionData(int wel
         QString execStr = QString("SELECT * FROM %1 WHERE %2 = :finalResult ORDER BY create_time DESC")
                               .arg(PRODUCTION_TABLENAME
                                    , getProduction_ColumnName(PRODUCTION_TABLE::FINAL_RESULT));
-        if (!exportAll) execStr += " LIMIT 150";
+        if (!exportAll) execStr += " LIMIT 500";
         query.prepare(execStr);
-        query.bindValue(":finalResult", finalResult-1);
+        query.bindValue(":finalResult", finalResult);
     }
     else
     {
@@ -976,7 +976,7 @@ QList<DataBaseManager::DB_PRODUCTION> DataBaseManager::getProductionData(int wel
         QString execStr = QString("SELECT * FROM %1 ORDER BY %2 DESC")
                               .arg(PRODUCTION_TABLENAME
                                    , getProduction_ColumnName(PRODUCTION_TABLE::CREATE_TIME));
-        if (!exportAll) execStr += " LIMIT 150";
+        if (!exportAll) execStr += " LIMIT 500";
         query.prepare(execStr);
     }
 

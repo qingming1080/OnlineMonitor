@@ -71,7 +71,6 @@ void Trend::AppendWeldPoint(const int cycleCount, const int power, const int tim
     appendWithLimit(m_PostHeightData,   cycleCount, postHeightDouble);
     appendWithLimit(m_WeldTimeData,     cycleCount, timeDouble);
     appendWithLimit(m_PeakPowerData,    cycleCount, powerDouble);
-
     int xMin = m_WeldTimeData.at(0).x();
     int size = m_WeldTimeData.size();
     int xMax = m_WeldTimeData.at(size - 1).x();

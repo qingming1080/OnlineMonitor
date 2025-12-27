@@ -64,7 +64,7 @@
         <translation>It is a defective</translation>
     </message>
     <message>
-        <location filename="../qmlSource/GlobalLanguageDefine.qml" line="178"/>
+        <location filename="../qmlSource/GlobalLanguageDefine.qml" line="179"/>
         <source>未连接</source>
         <translation>Disconnected</translation>
     </message>
@@ -269,97 +269,102 @@
         <translation>Refresh</translation>
     </message>
     <message>
-        <location filename="../qmlSource/GlobalLanguageDefine.qml" line="192"/>
+        <location filename="../qmlSource/GlobalLanguageDefine.qml" line="142"/>
+        <source>采样</source>
+        <translation>Samples</translation>
+    </message>
+    <message>
+        <location filename="../qmlSource/GlobalLanguageDefine.qml" line="193"/>
         <source>一月</source>
         <translation>January</translation>
     </message>
     <message>
-        <location filename="../qmlSource/GlobalLanguageDefine.qml" line="193"/>
+        <location filename="../qmlSource/GlobalLanguageDefine.qml" line="194"/>
         <source>二月</source>
         <translation>February</translation>
     </message>
     <message>
-        <location filename="../qmlSource/GlobalLanguageDefine.qml" line="194"/>
+        <location filename="../qmlSource/GlobalLanguageDefine.qml" line="195"/>
         <source>三月</source>
         <translation>March</translation>
     </message>
     <message>
-        <location filename="../qmlSource/GlobalLanguageDefine.qml" line="195"/>
+        <location filename="../qmlSource/GlobalLanguageDefine.qml" line="196"/>
         <source>四月</source>
         <translation>April</translation>
     </message>
     <message>
-        <location filename="../qmlSource/GlobalLanguageDefine.qml" line="196"/>
+        <location filename="../qmlSource/GlobalLanguageDefine.qml" line="197"/>
         <source>五月</source>
         <translation>May</translation>
     </message>
     <message>
-        <location filename="../qmlSource/GlobalLanguageDefine.qml" line="197"/>
+        <location filename="../qmlSource/GlobalLanguageDefine.qml" line="198"/>
         <source>六月</source>
         <translation>June</translation>
     </message>
     <message>
-        <location filename="../qmlSource/GlobalLanguageDefine.qml" line="198"/>
+        <location filename="../qmlSource/GlobalLanguageDefine.qml" line="199"/>
         <source>七月</source>
         <translation>July</translation>
     </message>
     <message>
-        <location filename="../qmlSource/GlobalLanguageDefine.qml" line="199"/>
+        <location filename="../qmlSource/GlobalLanguageDefine.qml" line="200"/>
         <source>八月</source>
         <translation>August</translation>
     </message>
     <message>
-        <location filename="../qmlSource/GlobalLanguageDefine.qml" line="200"/>
+        <location filename="../qmlSource/GlobalLanguageDefine.qml" line="201"/>
         <source>九月</source>
         <translation>September</translation>
     </message>
     <message>
-        <location filename="../qmlSource/GlobalLanguageDefine.qml" line="201"/>
+        <location filename="../qmlSource/GlobalLanguageDefine.qml" line="202"/>
         <source>十月</source>
         <translation>October</translation>
     </message>
     <message>
-        <location filename="../qmlSource/GlobalLanguageDefine.qml" line="202"/>
+        <location filename="../qmlSource/GlobalLanguageDefine.qml" line="203"/>
         <source>十一月</source>
         <translation>November</translation>
     </message>
     <message>
-        <location filename="../qmlSource/GlobalLanguageDefine.qml" line="203"/>
+        <location filename="../qmlSource/GlobalLanguageDefine.qml" line="204"/>
         <source>十二月</source>
         <translation>December</translation>
     </message>
     <message>
-        <location filename="../qmlSource/GlobalLanguageDefine.qml" line="206"/>
+        <location filename="../qmlSource/GlobalLanguageDefine.qml" line="207"/>
         <source>提示</source>
         <translation>Notification</translation>
     </message>
     <message>
-        <location filename="../qmlSource/GlobalLanguageDefine.qml" line="207"/>
+        <location filename="../qmlSource/GlobalLanguageDefine.qml" line="208"/>
         <source>系统时间设置成功已生效！</source>
         <translation>The system time has been successfully updated！</translation>
     </message>
     <message>
-        <location filename="../qmlSource/GlobalLanguageDefine.qml" line="223"/>
+        <location filename="../qmlSource/GlobalLanguageDefine.qml" line="224"/>
         <source>数据导出</source>
         <translation>Data Export</translation>
     </message>
     <message>
-        <location filename="../qmlSource/GlobalLanguageDefine.qml" line="224"/>
+        <location filename="../qmlSource/GlobalLanguageDefine.qml" line="225"/>
         <source>未插入U盘</source>
         <translation>No USB drive detected.</translation>
     </message>
     <message>
-        <location filename="../qmlSource/GlobalLanguageDefine.qml" line="225"/>
+        <location filename="../qmlSource/GlobalLanguageDefine.qml" line="226"/>
         <source>U盘已插入</source>
         <translation>USB drive detected.</translation>
     </message>
     <message>
-        <location filename="../qmlSource/GlobalLanguageDefine.qml" line="226"/>
+        <location filename="../qmlSource/GlobalLanguageDefine.qml" line="227"/>
         <source>导出数据已完成!</source>
         <translation>Data export completed！</translation>
     </message>
     <message>
-        <location filename="../qmlSource/GlobalLanguageDefine.qml" line="227"/>
+        <location filename="../qmlSource/GlobalLanguageDefine.qml" line="228"/>
         <source>没有找到可以使用的U盘或尝试再次导出</source>
         <translation>No usable USB drive found. Please try exporting again.</translation>
     </message>
@@ -545,52 +550,52 @@
         <translation type="vanished">N</translation>
     </message>
     <message>
-        <location filename="../qmlSource/GlobalLanguageDefine.qml" line="211"/>
+        <location filename="../qmlSource/GlobalLanguageDefine.qml" line="212"/>
         <source>请输入整数！</source>
         <translation>Please enter an integer!</translation>
     </message>
     <message>
-        <location filename="../qmlSource/GlobalLanguageDefine.qml" line="212"/>
+        <location filename="../qmlSource/GlobalLanguageDefine.qml" line="213"/>
         <source>请输入0~65535之间的数！</source>
         <translation>Please enter a number between 0 and 65,535!</translation>
     </message>
     <message>
-        <location filename="../qmlSource/GlobalLanguageDefine.qml" line="213"/>
+        <location filename="../qmlSource/GlobalLanguageDefine.qml" line="214"/>
         <source>请输入正确的IP地址！</source>
         <translation>Please enter a valid IP address!</translation>
     </message>
     <message>
-        <location filename="../qmlSource/GlobalLanguageDefine.qml" line="214"/>
+        <location filename="../qmlSource/GlobalLanguageDefine.qml" line="215"/>
         <source>设备名称只能包含中文、字母、数字（1~8字符）！</source>
         <translation>The device name can only contain Chinese characters, letters, and digits (1–8 characters)!</translation>
     </message>
     <message>
-        <location filename="../qmlSource/GlobalLanguageDefine.qml" line="215"/>
+        <location filename="../qmlSource/GlobalLanguageDefine.qml" line="216"/>
         <source>请输入有效年份！</source>
         <translation>Please enter a valid year!</translation>
     </message>
     <message>
-        <location filename="../qmlSource/GlobalLanguageDefine.qml" line="216"/>
+        <location filename="../qmlSource/GlobalLanguageDefine.qml" line="217"/>
         <source>月份必须是1~12之间的整数！</source>
         <translation>The month must be an integer between 1 and 12!</translation>
     </message>
     <message>
-        <location filename="../qmlSource/GlobalLanguageDefine.qml" line="217"/>
+        <location filename="../qmlSource/GlobalLanguageDefine.qml" line="218"/>
         <source>请输入正确的日期（1~31）！</source>
         <translation>Please enter a valid day (1–31)!</translation>
     </message>
     <message>
-        <location filename="../qmlSource/GlobalLanguageDefine.qml" line="218"/>
+        <location filename="../qmlSource/GlobalLanguageDefine.qml" line="219"/>
         <source>请输入正确的小时（0~23）！</source>
         <translation>Please enter a valid hour (0–23)!</translation>
     </message>
     <message>
-        <location filename="../qmlSource/GlobalLanguageDefine.qml" line="219"/>
+        <location filename="../qmlSource/GlobalLanguageDefine.qml" line="220"/>
         <source>请输入正确的分钟（0~59）！</source>
         <translation>Please enter a valid minute (0–59)!</translation>
     </message>
     <message>
-        <location filename="../qmlSource/GlobalLanguageDefine.qml" line="220"/>
+        <location filename="../qmlSource/GlobalLanguageDefine.qml" line="221"/>
         <source>请输入正确的秒数（0~59）！</source>
         <translation>Please enter a valid second (0–59)!</translation>
     </message>
@@ -748,28 +753,28 @@
         <translation>Reset</translation>
     </message>
     <message>
-        <location filename="../qmlSource/GlobalLanguageDefine.qml" line="144"/>
+        <location filename="../qmlSource/GlobalLanguageDefine.qml" line="145"/>
         <source>系统参数配置</source>
         <translation>System Parameter Configure</translation>
     </message>
     <message>
-        <location filename="../qmlSource/GlobalLanguageDefine.qml" line="145"/>
+        <location filename="../qmlSource/GlobalLanguageDefine.qml" line="146"/>
         <source>单因素系数</source>
         <translation>Single Coefficient</translation>
     </message>
     <message>
-        <location filename="../qmlSource/GlobalLanguageDefine.qml" line="146"/>
+        <location filename="../qmlSource/GlobalLanguageDefine.qml" line="147"/>
         <source>通用系数</source>
         <translation>General Coefficient</translation>
     </message>
     <message>
-        <location filename="../qmlSource/GlobalLanguageDefine.qml" line="147"/>
+        <location filename="../qmlSource/GlobalLanguageDefine.qml" line="148"/>
         <source>其他系数</source>
         <translation>Other Coefficient</translation>
     </message>
     <message>
         <location filename="../qmlSource/GlobalLanguageDefine.qml" line="41"/>
-        <location filename="../qmlSource/GlobalLanguageDefine.qml" line="148"/>
+        <location filename="../qmlSource/GlobalLanguageDefine.qml" line="149"/>
         <source>自动学习上限</source>
         <translation>Auto Learning Limit</translation>
     </message>
@@ -794,149 +799,149 @@
         <translation>Pending Opt</translation>
     </message>
     <message>
-        <location filename="../qmlSource/GlobalLanguageDefine.qml" line="149"/>
+        <location filename="../qmlSource/GlobalLanguageDefine.qml" line="150"/>
         <source>客户密码重置</source>
         <translation>Reset Password</translation>
     </message>
     <message>
-        <location filename="../qmlSource/GlobalLanguageDefine.qml" line="150"/>
+        <location filename="../qmlSource/GlobalLanguageDefine.qml" line="151"/>
         <source>保存</source>
         <translation>Save</translation>
     </message>
     <message>
-        <location filename="../qmlSource/GlobalLanguageDefine.qml" line="151"/>
+        <location filename="../qmlSource/GlobalLanguageDefine.qml" line="152"/>
         <source>初始化</source>
         <translation>Initialize</translation>
     </message>
     <message>
-        <location filename="../qmlSource/GlobalLanguageDefine.qml" line="154"/>
+        <location filename="../qmlSource/GlobalLanguageDefine.qml" line="155"/>
         <source>设置时间</source>
         <translation>Set Time</translation>
     </message>
     <message>
-        <location filename="../qmlSource/GlobalLanguageDefine.qml" line="155"/>
+        <location filename="../qmlSource/GlobalLanguageDefine.qml" line="156"/>
         <source>请输入当前时间</source>
         <translation>Please enter current time</translation>
     </message>
     <message>
-        <location filename="../qmlSource/GlobalLanguageDefine.qml" line="156"/>
+        <location filename="../qmlSource/GlobalLanguageDefine.qml" line="157"/>
         <source>年</source>
         <translation>Year</translation>
     </message>
     <message>
-        <location filename="../qmlSource/GlobalLanguageDefine.qml" line="157"/>
+        <location filename="../qmlSource/GlobalLanguageDefine.qml" line="158"/>
         <source>月</source>
         <translation>Month</translation>
     </message>
     <message>
-        <location filename="../qmlSource/GlobalLanguageDefine.qml" line="158"/>
+        <location filename="../qmlSource/GlobalLanguageDefine.qml" line="159"/>
         <source>日</source>
         <translation>Day</translation>
     </message>
     <message>
-        <location filename="../qmlSource/GlobalLanguageDefine.qml" line="159"/>
+        <location filename="../qmlSource/GlobalLanguageDefine.qml" line="160"/>
         <source>时</source>
         <translation>Hour</translation>
     </message>
     <message>
-        <location filename="../qmlSource/GlobalLanguageDefine.qml" line="160"/>
+        <location filename="../qmlSource/GlobalLanguageDefine.qml" line="161"/>
         <source>分</source>
         <translation>Minute</translation>
     </message>
     <message>
-        <location filename="../qmlSource/GlobalLanguageDefine.qml" line="161"/>
+        <location filename="../qmlSource/GlobalLanguageDefine.qml" line="162"/>
         <source>秒</source>
         <translation>Second</translation>
     </message>
     <message>
-        <location filename="../qmlSource/GlobalLanguageDefine.qml" line="163"/>
+        <location filename="../qmlSource/GlobalLanguageDefine.qml" line="164"/>
         <source>所有字段必须是数字!</source>
         <translation>Must be numerical only!</translation>
     </message>
     <message>
-        <location filename="../qmlSource/GlobalLanguageDefine.qml" line="164"/>
+        <location filename="../qmlSource/GlobalLanguageDefine.qml" line="165"/>
         <source>无效的年份!</source>
         <translation>Invalid Year!</translation>
     </message>
     <message>
-        <location filename="../qmlSource/GlobalLanguageDefine.qml" line="165"/>
+        <location filename="../qmlSource/GlobalLanguageDefine.qml" line="166"/>
         <source>无效的月份!</source>
         <translation>Invalid Month!</translation>
     </message>
     <message>
-        <location filename="../qmlSource/GlobalLanguageDefine.qml" line="166"/>
+        <location filename="../qmlSource/GlobalLanguageDefine.qml" line="167"/>
         <source>无效的日期!</source>
         <translation>Invalid Day!</translation>
     </message>
     <message>
-        <location filename="../qmlSource/GlobalLanguageDefine.qml" line="167"/>
+        <location filename="../qmlSource/GlobalLanguageDefine.qml" line="168"/>
         <source>无效的日期：该年份不是闰年!</source>
         <translation>Invalid Date: The year is not leap year!</translation>
     </message>
     <message>
-        <location filename="../qmlSource/GlobalLanguageDefine.qml" line="168"/>
+        <location filename="../qmlSource/GlobalLanguageDefine.qml" line="169"/>
         <source>无效的时间!</source>
         <translation>Invalid Date!</translation>
     </message>
     <message>
-        <location filename="../qmlSource/GlobalLanguageDefine.qml" line="171"/>
         <location filename="../qmlSource/GlobalLanguageDefine.qml" line="172"/>
+        <location filename="../qmlSource/GlobalLanguageDefine.qml" line="173"/>
         <source>小时</source>
         <translation>Hour</translation>
     </message>
     <message>
-        <location filename="../qmlSource/GlobalLanguageDefine.qml" line="173"/>
         <location filename="../qmlSource/GlobalLanguageDefine.qml" line="174"/>
+        <location filename="../qmlSource/GlobalLanguageDefine.qml" line="175"/>
         <source>天</source>
         <translation>Day</translation>
     </message>
     <message>
-        <location filename="../qmlSource/GlobalLanguageDefine.qml" line="177"/>
+        <location filename="../qmlSource/GlobalLanguageDefine.qml" line="178"/>
         <source>连接失败</source>
         <translation>Connect Failure</translation>
     </message>
     <message>
-        <location filename="../qmlSource/GlobalLanguageDefine.qml" line="179"/>
+        <location filename="../qmlSource/GlobalLanguageDefine.qml" line="180"/>
         <source>连接中</source>
         <translation>Connecting</translation>
     </message>
     <message>
-        <location filename="../qmlSource/GlobalLanguageDefine.qml" line="180"/>
+        <location filename="../qmlSource/GlobalLanguageDefine.qml" line="181"/>
         <source>已连接</source>
         <translation>Connected</translation>
     </message>
     <message>
-        <location filename="../qmlSource/GlobalLanguageDefine.qml" line="183"/>
+        <location filename="../qmlSource/GlobalLanguageDefine.qml" line="184"/>
         <source>星期日</source>
         <translation>Sun</translation>
     </message>
     <message>
-        <location filename="../qmlSource/GlobalLanguageDefine.qml" line="184"/>
+        <location filename="../qmlSource/GlobalLanguageDefine.qml" line="185"/>
         <source>星期一</source>
         <translation>Mon</translation>
     </message>
     <message>
-        <location filename="../qmlSource/GlobalLanguageDefine.qml" line="185"/>
+        <location filename="../qmlSource/GlobalLanguageDefine.qml" line="186"/>
         <source>星期二</source>
         <translation>Tue</translation>
     </message>
     <message>
-        <location filename="../qmlSource/GlobalLanguageDefine.qml" line="186"/>
+        <location filename="../qmlSource/GlobalLanguageDefine.qml" line="187"/>
         <source>星期三</source>
         <translation>Wed</translation>
     </message>
     <message>
-        <location filename="../qmlSource/GlobalLanguageDefine.qml" line="187"/>
+        <location filename="../qmlSource/GlobalLanguageDefine.qml" line="188"/>
         <source>星期四</source>
         <translation>Thur</translation>
     </message>
     <message>
-        <location filename="../qmlSource/GlobalLanguageDefine.qml" line="188"/>
+        <location filename="../qmlSource/GlobalLanguageDefine.qml" line="189"/>
         <source>星期五</source>
         <translation>Fri</translation>
     </message>
     <message>
-        <location filename="../qmlSource/GlobalLanguageDefine.qml" line="189"/>
+        <location filename="../qmlSource/GlobalLanguageDefine.qml" line="190"/>
         <source>星期六</source>
         <translation>Sat</translation>
     </message>

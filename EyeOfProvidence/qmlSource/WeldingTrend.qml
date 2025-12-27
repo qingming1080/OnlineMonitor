@@ -81,7 +81,7 @@ Rectangle {
         margins.top: 0
         margins.bottom: 0
         legend {
-            font.pixelSize: 16
+            font.pixelSize: LanguageManager.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 16 : 10
             font.bold: true
             labelColor: "#a3c7d0"
             font.family: GlobalSystemDefine.fontBold

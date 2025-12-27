@@ -713,7 +713,7 @@ Rectangle {
     Button{
         width: 120
         height: 36
-        anchors.top: usbVisableText.top
+        anchors.bottom: usbVisableText.bottom
         anchors.right: parent.right
         anchors.rightMargin: 35
         visible: isUSBAvailable
