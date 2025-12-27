@@ -400,6 +400,7 @@ void Manual::AppendNewRecordComming(const HBModbusClient::MODBUS_WELD_RESULT &da
     record.CycleCount     = data.CycleCount;
     record.Energy         = data.Energy;
     record.Amplitude      = data.Amplitude;
+    record.TriggerPressure = data.TriggerPressure;
     record.WeldPressure   = data.WeldingPressure;
     record.WeldTime       = data.WeldTime;
     record.PeakPower      = data.PeakPower;
