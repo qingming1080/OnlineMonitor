@@ -1007,7 +1007,7 @@ QList<DataBaseManager::DB_PRODUCTION> DataBaseManager::getProductionData(int wel
         data.Residual                = query.value(PRODUCTION_TABLE::RESIDUAL).toInt();
         data.FinalResult             = query.value(PRODUCTION_TABLE::FINAL_RESULT).toInt();
         // 历史记录，最新的最先显示
-        list.push_front(data);
+        list.push_back(data);
     }
 
     return list;
@@ -1161,6 +1161,21 @@ bool DataBaseManager::insertProductionRow(DB_PRODUCTION data)
         // db.rollback(); // 回滚事务
         return false;
     }
+
+    QString TrimStr = QString(
+                          "DELETE FROM %1 "
+                          "WHERE id IN ("
+                          "   SELECT id FROM %1 "
+                          "   ORDER BY id ASC "
+                          "   LIMIT (SELECT MAX(COUNT(*) - 5000, 0) FROM %1)"
+                          ")"
+                          ).arg(PRODUCTION_TABLENAME);
+
+    if (!query.exec(TrimStr)) {
+        qDebug() << "Trim failed:" << query.lastError().text();
+        // db.rollback();
+        return false;
+    }
     return true;
 }
 
@@ -1244,7 +1259,6 @@ DataBaseManager::DataBaseManager(QObject *parent)
 {
     init();
 }
-
 void DataBaseManager::init()
 {
     m_databaseHelper = new DataBaseHelper(this);

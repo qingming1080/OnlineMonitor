@@ -77,27 +77,25 @@ void History::setFinalResult(int newFinalResult)
 
 void History::AppendNewRecordComming(const DataBaseManager::DB_PRODUCTION &data)
 {
+    bool isAccept = false;
+
+    if (deviceID() == 0)
+    {
+        if (finalResult() == HistoryEnum::ALL || data.FinalResult == finalResult())
+            isAccept = true;
+    }
+    else if (data.WelderID == deviceID())
+    {
+        if (finalResult() == HistoryEnum::ALL || data.FinalResult == finalResult())
+            isAccept = true;
+    }
+
+    if (!isAccept)
+        return;
     beginResetModel();
-    if(deviceID() == 0)
-    {
-        if(finalResult() == HistoryEnum::ALL)
-            m_data.prepend(data);
-        else if(data.FinalResult == finalResult())
-            m_data.prepend(data);
-        else
-        {
-        }
-    }
-    else if(data.WelderID == deviceID())
-    {
-        if(finalResult() == HistoryEnum::ALL)
-            m_data.prepend(data);
-        else if(data.FinalResult == finalResult())
-            m_data.prepend(data);
-        else
-        {
-        }
-    }
+    m_data.prepend(data);
+    if (m_data.size() > MAX_UI_ROWS)
+        m_data.removeLast();
     endResetModel();
 }
 
