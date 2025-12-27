@@ -65,7 +65,8 @@ Item {
     property color blackFontColor:  "#757577" //Comply Emerson Color Palette
     property color blueFontColor:   "#4477aa" //Comply Emerson Color Palette
     property color redFontColor:    "#D31245"
-    property color backgroundColor: "#E8E8E8" //Comply Emerson Color Palette
+    // property color backgroundColor: "#E8E8E8" //Comply Emerson Color Palette
+    property color backgroundColor: "#2B70AD"
     property color dialogBackgroundColor: "#dadada"
     property color titleBackgroundColor: "#3D7AB3"  //Comply Emerson Color Palette
     property color mainWindowOpacityColor: "#dadada"

@@ -13,6 +13,7 @@ import GlobalLanguageDefine 1.0
 import ProductionObj        1.0
 import ManualObj            1.0
 import ManualTable          1.0
+import Style                1.0
 import LanguageEnum         1.0
 
 Rectangle {
@@ -64,13 +65,15 @@ Rectangle {
         anchors.topMargin: 29
         width: 1220
         height: 664
-        color: pRgb(43, 112, 173)
+        color: Style.backgroundColor
         radius: 5
 
         EquipmentInfor{
             id: layoutDeviceInfo
-            x: 42
-            y: 35
+            anchors.left: parent.left
+            anchors.leftMargin: 5
+            anchors.top: parent.top
+            anchors.topMargin: 5
             width:  258
             //TODO Need to have a double check
             height: 225
@@ -113,11 +116,12 @@ Rectangle {
         }
 
         WeldingParameter{
-            id: s3_1
+            id: layoutWeldParameter
             width: 258
             height: 236
-            x:42
-            y:274
+            anchors.top: layoutDeviceInfo.bottom
+            anchors.topMargin: 15
+            anchors.left: layoutDeviceInfo.left
             color:  "#0c5696"
             presetEnergy:           (currentIndex < deviceCount) ? DeviceManager.DeviceList[currentIndex].ManualObj.EnergySetting : "0"
             presetAmplitude:        (currentIndex < deviceCount) ? DeviceManager.DeviceList[currentIndex].ManualObj.AmplitudeSetting : "0"
@@ -126,10 +130,11 @@ Rectangle {
         }
 
         Button{
-            id: s4
-            x: 42
+            id: btnCreateModel
+            anchors.left: layoutDeviceInfo.left
             //TODO Need to have a double check
-            y: 520
+            anchors.top: layoutWeldParameter.bottom
+            anchors.topMargin: 15
             width:   258
             height:  45
             background: Rectangle{
@@ -171,9 +176,9 @@ Rectangle {
             }
         }
         Button{
-            id:s5
-            anchors.left: s4.left
-            anchors.top: s4.bottom
+            id: btnClear
+            anchors.left: btnCreateModel.left
+            anchors.top: btnCreateModel.bottom
             anchors.topMargin:  10
             width:   258
             height:  45
@@ -197,39 +202,66 @@ Rectangle {
                 DeviceManager.DeviceList[currentIndex].ManualObj.clearData()
             }
         }
-
-        Item {
-            Rectangle{
-                id:rect
-                x: 319
-                y: 36
-                width:842
-                height: 582
+        Button{
+            id: btnNewAdd
+            anchors.left: btnCreateModel.left
+            anchors.top: btnClear.bottom
+            anchors.topMargin:  10
+            width:   258
+            height:  45
+            background: Rectangle{
+                radius: 6
+                border.color: pRgb(43, 112, 173)
                 color: "#0c5696"
-                radius: 3
             }
+            contentItem: Text {
+                anchors.centerIn: parent
+                text: GlobalLanguageDefine.strAddRecord
+                font.pixelSize: 17
+                color: pRgb(153, 204, 255)
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
+                font.family: GlobalSystemDefine.fontBold
+            }
+            onPressed: {
+
+            }
+
+        }
+
+        Rectangle{
+            id: tableviewBackgroud
+            anchors.left: layoutDeviceInfo.right
+            anchors.leftMargin: 20
+            anchors.right: parent.right
+            anchors.rightMargin: 5
+            anchors.top: layoutDeviceInfo.top
+            anchors.bottom: parent.bottom
+            anchors.bottomMargin: 5
+            color: "#0c5696"
+            radius: 3
             Rectangle{
-                width:840
-                height: 580
-                x: 320
-                y: 37
+                id: listBackgroud
+                anchors.left: parent.left
+                anchors.right: parent.right
+                anchors.top: parent.top
+                anchors.topMargin: 40
+                anchors.bottom: parent.bottom
                 color: pRgb(43, 112, 173)
-                Text{
-                    id:t1
-                    x:840/7/2+5-width/2
-                    y:11
-                    font.pixelSize: heightOption ? 12 : 16
-                    // text: qsTr("全选")
-                    text: GlobalLanguageDefine.strSelectAll
-                    font.family: GlobalSystemDefine.fontBold
-                    color: pRgb(153, 204, 255)
-                }
+            }
+            Item {
+                id: listHeader
+                anchors.left: parent.left
+                anchors.right: parent.right
+                anchors.top: parent.top
+                height: 40
                 Button{
-                    id:bt1
+                    id: btnLockAll
                     width: 30
                     height: 30
-                    x:15
-                    y:8
+                    anchors.left: parent.left
+                    anchors.leftMargin: 5
+                    anchors.verticalCenter: parent.verticalCenter
                     background: Item {
                         width: parent.width
                         height: parent.height
@@ -260,355 +292,406 @@ Rectangle {
                     }
                 }
                 Text{
-                    id: swipeCycleCountText
+                    id: txtTotalChecked
+                    anchors.left: btnLockAll.right
+                    anchors.leftMargin: 5
+                    anchors.verticalCenter: btnLockAll.verticalCenter
+                    font.pixelSize: 16
+                    // text: qsTr("全选")
+                    text: GlobalLanguageDefine.strSelectAll
+                    font.family: GlobalSystemDefine.fontBold
+                    color: pRgb(153, 204, 255)
+                }
+
+                Text{
+                    id: txtCycleCount
                     anchors.left: parent.left
-                    anchors.leftMargin: LanguageManager.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ?
-                                            (heightOption ? 100 : 140) : (heightOption ? 85 : 140)
-                    anchors.top: t1.top
-                    font.pixelSize: heightOption ? 12 : 16
+                    anchors.leftMargin: DeviceManager.DeviceList[currentIndex].DeviceObj.HeightEncoderOption === true ? 80 : 120 //80 : 120
+                    anchors.top: txtTotalChecked.top
+                    font.pixelSize: 16
                     // text: qsTr("序号")
                     text: GlobalLanguageDefine.strCycleCount
                     font.family: GlobalSystemDefine.fontBold
                     color: pRgb(171, 206, 213)
                 }
                 Text{
-                    id: swipeWeldingTimeText
-                    anchors.top: t1.top
+                    id: txtWeldingTime
+                    anchors.top: txtTotalChecked.top
                     anchors.left: parent.left
-                    anchors.leftMargin: heightOption ? 160 : 260
-                    font.pixelSize: heightOption ? 12 : 16
+                    anchors.leftMargin: DeviceManager.DeviceList[currentIndex].DeviceObj.HeightEncoderOption === true ? 180 : 260 //100 : 120
+                    font.pixelSize: 16
                     // text: qsTr("焊接时间")
                     text: GlobalLanguageDefine.strWeldingTime + "(s)"
                     font.family: GlobalSystemDefine.fontBold
                     color: pRgb(171, 206, 213)
                 }
                 Text{
-                    id: swipePowerText
-                    anchors.top: t1.top
+                    id: txtPower
+                    anchors.top: txtTotalChecked.top
                     anchors.left: parent.left
-                    anchors.leftMargin: heightOption ? 250 : 400
-                    font.pixelSize: heightOption ? 12 : 16
+                    anchors.leftMargin: DeviceManager.DeviceList[currentIndex].DeviceObj.HeightEncoderOption === true ? 290 : 410 //110 : 150
+                    font.pixelSize: 16
                     // text: qsTr("功率")
                     text: GlobalLanguageDefine.strPower + "(W)"
                     font.family: GlobalSystemDefine.fontBold
                     color: pRgb(171, 206, 213)
                 }
                 Text{
-                    id: swipePreHeightText
-                    anchors.top: t1.top
+                    id: txtPreHeight
+                    anchors.top: txtTotalChecked.top
                     anchors.left: parent.left
-                    anchors.leftMargin: 320
-                    font.pixelSize: heightOption ? 12 : 16
+                    anchors.leftMargin: DeviceManager.DeviceList[currentIndex].DeviceObj.HeightEncoderOption === true ? 380 : 500 //90
+                    font.pixelSize: 16
                     text: GlobalLanguageDefine.strPreWeldHeight + "(mm)"
                     font.family: GlobalSystemDefine.fontBold
                     color: pRgb(171, 206, 213)
                     visible: heightOption
                 }
                 Text{
-                    id:swipePostHeightText
-                    anchors.top: t1.top
+                    id: txtPostHeight
+                    anchors.top: txtTotalChecked.top
                     anchors.left: parent.left
-                    anchors.leftMargin: 430
-                    font.pixelSize: heightOption ? 12 : 16
+                    anchors.leftMargin: DeviceManager.DeviceList[currentIndex].DeviceObj.HeightEncoderOption === true ? 520: 520 //140
+                    font.pixelSize: 16
                     text: GlobalLanguageDefine.strPostWeldHeight + "(mm)"
                     font.family: GlobalSystemDefine.fontBold
                     color: pRgb(171, 206, 213)
                     visible: heightOption
                 }
                 Text{
-                    id:t6
-                    x:840/8*5 + 840/8/2-width/2
-                    y:11
-                    font.pixelSize: heightOption ? 12 : 16
+                    id: txtDateTime
+                    anchors.top: txtTotalChecked.top
+                    anchors.left: parent.left
+                    anchors.leftMargin: DeviceManager.DeviceList[currentIndex].DeviceObj.HeightEncoderOption === true ? 665: 550 //145 : 150
+                    font.pixelSize: 16
                     // text: qsTr("日期")
                     text: GlobalLanguageDefine.strDate
                     font.family: GlobalSystemDefine.fontBold
                     color: pRgb(171, 206, 213)
                 }
                 Text{
-                    id:t7
-                    x:840/8*6 + 840/8/2-width/2
-                    y:11
-                    font.pixelSize: heightOption ? 12 : 16
+                    id: txtPeelForce
+                    anchors.top: txtTotalChecked.top
+                    anchors.left: parent.left
+                    anchors.leftMargin: {
+                        if(DeviceManager.DeviceList[currentIndex].DeviceObj.HeightEncoderOption === true)
+                        {
+                            if(LanguageManager.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE)
+                                return 740 //75
+                            else
+                                return 715 //50
+                        }
+                        else
+                        {
+                            if(LanguageManager.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE)
+                                return 665 //
+                            else
+                                return 640
+                        }
+                    }
+                    font.pixelSize: 16
                     // text: qsTr("拉力")
                     text: GlobalLanguageDefine.strTensile + "(N)"
                     font.family: GlobalSystemDefine.fontBold
                     color: pRgb(171, 206, 213)
                 }
                 Text{
-                    id:t8
-                    x:840/8*7 + 840/8/2-width/2
-                    y:11
-                    font.pixelSize: heightOption ? 12 : 16
+                    id: txtResidual
+                    anchors.top: txtTotalChecked.top
+                    anchors.left: parent.left
+                    anchors.leftMargin: {
+                        if(DeviceManager.DeviceList[currentIndex].DeviceObj.HeightEncoderOption === true)
+                        {
+                            if(LanguageManager.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE)
+                                return 845 //105
+                            else
+                                return 830 //115 : 160
+                        }
+                        else
+                        {
+                            if(LanguageManager.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE)
+                                return 815
+                            else
+                                return 800
+                        }
+                    }
+                    font.pixelSize: 16
                     // text: qsTr("残留度")
                     text: GlobalLanguageDefine.strResidual + "(%)"
                     font.family: GlobalSystemDefine.fontBold
                     color: pRgb(171, 206, 213)
                 }
-                ListView{
-                    id: taskplanView
-                    width:840
-                    height: 535
-                    y:40
-                    clip: true
-                    model: {
-                        if (swipe.currentIndex >= 0 && swipe.currentIndex < swipe.deviceCount)
-                            return DeviceManager.DeviceList[swipe.currentIndex].ManualObj
-                        else
-                            return 0
-                    }
-                    delegate: Rectangle{
-                        id: regionItem
-                        height: 36
-                        width: 840
-                        color: index % 2 === 0 ? "#afc3d8" : "#2d71ae"
-                        Button{
-                            id: bt
-                            x:840/8/2-width/2
-                            anchors.verticalCenter: parent.verticalCenter
-                            width: 30
-                            height: 30
-                            background: Item {
-                                width: parent.width
-                                height: parent.height
-                                Image {
-                                    id:im1
-                                    anchors.fill: parent
-                                    fillMode: Image.PreserveAspectFit // 保持图片的宽高比，适应按钮大小
-                                    source: {
-                                        if(index % 2 !== 0)
-                                        {
-                                            if(is_selected === true)
-                                                return "qrc:/images/btn_lock_double_line.png"
-                                            else
-                                                return "qrc:/images/btn_unlock_double_line.png"
-                                        }
+            }
+
+            ListView{
+                id: taskplanView
+                anchors.top: listHeader.bottom
+                anchors.bottom: parent.bottom
+                anchors.left: parent.left
+                anchors.leftMargin: 5
+                anchors.right: parent.right
+                anchors.rightMargin: 5
+                clip: true
+                model: {
+                    if (swipe.currentIndex >= 0 && swipe.currentIndex < swipe.deviceCount)
+                        return DeviceManager.DeviceList[swipe.currentIndex].ManualObj
+                    else
+                        return 0
+                }
+                delegate: Rectangle{
+                    id: regionItem
+                    height: 36
+                    width: parent.width
+                    color: index % 2 === 0 ? "#afc3d8" : "#2d71ae"
+                    Button{
+                        id: btnLock
+                        anchors.left: parent.left
+                        anchors.leftMargin: 15
+                        anchors.verticalCenter: parent.verticalCenter
+                        width: 30
+                        height: 30
+                        background: Item {
+                            width: parent.width
+                            height: parent.height
+                            Image {
+                                id:im1
+                                anchors.fill: parent
+                                fillMode: Image.PreserveAspectFit // 保持图片的宽高比，适应按钮大小
+                                source: {
+                                    if(index % 2 !== 0)
+                                    {
+                                        if(is_selected === true)
+                                            return "qrc:/images/btn_lock_double_line.png"
                                         else
-                                        {
-                                            if(is_selected === true)
-                                                return "qrc:/images/btn_lock_single_line.png"
-                                            else
-                                                return "qrc:/images/btn_unlock_single_line.png"
-                                        }
+                                            return "qrc:/images/btn_unlock_double_line.png"
+                                    }
+                                    else
+                                    {
+                                        if(is_selected === true)
+                                            return "qrc:/images/btn_lock_single_line.png"
+                                        else
+                                            return "qrc:/images/btn_unlock_single_line.png"
                                     }
                                 }
                             }
+                        }
 
-                            onPressed: {
-                                var isSelect = false
-                                if(im1.source == "qrc:/images/btn_unlock_double_line.png")
-                                {
-                                    im1.source = "qrc:/images/btn_lock_double_line.png"
-                                    isSelect = true
-                                }
-                                else if(im1.source == "qrc:/images/btn_lock_double_line.png")
-                                {
-                                    im1.source = "qrc:/images/btn_unlock_double_line.png"
-                                    isSelect = false
-                                }
-                                else if(im1.source == "qrc:/images/btn_lock_single_line.png")
-                                {
+                        onPressed: {
+                            var isSelect = false
+                            if(im1.source == "qrc:/images/btn_unlock_double_line.png")
+                            {
+                                im1.source = "qrc:/images/btn_lock_double_line.png"
+                                isSelect = true
+                            }
+                            else if(im1.source == "qrc:/images/btn_lock_double_line.png")
+                            {
+                                im1.source = "qrc:/images/btn_unlock_double_line.png"
+                                isSelect = false
+                            }
+                            else if(im1.source == "qrc:/images/btn_lock_single_line.png")
+                            {
+                                im1.source = "qrc:/images/btn_unlock_single_line.png"
+                                isSelect = false
+                            }
+                            else if(im1.source == "qrc:/images/btn_unlock_single_line.png")
+                            {
+                                im1.source = "qrc:/images/btn_lock_single_line.png"
+                                isSelect = true
+                            }
+                            var manualObj = DeviceManager.DeviceList[swipe.currentIndex].ManualObj
+                            manualObj.setData(manualObj.index(index, 0), isSelect, ManualTable.IS_SELECTED)
+                        }
+                    }
+                    Connections{
+                        target: btnLock
+                        function onPressed(){
+                            if(index % 2 === 0)
+                            {
+                                if(im.source == "qrc:/images/btn_unlock_double_line.png")
                                     im1.source = "qrc:/images/btn_unlock_single_line.png"
-                                    isSelect = false
-                                }
-                                else if(im1.source == "qrc:/images/btn_unlock_single_line.png")
-                                {
-                                    im1.source = "qrc:/images/btn_lock_single_line.png"
-                                    isSelect = true
-                                }
-                                var manualObj = DeviceManager.DeviceList[swipe.currentIndex].ManualObj
-                                manualObj.setData(manualObj.index(index, 0), isSelect, ManualTable.IS_SELECTED)
-                            }
-                        }
-                        Connections{
-                            target: bt1
-                            function onPressed(){
-                                if(index % 2 === 0)
-                                {
-                                    if(im.source == "qrc:/images/btn_unlock_double_line.png")
-                                        im1.source = "qrc:/images/btn_unlock_single_line.png"
-                                    else
-                                        im1.source = "qrc:/images/btn_lock_single_line.png"
-                                }
                                 else
+                                    im1.source = "qrc:/images/btn_lock_single_line.png"
+                            }
+                            else
+                            {
+                                if(im.source == "qrc:/images/btn_unlock_double_line.png")
+                                    im1.source = "qrc:/images/btn_unlock_double_line.png"
+                                else
+                                    im1.source = "qrc:/images/btn_lock_double_line.png"
+                            }
+                        }
+                    }
+                    Text{
+                        anchors.left: parent.left
+                        anchors.leftMargin: DeviceManager.DeviceList[currentIndex].DeviceObj.HeightEncoderOption === true ? 100 : 130
+                        anchors.verticalCenter: parent.verticalCenter
+                        font.pixelSize: 16
+                        text: cycle_count
+                        font.family: GlobalSystemDefine.fontBold
+                        color: index % 2 !== 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
+                    }
+                    Text{
+                        anchors.left: parent.left
+                        anchors.leftMargin: DeviceManager.DeviceList[currentIndex].DeviceObj.HeightEncoderOption === true ? 200 : 280 //200
+                        anchors.verticalCenter: parent.verticalCenter
+                        font.pixelSize: 16
+                        text: weld_time
+                        font.family: GlobalSystemDefine.fontBold
+                        color: index % 2 !== 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
+                    }
+                    Text{
+                        anchors.left: parent.left
+                        anchors.leftMargin: DeviceManager.DeviceList[currentIndex].DeviceObj.HeightEncoderOption === true ? 300 : 420 //
+                        anchors.verticalCenter: parent.verticalCenter
+                        font.pixelSize: 16
+                        text: peak_power
+                        font.family: GlobalSystemDefine.fontBold
+                        color: index % 2 !== 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
+                    }
+                    Text{
+                        anchors.left: parent.left
+                        anchors.leftMargin: 410
+                        anchors.verticalCenter: parent.verticalCenter
+                        font.pixelSize: 16
+                        text: preheight
+                        font.family: GlobalSystemDefine.fontBold
+                        color: index % 2 !== 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
+                        visible: DeviceManager.DeviceList[swipe.currentIndex].DeviceObj.HeightEncoderOption
+                    }
+                    Text{
+                        anchors.left: parent.left
+                        anchors.leftMargin: 550
+                        anchors.verticalCenter: parent.verticalCenter
+                        font.pixelSize: 16
+                        text: postheight
+                        font.family: GlobalSystemDefine.fontBold
+                        color: index % 2 !== 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
+                        visible: DeviceManager.DeviceList[swipe.currentIndex].DeviceObj.HeightEncoderOption
+                    }
+                    Text{
+                        anchors.left: parent.left
+                        anchors.leftMargin: DeviceManager.DeviceList[currentIndex].DeviceObj.HeightEncoderOption === true ? 645 : 530
+                        anchors.verticalCenter: parent.verticalCenter
+                        font.pixelSize: 16
+                        text: create_time
+                        font.family: GlobalSystemDefine.fontBold
+                        color: index % 2 !== 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
+                    }
+                    TextField{
+                        id: textField
+                        width: 100
+                        height: 33
+                        anchors.verticalCenter: parent.verticalCenter
+                        anchors.left: parent.left
+                        anchors.leftMargin: DeviceManager.DeviceList[currentIndex].DeviceObj.HeightEncoderOption === true ? 715: 640 //50 : 90
+                        horizontalAlignment: TextInput.AlignHCenter
+                        verticalAlignment: TextInput.AlignVCenter
+                        color: index % 2 === 0 ? "#014c8d" : pRgb(175, 195, 216)
+                        font.family: GlobalSystemDefine.fontBold
+                        font.pixelSize: 16
+                        text: actual_force
+                        inputMethodHints: Qt.ImhDigitsOnly
+                        background: Rectangle{
+                            radius: 3
+                            border.width: 2
+                            border.color: index % 2 === 0 ? "#2d71ae" : "#afc3d8"
+                            color: index % 2 !== 0 ? "#2d71ae" : "#afc3d8"
+                        }
+                        cursorDelegate: Rectangle {
+                            width: textField.cursorWidth
+                            height: textField.font.pixelSize * 1.5
+                            color: index % 2 === 0 ? "#2d71ae" : "#afc3d8"
+                            visible: textField.activeFocus
+                            anchors.verticalCenter: parent.verticalCenter
+                            Text {
+                                text: "|"
+                                color: index % 2 === 0 ? "#2d71ae" : "#afc3d8"
+                                font.pixelSize: textField.font.pixelSize
+                                anchors.centerIn: parent
+                            }
+                        }
+                        MouseArea {
+                            anchors.fill: parent
+                            onPressed: {
+                                textField.forceActiveFocus()
+                                window.showPrimaryNumpad(textField.text, " ", 3, 0, 999999, textField.text, textField, function(val)
                                 {
-                                    if(im.source == "qrc:/images/btn_unlock_double_line.png")
-                                        im1.source = "qrc:/images/btn_unlock_double_line.png"
+                                    textField.text = val;
+                                    var intRegex = /^[0-9]+$/
+                                    if (!intRegex.test(textField.text))
+                                        footer.showError(t7.text + GlobalLanguageDefine.strInputInterger)
                                     else
-                                        im1.source = "qrc:/images/btn_lock_double_line.png"
-                                }
-                            }
-                        }
-                        Text{
-                            anchors.left: parent.left
-                            anchors.leftMargin: DeviceManager.DeviceList[currentIndex].DeviceObj.HeightEncoderOption === true ? 115 : 160
-                            anchors.verticalCenter: parent.verticalCenter
-                            font.pixelSize: 16
-                            text: cycle_count
-                            font.family: GlobalSystemDefine.fontBold
-                            color: index % 2 !== 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
-                        }
-                        Text{
-                            anchors.left: parent.left
-                            anchors.leftMargin: DeviceManager.DeviceList[currentIndex].DeviceObj.HeightEncoderOption === true ? 180 : 280
-                            anchors.verticalCenter: parent.verticalCenter
-                            font.pixelSize: 16
-                            text: weld_time
-                            font.family: GlobalSystemDefine.fontBold
-                            color: index % 2 !== 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
-                        }
-                        Text{
-                            anchors.left: parent.left
-                            anchors.leftMargin: DeviceManager.DeviceList[currentIndex].DeviceObj.HeightEncoderOption === true ? 270 : 420
-                            anchors.verticalCenter: parent.verticalCenter
-                            font.pixelSize: 16
-                            text: peak_power
-                            font.family: GlobalSystemDefine.fontBold
-                            color: index % 2 !== 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
-                        }
-                        Text{
-                            anchors.left: parent.left
-                            anchors.leftMargin: 350
-                            anchors.verticalCenter: parent.verticalCenter
-                            font.pixelSize: 16
-                            text: preheight
-                            font.family: GlobalSystemDefine.fontBold
-                            color: index % 2 !== 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
-                            visible: DeviceManager.DeviceList[swipe.currentIndex].DeviceObj.HeightEncoderOption
-                        }
-                        Text{
-                            anchors.left: parent.left
-                            anchors.leftMargin: 450
-                            anchors.verticalCenter: parent.verticalCenter
-                            font.pixelSize: 16
-                            text: postheight
-                            font.family: GlobalSystemDefine.fontBold
-                            color: index % 2 !== 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
-                            visible: DeviceManager.DeviceList[swipe.currentIndex].DeviceObj.HeightEncoderOption
-                        }
-                        Text{
-                            anchors.verticalCenter: parent.verticalCenter
-                            x:840/8*5 + 840/8/2-width/2
-                            font.pixelSize: 16
-                            text: create_time
-                            font.family: GlobalSystemDefine.fontBold
-                            color: index % 2 !== 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
-                        }
-                        TextField{
-                            id: textField
-                            width: 100
-                            height: 33
-                            anchors.verticalCenter: parent.verticalCenter
-                            x:840/8*6 + 840/8/2-width/2
-                            horizontalAlignment: TextInput.AlignHCenter
-                            verticalAlignment: TextInput.AlignVCenter
-                            color: index % 2 === 0 ? "#014c8d" : pRgb(175, 195, 216)
-                            font.family: GlobalSystemDefine.fontBold
-                            font.pixelSize: 16
-                            text: actual_force
-                            inputMethodHints: Qt.ImhDigitsOnly
-                            background: Rectangle{
-                                radius: 3
-                                border.width: 2
-                                border.color: index % 2 === 0 ? "#2d71ae" : "#afc3d8"
-                                color: index % 2 !== 0 ? "#2d71ae" : "#afc3d8"
-                            }
-                            cursorDelegate: Rectangle {
-                                width: textField.cursorWidth
-                                height: textField.font.pixelSize * 1.5
-                                color: index % 2 === 0 ? "#2d71ae" : "#afc3d8"
-                                visible: textField.activeFocus
-                                anchors.verticalCenter: parent.verticalCenter
-                                Text {
-                                    text: "|"
-                                    color: index % 2 === 0 ? "#2d71ae" : "#afc3d8"
-                                    font.pixelSize: textField.font.pixelSize
-                                    anchors.centerIn: parent
-                                }
-                            }
-                            MouseArea {
-                                anchors.fill: parent
-                                onPressed: {
-                                    textField.forceActiveFocus()
-                                    window.showPrimaryNumpad(textField.text, " ", 3, 0, 999999, textField.text, textField, function(val)
                                     {
-                                        textField.text = val;
-                                        var intRegex = /^[0-9]+$/
-                                        if (!intRegex.test(textField.text))
-                                            footer.showError(t7.text + GlobalLanguageDefine.strInputInterger)
-                                        else
-                                        {
-                                            footer.hideError()
-                                            DeviceManager.DeviceList[swipe.currentIndex].ManualObj.setData(
-                                                        DeviceManager.DeviceList[swipe.currentIndex].ManualObj.index(index, 0),
-                                                        parseInt(textField.text),
-                                                        ManualTable.ACTUAL_FORCE
-                                                        )
-                                        }
-                                    })
+                                        footer.hideError()
+                                        DeviceManager.DeviceList[swipe.currentIndex].ManualObj.setData(
+                                                    DeviceManager.DeviceList[swipe.currentIndex].ManualObj.index(index, 0),
+                                                    parseInt(textField.text),
+                                                    ManualTable.ACTUAL_FORCE
+                                                    )
+                                    }
                                 }
                             }
                         }
-                        TextField{
-                            id: textField1
-                            width: 100
-                            height: 33
+                    }
+                    TextField{
+                        id: textField1
+                        width: 100
+                        height: 33
+                        anchors.verticalCenter: parent.verticalCenter
+                        anchors.left: parent.left
+                        anchors.leftMargin: DeviceManager.DeviceList[currentIndex].DeviceObj.HeightEncoderOption === true ? 830: 800 //115 : 160
+                        horizontalAlignment: TextInput.AlignHCenter
+                        verticalAlignment: TextInput.AlignVCenter
+                        // color: index % 2 === 0 ? pRgb(175, 195, 216) : "#014c8d"
+                        color: index % 2 === 0 ? "#014c8d" : pRgb(175, 195, 216)
+                        font.family: GlobalSystemDefine.fontBold
+                        font.pixelSize: 16
+                        text: actual_residual
+                        inputMethodHints: Qt.ImhDigitsOnly
+                        background: Rectangle{
+                            radius: 3
+                            border.width: 2
+                            border.color: index % 2 === 0 ? "#2d71ae" : "#afc3d8"
+                            color: index % 2 !== 0 ? "#2d71ae" : "#afc3d8"
+                        }
+                        cursorDelegate: Rectangle {
+                            width: textField1.cursorWidth
+                            height: textField1.font.pixelSize * 1.5
+                            color: index % 2 === 0 ? "#2d71ae" : "#afc3d8"
+                            visible: textField1.activeFocus
                             anchors.verticalCenter: parent.verticalCenter
-                            x:840/8*7 + 840/8/2-width/2
-                            horizontalAlignment: TextInput.AlignHCenter
-                            verticalAlignment: TextInput.AlignVCenter
-                            // color: index % 2 === 0 ? pRgb(175, 195, 216) : "#014c8d"
-                            color: index % 2 === 0 ? "#014c8d" : pRgb(175, 195, 216)
-                            font.family: GlobalSystemDefine.fontBold
-                            font.pixelSize: 16
-                            text: actual_residual
-                            inputMethodHints: Qt.ImhDigitsOnly
-                            background: Rectangle{
-                                radius: 3
-                                border.width: 2
-                                border.color: index % 2 === 0 ? "#2d71ae" : "#afc3d8"
-                                color: index % 2 !== 0 ? "#2d71ae" : "#afc3d8"
-                            }
-                            cursorDelegate: Rectangle {
-                                width: textField1.cursorWidth
-                                height: textField1.font.pixelSize * 1.5
+                            Text {
+                                text: "|"
                                 color: index % 2 === 0 ? "#2d71ae" : "#afc3d8"
-                                visible: textField1.activeFocus
-                                anchors.verticalCenter: parent.verticalCenter
-                                Text {
-                                    text: "|"
-                                    color: index % 2 === 0 ? "#2d71ae" : "#afc3d8"
-                                    font.pixelSize: textField1.font.pixelSize
-                                    anchors.centerIn: parent
-                                }
+                                font.pixelSize: textField1.font.pixelSize
+                                anchors.centerIn: parent
                             }
-                            MouseArea {
-                                anchors.fill: parent
-                                onPressed: {
-                                    textField1.forceActiveFocus()
-                                    window.showPrimaryNumpad(t8.text, " ", 3, 0, 999999, textField1.text, textField1, function(val)
+                        }
+                        MouseArea {
+                            anchors.fill: parent
+                            onPressed: {
+                                textField1.forceActiveFocus()
+                                window.showPrimaryNumpad(t8.text, " ", 3, 0, 999999, textField1.text, textField1, function(val)
+                                {
+                                    textField1.text = val;
+                                    var intRegex = /^[0-9]+$/
+                                    if (!intRegex.test(textField1.text))
+                                        footer.showError(t8.text + GlobalLanguageDefine.strInputInterger)
+                                    else
                                     {
-                                        textField1.text = val;
-                                        var intRegex = /^[0-9]+$/
-                                        if (!intRegex.test(textField1.text))
-                                            footer.showError(t8.text + GlobalLanguageDefine.strInputInterger)
-                                        else
-                                        {
-                                            footer.hideError()
-                                            DeviceManager.DeviceList[swipe.currentIndex].ManualObj.setData(
-                                                        DeviceManager.DeviceList[swipe.currentIndex].ManualObj.index(index, 0),
-                                                        parseInt(textField1.text),
-                                                        ManualTable.ACTUAL_RESIDUAL
-                                                        )
-                                        }
-                                    })
-                                }
+                                        footer.hideError()
+                                        DeviceManager.DeviceList[swipe.currentIndex].ManualObj.setData(
+                                                    DeviceManager.DeviceList[swipe.currentIndex].ManualObj.index(index, 0),
+                                                    parseInt(textField1.text),
+                                                    ManualTable.ACTUAL_RESIDUAL
+                                                    )
+                                    }
+                                })
                             }
                         }
                     }
                 }
             }
         }
-
     }
 }
