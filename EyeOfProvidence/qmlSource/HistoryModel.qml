@@ -26,6 +26,13 @@ Rectangle {
                 window.showDialog(GlobalLanguageDefine.strNotification,GlobalLanguageDefine.strExportFailed)
         }
     }
+    Connections {
+        target: History
+        function onModelReset()
+        {
+            taskplanView.positionViewAtIndex(0, ListView.Beginning)
+        }
+    }
 
     color: pRgb(153, 204, 255)
     Component.onCompleted: {
