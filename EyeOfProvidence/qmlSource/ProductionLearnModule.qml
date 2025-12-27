@@ -21,6 +21,7 @@ Rectangle {
     color: pRgb(153, 204, 255)
     radius: 5
     readonly property int qmlscreenIndicator: QmlEnum.AUTO_LEARNING_SCREEEN
+    property string tmpValue: ""
     property int listSize: 0
     property int currentIndex: DeviceManager.SelectedDeviceIndex
     property int deviceCount: DeviceManager.DeviceCounter
@@ -132,7 +133,6 @@ Rectangle {
         Button{
             id: btnCreateModel
             anchors.left: layoutDeviceInfo.left
-            //TODO Need to have a double check
             anchors.top: layoutWeldParameter.bottom
             anchors.topMargin: 15
             width:   258
@@ -569,12 +569,15 @@ Rectangle {
                             anchors.fill: parent
                             onPressed: {
                                 fieldCycleCount.forceActiveFocus()
+                                tmpValue = fieldCycleCount.text
                                 window.showPrimaryNumpad(txtCycleCount.text, " ", 3, 0, 999999, fieldCycleCount.text, fieldCycleCount, function(val)
                                 {
-                                    fieldCycleCount.text = val;
                                     var intRegex = /^[0-9]+$/
-                                    if (!intRegex.test(fieldCycleCount.text))
+                                    if (!intRegex.test(val))
+                                    {
                                         footer.showError(txtCycleCount.text + " " + GlobalLanguageDefine.strInputInterger)
+                                        fieldCycleCount.text = tmpValue;
+                                    }
                                     else
                                     {
                                         footer.hideError()
@@ -637,18 +640,21 @@ Rectangle {
                             anchors.fill: parent
                             onPressed: {
                                 fieldWeldTime.forceActiveFocus()
+                                tmpValue = fieldWeldTime.text
                                 window.showPrimaryNumpad(txtWeldTime.text, " ", 3, 0, 999999, fieldWeldTime.text, fieldWeldTime, function(val)
                                 {
-                                    fieldWeldTime.text = val;
-                                    var intRegex = /^[0-9]+$/
-                                    if (!intRegex.test(fieldWeldTime.text))
-                                        footer.showError(txtWeldTime.text + " " + GlobalLanguageDefine.strInputInterger)
+                                    var intRegex = /^[0-9]+(.[0-9]{1,2})?$/
+                                    if (!intRegex.test(val))
+                                    {
+                                        footer.showError(txtWeldTime.text + " " + GlobalLanguageDefine.strInputFloat)
+                                        fieldWeldTime.text = tmpValue;
+                                    }
                                     else
                                     {
                                         footer.hideError()
                                         DeviceManager.DeviceList[swipe.currentIndex].ManualObj.setData(
                                                     DeviceManager.DeviceList[swipe.currentIndex].ManualObj.index(index, 0),
-                                                    parseInt(fieldWeldTime.text),
+                                                    parseFloat(fieldWeldTime.text) * 100,
                                                     ManualTable.WELD_TIME
                                                     )
                                     }
@@ -705,12 +711,15 @@ Rectangle {
                             anchors.fill: parent
                             onPressed: {
                                 fieldPeakPower.forceActiveFocus()
+                                tmpValue = fieldPeakPower.text
                                 window.showPrimaryNumpad(txtPeakPower.text, " ", 3, 0, 999999, fieldPeakPower.text, fieldPeakPower, function(val)
                                 {
-                                    fieldPeakPower.text = val;
                                     var intRegex = /^[0-9]+$/
-                                    if (!intRegex.test(fieldPeakPower.text))
+                                    if (!intRegex.test(val))
+                                    {
                                         footer.showError(txtPeakPower.text + " " + GlobalLanguageDefine.strInputInterger)
+                                        fieldPeakPower.text = tmpValue;
+                                    }
                                     else
                                     {
                                         footer.hideError()
@@ -773,19 +782,22 @@ Rectangle {
                             anchors.fill: parent
                             onPressed: {
                                 fieldPreheight.forceActiveFocus()
+                                tmpValue = fieldPreheight.text
                                 window.showPrimaryNumpad(txtPreheight.text, " ", 3, 0, 999999, fieldPreheight.text, fieldPreheight, function(val)
                                 {
-                                    fieldPreheight.text = val;
-                                    var intRegex = /^[0-9]+$/
-                                    if (!intRegex.test(fieldPreheight.text))
-                                        footer.showError(txtPreheight.text + " " + GlobalLanguageDefine.strInputInterger)
+                                    var intRegex = /^[0-9]+(.[0-9]{1,2})?$/
+                                    if (!intRegex.test(val))
+                                    {
+                                        footer.showError(txtPreheight.text + " " + GlobalLanguageDefine.strInputFloat)
+                                        fieldPreheight.text = tmpValue;
+                                    }
                                     else
                                     {
                                         footer.hideError()
                                         DeviceManager.DeviceList[swipe.currentIndex].ManualObj.setData(
                                                     DeviceManager.DeviceList[swipe.currentIndex].ManualObj.index(index, 0),
-                                                    parseInt(fieldPreheight.text),
-                                                    ManualTable.PEAK_POWER
+                                                    parseFloat(fieldPreheight.text) * 100,
+                                                    ManualTable.PRE_HEIGHT
                                                     )
                                     }
                                 })
@@ -842,19 +854,22 @@ Rectangle {
                             anchors.fill: parent
                             onPressed: {
                                 fieldPostHeight.forceActiveFocus()
+                                tmpValue = fieldPostHeight.text
                                 window.showPrimaryNumpad(txtPostHeight.text, " ", 3, 0, 999999, fieldPostHeight.text, fieldPostHeight, function(val)
                                 {
-                                    fieldPostHeight.text = val;
-                                    var intRegex = /^[0-9]+$/
-                                    if (!intRegex.test(fieldPostHeight.text))
-                                        footer.showError(txtPostHeight.text + " " + GlobalLanguageDefine.strInputInterger)
+                                    var intRegex = /^[0-9]+(.[0-9]{1,2})?$/
+                                    if (!intRegex.test(val))
+                                    {
+                                        footer.showError(txtPostHeight.text + " " + GlobalLanguageDefine.strInputFloat)
+                                        fieldPostHeight.text = tmpValue;
+                                    }
                                     else
                                     {
                                         footer.hideError()
                                         DeviceManager.DeviceList[swipe.currentIndex].ManualObj.setData(
                                                     DeviceManager.DeviceList[swipe.currentIndex].ManualObj.index(index, 0),
-                                                    parseInt(fieldPostHeight.text),
-                                                    ManualTable.PEAK_POWER
+                                                    parseFloat(fieldPostHeight.text) * 100,
+                                                    ManualTable.POST_HEIGHT
                                                     )
                                     }
                                 })
@@ -909,12 +924,15 @@ Rectangle {
                             anchors.fill: parent
                             onPressed: {
                                 fieldForce.forceActiveFocus()
+                                tmpValue = fieldForce.text
                                 window.showPrimaryNumpad(txtPeelForce.text, " ", 3, 0, 999999, fieldForce.text, fieldForce, function(val)
                                 {
-                                    fieldForce.text = val;
                                     var intRegex = /^[0-9]+$/
-                                    if (!intRegex.test(fieldForce.text))
+                                    if (!intRegex.test(val))
+                                    {
                                         footer.showError(txtPeelForce.text + " "+ GlobalLanguageDefine.strInputInterger)
+                                        fieldForce.text = tmpValue;
+                                    }
                                     else
                                     {
                                         footer.hideError()
@@ -967,12 +985,15 @@ Rectangle {
                             anchors.fill: parent
                             onPressed: {
                                 fieldResidual.forceActiveFocus()
+                                tmpValue = fieldResidual.text
                                 window.showPrimaryNumpad(txtResidual.text, " ", 3, 0, 999999, fieldResidual.text, fieldResidual, function(val)
                                 {
-                                    fieldResidual.text = val;
                                     var intRegex = /^[0-9]+$/
-                                    if (!intRegex.test(fieldResidual.text))
+                                    if (!intRegex.test(val))
+                                    {
                                         footer.showError(txtResidual.text + " " + GlobalLanguageDefine.strInputInterger)
+                                        fieldResidual.text = tmpValue;
+                                    }
                                     else
                                     {
                                         footer.hideError()

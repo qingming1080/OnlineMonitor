@@ -211,6 +211,7 @@ QtObject
 
     //ValidMessage
     readonly property string strInputInterger:          qsTr("请输入整数！")
+    readonly property string strInputFloat:             qsTr("请输入浮点数xx.xx!")
     readonly property string strEnter0And65535:         qsTr("请输入0~65535之间的数！")
     readonly property string strEnterValidIPAddress:    qsTr("请输入正确的IP地址！")
     readonly property string strDeviceNameRule:         qsTr("设备名称只能包含中文、字母、数字（1~8字符）！")

@@ -120,6 +120,7 @@ bool Manual::setData(const QModelIndex &index, const QVariant &value, int role)
     {
     case MANUAL_TABLE::CYCLE_COUNT:
         m_listManualRecords[row].CycleCount = value.toInt();
+        qDebug() << "Cycle Count: " << m_listManualRecords[row].CycleCount;
         break;
     case MANUAL_TABLE::ENERGY:
         m_listManualRecords[row].Energy = value.toInt();
@@ -135,15 +136,19 @@ bool Manual::setData(const QModelIndex &index, const QVariant &value, int role)
         break;
     case MANUAL_TABLE::WELD_TIME:
         m_listManualRecords[row].WeldTime = value.toInt();
+        qDebug() << "Weld Time: " << m_listManualRecords[row].WeldTime;
         break;
     case MANUAL_TABLE::PEAK_POWER:
         m_listManualRecords[row].PeakPower = value.toInt();
+        qDebug() << "Peak Power: " << m_listManualRecords[row].PeakPower;
         break;
     case MANUAL_TABLE::PRE_HEIGHT:
         m_listManualRecords[row].Preheight = value.toInt();
+        qDebug() << "Preheightr: " << m_listManualRecords[row].Preheight;
         break;
     case MANUAL_TABLE::POST_HEIGHT:
         m_listManualRecords[row].PostHeight = value.toInt();
+        qDebug() << "Post Heightr: " << m_listManualRecords[row].PostHeight;
         break;
     case MANUAL_TABLE::ACTUAL_FORCE:
         m_listManualRecords[row].ActualForce = value.toInt();
