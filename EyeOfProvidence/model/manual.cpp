@@ -210,6 +210,50 @@ void Manual::loadData()
     endResetModel();
 }
 
+void Manual::addNewRecordByManual()
+{
+    beginInsertRows(QModelIndex(), 0, 0);
+    DataBaseManager::DB_MANUAL record;
+    record.WelderId       = m_WelderID;
+    record.CycleCount     = -1;
+    record.Energy         = m_DBModel.Energy;
+    record.Amplitude      = m_DBModel.Amplitude;
+    record.WeldPressure   = m_DBModel.WeldPressure;
+    record.ActualForce    = 0;
+    record.ActualResidual = 0;
+    record.CreateTime     = QDateTime::currentDateTime();
+    record.IsSelected     = false;
+    record.IsNewComming   = true;
+    record.IsAddByManual  = true;
+    if(m_listManualRecords.size() == 0)
+    {
+        record.WeldTime       = 0;
+        record.PeakPower      = 0;
+        record.Preheight      = 0;
+        record.PostHeight     = 0;
+    }
+    else
+    {
+        if(m_listManualRecords[0].IsNewComming == true)
+        {
+            record.WeldTime       = m_listManualRecords[0].WeldTime;
+            record.PeakPower      = m_listManualRecords[0].PeakPower;
+            record.Preheight      = m_listManualRecords[0].Preheight;
+            record.PostHeight     = m_listManualRecords[0].PostHeight;
+        }
+        else
+        {
+            record.WeldTime       = 0;
+            record.PeakPower      = 0;
+            record.Preheight      = 0;
+            record.PostHeight     = 0;
+        }
+    }
+
+    m_listManualRecords.prepend(record);
+    endInsertRows();
+}
+
 bool Manual::isSettingsValid() const
 {
     bool ok;

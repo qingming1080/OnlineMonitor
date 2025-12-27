@@ -33,6 +33,7 @@ public:
     Q_INVOKABLE void saveData();
     Q_INVOKABLE void clearData();
     Q_INVOKABLE void loadData();
+    Q_INVOKABLE void addNewRecordByManual();
     Q_INVOKABLE bool isSettingsValid() const;
 
     void AppendNewRecordComming(const HBModbusClient::MODBUS_WELD_RESULT &data);

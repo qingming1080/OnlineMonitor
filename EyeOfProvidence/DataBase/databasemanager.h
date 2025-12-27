@@ -186,6 +186,7 @@ public:
         int ActualResidual; // 残留度
         bool IsSelected;
         bool IsNewComming;
+        bool IsAddByManual;
     };
 
     struct ALPHA_BETA

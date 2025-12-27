@@ -614,7 +614,8 @@ bool DataBaseManager::getManualRecords(int welderID, QList<DataBaseManager::DB_M
         data.ActualForce    = query.value(MANUAL_TABLE::ACTUAL_FORCE).toInt();
         data.ActualResidual = query.value(MANUAL_TABLE::ACTUAL_RESIDUAL).toInt();
         data.IsNewComming   = false;
-        data.IsSelected = true;
+        data.IsSelected     = true;
+        data.IsAddByManual  = false;
         list.push_back(data);
     }
     return !list.empty();

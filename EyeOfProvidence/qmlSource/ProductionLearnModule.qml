@@ -224,7 +224,7 @@ Rectangle {
                 font.family: GlobalSystemDefine.fontBold
             }
             onPressed: {
-
+                DeviceManager.DeviceList[currentIndex].ManualObj.addNewRecordByManual()
             }
 
         }
@@ -629,7 +629,7 @@ Rectangle {
                                                     ManualTable.ACTUAL_FORCE
                                                     )
                                     }
-                                }
+                                })
                             }
                         }
                     }
