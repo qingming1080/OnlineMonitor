@@ -92,11 +92,15 @@ void History::AppendNewRecordComming(const DataBaseManager::DB_PRODUCTION &data)
 
     if (!isAccept)
         return;
-    beginResetModel();
+    beginInsertRows(QModelIndex(), 0, 0);
     m_data.prepend(data);
-    if (m_data.size() > MAX_UI_ROWS)
+    endInsertRows();
+
+    if (m_data.size() > MAX_UI_ROWS) {
+        beginRemoveRows(QModelIndex(), m_data.size() - 1, m_data.size() - 1);
         m_data.removeLast();
-    endResetModel();
+        endRemoveRows();
+    }
 }
 
 int History::deviceID() const
