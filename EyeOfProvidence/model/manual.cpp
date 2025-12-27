@@ -411,6 +411,7 @@ void Manual::AppendNewRecordComming(const HBModbusClient::MODBUS_WELD_RESULT &da
     record.CreateTime     = data.DateTime;
     record.IsSelected     = true;
     record.IsNewComming   = true;
+    record.IsAddByManual  = false;
 
     m_listManualRecords.prepend(record);
     endInsertRows();
