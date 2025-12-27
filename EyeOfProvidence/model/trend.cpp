@@ -3,7 +3,6 @@
 #include "DataBase/databasemanager.h"
 #include <QDateTime>
 #include "historyenum.h"
-#include "signalmanager.h"
 #include <QDebug>
 #include <QElapsedTimer>
 // #include "log/localrecord.h"
@@ -55,6 +54,19 @@ void Trend::setWeldTrendData(WELD_TREND result)
 
 void Trend::AppendWeldPoint(const int cycleCount, const int power, const int time, const int preHeight, const int postHeight)
 {
+    static int lastCycleCount = -1;
+    if (lastCycleCount > cycleCount) {
+        m_PreheightData.clear();
+        m_PostHeightData.clear();
+        m_WeldTimeData.clear();
+        m_PeakPowerData.clear();
+
+        if (m_pPreheightSeries)    m_pPreheightSeries->clear();
+        if (m_pPostHeightSeries)   m_pPostHeightSeries->clear();
+        if (m_pWeldTimeSeries)     m_pWeldTimeSeries->clear();
+        if (m_pPeakPowerSeries)    m_pPeakPowerSeries->clear();
+    }
+    lastCycleCount = cycleCount;
     double preheightDouble  = preHeight / 100.0;
     double postHeightDouble = postHeight / 100.0;
     double timeDouble       = time / 100.0;

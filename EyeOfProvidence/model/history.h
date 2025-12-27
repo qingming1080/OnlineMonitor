@@ -68,6 +68,7 @@ private:
     int m_deviceID{0};
     // 产品状态 0_全部 1_合格 2_次品 3_可疑
     int m_finalResult{0};;
+    static constexpr int MAX_UI_ROWS  = 500;
 };
 
 #endif // HISTORY_H
