@@ -57,17 +57,20 @@ void ProvidenceEE::CalibrateSPCProcess(const QList<DataBaseManager::DB_MANUAL>& 
     GenericLearning::ResetProcessParam();
     for(int i = 0; i < sourceList.size(); i++)
 	{
-        GenericLearning::UpdateCurrentValue(GenericLearning::TIME, 		sourceList[i].WeldTime);
-        GenericLearning::UpdateCurrentValue(GenericLearning::POWER, 	sourceList[i].PeakPower);
-        GenericLearning::UpdateCurrentValue(GenericLearning::PREHEIGHT, sourceList[i].Preheight);
-        GenericLearning::UpdateCurrentValue(GenericLearning::POSTHEIGHT,sourceList[i].PostHeight);
+        if((sourceList[i].IsSelected == true) && (sourceList[i].CycleCount != -1))
+        {
+            GenericLearning::UpdateCurrentValue(GenericLearning::TIME, 		sourceList[i].WeldTime);
+            GenericLearning::UpdateCurrentValue(GenericLearning::POWER, 	sourceList[i].PeakPower);
+            GenericLearning::UpdateCurrentValue(GenericLearning::PREHEIGHT, sourceList[i].Preheight);
+            GenericLearning::UpdateCurrentValue(GenericLearning::POSTHEIGHT,sourceList[i].PostHeight);
 
-        GenericLearning::UpdateProcessParameter();
+            GenericLearning::UpdateProcessParameter();
 
-        GenericLearning::GetProcessParam(GenericLearning::TIME, 		&ProcessParam[GenericLearning::TIME]);
-        GenericLearning::GetProcessParam(GenericLearning::POWER, 		&ProcessParam[GenericLearning::POWER]);
-        GenericLearning::GetProcessParam(GenericLearning::PREHEIGHT, 	&ProcessParam[GenericLearning::PREHEIGHT]);
-        GenericLearning::GetProcessParam(GenericLearning::POSTHEIGHT, 	&ProcessParam[GenericLearning::POSTHEIGHT]);
+            GenericLearning::GetProcessParam(GenericLearning::TIME, 		&ProcessParam[GenericLearning::TIME]);
+            GenericLearning::GetProcessParam(GenericLearning::POWER, 		&ProcessParam[GenericLearning::POWER]);
+            GenericLearning::GetProcessParam(GenericLearning::PREHEIGHT, 	&ProcessParam[GenericLearning::PREHEIGHT]);
+            GenericLearning::GetProcessParam(GenericLearning::POSTHEIGHT, 	&ProcessParam[GenericLearning::POSTHEIGHT]);
+        }
 	}
 #else
     Q_UNUSED(sourceList)

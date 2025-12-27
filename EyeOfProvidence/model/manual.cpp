@@ -179,9 +179,15 @@ void Manual::saveData()
         if (m_listManualRecords[i].IsSelected)
         {
             if(m_listManualRecords[i].IsNewComming)
-                DataBaseManager::getInstance()->insertManualRecord(m_listManualRecords.at(i));
+            {
+                if(m_listManualRecords[i].CycleCount != -1)
+                    DataBaseManager::getInstance()->insertManualRecord(m_listManualRecords.at(i));
+            }
             else
-                DataBaseManager::getInstance()->updateManualRecord(m_listManualRecords.at(i).Id, m_listManualRecords.at(i));
+            {
+                if(m_listManualRecords[i].CycleCount != -1)
+                    DataBaseManager::getInstance()->updateManualRecord(m_listManualRecords.at(i).Id, m_listManualRecords.at(i));
+            }
         }
         else
             DataBaseManager::getInstance()->removeManualRecord(m_listManualRecords.at(i).Id);
