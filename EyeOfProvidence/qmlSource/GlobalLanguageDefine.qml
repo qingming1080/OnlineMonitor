@@ -69,6 +69,7 @@ QtObject
     readonly property string strCreateModel:            qsTr("创建模型")
     readonly property string strNewModel:               qsTr("新建模型")
     readonly property string strClearData:              qsTr("清除数据")
+    readonly property string strAddRecord:              qsTr("添加记录")
     readonly property string strSelectAll:              qsTr("全选")
     readonly property string strCycleCount:             qsTr("循环计数")
     readonly property string strWeldingTime:            qsTr("焊接时间")
