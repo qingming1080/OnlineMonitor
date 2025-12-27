@@ -389,17 +389,21 @@ void Production::AppendNewRecordComming(const HBModbusClient::MODBUS_WELD_RESULT
     if(data.WeldAlarm == 0)
         m_DBProduction.FinalResult = HistoryEnum::GOOD;
     else
-        m_DBProduction.FinalResult = HistoryEnum::SUSPECT;
+        m_DBProduction.FinalResult = HistoryEnum::DEFECT;
 
     if(m_DBProduction.FinalResult == HistoryEnum::GOOD)
     {
         if(ProvidenceEE::getInstance()->GetSPCGoodnessResult() == true)
         {
+            if(m_DBProduction.WeldTime > (m_DBModel.WeldTime.Alpha + 3 * m_DBModel.WeldTime.Beta))
+                m_DBProduction.FinalResult = HistoryEnum::SUSPECT;
+            else if(m_DBProduction.PeakPower < (m_DBModel.PeakPower.Alpha - 3 * m_DBModel.PeakPower.Beta))
+                m_DBProduction.FinalResult = HistoryEnum::SUSPECT;
             // if((m_DBProduction.Force < m_iForceThreshold) || (m_DBProduction.Residual < m_iResidualThreshold))
             //     m_DBProduction.FinalResult = HistoryEnum::DEFECT;
         }
         else
-            m_DBProduction.FinalResult = HistoryEnum::SUSPECT;
+            m_DBProduction.FinalResult = HistoryEnum::DEFECT;
     }
 
     int goodCount = GetGoodCycleCount();
@@ -420,10 +424,10 @@ void Production::AppendNewRecordComming(const HBModbusClient::MODBUS_WELD_RESULT
         Message::getInstance()->addMessage(m_WelderID, MESSAGE_ENUM::SUSPICIOUS);
         break;
     case HistoryEnum::DEFECT:
+        defectCount++;
         HBModbusClient::getInstance()->setAlarmLedStatus(true);
         HBModbusClient::getInstance()->setDeviceIOStatus(m_WelderID, true, false);
         Message::getInstance()->addMessage(m_WelderID, MESSAGE_ENUM::DEFECTIVE);
-        defectCount++;
         break;
     default:
         break;
@@ -436,7 +440,7 @@ void Production::AppendNewRecordComming(const HBModbusClient::MODBUS_WELD_RESULT
     setTotalCycleCount(QString::number(totalCount));
     float goodRate = 0.0;
     if(totalCount != 0)
-        goodRate = static_cast<float>(goodCount) / totalCount * 100;
+        goodRate = static_cast<float>(goodCount + suspectCount) / totalCount * 100;
     setGoodRate(goodRate);
 
     // TODO need to move these two line code into movetothread process.
