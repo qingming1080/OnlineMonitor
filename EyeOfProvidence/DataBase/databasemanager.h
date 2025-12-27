@@ -38,7 +38,8 @@ public:
         POST_HEIGHT         = 11,   // 焊后高度
         ACTUAL_FORCE        = 12,   // 撕拉力
         ACTUAL_RESIDUAL     = 13,   // 残留度
-        IS_SELECTED         = 14
+        IS_SELECTED         = 14,
+        IS_BY_MANUAL        = 15
     };
     Q_ENUM(MANUAL_COLUMN)
     explicit MANUAL_TABLE(QObject *parent = nullptr){Q_UNUSED(parent)}

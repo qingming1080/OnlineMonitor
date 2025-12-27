@@ -80,6 +80,8 @@ QVariant Manual::data(const QModelIndex &index, int role) const
         return data.ActualResidual;
     case MANUAL_TABLE::IS_SELECTED:
         return data.IsSelected;
+    case MANUAL_TABLE::IS_BY_MANUAL:
+        return data.IsAddByManual;
     default:
         return QVariant();
     }
@@ -103,6 +105,7 @@ QHash<int, QByteArray> Manual::roleNames() const
     roles[MANUAL_TABLE::ACTUAL_FORCE]     = "actual_force";
     roles[MANUAL_TABLE::ACTUAL_RESIDUAL]  = "actual_residual";
     roles[MANUAL_TABLE::IS_SELECTED]      = "is_selected";
+    roles[MANUAL_TABLE::IS_BY_MANUAL]     = "is_by_manual";
     return roles;
 }
 
@@ -150,6 +153,10 @@ bool Manual::setData(const QModelIndex &index, const QVariant &value, int role)
         break;
     case MANUAL_TABLE::IS_SELECTED:
         m_listManualRecords[row].IsSelected = value.toBool();
+        emit dataChanged(index, index, {role});
+        break;
+    case MANUAL_TABLE::IS_BY_MANUAL:
+        m_listManualRecords[row].IsAddByManual = value.toBool();
         emit dataChanged(index, index, {role});
         break;
     default:

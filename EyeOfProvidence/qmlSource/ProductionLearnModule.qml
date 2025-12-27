@@ -315,7 +315,7 @@ Rectangle {
                     color: pRgb(171, 206, 213)
                 }
                 Text{
-                    id: txtWeldingTime
+                    id: txtWeldTime
                     anchors.top: txtTotalChecked.top
                     anchors.left: parent.left
                     anchors.leftMargin: DeviceManager.DeviceList[currentIndex].DeviceObj.HeightEncoderOption === true ? 180 : 260 //100 : 120
@@ -326,7 +326,7 @@ Rectangle {
                     color: pRgb(171, 206, 213)
                 }
                 Text{
-                    id: txtPower
+                    id: txtPeakPower
                     anchors.top: txtTotalChecked.top
                     anchors.left: parent.left
                     anchors.leftMargin: DeviceManager.DeviceList[currentIndex].DeviceObj.HeightEncoderOption === true ? 290 : 410 //110 : 150
@@ -337,7 +337,7 @@ Rectangle {
                     color: pRgb(171, 206, 213)
                 }
                 Text{
-                    id: txtPreHeight
+                    id: txtPreheight
                     anchors.top: txtTotalChecked.top
                     anchors.left: parent.left
                     anchors.leftMargin: DeviceManager.DeviceList[currentIndex].DeviceObj.HeightEncoderOption === true ? 380 : 500 //90
@@ -428,9 +428,9 @@ Rectangle {
                 anchors.top: listHeader.bottom
                 anchors.bottom: parent.bottom
                 anchors.left: parent.left
-                anchors.leftMargin: 5
+                // anchors.leftMargin: 5
                 anchors.right: parent.right
-                anchors.rightMargin: 5
+                // anchors.rightMargin: 5
                 clip: true
                 model: {
                     if (swipe.currentIndex >= 0 && swipe.currentIndex < swipe.deviceCount)
@@ -529,7 +529,66 @@ Rectangle {
                         text: cycle_count
                         font.family: GlobalSystemDefine.fontBold
                         color: index % 2 !== 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
+                        visible: !is_by_manual
                     }
+                    TextField{
+                        id: fieldCycleCount
+                        width: 90
+                        height: 33
+                        anchors.verticalCenter: parent.verticalCenter
+                        anchors.left: parent.left
+                        anchors.leftMargin: DeviceManager.DeviceList[currentIndex].DeviceObj.HeightEncoderOption === true ? 75: 110 //50 : 90
+                        horizontalAlignment: TextInput.AlignHCenter
+                        verticalAlignment: TextInput.AlignVCenter
+                        color: index % 2 === 0 ? "#014c8d" : pRgb(175, 195, 216)
+                        font.family: GlobalSystemDefine.fontBold
+                        font.pixelSize: 16
+                        text: cycle_count
+                        inputMethodHints: Qt.ImhDigitsOnly
+                        visible: is_by_manual
+                        background: Rectangle{
+                            radius: 3
+                            border.width: 2
+                            border.color: index % 2 === 0 ? "#2d71ae" : "#afc3d8"
+                            color: index % 2 !== 0 ? "#2d71ae" : "#afc3d8"
+                        }
+                        cursorDelegate: Rectangle {
+                            width: fieldCycleCount.cursorWidth
+                            height: fieldCycleCount.font.pixelSize * 1.5
+                            color: index % 2 === 0 ? "#2d71ae" : "#afc3d8"
+                            visible: fieldCycleCount.activeFocus
+                            anchors.verticalCenter: parent.verticalCenter
+                            Text {
+                                text: "|"
+                                color: index % 2 === 0 ? "#2d71ae" : "#afc3d8"
+                                font.pixelSize: fieldCycleCount.font.pixelSize
+                                anchors.centerIn: parent
+                            }
+                        }
+                        MouseArea {
+                            anchors.fill: parent
+                            onPressed: {
+                                fieldCycleCount.forceActiveFocus()
+                                window.showPrimaryNumpad(txtCycleCount.text, " ", 3, 0, 999999, fieldCycleCount.text, fieldCycleCount, function(val)
+                                {
+                                    fieldCycleCount.text = val;
+                                    var intRegex = /^[0-9]+$/
+                                    if (!intRegex.test(fieldCycleCount.text))
+                                        footer.showError(txtCycleCount.text + " " + GlobalLanguageDefine.strInputInterger)
+                                    else
+                                    {
+                                        footer.hideError()
+                                        DeviceManager.DeviceList[swipe.currentIndex].ManualObj.setData(
+                                                    DeviceManager.DeviceList[swipe.currentIndex].ManualObj.index(index, 0),
+                                                    parseInt(fieldCycleCount.text),
+                                                    ManualTable.CYCLE_COUNT
+                                                    )
+                                    }
+                                })
+                            }
+                        }
+                    }
+
                     Text{
                         anchors.left: parent.left
                         anchors.leftMargin: DeviceManager.DeviceList[currentIndex].DeviceObj.HeightEncoderOption === true ? 200 : 280 //200
@@ -538,7 +597,66 @@ Rectangle {
                         text: weld_time
                         font.family: GlobalSystemDefine.fontBold
                         color: index % 2 !== 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
+                        visible: !is_by_manual
                     }
+                    TextField{
+                        id: fieldWeldTime
+                        width: 100
+                        height: 33
+                        anchors.verticalCenter: parent.verticalCenter
+                        anchors.left: parent.left
+                        anchors.leftMargin: DeviceManager.DeviceList[currentIndex].DeviceObj.HeightEncoderOption === true ? 175: 255
+                        horizontalAlignment: TextInput.AlignHCenter
+                        verticalAlignment: TextInput.AlignVCenter
+                        color: index % 2 === 0 ? "#014c8d" : pRgb(175, 195, 216)
+                        font.family: GlobalSystemDefine.fontBold
+                        font.pixelSize: 16
+                        text: weld_time
+                        inputMethodHints: Qt.ImhDigitsOnly
+                        visible: is_by_manual
+                        background: Rectangle{
+                            radius: 3
+                            border.width: 2
+                            border.color: index % 2 === 0 ? "#2d71ae" : "#afc3d8"
+                            color: index % 2 !== 0 ? "#2d71ae" : "#afc3d8"
+                        }
+                        cursorDelegate: Rectangle {
+                            width: fieldWeldTime.cursorWidth
+                            height: fieldWeldTime.font.pixelSize * 1.5
+                            color: index % 2 === 0 ? "#2d71ae" : "#afc3d8"
+                            visible: fieldWeldTime.activeFocus
+                            anchors.verticalCenter: parent.verticalCenter
+                            Text {
+                                text: "|"
+                                color: index % 2 === 0 ? "#2d71ae" : "#afc3d8"
+                                font.pixelSize: fieldWeldTime.font.pixelSize
+                                anchors.centerIn: parent
+                            }
+                        }
+                        MouseArea {
+                            anchors.fill: parent
+                            onPressed: {
+                                fieldWeldTime.forceActiveFocus()
+                                window.showPrimaryNumpad(txtWeldTime.text, " ", 3, 0, 999999, fieldWeldTime.text, fieldWeldTime, function(val)
+                                {
+                                    fieldWeldTime.text = val;
+                                    var intRegex = /^[0-9]+$/
+                                    if (!intRegex.test(fieldWeldTime.text))
+                                        footer.showError(txtWeldTime.text + " " + GlobalLanguageDefine.strInputInterger)
+                                    else
+                                    {
+                                        footer.hideError()
+                                        DeviceManager.DeviceList[swipe.currentIndex].ManualObj.setData(
+                                                    DeviceManager.DeviceList[swipe.currentIndex].ManualObj.index(index, 0),
+                                                    parseInt(fieldWeldTime.text),
+                                                    ManualTable.WELD_TIME
+                                                    )
+                                    }
+                                })
+                            }
+                        }
+                    }
+
                     Text{
                         anchors.left: parent.left
                         anchors.leftMargin: DeviceManager.DeviceList[currentIndex].DeviceObj.HeightEncoderOption === true ? 300 : 420 //
@@ -547,7 +665,66 @@ Rectangle {
                         text: peak_power
                         font.family: GlobalSystemDefine.fontBold
                         color: index % 2 !== 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
+                        visible: !is_by_manual
                     }
+                    TextField{
+                        id: fieldPeakPower
+                        width: 90
+                        height: 33
+                        anchors.verticalCenter: parent.verticalCenter
+                        anchors.left: parent.left
+                        anchors.leftMargin: DeviceManager.DeviceList[currentIndex].DeviceObj.HeightEncoderOption === true ? 285: 400
+                        horizontalAlignment: TextInput.AlignHCenter
+                        verticalAlignment: TextInput.AlignVCenter
+                        color: index % 2 === 0 ? "#014c8d" : pRgb(175, 195, 216)
+                        font.family: GlobalSystemDefine.fontBold
+                        font.pixelSize: 16
+                        text: peak_power
+                        inputMethodHints: Qt.ImhDigitsOnly
+                        visible: is_by_manual
+                        background: Rectangle{
+                            radius: 3
+                            border.width: 2
+                            border.color: index % 2 === 0 ? "#2d71ae" : "#afc3d8"
+                            color: index % 2 !== 0 ? "#2d71ae" : "#afc3d8"
+                        }
+                        cursorDelegate: Rectangle {
+                            width: fieldPeakPower.cursorWidth
+                            height: fieldPeakPower.font.pixelSize * 1.5
+                            color: index % 2 === 0 ? "#2d71ae" : "#afc3d8"
+                            visible: fieldPeakPower.activeFocus
+                            anchors.verticalCenter: parent.verticalCenter
+                            Text {
+                                text: "|"
+                                color: index % 2 === 0 ? "#2d71ae" : "#afc3d8"
+                                font.pixelSize: fieldPeakPower.font.pixelSize
+                                anchors.centerIn: parent
+                            }
+                        }
+                        MouseArea {
+                            anchors.fill: parent
+                            onPressed: {
+                                fieldPeakPower.forceActiveFocus()
+                                window.showPrimaryNumpad(txtPeakPower.text, " ", 3, 0, 999999, fieldPeakPower.text, fieldPeakPower, function(val)
+                                {
+                                    fieldPeakPower.text = val;
+                                    var intRegex = /^[0-9]+$/
+                                    if (!intRegex.test(fieldPeakPower.text))
+                                        footer.showError(txtPeakPower.text + " " + GlobalLanguageDefine.strInputInterger)
+                                    else
+                                    {
+                                        footer.hideError()
+                                        DeviceManager.DeviceList[swipe.currentIndex].ManualObj.setData(
+                                                    DeviceManager.DeviceList[swipe.currentIndex].ManualObj.index(index, 0),
+                                                    parseInt(fieldPeakPower.text),
+                                                    ManualTable.PEAK_POWER
+                                                    )
+                                    }
+                                })
+                            }
+                        }
+                    }
+
                     Text{
                         anchors.left: parent.left
                         anchors.leftMargin: 410
@@ -556,8 +733,66 @@ Rectangle {
                         text: preheight
                         font.family: GlobalSystemDefine.fontBold
                         color: index % 2 !== 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
-                        visible: DeviceManager.DeviceList[swipe.currentIndex].DeviceObj.HeightEncoderOption
+                        visible: DeviceManager.DeviceList[swipe.currentIndex].DeviceObj.HeightEncoderOption && !is_by_manual
                     }
+                    TextField{
+                        id: fieldPreheight
+                        width: 90
+                        height: 33
+                        anchors.verticalCenter: parent.verticalCenter
+                        anchors.left: parent.left
+                        anchors.leftMargin: 390
+                        horizontalAlignment: TextInput.AlignHCenter
+                        verticalAlignment: TextInput.AlignVCenter
+                        color: index % 2 === 0 ? "#014c8d" : pRgb(175, 195, 216)
+                        font.family: GlobalSystemDefine.fontBold
+                        font.pixelSize: 16
+                        text: preheight
+                        inputMethodHints: Qt.ImhDigitsOnly
+                        visible: DeviceManager.DeviceList[swipe.currentIndex].DeviceObj.HeightEncoderOption && is_by_manual
+                        background: Rectangle{
+                            radius: 3
+                            border.width: 2
+                            border.color: index % 2 === 0 ? "#2d71ae" : "#afc3d8"
+                            color: index % 2 !== 0 ? "#2d71ae" : "#afc3d8"
+                        }
+                        cursorDelegate: Rectangle {
+                            width: fieldPreheight.cursorWidth
+                            height: fieldPreheight.font.pixelSize * 1.5
+                            color: index % 2 === 0 ? "#2d71ae" : "#afc3d8"
+                            visible: fieldPreheight.activeFocus
+                            anchors.verticalCenter: parent.verticalCenter
+                            Text {
+                                text: "|"
+                                color: index % 2 === 0 ? "#2d71ae" : "#afc3d8"
+                                font.pixelSize: fieldPreheight.font.pixelSize
+                                anchors.centerIn: parent
+                            }
+                        }
+                        MouseArea {
+                            anchors.fill: parent
+                            onPressed: {
+                                fieldPreheight.forceActiveFocus()
+                                window.showPrimaryNumpad(txtPreheight.text, " ", 3, 0, 999999, fieldPreheight.text, fieldPreheight, function(val)
+                                {
+                                    fieldPreheight.text = val;
+                                    var intRegex = /^[0-9]+$/
+                                    if (!intRegex.test(fieldPreheight.text))
+                                        footer.showError(txtPreheight.text + " " + GlobalLanguageDefine.strInputInterger)
+                                    else
+                                    {
+                                        footer.hideError()
+                                        DeviceManager.DeviceList[swipe.currentIndex].ManualObj.setData(
+                                                    DeviceManager.DeviceList[swipe.currentIndex].ManualObj.index(index, 0),
+                                                    parseInt(fieldPreheight.text),
+                                                    ManualTable.PEAK_POWER
+                                                    )
+                                    }
+                                })
+                            }
+                        }
+                    }
+
                     Text{
                         anchors.left: parent.left
                         anchors.leftMargin: 550
@@ -566,8 +801,68 @@ Rectangle {
                         text: postheight
                         font.family: GlobalSystemDefine.fontBold
                         color: index % 2 !== 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
-                        visible: DeviceManager.DeviceList[swipe.currentIndex].DeviceObj.HeightEncoderOption
+                        visible: DeviceManager.DeviceList[swipe.currentIndex].DeviceObj.HeightEncoderOption && !is_by_manual
                     }
+
+                    TextField{
+                        id: fieldPostHeight
+                        width: 90
+                        height: 33
+                        anchors.verticalCenter: parent.verticalCenter
+                        anchors.left: parent.left
+                        anchors.leftMargin: 530
+                        horizontalAlignment: TextInput.AlignHCenter
+                        verticalAlignment: TextInput.AlignVCenter
+                        color: index % 2 === 0 ? "#014c8d" : pRgb(175, 195, 216)
+                        font.family: GlobalSystemDefine.fontBold
+                        font.pixelSize: 16
+                        text: postheight
+                        inputMethodHints: Qt.ImhDigitsOnly
+                        visible: DeviceManager.DeviceList[swipe.currentIndex].DeviceObj.HeightEncoderOption && is_by_manual
+                        background: Rectangle{
+                            radius: 3
+                            border.width: 2
+                            border.color: index % 2 === 0 ? "#2d71ae" : "#afc3d8"
+                            color: index % 2 !== 0 ? "#2d71ae" : "#afc3d8"
+                        }
+                        cursorDelegate: Rectangle {
+                            width: fieldPostHeight.cursorWidth
+                            height: fieldPostHeight.font.pixelSize * 1.5
+                            color: index % 2 === 0 ? "#2d71ae" : "#afc3d8"
+                            visible: fieldPostHeight.activeFocus
+                            anchors.verticalCenter: parent.verticalCenter
+                            Text {
+                                text: "|"
+                                color: index % 2 === 0 ? "#2d71ae" : "#afc3d8"
+                                font.pixelSize: fieldPostHeight.font.pixelSize
+                                anchors.centerIn: parent
+                            }
+                        }
+                        MouseArea {
+                            anchors.fill: parent
+                            onPressed: {
+                                fieldPostHeight.forceActiveFocus()
+                                window.showPrimaryNumpad(txtPostHeight.text, " ", 3, 0, 999999, fieldPostHeight.text, fieldPostHeight, function(val)
+                                {
+                                    fieldPostHeight.text = val;
+                                    var intRegex = /^[0-9]+$/
+                                    if (!intRegex.test(fieldPostHeight.text))
+                                        footer.showError(txtPostHeight.text + " " + GlobalLanguageDefine.strInputInterger)
+                                    else
+                                    {
+                                        footer.hideError()
+                                        DeviceManager.DeviceList[swipe.currentIndex].ManualObj.setData(
+                                                    DeviceManager.DeviceList[swipe.currentIndex].ManualObj.index(index, 0),
+                                                    parseInt(fieldPostHeight.text),
+                                                    ManualTable.PEAK_POWER
+                                                    )
+                                    }
+                                })
+                            }
+                        }
+                    }
+
+
                     Text{
                         anchors.left: parent.left
                         anchors.leftMargin: DeviceManager.DeviceList[currentIndex].DeviceObj.HeightEncoderOption === true ? 645 : 530
@@ -578,7 +873,7 @@ Rectangle {
                         color: index % 2 !== 0 ? pRgb(177, 213, 219) : pRgb(45, 113, 174)
                     }
                     TextField{
-                        id: textField
+                        id: fieldForce
                         width: 100
                         height: 33
                         anchors.verticalCenter: parent.verticalCenter
@@ -598,34 +893,34 @@ Rectangle {
                             color: index % 2 !== 0 ? "#2d71ae" : "#afc3d8"
                         }
                         cursorDelegate: Rectangle {
-                            width: textField.cursorWidth
-                            height: textField.font.pixelSize * 1.5
+                            width: fieldForce.cursorWidth
+                            height: fieldForce.font.pixelSize * 1.5
                             color: index % 2 === 0 ? "#2d71ae" : "#afc3d8"
-                            visible: textField.activeFocus
+                            visible: fieldForce.activeFocus
                             anchors.verticalCenter: parent.verticalCenter
                             Text {
                                 text: "|"
                                 color: index % 2 === 0 ? "#2d71ae" : "#afc3d8"
-                                font.pixelSize: textField.font.pixelSize
+                                font.pixelSize: fieldForce.font.pixelSize
                                 anchors.centerIn: parent
                             }
                         }
                         MouseArea {
                             anchors.fill: parent
                             onPressed: {
-                                textField.forceActiveFocus()
-                                window.showPrimaryNumpad(textField.text, " ", 3, 0, 999999, textField.text, textField, function(val)
+                                fieldForce.forceActiveFocus()
+                                window.showPrimaryNumpad(txtPeelForce.text, " ", 3, 0, 999999, fieldForce.text, fieldForce, function(val)
                                 {
-                                    textField.text = val;
+                                    fieldForce.text = val;
                                     var intRegex = /^[0-9]+$/
-                                    if (!intRegex.test(textField.text))
-                                        footer.showError(t7.text + GlobalLanguageDefine.strInputInterger)
+                                    if (!intRegex.test(fieldForce.text))
+                                        footer.showError(txtPeelForce.text + " "+ GlobalLanguageDefine.strInputInterger)
                                     else
                                     {
                                         footer.hideError()
                                         DeviceManager.DeviceList[swipe.currentIndex].ManualObj.setData(
                                                     DeviceManager.DeviceList[swipe.currentIndex].ManualObj.index(index, 0),
-                                                    parseInt(textField.text),
+                                                    parseInt(fieldForce.text),
                                                     ManualTable.ACTUAL_FORCE
                                                     )
                                     }
@@ -633,8 +928,9 @@ Rectangle {
                             }
                         }
                     }
+
                     TextField{
-                        id: textField1
+                        id: fieldResidual
                         width: 100
                         height: 33
                         anchors.verticalCenter: parent.verticalCenter
@@ -655,34 +951,34 @@ Rectangle {
                             color: index % 2 !== 0 ? "#2d71ae" : "#afc3d8"
                         }
                         cursorDelegate: Rectangle {
-                            width: textField1.cursorWidth
-                            height: textField1.font.pixelSize * 1.5
+                            width: fieldResidual.cursorWidth
+                            height: fieldResidual.font.pixelSize * 1.5
                             color: index % 2 === 0 ? "#2d71ae" : "#afc3d8"
-                            visible: textField1.activeFocus
+                            visible: fieldResidual.activeFocus
                             anchors.verticalCenter: parent.verticalCenter
                             Text {
                                 text: "|"
                                 color: index % 2 === 0 ? "#2d71ae" : "#afc3d8"
-                                font.pixelSize: textField1.font.pixelSize
+                                font.pixelSize: fieldResidual.font.pixelSize
                                 anchors.centerIn: parent
                             }
                         }
                         MouseArea {
                             anchors.fill: parent
                             onPressed: {
-                                textField1.forceActiveFocus()
-                                window.showPrimaryNumpad(t8.text, " ", 3, 0, 999999, textField1.text, textField1, function(val)
+                                fieldResidual.forceActiveFocus()
+                                window.showPrimaryNumpad(txtResidual.text, " ", 3, 0, 999999, fieldResidual.text, fieldResidual, function(val)
                                 {
-                                    textField1.text = val;
+                                    fieldResidual.text = val;
                                     var intRegex = /^[0-9]+$/
-                                    if (!intRegex.test(textField1.text))
-                                        footer.showError(t8.text + GlobalLanguageDefine.strInputInterger)
+                                    if (!intRegex.test(fieldResidual.text))
+                                        footer.showError(txtResidual.text + " " + GlobalLanguageDefine.strInputInterger)
                                     else
                                     {
                                         footer.hideError()
                                         DeviceManager.DeviceList[swipe.currentIndex].ManualObj.setData(
                                                     DeviceManager.DeviceList[swipe.currentIndex].ManualObj.index(index, 0),
-                                                    parseInt(textField1.text),
+                                                    parseInt(fieldResidual.text),
                                                     ManualTable.ACTUAL_RESIDUAL
                                                     )
                                     }
