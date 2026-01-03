@@ -31,13 +31,12 @@ Rectangle {
 
     function chartUpdate()
     {
-        for(var i = 0; i < deviceCount; i++)
+        if(currentIndex < deviceCount)
         {
-            DeviceManager.DeviceList[i].TrendObj.setPreheightSeries((chartView.series(lineSeriesPreheight.name)))
-            DeviceManager.DeviceList[i].TrendObj.setPostHeightSeries((chartView.series(lineSeriesPostHeight.name)))
-            DeviceManager.DeviceList[i].TrendObj.setWeldTimeSeries((chartView.series(lineSeriesWeldTime.name)))
-            DeviceManager.DeviceList[i].TrendObj.setPeakPowerSeries((chartView.series(lineSeriesPeakPower.name)))
-            return
+            DeviceManager.DeviceList[currentIndex].TrendObj.setPreheightSeries((chartView.series(lineSeriesPreheight.name)))
+            DeviceManager.DeviceList[currentIndex].TrendObj.setPostHeightSeries((chartView.series(lineSeriesPostHeight.name)))
+            DeviceManager.DeviceList[currentIndex].TrendObj.setWeldTimeSeries((chartView.series(lineSeriesWeldTime.name)))
+            DeviceManager.DeviceList[currentIndex].TrendObj.setPeakPowerSeries((chartView.series(lineSeriesPeakPower.name)))
         }
     }
 

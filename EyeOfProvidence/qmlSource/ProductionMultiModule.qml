@@ -361,9 +361,7 @@ Rectangle {
             }
             eqText4:{
                 if(DeviceManager.DeviceList[1]){
-                    return DeviceManager.DeviceList[1].ProductionObj.GoodCycleCount
-                            + DeviceManager.DeviceList[1].ProductionObj.SuspectCycleCount
-                            +DeviceManager.DeviceList[1].ProductionObj.DefectiveCycleCount
+                    return DeviceManager.DeviceList[0].ProductionObj.TotalCycleCount
                 }
                 else{
                     return ""

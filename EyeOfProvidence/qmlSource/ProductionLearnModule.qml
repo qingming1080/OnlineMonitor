@@ -27,7 +27,6 @@ Rectangle {
     property int deviceCount: DeviceManager.DeviceCounter
     property bool heightOption: (currentIndex < deviceCount) ? DeviceManager.DeviceList[currentIndex].DeviceObj.HeightEncoderOption : false
     property ManualObj manualObj: (currentIndex < deviceCount) ? DeviceManager.DeviceList[currentIndex].ManualObj : null
-
     Connections{
         target: manualObj
         function onNotifyCurrentSamplesChanged()
@@ -43,10 +42,21 @@ Rectangle {
                 manualObj.saveData()
                 sigUpdateUI(0)
                 sigRecover()
-                if(deviceCount === 1)
-                    loadViewpro(3, singlePro)
+
+                if(stillNeedToLearning() === true)
+                {
+                    layoutWeldParameter.txtEnergy       = DeviceManager.DeviceList[swipe.currentIndex].ManualObj.EnergySetting
+                    layoutWeldParameter.txtAmplitude    = DeviceManager.DeviceList[swipe.currentIndex].ManualObj.AmplitudeSetting
+                    layoutWeldParameter.txtTP           = DeviceManager.DeviceList[swipe.currentIndex].ManualObj.TriggerPressureSetting
+                    layoutWeldParameter.txtWP           = DeviceManager.DeviceList[swipe.currentIndex].ManualObj.WeldPressureSetting
+                }
                 else
-                    loadViewpro(2, multiPro)
+                {
+                    if(DeviceManager.DeviceCounter > 1)
+                        loadViewpro(2, multiPro)
+                    else
+                        loadViewpro(3, singlePro)
+                }
             }
         }
     }
@@ -441,7 +451,7 @@ Rectangle {
                 delegate: Rectangle{
                     id: regionItem
                     height: 36
-                    width: parent.width
+                    width: taskplanView.width
                     color: index % 2 === 0 ? "#afc3d8" : "#2d71ae"
                     Button{
                         id: btnLock

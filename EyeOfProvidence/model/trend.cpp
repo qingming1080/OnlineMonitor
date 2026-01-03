@@ -55,7 +55,8 @@ void Trend::setWeldTrendData(WELD_TREND result)
 void Trend::AppendWeldPoint(const int cycleCount, const int power, const int time, const int preHeight, const int postHeight)
 {
     static int lastCycleCount = -1;
-    if (lastCycleCount > cycleCount) {
+    if (lastCycleCount > cycleCount)
+    {
         m_PreheightData.clear();
         m_PostHeightData.clear();
         m_WeldTimeData.clear();

@@ -7,6 +7,8 @@
 #include <QDateTime>
 #include <QPointF>
 
+#define DEBUG_MULTIDEVICE 0
+
 struct _IO_Data
 {
     int id;         // io_id

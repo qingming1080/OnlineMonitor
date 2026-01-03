@@ -50,18 +50,25 @@ Rectangle {
             ModbusClient.setLearnLedStatus(true)
         }
     }
-    onDeviceCountChanged: {
+
+    function stillNeedToLearning()
+    {
         var isLearning = false;
         for(var i = 0; i < deviceCount; i++)
         {
             if(DeviceManager.DeviceList[i].ProductionObj.ModelStatus === false)
             {
                 DeviceManager.SelectedDeviceIndex = i;
-                loadViewpro(1, autoLearning)
                 isLearning = true;
+                break;
             }
         }
-        if(isLearning === false)
+        return isLearning;
+    }
+
+    onDeviceCountChanged:
+    {
+        if(stillNeedToLearning() === false)
         {
             if(DeviceManager.DeviceCounter > 1)
             {
@@ -69,6 +76,10 @@ Rectangle {
             }
             else
                 loadViewpro(3, singlePro)
+        }
+        else
+        {
+            loadViewpro(1, autoLearning)
         }
     }
 
@@ -91,15 +102,6 @@ Rectangle {
                 }
             }
         }
-    }
-
-    Component.onCompleted: {
-        if(DeviceManager.DeviceList[0].ProductionObj.ModelStatus === false)
-            loadViewpro(1, autoLearning)
-        else if(DeviceManager.DeviceCounter > 1)
-            loadViewpro(2, multiPro)
-        else
-            loadViewpro(3, singlePro)
     }
 
     StackView{
@@ -131,7 +133,5 @@ Rectangle {
             width: 1280
             height: 740
         }
-
     }
-
 }

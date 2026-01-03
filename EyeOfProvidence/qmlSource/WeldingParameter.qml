@@ -11,6 +11,10 @@ Rectangle {
     property string presetAmplitude: ""
     property string presetTriggerPressure: ""
     property string presetWeldPressure: ""
+    property alias txtEnergy: fieldEnergy.text
+    property alias txtAmplitude: fieldAmplitude.text
+    property alias txtTP: fieldTriggerPressure.text
+    property alias txtWP: fieldWeldPressure.text
     property int deviceCount: DeviceManager.DeviceCounter
 
     radius: 3

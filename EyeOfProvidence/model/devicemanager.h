@@ -75,6 +75,8 @@ private:
     explicit DeviceManager(QObject *parent = nullptr);
     bool InitDeviceList();
     bool IsManualPresetChanged();
+
+    virtual void timerEvent(QTimerEvent *event) override;
 private:
     static DeviceManager* m_ptrInstance;
     int m_iSelectedDeviceIndex;

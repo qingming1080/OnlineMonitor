@@ -166,7 +166,7 @@ private:
     void updateYAxisRanges();
 
 private:
-    static constexpr int X_AXIS_MAX = 256;
+    static constexpr int X_AXIS_MAX = 128;
     static constexpr int ONE_HOUR = 60 * 60;
     static constexpr int ONE_DAY = 60 * 60 * 24;
     static constexpr int SEVEN_DAYS = 60 * 60 * 24 * 7;

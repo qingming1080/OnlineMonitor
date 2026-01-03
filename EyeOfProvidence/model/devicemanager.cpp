@@ -8,6 +8,7 @@
 #include "rs232model.h"
 #include "tools/utilityfunction.h"
 #include "message.h"
+#include "../define.h"
 
 DeviceManager* DeviceManager::m_ptrInstance = nullptr;
 DeviceManager *DeviceManager::getInstance()
@@ -37,6 +38,9 @@ DeviceManager::DeviceManager(QObject *parent)
     connect(HBModbusClient::getInstance(), &HBModbusClient::connectionStateChanged, this, &DeviceManager::slotNotifyModbusStatusChanged);
     connect(HBModbusClient::getInstance(), &HBModbusClient::notifyResetButtonChanged, this,&DeviceManager::slotNotifyResetButtonChanged);
     connect(HBModbusClient::getInstance(), &HBModbusClient::notifyDeviceIOStatusChanged, this,&DeviceManager::slotNotifyDeviceIOStatusChanged);
+#if DEBUG_MULTIDEVICE
+    startTimer(5000);
+#endif
 }
 
 bool DeviceManager::InitDeviceList()
@@ -64,6 +68,44 @@ bool DeviceManager::InitDeviceList()
 bool DeviceManager::IsManualPresetChanged()
 {
     return true;
+}
+
+void DeviceManager::timerEvent(QTimerEvent *event)
+{
+    Q_UNUSED(event)
+    static int iCount = 0;
+    HBModbusClient::MODBUS_WELD_RESULT tmpWeldResult;
+    tmpWeldResult.WeldAlarm = 0;
+
+    tmpWeldResult.DateTime = QDateTime::currentDateTime();
+    if(iCount % 2 == 0)
+    {
+        tmpWeldResult.CycleCount = iCount;
+        tmpWeldResult.Energy = 2000;
+        tmpWeldResult.Amplitude = 22;
+        tmpWeldResult.TriggerPressure = 200;
+        tmpWeldResult.WeldingPressure = 200;
+        tmpWeldResult.WeldTime = 200;
+        tmpWeldResult.PeakPower = 2000;
+        tmpWeldResult.Preheight = 600;
+        tmpWeldResult.PostHeight = 400;
+        slotNotifyWeldResultComing(1, tmpWeldResult);
+    }
+    else
+    {
+        tmpWeldResult.CycleCount = iCount;
+        tmpWeldResult.Energy = 1000;
+        tmpWeldResult.Amplitude = 11;
+        tmpWeldResult.TriggerPressure = 300;
+        tmpWeldResult.WeldingPressure = 300;
+        tmpWeldResult.WeldTime = 100;
+        tmpWeldResult.PeakPower = 1000;
+        tmpWeldResult.Preheight = 500;
+        tmpWeldResult.PostHeight = 300;
+        slotNotifyWeldResultComing(2, tmpWeldResult);
+    }
+    iCount++;
+
 }
 
 int DeviceManager::getSelectedDeviceIndex() const
