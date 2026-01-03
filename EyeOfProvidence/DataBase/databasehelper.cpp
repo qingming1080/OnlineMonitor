@@ -38,8 +38,11 @@ void DataBaseHelper::appendOperation(const DataBaseManager::DB_PRODUCTION &inser
                                      const DataBaseManager::DB_MODEL &updateOperation)
 {
     QMutexLocker locker(&m_mutex);
-    m_insertOperationQueue.append(insertOperation);
-    m_updateOperation = updateOperation;
+    m_insertOperationList.append(insertOperation);
+    if(m_updateOperationMap.contains(updateOperation.id) == true)
+        m_updateOperationMap[updateOperation.id] = updateOperation;
+    else
+        m_updateOperationMap.insert(updateOperation.id, updateOperation);
 
     if (!m_timer->isActive())
         m_timer->start(5000);
@@ -50,20 +53,25 @@ void DataBaseHelper::appendOperation(const DataBaseManager::DB_PRODUCTION &inser
  */
 void DataBaseHelper::processOperation()
 {
+    QMutexLocker locker(&m_mutex);
     // 插入操作
-    if (!m_insertOperationQueue.isEmpty())
+    if (!m_insertOperationList.isEmpty())
     {
-        DataBaseManager::DB_PRODUCTION production;
+        for(int i = 0; i < m_insertOperationList.size(); i++)
         {
-            QMutexLocker locker(&m_mutex);
-            production = m_insertOperationQueue.dequeue();
+            DataBaseManager::getInstance()->insertProductionRow(m_insertOperationList[i]);
         }
-        DataBaseManager::getInstance()->insertProductionRow(production);
-        DataBaseManager::getInstance()->updateModelRecord(m_updateOperation.id, m_updateOperation);
+        m_insertOperationList.clear();
     }
-
-    if (m_insertOperationQueue.isEmpty())
-        m_timer->stop();
+    if(!m_updateOperationMap.isEmpty())
+    {
+        for(auto iter = m_updateOperationMap.begin(); iter != m_updateOperationMap.end(); iter++)
+        {
+            DataBaseManager::getInstance()->updateModelRecord(iter.key(), iter.value());
+        }
+        m_updateOperationMap.clear();
+    }
+    m_timer->stop();
 }
 
 /*!

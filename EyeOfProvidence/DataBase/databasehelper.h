@@ -4,6 +4,7 @@
 #include <QMutex>
 #include <QObject>
 #include <QQueue>
+#include <QMap>
 #include <QThread>
 #include <QTimer>
 
@@ -36,8 +37,8 @@ private:
     QMutex m_mutex;
     QTimer *m_timer;
     QThread *m_thread;
-    QQueue<DataBaseManager::DB_PRODUCTION> m_insertOperationQueue;
-    DataBaseManager::DB_MODEL m_updateOperation;
+    QList<DataBaseManager::DB_PRODUCTION> m_insertOperationList;
+    QMap<int, DataBaseManager::DB_MODEL> m_updateOperationMap;
 };
 
 #endif // DATABASEHELPER_H
