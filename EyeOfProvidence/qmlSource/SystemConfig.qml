@@ -1585,12 +1585,12 @@ Rectangle {
                 y:654
                 width: 243
                 height: 52
-                enabled: DeviceManager.DeviceCounter === 4 ? false : true
+                enabled: DeviceManager.DeviceCounter === 2 ? false : true
                 background: Rectangle{
                     radius: 6
                     border.width: 2
                     border.color: pRgb(43, 112, 173)
-                    color: DeviceManager.DeviceCounter === 4 ? pRgb(232, 232, 232) : pRgb(43, 112, 173)
+                    color: DeviceManager.DeviceCounter === 2 ? pRgb(232, 232, 232) : pRgb(43, 112, 173)
                 }
                 contentItem: Text {
                     // text: qsTr( "新增设备")

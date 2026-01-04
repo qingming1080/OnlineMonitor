@@ -8,6 +8,7 @@ Item
 {
     id: hbCalendar
     property date selectedDate: new Date()
+    property date initDate: new Date(2026, 0, 1)
     width: parent.width
     height: parent.height
     readonly property int buttonWidth: 100
@@ -25,7 +26,11 @@ Item
         height: 400
         frameVisible: false
         // weekNumbersVisible: true
-        selectedDate: todayDate
+        selectedDate: hbCalendar.initDate
+        Component.onCompleted:{
+               visibleYear  =  hbCalendar.initDate.getFullYear()
+               visibleMonth =  hbCalendar.initDate.getMonth()
+        }
         focus: true
         onClicked:{
             hbCalendar.selectedDate = date
