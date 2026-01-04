@@ -12,7 +12,7 @@ import LanguageEnum 1.0
 Rectangle
 {
     property bool isSingleDevice: false
-    property int deviceIndex: DeviceManager.SelectedDeviceIndex
+    property int deviceIndex: 0
     property int deviceCount: DeviceManager.DeviceCounter
     property var startTime: {
         if(deviceIndex < deviceCount)

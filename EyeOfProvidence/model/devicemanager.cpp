@@ -39,7 +39,7 @@ DeviceManager::DeviceManager(QObject *parent)
     connect(HBModbusClient::getInstance(), &HBModbusClient::notifyResetButtonChanged, this,&DeviceManager::slotNotifyResetButtonChanged);
     connect(HBModbusClient::getInstance(), &HBModbusClient::notifyDeviceIOStatusChanged, this,&DeviceManager::slotNotifyDeviceIOStatusChanged);
 #if DEBUG_MULTIDEVICE
-    startTimer(5000);
+    startTimer(3000);
 #endif
 }
 
