@@ -113,7 +113,7 @@ int EthernetApp::Init(const void *_dev)
 
         for(int i = 0; i < ETHS; i++)
             _Socket[i]->Close_TCP_Socket();
-        static QMap<int, ETHERNET_DEV>::iterator iter = m_mapEthernetDev.begin();
+        QMap<int, ETHERNET_DEV>::iterator iter = m_mapEthernetDev.begin();
         while(iter != m_mapEthernetDev.end())
         {
             if(iter->_ptrProtocol != nullptr)
@@ -121,7 +121,7 @@ int EthernetApp::Init(const void *_dev)
                 delete iter->_ptrProtocol;
                 iter->_ptrProtocol = nullptr;
             }
-            iter++;
+            ++iter;
         }
         m_mapEthernetDev.clear();
     }
