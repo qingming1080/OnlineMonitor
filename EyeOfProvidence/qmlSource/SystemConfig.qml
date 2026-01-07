@@ -535,7 +535,6 @@ Rectangle {
                     }
                 }
 
-
                 Text {
                     id: titleHeightMode
                     // text: qsTr("高度模式")
@@ -692,6 +691,7 @@ Rectangle {
                     }
                 }
             }
+
             Rectangle{
                 x:515
                 y:25
