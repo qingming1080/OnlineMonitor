@@ -307,11 +307,11 @@ QString NetworkModel::checkIPUnique(const QString &localIP, const QString &remot
         if(iter.value().WelderId == ignoreWelderId)
             continue;
 
-        if(iter.value().LocalIP == localIP)
-        {
-            qDebug() << "LocalIP 重复:" << localIP;
-            return QString("本地IP地址 %1 已存在").arg(localIP);
-        }
+        // if(iter.value().LocalIP == localIP)
+        // {
+        //     qDebug() << "LocalIP 重复:" << localIP;
+        //     return QString("本地IP地址 %1 已存在").arg(localIP);
+        // }
 
         if(iter.value().RemoteIP == remoteIP)
         {
