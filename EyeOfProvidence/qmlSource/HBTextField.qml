@@ -15,7 +15,7 @@
 import QtQuick 2.0
 import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
-import Style 1.0
+import GlobalStyle 1.0
 import GlobalLanguageDefine 1.0
 
 TextField {
@@ -23,8 +23,8 @@ TextField {
     property alias text: hbTextField.text
     property bool onlyForNumpad: true
     property bool isSelectedAll: false
-    property int fontSize: Math.round(Style.style5 * Style.scaleHint)
-    property string backgroundColor: Style.hbFrameBackgroundColor
+    property int fontSize: Math.round(GlobalStyle.style5 * GlobalStyle.scaleHint)
+    property string backgroundColor: GlobalStyle.hbFrameBackgroundColor
     signal signalClickedEvent()
     implicitWidth: parent.width
     implicitHeight: parent.height
@@ -47,12 +47,12 @@ TextField {
         id: textStyleId
         font.pixelSize: fontSize
         font.family: GlobalSystemDefine.fontBold
-        textColor: Style.whiteFontColor
+        textColor: GlobalStyle.whiteFontColor
         background: Rectangle {
             id:backGroundId
             radius: 2
             color: (enabled === true) ? backgroundColor : backgroundColor
-            border.color: Style.hbFrameBorderColor
+            border.color: GlobalStyle.hbFrameBorderColor
             border.width: 2
         }
     }

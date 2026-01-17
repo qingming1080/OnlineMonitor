@@ -1580,9 +1580,9 @@ Rectangle {
                 }
             }
             Button{
-                id:btn1
-                x:210
-                y:654
+                id: btn1
+                x: 210
+                y: 630
                 width: 243
                 height: 52
                 enabled: DeviceManager.DeviceCounter === 2 ? false : true
@@ -1612,9 +1612,9 @@ Rectangle {
                 }
             }
             Button{
-                id:btn2
-                x:542
-                y:654
+                id: btn2
+                x: 542
+                y: 630
                 width: 243
                 height: 52
                 enabled: DeviceManager.DeviceCounter === 0 ? false : true
@@ -1640,9 +1640,9 @@ Rectangle {
                 }
             }
             Button{
-                id:btn3
-                x:867
-                y:654
+                id: btn3
+                x: 867
+                y: 630
                 width: 243
                 height: 52
                 background: Rectangle{

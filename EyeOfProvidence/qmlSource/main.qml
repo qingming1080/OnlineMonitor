@@ -43,17 +43,14 @@ Window {
     signal sigSwitch(var id)
     signal sigSysConfig()
     signal sigStatusReset()
-    signal sigUpdateUI(var index)
     signal sigRoot()
     signal sigNewModel()
     signal sigOneModel()
     signal sigPassError()
     signal sigDelDevice()
-    signal sigRecover()
     function switchUI(id)
     {
         sigSwitch(id)
-        // sigUpdateUI(swipeCurrIndex)
     }
 
     //Only one time running
@@ -63,10 +60,12 @@ Window {
 
         if(DeviceManager.DeviceList[0].WelderID === -1)
         {
-            loadView(3, sys)
+            // loadView(3, sys)
+            loadView(3, null)
         }
         else
-            loadView(1, pro)
+            // loadView(1, pro)
+            loadView(1, null)
     }
 
     function showWelcomeScreen()
@@ -77,17 +76,38 @@ Window {
     // 动态加载和缓存视图
     function loadView(viewName, component)
     {
-        if (cachedViews[viewName])
-        {
-            // 如果视图已缓存，直接显示
-            stackView.push(cachedViews[viewName]);
-        }
-        else
-        {
+        // stackView.clear()
+
+        // if (cachedViews[viewName])
+        // {
+        //     // 如果视图已缓存，直接显示
+        //     stackView.push(cachedViews[viewName]);
+        // }
+        // else
+        // {
             // 创建视图并缓存
-            var newItem = component.createObject(stackView);
-            cachedViews[viewName] = newItem;
-            stackView.push(newItem);
+            // var newItem = component.createObject(stackView);
+            // cachedViews[viewName] = newItem;
+            // stackView.push(newItem);
+        // }
+        stackView.source = ""
+        switch(viewName)
+        {
+        case 1:
+            stackView.source = "qrc:/qmlSource/ProductionWindow.qml"
+            break;
+        case 2:
+            stackView.source = "qrc:/qmlSource/HistoryModel.qml"
+            break;
+        case 3:
+            stackView.source = "qrc:/qmlSource/SystemConfig.qml"
+            break;
+        case 4:
+            stackView.source = "qrc:/qmlSource/RootConfigView.qml"
+            break;
+        default:
+            stackView.source = ""
+            break;
         }
     }
 
@@ -142,27 +162,26 @@ Window {
         target: window
         function onSigSwitch(id)
         {
-            stackView.clear()
             interFaceId = id
             switch(id)
             {
             case 1:
-                loadView(id, pro)
+                loadView(id, null)
                 // p1.bt1Check()
                 break;
             case 2:
-                loadView(id, his)
+                loadView(id, null)
                 // p1.bt2Check()
                 break;
             case 3:
                 sigSysConfig()
                 Qt.callLater(sigSysConfig)//立即执行
-                loadView(id, sys)
+                loadView(id, null)
                 sigStatusReset()
                 // p1.bt3Check()
                 break;
             case 4:
-                loadView(id, rootview)
+                loadView(id, null)
                 break;
             default:
                 break;
@@ -170,29 +189,32 @@ Window {
         }
     }
 
-    Item{
-        anchors.fill: parent
-        Header{
-            id: header
-            anchors.top: parent.top
-            anchors.left: parent.left
-            width: showWidth
-            height: 60
-        }
-        StackView{
-            id: stackView
-            anchors.top: header.bottom
-            anchors.bottom: parent.bottom
-            anchors.left: parent.left
-            width: showWidth
-        }
-        Footer
-        {
-            id: footer
-            anchors.left: parent.left
-            anchors.bottom: parent.bottom
-        }
+
+    Header{
+        id: header
+        anchors.top: parent.top
+        anchors.left: parent.left
+        width: showWidth
+        height: 60
     }
+
+    Footer
+    {
+        id: footer
+        anchors.left: parent.left
+        anchors.bottom: parent.bottom
+        width: showWidth
+        height: 40
+    }
+
+    Loader{
+        id: stackView
+        anchors.top: header.bottom
+        anchors.bottom: footer.top
+        anchors.left: parent.left
+        width: showWidth
+    }
+
 
     MessageDialog
     {
@@ -215,41 +237,6 @@ Window {
         width: showWidth
         height: showHeight
         source: "qrc:/qmlSource/Welcome.qml"
-    }
-
-    Component{
-        id:pro
-        ProductionWindow{
-            id:s1
-            width: 1280
-            height: 740
-        }
-    }
-
-    Component{
-        id:his
-        HistoryModel{
-            id:hisin
-            width: 1280
-            height: 740
-        }
-    }
-
-    Component{
-        id:sys
-        SystemConfig{
-            id: sysin
-            width: 1280
-            height: 740
-        }
-    }
-
-    Component{
-        id:rootview
-        RootConfigView{
-            width: 1280
-            height: 740
-        }
     }
 
     CustomDialog{

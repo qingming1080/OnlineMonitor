@@ -13,7 +13,7 @@ import GlobalLanguageDefine 1.0
 import ProductionObj        1.0
 import ManualObj            1.0
 import ManualTable          1.0
-import Style                1.0
+import GlobalStyle          1.0
 import LanguageEnum         1.0
 
 Rectangle {
@@ -40,9 +40,7 @@ Rectangle {
                     return
                 }
                 manualObj.saveData()
-                sigUpdateUI(0)
-                sigRecover()
-
+                DeviceManager.DeviceList[currentIndex].ProductionObj.ModelStatus = true
                 if(stillNeedToLearning() === true)
                 {
                     layoutWeldParameter.txtEnergy       = DeviceManager.DeviceList[swipe.currentIndex].ManualObj.EnergySetting
@@ -53,9 +51,9 @@ Rectangle {
                 else
                 {
                     if(DeviceManager.DeviceCounter > 1)
-                        loadViewpro(2, multiPro)
+                        loadViewpro(2, null)
                     else
-                        loadViewpro(3, singlePro)
+                        loadViewpro(3, null)
                 }
             }
         }
@@ -76,7 +74,7 @@ Rectangle {
         anchors.topMargin: 29
         width: 1220
         height: 664
-        color: Style.backgroundColor
+        color: GlobalStyle.backgroundColor
         radius: 5
 
         EquipmentInfor{
@@ -172,12 +170,10 @@ Rectangle {
                 if(DeviceManager.DeviceList[currentIndex].ManualObj.rowCount() >= DeviceManager.DeviceList[currentIndex].DeviceObj.MaxModelSamples)
                 {
                     DeviceManager.DeviceList[currentIndex].ManualObj.saveData()
-                    sigUpdateUI(0)
-                    sigRecover()
                     if(deviceCount === 1)
-                        loadViewpro(3, singlePro)
+                        loadViewpro(3, null)
                     else
-                        loadViewpro(2, multiPro)
+                        loadViewpro(2, null)
                 }
                 else
                 {

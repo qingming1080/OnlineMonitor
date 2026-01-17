@@ -15,15 +15,15 @@
 import QtQuick 2.0
 import QtQuick.Controls 2.1
 import QtGraphicalEffects 1.0
-import Style 1.0
+import GlobalStyle 1.0
 import GlobalSystemDefine 1.0
 
 Button{
     id: digiaal
-    property int minWidth: Math.round(50 * Style.scaleHint)
-    property int minHeight: Math.round(50 * Style.scaleHint)
+    property int minWidth: Math.round(50 * GlobalStyle.scaleHint)
+    property int minHeight: Math.round(50 * GlobalStyle.scaleHint)
     property int radiusWidth: 3
-    property int fontSize: Math.round(Style.style6 * Style.scaleHint)
+    property int fontSize: Math.round(GlobalStyle.style6 * GlobalStyle.scaleHint)
     property string fontFamily: GlobalSystemDefine.fontBold
     property bool operator: false
     property string buttonColor: "#6699CC"

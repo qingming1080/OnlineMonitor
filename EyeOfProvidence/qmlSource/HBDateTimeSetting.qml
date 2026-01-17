@@ -3,7 +3,7 @@ import QtQuick.Controls 1.2
 import QtQuick.Controls.Styles 1.1
 import QtQuick.Layouts 1.0
 import QtQuick.Window 2.2
-import Style 1.0
+import GlobalStyle 1.0
 import GlobalLanguageDefine 1.0
 import GlobalSystemDefine   1.0
 
@@ -73,10 +73,10 @@ Item {
             anchors.top: parent.top
             anchors.right: parent.right
             width: parent.width
-            height: Math.round(30 * Style.scaleHint)
+            height: Math.round(30 * GlobalStyle.scaleHint)
             Row {
                 anchors.right: parent.right
-                anchors.rightMargin: Math.round(10 * Style.scaleHint)
+                anchors.rightMargin: Math.round(10 * GlobalStyle.scaleHint)
                 anchors.verticalCenter: parent.verticalCenter
                 spacing: 15
                 Text {
@@ -165,7 +165,7 @@ Item {
                     anchors.centerIn: parent
                     text: index
 
-                    color: timeView.currentIndex == index ? Style.hbButtonBackgroundColor /*"blue"*/ : Style.whiteFontColor /*"white"*/;
+                    color: timeView.currentIndex == index ? GlobalStyle.hbButtonBackgroundColor /*"blue"*/ : GlobalStyle.whiteFontColor /*"white"*/;
                     font.pointSize: 20
                 }
             }
@@ -238,7 +238,7 @@ Item {
                     id: modelRect2
                     anchors.centerIn: parent
                     text: index
-                    color: mint.currentIndex == index ? Style.hbButtonBackgroundColor /*"blue"*/ : Style.whiteFontColor /*"white"*/;
+                    color: mint.currentIndex == index ? GlobalStyle.hbButtonBackgroundColor /*"blue"*/ : GlobalStyle.whiteFontColor /*"white"*/;
                     font.pointSize: 20
                 }
             }
@@ -309,7 +309,7 @@ Item {
                     id: modelRect3
                     anchors.centerIn: parent
                     text: index
-                    color: second.currentIndex == index ? Style.hbButtonBackgroundColor /*"blue"*/ : Style.whiteFontColor /*"white"*/;
+                    color: second.currentIndex == index ? GlobalStyle.hbButtonBackgroundColor /*"blue"*/ : GlobalStyle.whiteFontColor /*"white"*/;
                     font.pointSize: 20
                 }
             }

@@ -54,21 +54,15 @@ void DataBaseHelper::appendOperation(const DataBaseManager::DB_PRODUCTION &inser
 void DataBaseHelper::processOperation()
 {
     QMutexLocker locker(&m_mutex);
-    // 插入操作
+    // 插入操作 - 使用批量插入提高性能
     if (!m_insertOperationList.isEmpty())
     {
-        for(int i = 0; i < m_insertOperationList.size(); i++)
-        {
-            DataBaseManager::getInstance()->insertProductionRow(m_insertOperationList[i]);
-        }
+        DataBaseManager::getInstance()->insertProductionRowBatch(m_insertOperationList);
         m_insertOperationList.clear();
     }
     if(!m_updateOperationMap.isEmpty())
     {
-        for(auto iter = m_updateOperationMap.begin(); iter != m_updateOperationMap.end(); iter++)
-        {
-            DataBaseManager::getInstance()->updateModelRecord(iter.key(), iter.value());
-        }
+        DataBaseManager::getInstance()->updateModelRecordBatch(m_updateOperationMap);
         m_updateOperationMap.clear();
     }
     m_timer->stop();

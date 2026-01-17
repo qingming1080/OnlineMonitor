@@ -2,9 +2,9 @@
 import QtQuick.Controls 2.5
 import GlobalLanguageDefine 1.0
 import GlobalSystemDefine 1.0
+import GlobalStyle 1.0
 Rectangle {
-    color: pRgb(43, 112, 173)
-
+    color: GlobalStyle.backgroundColor
     Connections{
         target: window
         function onSigPassError()
@@ -178,7 +178,7 @@ Rectangle {
         }
     }
     CustomBtn{
-        id:bt4
+        id: bt4
         anchors.right: bt1.left
         width: 157
         height: 60

@@ -33,13 +33,25 @@ Rectangle {
 
     function loadViewpro(viewName, component)
     {
-        prostack.clear();
-        var newItem = component.createObject(prostack);
-        proViews[viewName] = newItem;
-        prostack.push(newItem);
+        componentLoader.source = ""
+        switch(viewName)
+        {
+        case 1:
+            componentLoader.source = "qrc:/qmlSource/ProductionLearnModule.qml";
+            break;
+        case 2:
+            componentLoader.source = "qrc:/qmlSource/ProductionMultiModule.qml"
+            break;
+        case 3:
+            componentLoader.source = "qrc:/qmlSource/ProductionSingleModule.qml"
+            break;
+        default:
+            componentLoader.source = "qrc:/qmlSource/ProductionLearnModule.qml";
+            break;
+        }
+
         if( viewName === 2 || viewName === 3)
         {
-            DeviceManager.DeviceList[currentIndex].ProductionObj.ModelStatus = true
             ModbusClient.setPilotLedStatus(true)
             ModbusClient.setLearnLedStatus(false)
         }
@@ -72,14 +84,18 @@ Rectangle {
         {
             if(DeviceManager.DeviceCounter > 1)
             {
-                loadViewpro(2, multiPro)
+                // loadViewpro(2, multiPro)
+                loadViewpro(2, null)
             }
             else
-                loadViewpro(3, singlePro)
+                // loadViewpro(3, singlePro)
+                loadViewpro(3, null)
+
         }
         else
         {
-            loadViewpro(1, autoLearning)
+            // loadViewpro(1, autoLearning)
+            loadViewpro(1, null)
         }
     }
 
@@ -97,41 +113,19 @@ Rectangle {
                     if(DeviceManager.DeviceList[i].WelderID === welderID)
                     {
                         DeviceManager.SelectedDeviceIndex = i;
-                        loadViewpro(1, autoLearning)
+                        loadViewpro(1, null)
                     }
                 }
             }
         }
     }
 
-    StackView{
-        id: prostack
+    Loader{
+        id: componentLoader
+        anchors.left: parent.left
+        anchors.top: parent.top
+        width: 1280
+        height: 700
     }
 
-    Component{
-        id: multiPro
-        ProductionMultiModule{
-            id: mupMode
-            width: 1280
-            height: 740
-        }
-    }
-
-    Component{
-        id: singlePro
-        ProductionSingleModule{
-            id: mupMode
-            width: 1280
-            height: 740
-        }
-    }
-
-    Component{
-        id: autoLearning
-        ProductionLearnModule{
-            id: mupMode
-            width: 1280
-            height: 740
-        }
-    }
 }

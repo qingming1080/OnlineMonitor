@@ -37,6 +37,8 @@ Rectangle {
             DeviceManager.DeviceList[currentIndex].TrendObj.setPostHeightSeries((chartView.series(lineSeriesPostHeight.name)))
             DeviceManager.DeviceList[currentIndex].TrendObj.setWeldTimeSeries((chartView.series(lineSeriesWeldTime.name)))
             DeviceManager.DeviceList[currentIndex].TrendObj.setPeakPowerSeries((chartView.series(lineSeriesPeakPower.name)))
+            DeviceManager.DeviceList[currentIndex].TrendObj.updateXYAxisRanges();
+            DeviceManager.DeviceList[currentIndex].TrendObj.updateSeries();
         }
     }
 

@@ -33,13 +33,13 @@ DeviceManager::DeviceManager(QObject *parent)
         qDebug() << "Failed to query device list from database! ";
     }
     connect(HBModbusClient::getInstance(), &HBModbusClient::notifyDeviceStatusChanged,  this, &DeviceManager::slotNotifyDeviceStatusChanged);
-    connect(HBModbusClient::getInstance(), &HBModbusClient::notifyWeldResultComing,     this, &DeviceManager::slotNotifyWeldResultComing);
+    connect(HBModbusClient::getInstance(), &HBModbusClient::notifyWeldResultComing,     this, &DeviceManager::slotNotifyWeldResultComing, Qt::QueuedConnection);
     connect(HBModbusClient::getInstance(), &HBModbusClient::notifyPresetSettingChanged, this, &DeviceManager::slotNotifyPresetSettingChanged);
     connect(HBModbusClient::getInstance(), &HBModbusClient::connectionStateChanged, this, &DeviceManager::slotNotifyModbusStatusChanged);
     connect(HBModbusClient::getInstance(), &HBModbusClient::notifyResetButtonChanged, this,&DeviceManager::slotNotifyResetButtonChanged);
     connect(HBModbusClient::getInstance(), &HBModbusClient::notifyDeviceIOStatusChanged, this,&DeviceManager::slotNotifyDeviceIOStatusChanged);
 #if DEBUG_MULTIDEVICE
-    startTimer(3000);
+    startTimer(1000);
 #endif
 }
 
@@ -94,8 +94,8 @@ void DeviceManager::timerEvent(QTimerEvent *event)
     else
     {
         tmpWeldResult.CycleCount = iCount;
-        tmpWeldResult.Energy = 1000;
-        tmpWeldResult.Amplitude = 11;
+        tmpWeldResult.Energy = 3000;
+        tmpWeldResult.Amplitude = 33;
         tmpWeldResult.TriggerPressure = 300;
         tmpWeldResult.WeldingPressure = 300;
         tmpWeldResult.WeldTime = 100;
@@ -223,6 +223,7 @@ void DeviceManager::slotNotifyWeldResultComing(int welderId, const HBModbusClien
     //          << " PostHeight:" << data.PostHeight
     //          << " WeldAlarm: " << data.WeldAlarm
     //          << " DateTime:" << data.DateTime.toString("yyyy-MM-dd hh:mm:ss");
+    mutex.lock();
     for(int i = 0; i < m_listDevices.size(); i++)
     {
         if(welderId == m_listDevices[i]->getWelderID())
@@ -230,6 +231,7 @@ void DeviceManager::slotNotifyWeldResultComing(int welderId, const HBModbusClien
             m_listDevices[i]->NotifyWeldResultComing(data);
         }
     }
+    mutex.unlock();
 }
 
 void DeviceManager::slotNotifyPresetSettingChanged(int welderId, const HBModbusClient::WELD_PRESET &data)

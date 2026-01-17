@@ -62,7 +62,6 @@ Rectangle {
     //        currentIndex: swipeCurrIndex
     //        onDataAlter: {
     //            swipeCurrIndex = com1.currentIndex
-    //            sigUpdateUI(swipeCurrIndex)
     //        }
     //        visible: switchingEquipment
     //    }

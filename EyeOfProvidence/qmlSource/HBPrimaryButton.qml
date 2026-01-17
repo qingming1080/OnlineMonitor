@@ -15,7 +15,7 @@
 import QtQuick 2.6
 import QtGraphicalEffects 1.0
 import QtQuick.Controls 2.1
-import Style 1.0
+import GlobalStyle 1.0
 import GlobalSystemDefine   1.0
 Button {
     readonly property string qmltextPrimary: qsTr("PRIMARY")
@@ -24,11 +24,11 @@ Button {
     property int minWidth: 140
     property int maxHeight: 40
     property int radiusWidth: 4
-    property color buttonColor: Style.hbButtonBackgroundColor
-    property color textColor : Style.whiteFontColor
+    property color buttonColor: GlobalStyle.hbButtonBackgroundColor
+    property color textColor : GlobalStyle.whiteFontColor
     property color shadowColor: "#80000000"
     property color pressedColor: "#AFC3D8"
-    property int fontSize: Math.round(Style.style6 * Style.scaleHint)
+    property int fontSize: Math.round(GlobalStyle.style6 * GlobalStyle.scaleHint)
     width: 140
     height: 40
     contentItem: Text {

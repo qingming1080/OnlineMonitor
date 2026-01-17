@@ -891,6 +891,75 @@ bool DataBaseManager::updateModelRecord(const int id, const DB_MODEL model)
     return true;
 }
 
+bool DataBaseManager::updateModelRecordBatch(const QMap<int, DB_MODEL>& dataMap)
+{
+    if (dataMap.isEmpty())
+        return true;
+
+    QSqlDatabase db = QSqlDatabase::database();
+    db.transaction(); // 开启事务
+
+    QSqlQuery query;
+    QString execStr = QString(
+                          "UPDATE %1 SET "
+                          "welder_id = :welder_id, "
+                          "create_time = :create_time, "
+                          "energy = :energy, "
+                          "amplitude = :amplitude, "
+                          "trigger_pressure = :trigger_pressure, "
+                          "weld_pressure = :weld_pressure, "
+                          "alpha_beta = :alpha_beta, "
+                          "coefficient = :coefficient, "
+                          "centralized = :centralized, "
+                          "sample_count = :sample_count, "
+                          "batch_count = :batch_count, "
+                          "available = :available "
+                          "WHERE id = :id"
+                          ).arg(MODEL_TABLENAME);
+
+    if (!query.prepare(execStr)) {
+        qWarning() << "Failed to prepare batch update SQL:" << query.lastError().text();
+        return false;
+    }
+
+    // 批量绑定并执行更新
+    for (auto iter = dataMap.begin(); iter != dataMap.end(); ++iter)
+    {
+        const int id = iter.key();
+        const DB_MODEL& model = iter.value();
+        QString strJson;
+
+        query.bindValue(":welder_id",           model.WelderId);
+        query.bindValue(":create_time",         model.CreateTime.toSecsSinceEpoch());
+        query.bindValue(":energy",              model.Energy);
+        query.bindValue(":amplitude",           model.Amplitude);
+        query.bindValue(":trigger_pressure",    model.TriggerPressure);
+        query.bindValue(":weld_pressure",       model.WeldPressure);
+        AlphaBeta2JsonFormat(model.WeldTime, model.PeakPower, model.Preheight, model.PostHeight, strJson);
+        query.bindValue(":alpha_beta",          strJson);
+        Coefficient2JsonFormat(model.PeelForce, model.Residual, strJson);
+        query.bindValue(":coefficient",         strJson);
+        Centralized2JsonFormat(model.Centralized, strJson);
+        query.bindValue(":centralized",         strJson);
+        query.bindValue(":sample_count",        model.SampleCount);
+        query.bindValue(":batch_count",         model.BatchCount);
+        query.bindValue(":available",           model.isAvailable);
+        query.bindValue(":id", id);
+
+        if (!query.exec())
+        {
+            qWarning() << "Batch update Model failed:" << query.lastError().text();
+            qWarning() << "Failed ID:" << id;
+            db.rollback(); // 回滚事务
+            return false;
+        }
+    }
+
+    db.commit(); // 提交事务
+    // qDebug() << "Batch update success: " << dataMap.size() << " records";
+    return true;
+}
+
 bool DataBaseManager::insertModelRecord(DB_MODEL model)
 {
     QString strJson;
@@ -1177,6 +1246,76 @@ bool DataBaseManager::insertProductionRow(DB_PRODUCTION data)
         // db.rollback();
         return false;
     }
+    return true;
+}
+
+bool DataBaseManager::insertProductionRowBatch(const QList<DB_PRODUCTION>& dataList)
+{
+    if (dataList.isEmpty())
+        return true;
+
+    QSqlDatabase db = QSqlDatabase::database();
+    db.transaction(); // 开启事务
+
+    QSqlQuery query;
+    QString execStr = QString("INSERT INTO %1 ("
+                              "welder_id, create_time, serial_number, cycle_count, batch_count, "
+                              "energy, amplitude, trigger_pressure, weld_pressure, time, "
+                              "power, pre_height, post_height, force, residual, final_result) "
+                              "VALUES ("
+                              ":welder_id, :create_time, :serial_number, :cycle_count, :batch_count, "
+                              ":energy, :amplitude, :trigger_pressure, :weld_pressure, :time, "
+                              ":power, :pre_height, :post_height, :force, :residual, :final_result)").arg(PRODUCTION_TABLENAME);
+
+    query.prepare(execStr);
+
+    // 批量绑定数据
+    for (const auto& data : dataList)
+    {
+        query.bindValue(":welder_id", data.WelderID);
+        query.bindValue(":create_time", data.CreateTime);
+        query.bindValue(":serial_number", data.SerialNumber);
+        query.bindValue(":cycle_count", data.CycleCount);
+        query.bindValue(":batch_count", data.BatchCount);
+        query.bindValue(":energy", data.Energy);
+        query.bindValue(":amplitude", data.Amplitude);
+        query.bindValue(":trigger_pressure", data.TriggerPressure);
+        query.bindValue(":weld_pressure", data.WeldPressure);
+        query.bindValue(":time", data.WeldTime);
+        query.bindValue(":power", data.PeakPower);
+        query.bindValue(":pre_height", data.Preheight);
+        query.bindValue(":post_height", data.PostHeight);
+        query.bindValue(":force", data.Force);
+        query.bindValue(":residual", data.Residual);
+        query.bindValue(":final_result", data.FinalResult);
+
+        if (!query.exec())
+        {
+            qDebug() << "Batch insert failed:" << query.lastError().text();
+            db.rollback(); // 回滚事务
+            return false;
+        }
+    }
+
+    // 清理超过5000条的旧数据
+    QString TrimStr = QString(
+                          "DELETE FROM %1 "
+                          "WHERE id IN ("
+                          "   SELECT id FROM %1 "
+                          "   ORDER BY id ASC "
+                          "   LIMIT (SELECT MAX(COUNT(*) - 5000, 0) FROM %1)"
+                          ")"
+                          ).arg(PRODUCTION_TABLENAME);
+
+    if (!query.exec(TrimStr))
+    {
+        qDebug() << "Trim failed:" << query.lastError().text();
+        db.rollback();
+        return false;
+    }
+
+    db.commit(); // 提交事务
+    // qDebug() << "Batch insert success: " << dataList.size() << " records";
     return true;
 }
 

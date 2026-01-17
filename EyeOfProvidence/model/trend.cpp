@@ -16,6 +16,7 @@ Trend::Trend(int welderID, QObject *parent)
         m_DBModel = DataBaseManager::DB_MODEL();
     }
     init();
+    lastCycleCount = -1;
 }
 
 void Trend::upWeldData()
@@ -54,7 +55,6 @@ void Trend::setWeldTrendData(WELD_TREND result)
 
 void Trend::AppendWeldPoint(const int cycleCount, const int power, const int time, const int preHeight, const int postHeight)
 {
-    static int lastCycleCount = -1;
     if (lastCycleCount > cycleCount)
     {
         m_PreheightData.clear();
@@ -62,10 +62,10 @@ void Trend::AppendWeldPoint(const int cycleCount, const int power, const int tim
         m_WeldTimeData.clear();
         m_PeakPowerData.clear();
 
-        if (m_pPreheightSeries)    m_pPreheightSeries->clear();
-        if (m_pPostHeightSeries)   m_pPostHeightSeries->clear();
-        if (m_pWeldTimeSeries)     m_pWeldTimeSeries->clear();
-        if (m_pPeakPowerSeries)    m_pPeakPowerSeries->clear();
+        // if (m_pPreheightSeries)    m_pPreheightSeries->clear();
+        // if (m_pPostHeightSeries)   m_pPostHeightSeries->clear();
+        // if (m_pWeldTimeSeries)     m_pWeldTimeSeries->clear();
+        // if (m_pPeakPowerSeries)    m_pPeakPowerSeries->clear();
     }
     lastCycleCount = cycleCount;
     double preheightDouble  = preHeight / 100.0;
@@ -84,41 +84,16 @@ void Trend::AppendWeldPoint(const int cycleCount, const int power, const int tim
     appendWithLimit(m_PostHeightData,   cycleCount, postHeightDouble);
     appendWithLimit(m_WeldTimeData,     cycleCount, timeDouble);
     appendWithLimit(m_PeakPowerData,    cycleCount, powerDouble);
+}
+
+void Trend::updateXYAxisRanges()
+{
+
     int xMin = m_WeldTimeData.at(0).x();
     int size = m_WeldTimeData.size();
     int xMax = m_WeldTimeData.at(size - 1).x();
     setCountMinX(xMin);
     setCountMaxX(xMax);
-
-    auto updateSeries = [&](QXYSeries* series, int xCount, double yValue)
-    {
-        if (series)
-        {
-            series->append(xCount, yValue);
-            if (series->count() > X_AXIS_MAX)
-                series->remove(0);
-        }
-    };
-
-    updateSeries(m_pPreheightSeries,    cycleCount, preheightDouble);
-    updateSeries(m_pPostHeightSeries,   cycleCount, postHeightDouble);
-    updateSeries(m_pWeldTimeSeries,     cycleCount, timeDouble);
-    updateSeries(m_pPeakPowerSeries,    cycleCount, powerDouble);
-
-    updateYAxisRanges();
-}
-
-void Trend::updateYAxisRanges()
-{
-    // auto calcRange = [](const QVector<QPointF>& data, double& minVal, double& maxVal) {
-    //     if (data.isEmpty()) return;
-    //     minVal = maxVal = data.first().y();
-    //     for (const QPointF& p : data)
-    //     {
-    //         minVal = qMin(minVal, p.y());
-    //         maxVal = qMax(maxVal, p.y());
-    //     }
-    // };
 
     double PreheightMinY, PreheightMaxY;
     double PostHeightMinY,  PostHeightMaxY;
@@ -163,6 +138,23 @@ void Trend::updateYAxisRanges()
     PeakPowerMinY *= 0.75;
     setPeakPowerMaxY(PeakPowerMaxY);
     setPeakPowerMinY(PeakPowerMinY);
+}
+
+void Trend::updateSeries()
+{
+    if (m_pPreheightSeries == nullptr)
+        return;
+    if (m_pPostHeightSeries == nullptr)
+        return;
+    if (m_pWeldTimeSeries == nullptr)
+        return;
+    if (m_pPeakPowerSeries == nullptr)
+        return;
+
+    m_pPreheightSeries->replace(m_PreheightData);
+    m_pPostHeightSeries->replace(m_PostHeightData);
+    m_pWeldTimeSeries->replace(m_WeldTimeData);
+    m_pPeakPowerSeries->replace(m_PeakPowerData);
 }
 
 void Trend::SetModel(const DataBaseManager::DB_MODEL &model)

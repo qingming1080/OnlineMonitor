@@ -1,12 +1,12 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
-import Style 1.0
+import GlobalStyle 1.0
 import GlobalSystemDefine 1.0
 Rectangle {
     id: keyboard
     width: window.width  // 与主窗口同宽
-    // height: Math.round(280 * Style.scaleHint)
-    height: Math.round(340 * Style.scaleHint)
+    // height: Math.round(280 * GlobalStyle.scaleHint)
+    height: Math.round(340 * GlobalStyle.scaleHint)
     color: "#1E1E1E"
     // color: "transparent"
 
@@ -17,11 +17,11 @@ Rectangle {
     property bool isChinese: false
     property bool isAlphabet: true
 
-    readonly property int heightSize:           Math.round(70 * Style.scaleHint)
-    readonly property int rowWidthSize:         Math.round(80 * Style.scaleHint)
-    readonly property int enterRowWidthSize:    Math.round(140 * Style.scaleHint)
-    readonly property int abcRowWidthSize:      Math.round(140 * Style.scaleHint)
-    readonly property int fontsize: Math.round(Style.style7 * Style.scaleHint)
+    readonly property int heightSize:           Math.round(70 * GlobalStyle.scaleHint)
+    readonly property int rowWidthSize:         Math.round(80 * GlobalStyle.scaleHint)
+    readonly property int enterRowWidthSize:    Math.round(140 * GlobalStyle.scaleHint)
+    readonly property int abcRowWidthSize:      Math.round(140 * GlobalStyle.scaleHint)
+    readonly property int fontsize: Math.round(GlobalStyle.style7 * GlobalStyle.scaleHint)
     signal keyPressed(var key)
     signal backspace()
     signal enter()
@@ -50,12 +50,12 @@ Rectangle {
         id: keyboardLayout
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.bottom: parent.bottom
-        anchors.bottomMargin: Math.round(10 * Style.scaleHint)
-        spacing: Math.round(10 * Style.scaleHint)
+        anchors.bottomMargin: Math.round(10 * GlobalStyle.scaleHint)
+        spacing: Math.round(10 * GlobalStyle.scaleHint)
 
         // Row {
         //     anchors.horizontalCenter: parent.horizontalCenter
-        //     spacing: Math.round(5 * Style.scaleHint)
+        //     spacing: Math.round(5 * GlobalStyle.scaleHint)
         //     Repeater {
         //         model: ["1","2","3","4","5","6","7","8","9","0"]
         //         HBKeyButton {
@@ -70,7 +70,7 @@ Rectangle {
 
         Row {
             id: fristRow
-            spacing: Math.round(8 * Style.scaleHint)
+            spacing: Math.round(8 * GlobalStyle.scaleHint)
             anchors.horizontalCenter: parent.horizontalCenter
             Repeater {
                 model: {
@@ -111,7 +111,7 @@ Rectangle {
 
         Row {
             id: secondRow
-            spacing: Math.round(8 * Style.scaleHint)
+            spacing: Math.round(8 * GlobalStyle.scaleHint)
             anchors.horizontalCenter: parent.horizontalCenter
             Repeater {
                 model: {
@@ -139,7 +139,7 @@ Rectangle {
 
         Row {
             id: thirdRow
-            spacing: Math.round(8 * Style.scaleHint)
+            spacing: Math.round(8 * GlobalStyle.scaleHint)
             anchors.horizontalCenter: parent.horizontalCenter
             HBKeyButton {
                 text: keyboard.upperCase ? "A/a" : "A/a"
@@ -206,7 +206,7 @@ Rectangle {
         // 第五排：skin, abc, ,, 空格, ., CH, Enter
         Row {
             id: fourthRow
-            spacing: Math.round(8 * Style.scaleHint)
+            spacing: Math.round(8 * GlobalStyle.scaleHint)
             anchors.horizontalCenter: parent.horizontalCenter
             HBKeyButton {
                 text: (keyboard.isAlphabet === true) ? "&123" : "ABC"
@@ -269,12 +269,12 @@ Rectangle {
         width: keyboardLayout.width
         height: rowWidthSize
         anchors.bottom: keyboardLayout.top
-//        anchors.bottomMargin: Math.round(5 * Style.scaleHint)
+//        anchors.bottomMargin: Math.round(5 * GlobalStyle.scaleHint)
         anchors.left: keyboardLayout.left
         visible: isChinese
         Row {
             anchors.fill: parent
-            spacing: Math.round(8 * Style.scaleHint)
+            spacing: Math.round(8 * GlobalStyle.scaleHint)
             // 左翻页按钮
             HBKeyButton {
                 visible: keyboard.candidateList.length > keyboard.candidatesPerPage && keyboard.candidatePage > 0
@@ -314,7 +314,7 @@ Rectangle {
             Text {
                 text: keyboard.pinyinBuffer.length > 0 ? keyboard.pinyinBuffer : ""
                 color: "#333333"
-                font.pixelSize: Math.round(Style.style5 * Style.scaleHint)
+                font.pixelSize: Math.round(GlobalStyle.style5 * GlobalStyle.scaleHint)
                 verticalAlignment: Text.AlignVCenter
                 anchors.verticalCenter: parent.verticalCenter
                 visible: keyboard.pinyinBuffer.length > 0

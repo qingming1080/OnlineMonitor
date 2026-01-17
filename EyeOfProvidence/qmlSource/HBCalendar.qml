@@ -1,5 +1,5 @@
 import QtQuick 2.0
-import Style 1.0
+import GlobalStyle 1.0
 import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
 import GlobalLanguageDefine 1.0
@@ -58,15 +58,15 @@ Item
                                                   GlobalLanguageDefine.strDecember,]
 
                 width: parent.width
-                height: Math.round(30 * Style.scaleHint)
+                height: Math.round(30 * GlobalStyle.scaleHint)
                 Rectangle
                 {
                     anchors.fill: parent
-                    color: Style.backgroundDeepColor
+                    color: GlobalStyle.backgroundDeepColor
                 }
                 HBPrimaryButton {
                     text: "<"
-                    width: Math.round(25 * Style.scaleHint)
+                    width: Math.round(25 * GlobalStyle.scaleHint)
                     height: width
                     anchors.left: parent.left
                     anchors.verticalCenter: parent.verticalCenter
@@ -78,7 +78,7 @@ Item
                 HBPrimaryButton {
                     text: ">"
                     onClicked: calendar.showNextMonth()
-                    width: Math.round(25 * Style.scaleHint)
+                    width: Math.round(25 * GlobalStyle.scaleHint)
                     height: width
                     anchors.right: parent.right
                     anchors.verticalCenter: parent.verticalCenter
@@ -87,10 +87,10 @@ Item
                 // Current month and year label
                 Label {
                     height: parent.height
-                    width: Math.round(50 * Style.scaleHint)
+                    width: Math.round(50 * GlobalStyle.scaleHint)
                     anchors.centerIn: parent
                     text: qsTr("%1  %2").arg(strMonths[calendar.visibleMonth]).arg(calendar.visibleYear)
-                    font.pixelSize: Math.round(Style.style3 * Style.scaleHint)
+                    font.pixelSize: Math.round(GlobalStyle.style3 * GlobalStyle.scaleHint)
                     font.family: GlobalSystemDefine.fontBold
                     color: "#E1EAEA"
                     font.bold: true
@@ -109,20 +109,20 @@ Item
                                                     GlobalLanguageDefine.strFriday,
                                                     GlobalLanguageDefine.strSaturday]
                 width: parent.width
-                height: Math.round(30 * Style.scaleHint)
+                height: Math.round(30 * GlobalStyle.scaleHint)
                 Label {
                     anchors.centerIn: parent
                     text: strWeekDays[styleData.dayOfWeek]
-                    color: styleData.dayOfWeek === 0 || styleData.dayOfWeek === 6 ? Style.redFontColor : "#E1EAEA"
-                    font.pixelSize: Math.round(Style.style2 * Style.scaleHint)
+                    color: styleData.dayOfWeek === 0 || styleData.dayOfWeek === 6 ? GlobalStyle.redFontColor : "#E1EAEA"
+                    font.pixelSize: Math.round(GlobalStyle.style2 * GlobalStyle.scaleHint)
                     font.family: GlobalSystemDefine.fontBold
                     font.bold: true
                 }
             }
             dayDelegate: Item {
                 readonly property color sameMonthDateTextColor: "#E1EAEA"
-                readonly property color selectedDateColor: Qt.platform.os === "osx" ? Style.hbButtonBackgroundColor : systemPalette.highlight
-                readonly property color selectedDateTextColor: Style.blackFontColor
+                readonly property color selectedDateColor: Qt.platform.os === "osx" ? GlobalStyle.hbButtonBackgroundColor : systemPalette.highlight
+                readonly property color selectedDateTextColor: GlobalStyle.blackFontColor
                 readonly property color differentMonthDateTextColor: "#bbb"
                 readonly property color invalidDatecolor: "#dddddd"
 
@@ -137,7 +137,7 @@ Item
                 Label {
                     id: dayDelegateText
                     text: styleData.date.getDate()
-                    font.pixelSize: Math.round(Style.style3 * Style.scaleHint)
+                    font.pixelSize: Math.round(GlobalStyle.style3 * GlobalStyle.scaleHint)
                     anchors.centerIn: parent
                     color: {
                         var color = invalidDatecolor;
@@ -147,7 +147,7 @@ Item
                             {
                                 color = sameMonthDateTextColor;
                                 if(styleData.date.getDay() === 0 || styleData.date.getDay() === 6)
-                                    color = Style.redFontColor
+                                    color = GlobalStyle.redFontColor
                             }
                             else
                                 color = differentMonthDateTextColor;

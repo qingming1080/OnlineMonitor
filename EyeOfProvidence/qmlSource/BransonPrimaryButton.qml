@@ -15,7 +15,7 @@
 import QtQuick 2.6
 import QtGraphicalEffects 1.0
 import QtQuick.Controls 2.1
-import Style 1.0
+import GlobalStyle 1.0
 
 Button {
     readonly property string qmltextPrimary: qsTr("PRIMARY")
@@ -28,12 +28,12 @@ Button {
     property color buttonColor: "#6699CC"
     property color textColor : "#FFFFFF"
     property color shadowColor: "#80000000"
-    property int fontSize: Math.round(Style.style2 * Style.scaleHint)
+    property int fontSize: Math.round(GlobalStyle.style2 * GlobalStyle.scaleHint)
 
     contentItem: Text {
         text: qsTr(primaryButton.text)
         font{
-            family: Style.semibold.name
+            family: GlobalStyle.semibold.name
             pixelSize: fontSize
             capitalization: Font.AllUppercase
         }

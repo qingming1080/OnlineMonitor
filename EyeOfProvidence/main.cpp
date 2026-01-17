@@ -118,7 +118,7 @@ int main(int argc, char *argv[])
     qmlRegisterType<HistoryEnum>("HistoryEnum", 1, 0, "HistoryEnum");
 
     qmlRegisterSingletonType(QUrl("qrc:/qmlSource/GlobalLanguageDefine.qml"),   "GlobalLanguageDefine", 1,  0,  "GlobalLanguageDefine");
-    qmlRegisterSingletonType(QUrl("qrc:/qmlSource/BransonStyle.qml"),           "Style",                1,  0,  "Style");
+    qmlRegisterSingletonType(QUrl("qrc:/qmlSource/BransonStyle.qml"),           "GlobalStyle",          1,  0,  "GlobalStyle");
     qmlRegisterSingletonType(QUrl("qrc:/qmlSource/GlobalSystemDefine.qml"),     "GlobalSystemDefine",   1,  0,  "GlobalSystemDefine");
     qmlRegisterSingletonType(QUrl("qrc:/qmlSource/GlobalMessageDefine.qml"),    "GlobalMessageDefine",  1,  0,  "GlobalMessageDefine");
 

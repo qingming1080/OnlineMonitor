@@ -191,8 +191,8 @@ void Manual::saveData()
         }
         else
             DataBaseManager::getInstance()->removeManualRecord(m_listManualRecords.at(i).Id);
-        QModelIndex idx = index(i);
-        emit dataChanged(idx, idx, {MANUAL_TABLE::IS_SELECTED});
+        // QModelIndex idx = index(i);
+        // emit dataChanged(idx, idx, {MANUAL_TABLE::IS_SELECTED});
     }
     if(m_DBModel.id == -1)
     {

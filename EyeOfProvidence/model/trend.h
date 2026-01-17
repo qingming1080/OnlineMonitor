@@ -127,6 +127,9 @@ public:
     Q_INVOKABLE void setPostHeightSeries(QAbstractSeries *series);
     Q_INVOKABLE void setWeldTimeSeries(QAbstractSeries *series);
     Q_INVOKABLE void setPeakPowerSeries(QAbstractSeries *series);
+
+    Q_INVOKABLE void updateXYAxisRanges();
+    Q_INVOKABLE void updateSeries();
 signals:
 
     void notifyCountMinXChanged();
@@ -163,7 +166,6 @@ private:
     void setWeldTrendData(WELD_TREND data);
 
     void setYieldTrendData();
-    void updateYAxisRanges();
 
 private:
     static constexpr int X_AXIS_MAX = 128;
@@ -207,6 +209,8 @@ private:
     int m_YieldType{0};
     QTimer* m_weldTimer;
     QTimer* m_yieldTimer;
+
+    int lastCycleCount = -1;
 
     YIELD_TREND                     m_YieldData;
     DataBaseManager::DB_MODEL       m_DBModel;

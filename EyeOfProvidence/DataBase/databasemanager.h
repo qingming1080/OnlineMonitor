@@ -295,10 +295,12 @@ public:
     bool insertModelRecord(DB_MODEL model);
     bool removeModelRecord(int id);
     bool updateModelRecord(const int id, const DB_MODEL model);
+    bool updateModelRecordBatch(const QMap<int, DB_MODEL>& dataMap);
 
     bool removeProductionRow(int id);
     bool clearProduction();
     bool insertProductionRow(DB_PRODUCTION data);
+    bool insertProductionRowBatch(const QList<DB_PRODUCTION>& dataList);
     QList<DB_PRODUCTION> getProductionData(int welderID = 0, int finalResult = 0, bool exportAll = false);
 
     bool getProductionLastRecord(const int welderID, DB_PRODUCTION& production);

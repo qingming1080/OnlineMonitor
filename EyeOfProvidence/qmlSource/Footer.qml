@@ -1,11 +1,12 @@
 import QtQuick 2.0
-
-Rectangle  {
+import GlobalStyle 1.0
+Rectangle{
 
     id: footer
     width: parent.width
     height: 100
-    color: "transparent"
+    // color: GlobalStyle.backgroundColor
+    color: pRgb(153, 204, 255)
     property string versionText: GlobalLanguageDefine.strSystemVersion + ": " + GlobalSystemDefine.strVersionNumber
     property string currentTime: GlobalMessageDefine.getCurrentTime()
 

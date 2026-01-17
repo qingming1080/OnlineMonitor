@@ -15,7 +15,7 @@
 import QtQuick 2.0
 import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
-import Style 1.0
+import GlobalStyle 1.0
 
 TextField {
     id: bransonTextField
@@ -41,13 +41,13 @@ TextField {
     /*TextField style*/
     style: TextFieldStyle {
         id: textStyleId
-        font.pixelSize: Math.round(Style.style6 * Style.scaleHint)
-        textColor: Style.blueFontColor
+        font.pixelSize: Math.round(GlobalStyle.style6 * GlobalStyle.scaleHint)
+        textColor: GlobalStyle.blueFontColor
         background: Rectangle {
             id:backGroundId
             radius: 2
-            color: (enabled === true) ? "#ffffff" : Style.backgroundColor
-            border.color: Style.activeFrameBorderColor
+            color: (enabled === true) ? "#ffffff" : GlobalStyle.backgroundColor
+            border.color: GlobalStyle.activeFrameBorderColor
             border.width: 1
         }
     }
