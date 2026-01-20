@@ -209,5 +209,8 @@ private:
     QMap<int, int> m_WelderDeviceMap; //welderId, deviceId
     bool m_connected = false;
 };
-
+Q_DECLARE_METATYPE(HBModbusClient::MODBUS_WELD_RESULT)
+Q_DECLARE_METATYPE(HBModbusClient::WELD_PRESET)
+Q_DECLARE_METATYPE(HBModbusClient::IO_STATUS)
+Q_DECLARE_METATYPE(HBModbusClient::DEVICE_STATUS)
 #endif // HBMODBUSCLIENT_H

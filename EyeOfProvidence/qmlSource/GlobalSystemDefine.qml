@@ -15,5 +15,5 @@ QtObject
     property string fontBold: bold.name
 
     // Version Number
-    readonly property string strVersionNumber:      "v2.0.2"
+    readonly property string strVersionNumber:      "v2.0.3"
 }

@@ -67,6 +67,10 @@ int main(int argc, char *argv[])
     // 安装自定义消息处理程序
     // qInstallMessageHandler(myMessageHandler);
     QApplication app(argc, argv);
+    qRegisterMetaType<HBModbusClient::MODBUS_WELD_RESULT>("HBModbusClient::MODBUS_WELD_RESULT");
+    qRegisterMetaType<HBModbusClient::WELD_PRESET>("HBModbusClient::WELD_PRESET");
+    qRegisterMetaType<HBModbusClient::IO_STATUS>("HBModbusClient::IO_STATUS");
+    qRegisterMetaType<HBModbusClient::DEVICE_STATUS>("HBModbusClient::DEVICE_STATUS");
     LocalRecord::getInstance()->start();
 
     LanguageManager LanguageManager;
