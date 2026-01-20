@@ -709,7 +709,7 @@ Rectangle {
         anchors.left: parent.left
         anchors.leftMargin: 25
         anchors.bottom: parent.bottom
-        anchors.bottomMargin: 40
+        anchors.bottomMargin: 10
         text: isUSBAvailable ? GlobalLanguageDefine.strUSBConnected : GlobalLanguageDefine.strNoUSB
         color: "#E8E8E8"
         font.family: GlobalSystemDefine.fontBold
