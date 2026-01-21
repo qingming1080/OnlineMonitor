@@ -104,9 +104,10 @@ Rectangle {
         function onNotifyPresetChanged(welderID)
         {
             var learningScreen = QmlEnum.AUTO_LEARNING_SCREEEN
-            var objItem = prostack.find(function(item) {
-                return (item.qmlscreenIndicator === learningScreen)})
-            if(objItem === null)
+            // var objItem = prostack.find(function(item) {
+            //     return (item.qmlscreenIndicator === learningScreen)})
+            var isCurrentLearningPage = componentLoader.item && componentLoader.item.qmlscreenIndicator === learningScreen
+            if(!isCurrentLearningPage)
             {
                 for(var i = 0; i < deviceCount; i++)
                 {
