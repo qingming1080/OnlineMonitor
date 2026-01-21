@@ -11,12 +11,16 @@
 Trend::Trend(int welderID, QObject *parent)
     : QObject{parent}, m_WelderID(welderID)
 {
+    m_PreheightData.reserve(X_AXIS_MAX);
+    m_PostHeightData.reserve(X_AXIS_MAX);
+    m_WeldTimeData.reserve(X_AXIS_MAX);
+    m_PeakPowerData.reserve(X_AXIS_MAX);
+    lastCycleCount = -1;
     if(DataBaseManager::getInstance()->getModelRecord(m_WelderID, m_DBModel) == false)
     {
         m_DBModel = DataBaseManager::DB_MODEL();
     }
     init();
-    lastCycleCount = -1;
 }
 
 void Trend::upWeldData()
@@ -89,9 +93,13 @@ void Trend::AppendWeldPoint(const int cycleCount, const int power, const int tim
 void Trend::updateXYAxisRanges()
 {
 
-    int xMin = m_WeldTimeData.at(0).x();
-    int size = m_WeldTimeData.size();
-    int xMax = m_WeldTimeData.at(size - 1).x();
+    if (m_WeldTimeData.isEmpty())
+    {
+        return;
+    }
+
+    int xMin = m_WeldTimeData.first().x();
+    int xMax = m_WeldTimeData.last().x();
     setCountMinX(xMin);
     setCountMaxX(xMax);
 
