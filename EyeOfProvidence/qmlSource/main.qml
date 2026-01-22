@@ -343,6 +343,13 @@ Window {
         height: parent.height
         z: 2
     }
+    HBDateTimeSetting
+    {
+        id: dateTimeSetting
+        anchors.centerIn: parent
+        visible:false
+        z:100
+    }
 }
 
 

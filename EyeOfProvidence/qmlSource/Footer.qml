@@ -64,19 +64,9 @@ Rectangle{
             cursorShape: Qt.PointingHandCursor
             onClicked:
             {
-                  dateTimeSetting.visible = true
+                dateTimeSetting.visible = true
             }
         }
-    }
-
-    HBDateTimeSetting
-    {
-        id: dateTimeSetting
-        anchors.right: parent.right
-        anchors.bottom: parent.bottom
-        anchors.rightMargin: 260
-        anchors.bottomMargin: 230
-        visible:false
     }
 
     Timer

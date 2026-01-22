@@ -48,7 +48,7 @@ bool CSVExportWorker::ExportToCSV(const QString localDirectory, const QString ta
     QStringList arguments; // 这里可以添加命令参数，例如 "-l" 或其他
     qDebug() << "localDirectly: " << localDirectory;
     qDebug() << "targetDirectory: " << targetDirectory;
-    arguments.append("ConvertCSV.py");
+    arguments.append("/opt/ProvidenceEE/bin/ConvertCSV.py");
     arguments.append(localDirectory);
     arguments.append(targetDirectory);
 
