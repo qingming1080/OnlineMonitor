@@ -18,6 +18,7 @@ DEFINES += REMARK_FWC
 
 INCLUDEPATH += $$PWD/../HBCommon
 HEADERS += $$PWD/../HBCommon/ModbusDefine.h \
+    model/yieldstrendenum.h
 
 SOURCES += \
         DataBase/databasehelper.cpp \

@@ -20,12 +20,14 @@
 #include "model/paritymodel.h"
 #include "model/weldertypemodel.h"
 #include "model/historyenum.h"
+#include "model/yieldstrendenum.h"
 #include "DataBase/databasemanager.h"
 #include "log/localrecord.h"
 #include "LanguageManager/languageManager.h"
 #include "tools/utilityapplauncher.h"
 #include "tools/utilityfunction.h"
 #include "KeyBoard/pinyindict.h"
+
 
 //modbus
 #include "modbus/hbmodbusclient.h"
@@ -110,16 +112,17 @@ int main(int argc, char *argv[])
 
     qmlRegisterType<Device>("Device", 1, 0, "Device");
     // qmlRegisterType<IO>("IO", 1, 0, "IO");
-    qmlRegisterType<DeviceInformation>("DeviceObj", 1, 0, "DeviceObj");//
-    qmlRegisterType<Production>("ProductionObj", 1, 0, "ProductionObj");//
-    qmlRegisterType<Manual>("ManualObj", 1, 0, "ManualObj"); //
-    qmlRegisterType<Trend>("TrendObj", 1, 0,"TrendObj");
-    qmlRegisterType<MESSAGE_ENUM>("MessageEnum", 1, 0, "MessageEnum");
-    qmlRegisterType<QmlEnum>("QmlEnum", 1, 0,"QmlEnum");
-    qmlRegisterType<LanguageEnum>("LanguageEnum", 1, 0, "LanguageEnum");
-    qmlRegisterType<DeviceInfoEnum>("DeviceInfoEnum", 1, 0, "DeviceInfoEnum");
-    qmlRegisterType<MANUAL_TABLE>("ManualTable", 1, 0, "ManualTable");
-    qmlRegisterType<HistoryEnum>("HistoryEnum", 1, 0, "HistoryEnum");
+    qmlRegisterType<DeviceInformation>("DeviceObj",     1, 0, "DeviceObj");//
+    qmlRegisterType<Production>("ProductionObj",        1, 0, "ProductionObj");//
+    qmlRegisterType<Manual>("ManualObj",                1, 0, "ManualObj"); //
+    qmlRegisterType<Trend>("TrendObj",                  1, 0,"TrendObj");
+    qmlRegisterType<MESSAGE_ENUM>("MessageEnum",        1, 0, "MessageEnum");
+    qmlRegisterType<QmlEnum>("QmlEnum",                 1, 0,"QmlEnum");
+    qmlRegisterType<LanguageEnum>("LanguageEnum",       1, 0, "LanguageEnum");
+    qmlRegisterType<DeviceInfoEnum>("DeviceInfoEnum",   1, 0, "DeviceInfoEnum");
+    qmlRegisterType<MANUAL_TABLE>("ManualTable",        1, 0, "ManualTable");
+    qmlRegisterType<HistoryEnum>("HistoryEnum",         1, 0, "HistoryEnum");
+    qmlRegisterType<YieldsTrendEnum>("YieldsTrendEnum", 1, 0, "YieldsTrendEnum");
 
     qmlRegisterSingletonType(QUrl("qrc:/qmlSource/GlobalLanguageDefine.qml"),   "GlobalLanguageDefine", 1,  0,  "GlobalLanguageDefine");
     qmlRegisterSingletonType(QUrl("qrc:/qmlSource/BransonStyle.qml"),           "GlobalStyle",          1,  0,  "GlobalStyle");

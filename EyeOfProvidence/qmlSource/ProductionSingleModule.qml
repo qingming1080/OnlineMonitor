@@ -134,16 +134,17 @@ Rectangle {
                         return ""
                 }
             }
-            // YieldTrend{
-            //     id: s6
-            //     width:  514
-            //     height:  255
-            //     x: 658
-            //     y: 35
-            //     color:  "#0c5696"
-            //     deviceIndex: currentIndex
-            //     isSingleDevice: true
-            // }
+
+            YieldTrend{
+                id: s6
+                width:  514
+                height:  255
+                x: 658
+                y: 35
+                color:  "#0c5696"
+                deviceIndex: currentIndex
+            }
+
             WeldingTrend{
                 id:s7
                 width:  502
@@ -204,7 +205,6 @@ Rectangle {
         onPressed: {
             if(deviceCount === 3)
                 currentIndex = 0
-            // s6.isSingleDevice = false
             loadViewpro(2, null)
         }
         visible: (DeviceManager.DeviceCounter > 1) ? true : false

@@ -225,17 +225,16 @@ Rectangle {
                 }
             }
         }
-        // YieldTrend{
-        //     id: s5
-        //     width: 545
-        //     height: 254
-        //     x:28
-        //     y:298
-        //     radius: 3
-        //     color: "#0c5596"
-        //     deviceIndex: 0
-        //     isSingleDevice: false
-        // }
+        YieldTrend{
+            id: s5
+            width: 545
+            height: 254
+            x:28
+            y:298
+            radius: 3
+            // color: "#0c5596"
+            deviceIndex: 0
+        }
         Button{
             width: 30
             height: 30
@@ -375,17 +374,15 @@ Rectangle {
                 }
             }
         }
-        // YieldTrend{
-        //     id: s6
-        //     width: 545
-        //     height: 254
-        //     x:28
-        //     y:298
-        //     radius: 3
-        //     color: "#0c5596"
-        //     deviceIndex: 1
-        //     isSingleDevice: false
-        // }
+        YieldTrend{
+            id: s6
+            width: 545
+            height: 254
+            x:28
+            y:298
+            radius: 3
+            deviceIndex: 1
+        }
         Button{
             width: 30
             height: 30
