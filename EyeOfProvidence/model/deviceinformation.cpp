@@ -437,17 +437,17 @@ bool DeviceInformation::validateConfigureSettings()
     bool isL20_TS   = (m_DBConfigure.WelderType == DeviceInfoEnum::L20_TS);
     bool isRS232    = (m_DBConfigure.ConnectType == DeviceInfoEnum::RS232);
 
-    if (isL20_TS != isRS232)
-    {
-        QString msg;
-        if (isL20_TS)
-            msg = "设备型号 L20-TS, 请选择 RS232 连接！";
-        else
-            msg = "使用 RS232 连接时，请选择设备型号为 L20-TS ！";
+    // if (isL20_TS != isRS232)
+    // {
+    //     QString msg;
+    //     if (isL20_TS)
+    //         msg = "设备型号 L20-TS, 请选择 RS232 连接！";
+    //     else
+    //         msg = "使用 RS232 连接时，请选择设备型号为 L20-TS ！";
 
-        emit errorMessageChanged(msg);
-        return false;
-    }
+    //     emit errorMessageChanged(msg);
+    //     return false;
+    // }
 
     if(m_DBConfigure.ConnectType == DeviceInfoEnum::TCP_IP)
     {
