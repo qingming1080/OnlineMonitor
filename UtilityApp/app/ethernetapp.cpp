@@ -1,6 +1,7 @@
 #include "ethernetapp.h"
 #include "../protocol/common.h"
 #include "../protocol/versagraphic.h"
+#include "../protocol/touchscreen.h"
 #include <QThread>
 #include <QTimerEvent>
 #include <QDebug>
@@ -166,6 +167,9 @@ int EthernetApp::Attach(const int iDev, const int ProtocolType, const void *_dev
     {
     case Common::VG_TCP:
         dev._ptrProtocol = new Versagraphic();
+        break;
+    case Common::TC_RS232:
+        dev._ptrProtocol = new TouchScreen();
         break;
     case Common::DP2000X_TCP:
         break;
