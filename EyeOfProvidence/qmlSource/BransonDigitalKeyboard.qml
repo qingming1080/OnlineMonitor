@@ -12,11 +12,11 @@
  
  **********************************************************************************************************/
 
-import QtQuick 2.0
-import QtQuick.Controls 2.1
-import QtGraphicalEffects 1.0
-import GlobalStyle 1.0
-import GlobalSystemDefine 1.0
+import QtQuick               2.0
+import QtQuick.Controls      2.1
+import QtGraphicalEffects    1.0
+import GlobalStyle           1.0
+import GlobalSystemDefine    1.0
 
 Button{
     id: digiaal

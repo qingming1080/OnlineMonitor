@@ -1,6 +1,6 @@
-import QtQuick 2.0
-import QtQuick.Controls 2.5
-import GlobalSystemDefine 1.0
+import QtQuick              2.0
+import QtQuick.Controls     2.5
+import GlobalSystemDefine   1.0
 Rectangle {
     border.color: "transparent"
     property string btnText: ""

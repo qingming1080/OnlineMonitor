@@ -1,9 +1,9 @@
-﻿import QtQuick 2.0
-import QmlEnum 1.0
+﻿import QtQuick              2.0
+import QmlEnum              1.0
 import GlobalLanguageDefine 1.0
-import GlobalMessageDefine 1.0
-import GlobalSystemDefine 1.0
-import LanguageEnum 1.0
+import GlobalMessageDefine  1.0
+import GlobalSystemDefine   1.0
+import LanguageEnum         1.0
 //异常信息
 Rectangle {
     color: pRgb(43, 112, 173)

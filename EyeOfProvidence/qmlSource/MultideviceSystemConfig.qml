@@ -1,11 +1,11 @@
-import QtQuick 2.0
-import QtQuick.Controls 2.15
-import Device 1.0
+import QtQuick              2.0
+import QtQuick.Controls     2.15
+import Device               1.0
 
 import GlobalLanguageDefine 1.0
 import DeviceObj            1.0
 import DeviceInfoEnum       1.0
-import GlobalSystemDefine 1.0
+import GlobalSystemDefine   1.0
 //系统配置（小）
 Rectangle {
     id: multiDeviceConfigure

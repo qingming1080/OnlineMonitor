@@ -1,8 +1,8 @@
-﻿import QtQuick 2.0
-import QtQuick.Controls 2.5
+﻿import QtQuick              2.0
+import QtQuick.Controls     2.5
 import GlobalLanguageDefine 1.0
-import GlobalSystemDefine 1.0
-import GlobalStyle 1.0
+import GlobalSystemDefine   1.0
+import GlobalStyle          1.0
 Rectangle {
     color: GlobalStyle.backgroundColor
     Connections{

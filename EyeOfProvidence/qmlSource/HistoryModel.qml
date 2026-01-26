@@ -1,14 +1,14 @@
-﻿import QtQuick 2.15
-import QtQuick.Controls 1.4
-import QtQml.Models 2.2
-import QtQuick.Controls 2.5
-import Qt.labs.qmlmodels 1.0
-import QtQuick.Controls.Styles 1.4
-import GlobalLanguageDefine 1.0
-import GlobalSystemDefine 1.0
-import GlobalMessageDefine 1.0
-import LanguageEnum 1.0
-import HistoryEnum 1.0
+﻿import QtQuick                  2.15
+import QtQuick.Controls         1.4
+import QtQml.Models             2.2
+import QtQuick.Controls         2.5
+import Qt.labs.qmlmodels        1.0
+import QtQuick.Controls.Styles  1.4
+import GlobalLanguageDefine     1.0
+import GlobalSystemDefine       1.0
+import GlobalMessageDefine      1.0
+import LanguageEnum             1.0
+import HistoryEnum              1.0
 Rectangle {
     property int itemCount: DeviceManager.DeviceCounter
     property bool isUSBAvailable: false

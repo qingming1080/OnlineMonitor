@@ -1,5 +1,5 @@
-import QtQuick 2.0
-import GlobalSystemDefine 1.0
+import QtQuick              2.0
+import GlobalSystemDefine   1.0
 Item {
     id: control
 

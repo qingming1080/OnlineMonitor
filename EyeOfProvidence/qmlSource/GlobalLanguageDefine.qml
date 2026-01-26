@@ -1,5 +1,5 @@
 pragma Singleton //we indicate that this QML Type is a singleton
-import QtQuick 2.12
+import QtQuick      2.12
 import LanguageEnum 1.0
 QtObject
 {

@@ -1,13 +1,13 @@
-﻿import QtQuick 2.0
-import QtQuick.Controls 2.5
-import QtCharts 2.15
-import Device 1.0
-import TrendObj 1.0
+﻿import QtQuick              2.0
+import QtQuick.Controls     2.5
+import QtCharts             2.15
+import Device               1.0
+import TrendObj             1.0
 import GlobalLanguageDefine 1.0
-import GlobalSystemDefine 1.0
-import GlobalStyle 1.0
-import LanguageEnum 1.0
-import YieldsTrendEnum 1.0
+import GlobalSystemDefine   1.0
+import GlobalStyle          1.0
+import LanguageEnum         1.0
+import YieldsTrendEnum      1.0
 
 //良率趋势
 Rectangle

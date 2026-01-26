@@ -1,7 +1,7 @@
-﻿import QtQuick 2.0
+﻿import QtQuick              2.0
 import GlobalLanguageDefine 1.0
-import GlobalSystemDefine 1.0
-import LanguageEnum 1.0
+import GlobalSystemDefine   1.0
+import LanguageEnum         1.0
 //焊接结果
 Rectangle {
     property string energy: ""

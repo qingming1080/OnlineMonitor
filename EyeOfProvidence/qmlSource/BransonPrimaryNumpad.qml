@@ -12,12 +12,12 @@
  
  **********************************************************************************************************/
 
-import QtQuick 2.0
+import QtQuick                  2.0
 //import QtQuick.Controls 2.2
-import QtQuick.Controls 1.1
-import QtQuick.Controls.Styles 1.1
-import GlobalStyle 1.0
-import GlobalSystemDefine 1.0
+import QtQuick.Controls         1.1
+import QtQuick.Controls.Styles  1.1
+import GlobalStyle              1.0
+import GlobalSystemDefine       1.0
 
 //import NumpadDefine 1.0
 Item {

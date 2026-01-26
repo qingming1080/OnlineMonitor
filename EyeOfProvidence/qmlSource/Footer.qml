@@ -1,5 +1,5 @@
-import QtQuick 2.0
-import GlobalStyle 1.0
+import QtQuick      2.0
+import GlobalStyle  1.0
 Rectangle{
 
     id: footer

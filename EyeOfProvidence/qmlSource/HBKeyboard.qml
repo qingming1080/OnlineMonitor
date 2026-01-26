@@ -1,7 +1,7 @@
-import QtQuick 2.15
-import QtQuick.Controls 2.15
-import GlobalStyle 1.0
-import GlobalSystemDefine 1.0
+import QtQuick              2.15
+import QtQuick.Controls     2.15
+import GlobalStyle          1.0
+import GlobalSystemDefine   1.0
 Rectangle {
     id: keyboard
     width: window.width  // 与主窗口同宽
