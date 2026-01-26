@@ -17,6 +17,7 @@ import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
 import GlobalStyle 1.0
 import GlobalLanguageDefine 1.0
+import GlobalSystemDefine 1.0
 
 TextField {
     id: hbTextField

@@ -17,10 +17,13 @@ QtObject
     readonly property string strSystemConfigSuccess:    qsTr("系统配置成功!")
     readonly property string strLoading:                qsTr("载入中")
     readonly property string strRomveDevice:            qsTr("是否删除当前设备")
-             property string qmltextMinimun:            qsTr("Min")
-             property string qmltextMaximum:            qsTr("Max")
-             property string qmltextDone:               qsTr("DONE")
-             property string qmltextCancel:             qsTr("CANCEL")
+
+    //NumberKeyBoard
+    readonly property string strKeyBoardMinimun:        qsTr("最小值")
+    readonly property string strKeyBoardMaximum:        qsTr("最大值")
+    readonly property string strKeyBoardDone:           qsTr("确认")
+    readonly property string strKeyBoardCancel:         qsTr("返回")
+    readonly property string strKeyBoardClr:            qsTr("清除")
     
     // 异常信息相关
     readonly property string strSuspiciousAppeared:     qsTr("出现可疑品")

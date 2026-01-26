@@ -16,6 +16,8 @@ import QtQuick 2.0
 import GlobalStyle 1.0
 import QtQuick.Controls 1.1
 import QtQuick.Controls.Styles 1.1
+import GlobalLanguageDefine 1.0
+import GlobalSystemDefine 1.0
 Item {
     readonly property int minWidthNumpad: Math.round(248 * GlobalStyle.scaleHint)
     readonly property int minHeightNumpad: Math.round(236 * GlobalStyle.scaleHint)
@@ -35,7 +37,7 @@ Item {
     readonly property string qmltextDigit0:  "0"
     readonly property string qmltextDot:     "."
     readonly property string qmltextBackSpaceSymbol: "⌫"
-    readonly property string qmltextClr:     qsTr("Clr")
+    readonly property string qmltextClr:     GlobalLanguageDefine.strKeyBoardClr
     signal signalButtonNum(string num)
     signal signalButtonFunc(int funcBtn)
     Rectangle{

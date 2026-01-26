@@ -17,6 +17,8 @@ import QtQuick 2.0
 import QtQuick.Controls 1.1
 import QtQuick.Controls.Styles 1.1
 import GlobalStyle 1.0
+import GlobalSystemDefine 1.0
+
 //import NumpadDefine 1.0
 Item {
     id: primaryNumpad
@@ -32,6 +34,7 @@ Item {
     property var targetTextField // allow the external object to register into Component
     signal valueUpdated(string newValue)
     property var confirmCallback
+    property bool showMinMax: false
 
     function selectAll()
     {
@@ -153,13 +156,14 @@ Item {
             }
             Label {
                 id: labelMin
-                text: GlobalLanguageDefine.qmltextMinimun + ":" //qsTr("Min:")
+                text: GlobalLanguageDefine.strKeyBoardMinimun + ":" //qsTr("Min:")
                 anchors.top: input.bottom
                 anchors.left: input.left
                 anchors.topMargin: Math.round(2 * GlobalStyle.scaleHint)
                 font.pixelSize: Math.round(GlobalStyle.style3 * GlobalStyle.scaleHint)
                 font.family: GlobalSystemDefine.fontBold
                 color: GlobalStyle.blueFontColor
+                visible: showMinMax
             }
             Text {
                 id: txtMin
@@ -170,17 +174,19 @@ Item {
                 font.pixelSize: Math.round(GlobalStyle.style3 * GlobalStyle.scaleHint)
                 font.family: GlobalSystemDefine.fontBold
                 color: GlobalStyle.blueFontColor
+                visible: showMinMax
 
             }
             Label {
                 id: labelMax
-                text: GlobalLanguageDefine.qmltextMaximum + ":" //qsTr("Max:")
+                text: GlobalLanguageDefine.strKeyBoardMaximum + ":" //qsTr("Max:")
                 anchors.top: txtMax.top
                 anchors.right: txtMax.left
                 anchors.rightMargin: Math.round(5 * GlobalStyle.scaleHint)
                 font.pixelSize: Math.round(GlobalStyle.style3 * GlobalStyle.scaleHint)
                 font.family: GlobalSystemDefine.fontBold
                 color: GlobalStyle.blueFontColor
+                visible: showMinMax
             }
             Text {
                 id: txtMax
@@ -191,6 +197,7 @@ Item {
                 font.pixelSize: Math.round(GlobalStyle.style3 * GlobalStyle.scaleHint)
                 font.family: GlobalSystemDefine.fontBold
                 color: GlobalStyle.blueFontColor
+                visible: showMinMax
 
             }
             BransonNumKeyboard
@@ -212,10 +219,10 @@ Item {
             anchors.bottomMargin: Math.round(15 * GlobalStyle.scaleHint)
             anchors.left: root.left
             anchors.leftMargin: Math.round(60 * GlobalStyle.scaleHint)
-            text: GlobalLanguageDefine.qmltextCancel
+            text: GlobalLanguageDefine.strKeyBoardCancel
             font.family: GlobalSystemDefine.fontBold
-            buttonColor: GlobalStyle.backgroundColor
-            textColor: "#000000"
+            // buttonColor: GlobalStyle.backgroundColor
+            // textColor: "#000000"
             onClicked:
             {
                 primaryNumpad.visible = false
@@ -231,7 +238,7 @@ Item {
             anchors.top: cancel.top
             anchors.left: cancel.right
             anchors.leftMargin: Math.round(20 * GlobalStyle.scaleHint)
-            text: GlobalLanguageDefine.qmltextDone
+            text: GlobalLanguageDefine.strKeyBoardDone
             font.family: GlobalSystemDefine.fontBold
             onClicked:
             {
