@@ -16,42 +16,49 @@ Rectangle {
     readonly property int qmlscreenIndicator: QmlEnum.MULTI_PRODUCTION_SCREEN
     property int currentIndex: DeviceManager.SelectedDeviceIndex
     property int deviceCount: DeviceManager.DeviceCounter
+    property int overViewsWidth: 600
+    property int overViewsHight: 664
+    property int overViewsInfoWidth: 238
+    property int overViewsInfoHeight: 270
+    property int overViewsRealtimeYieldWidth: 305
+    property int overViewsRealtimeYieldHight: 270
+    property int overViewsYieldTrendWidth: 558
+    property int overViewsYieldTrendHight: 285
 
     Connections{
         target: mpro
         function onSigBtnSynchronization(index,time){
             if(index === 1){
-                s5.btnIndex = time
+                device1_YieldTrend.btnIndex = time
             }
             else if(index === 2){
-                s6.btnIndex = time
+                device2_YieldTrend.btnIndex = time
             }
         }
     }
     function swichCount(){
         if(deviceCount == 2)
         {
-            r1.height = 581
-            r2.height = 581
+            device1_OverView.height         = overViewsHight
+            device1_OverView.width          = overViewsWidth
+            device2_OverView.height         = overViewsHight
+            device2_OverView.width          = overViewsWidth
             // r3.visible = false
             // r4.visible = false
-            s1.x = 28
-            s1.y = 42
-            s2.x = 284
-            s2.y = 42
-            s3.x = 28
-            s3.y = 42
-            s4.x = 284
-            s4.y = 42
+            device1_Info.width              = overViewsInfoWidth
+            device1_Info.height             = overViewsInfoHeight
+            device2_Info.width              = overViewsInfoWidth
+            device2_Info.height             = overViewsInfoHeight
 
-            s1.width = 243
-            s1.height = 237
-            s2.width = 289
-            s2.height = 238
-            s3.width = 243
-            s3.height = 237
-            s4.width = 289
-            s4.height = 238
+            device1_RealtimeYield.width     = overViewsRealtimeYieldWidth
+            device1_RealtimeYield.height    = overViewsRealtimeYieldHight
+            device2_RealtimeYield.width     = overViewsRealtimeYieldWidth
+            device2_RealtimeYield.height    = overViewsRealtimeYieldHight
+
+            device1_YieldTrend.width        = overViewsYieldTrendWidth
+            device1_YieldTrend.height       = overViewsYieldTrendHight
+            device2_YieldTrend.width        = overViewsYieldTrendWidth
+            device2_YieldTrend.height       = overViewsYieldTrendHight
         }
         // else if(deviceCount == 3)
         // {
@@ -109,28 +116,28 @@ Rectangle {
     }
 
     Rectangle{
-        id:r1
-        x:28
-        y:44
-        width: 600
-        height: 581
+        id: device1_OverView
+        anchors.top: parent.top
+        anchors.topMargin: 29
+        anchors.left: parent.left
+        anchors.leftMargin: 30
         radius: 5
         color: pRgb(43, 112, 173)
         onHeightChanged: {
             if(height>290){
-                s5.visible = true
+                device1_YieldTrend.visible = true
             }
             else{
-                s5.visible = false
+                device1_YieldTrend.visible = false
             }
         }
 
         EquipmentInfor{
-            id:s1
-            x:28
-            y:42
-            width: 243
-            height: 237
+            id: device1_Info
+            anchors.left: parent.left
+            anchors.leftMargin: 20
+            anchors.top: parent.top
+            anchors.topMargin: 45
             radius: 3
             color: "#0c5596"
             deviceName:{
@@ -169,11 +176,11 @@ Rectangle {
             }
         }
         RealtimeYield{
-            id:s2
-            width: 289
-            height: 238
-            x:284
-            y:42
+            id: device1_RealtimeYield
+            anchors.left: parent.left
+            anchors.leftMargin: 272
+            anchors.top: parent.top
+            anchors.topMargin: 45
             radius: 3
             color: "#0c5596"
             revealing:{
@@ -226,20 +233,22 @@ Rectangle {
             }
         }
         YieldTrend{
-            id: s5
-            width: 545
-            height: 254
-            x:28
-            y:298
+            id: device1_YieldTrend
+            anchors.left: parent.left
+            anchors.leftMargin: 20
+            anchors.bottom: parent.bottom
+            anchors.bottomMargin: 40
             radius: 3
             // color: "#0c5596"
             deviceIndex: 0
         }
         Button{
-            width: 30
-            height: 30
-            x:566
-            y:6
+            width: 27
+            height: 27
+            anchors.top: parent.top
+            anchors.topMargin: 10
+            anchors.right: parent.right
+            anchors.rightMargin: 10
             background: Rectangle{
                 color: "transparent"
                 Image {
@@ -255,27 +264,27 @@ Rectangle {
         }
     }
     Rectangle{
-        id:r2
-        x:654
-        y:44
-        width: 600
-        height: 581
+        id: device2_OverView
+        anchors.top: parent.top
+        anchors.topMargin: 29
+        anchors.right: parent.right
+        anchors.rightMargin: 30
         radius: 5
         color: pRgb(43, 112, 173)
         onHeightChanged: {
             if(height > 290){
-                s6.visible = true
+                device2_YieldTrend.visible = true
             }
             else{
-                s6.visible = false
+                device2_YieldTrend.visible = false
             }
         }
         EquipmentInfor{
-            id:s3
-            x:28
-            y:42
-            width: 243
-            height: 237
+            id: device2_Info
+            anchors.left: parent.left
+            anchors.leftMargin: 20
+            anchors.top: parent.top
+            anchors.topMargin: 45
             radius: 3
             color: "#0c5596"
             deviceName:{
@@ -318,11 +327,11 @@ Rectangle {
             }
         }
         RealtimeYield{
-            id:s4
-            width: 289
-            height: 238
-            x:284
-            y:42
+            id: device2_RealtimeYield
+            anchors.left: parent.left
+            anchors.leftMargin: 272
+            anchors.top: parent.top
+            anchors.topMargin: 45
             radius: 3
             color: "#0c5596"
             revealing:{
@@ -375,19 +384,21 @@ Rectangle {
             }
         }
         YieldTrend{
-            id: s6
-            width: 545
-            height: 254
-            x:28
-            y:298
+            id: device2_YieldTrend
+            anchors.left: parent.left
+            anchors.leftMargin: 20
+            anchors.bottom: parent.bottom
+            anchors.bottomMargin: 40
             radius: 3
             deviceIndex: 1
         }
         Button{
-            width: 30
-            height: 30
-            x:566
-            y:6
+            width: 27
+            height: 27
+            anchors.top: parent.top
+            anchors.topMargin: 8
+            anchors.right: parent.right
+            anchors.rightMargin: 8
             background: Rectangle{
                 color: "transparent"
                 Image {

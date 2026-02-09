@@ -79,7 +79,8 @@ Rectangle {
         font.bold: true
         font.pixelSize: LanguageManager.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 16 : 14
         color: pRgb(171, 206, 213)
-        x:/*mode === 1 ? 33 :*/ 39
+        anchors.left: parent.left
+        anchors.leftMargin: 17
         y:/*mode === 1 ? 54 :*/ 63
     }
     Text {

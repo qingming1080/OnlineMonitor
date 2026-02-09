@@ -96,8 +96,8 @@ Rectangle {
     }
     CustomRipple{
         id: yuan
-        x:150
-        y:58
+        anchors.left: t4.right
+        anchors.bottom: t4.bottom
         value: eqText5
     }
 }

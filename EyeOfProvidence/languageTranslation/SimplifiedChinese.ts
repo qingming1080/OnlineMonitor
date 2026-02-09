@@ -260,22 +260,22 @@
     <message>
         <location filename="../qmlSource/GlobalLanguageDefine.qml" line="22"/>
         <source>最小值</source>
-        <translation type="unfinished"></translation>
+        <translation>最小值</translation>
     </message>
     <message>
         <location filename="../qmlSource/GlobalLanguageDefine.qml" line="23"/>
         <source>最大值</source>
-        <translation type="unfinished"></translation>
+        <translation>最大值</translation>
     </message>
     <message>
         <location filename="../qmlSource/GlobalLanguageDefine.qml" line="25"/>
         <source>返回</source>
-        <translation type="unfinished"></translation>
+        <translation>最大值</translation>
     </message>
     <message>
         <location filename="../qmlSource/GlobalLanguageDefine.qml" line="26"/>
         <source>清除</source>
-        <translation type="unfinished"></translation>
+        <translation>清除</translation>
     </message>
     <message>
         <location filename="../qmlSource/GlobalLanguageDefine.qml" line="82"/>
@@ -681,37 +681,37 @@
     <message>
         <location filename="../qmlSource/GlobalLanguageDefine.qml" line="75"/>
         <source>添加记录</source>
-        <translation type="unfinished"></translation>
+        <translation>添加记录</translation>
     </message>
     <message>
         <location filename="../qmlSource/GlobalLanguageDefine.qml" line="77"/>
         <source>循环计数</source>
-        <translation type="unfinished"></translation>
+        <translation>循环计数</translation>
     </message>
     <message>
         <location filename="../qmlSource/GlobalLanguageDefine.qml" line="112"/>
         <source>预高</source>
-        <translation type="unfinished"></translation>
+        <translation>预高</translation>
     </message>
     <message>
         <location filename="../qmlSource/GlobalLanguageDefine.qml" line="114"/>
         <source>终高</source>
-        <translation type="unfinished"></translation>
+        <translation>终高</translation>
     </message>
     <message>
         <location filename="../qmlSource/GlobalLanguageDefine.qml" line="141"/>
         <source>待定模式</source>
-        <translation type="unfinished"></translation>
+        <translation>待定模式</translation>
     </message>
     <message>
         <location filename="../qmlSource/GlobalLanguageDefine.qml" line="145"/>
         <source>刷新</source>
-        <translation type="unfinished"></translation>
+        <translation>刷新</translation>
     </message>
     <message>
         <location filename="../qmlSource/GlobalLanguageDefine.qml" line="146"/>
         <source>采样</source>
-        <translation type="unfinished"></translation>
+        <translation>采样</translation>
     </message>
     <message>
         <location filename="../qmlSource/GlobalLanguageDefine.qml" line="154"/>
@@ -863,102 +863,102 @@
     <message>
         <location filename="../qmlSource/GlobalLanguageDefine.qml" line="197"/>
         <source>一月</source>
-        <translation type="unfinished"></translation>
+        <translation>一月</translation>
     </message>
     <message>
         <location filename="../qmlSource/GlobalLanguageDefine.qml" line="198"/>
         <source>二月</source>
-        <translation type="unfinished"></translation>
+        <translation>二月</translation>
     </message>
     <message>
         <location filename="../qmlSource/GlobalLanguageDefine.qml" line="199"/>
         <source>三月</source>
-        <translation type="unfinished"></translation>
+        <translation>三月</translation>
     </message>
     <message>
         <location filename="../qmlSource/GlobalLanguageDefine.qml" line="200"/>
         <source>四月</source>
-        <translation type="unfinished"></translation>
+        <translation>四月</translation>
     </message>
     <message>
         <location filename="../qmlSource/GlobalLanguageDefine.qml" line="201"/>
         <source>五月</source>
-        <translation type="unfinished"></translation>
+        <translation>五月</translation>
     </message>
     <message>
         <location filename="../qmlSource/GlobalLanguageDefine.qml" line="202"/>
         <source>六月</source>
-        <translation type="unfinished"></translation>
+        <translation>六月</translation>
     </message>
     <message>
         <location filename="../qmlSource/GlobalLanguageDefine.qml" line="203"/>
         <source>七月</source>
-        <translation type="unfinished"></translation>
+        <translation>七月</translation>
     </message>
     <message>
         <location filename="../qmlSource/GlobalLanguageDefine.qml" line="204"/>
         <source>八月</source>
-        <translation type="unfinished"></translation>
+        <translation>八月</translation>
     </message>
     <message>
         <location filename="../qmlSource/GlobalLanguageDefine.qml" line="205"/>
         <source>九月</source>
-        <translation type="unfinished"></translation>
+        <translation>九月</translation>
     </message>
     <message>
         <location filename="../qmlSource/GlobalLanguageDefine.qml" line="206"/>
         <source>十月</source>
-        <translation type="unfinished"></translation>
+        <translation>十月</translation>
     </message>
     <message>
         <location filename="../qmlSource/GlobalLanguageDefine.qml" line="207"/>
         <source>十一月</source>
-        <translation type="unfinished"></translation>
+        <translation>十一月</translation>
     </message>
     <message>
         <location filename="../qmlSource/GlobalLanguageDefine.qml" line="208"/>
         <source>十二月</source>
-        <translation type="unfinished"></translation>
+        <translation>十二月</translation>
     </message>
     <message>
         <location filename="../qmlSource/GlobalLanguageDefine.qml" line="211"/>
         <source>提示</source>
-        <translation type="unfinished"></translation>
+        <translation>提示</translation>
     </message>
     <message>
         <location filename="../qmlSource/GlobalLanguageDefine.qml" line="212"/>
         <source>系统时间设置成功已生效！</source>
-        <translation type="unfinished"></translation>
+        <translation>系统时间设置成功已生效！</translation>
     </message>
     <message>
         <location filename="../qmlSource/GlobalLanguageDefine.qml" line="217"/>
         <source>请输入浮点数xx.xx!</source>
-        <translation type="unfinished"></translation>
+        <translation>请输入浮点数xx.xx!</translation>
     </message>
     <message>
         <location filename="../qmlSource/GlobalLanguageDefine.qml" line="229"/>
         <source>数据导出</source>
-        <translation type="unfinished"></translation>
+        <translation>数据导出</translation>
     </message>
     <message>
         <location filename="../qmlSource/GlobalLanguageDefine.qml" line="230"/>
         <source>未插入U盘</source>
-        <translation type="unfinished"></translation>
+        <translation>未插入U盘</translation>
     </message>
     <message>
         <location filename="../qmlSource/GlobalLanguageDefine.qml" line="231"/>
         <source>U盘已插入</source>
-        <translation type="unfinished"></translation>
+        <translation>U盘已插入</translation>
     </message>
     <message>
         <location filename="../qmlSource/GlobalLanguageDefine.qml" line="232"/>
         <source>导出数据已完成!</source>
-        <translation type="unfinished"></translation>
+        <translation>导出数据已完成!</translation>
     </message>
     <message>
         <location filename="../qmlSource/GlobalLanguageDefine.qml" line="233"/>
         <source>没有找到可以使用的U盘或尝试再次导出</source>
-        <translation type="unfinished"></translation>
+        <translation>没有找到可以使用的U盘或尝试再次导出</translation>
     </message>
 </context>
 </TS>
