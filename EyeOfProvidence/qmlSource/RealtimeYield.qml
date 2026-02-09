@@ -96,8 +96,10 @@ Rectangle {
     }
     CustomRipple{
         id: yuan
-        anchors.left: t4.right
-        anchors.bottom: t4.bottom
+        anchors.right: parent.right
+        anchors.rightMargin: 5
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: 50
         value: eqText5
     }
 }
