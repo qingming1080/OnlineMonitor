@@ -75,10 +75,11 @@ public:
     explicit Trend(int welderID = 0, QObject *parent = nullptr);
 
     void AppendWeldPoint(const int cycleCount, const int power, const int time, const int preHeight, const int postHeight);
+    void AppendProduction(const DataBaseManager::DB_PRODUCTION data);
     virtual void SetModel(const DataBaseManager::DB_MODEL& model);
 
     // 更新良率趋势
-    void upYieldData();
+    void upYieldData(const int duration);
     // 更新焊接趋势
     void upWeldData();
 
@@ -152,13 +153,13 @@ signals:
 
     void notifyPeakPowerMinYChanged();
 
-    void notifyYieldTypeChanged();
+    void notifyYieldTypeChanged(int welderID);
 
     void notifyStartTimeChanged();
 
     void notifyEndTimeChanged();
 
-    void notifyYieldTrendChanged();
+    void notifyYieldTrendChanged(int welderID);
 
 private:
     void init();
@@ -201,6 +202,8 @@ private:
     QVector<QPointF> m_PostHeightData;
     QVector<QPointF> m_WeldTimeData;
     QVector<QPointF> m_PeakPowerData;
+
+    QList<DataBaseManager::DB_PRODUCTION> m_OneHourWeldResultData;
 
     // 良率趋势 X轴范围
     QString m_StartTime;

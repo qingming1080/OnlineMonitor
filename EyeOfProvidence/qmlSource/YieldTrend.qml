@@ -14,6 +14,7 @@ Rectangle
 {
     property int deviceIndex: 0
     property int deviceCount: DeviceManager.DeviceCounter
+    property int currentWelderId: DeviceManager.DeviceList[deviceIndex].WelderID
     property var startTime: {
         if(deviceIndex < deviceCount)
             return Date.fromLocaleString(Qt.locale(), DeviceManager.DeviceList[deviceIndex].TrendObj.StartTime, "yyyy-MM-dd hh:mm:ss")
@@ -70,9 +71,25 @@ Rectangle
 
     Connections{
         target: objTrend
-        function onNotifyYieldTrendChanged()
+        function onNotifyYieldTrendChanged(welderID)
         {
-            chartUpdata()
+            if(currentWelderId === welderID)
+            {
+                chartUpdata()
+                // console.debug("update trend graph")
+            }
+        }
+        function onNotifyYieldTypeChanged(welderID)
+        {
+            if(currentWelderId === welderID)
+            {
+                // 先将所有项设置为 false，再将目标项设置为 true
+                for(var i = 0; i < yieldModel.count; i++) {
+                    yieldModel.set(i, {"checked": false})
+                }
+                yieldModel.set(objTrend.YieldType, {"checked": true})
+                // console.debug("Yield Type:", objTrend.YieldType)
+            }
         }
     }
 

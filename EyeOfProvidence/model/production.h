@@ -128,6 +128,7 @@ public:
     void setResidualThreshold(const int threshold);
     
     void AppendNewRecordComming(const HBModbusClient::MODBUS_WELD_RESULT &data);
+    DataBaseManager::DB_PRODUCTION GetProductionResult() const;
 
     virtual void SetModel(const DataBaseManager::DB_MODEL& model);
 

@@ -322,6 +322,8 @@ bool Device::NotifyWeldResultComing(const HBModbusClient::MODBUS_WELD_RESULT &da
         {
             m_ptrProduction->AppendNewRecordComming(data);
             m_ptrTrend->AppendWeldPoint(data.CycleCount, data.PeakPower, data.WeldTime, data.Preheight, data.PostHeight);
+            DataBaseManager::DB_PRODUCTION production = m_ptrProduction->GetProductionResult();
+            m_ptrTrend->AppendProduction(production);
             emit notifyWeldTrendChanged(m_WelderID);
             // qDebug() << "Production data coming";
         }

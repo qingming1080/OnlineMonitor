@@ -3,10 +3,10 @@
 #include "DataBase/databasemanager.h"
 #include <QDateTime>
 #include "historyenum.h"
+#include "yieldstrendenum.h"
+
 #include <QDebug>
 #include <QElapsedTimer>
-// #include "log/localrecord.h"
-// #include "devicemanager.h"
 #include <QPointF>
 Trend::Trend(int welderID, QObject *parent)
     : QObject{parent}, m_WelderID(welderID)
@@ -88,6 +88,17 @@ void Trend::AppendWeldPoint(const int cycleCount, const int power, const int tim
     appendWithLimit(m_PostHeightData,   cycleCount, postHeightDouble);
     appendWithLimit(m_WeldTimeData,     cycleCount, timeDouble);
     appendWithLimit(m_PeakPowerData,    cycleCount, powerDouble);
+}
+
+void Trend::AppendProduction(const DataBaseManager::DB_PRODUCTION data)
+{
+    int duration = ONE_HOUR;
+    m_OneHourWeldResultData.append(data);
+    qint64 startTime = m_OneHourWeldResultData.first().CreateTime;
+    qint64 endTime = m_OneHourWeldResultData.last().CreateTime;
+    while(endTime - duration > startTime)
+        m_OneHourWeldResultData.pop_front();
+    setYieldType(YieldsTrendEnum::ONE_HOUR);
 }
 
 void Trend::updateXYAxisRanges()
@@ -255,15 +266,13 @@ void Trend::setPeakPowerSeries(QAbstractSeries *series)
 
 void Trend::init()
 {
-    // QElapsedTimer tm;
-    // tm.start();
-
 
     // 良率趋势刷新
     // m_yieldTimer = new QTimer;
     // connect(m_yieldTimer, &QTimer::timeout, this, &Trend::upYieldData);
     // m_yieldTimer->start(1000*60);
-    upYieldData();
+    // upYieldData(YieldsTrendEnum::ONE_HOUR);
+    m_OneHourWeldResultData.clear();
     setWeldTimeMinY(0.00);
     setWeldTimeMaxY(5.00);
     setPeakPowerMinY(0);
@@ -274,10 +283,6 @@ void Trend::init()
     setPostHeightMaxY(15.00);
     setCountMinX(0);
     setCountMaxX(X_AXIS_MAX);
-
-    // m_weldTimer = new QTimer(this);
-    // connect(m_weldTimer, &QTimer::timeout, this, &Trend::upYieldData);
-    // m_weldTimer->start(1000 * 1);  // 每2秒刷新一次焊接数据
 }
 
 int Trend::getPeakPowerMinY() const
@@ -410,37 +415,38 @@ void Trend::setCountMinX(const int count)
     emit notifyCountMinXChanged();
 }
 
-void Trend::upYieldData()
+void Trend::upYieldData(const int duration)
 {
-    int duration = 60 * 60;
     DataBaseManager::DB_PRODUCTION production;
+    QList<DataBaseManager::DB_PRODUCTION> productionList;
+    qint64 startTime = -1;
+    qint64 endTime = -1;
     if(DataBaseManager::getInstance()->getProductionLastRecord(m_WelderID, production) == false)
         return;
     switch(m_YieldType)
     {
-    case 0:
-        duration = ONE_HOUR; // 一个小时 60s*60m
+    case YieldsTrendEnum::ONE_HOUR:
+        productionList = m_OneHourWeldResultData;
         break;
-    case 1:
-        duration = ONE_DAY;   // 一天  60s*60m*24h
-        break;
-    case 2:
-        duration = SEVEN_DAYS; // 七天
-        break;
-    case 3:
-        duration = ONE_MONTH; // 三十天
+    case YieldsTrendEnum::TWENTY_FOUR_HOURS:
+    case YieldsTrendEnum::SEVEN_DAYS:
+    case YieldsTrendEnum::THIRTY_DAYS:
+        if(DataBaseManager::getInstance()->getProductionLastRecord(m_WelderID, production) == true)
+        {
+            startTime = production.CreateTime - duration;
+            endTime = production.CreateTime;
+            if(startTime > 0)
+            {
+                DataBaseManager::getInstance()->getProductionRecords(m_WelderID, startTime, endTime, productionList);
+            }
+        }
         break;
     default:
-        duration = ONE_HOUR; // 一个小时 60s*60m
+        // duration = ONE_HOUR; // 一个小时 60s*60m
+        productionList = m_OneHourWeldResultData;
         break;
     }
 
-    qint64 startTime = production.CreateTime - duration;
-    if(startTime < 0)
-        return;
-    quint64 endTime = production.CreateTime;
-    QList<DataBaseManager::DB_PRODUCTION> productionList;
-    DataBaseManager::getInstance()->getProductionRecords(m_WelderID, startTime, endTime, productionList);
     if (productionList.isEmpty())
         return;
     // qDebug() << "StartTime: " << QDateTime::fromSecsSinceEpoch(startTime).toString("yyyy-MM-dd hh:mm:ss");
@@ -492,8 +498,8 @@ void Trend::upYieldData()
 
     setStartTime(m_YieldData.startTime);
     setEndTime(m_YieldData.endTime);
-    // qDebug() << "Yield StartTime: " << m_YieldData.startTime;
-    // qDebug() << "Yield End Time: " <<  m_YieldData.endTime;
+    qDebug() << "Yield StartTime: " << m_YieldData.startTime;
+    qDebug() << "Yield End Time: " <<  m_YieldData.endTime;
 
     m_YieldData.points.clear();
     // 开始计算每个时间段的良率
@@ -514,7 +520,7 @@ void Trend::upYieldData()
         pos.rx() = QDateTime::fromSecsSinceEpoch(resultList.at(i).TimeStamp).toMSecsSinceEpoch();
         m_YieldData.points.push_back(pos);
     }
-    emit notifyYieldTrendChanged();
+    emit notifyYieldTrendChanged(m_WelderID);
 }
 
 int Trend::getYieldType() const
@@ -524,36 +530,40 @@ int Trend::getYieldType() const
 
 void Trend::setYieldType(int type)
 {
-    if (m_YieldType == type)
-        return;
+    int duration = 0;
+    QDateTime time;
+    // if (m_YieldType == type)
+    //     return;
     m_YieldType = type;
-    emit notifyYieldTypeChanged();
+    emit notifyYieldTypeChanged(m_WelderID);
 
     m_EndTime = QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss");
-    if(m_YieldType == 0)
+    switch(m_YieldType)
     {
-        QDateTime time = QDateTime::currentDateTime().addSecs(-3600);
+    case YieldsTrendEnum::ONE_HOUR:
+        time = QDateTime::currentDateTime().addSecs(-3600);
         m_StartTime = time.toString("yyyy-MM-dd hh:mm:ss");
-    }
-    else if(m_YieldType == 1)
-    {
-        QDateTime time = QDateTime::currentDateTime().addDays(-1);
+        duration = ONE_HOUR; // 一个小时 60s*60m
+        break;
+    case YieldsTrendEnum::TWENTY_FOUR_HOURS:
+        time = QDateTime::currentDateTime().addDays(-1);
         m_StartTime = time.toString("yyyy-MM-dd hh:mm:ss");
-    }
-    else if(m_YieldType == 2)
-    {
-        QDateTime time = QDateTime::currentDateTime().addDays(-7);
+        duration = ONE_DAY;   // 一天  60s*60m*24h
+        break;
+    case YieldsTrendEnum::SEVEN_DAYS:
+        time = QDateTime::currentDateTime().addDays(-7);
         m_StartTime = time.toString("yyyy-MM-dd hh:mm:ss");
-    }
-    else if(m_YieldType == 3)
-    {
-        QDateTime time = QDateTime::currentDateTime().addDays(-30);
+        duration = SEVEN_DAYS; // 七天
+        break;
+    case YieldsTrendEnum::THIRTY_DAYS:
+        time = QDateTime::currentDateTime().addDays(-30);
         m_StartTime = time.toString("yyyy-MM-dd hh:mm:ss");
+        duration = ONE_MONTH; // 三十天
     }
 
     // emit notifyStartTimeChanged();
     // emit notifyEndTimeChanged();
-    upYieldData();
+    upYieldData(duration);
 }
 
 QString Trend::getStartTime() const

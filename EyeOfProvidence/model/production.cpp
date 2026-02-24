@@ -456,6 +456,11 @@ void Production::AppendNewRecordComming(const HBModbusClient::MODBUS_WELD_RESULT
     History::getInstance()->AppendNewRecordComming(m_DBProduction);
 }
 
+DataBaseManager::DB_PRODUCTION Production::GetProductionResult() const
+{
+    return  m_DBProduction;
+}
+
 void Production::SetModel(const DataBaseManager::DB_MODEL &model)
 {
     m_DBModel.id = model.id;
