@@ -170,7 +170,7 @@ Rectangle
 
                         radius: 3
                     }
-                    onPressed: {
+                    onClicked: {
                         objTrend.YieldType = model.modelType
                     }
                     contentItem: Text {
