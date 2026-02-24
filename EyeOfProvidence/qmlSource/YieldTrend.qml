@@ -103,6 +103,7 @@ Rectangle
 
     Component.onCompleted: {
         yieldModel.resetYieldModel()
+        objTrend.YieldType = YieldsTrendEnum.ONE_HOUR
     }
 
     Text {
