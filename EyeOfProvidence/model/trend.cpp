@@ -98,7 +98,11 @@ void Trend::AppendProduction(const DataBaseManager::DB_PRODUCTION data)
     qint64 endTime = m_OneHourWeldResultData.last().CreateTime;
     while(endTime - duration > startTime)
         m_OneHourWeldResultData.pop_front();
-    setYieldType(YieldsTrendEnum::ONE_HOUR);
+    if((QDateTime::currentSecsSinceEpoch() - m_CurrentTimeStamp) > 60)
+    {
+        setYieldType(YieldsTrendEnum::ONE_HOUR);
+        m_CurrentTimeStamp = QDateTime::currentSecsSinceEpoch();
+    }
 }
 
 void Trend::updateXYAxisRanges()
@@ -273,6 +277,7 @@ void Trend::init()
     // m_yieldTimer->start(1000*60);
     // upYieldData(YieldsTrendEnum::ONE_HOUR);
     m_OneHourWeldResultData.clear();
+    m_CurrentTimeStamp = QDateTime::currentSecsSinceEpoch();
     setWeldTimeMinY(0.00);
     setWeldTimeMaxY(5.00);
     setPeakPowerMinY(0);

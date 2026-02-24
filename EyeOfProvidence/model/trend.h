@@ -217,6 +217,7 @@ private:
 
     YIELD_TREND                     m_YieldData;
     DataBaseManager::DB_MODEL       m_DBModel;
+    qint64 m_CurrentTimeStamp;
 };
 
 #endif // TREND_H
