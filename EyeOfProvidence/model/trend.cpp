@@ -94,10 +94,16 @@ void Trend::AppendProduction(const DataBaseManager::DB_PRODUCTION data)
 {
     int duration = ONE_HOUR;
     m_OneHourWeldResultData.append(data);
+    if(m_OneHourWeldResultData.isEmpty())
+        return;
     qint64 startTime = m_OneHourWeldResultData.first().CreateTime;
     qint64 endTime = m_OneHourWeldResultData.last().CreateTime;
-    while(endTime - duration > startTime)
+    while(endTime - duration > startTime && !m_OneHourWeldResultData.isEmpty())
+    {
         m_OneHourWeldResultData.pop_front();
+        if(!m_OneHourWeldResultData.isEmpty())
+            startTime = m_OneHourWeldResultData.first().CreateTime;
+    }
     if((QDateTime::currentSecsSinceEpoch() - m_CurrentTimeStamp) > 60)
     {
         setYieldType(YieldsTrendEnum::ONE_HOUR);

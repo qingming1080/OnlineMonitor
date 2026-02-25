@@ -21,6 +21,8 @@ TextField {
     id: bransonTextField
     property bool onlyForNumpad: false
     property bool isSelectedAll: false
+    property int  textFieldborderWith: 1
+    property int  textFieldFontSize: Math.round(GlobalStyle.style6 * GlobalStyle.scaleHint)
     signal signalClickedEvent()
     implicitWidth: parent.width
     implicitHeight: parent.height
@@ -41,14 +43,14 @@ TextField {
     /*TextField style*/
     style: TextFieldStyle {
         id: textStyleId
-        font.pixelSize: Math.round(GlobalStyle.style6 * GlobalStyle.scaleHint)
+        font.pixelSize: textFieldFontSize
         textColor: GlobalStyle.blueFontColor
         background: Rectangle {
             id:backGroundId
             radius: 2
             color: (enabled === true) ? "#ffffff" : GlobalStyle.backgroundColor
             border.color: GlobalStyle.activeFrameBorderColor
-            border.width: 1
+            border.width: textFieldborderWith
         }
     }
 

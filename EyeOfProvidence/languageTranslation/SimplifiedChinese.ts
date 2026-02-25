@@ -270,7 +270,7 @@
     <message>
         <location filename="../qmlSource/GlobalLanguageDefine.qml" line="25"/>
         <source>返回</source>
-        <translation>最大值</translation>
+        <translation>返回</translation>
     </message>
     <message>
         <location filename="../qmlSource/GlobalLanguageDefine.qml" line="26"/>
