@@ -19,12 +19,12 @@ import QtQuick.Controls.Styles  1.1
 import GlobalLanguageDefine     1.0
 import GlobalSystemDefine       1.0
 Item {
-    readonly property int minWidthNumpad: Math.round(248 * GlobalStyle.scaleHint)
-    readonly property int minHeightNumpad: Math.round(236 * GlobalStyle.scaleHint)
+    readonly property int minWidthNumpad: Math.round(360 * GlobalStyle.scaleHint)
+    readonly property int minHeightNumpad: Math.round(360 * GlobalStyle.scaleHint)
     readonly property int minHeightTextField: Math.round(40 * GlobalStyle.scaleHint)
-    readonly property int fontsize: Math.round(GlobalStyle.style6 * GlobalStyle.scaleHint)
+    readonly property int fontsize: Math.round(GlobalStyle.style8 * GlobalStyle.scaleHint)
     readonly property string backgroundcolor: "#FFFFFF"
-    readonly property int buttonNumpadSize: Math.round(50 * GlobalStyle.scaleHint)
+    readonly property int buttonNumpadSize: Math.round(80 * GlobalStyle.scaleHint)
     readonly property string qmltextDigit1:  "1"
     readonly property string qmltextDigit2:  "2"
     readonly property string qmltextDigit3:  "3"
@@ -150,7 +150,7 @@ Item {
             id:zeroButton
             anchors.left: parent.left
             anchors.top:textdot.top
-            width: buttonNumpadSize * 2 + Math.round(10 * GlobalStyle.scaleHint)
+            width: buttonNumpadSize * 2 + Math.round(12 * GlobalStyle.scaleHint)
             implicitWidth: buttonNumpadSize
             implicitHeight: buttonNumpadSize
             fontSize: fontsize
@@ -165,10 +165,10 @@ Item {
             anchors.top: numpadRec.top
             anchors.topMargin: 0
             implicitHeight: buttonNumpadSize
-            width: customButton.width//42
+            width: customButton.width
             height: customButton.height*3 + Math.round(24 * GlobalStyle.scaleHint)//141
             anchors.leftMargin: Math.round(12 * GlobalStyle.scaleHint)
-            fontSize: Math.round(GlobalStyle.style7 * GlobalStyle.scaleHint)
+            fontSize: Math.round(GlobalStyle.style8 * GlobalStyle.scaleHint)
             onClicked:signalButtonFunc(GlobalLanguageDefine.EnumKeyboard.Delete)
         }
         BransonDigitalKeyboard {
@@ -179,7 +179,7 @@ Item {
             anchors.top: deleteButton.bottom
             anchors.topMargin: Math.round(12 * GlobalStyle.scaleHint)
             visible: true
-            implicitWidth: buttonNumpadSize
+            implicitWidth: buttonNumpadSize + Math.round(15 * GlobalStyle.scaleHint)
             implicitHeight: buttonNumpadSize
             fontSize: fontsize
             onClicked: signalButtonFunc(GlobalLanguageDefine.EnumKeyboard.Clear)
@@ -188,7 +188,7 @@ Item {
             id: textdot
             text: qmltextDot
             anchors.right: customButton.left
-            anchors.rightMargin: Math.round(15 * GlobalStyle.scaleHint)
+            anchors.rightMargin: Math.round(8 * GlobalStyle.scaleHint)
             anchors.top: deleteButton.bottom
             anchors.topMargin: Math.round(12 * GlobalStyle.scaleHint)
             implicitWidth: buttonNumpadSize

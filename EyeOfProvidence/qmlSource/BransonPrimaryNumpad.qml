@@ -22,9 +22,9 @@ import GlobalSystemDefine       1.0
 //import NumpadDefine 1.0
 Item {
     id: primaryNumpad
-    property int minWidth: Math.round(400 * GlobalStyle.scaleHint)
-    property int maxHeight: Math.round(411 * GlobalStyle.scaleHint)
-    property int headermaxHeight: Math.round(30 * GlobalStyle.scaleHint)
+    property int minWidth: Math.round(430 * GlobalStyle.scaleHint)
+    property int maxHeight: Math.round(640 * GlobalStyle.scaleHint)
+    property int headermaxHeight: Math.round(45 * GlobalStyle.scaleHint)
     property string headertext: "TRIGGER FORCE"
     property string suffix:  "%"
     property int decimals: 2
@@ -70,6 +70,7 @@ Item {
         implicitHeight:maxHeight
         anchors.centerIn: parent
         color: "#FFFFFF"
+        radius: Math.round(6 * GlobalStyle.scaleHint)
         /*header title*/
         Rectangle
         {
@@ -82,20 +83,20 @@ Item {
                 anchors.left: numpadHeader.left
                 anchors.top: numpadHeader.top
                 anchors.leftMargin: Math.round(5 * GlobalStyle.scaleHint)
-                anchors.topMargin: Math.round(5 * GlobalStyle.scaleHint)
+                anchors.topMargin: Math.round(7 * GlobalStyle.scaleHint)
                 text: headertext
                 color: GlobalStyle.whiteFontColor
                 font{
                     family: GlobalSystemDefine.fontBold
-                    pixelSize: Math.round(GlobalStyle.style2 * GlobalStyle.scaleHint)
+                    pixelSize: Math.round(GlobalStyle.style6 * GlobalStyle.scaleHint)
                 }
             }
 
             Rectangle
             {
                 id:rectimage
-                implicitWidth: Math.round(24 * GlobalStyle.scaleHint)
-                implicitHeight: Math.round(24 * GlobalStyle.scaleHint)
+                implicitWidth: Math.round(36 * GlobalStyle.scaleHint)
+                implicitHeight: Math.round(36 * GlobalStyle.scaleHint)
                 anchors.right: numpadHeader.right
                 anchors.rightMargin: Math.round(5 * GlobalStyle.scaleHint)
                 anchors.top: numpadHeader.top
@@ -126,7 +127,7 @@ Item {
             anchors.top: numpadHeader.bottom
             anchors.left: numpadHeader.left
             anchors.topMargin: Math.round(0* GlobalStyle.scaleHint)
-            anchors.leftMargin: Math.round(200 * GlobalStyle.scaleHint)
+            anchors.leftMargin: Math.round(215 * GlobalStyle.scaleHint)
 
             BransonTextField
             {
@@ -134,10 +135,12 @@ Item {
                 anchors.top: parent.top
                 anchors.topMargin: Math.round(22 * GlobalStyle.scaleHint)
                 anchors.horizontalCenter: parent.horizontalCenter
-                width: Math.round(260 * GlobalStyle.scaleHint)
-                height: Math.round(30 * GlobalStyle.scaleHint)
+                width: Math.round(370 * GlobalStyle.scaleHint)
+                height: Math.round(60 * GlobalStyle.scaleHint)
                 focus: true
                 onlyForNumpad: true
+                textFieldborderWith: 3
+                textFieldFontSize: Math.round(GlobalStyle.style8 * GlobalStyle.scaleHint)
                 onTextChanged:
                 {
                     GlobalLanguageDefine.decimalsNumber(decimals,input, suffix)
@@ -205,20 +208,21 @@ Item {
                 id:bransonprimary
                 anchors.top:input.bottom
                 anchors.topMargin: Math.round(8 * GlobalStyle.scaleHint)
-                anchors.horizontalCenter: parent.horizontalCenter
+                anchors.left: input.left
+                anchors.leftMargin: Math.round(180 * GlobalStyle.scaleHint)
             }
         }
         /*bottom keyboard*/
         BransonPrimaryButton
         {
             id:cancel
-            implicitWidth: Math.round(124 * GlobalStyle.scaleHint)
-            implicitHeight: Math.round(30 * GlobalStyle.scaleHint)
-            fontSize: Math.round(GlobalStyle.style2  * GlobalStyle.scaleHint)
+            implicitWidth: Math.round(172 * GlobalStyle.scaleHint)
+            implicitHeight: Math.round(80 * GlobalStyle.scaleHint)
+            fontSize: Math.round(GlobalStyle.style8  * GlobalStyle.scaleHint)
             anchors.bottom: root.bottom
-            anchors.bottomMargin: Math.round(15 * GlobalStyle.scaleHint)
+            anchors.bottomMargin: Math.round(25 * GlobalStyle.scaleHint)
             anchors.left: root.left
-            anchors.leftMargin: Math.round(60 * GlobalStyle.scaleHint)
+            anchors.leftMargin: Math.round(30 * GlobalStyle.scaleHint)
             text: GlobalLanguageDefine.strKeyBoardCancel
             font.family: GlobalSystemDefine.fontBold
             // buttonColor: GlobalStyle.backgroundColor
@@ -232,12 +236,12 @@ Item {
         BransonPrimaryButton
         {
             id:done
-            implicitWidth: Math.round(124 * GlobalStyle.scaleHint)
-            implicitHeight: Math.round(30 * GlobalStyle.scaleHint)
-            fontSize: Math.round(GlobalStyle.style2  * GlobalStyle.scaleHint)
+            implicitWidth: Math.round(182 * GlobalStyle.scaleHint)
+            implicitHeight: Math.round(80 * GlobalStyle.scaleHint)
+            fontSize: Math.round(GlobalStyle.style8  * GlobalStyle.scaleHint)
             anchors.top: cancel.top
             anchors.left: cancel.right
-            anchors.leftMargin: Math.round(20 * GlobalStyle.scaleHint)
+            anchors.leftMargin: Math.round(12 * GlobalStyle.scaleHint)
             text: GlobalLanguageDefine.strKeyBoardDone
             font.family: GlobalSystemDefine.fontBold
             onClicked:

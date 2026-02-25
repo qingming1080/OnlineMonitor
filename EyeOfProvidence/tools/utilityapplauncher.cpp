@@ -61,10 +61,10 @@ void UtilityAppLauncher::startUtilityApp()
     QStringList arguments;
     arguments.append("/opt/UtilityApp/bin/UtilityApp");
     arguments.append("-platform");
-    arguments.append("xbc");
+    arguments.append("xcb");
 
     if (m_process->state() == QProcess::NotRunning) {
-        // m_process->start("sudo",{program,"-platform","xbc"});
+        // m_process->start("sudo",{program,"-platform","xcb"});
         m_process->start(program, arguments);
         if (!m_process->waitForStarted(2000)) {
             qWarning() << "UtilityApp 启动失败:" << m_process->errorString();
