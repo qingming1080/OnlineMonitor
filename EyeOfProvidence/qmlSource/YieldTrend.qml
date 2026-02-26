@@ -75,6 +75,8 @@ Rectangle
         {
             if(currentWelderId === welderID)
             {
+                startTime   = Date.fromLocaleString(Qt.locale(), DeviceManager.DeviceList[deviceIndex].TrendObj.StartTime, "yyyy-MM-dd hh:mm:ss")
+                endTime     = Date.fromLocaleString(Qt.locale(), DeviceManager.DeviceList[deviceIndex].TrendObj.EndTime, "yyyy-MM-dd hh:mm:ss")
                 chartUpdata()
                 // console.debug("update trend graph")
             }
