@@ -277,7 +277,13 @@ void Device::setProductionObj(const Production *object)
 
 bool Device::SaveDevice()
 {
-    return  m_ptrDevice->SaveDevice();
+    if(m_ptrDevice->SaveDevice() == true)
+    {
+        m_WelderID = m_ptrDevice->getWelderID();
+        return true;
+    }
+    else
+        return false;
 }
 
 bool Device::RemoveDevice()

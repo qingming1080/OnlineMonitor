@@ -131,7 +131,8 @@ void DeviceManager::setDeviceCounter(int counter)
 }
 void DeviceManager::setSelectedDeviceIndex(const int &index)
 {
-    if (index < 0 || index >= m_listDevices.size()) {
+    if (index < 0 || index >= m_listDevices.size())
+    {
         m_iSelectedDeviceIndex = -1;
         emit notifySelectedDeviceIndexChanged();
         return;

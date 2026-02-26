@@ -1355,10 +1355,10 @@ Rectangle {
                 switch(index)
                 {
                 case 0:
-                    s1.color = selectedColor;
+                    s1.color = selectedColor
                     break;
                 case 1:
-                    s2.color = selectedColor;
+                    s2.color = selectedColor
                     break;
                 case 2:
                     s3.color = selectedColor

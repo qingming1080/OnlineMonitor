@@ -406,6 +406,11 @@ bool DeviceInformation::RemoveDevice()
     return true;
 }
 
+int DeviceInformation::getWelderID() const
+{
+    return m_WelderID;
+}
+
 void DeviceInformation::InitModbusDevice()
 {
     m_ModbusConfigure.ConnectState = DeviceInfoEnum::DISCONNECTED;

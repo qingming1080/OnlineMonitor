@@ -98,6 +98,8 @@ public:
 
     bool SaveDevice();
     bool RemoveDevice();
+
+    int getWelderID() const;
 private:
     void InitModbusDevice();
     bool validateConfigureSettings();
