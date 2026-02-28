@@ -17,14 +17,15 @@ int main(int argc, char **argv)
 {
     QCoreApplication app(argc, argv);
 
-    SystemClock::GetInstance()->SyncSystemClock();
+    // SystemClock::GetInstance()->SyncSystemClock();
 
-    ModbusServers* _servers = new ModbusServers(nullptr);
-    _servers->Init();
-    qDebug()<< "Modbus Server Application Running ";
+    // ModbusServers* _servers = new ModbusServers(nullptr);
+    // _servers->Init();
+    // qDebug()<< "Modbus Server Application Running ";
 
     // QTimer::singleShot(5000 * 720, &app, &QCoreApplication::quit);
     Decryption* _decryption = new Decryption(nullptr);
+    _decryption->DecryptLicenseFile();
     return app.exec();
 
     // _EthernetApp->Close(0);

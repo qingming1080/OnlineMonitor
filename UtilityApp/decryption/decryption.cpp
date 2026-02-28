@@ -1,24 +1,41 @@
 #include "decryption.h"
 #include <QFile>
 #include <QDebug>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QJsonParseError>
 #include <openssl/evp.h>
 
 Decryption::Decryption(QObject *parent)
     : QObject{parent}
 {}
 
-int Decryption::DecryptLicenseFile()
+bool Decryption::DecryptLicenseFile()
 {
     int size = 0;
     QString config_A_path = ":/miscellaneous/33595419_A.out";
     QString config_B_path = ":/miscellaneous/33595419_B.out";
     unsigned char DecryptedJson[DECRYPT_JSON_SIZE] = { 0 };
     unsigned char DecryptedKeyJson[DECRYPT_JSON_KEY_SIZE] = { 0 };
-
+    decrypt(DECRYPT_KEY_PATH, "BransonTopSecret@1234#", DecryptedKeyJson, &size);
+    qDebug() << "DecryptedKeyJson: " << QString::fromUtf8(reinterpret_cast<char*>(DecryptedKeyJson), size);
+    bool bResult = decrypt(config_B_path, (char*)DecryptedKeyJson, DecryptedJson, &size);
+    if(bResult == true)
+    {
+        const QString strDecryptionJson = QString::fromUtf8(reinterpret_cast<char*>(DecryptedJson), size);
+        qDebug() << "DecryptedJson: " << strDecryptionJson;
+        bResult = validate(strDecryptionJson, config_A_path);
+        if (!bResult)
+        {
+            qDebug() << "Failed to parse license information";
+            return false;
+        }
+    }
+    return bResult;
 }
 
 
-int Decryption::decrypt(const QString file_path, const QString passphrase, unsigned char *output, int *output_size)
+bool Decryption::decrypt(const QString file_path, const QString passphrase, unsigned char *output, int *output_size)
 {
     // set default output size to zero
     *output_size = 0;
@@ -30,7 +47,7 @@ int Decryption::decrypt(const QString file_path, const QString passphrase, unsig
     if (!in.open(QIODevice::ReadOnly))
     {
         qDebug() << "File Open Error";
-        return -1;
+        return false;
     }
 
     // get salt from file
@@ -41,7 +58,7 @@ int Decryption::decrypt(const QString file_path, const QString passphrase, unsig
     if (in.read(reinterpret_cast<char*>(temp_buff), 16) < 16)
     {
         qDebug() << "File Read Error";
-        return -1;
+        return false;
     }
     else
     {
@@ -54,7 +71,7 @@ int Decryption::decrypt(const QString file_path, const QString passphrase, unsig
         else
         {
             qDebug() << "No salt in file";
-            return -1;
+            return false;
         }
 
         // get key & IV pair
@@ -69,7 +86,9 @@ int Decryption::decrypt(const QString file_path, const QString passphrase, unsig
         unsigned char* inbuff = reinterpret_cast<unsigned char*>(malloc(blocksize));
         int output_size_local = 0;
 
-        PKCS5_PBKDF2_HMAC(passphrase, -1, salt, 8, 10000, EVP_sha256(), iklen + ivlen, keyivpair);
+        QByteArray byteArray = passphrase.toUtf8();
+        const char* _strPassphrase = byteArray.constData();
+        PKCS5_PBKDF2_HMAC(_strPassphrase, -1, salt, 8, 10000, EVP_sha256(), iklen + ivlen, keyivpair);
         memcpy(key, keyivpair, iklen);
         memcpy(iv, keyivpair + iklen, ivlen);
 
@@ -84,7 +103,7 @@ int Decryption::decrypt(const QString file_path, const QString passphrase, unsig
             free(decrypt_buff);
             free(inbuff);
             qDebug() << "Decrypt init failed";
-            return -1;
+            return false;
         }
 
         int inlen, outlen;
@@ -115,7 +134,7 @@ int Decryption::decrypt(const QString file_path, const QString passphrase, unsig
             free(decrypt_buff);
             free(inbuff);
             qDebug() << "Decrypt final failed";
-            return -1;
+            return false;
         }
         else
         {
@@ -130,7 +149,7 @@ int Decryption::decrypt(const QString file_path, const QString passphrase, unsig
         free(keyivpair);
         free(decrypt_buff);
         free(inbuff);
-        return 0;
+        return true;
     }
 }
 
@@ -176,4 +195,62 @@ int LicenseProcessing::CalculateSHA512(std::string* inJsonString, std::string* o
     *outSHA512 = HashHexValue;
 
     return status;
+}
+
+bool Decryption::getLicenseInfo(const QString strDecryptionJSON)
+{
+    QJsonParseError parseError;
+    const QJsonDocument jsonDoc = QJsonDocument::fromJson(strDecryptionJSON.toUtf8(), &parseError);
+    if (parseError.error != QJsonParseError::NoError || !jsonDoc.isObject())
+    {
+        qDebug() << "License JSON parse failed:" << parseError.errorString();
+        return false;
+    }
+
+    const QJsonObject jsonObject = jsonDoc.object();
+
+    m_stLicenseInfo.MachineSerialNumber = jsonObject.value("Machine Serial Number").toString();
+    m_stLicenseInfo.CreateTime = QDateTime::fromString(
+        jsonObject.value("Date Time").toString(),
+        "yyyy-MM-dd HH:mm:ss");
+    m_stLicenseInfo.Version = jsonObject.value("Version").toString();
+    m_stLicenseInfo.MachineType = jsonObject.value("Welder Model").toInt(-1);
+    m_stLicenseInfo.ExpiredTimeType = jsonObject.value("Expire Time").toInt(-1);
+
+    if (m_stLicenseInfo.MachineSerialNumber.isEmpty() ||
+        !m_stLicenseInfo.CreateTime.isValid() ||
+        m_stLicenseInfo.Version.isEmpty() ||
+        m_stLicenseInfo.MachineType < 0 ||
+        m_stLicenseInfo.ExpiredTimeType < 0)
+    {
+        qDebug() << "License JSON missing required fields";
+        return false;
+    }
+
+    qDebug() << "LicenseInfo parsed:" << m_stLicenseInfo.MachineSerialNumber
+             << m_stLicenseInfo.CreateTime.toString("yyyy-MM-dd HH:mm:ss")
+             << m_stLicenseInfo.Version
+             << m_stLicenseInfo.MachineType
+             << m_stLicenseInfo.ExpiredTimeType;
+    return true;
+}
+
+bool Decryption::validate(const QString strDecryptionJSON, QString pathconfig_A)
+{
+    Q_UNUSED(pathconfig_A);
+    if(getLicenseInfo(strDecryptionJSON) == false)
+        return false;
+    std::ifstream HashFileDescrptr(pathconfig_A);
+    if(HashFileDescrptr)
+    {
+        qDebug() << "Failed to open the hash file";
+        return false;
+    }
+
+    std::string ConfigHash((std::ifstreambuf_iterator<char>(HashFileDescrptr)), std::istreambuf_iterator<char>());
+    // Calculate the SHA-512 hash of the JSON content
+
+
+
+    return true;
 }
