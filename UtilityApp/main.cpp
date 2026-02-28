@@ -13,20 +13,39 @@
 #include <QTimer>
 #include <QThread>
 #include <QDateTime>
+static ModbusServers* _servers = nullptr;
+static bool bResult = false;
+static QTimer *timer = nullptr;
 int main(int argc, char **argv)
 {
     QCoreApplication app(argc, argv);
 
-    Decryption* _decryption = new Decryption(nullptr);
-    if(_decryption->DecryptLicenseFile() == false)
-    {
-        QTimer::singleShot(600000, &app, &QCoreApplication::quit); //it will be running 10min
-    }
-
     SystemClock::GetInstance()->SyncSystemClock();
 
-    ModbusServers* _servers = new ModbusServers(nullptr);
+    _servers = new ModbusServers(nullptr);
     _servers->Init();
+
+    Decryption* _decryption = new Decryption(nullptr);
+
+    // if(_decryption->DecryptLicenseFile() == false)
+    // {
+    //     QTimer::singleShot(600000, &app, &QCoreApplication::quit); //it will be running 10min
+    // }
+    if(_decryption->DecryptLicenseFile() == false)
+    {
+        timer = new QTimer(&app);
+        QObject::connect(timer, &QTimer::timeout, [&app]() {
+            qDebug() << "Timer triggered at" << QDateTime::currentDateTime().toString();
+            if(bResult == false)
+            {
+                delete _servers;
+                timer->stop();
+            }
+            // 你的定时任务在这里
+        });
+        timer->start(60000);  // 每5秒触发一次
+    }
+
     qDebug()<< "Modbus Server Application Running ";
     return app.exec();
 

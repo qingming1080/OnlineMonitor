@@ -24,8 +24,8 @@ Decryption::Decryption(QObject *parent)
 bool Decryption::DecryptLicenseFile()
 {
     int size = 0;
-    QString config_A_path = ":/miscellaneous/33595419_A.out";
-    QString config_B_path = ":/miscellaneous/33595419_B.out";
+    QString config_A_path = QString("/opt/%1_A.out").arg(m_strActualSN);
+    QString config_B_path = QString("/opt/%1_B.out").arg(m_strActualSN);
     unsigned char DecryptedJson[DECRYPT_JSON_SIZE] = { 0 };
     unsigned char DecryptedKeyJson[DECRYPT_JSON_KEY_SIZE] = { 0 };
     decrypt(DECRYPT_KEY_PATH, "BransonTopSecret@1234#", DecryptedKeyJson, &size);
