@@ -9,7 +9,17 @@
 
 Decryption::Decryption(QObject *parent)
     : QObject{parent}
-{}
+{
+    if(getRaspberryPiSerialNumber().length() > 8)
+    {
+        m_strActualSN = getRaspberryPiSerialNumber().right(8);
+    }
+    else
+    {
+        m_strActualSN = "Unknown";
+    }
+    // qDebug() << "SN: " << m_strActualSN;
+}
 
 bool Decryption::DecryptLicenseFile()
 {
@@ -19,12 +29,12 @@ bool Decryption::DecryptLicenseFile()
     unsigned char DecryptedJson[DECRYPT_JSON_SIZE] = { 0 };
     unsigned char DecryptedKeyJson[DECRYPT_JSON_KEY_SIZE] = { 0 };
     decrypt(DECRYPT_KEY_PATH, "BransonTopSecret@1234#", DecryptedKeyJson, &size);
-    qDebug() << "DecryptedKeyJson: " << QString::fromUtf8(reinterpret_cast<char*>(DecryptedKeyJson), size);
+    // qDebug() << "DecryptedKeyJson: " << QString::fromUtf8(reinterpret_cast<char*>(DecryptedKeyJson), size);
     bool bResult = decrypt(config_B_path, (char*)DecryptedKeyJson, DecryptedJson, &size);
     if(bResult == true)
     {
         const QString strDecryptionJson = QString::fromUtf8(reinterpret_cast<char*>(DecryptedJson), size);
-        qDebug() << "DecryptedJson: " << strDecryptionJson;
+        // qDebug() << "DecryptedJson: " << strDecryptionJson;
         bResult = validate(strDecryptionJson, config_A_path);
         if (!bResult)
         {
@@ -230,11 +240,11 @@ bool Decryption::getLicenseInfo(const QString strDecryptionJSON)
         return false;
     }
 
-    qDebug() << "LicenseInfo parsed:" << m_stLicenseInfo.MachineSerialNumber
-             << m_stLicenseInfo.CreateTime.toString("yyyy-MM-dd HH:mm:ss")
-             << m_stLicenseInfo.Version
-             << m_stLicenseInfo.MachineType
-             << m_stLicenseInfo.ExpiredTimeType;
+    // qDebug() << "LicenseInfo parsed:" << m_stLicenseInfo.MachineSerialNumber
+    //          << m_stLicenseInfo.CreateTime.toString("yyyy-MM-dd HH:mm:ss")
+    //          << m_stLicenseInfo.Version
+    //          << m_stLicenseInfo.MachineType
+    //          << m_stLicenseInfo.ExpiredTimeType;
     return true;
 }
 
@@ -248,25 +258,55 @@ bool Decryption::validate(const QString strDecryptionJSON, QString pathconfig_A)
     }
 
     QString strConfigHash = QString::fromUtf8(hashFile.readAll());
-    qDebug() << "strConfigHash: " << strConfigHash;
+    // qDebug() << "strConfigHash: " << strConfigHash;
     hashFile.close();
     
     QString strCalculatedHash;
     // Calculate the SHA-512 hash of the JSON content
-    bool bResult = calculateSHA512(strDecryptionJSON, strCalculatedHash);
-    qDebug() << "strCalculatedHash: " << strCalculatedHash;
-    if(bResult == false)
+    if(calculateSHA512(strDecryptionJSON, strCalculatedHash) == false)
         return false;
+    // qDebug() << "strCalculatedHash: " << strCalculatedHash;
 
     if(strConfigHash != strCalculatedHash)
     {
         qDebug() << "Hash verification failed.";
         return false;
     }
-    else
+
+    qDebug() << "Hash verification successful.";
+
+    if(getLicenseInfo(strDecryptionJSON) == false)
+        qDebug() << "License Info Getting failed.";
+
+    bool bResult = false;
+    if(m_stLicenseInfo.MachineSerialNumber == m_strActualSN)
     {
-        qDebug() << "Hash verification successful.";
-        bResult = getLicenseInfo(strDecryptionJSON);
+        bResult = true;
     }
+    qDebug() << "ActualSN: " << m_strActualSN;
     return bResult;
+}
+
+QString Decryption::getRaspberryPiSerialNumber()
+{
+    QFile cpuinfo("/proc/cpuinfo");
+    if (!cpuinfo.open(QIODevice::ReadOnly))
+    {
+        qDebug() << "Failed to open cpuinfo";
+        return "";
+    }
+    
+    QString content = cpuinfo.readAll();
+    cpuinfo.close();
+    
+    QStringList lines = content.split('\n');
+    for (const QString& line : lines)
+    {
+        if (line.startsWith("Serial"))
+        {
+            return line.split(':').last().trimmed();
+        }
+    }
+    
+    return "";
 }

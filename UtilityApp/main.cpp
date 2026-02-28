@@ -17,20 +17,19 @@ int main(int argc, char **argv)
 {
     QCoreApplication app(argc, argv);
 
-    // SystemClock::GetInstance()->SyncSystemClock();
-
-    // ModbusServers* _servers = new ModbusServers(nullptr);
-    // _servers->Init();
-    // qDebug()<< "Modbus Server Application Running ";
-
-    // QTimer::singleShot(5000 * 720, &app, &QCoreApplication::quit);
     Decryption* _decryption = new Decryption(nullptr);
-    _decryption->DecryptLicenseFile();
+    if(_decryption->DecryptLicenseFile() == false)
+    {
+        QTimer::singleShot(600000, &app, &QCoreApplication::quit); //it will be running 10min
+    }
+
+    SystemClock::GetInstance()->SyncSystemClock();
+
+    ModbusServers* _servers = new ModbusServers(nullptr);
+    _servers->Init();
+    qDebug()<< "Modbus Server Application Running ";
     return app.exec();
 
-    // _EthernetApp->Close(0);
-    // _SerialApp->Close(0);
-    // delete _EthernetApp;
-    // delete _SerialApp;
-    // delete _servers;
+    delete _servers;
+    delete _decryption;
 }
