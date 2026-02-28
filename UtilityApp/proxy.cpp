@@ -1,7 +1,7 @@
 #include "proxy.h"
 #include "subject.h"
 #include "definition.h"
-#include "../app/gpioapp.h"
+#include "app/gpioapp.h"
 #include <QDebug>
 QMap<int, Proxy::MACHINE_DEVICE>        Proxy::m_listDevice;
 Proxy* Proxy::_Proxy = nullptr;

@@ -41,9 +41,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 INCLUDEPATH += $$PWD/../HBCommon
-HEADERS += $$PWD/../HBCommon/ModbusDefine.h \
-    decryption.h \
-    protocol/tcpip2000x.h
+HEADERS += $$PWD/../HBCommon/ModbusDefine.h
 
 SOURCES += \
         app/ethernetapp.cpp \
@@ -51,7 +49,7 @@ SOURCES += \
         app/interfaceapp.cpp \
         app/serialapp.cpp \
         app/systemclock.cpp \
-        decryption.cpp \
+        decryption/decryption.cpp \
         hardware/board_cm3.cpp \
         hardware/ethernet.cpp \
         hardware/gpio.cpp \
@@ -69,7 +67,6 @@ SOURCES += \
         proxy.cpp \
         subject.cpp \
         utility/utility.cpp \
-        decryption/decryption.cpp
 
 RESOURCES += qml.qrc \
     miscellaneous.qrc
@@ -98,6 +95,7 @@ HEADERS += \
     app/interfaceapp.h \
     app/serialapp.h \
     app/systemclock.h \
+    decryption/decryption.h \
     hardware/board_cm3.h \
     definition.h \
     hardware/ethernet.h \
@@ -114,4 +112,3 @@ HEADERS += \
     proxy.h \
     subject.h \
     utility/utility.h \
-    decryption/decryption.h
