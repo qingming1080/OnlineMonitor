@@ -40,7 +40,6 @@ int main(int argc, char **argv)
                 delete _servers;
                 _servers = nullptr;
             }
-            // 你的定时任务在这里
         });
     }
 
