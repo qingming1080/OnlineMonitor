@@ -18,7 +18,7 @@ Decryption::Decryption(QObject *parent)
     {
         m_strActualSN = "Unknown";
     }
-    // qDebug() << "SN: " << m_strActualSN;
+    qDebug() << "SN: " << m_strActualSN;
 }
 
 bool Decryption::DecryptLicenseFile()
