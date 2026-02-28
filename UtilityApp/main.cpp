@@ -7,6 +7,7 @@
 #include "app/systemclock.h"
 #include "hardware/serial.h"
 #include "hardware/rtc_ds3231.h"
+#include "decryption/decryption.h"
 #include <QCoreApplication>
 #include <QObject>
 #include <QTimer>
@@ -23,6 +24,7 @@ int main(int argc, char **argv)
     qDebug()<< "Modbus Server Application Running ";
 
     // QTimer::singleShot(5000 * 720, &app, &QCoreApplication::quit);
+    Decryption* _decryption = new Decryption(nullptr);
     return app.exec();
 
     // _EthernetApp->Close(0);
