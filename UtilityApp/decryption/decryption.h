@@ -25,6 +25,7 @@ private:
     bool decrypt(const QString file_path, const QString passphrase, unsigned char *output, int *output_size);
     bool validate(const QString strDecryptionJSON, QString pathconfig_A);
     bool getLicenseInfo(const QString strDecryptionJSON);
+    bool calculateSHA512(const QString inJsonString, QString& outSHA512);
 public:
     explicit Decryption(QObject *parent = nullptr);
     bool DecryptLicenseFile();
