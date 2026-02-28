@@ -2,6 +2,33 @@ QT += core serialbus network core serialport
 
 CONFIG += c++11
 
+OPENSSL_DIR = $$(OPENSSL_DIR)
+
+win32 {
+    !isEmpty(OPENSSL_DIR) {
+        INCLUDEPATH += $$OPENSSL_DIR/include
+        LIBS += -L$$OPENSSL_DIR/lib
+    }
+    LIBS += -lcrypto -lssl
+}
+
+unix:!android {
+    !isEmpty(OPENSSL_DIR) {
+        INCLUDEPATH += $$OPENSSL_DIR/include
+        exists($$OPENSSL_DIR/lib64) {
+            LIBS += -L$$OPENSSL_DIR/lib64
+        } else {
+            LIBS += -L$$OPENSSL_DIR/lib
+        }
+        LIBS += -lcrypto -lssl
+    } else:packagesExist(openssl) {
+        CONFIG += link_pkgconfig
+        PKGCONFIG += openssl
+    } else {
+        LIBS += -lcrypto -lssl
+    }
+}
+
 # The following define makes your compiler emit warnings if you use
 # any Qt feature that has been marked deprecated (the exact warnings
 # depend on your compiler). Refer to the documentation for the
@@ -15,6 +42,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 INCLUDEPATH += $$PWD/../HBCommon
 HEADERS += $$PWD/../HBCommon/ModbusDefine.h \
+    decryption.h \
     protocol/tcpip2000x.h
 
 SOURCES += \
@@ -23,6 +51,7 @@ SOURCES += \
         app/interfaceapp.cpp \
         app/serialapp.cpp \
         app/systemclock.cpp \
+        decryption.cpp \
         hardware/board_cm3.cpp \
         hardware/ethernet.cpp \
         hardware/gpio.cpp \
@@ -39,9 +68,11 @@ SOURCES += \
         protocol/versagraphic.cpp \
         proxy.cpp \
         subject.cpp \
-        utility/utility.cpp
+        utility/utility.cpp \
+        decryption/decryption.cpp
 
-RESOURCES += qml.qrc
+RESOURCES += qml.qrc \
+    miscellaneous.qrc
 
 # Additional import path used to resolve QML modules in Qt Creator's code model
 QML_IMPORT_PATH =
@@ -82,4 +113,5 @@ HEADERS += \
     protocol/versagraphic.h \
     proxy.h \
     subject.h \
-    utility/utility.h
+    utility/utility.h \
+    decryption/decryption.h

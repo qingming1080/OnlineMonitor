@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/">
+        <file>miscellaneous/33595419_A.out</file>
+        <file>miscellaneous/33595419_B.out</file>
+        <file>miscellaneous/developer-conf-key.enc</file>
+    </qresource>
+</RCC>
