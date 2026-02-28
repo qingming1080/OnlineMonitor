@@ -67,7 +67,10 @@ QtObject
     readonly property string strSystemConfig:           qsTr("系统配置")
     readonly property string strSystemVersion:          qsTr("系统版本号")
     readonly property string strSystemMessage:          qsTr("系统消息")
-    
+    readonly property string strSystemTimeout:          qsTr("系统连接超时")
+    readonly property string strContactInfo:            qsTr("灏博工业科技（西安）有限公司\n联系电话：029-84499505")
+    readonly property string strcontactSupport:         qsTr("请联系技术支持")
+
     // 生产模块
     readonly property string strCreateModel:            qsTr("创建模型")
     readonly property string strNewModel:               qsTr("新建模型")
