@@ -133,3 +133,47 @@ int Decryption::decrypt(const QString file_path, const QString passphrase, unsig
         return 0;
     }
 }
+
+int LicenseProcessing::CalculateSHA512(std::string* inJsonString, std::string* outSHA512)
+{
+    int status = 0;
+    unsigned char HashValue[SHA512_DIGEST_LENGTH];
+
+    // Allocate an sha512_ctx
+    SHA512_CTX sha512_ctx;
+
+    // Initializes a SHA512_CTX structure
+    status = SHA512_Init(&sha512_ctx);
+    if (status < 0)
+    {
+        cout << "Failed to Initializes a SHA512_CTX" << endl;
+        return -1;
+    }
+
+    // Run over the data
+    status = SHA512_Update(&sha512_ctx, inJsonString->c_str(), inJsonString->size());
+    if (status < 0)
+    {
+        cout << "Failed to update a SHA512_CTX" << endl;
+        return -1;
+    }
+
+    //  Finally extract the result and erase the SHA512_CTX
+    status = SHA512_Final(HashValue, &sha512_ctx);
+    if (status < 0)
+    {
+        cout << "Failed to extract / erase a SHA512_CTX" << endl;
+        return -1;
+    }
+
+    char HashHexValue[2 * SHA512_DIGEST_LENGTH + 1];
+
+    for (int i = 0; i < SHA512_DIGEST_LENGTH; ++i)
+    {
+        sprintf(HashHexValue + (i * 2), "%02x", HashValue[i]);
+    }
+
+    *outSHA512 = HashHexValue;
+
+    return status;
+}
