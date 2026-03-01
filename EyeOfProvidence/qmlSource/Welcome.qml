@@ -78,18 +78,18 @@ Rectangle {
             if (connected)
             {
                 waitSeconds = 0
-                systemStatusText = ""
+                systemStatusText = GlobalLanguageDefine.strLoading
                 ModbusClient.setLearnLedStatus(true);
                 ModbusClient.setPilotLedStatus(true);
                 ModbusClient.setReadyLedStatus(true);
                 ModbusClient.setAlarmLedStatus(true);
-                systemStatusText = ""
+                systemStatusText = GlobalLanguageDefine.strLoading
             }
             else
             {
                 waitSeconds = 0
                 loadingTimer.start()
-                systemStatusText = ""
+                systemStatusText = GlobalLanguageDefine.strLoading
                 window.showWelcomeScreen()
             }
         }
