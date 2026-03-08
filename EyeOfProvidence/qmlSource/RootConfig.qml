@@ -3,8 +3,6 @@ import QtQuick.Controls     2.15
 import GlobalLanguageDefine 1.0
 import GlobalSystemDefine   1.0
 Rectangle {
-    property string name: ""
-    property string model: ""
     property string eqText1: ""
     property string eqText2: ""
     property string eqText3: ""
@@ -17,39 +15,22 @@ Rectangle {
     radius: 6
     Text {
         // text: qsTr("系统参数配置")
+        id: systemSettingText
         text: GlobalLanguageDefine.strSystemParamConfig
         font.family: GlobalSystemDefine.fontBold
         font.bold: true
         font.pixelSize: 20
         color: pRgb(153, 204, 255)
-        x:17
-        y:9
+        anchors.top: parent.top
+        anchors.topMargin: 10
+        anchors.left: parent.left
+        anchors.leftMargin: 20
     }
     Rectangle{
-        y:42
+        anchors.top: systemSettingText.bottom
         height: 1
         width: 146
         color: pRgb(174, 210, 216)
-    }
-    Text {
-        // text: qsTr("设备名称") + ": " + name
-        text: GlobalLanguageDefine.strDeviceName + ": " + name
-        font.family: GlobalSystemDefine.fontBold
-        font.bold: true
-        font.pixelSize: 16
-        color: "#abced5"
-        x:15
-        y:69
-    }
-    Text {
-        // text: qsTr("设备型号") + ": " + model
-        text: GlobalLanguageDefine.strDeviceModel + ": " + model
-        font.family: GlobalSystemDefine.fontBold
-        font.bold: true
-        font.pixelSize: 16
-        color: "#abced5"
-        x:15
-        y:121
     }
     Text {
         // text: qsTr("单因素系数") + ":

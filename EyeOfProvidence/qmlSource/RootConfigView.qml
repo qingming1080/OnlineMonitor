@@ -13,22 +13,6 @@ Rectangle {
         height: 613
         x:21
         y:25
-        name: {
-            if(DeviceManager.deviceList[0]){
-                return DeviceManager.deviceList[0].DevInfoObject.name
-            }
-            else{
-                return ""
-            }
-        }
-        model: {
-            if(DeviceManager.deviceList[0]){
-                return DeviceManager.deviceList[0].DevInfoObject.model
-            }
-            else{
-                return ""
-            }
-        }
         eqText1: {
             if(DeviceManager.deviceList[0]){
                 return DeviceManager.deviceList[0].pSystem.singleFact
@@ -63,174 +47,7 @@ Rectangle {
         }
 
     }
-    RootConfig{
-        id:s2
-        width: 300
-        height: 613
-        x:334
-        y:25
-        name: {
-            if(DeviceManager.deviceList[1]){
-                return DeviceManager.deviceList[1].DevInfoObject.name
-            }
-            else{
-                return ""
-            }
-        }
-        model: {
-            if(DeviceManager.deviceList[1]){
-                return DeviceManager.deviceList[1].DevInfoObject.model
-            }
-            else{
-                return ""
-            }
-        }
-        eqText1: {
-            if(DeviceManager.deviceList[1]){
-                return DeviceManager.deviceList[1].pSystem.singleFact
-            }
-            else{
-                return ""
-            }
-        }
-        eqText2: {
-            if(DeviceManager.deviceList[1]){
-                return DeviceManager.deviceList[1].pSystem.generalFact
-            }
-            else{
-                return ""
-            }
-        }
-        eqText3: {
-            if(DeviceManager.deviceList[1]){
-                return DeviceManager.deviceList[1].pSystem.otherFace
-            }
-            else{
-                return ""
-            }
-        }
-        eqText4: {
-            if(DeviceManager.deviceList[1]){
-                return DeviceManager.deviceList[1].pSystem.autoModel
-            }
-            else{
-                return ""
-            }
-        }
-        visible: equipmentCount>=2 ? true : false
-    }
-    RootConfig{
-        id:s3
-        width: 300
-        height: 613
-        x:648
-        y:25
-        name: {
-            if(DeviceManager.deviceList[2]){
-                return DeviceManager.deviceList[2].DevInfoObject.name
-            }
-            else{
-                return ""
-            }
-        }
-        model: {
-            if(DeviceManager.deviceList[2]){
-                return DeviceManager.deviceList[2].DevInfoObject.model
-            }
-            else{
-                return ""
-            }
-        }
-        eqText1: {
-            if(DeviceManager.deviceList[2]){
-                return DeviceManager.deviceList[2].pSystem.singleFact
-            }
-            else{
-                return ""
-            }
-        }
-        eqText2: {
-            if(DeviceManager.deviceList[2]){
-                return DeviceManager.deviceList[2].pSystem.generalFact
-            }
-            else{
-                return ""
-            }
-        }
-        eqText3: {
-            if(DeviceManager.deviceList[2]){
-                return DeviceManager.deviceList[2].pSystem.otherFace
-            }
-            else{
-                return ""
-            }
-        }
-        eqText4: {
-            if(DeviceManager.deviceList[2]){
-                return DeviceManager.deviceList[2].pSystem.autoModel
-            }
-            else{
-                return ""
-            }
-        }
-        visible: equipmentCount>=3 ? true : false
-    }
-    RootConfig{
-        id:s4
-        width: 300
-        height: 613
-        x:963
-        y:25
-        name: {
-            if(DeviceManager.deviceList[3]){
-                return DeviceManager.deviceList[3].DevInfoObject.name
-            }
-            else{
-                return ""
-            }
-        }
-        model: {
-            if(DeviceManager.deviceList[3]){
-                return DeviceManager.deviceList[3].DevInfoObject.model
-            }
-            else{
-                return ""
-            }
-        }
-        eqText1: {
-            if(DeviceManager.deviceList[3]){
-                return DeviceManager.deviceList[3].pSystem.singleFact
-            }
-            else{
-                return ""
-            }
-        }
-        eqText2: {
-            if(DeviceManager.deviceList[3]){
-                return DeviceManager.deviceList[3].pSystem.generalFact
-            }
-            else{
-                return ""
-            }
-        }
-        eqText3: {
-            if(DeviceManager.deviceList[3]){
-                return DeviceManager.deviceList[3].pSystem.otherFace
-            }
-            else{
-                return ""
-            }
-        }
-        eqText4: {
-            if(DeviceManager.deviceList[3]){
-                return DeviceManager.deviceList[3].pSystem.autoModel
-            }
-            else{
-                return ""
-            }
-        }
-        visible: equipmentCount>=4 ? true : false
-    }
+
     Button{
         id:btn1
         x:165
@@ -259,22 +76,25 @@ Rectangle {
         }
     }
     Button{
-        id:btn2
-        x:519
-        y:654
+        id:rootSaveButton
+        anchors.left: parent.left
+        anchors.leftMargin: 50
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: 100
         width: 243
         height: 52
         background: Rectangle{
             radius: 6
             border.width: 2
             border.color: pRgb(43, 112, 173)
-            color: pRgb(43, 112, 173)
+            // color: pRgb(43, 112, 173)
+            color: pRgb(153, 204, 255)
         }
         contentItem: Text {
             // text: qsTr("保存")
             text: GlobalLanguageDefine.strSave
             font.pixelSize: 20
-            color: pRgb(153, 204, 255)
+            color: pRgb(43, 112, 173)
             anchors.centerIn: parent  // 确保文本在按钮内居中对齐
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
