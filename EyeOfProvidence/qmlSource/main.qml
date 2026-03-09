@@ -48,6 +48,7 @@ Window {
     signal sigOneModel()
     signal sigPassError()
     signal sigDelDevice()
+    signal signalOneSecondEvent()
     function switchUI(id)
     {
         sigSwitch(id)
@@ -349,6 +350,19 @@ Window {
         anchors.centerIn: parent
         visible:false
         z:100
+    }
+
+
+    Timer
+    {
+        id: timer
+        interval: 1000
+        repeat: true
+        running: true
+        onTriggered:
+        {
+            signalOneSecondEvent()
+        }
     }
 }
 

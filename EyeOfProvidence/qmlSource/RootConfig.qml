@@ -2,15 +2,16 @@ import QtQuick              2.0
 import QtQuick.Controls     2.15
 import GlobalLanguageDefine 1.0
 import GlobalSystemDefine   1.0
+import LanguageEnum         1.0
 Rectangle {
     property string eqText1: ""
     property string eqText2: ""
     property string eqText3: ""
     property string eqText4: ""
-    property alias t1Edit: t1
-    property alias t2Edit: t2
-    property alias t3Edit: t3
-    property alias t4Edit: t4
+    property alias t1Edit: txtFieldSingleFactorCoeff
+    property alias t2Edit: txtFieldGeneralFactorCoeff
+    property alias t3Edit: txtFieldOtherFactorCoeff
+    property alias t4Edit: txtFieldAutoLearnCountLimit
     color: pRgb(43, 112, 173)
     radius: 6
     Text {
@@ -19,19 +20,23 @@ Rectangle {
         text: GlobalLanguageDefine.strSystemParamConfig
         font.family: GlobalSystemDefine.fontBold
         font.bold: true
-        font.pixelSize: 20
+        font.pixelSize: LanguageManager.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 20 : 18
         color: pRgb(153, 204, 255)
-        anchors.top: parent.top
-        anchors.topMargin: 10
+        height: parent.height
         anchors.left: parent.left
-        anchors.leftMargin: 20
+        anchors.leftMargin: 17
+        anchors.top: parent.top
+        anchors.topMargin: 9
     }
+
     Rectangle{
-        anchors.top: systemSettingText.bottom
+        id: systemLine
+        y: 42
         height: 1
         width: 146
         color: pRgb(174, 210, 216)
     }
+
     Text {
         // text: qsTr("单因素系数") + ":
         id: titleSingleFactorCoeff
@@ -40,15 +45,18 @@ Rectangle {
         font.bold: true
         font.pixelSize: 16
         color: "#abced5"
-        x:15
-        y:189
+        anchors.left: parent.left
+        anchors.leftMargin: 15
+        anchors.verticalCenter: txtFieldSingleFactorCoeff.verticalCenter
     }
     TextField{
-        id:t1
+        id: txtFieldSingleFactorCoeff
         width: 155
         height: 40
-        x:130
-        y:187
+        anchors.left: parent.left
+        anchors.leftMargin: 130
+        anchors.top: systemLine.bottom
+        anchors.topMargin: 10
         horizontalAlignment: TextInput.AlignHCenter
         verticalAlignment: TextInput.AlignVCenter
         color: pRgb(43, 112, 173)
@@ -72,21 +80,24 @@ Rectangle {
     }
     Text {
         // text: qsTr("通用系数") + ": "
-        id: titleGeneralCoeff
+        id: titleGeneralFactorCoeff
         text: GlobalLanguageDefine.strGeneralCoeff + ": "
         font.family: GlobalSystemDefine.fontBold
         font.bold: true
         font.pixelSize: 16
         color: "#abced5"
-        x:15
-        y:253
+        anchors.left: parent.left
+        anchors.leftMargin: 15
+        anchors.verticalCenter: txtFieldGeneralFactorCoeff.verticalCenter
     }
     TextField{
-        id:t2
+        id: txtFieldGeneralFactorCoeff
         width: 155
         height: 40
-        x:130
-        y:247
+        anchors.left: parent.left
+        anchors.leftMargin: 130
+        anchors.top: txtFieldSingleFactorCoeff.bottom
+        anchors.topMargin: 20
         horizontalAlignment: TextInput.AlignHCenter
         verticalAlignment: TextInput.AlignVCenter
         color: pRgb(43, 112, 173)
@@ -110,21 +121,24 @@ Rectangle {
     }
     Text {
         // text: qsTr("其他系数") + ": "
-        id: titleOtherCoeff
+        id: titleOtherFactorCoeff
         text: GlobalLanguageDefine.strOtherCoeff + ": "
         font.family: GlobalSystemDefine.fontBold
         font.bold: true
         font.pixelSize: 16
         color: "#abced5"
-        x:15
-        y:325
+        anchors.left: parent.left
+        anchors.leftMargin: 15
+        anchors.verticalCenter: txtFieldOtherFactorCoeff.verticalCenter
     }
     TextField{
-        id:t3
+        id: txtFieldOtherFactorCoeff
         width: 155
         height: 40
-        x:130
-        y:317
+        anchors.left: parent.left
+        anchors.leftMargin: 130
+        anchors.top: txtFieldGeneralFactorCoeff.bottom
+        anchors.topMargin: 20
         horizontalAlignment: TextInput.AlignHCenter
         verticalAlignment: TextInput.AlignVCenter
         color: pRgb(43, 112, 173)
@@ -153,15 +167,18 @@ Rectangle {
         font.bold: true
         font.pixelSize: 16
         color: "#abced5"
-        x:15
-        y:394
+        anchors.left: parent.left
+        anchors.leftMargin: 15
+        anchors.verticalCenter: txtFieldAutoLearnCountLimit.verticalCenter
     }
     TextField{
-        id:t4
+        id: txtFieldAutoLearnCountLimit
         width: 155
         height: 40
-        x:130
-        y:382
+        anchors.left: parent.left
+        anchors.leftMargin: 130
+        anchors.top: txtFieldOtherFactorCoeff.bottom
+        anchors.topMargin: 20
         horizontalAlignment: TextInput.AlignHCenter
         verticalAlignment: TextInput.AlignVCenter
         color: pRgb(43, 112, 173)

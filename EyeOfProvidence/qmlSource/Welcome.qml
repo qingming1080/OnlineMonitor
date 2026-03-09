@@ -11,6 +11,7 @@ Rectangle {
     property bool   isContactInfo:      false
     property int    waitSeconds:        0
     property int    maxWaitSeconds:     15
+    property bool   isRunning:          true
     Image {
         id: imgname
         width: 229
@@ -88,22 +89,22 @@ Rectangle {
             else
             {
                 waitSeconds = 0
-                loadingTimer.start()
+                isRunning = true
                 systemStatusText = GlobalLanguageDefine.strLoading
                 window.showWelcomeScreen()
             }
         }
     }
 
-    Timer {
-        id: loadingTimer
-        interval: 1000
-        running: true
-        repeat: true
-        onTriggered: {
+    Connections {
+        target: window
+        function onSignalOneSecondEvent()
+        {
+            if(isRunning === false)
+                return
             if(IsRaspberry === false)
             {
-                stop()
+                isRunning = false
                 window.releaseWelcomeScreen()
             }
             else
@@ -111,14 +112,14 @@ Rectangle {
                 waitSeconds++
                 if(waitSeconds >= maxWaitSeconds && !isConnected)
                 {
-                    stop()
+                    isRunning = false
                     systemStatusText = GlobalLanguageDefine.strSystemTimeout + "....." + "\n" + GlobalLanguageDefine.strcontactSupport
                     isContactInfo = true
                     return
                 }
                 if((isConnected == true) && (systemStatusText.length > 5))
                 {
-                    stop()
+                    isRunning = false
                     isContactInfo = false
                     ModbusClient.setLearnLedStatus(false);
                     ModbusClient.setPilotLedStatus(false);

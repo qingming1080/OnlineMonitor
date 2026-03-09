@@ -11,6 +11,14 @@ Rectangle{
     property string versionText: GlobalLanguageDefine.strSystemVersion + ": " + GlobalSystemDefine.strVersionNumber
     property string currentTime: GlobalMessageDefine.getCurrentTime()
 
+    Connections{
+        target: window
+        function onSignalOneSecondEvent()
+        {
+            footer.currentTime = GlobalMessageDefine.getCurrentTime()
+        }
+    }
+
     ValidMessage
     {
         id: validMessage
@@ -68,14 +76,5 @@ Rectangle{
                 dateTimeSetting.visible = true
             }
         }
-    }
-
-    Timer
-    {
-        id: timer
-        interval: 1000
-        repeat: true
-        running: true
-        onTriggered: footer.currentTime = GlobalMessageDefine.getCurrentTime()
     }
 }

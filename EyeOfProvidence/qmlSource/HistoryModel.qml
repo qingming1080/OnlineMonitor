@@ -34,6 +34,14 @@ Rectangle {
         }
     }
 
+    Connections {
+        target: window
+        function onSignalOneSecondEvent()
+        {
+            isUSBAvailable = History.isAvailaleDiskUSB()
+        }
+    }
+
     color: pRgb(153, 204, 255)
     Component.onCompleted: {
         bt1.checkable = true
@@ -750,18 +758,6 @@ Rectangle {
             {
                 // window.showDialog(qsTr("提示"), qsTr("无法开始导出，未找到可用的U盘"))
             }
-        }
-    }
-
-    Timer
-    {
-        id: timer
-        interval: 2000
-        repeat: true
-        running: true
-        onTriggered:
-        {
-            isUSBAvailable = History.isAvailaleDiskUSB()
         }
     }
 
