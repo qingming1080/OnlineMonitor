@@ -109,6 +109,7 @@ HEADERS += \
     protocol/common.h \
     protocol/touchscreen.h \
     protocol/versagraphic.h \
+    protocol/tcpip2000x.h \
     proxy.h \
     subject.h \
     utility/utility.h \
