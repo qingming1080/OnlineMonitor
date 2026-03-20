@@ -2,6 +2,7 @@
 #include "../protocol/common.h"
 #include "../protocol/versagraphic.h"
 #include "../protocol/touchscreen.h"
+#include "../protocol/tcpip2000x.h"
 #include <QThread>
 #include <QTimerEvent>
 #include <QDebug>
@@ -172,6 +173,7 @@ int EthernetApp::Attach(const int iDev, const int ProtocolType, const void *_dev
         dev._ptrProtocol = new TouchScreen();
         break;
     case Common::DP2000X_TCP:
+        dev._ptrProtocol = new TcpIp2000x();
         break;
     default:
         dev._ptrProtocol = new Versagraphic();
@@ -235,6 +237,7 @@ int EthernetApp::Update(const int iDev, const Common::WELD_SETTING *_setting)
 
 void EthernetApp::timerEvent(QTimerEvent *event)
 {
+    Q_UNUSED(event)
     if(m_mapEthernetDev.isEmpty() == true)
         return;
     else

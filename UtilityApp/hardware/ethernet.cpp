@@ -527,8 +527,12 @@ void Ethernet::timerEvent(QTimerEvent *event)
         memset(_Recv_buffer, 0, 2048);
         if(this->receive_TCP_Socket(_Recv_buffer) > 0)
         {
+            // m_strBuffer.clear();
+            // m_strBuffer.append((char*)_Recv_buffer);
+
             m_strBuffer.clear();
-            m_strBuffer.append((char*)_Recv_buffer);
+            m_strBuffer = QString::fromLatin1(reinterpret_cast<const char*>(_Recv_buffer), 2048);
+
             emit signalResultReady(m_iDevNum, m_strBuffer); //Send the signal to Serial APP
             qDebug() << m_strBuffer;
         }
