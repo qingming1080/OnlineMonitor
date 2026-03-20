@@ -2,10 +2,10 @@
 #include <QVariant>
 #include <QDebug>
 #include <QSerialPort>
-#include "tools/utilityfunction.h"
+// #include "tools/utilityfunction.h"
 #include "networkmodel.h"
 #include "rs232model.h"
-#include "weldertypemodel.h"
+// #include "weldertypemodel.h"
 
 DeviceInformation::DeviceInformation(int welderID, QObject *parent)
     : QObject{parent}, m_WelderID(welderID)
@@ -439,8 +439,8 @@ void DeviceInformation::InitModbusDevice()
 
 bool DeviceInformation::validateConfigureSettings()
 {
-    bool isL20_TS   = (m_DBConfigure.WelderType == DeviceInfoEnum::L20_TS);
-    bool isRS232    = (m_DBConfigure.ConnectType == DeviceInfoEnum::RS232);
+    // bool isL20_TS   = (m_DBConfigure.WelderType == DeviceInfoEnum::L20_TS);
+    // bool isRS232    = (m_DBConfigure.ConnectType == DeviceInfoEnum::RS232);
 
     // if (isL20_TS != isRS232)
     // {
