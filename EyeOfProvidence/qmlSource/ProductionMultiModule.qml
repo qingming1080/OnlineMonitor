@@ -150,7 +150,16 @@ Rectangle {
             }
             deviceType:{
                 if(DeviceManager.DeviceList[0]){
-                    return DeviceManager.DeviceList[0].DeviceObj.WelderType === 0 ? "L20-VG" : "L20-TS"
+                    switch(DeviceManager.DeviceList[0].DeviceObj.WelderType){
+                    case 0:
+                        return "L20-VG"
+                    case 1:
+                        return "L20-TS"
+                    case 2:
+                        return "2000XC"
+                    default:
+                        return "Other"
+                    }
                 }
                 else{
                     return ""
@@ -300,7 +309,16 @@ Rectangle {
             deviceType:{
                 if(DeviceManager.DeviceList[1])
                 {
-                    return DeviceManager.DeviceList[1].DeviceObj.WelderType === 0 ? "L20-VG" : "L20-TS"
+                    switch(DeviceManager.DeviceList[1].DeviceObj.WelderType){
+                    case 0:
+                        return "L20-VG"
+                    case 1:
+                        return "L20-TS"
+                    case 2:
+                        return "2000XC"
+                    default:
+                        return "Other"
+                    }
                 }
                 else
                 {
