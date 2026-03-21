@@ -513,6 +513,7 @@ void Ethernet::timerEvent(QTimerEvent *event)
 
     // qDebug() << "PHY: " << _W5500->GetRegister(W5500::COMMON_REGISTER, W5500::PHYCFGR);
     unsigned status = this->get_TCP_Status();
+    int receivedSize = -1;
     m_iStatus = status;
     switch(status)
     {
@@ -525,13 +526,11 @@ void Ethernet::timerEvent(QTimerEvent *event)
     case W5500::SOCK_ESTABLISHED:
         // _Socket1->Get_Socket_Server(TargetIP_1, &TargetPort_1);
         memset(_Recv_buffer, 0, 2048);
-        if(this->receive_TCP_Socket(_Recv_buffer) > 0)
+        receivedSize = this->receive_TCP_Socket(_Recv_buffer);
+        if(receivedSize > 0)
         {
-            // m_strBuffer.clear();
-            // m_strBuffer.append((char*)_Recv_buffer);
-
             m_strBuffer.clear();
-            m_strBuffer = QString::fromLatin1(reinterpret_cast<const char*>(_Recv_buffer), 2048);
+            m_strBuffer = QString::fromLatin1(reinterpret_cast<const char*>(_Recv_buffer), receivedSize);
 
             emit signalResultReady(m_iDevNum, m_strBuffer); //Send the signal to Serial APP
             qDebug() << m_strBuffer;

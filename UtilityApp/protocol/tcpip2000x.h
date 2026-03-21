@@ -64,6 +64,10 @@ private:
     static_assert(sizeof(BYTE_2000X_PROTOCOL) == 125, "BYTE_2000X_PROTOCOL size must be 125 bytes");
 
     BYTE_2000X_PROTOCOL m_byte2000xProtocol;
+
+    int validateProtocol(const QString strWeldResult);
+
+    int parseProtocol();
 public:
     TcpIp2000x();
     virtual int ParseWeldResult(QString weldResult) override;
