@@ -6,12 +6,15 @@ import GlobalLanguageDefine 1.0
 import GlobalSystemDefine   1.0
 import GlobalMessageDefine  1.0
 import QmlEnum              1.0
+import DeviceInfoEnum       1.0
+import DeviceObj            1.0
 
 Rectangle {
     readonly property int qmlscreenIndicator: QmlEnum.SINGLE_PRODUCTION_SCREEN
     property int currentIndex: DeviceManager.SelectedDeviceIndex
     property int deviceCount: DeviceManager.DeviceCounter
     property bool heightOption: (currentIndex < deviceCount) ? DeviceManager.DeviceList[currentIndex].DeviceObj.HeightEncoderOption : false
+    property DeviceObj deviceObj: (currentIndex < deviceCount) ? DeviceManager.DeviceList[currentIndex].DeviceObj : null
     color: pRgb(153, 204, 255)
 
     Connections{
@@ -77,6 +80,7 @@ Rectangle {
             x:42
             y:314
             color: "#0c5696"
+            is2000XDevice:      (deviceObj.WelderType === DeviceInfoEnum.BRANSON_2000XC) ? true : false
             heightOption:       (currentIndex < deviceCount) ? DeviceManager.DeviceList[currentIndex].DeviceObj.HeightEncoderOption : false
             energy:             (currentIndex < deviceCount) ? DeviceManager.DeviceList[currentIndex].ProductionObj.Energy : 0
             amplitude:          (currentIndex < deviceCount) ? DeviceManager.DeviceList[currentIndex].ProductionObj.Amplitude : 0

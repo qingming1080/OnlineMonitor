@@ -16,6 +16,7 @@ Rectangle {
     property alias txtTP: fieldTriggerPressure.text
     property alias txtWP: fieldWeldPressure.text
     property int deviceCount: DeviceManager.DeviceCounter
+    property bool is2000XDevice: false
 
     radius: 3
     Rectangle {
@@ -103,7 +104,7 @@ Rectangle {
     Text {
         id: titleAmplitude
         // text: qsTr("振幅")
-        text: GlobalLanguageDefine.strAmplitude + "(μm)" + ": "
+        text: (is2000XDevice === false) ? GlobalLanguageDefine.strAmplitude + "(μm)" + ": " : GlobalLanguageDefine.strAmplitude + "(%)" + ": "
         height: 25
         width: 80
         font.family: GlobalSystemDefine.fontBold

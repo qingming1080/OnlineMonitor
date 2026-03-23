@@ -87,12 +87,12 @@ int TcpIp2000x::parseProtocol()
 
     double actualDistanceInMicroMeter = m_byte2000xProtocol.ActualDistance * 25.4 / 1000;
     QString strActualDistance = QString::number(actualDistanceInMicroMeter, 'f', 2);
-    doubleTemp = _Utility->String2FormatedData(Utility::DINActHgt, strActualDistance);
+    doubleTemp = _Utility->String2FormatedData(Utility::DINActHgtNoUnit, strActualDistance);
     m_stWeldResult.PostHeight = static_cast<int>(doubleTemp);
 
     double actualTotalCollapseInMicroMeter = m_byte2000xProtocol.ActualTotalCollapse * 25.4 / 1000;
     QString strActualTotalCollapse = QString::number(actualTotalCollapseInMicroMeter, 'f', 2);
-    doubleTemp = _Utility->String2FormatedData(Utility::DINActPreHgt, strActualTotalCollapse);
+    doubleTemp = _Utility->String2FormatedData(Utility::DINActPreHgtNoUnit, strActualTotalCollapse);
     m_stWeldResult.Preheight = static_cast<int>(doubleTemp);
 
     double peakPowerInPercent = m_byte2000xProtocol.PeakPower / 10.0; // Assuming PeakPower is in deci-Watts

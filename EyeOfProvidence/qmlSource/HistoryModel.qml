@@ -9,10 +9,13 @@ import GlobalSystemDefine       1.0
 import GlobalMessageDefine      1.0
 import LanguageEnum             1.0
 import HistoryEnum              1.0
+import DeviceObj                1.0
+import DeviceInfoEnum           1.0
 Rectangle {
     property int itemCount: DeviceManager.DeviceCounter
     property bool isUSBAvailable: false
     property string buttonColor: "#0d988c"
+    property DeviceObj deviceObj: null
 
     Connections {
         target: History
@@ -127,6 +130,7 @@ Rectangle {
             }
             onPressed: {
                 History.setDeviceID(HistoryEnum.ALL_WELDERS)
+                deviceObj = null
             }
         }
         Text {
@@ -163,6 +167,7 @@ Rectangle {
             onPressed: {
                 var welderID = DeviceManager.DeviceList[0].WelderID
                 History.setDeviceID(welderID)
+                deviceObj = DeviceManager.DeviceList[0].DeviceObj
             }
         }
         Text {
@@ -208,6 +213,7 @@ Rectangle {
             onPressed: {
                 var welderID = DeviceManager.DeviceList[1].WelderID
                 History.setDeviceID(welderID)
+                deviceObj = DeviceManager.DeviceList[1].DeviceObj
             }
         }
         Text {
@@ -254,6 +260,7 @@ Rectangle {
             onPressed: {
                 var welderID = DeviceManager.DeviceList[2].WelderID
                 History.setDeviceID(welderID)
+                deviceObj = DeviceManager.DeviceList[2].DeviceObj
             }
         }
         Text {
@@ -300,6 +307,7 @@ Rectangle {
             onPressed: {
                 var welderID = DeviceManager.DeviceList[3].WelderID
                 History.setDeviceID(welderID)
+                deviceObj = DeviceManager.DeviceList[3].DeviceObj
             }
         }
         Text {
@@ -524,7 +532,17 @@ Rectangle {
             anchors.left: historyEnergyeText.right
             anchors.leftMargin: LanguageManager.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 70 : 50
             font.pixelSize: 16
-            text: GlobalLanguageDefine.strAmplitude + "(μm)"
+            text: {
+                if(deviceObj === null)
+                    return GlobalLanguageDefine.strAmplitude + "(μm) / (%)"
+                else
+                {
+                    if(deviceObj.WelderType === DeviceInfoEnum.BRANSON_2000XC)
+                        return GlobalLanguageDefine.strAmplitude + "(%)"
+                    else
+                        return GlobalLanguageDefine.strAmplitude + "(μm)"
+                }
+            }
             font.family: GlobalSystemDefine.fontBold
             font.bold: true
             color: "#0068a8"
@@ -535,7 +553,17 @@ Rectangle {
             anchors.left: historyAmplitudeText.right
             anchors.leftMargin: LanguageManager.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 70 : 50
             font.pixelSize: 16
-            text: GlobalLanguageDefine.strPower + "(W)"
+            text: {
+                if(deviceObj === null)
+                    return GlobalLanguageDefine.strPower + "(W) / (%)"
+                else
+                {
+                    if(deviceObj.WelderType === DeviceInfoEnum.BRANSON_2000XC)
+                        return GlobalLanguageDefine.strPower + "(%)"
+                    else
+                        return GlobalLanguageDefine.strPower + "(W)"
+                }
+            }
             font.family: GlobalSystemDefine.fontBold
             font.bold: true
             color: "#0068a8"

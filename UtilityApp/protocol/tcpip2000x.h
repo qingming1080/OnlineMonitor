@@ -61,6 +61,34 @@ private:
     };
 #pragma pack(pop)
 
+    enum OVERLOAD_DEFINITION
+    {
+        TEST_OVERLOAD = 0,
+        PRETRIGGER_OVERLOAD,
+        SEEK_OVERLOAD,
+        POWER_SUPPLY_OVERLOAD,
+        CONT_POWER_LIMIT,
+        AFTERBURST_OVERLOAD,
+        PRE_WELD_SEEK_OVERLOAD,
+        POST_WELD_SEEK_OVERLOAD
+    };
+
+    enum NO_CYCLE_ALARM_DEFINITION
+    {
+        UPPER_LIMIT_TIMEOUT = 0,
+        UNDEFINED_1,
+        TRIGGER_BEFORE_PRETRIGGER,
+        TRIGGER_TIMEOUT,
+        UNDEFINED_2,
+        LLS_ABORT_BEFORE_TRS,
+        EXTERNAL_CYCLE_ABORT,
+        MISSING_PART_ABORT,
+        ABS_BEFORE_TRIGGER,
+        AMP_STEP_BEFORE_TRIGGER,
+        F_STEP_BEFORE_TRIGGER,
+        GROUND_DETECTE_CUTOFF,
+    };
+
     static_assert(sizeof(BYTE_2000X_PROTOCOL) == 125, "BYTE_2000X_PROTOCOL size must be 125 bytes");
 
     BYTE_2000X_PROTOCOL m_byte2000xProtocol;

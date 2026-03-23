@@ -27,6 +27,7 @@ Rectangle {
     property int deviceCount: DeviceManager.DeviceCounter
     property bool heightOption: (currentIndex < deviceCount) ? DeviceManager.DeviceList[currentIndex].DeviceObj.HeightEncoderOption : false
     property ManualObj manualObj: (currentIndex < deviceCount) ? DeviceManager.DeviceList[currentIndex].ManualObj : null
+    property DeviceObj deviceObj: (currentIndex < deviceCount) ? DeviceManager.DeviceList[currentIndex].DeviceObj : null
     Connections{
         target: manualObj
         function onNotifyCurrentSamplesChanged()
@@ -132,6 +133,7 @@ Rectangle {
             anchors.topMargin: 15
             anchors.left: layoutDeviceInfo.left
             color:  "#0c5696"
+            is2000XDevice:          (deviceObj.WelderType === DeviceInfoEnum.BRANSON_2000XC) ? true : false
             presetEnergy:           (currentIndex < deviceCount) ? DeviceManager.DeviceList[currentIndex].ManualObj.EnergySetting : "0"
             presetAmplitude:        (currentIndex < deviceCount) ? DeviceManager.DeviceList[currentIndex].ManualObj.AmplitudeSetting : "0"
             presetTriggerPressure:  (currentIndex < deviceCount) ? DeviceManager.DeviceList[currentIndex].ManualObj.TriggerPressureSetting : "0.0"
@@ -338,7 +340,7 @@ Rectangle {
                     anchors.leftMargin: DeviceManager.DeviceList[currentIndex].DeviceObj.HeightEncoderOption === true ? 290 : 410 //110 : 150
                     font.pixelSize: 16
                     // text: qsTr("功率")
-                    text: GlobalLanguageDefine.strPower + "(W)"
+                    text: (deviceObj.WelderType !== DeviceInfoEnum.BRANSON_2000XC) ? GlobalLanguageDefine.strPower + "(W)" : GlobalLanguageDefine.strPower + "(%)"
                     font.family: GlobalSystemDefine.fontBold
                     color: pRgb(171, 206, 213)
                 }

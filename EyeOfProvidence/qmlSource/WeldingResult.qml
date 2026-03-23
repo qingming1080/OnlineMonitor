@@ -21,6 +21,7 @@ Rectangle {
 
     property int textMargin:1
     property int imgWidHei:1
+    property bool is2000XDevice: false
 
     color: pRgb(43, 112, 173)
     radius: 3
@@ -78,7 +79,9 @@ Rectangle {
 
     Text {
         id: titlePower
-        text: GlobalLanguageDefine.strPower + "(W)" + ": " + peakPower
+        text: (is2000XDevice === true) ?
+                  GlobalLanguageDefine.strPower + "(%)" + ": " + peakPower :
+                  GlobalLanguageDefine.strPower + "(W)" + ": " + peakPower
         font.family: GlobalSystemDefine.fontBold
         font.bold: true
         font.pixelSize: 16
@@ -103,7 +106,9 @@ Rectangle {
     Text {
         id: titleAmplitude
         // text: qsTr("振幅") + ": " + eqText3 + "J"
-        text: GlobalLanguageDefine.strAmplitude + "(μm)" + ": " + amplitude
+        text: (is2000XDevice === true) ?
+                  GlobalLanguageDefine.strAmplitude + "(%)" + ": " + amplitude :
+                  GlobalLanguageDefine.strAmplitude + "(μm)" + ": " + amplitude
         font.family: GlobalSystemDefine.fontBold
         font.bold: true
         font.pixelSize: 16
