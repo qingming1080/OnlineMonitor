@@ -95,9 +95,19 @@ Rectangle {
                     return ""
             }
             deviceType:{
-                if(currentIndex < deviceCount)
-                    return DeviceManager.DeviceList[currentIndex].DeviceObj.WelderType === 0 ? "L20-VG" : "L20-TS"
-                    return ""
+                if(currentIndex < deviceCount){
+                    switch(DeviceManager.DeviceList[currentIndex].DeviceObj.WelderType){
+                    case 0:
+                        return "L20-VG"
+                    case 1:
+                        return "L20-TS"
+                    case 2:
+                        return "2000XC"
+                    default:
+                        return "Other"
+                    }
+                }
+                return ""
             }
             connectionType:{
                 if(currentIndex < deviceCount)
