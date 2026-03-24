@@ -5,7 +5,7 @@ import LanguageEnum         1.0
 //设备信息
 Rectangle {
     property string deviceName: ""
-    property string deviceType: ""
+    property int deviceType: 0
     property string connectionType: ""
     property string devcieStatus: ""
     property int    sampleCount: 0
@@ -86,7 +86,7 @@ Rectangle {
     Text {
         id:t2
         // text: qsTr("设备型号") + ": " + eqText2
-        text: GlobalLanguageDefine.strDeviceModel + ": " + deviceType
+        text: GlobalLanguageDefine.strDeviceModel + ": " + WelderTypeModel.get(deviceType).key
         font.family: GlobalSystemDefine.fontBold
         font.bold: true
         font.pixelSize: LanguageManager.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 16 : 14

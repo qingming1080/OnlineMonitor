@@ -149,21 +149,10 @@ Rectangle {
                 }
             }
             deviceType:{
-                if(DeviceManager.DeviceList[0]){
-                    switch(DeviceManager.DeviceList[0].DeviceObj.WelderType){
-                    case 0:
-                        return "L20-VG"
-                    case 1:
-                        return "L20-TS"
-                    case 2:
-                        return "2000XC"
-                    default:
-                        return "Other"
-                    }
-                }
-                else{
-                    return ""
-                }
+                if(DeviceManager.DeviceList[0])
+                    return DeviceManager.DeviceList[0].DeviceObj.WelderType;
+                else
+                    return 0
             }
             connectionType:{
                 if(DeviceManager.DeviceList[0]){
@@ -309,20 +298,11 @@ Rectangle {
             deviceType:{
                 if(DeviceManager.DeviceList[1])
                 {
-                    switch(DeviceManager.DeviceList[1].DeviceObj.WelderType){
-                    case 0:
-                        return "L20-VG"
-                    case 1:
-                        return "L20-TS"
-                    case 2:
-                        return "2000XC"
-                    default:
-                        return "Other"
-                    }
+                    return DeviceManager.DeviceList[1].DeviceObj.WelderType;
                 }
                 else
                 {
-                    return ""
+                    return 0
                 }
             }
             connectionType:{
