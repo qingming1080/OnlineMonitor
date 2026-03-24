@@ -530,7 +530,7 @@ Rectangle {
             id: historyAmplitudeText
             anchors.top: historyEnergyeText.top
             anchors.left: historyEnergyeText.right
-            anchors.leftMargin: LanguageManager.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 70 : 50
+            anchors.leftMargin: LanguageManager.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 50 : 40
             font.pixelSize: 16
             text: {
                 if(deviceObj === null)
@@ -551,7 +551,7 @@ Rectangle {
             id: historyPowerText
             anchors.top: historyAmplitudeText.top
             anchors.left: historyAmplitudeText.right
-            anchors.leftMargin: LanguageManager.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 70 : 50
+            anchors.leftMargin: LanguageManager.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 35 : 35
             font.pixelSize: 16
             text: {
                 if(deviceObj === null)
@@ -572,7 +572,7 @@ Rectangle {
             id: historyWeldTimeText
             anchors.top: historyPowerText.top
             anchors.left: historyPowerText.right
-            anchors.leftMargin: LanguageManager.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 70 : 80
+            anchors.leftMargin: LanguageManager.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 50 : 30
             font.pixelSize: 16
             text: GlobalLanguageDefine.strTime + "(s)"
             font.family: GlobalSystemDefine.fontBold
@@ -583,7 +583,7 @@ Rectangle {
             id: historyWeldPressureText
             anchors.top: historyWeldTimeText.top
             anchors.left: historyWeldTimeText.right
-            anchors.leftMargin: LanguageManager.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 70 : 70
+            anchors.leftMargin: LanguageManager.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 70 : 65
             font.pixelSize: 16
             text: GlobalLanguageDefine.strWeldPressure + "(PSI)"
             font.family: GlobalSystemDefine.fontBold
@@ -594,7 +594,7 @@ Rectangle {
             id: historyWeldResultText
             anchors.top: historyWeldPressureText.top
             anchors.left: historyWeldPressureText.right
-            anchors.leftMargin: LanguageManager.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 85 : 100
+            anchors.leftMargin: LanguageManager.LanguageIndex === LanguageEnum.SIMPLIFIED_CHINESE ? 80 : 100
             font.pixelSize: 16
             text: GlobalLanguageDefine.strResult
             font.family: GlobalSystemDefine.fontBold
@@ -672,7 +672,7 @@ Rectangle {
                     id: historyPowerValueText
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.left: parent.left
-                    anchors.leftMargin: 709
+                    anchors.leftMargin: 719
                     font.pixelSize: 16
                     text: power
                     font.family: GlobalSystemDefine.fontBold
