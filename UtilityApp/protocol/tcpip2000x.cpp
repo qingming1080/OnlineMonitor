@@ -85,12 +85,12 @@ int TcpIp2000x::parseProtocol()
 
     m_stWeldResult.CycleCount = m_byte2000xProtocol.CycleCount;
 
-    double actualDistanceInMicroMeter = m_byte2000xProtocol.ActualDistance * 25.4 / 1000;
+    double actualDistanceInMicroMeter = m_byte2000xProtocol.ActualDistance * 25.4 / 10000;
     QString strActualDistance = QString::number(actualDistanceInMicroMeter, 'f', 2);
     doubleTemp = _Utility->String2FormatedData(Utility::DINActHgtNoUnit, strActualDistance);
     m_stWeldResult.PostHeight = static_cast<int>(doubleTemp);
 
-    double actualTotalCollapseInMicroMeter = m_byte2000xProtocol.ActualTotalCollapse * 25.4 / 1000;
+    double actualTotalCollapseInMicroMeter = m_byte2000xProtocol.ActualTotalCollapse * 25.4 / 10000;
     QString strActualTotalCollapse = QString::number(actualTotalCollapseInMicroMeter, 'f', 2);
     doubleTemp = _Utility->String2FormatedData(Utility::DINActPreHgtNoUnit, strActualTotalCollapse);
     m_stWeldResult.Preheight = static_cast<int>(doubleTemp);
