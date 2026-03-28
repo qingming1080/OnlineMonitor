@@ -351,7 +351,7 @@ Rectangle {
                     anchors.left: parent.left
                     anchors.leftMargin: DeviceManager.DeviceList[currentIndex].DeviceObj.HeightEncoderOption === true ? 380 : 500 //90
                     font.pixelSize: 16
-                    text: GlobalLanguageDefine.strPreWeldHeight + "(mm)"
+                    text: (deviceObj.WelderType !== DeviceInfoEnum.BRANSON_2000XC) ? GlobalLanguageDefine.strCollapseDistance + "(mm)" : GlobalLanguageDefine.strPreWeldHeight + "(mm)"
                     font.family: GlobalSystemDefine.fontBold
                     color: pRgb(171, 206, 213)
                     visible: heightOption
@@ -362,7 +362,7 @@ Rectangle {
                     anchors.left: parent.left
                     anchors.leftMargin: DeviceManager.DeviceList[currentIndex].DeviceObj.HeightEncoderOption === true ? 520: 520 //140
                     font.pixelSize: 16
-                    text: GlobalLanguageDefine.strPostWeldHeight + "(mm)"
+                    text: (deviceObj.WelderType !== DeviceInfoEnum.BRANSON_2000XC) ? GlobalLanguageDefine.strAbsoluteDistance + "(mm)" : GlobalLanguageDefine.strPostWeldHeight + "(mm)"
                     font.family: GlobalSystemDefine.fontBold
                     color: pRgb(171, 206, 213)
                     visible: heightOption

@@ -116,6 +116,8 @@ QtObject
     readonly property string strPostWeldHeight:         qsTr("焊后高度")
     readonly property string strShortPostHeight:        qsTr("终高")
     readonly property string strParameterSetting:       qsTr("参数设置")
+    readonly property string strAbsoluteDistance:       qsTr("绝对距离")
+    readonly property string strCollapsDistance:        qsTr("相对距离")
     
     // 系统配置
     readonly property string strDeviceConfig:           qsTr("设备配置")

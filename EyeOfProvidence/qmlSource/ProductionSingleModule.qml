@@ -157,6 +157,7 @@ Rectangle {
                 x: 329
                 y: 314
                 color:  "#0c5696"
+                is2000XDevice: (deviceObj.WelderType === DeviceInfoEnum.BRANSON_2000XC) ? true : false
             }
             AbnormalMessage{
                 id:s8

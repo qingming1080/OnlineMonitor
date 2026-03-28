@@ -10,6 +10,7 @@ import LanguageEnum         1.0
 Rectangle {
     color: pRgb(43, 112, 173)
     property bool optionHeightEncoder: false
+    property bool is2000XDevice: false
     property int currentIndex: DeviceManager.SelectedDeviceIndex
     property int deviceCount: DeviceManager.DeviceCounter;
     property int currentWelderId: DeviceManager.DeviceList[currentIndex].WelderID
@@ -176,7 +177,7 @@ Rectangle {
         LineSeries {
             id: lineSeriesPreheight
             // name: "焊前高度"
-            name: GlobalLanguageDefine.strPreWeldHeight
+            name: (is2000XDevice === false) ? GlobalLanguageDefine.strPreWeldHeight : GlobalLanguageDefine.strCollapseDistance
             axisX: cycleCount
             axisY: preHeight
             color: "#1398fa"
@@ -187,7 +188,7 @@ Rectangle {
         LineSeries {
             id: lineSeriesPostHeight
             // name: "焊后高度"
-            name: GlobalLanguageDefine.strPostWeldHeight
+            name: (is2000XDevice === false) ? GlobalLanguageDefine.strPostWeldHeight : GlobalLanguageDefine.strAbsoluteDistance
             axisX: cycleCount
             axisY: postHeight
             color: "#B388FF"

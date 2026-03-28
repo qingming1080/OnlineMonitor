@@ -23,7 +23,10 @@ linguist SimplifiedChinese.ts
 ```bash
 C:\Qt\5.15.17\mingw81_64\bin\linguist .\languageTranslation\SimplifiedChinese.ts
 
-C:\Qt\5.15.17\mingw81_64\bin\linguist .\languageTranslation\English.ts   
+C:\Qt\5.15.17\mingw81_64\bin\linguist .\languageTranslation\English.ts
+
+C:\Users\jerry\software\tools\QT\5.15.12\mingw81_64\bin\linguist .\languageTranslation\SimlifiedChinese.ts
+C:\Users\jerry\software\tools\QT\5.15.12\mingw81_64\bin\lignusit .\languageTranslation\English.ts
 ```
 #### 2.3. Save and Generate .qm files
 ```bash

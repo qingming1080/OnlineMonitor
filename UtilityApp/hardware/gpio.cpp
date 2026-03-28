@@ -250,7 +250,7 @@ GPIO::GPIO(QObject *parent)
     for(int i = 0; i < TOTAL_OUTPUT; i++)
     {
         bcm2835_gpio_fsel(m_arrayOutput[i], BCM2835_GPIO_FSEL_OUTP);
-        bcm2835_gpio_write(m_arrayOutput[i], HIGH);
+        bcm2835_gpio_write(m_arrayOutput[i], LOW);
     }
 
     for(int i = 0; i < TOTAL_INPUT; i++)
