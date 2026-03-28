@@ -281,6 +281,7 @@ void DeviceManager::slotNotifyDeviceIOStatusChanged(int welderId, const HBModbus
             {
                 device->setIORejectStatus(false);
                 device->setIOSuspectStatus(false);
+                HBModbusClient::getInstance()->setDeviceIOStatus(welderId, false, false);
             }
             break;
         }
