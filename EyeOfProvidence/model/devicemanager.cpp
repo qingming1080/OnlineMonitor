@@ -277,13 +277,13 @@ void DeviceManager::slotNotifyDeviceIOStatusChanged(int welderId, const HBModbus
             device->setIORejectStatus(status.IsRejectStatus);
             device->setIOSuspectStatus(status.IsSuspectStatus);
             device->setIOResetStatus(status.IsResetStatus);
+            if(status.IsResetStatus == true)
+            {
+                device->setIORejectStatus(false);
+                device->setIOSuspectStatus(false);
+            }
             break;
         }
-    }
-
-    if(status.IsResetStatus)
-    {
-        // resetDeviceIO(welderId);
     }
 }
 
