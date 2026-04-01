@@ -2,82 +2,10 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="en_US" sourcelanguage="zh_CN">
 <context>
-    <name>BransonFunctionKeyboard</name>
-    <message>
-        <location filename="../qmlSource/BransonFunctionKeyboard.qml" line="22"/>
-        <source>SECONDARY</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>BransonPrimaryButton</name>
-    <message>
-        <location filename="../qmlSource/BransonPrimaryButton.qml" line="21"/>
-        <source>PRIMARY</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>BransonStyle</name>
     <message>
-        <location filename="../qmlSource/BransonStyle.qml" line="35"/>
         <source>English</source>
-        <translation type="unfinished">English</translation>
-    </message>
-    <message>
-        <location filename="../qmlSource/BransonStyle.qml" line="36"/>
-        <source>Deutsche</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../qmlSource/BransonStyle.qml" line="37"/>
-        <source>中文(传统的)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../qmlSource/BransonStyle.qml" line="38"/>
-        <source>Français</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../qmlSource/BransonStyle.qml" line="39"/>
-        <source>한국어</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../qmlSource/BransonStyle.qml" line="40"/>
-        <source>Italiano</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../qmlSource/BransonStyle.qml" line="41"/>
-        <source>Español</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../qmlSource/BransonStyle.qml" line="42"/>
-        <source>中文(简化的)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../qmlSource/BransonStyle.qml" line="43"/>
-        <source>日本语</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../qmlSource/BransonStyle.qml" line="44"/>
-        <source>dansk</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../qmlSource/BransonStyle.qml" line="45"/>
-        <source>Slovenský</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../qmlSource/BransonStyle.qml" line="46"/>
-        <source>Polskie</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">English</translation>
     </message>
 </context>
 <context>
@@ -347,12 +275,12 @@
     <message>
         <location filename="../qmlSource/GlobalLanguageDefine.qml" line="119"/>
         <source>绝对距离</source>
-        <translation>AbsoluteDistance</translation>
+        <translation>Total Abs</translation>
     </message>
     <message>
         <location filename="../qmlSource/GlobalLanguageDefine.qml" line="120"/>
         <source>相对距离</source>
-        <translation>CollapseDistance</translation>
+        <translation>Total Col</translation>
     </message>
     <message>
         <location filename="../qmlSource/GlobalLanguageDefine.qml" line="150"/>
@@ -1060,39 +988,6 @@
         <location filename="../qmlSource/GlobalLanguageDefine.qml" line="199"/>
         <source>星期六</source>
         <translation>Sat</translation>
-    </message>
-</context>
-<context>
-    <name>HBCalendar</name>
-    <message>
-        <location filename="../qmlSource/HBCalendar.qml" line="92"/>
-        <source>%1  %2</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>HBPrimaryButton</name>
-    <message>
-        <location filename="../qmlSource/HBPrimaryButton.qml" line="21"/>
-        <source>PRIMARY</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>Loading</name>
-    <message>
-        <location filename="../qmlSource/Loading.qml" line="32"/>
-        <source>正在导出...</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>ProductionLearnModule</name>
-    <message>
-        <location filename="../qmlSource/ProductionLearnModule.qml" line="40"/>
-        <location filename="../qmlSource/ProductionLearnModule.qml" line="168"/>
-        <source>请输入焊接参数！</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>
