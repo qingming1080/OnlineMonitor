@@ -633,7 +633,20 @@ bool DataBaseManager::removeManualRecords(const int welderID)
     query.prepare(execStr);
     query.bindValue(":welder_id", welderID);
 
-    return query.exec();
+    if (!query.exec())
+    {
+        qWarning() << "removeManualRecords failed:" << query.lastError().text();
+        return false;
+    }
+
+    // Force a checkpoint so WAL changes are merged into the main .db file sooner.
+    QSqlQuery checkpointQuery(m_database);
+    if (!checkpointQuery.exec("PRAGMA wal_checkpoint(TRUNCATE);"))
+    {
+        qWarning() << "removeManualRecords checkpoint failed:" << checkpointQuery.lastError().text();
+    }
+
+    return true;
 }
 
 bool DataBaseManager::removeManualRecord(const int id)
@@ -648,7 +661,20 @@ bool DataBaseManager::removeManualRecord(const int id)
     query.prepare(execStr);
     query.bindValue(":id", id);
 
-    return query.exec();
+    if (!query.exec())
+    {
+        qWarning() << "removeManualRecord failed:" << query.lastError().text();
+        return false;
+    }
+
+    // Force a checkpoint so WAL changes are merged into the main .db file sooner.
+    QSqlQuery checkpointQuery(m_database);
+    if (!checkpointQuery.exec("PRAGMA wal_checkpoint(TRUNCATE);"))
+    {
+        qWarning() << "removeManualRecord checkpoint failed:" << checkpointQuery.lastError().text();
+    }
+
+    return true;
 }
 
 bool DataBaseManager::insertManualRecord(DB_MANUAL data)

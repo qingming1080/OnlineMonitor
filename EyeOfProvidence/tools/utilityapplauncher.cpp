@@ -67,9 +67,9 @@ void UtilityAppLauncher::startUtilityApp()
         // m_process->start("sudo",{program,"-platform","xcb"});
         m_process->start(program, arguments);
         if (!m_process->waitForStarted(2000)) {
-            qWarning() << "UtilityApp 启动失败:" << m_process->errorString();
+            qWarning() << "UtilityApp launching failure" << m_process->errorString();
         } else {
-            qDebug() << "UtilityApp 已启动";
+            qDebug() << "UtilityApp launched";
         }
     }
 #endif
