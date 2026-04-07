@@ -233,7 +233,7 @@ Rectangle {
         id: titlePostHeight
         // text: qsTr("焊后高度") + ": " + eqText5/100.0 + "mm"
         text: (is2000XDevice === true) ?
-            GlobalLanguageDefine.strAbsoluteDistance + ("mm") + ": " + postHeight :
+            GlobalLanguageDefine.strAbsoluteDistance + "(mm)" + ": " + postHeight :
             GlobalLanguageDefine.strPostWeldHeight + "(mm)" + ": " + postHeight
         font.family: GlobalSystemDefine.fontBold
         font.bold: true
