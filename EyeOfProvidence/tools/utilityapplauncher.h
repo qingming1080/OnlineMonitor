@@ -14,8 +14,14 @@ public:
     Q_INVOKABLE void startUtilityApp();
     Q_INVOKABLE void stopUtilityApp();
 
+    bool isUtilityAppRunning() const;
+    void killUtilityApp();
+
     void onProcessError(QProcess::ProcessError error);
     void onProcessFinished(int exitCode, QProcess::ExitStatus exitStatus);
+
+signals:
+    void utilityAppReady();
 
 private:
 

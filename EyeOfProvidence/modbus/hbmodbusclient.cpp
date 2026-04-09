@@ -24,12 +24,16 @@ HBModbusClient::HBModbusClient( QObject *parent)
     : QObject(parent){
 
     modbusClient = new QModbusTcpClient(this);
+    modbusClient->setTimeout(5000);  // Set 5 second timeout
+    modbusClient->setNumberOfRetries(3);  // Retry 3 times
     connect(modbusClient, &QModbusClient::stateChanged, this, &HBModbusClient::onStateChanged);
-    connectToServer(QString(LOCAL_IP), SERVER_PORT);
+    // Don't connect immediately - wait for UtilityApp to be ready
+    // connectToServer(QString(LOCAL_IP), SERVER_PORT);
     m_timer = new QTimer(this);
     m_timer->setInterval(500);
     connect(m_timer, &QTimer::timeout, this, &HBModbusClient::onPollingTimeoutEvent);
-    m_timer->start();
+    // Don't start timer yet
+    // m_timer->start();
     m_WelderDeviceMap.clear();
 }
 
@@ -100,8 +104,24 @@ void HBModbusClient::onStateChanged(QModbusDevice::State state)
     {
         m_connected = newConnected;
         qDebug() << "connectionStateChanged:" << m_connected;
+        if (!m_connected) {
+            m_serverVerified = false;  // Reset verification on disconnect
+        }
         emit connectionStateChanged(m_connected);
     }
+}
+
+void HBModbusClient::onUtilityAppReady()
+{
+    qDebug() << "UtilityApp is ready, starting Modbus connection";
+    connectToServer(QString(LOCAL_IP), SERVER_PORT);
+    m_timer->start();
+
+    // Verify server is responding by doing a test read
+    QTimer::singleShot(2000, this, [this]() {
+        // qDebug() << "Testing Modbus server responsiveness...";
+        readRegisters(QModbusDataUnit::Coils, SYS_LED_L_BIT0, 4, "Modbus server test read failed:");
+    });
 }
 
 void HBModbusClient::readRegisters(QModbusDataUnit::RegisterType type,int startAddress, int count, const char* errMsg)
@@ -139,6 +159,12 @@ void HBModbusClient::readRegisters(QModbusDataUnit::RegisterType type,int startA
                                 break;
                             default: break;
                             }
+                        }
+
+                        // Mark server as verified on successful read
+                        if (!m_serverVerified) {
+                            m_serverVerified = true;
+                            // qDebug() << "Modbus server verified as responsive";
                         }
 
                         switch (type)
@@ -208,19 +234,38 @@ void HBModbusClient::WriteCoils(int startAddress, const QVector<quint8>& values)
     }
     if (modbusClient->state() == QModbusDevice::ConnectedState)
     {
+        if (!m_serverVerified) {
+            // qDebug() << "Server not yet verified, delaying coil write to address" << startAddress;
+            // Retry after a short delay
+            QTimer::singleShot(1000, this, [this, startAddress, values]() {
+                WriteCoils(startAddress, values);
+            });
+            return;
+        }
+
         QModbusDataUnit writeUnit(QModbusDataUnit::Coils, startAddress, values.size());
         for (int i = 0; i < values.size(); ++i)
         {
             writeUnit.setValue(i, values[i]);
-            // qDebug() << "WriteCoils success, addr:" << startAddress << "values:" << values;
         }
+        // qDebug() << "Sending coil write to address" << startAddress << "with" << values.size() << "values:" << values;
         if (auto *reply = modbusClient->sendWriteRequest(writeUnit, 1))
         {
-            connect(reply, &QModbusReply::finished, this, [reply]()
+            connect(reply, &QModbusReply::finished, this, [this, reply, startAddress, values]()
             {
                 if (reply->error() != QModbusDevice::NoError)
                 {
                     qWarning() << "写入线圈失败:" << reply->errorString();
+                    // Retry after a longer delay
+                    if (reply->error() == QModbusDevice::TimeoutError)
+                    {
+                        QTimer::singleShot(2000, this, [this, startAddress, values]() {
+                            qDebug() << "Retrying coil write to address" << startAddress;
+                            WriteCoils(startAddress, values);
+                        });
+                    }
+                } else {
+                    // qDebug() << "Coil write successful at address" << startAddress;
                 }
                 reply->deleteLater();
             });
@@ -391,17 +436,17 @@ void HBModbusClient::setSystemClock(const QDateTime &datetime)
     WriteHoldingRegisters(SYS_RTC_YY, rtcValues);
 }
 
-Q_INVOKABLE void HBModbusClient::setLearnLedStatus(bool condition)
+void HBModbusClient::setLearnLedStatus(bool condition)
 {
     updateLedStatus(SYS_LED_L_BIT0, condition);
 }
 
-Q_INVOKABLE void HBModbusClient::setPilotLedStatus(bool condition)
+void HBModbusClient::setPilotLedStatus(bool condition)
 {
     updateLedStatus(SYS_LED_P_BIT1, condition);
 }
 
-Q_INVOKABLE void HBModbusClient::setReadyLedStatus(bool condition)
+void HBModbusClient::setReadyLedStatus(bool condition)
 {
     updateLedStatus(SYS_LED_R_BIT2, condition);
 }
@@ -411,7 +456,7 @@ bool HBModbusClient::getReadyLedStatus() const
     return (m_Coils[SYS_LED_R_BIT2] == 1) ? true : false;
 }
 
-Q_INVOKABLE void HBModbusClient::setAlarmLedStatus(bool condition)
+void HBModbusClient::setAlarmLedStatus(bool condition)
 {
     updateLedStatus(SYS_LED_A_BIT3, condition);
 }
@@ -429,7 +474,7 @@ void HBModbusClient::updateLedStatus(int ledIndex, bool condition)
     m_Coils[ledIndex] = condition ? 1 : 0;
 }
 
-Q_INVOKABLE void HBModbusClient::setDeviceIOStatus(int welderId, bool reject, bool suspect)
+void HBModbusClient::setDeviceIOStatus(int welderId, bool reject, bool suspect)
 {
     int deviceId = -1;
     auto iter = m_WelderDeviceMap.find(welderId);

@@ -2,6 +2,7 @@
 #include <QCoreApplication>
 #include <QDebug>
 #include <QTimer>
+#include <QThread>
 
 UtilityAppLauncher* UtilityAppLauncher::getInstance()
 {
@@ -13,9 +14,9 @@ UtilityAppLauncher::UtilityAppLauncher(QObject *parent)
     : QObject(parent)
 {
     m_process = new QProcess(this);
-    connect(m_process, QOverload<QProcess::ProcessError>::of(&QProcess::errorOccurred),this, &UtilityAppLauncher::onProcessError);
+    // connect(m_process, QOverload<QProcess::ProcessError>::of(&QProcess::errorOccurred),this, &UtilityAppLauncher::onProcessError);
 
-    connect(m_process, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished),this, &UtilityAppLauncher::onProcessFinished);
+    // connect(m_process, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished),this, &UtilityAppLauncher::onProcessFinished);
 
 }
 
@@ -53,23 +54,67 @@ UtilityAppLauncher::~UtilityAppLauncher()
     }
 }
 
+bool UtilityAppLauncher::isUtilityAppRunning() const
+{
+#ifdef RASPBERRY
+    QProcess checker;
+    checker.start("pgrep", {"-f", "/opt/UtilityApp/bin/UtilityApp"});
+    if (!checker.waitForFinished(2000)) {
+        qWarning() << "UtilityApp check failed:" << checker.errorString();
+        return false;
+    }
+
+    const QString output = QString::fromLocal8Bit(checker.readAllStandardOutput()).trimmed();
+    return !output.isEmpty();
+#else
+    return false;
+#endif
+}
+
+void UtilityAppLauncher::killUtilityApp()
+{
+#ifdef RASPBERRY
+    QProcess killer;
+    killer.start("pkill", {"-f", "/opt/UtilityApp/bin/UtilityApp"});
+    if (!killer.waitForFinished(2000)) {
+        qWarning() << "UtilityApp kill failed:" << killer.errorString();
+    } else {
+        qDebug() << "UtilityApp killed";
+    }
+#endif
+}
+
 void UtilityAppLauncher::startUtilityApp()
 {
 #ifdef RASPBERRY
-    // // 仅在树莓派（Linux）下运行指定路径
+    bool isFirstRun = !isUtilityAppRunning();
+
+    if (!isFirstRun) {
+        qDebug() << "UtilityApp is already running; killing existing process.";
+        killUtilityApp();
+        // Give it a moment to fully terminate
+        QThread::msleep(500);
+    }
+
+    // 仅在树莓派（Linux）下运行指定路径
     QString program = "sudo";
     QStringList arguments;
     arguments.append("/opt/UtilityApp/bin/UtilityApp");
-    arguments.append("-platform");
-    arguments.append("xcb");
+    // arguments.append("-platform");
+    // arguments.append("xcb");
 
     if (m_process->state() == QProcess::NotRunning) {
-        // m_process->start("sudo",{program,"-platform","xcb"});
         m_process->start(program, arguments);
-        if (!m_process->waitForStarted(2000)) {
+        if (!m_process->waitForStarted(5000)) {
             qWarning() << "UtilityApp launching failure" << m_process->errorString();
         } else {
             qDebug() << "UtilityApp launched";
+            // Give more time for first run after boot
+            int delayMs = isFirstRun ? 15000 : 10000;
+            qDebug() << "Waiting" << delayMs << "ms for UtilityApp initialization";
+            QTimer::singleShot(delayMs, this, [this]() {
+                emit utilityAppReady();
+            });
         }
     }
 #endif

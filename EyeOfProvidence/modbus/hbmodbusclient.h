@@ -193,6 +193,9 @@ public slots:
     void onPollingTimeoutEvent();
     void onStateChanged(QModbusDevice::State state);
 
+public slots:
+    void onUtilityAppReady();
+
 private:
     static unsigned char    m_Coils[SYS_COILS_REGISTERS_COUNT + DEV_COILS_REGISTERS_COUNT * DEV_COUNT];
     static unsigned char    m_LastDiscreteds[DEV_DISCRETE_REGISTERS_COUNT * DEV_COUNT];
@@ -208,6 +211,7 @@ private:
     bool m_isFirstPresetParse = true;
     QMap<int, int> m_WelderDeviceMap; //welderId, deviceId
     bool m_connected = false;
+    bool m_serverVerified = false;
 };
 Q_DECLARE_METATYPE(HBModbusClient::MODBUS_WELD_RESULT)
 Q_DECLARE_METATYPE(HBModbusClient::WELD_PRESET)

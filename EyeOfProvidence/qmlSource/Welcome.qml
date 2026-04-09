@@ -110,14 +110,14 @@ Rectangle {
             else
             {
                 waitSeconds++
-                if(waitSeconds >= maxWaitSeconds && !isConnected)
+                if((waitSeconds >= maxWaitSeconds) && (isConnected == false))
                 {
                     isRunning = false
                     systemStatusText = GlobalLanguageDefine.strSystemTimeout + "....." + "\n" + GlobalLanguageDefine.strcontactSupport
                     isContactInfo = true
                     return
                 }
-                if((isConnected == true) && (systemStatusText.length > 5))
+                else if((isConnected == true) && (systemStatusText.length > 5))
                 {
                     isRunning = false
                     isContactInfo = false
@@ -127,7 +127,8 @@ Rectangle {
                     ModbusClient.setAlarmLedStatus(false);
                     window.releaseWelcomeScreen()
                 }
-                systemStatusText += "."
+                else
+                    systemStatusText += "."
             }
         }
     }

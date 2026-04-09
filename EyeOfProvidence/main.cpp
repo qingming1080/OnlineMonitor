@@ -88,6 +88,12 @@ int main(int argc, char *argv[])
     isRaspberry = false;
 #endif
 
+    //Launch modbus server after the client ready
+    UtilityAppLauncher::getInstance()->startUtilityApp();
+
+    // Connect UtilityApp ready signal to Modbus client
+    QObject::connect(UtilityAppLauncher::getInstance(), &UtilityAppLauncher::utilityAppReady,
+                     HBModbusClient::getInstance(), &HBModbusClient::onUtilityAppReady);
 
     pQmlContext->setContextProperty("LanguageManager", &LanguageManager);
     pQmlContext->setContextProperty("DeviceManager", DeviceManager::getInstance());
@@ -128,9 +134,6 @@ int main(int argc, char *argv[])
     qmlRegisterSingletonType(QUrl("qrc:/qmlSource/BransonStyle.qml"),           "GlobalStyle",          1,  0,  "GlobalStyle");
     qmlRegisterSingletonType(QUrl("qrc:/qmlSource/GlobalSystemDefine.qml"),     "GlobalSystemDefine",   1,  0,  "GlobalSystemDefine");
     qmlRegisterSingletonType(QUrl("qrc:/qmlSource/GlobalMessageDefine.qml"),    "GlobalMessageDefine",  1,  0,  "GlobalMessageDefine");
-
-    //Launch modbus server after the client ready
-    UtilityAppLauncher::getInstance()->startUtilityApp();
 
     const QUrl url(QStringLiteral("qrc:/qmlSource/main.qml"));
 
