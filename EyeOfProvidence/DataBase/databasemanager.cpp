@@ -914,6 +914,14 @@ bool DataBaseManager::updateModelRecord(const int id, const DB_MODEL model)
         qWarning() << "Executed query:" << query.lastQuery();
         return false;
     }
+
+    // Force a checkpoint so WAL changes are merged into the main .db file sooner.
+    QSqlQuery checkpointQuery(m_database);
+    if (!checkpointQuery.exec("PRAGMA wal_checkpoint(TRUNCATE);"))
+    {
+        qWarning() << "updateModelRecord checkpoint failed:" << checkpointQuery.lastError().text();
+    }
+
     return true;
 }
 
@@ -982,6 +990,14 @@ bool DataBaseManager::updateModelRecordBatch(const QMap<int, DB_MODEL>& dataMap)
     }
 
     db.commit(); // 提交事务
+
+    // Force a checkpoint so WAL changes are merged into the main .db file sooner.
+    QSqlQuery checkpointQuery(m_database);
+    if (!checkpointQuery.exec("PRAGMA wal_checkpoint(TRUNCATE);"))
+    {
+        qWarning() << "updateModelRecordBatch checkpoint failed:" << checkpointQuery.lastError().text();
+    }
+
     // qDebug() << "Batch update success: " << dataMap.size() << " records";
     return true;
 }
@@ -1024,6 +1040,14 @@ bool DataBaseManager::insertModelRecord(DB_MODEL model)
         qWarning() << "Executed query:" << query.lastQuery();
         return false;
     }
+
+    // Force a checkpoint so WAL changes are merged into the main .db file sooner.
+    QSqlQuery checkpointQuery(m_database);
+    if (!checkpointQuery.exec("PRAGMA wal_checkpoint(TRUNCATE);"))
+    {
+        qWarning() << "insertModelRecord checkpoint failed:" << checkpointQuery.lastError().text();
+    }
+
     return true;
 }
 
