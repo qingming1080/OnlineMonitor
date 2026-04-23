@@ -121,32 +121,64 @@ bool Device::IsProductionPresetChanged(const HBModbusClient::MODBUS_WELD_RESULT 
     int weldPressure = m_ptrProduction->getWPSetting();
     float energy_lower = static_cast<float>(0.95 * energy);
     float energy_upper = static_cast<float>(1.05 * energy);
+    float amplitude_lower = static_cast<float>(0.95 * amplitude);
+    float amplitude_upper = static_cast<float>(1.05 * amplitude);
+    float triggerPressure_lower = static_cast<float>(0.95 * triggerPressure);
+    float triggerPressure_upper = static_cast<float>(1.05 * triggerPressure);
+    float weldPressure_lower = static_cast<float>(0.95 * weldPressure);
+    float weldPressure_upper = static_cast<float>(1.05 * weldPressure);
 
     if(data.Amplitude == 0)
-        return bResult;
+        return false;
     if(data.TriggerPressure == 0)
-        return bResult;
+        return false;
     if(data.WeldingPressure == 0)
-        return bResult;
+        return false;
     if(data.Energy == 0)
-        return bResult;
+        return false;
+    if(data.WeldAlarm != 0)
+        return false;
 
     if(amplitude != data.Amplitude)
     {
-        m_ptrProduction->setModelStatus(false);
-        bResult = true;
+        if((data.Amplitude < amplitude_lower) || (data.Amplitude > amplitude_upper))
+        {
+            m_ptrProduction->setModelStatus(false);
+            bResult = true;
+        }
     }
-    else if(triggerPressure != data.TriggerPressure)
+    else
+        bResult = false;
+    if(bResult == true)
+        return bResult;
+
+    if(triggerPressure != data.TriggerPressure)
     {
-        m_ptrProduction->setModelStatus(false);
-        bResult = true;
+        if((data.TriggerPressure < triggerPressure_lower) || (data.TriggerPressure > triggerPressure_upper))
+        {
+            m_ptrProduction->setModelStatus(false);
+            bResult = true;
+        }
     }
-    else if(weldPressure != data.WeldingPressure)
+    else
+        bResult = false;
+    if(bResult == true)
+        return bResult;
+
+    if(weldPressure != data.WeldingPressure)
     {
-        m_ptrProduction->setModelStatus(false);
-        bResult = true;
+        if((data.WeldingPressure < weldPressure_lower) || (data.WeldingPressure > weldPressure_upper))
+        {
+            m_ptrProduction->setModelStatus(false);
+            bResult = true;
+        }
     }
-    else if((energy != data.Energy) && (data.WeldAlarm == 0))
+    else
+        bResult = false;
+    if(bResult == true)
+        return bResult;
+
+    if(energy != data.Energy)
     {
         if((data.Energy < energy_lower) || (data.Energy > energy_upper))
         {
@@ -155,9 +187,8 @@ bool Device::IsProductionPresetChanged(const HBModbusClient::MODBUS_WELD_RESULT 
         }
     }
     else
-    {
         bResult = false;
-    }
+        
     return bResult;
 }
 
