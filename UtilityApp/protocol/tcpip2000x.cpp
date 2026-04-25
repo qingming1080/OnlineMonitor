@@ -104,6 +104,8 @@ int TcpIp2000x::parseProtocol()
     QString strActualWeldTime = QString::number(actualWeldTimeInSeconds, 'f', 3);
     doubleTemp = _Utility->String2FormatedData(Utility::DINActTime, strActualWeldTime);
     m_stWeldResult.Time = static_cast<int>(doubleTemp);
+
+    m_stWeldResult.AlarmFlag = 0;
     return 0;
 }
 
