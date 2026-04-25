@@ -1366,6 +1366,14 @@ bool DataBaseManager::insertProductionRowBatch(const QList<DB_PRODUCTION>& dataL
 
     db.commit(); // 提交事务
     // qDebug() << "Batch insert success: " << dataList.size() << " records";
+
+    // Force a checkpoint so WAL changes are merged into the main .db file sooner.
+    QSqlQuery checkpointQuery(m_database);
+    if (!checkpointQuery.exec("PRAGMA wal_checkpoint(TRUNCATE);"))
+    {
+        qWarning() << "insertProductionRowBatch checkpoint failed:" << checkpointQuery.lastError().text();
+    }
+
     return true;
 }
 
