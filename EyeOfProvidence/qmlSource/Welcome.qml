@@ -80,10 +80,6 @@ Rectangle {
             {
                 waitSeconds = 0
                 systemStatusText = GlobalLanguageDefine.strLoading
-                ModbusClient.setLearnLedStatus(true);
-                ModbusClient.setPilotLedStatus(true);
-                ModbusClient.setReadyLedStatus(true);
-                ModbusClient.setAlarmLedStatus(true);
                 systemStatusText = GlobalLanguageDefine.strLoading
             }
             else

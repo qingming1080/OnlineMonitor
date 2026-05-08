@@ -90,6 +90,7 @@ int main(int argc, char *argv[])
 
     //Launch modbus server after the client ready
     UtilityAppLauncher::getInstance()->startUtilityApp();
+    // HBModbusClient::getInstance()->onUtilityAppReady();
 
     // Connect UtilityApp ready signal to Modbus client
     QObject::connect(UtilityAppLauncher::getInstance(), &UtilityAppLauncher::utilityAppReady,
