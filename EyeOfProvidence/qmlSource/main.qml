@@ -104,7 +104,7 @@ Window {
             stackView.source = "qrc:/qmlSource/SystemConfig.qml"
             break;
         case 4:
-            stackView.source = "qrc:/qmlSource/RootConfigView.qml"
+            stackView.source = "qrc:/qmlSource/AdminConfigView.qml"
             break;
         default:
             stackView.source = ""

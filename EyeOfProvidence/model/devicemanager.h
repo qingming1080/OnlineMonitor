@@ -43,6 +43,8 @@ public:
 
     Q_INVOKABLE bool saveDevice();
 
+    Q_INVOKABLE bool updateDevice();
+
     
 
     ///

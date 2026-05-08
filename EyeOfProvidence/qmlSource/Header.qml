@@ -182,7 +182,7 @@ Rectangle {
         anchors.right: bt1.left
         width: 157
         height: 60
-        btnText:"   ROOT"
+        btnText: GlobalLanguageDefine.strSystemAdmin
         visible: false
         index:4
         Connections{

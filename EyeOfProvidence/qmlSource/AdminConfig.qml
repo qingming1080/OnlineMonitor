@@ -15,7 +15,7 @@ Rectangle {
     color: pRgb(43, 112, 173)
     radius: 6
     Text {
-        // text: qsTr("系统参数配置")
+        // text: qsTr("系统升级")
         id: systemSettingText
         text: GlobalLanguageDefine.strSystemParamConfig
         font.family: GlobalSystemDefine.fontBold
@@ -73,8 +73,8 @@ Rectangle {
         MouseArea {
             anchors.fill: parent
             onPressed: {
-                t1.forceActiveFocus()
-                keyboardType = 0
+                txtFieldSingleFactorCoeff.forceActiveFocus()
+                // keyboardType = 0
             }
         }
     }
@@ -114,8 +114,8 @@ Rectangle {
         MouseArea {
             anchors.fill: parent
             onPressed: {
-                t2.forceActiveFocus()
-                keyboardType = 0
+                txtFieldGeneralFactorCoeff.forceActiveFocus()
+                // keyboardType = 0
             }
         }
     }
@@ -155,8 +155,8 @@ Rectangle {
         MouseArea {
             anchors.fill: parent
             onPressed: {
-                t3.forceActiveFocus()
-                keyboardType = 0
+                txtFieldOtherFactorCoeff.forceActiveFocus()
+                // keyboardType = 0
             }
         }
     }
@@ -195,8 +195,8 @@ Rectangle {
         MouseArea {
             anchors.fill: parent
             onPressed: {
-                t4.forceActiveFocus()
-                keyboardType = 0
+                txtFieldAutoLearnCountLimit.forceActiveFocus()
+                // keyboardType = 0
             }
         }
     }

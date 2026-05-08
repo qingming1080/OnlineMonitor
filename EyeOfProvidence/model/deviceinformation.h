@@ -33,11 +33,12 @@ class DeviceInformation : public QObject
     Q_PROPERTY(int     ConnectState         READ getConnectState        WRITE setConnectState       NOTIFY notifyConnectStateChanged)
 
     /// 2024/08/01 IP与端口 暴露
-    Q_PROPERTY(QString SingleFactor         READ getSingleFactor        WRITE setSingleFactor       NOTIFY notifySingleFactorChanged FINAL)
-    Q_PROPERTY(QString GeneralFactor        READ getGeneralFactor       WRITE setGeneralFactor      NOTIFY notifyGeneralFactorChanged FINAL)
-    Q_PROPERTY(QString ForceThreshold       READ getForceThreshold      WRITE setForceThreshold     NOTIFY notifyForceThresholdChanged FINAL)
-    Q_PROPERTY(QString ResidualThreshold    READ getResidualThreshold   WRITE setResidualThreshold  NOTIFY notifyResidualThresholdChanged FINAL)
-    Q_PROPERTY(QString AutoLearningCount    READ getAutoLearningCount   WRITE setAutoLearningCount  NOTIFY notifyAutoLearningCountChanged FINAL)
+    Q_PROPERTY(QString SingleFactor         READ getSingleFactor        WRITE setSingleFactor       NOTIFY notifySingleFactorChanged        FINAL)
+    Q_PROPERTY(QString GeneralFactor        READ getGeneralFactor       WRITE setGeneralFactor      NOTIFY notifyGeneralFactorChanged       FINAL)
+    Q_PROPERTY(QString OtherFactor          READ getOtherFactor         WRITE setOtherFactor        NOTIFY notifyOtherFactorChanged         FINAL)
+    Q_PROPERTY(QString ForceThreshold       READ getForceThreshold      WRITE setForceThreshold     NOTIFY notifyForceThresholdChanged      FINAL)
+    Q_PROPERTY(QString ResidualThreshold    READ getResidualThreshold   WRITE setResidualThreshold  NOTIFY notifyResidualThresholdChanged   FINAL)
+    Q_PROPERTY(QString AutoLearningCount    READ getAutoLearningCount   WRITE setAutoLearningCount  NOTIFY notifyAutoLearningCountChanged   FINAL)
 
 public:
     explicit DeviceInformation(int welderID = 0, QObject *parent = nullptr);
@@ -83,6 +84,10 @@ public:
     int GetGeneralFactor() const;
     void setGeneralFactor(const QString &factor);
 
+    QString getOtherFactor() const;
+    int GetOtherFactor() const;
+    void setOtherFactor(const QString &factor);
+
     QString getForceThreshold() const;
     int GetForceThreshold() const;
     void setForceThreshold(const QString &threshold);
@@ -98,6 +103,7 @@ public:
 
     bool SaveDevice();
     bool RemoveDevice();
+    bool UpdateDevice();
 
     int getWelderID() const;
 private:
@@ -116,6 +122,7 @@ signals:
 
     void notifySingleFactorChanged();
     void notifyGeneralFactorChanged();
+    void notifyOtherFactorChanged();
     void notifyForceThresholdChanged();
     void notifyResidualThresholdChanged();
     void notifyAutoLearningCountChanged();

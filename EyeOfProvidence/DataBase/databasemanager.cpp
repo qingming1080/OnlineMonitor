@@ -157,6 +157,14 @@ bool DataBaseManager::removeConfigurationDevice(const int welderID)
     query.prepare(execStr);
     query.bindValue(":id", welderID);
     bool ret = query.exec();
+    if (ret) {
+        // Force a checkpoint so WAL changes are merged into the main .db file sooner.
+        QSqlQuery checkpointQuery(m_database);
+        if (!checkpointQuery.exec("PRAGMA wal_checkpoint(TRUNCATE);"))
+        {
+            qWarning() << "removeConfigurationDevice checkpoint failed:" << checkpointQuery.lastError().text();
+        }
+    }
     return ret;
 }
 
@@ -222,8 +230,15 @@ int DataBaseManager::insertConfigurationDevice(const DB_CONFIGURE configure)
         qWarning() << "Insert configuration failed:" << query.lastError().text();
         iWelderId = -1;
     }
-    else
+    else {
         iWelderId = query.lastInsertId().toInt();
+        // Force a checkpoint so WAL changes are merged into the main .db file sooner.
+        QSqlQuery checkpointQuery(m_database);
+        if (!checkpointQuery.exec("PRAGMA wal_checkpoint(TRUNCATE);"))
+        {
+            qWarning() << "insertConfigurationDevice checkpoint failed:" << checkpointQuery.lastError().text();
+        }
+    }
     return iWelderId;
 }
 
@@ -284,6 +299,13 @@ bool DataBaseManager::updateConfigurationDevice(const int welderID, const DB_CON
     if (affectedRows == 0) {
         qWarning() << "No rows updated! welder_id may not exist:" << welderID;
         return false;
+    }
+
+    // Force a checkpoint so WAL changes are merged into the main .db file sooner.
+    QSqlQuery checkpointQuery(m_database);
+    if (!checkpointQuery.exec("PRAGMA wal_checkpoint(TRUNCATE);"))
+    {
+        qWarning() << "updateConfigurationDevice checkpoint failed:" << checkpointQuery.lastError().text();
     }
 
     return true;
@@ -354,6 +376,14 @@ bool DataBaseManager::updateNetworkConfigure(const int id, const DB_NETWORK netw
         qWarning() << "Executed query:" << query.lastQuery();
         return false;
     }
+
+    // Force a checkpoint so WAL changes are merged into the main .db file sooner.
+    QSqlQuery checkpointQuery(m_database);
+    if (!checkpointQuery.exec("PRAGMA wal_checkpoint(TRUNCATE);"))
+    {
+        qWarning() << "updateNetworkConfigure checkpoint failed:" << checkpointQuery.lastError().text();
+    }
+
     return true;
 }
 
@@ -461,6 +491,14 @@ bool DataBaseManager::updateRS232Configure(const int id, const DB_RS232 rs232)
         qWarning() << "Failed to update RS232 configuration:" << query.lastError().text();
         return false;
     }
+
+    // Force a checkpoint so WAL changes are merged into the main .db file sooner.
+    QSqlQuery checkpointQuery(m_database);
+    if (!checkpointQuery.exec("PRAGMA wal_checkpoint(TRUNCATE);"))
+    {
+        qWarning() << "updateRS232Configure checkpoint failed:" << checkpointQuery.lastError().text();
+    }
+
     return true;
 }
 
@@ -721,6 +759,14 @@ bool DataBaseManager::insertManualRecord(DB_MANUAL data)
         qDebug() << "Failed to commit transaction:" << m_database.lastError().text();
         return false;
     }
+
+    // Force a checkpoint so WAL changes are merged into the main .db file sooner.
+    QSqlQuery checkpointQuery(m_database);
+    if (!checkpointQuery.exec("PRAGMA wal_checkpoint(TRUNCATE);"))
+    {
+        qWarning() << "insertManualRecord checkpoint failed:" << checkpointQuery.lastError().text();
+    }
+
     return true;
 }
 
@@ -771,6 +817,14 @@ bool DataBaseManager::updateManualRecord(const int id, const DB_MANUAL data)
         qWarning() << "Executed query:" << query.lastQuery();
         return false;
     }
+
+    // Force a checkpoint so WAL changes are merged into the main .db file sooner.
+    QSqlQuery checkpointQuery(m_database);
+    if (!checkpointQuery.exec("PRAGMA wal_checkpoint(TRUNCATE);"))
+    {
+        qWarning() << "updateManualRecord checkpoint failed:" << checkpointQuery.lastError().text();
+    }
+
     return true;
 }
 

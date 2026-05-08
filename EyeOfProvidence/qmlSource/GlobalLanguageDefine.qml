@@ -70,6 +70,7 @@ QtObject
     readonly property string strSystemTimeout:          qsTr("系统连接超时")
     readonly property string strContactInfo:            qsTr("灏博工业科技（西安）有限公司\n联系电话：029-84499505")
     readonly property string strcontactSupport:         qsTr("请联系技术支持")
+    readonly property string strSystemAdmin:            qsTr("系统管理")
 
     // 生产模块
     readonly property string strCreateModel:            qsTr("创建模型")
@@ -236,6 +237,11 @@ QtObject
     readonly property string strUSBConnected:           qsTr("U盘已插入")
     readonly property string strExportIsOk:             qsTr("导出数据已完成!")
     readonly property string strExportFailed:           qsTr("没有找到可以使用的U盘或尝试再次导出")
+
+    readonly property string strSystemSWUpgrade:        qsTr("系统软件升级")
+    readonly property string strSoftwareVersion:        qsTr("软件版本")
+    readonly property string strSystemLicense:          qsTr("系统许可证导入")
+    readonly property string strSystemSN:               qsTr("系统序列号")
 
     enum EnumKeyboard{
         Delete,

@@ -13,8 +13,8 @@
         <file>qmlSource/MultideviceSystemConfig.qml</file>
         <file>qmlSource/ProductionWindow.qml</file>
         <file>qmlSource/RealtimeYield.qml</file>
-        <file>qmlSource/RootConfig.qml</file>
-        <file>qmlSource/RootConfigView.qml</file>
+        <file>qmlSource/AdminConfig.qml</file>
+        <file>qmlSource/AdminConfigView.qml</file>
         <file>qmlSource/ProductionLearnModule.qml</file>
         <file>qmlSource/ProductionSingleModule.qml</file>
         <file>qmlSource/SystemConfig.qml</file>
@@ -44,5 +44,7 @@
         <file>qmlSource/HBDateTimeSetting.qml</file>
         <file>qmlSource/HBTextField.qml</file>
         <file>qmlSource/HBPrimaryButton.qml</file>
+        <file>qmlSource/AdminUpgrade.qml</file>
+        <file>qmlSource/AdminLicense.qml</file>
     </qresource>
 </RCC>

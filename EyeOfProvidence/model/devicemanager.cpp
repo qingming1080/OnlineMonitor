@@ -329,3 +329,14 @@ bool DeviceManager::saveDevice()
         return false;
     return true;
 }
+
+bool DeviceManager::updateDevice()
+{
+    if(m_iSelectedDeviceIndex < 0)
+        return false;
+    else if(m_iSelectedDeviceIndex >= m_listDevices.size())
+        return false;
+    else
+        return m_listDevices[m_iSelectedDeviceIndex]->UpdateDevice();
+    return true;
+}

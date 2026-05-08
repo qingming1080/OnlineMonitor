@@ -24,6 +24,7 @@ DeviceInformation::DeviceInformation(int welderID, QObject *parent)
         setConnectType(m_DBConfigure.ConnectType);
 		setSingleFactor(QString::number(m_DBConfigure.SingleFactSetting));
         setGeneralFactor(QString::number(m_DBConfigure.GeneralFactSetting));
+        setOtherFactor(QString::number(m_DBConfigure.OtherFactSetting));
         setAutoLearningCount(QString::number(m_DBConfigure.AutoLearnCount));
         setForceThreshold(QString::number(m_DBConfigure.ForceThreshold));
         setResidualThreshold(QString::number(m_DBConfigure.ResidualThreshold));
@@ -250,6 +251,26 @@ void DeviceInformation::setGeneralFactor(const QString &factor)
     emit notifyGeneralFactorChanged();
 }
 
+QString DeviceInformation::getOtherFactor() const
+{
+    return QString::number(m_DBConfigure.OtherFactSetting);
+}
+
+int DeviceInformation::GetOtherFactor() const
+{
+    return m_DBConfigure.OtherFactSetting;
+}
+
+void DeviceInformation::setOtherFactor(const QString &factor)
+{
+    bool isOk = false;
+    int iFactor = factor.toInt(&isOk);
+    if (!isOk || m_DBConfigure.OtherFactSetting == iFactor)
+        return;
+    m_DBConfigure.OtherFactSetting = iFactor;
+    emit notifyOtherFactorChanged();
+}
+
 QString DeviceInformation::getForceThreshold() const
 {
     return QString::number(m_DBConfigure.ForceThreshold);
@@ -404,6 +425,11 @@ bool DeviceInformation::RemoveDevice()
     InitModbusDevice();
     HBModbusClient::getInstance()->removeDeviceConfigure(m_WelderID, m_ModbusConfigure);
     return true;
+}
+
+bool DeviceInformation::UpdateDevice()
+{
+    return DataBaseManager::getInstance()->updateConfigurationDevice(m_WelderID, m_DBConfigure);
 }
 
 int DeviceInformation::getWelderID() const

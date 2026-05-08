@@ -322,6 +322,11 @@ bool Device::RemoveDevice()
     return m_ptrDevice->RemoveDevice();
 }
 
+bool Device::UpdateDevice()
+{
+    return m_ptrDevice->UpdateDevice();
+}
+
 int Device::getWelderID() const
 {
     return m_WelderID;
