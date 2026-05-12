@@ -34,7 +34,7 @@ int main(int argc, char **argv)
 
     if(_decryption->DecryptLicenseFile() == false)
     {
-        QTimer::singleShot(302400000, [&app]() {
+        QTimer::singleShot(600000, [&app]() {
             qDebug() << "Timer triggered at" << QDateTime::currentDateTime().toString();
             if(bResult == false)
             {
