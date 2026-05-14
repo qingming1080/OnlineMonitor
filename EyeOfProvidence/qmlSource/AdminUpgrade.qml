@@ -8,7 +8,6 @@ Rectangle {
     property string eqText2: ""
     property string eqText3: ""
     property string eqText4: ""
-    property alias t1Edit: txtFieldSingleFactorCoeff
     color: pRgb(43, 112, 173)
     radius: 6
     Text {
@@ -37,43 +36,55 @@ Rectangle {
     Text {
         // text: qsTr("软件版本") + ":
         id: titleSoftwareVersion
-        text: GlobalLanguageDefine.strSoftwareVersion + ": "
+        text: GlobalLanguageDefine.strAvailableVersions + ": "
         font.family: GlobalSystemDefine.fontBold
         font.bold: true
         font.pixelSize: 16
         color: "#abced5"
         anchors.left: parent.left
         anchors.leftMargin: 15
-        anchors.verticalCenter: txtFieldSingleFactorCoeff.verticalCenter
+        anchors.verticalCenter: listSoftwareVersions.verticalCenter
     }
-    TextField{
-        id: txtFieldSingleFactorCoeff
+    CustomComboBox{
+        id: listSoftwareVersions
         width: 155
         height: 40
         anchors.left: parent.left
         anchors.leftMargin: 130
         anchors.top: systemLine.bottom
         anchors.topMargin: 10
-        horizontalAlignment: TextInput.AlignHCenter
-        verticalAlignment: TextInput.AlignVCenter
-        color: pRgb(43, 112, 173)
-        font.family: GlobalSystemDefine.fontBold
-        font.bold: true
-        font.pixelSize: 16
-        background: Rectangle{
-            radius: 6
-            border.width: 3
-            border.color: "#99ccff"
-        }
-        text: eqText1
-        inputMethodHints: Qt.ImhDigitsOnly
-        MouseArea {
-            anchors.fill: parent
+        displayText: "NONE"
+
+        // model: WelderTypeModel
+        // property int tmpIndex: DeviceManager.SelectedDeviceIndex
+        // currentIndex: DeviceManager.DeviceList[tmpIndex].DeviceObj.WelderType
+        // onCurrentIndexChanged:
+        // {
+        //     DeviceManager.DeviceList[tmpIndex].DeviceObj.WelderType = currentIndex
+        // }
+    }
+
+    Row {
+        width: parent.width - 10
+        height: 40
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: 10
+        spacing: 20
+        HBPrimaryButton {
+            id: btnReadUSB
+            width: (parent.width - 20) / 2
+            text: GlobalLanguageDefine.strReadUSB
             onPressed: {
-                txtFieldSingleFactorCoeff.forceActiveFocus()
-                // keyboardType = 0
+            }
+        }
+
+        HBPrimaryButton {
+            id: btnUpgrade
+            width: (parent.width - 20) / 2
+            text: GlobalLanguageDefine.strSoftwareUpgrade
+            onPressed: {
             }
         }
     }
-
 }

@@ -239,9 +239,11 @@ QtObject
     readonly property string strExportFailed:           qsTr("没有找到可以使用的U盘或尝试再次导出")
 
     readonly property string strSystemSWUpgrade:        qsTr("系统软件升级")
-    readonly property string strSoftwareVersion:        qsTr("软件版本")
+    readonly property string strAvailableVersions:      qsTr("可用软件版本")
     readonly property string strSystemLicense:          qsTr("系统许可证导入")
     readonly property string strSystemSN:               qsTr("系统序列号")
+    readonly property string strReadUSB:                qsTr("读U盘")
+    readonly property string strSoftwareUpgrade:        qsTr("软件升级")
 
     enum EnumKeyboard{
         Delete,

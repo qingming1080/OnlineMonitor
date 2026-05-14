@@ -83,14 +83,24 @@ Rectangle {
         }
     }
 
-    AdminUpgrade {
+    Row {
         anchors.left: parent.left
         anchors.leftMargin: 40
         anchors.top: advanceSetting.bottom
         anchors.topMargin: 20
         anchors.bottom: btn1.top
         anchors.bottomMargin: 20
-        width: 290
+        width: 1200
+        spacing: 20
+        AdminUpgrade {
+            height: parent.height
+            width: 290
+        }
+
+        AdminLicense {
+            height: parent.height
+            width: 290
+        }
     }
 
     Button{

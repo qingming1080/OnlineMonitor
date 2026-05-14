@@ -152,31 +152,34 @@ bool Device::IsProductionPresetChanged(const HBModbusClient::MODBUS_WELD_RESULT 
     if(bResult == true)
         return bResult;
 
-    if(triggerPressure != data.TriggerPressure)
+    if(m_ptrDevice->getWelderType() != DeviceInfoEnum::BRANSON_2000XC)
     {
-        if((data.TriggerPressure < triggerPressure_lower) || (data.TriggerPressure > triggerPressure_upper))
+        if(triggerPressure != data.TriggerPressure)
         {
-            m_ptrProduction->setModelStatus(false);
-            bResult = true;
+            if((data.TriggerPressure < triggerPressure_lower) || (data.TriggerPressure > triggerPressure_upper))
+            {
+                m_ptrProduction->setModelStatus(false);
+                bResult = true;
+            }
         }
-    }
-    else
-        bResult = false;
-    if(bResult == true)
-        return bResult;
+        else
+            bResult = false;
+        if(bResult == true)
+            return bResult;
 
-    if(weldPressure != data.WeldingPressure)
-    {
-        if((data.WeldingPressure < weldPressure_lower) || (data.WeldingPressure > weldPressure_upper))
+        if(weldPressure != data.WeldingPressure)
         {
-            m_ptrProduction->setModelStatus(false);
-            bResult = true;
+            if((data.WeldingPressure < weldPressure_lower) || (data.WeldingPressure > weldPressure_upper))
+            {
+                m_ptrProduction->setModelStatus(false);
+                bResult = true;
+            }
         }
+        else
+            bResult = false;
+        if(bResult == true)
+            return bResult;
     }
-    else
-        bResult = false;
-    if(bResult == true)
-        return bResult;
 
     if(energy != data.Energy)
     {
@@ -215,30 +218,35 @@ bool Device::IsProductionPresetChanged(const HBModbusClient::WELD_PRESET &data)
         return bResult;
     if(data.Energy == 0)
         return bResult;
+
     if((data.Amplitude < amplitude_lower) || (data.Amplitude > amplitude_upper))
     {
         m_ptrProduction->setModelStatus(false);
-        bResult = true;
+        return true;
     }
-    else if((data.TriggerPressure < triggerPressure_lower) || (data.TriggerPressure > triggerPressure_upper))
+
+    if(m_ptrDevice->getWelderType() != DeviceInfoEnum::BRANSON_2000XC)
+    {
+        if((data.TriggerPressure < triggerPressure_lower) || (data.TriggerPressure > triggerPressure_upper))
+        {
+            m_ptrProduction->setModelStatus(false);
+            return true;
+        }
+
+        if((data.WeldingPressure < weldPressure_lower) || (data.WeldingPressure > weldPressure_upper))
+        {
+            m_ptrProduction->setModelStatus(false);
+            return true;
+        }
+    }
+
+    if((data.Energy < energy_lower) || (data.Energy > energy_upper))
     {
         m_ptrProduction->setModelStatus(false);
-        bResult = true;
+        return true;
     }
-    else if((data.WeldingPressure < weldPressure_lower) || (data.WeldingPressure > weldPressure_upper))
-    {
-        m_ptrProduction->setModelStatus(false);
-        bResult = true;
-    }
-    else if((data.Energy < energy_lower) || (data.Energy > energy_upper))
-    {
-        m_ptrProduction->setModelStatus(false);
-        bResult = true;
-    }
-    else
-    {
-        bResult = false;
-    }
+
+    bResult = false;
     return bResult;
 }
 
