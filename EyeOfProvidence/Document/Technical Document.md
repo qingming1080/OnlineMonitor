@@ -14,26 +14,24 @@ void myFunction(int value)
 lupdate your.pro
 ```
 ```bash
-C:\Qt\5.15.17\mingw81_64\bin\lupdate.exe .\ProvidenceEE.pro    
+C:\Users\jerry\software\tools\QT\5.15.12\mingw81_64\bin\lupdate.exe .\ProvidenceEE.pro    
 ```
 #### 2.2. Edit .ts file using Qt Linguist
 ```bash
 linguist SimplifiedChinese.ts
 ```
 ```bash
-C:\Qt\5.15.17\mingw81_64\bin\linguist .\languageTranslation\SimplifiedChinese.ts
+C:\Users\jerry\software\tools\QT\5.15.12\mingw81_64\bin\linguist .\languageTranslation\SimplifiedChinese.ts
 
-C:\Qt\5.15.17\mingw81_64\bin\linguist .\languageTranslation\English.ts
+C:\Users\jerry\software\tools\QT\5.15.12\mingw81_64\bin\linguist .\languageTranslation\English.ts
 
-C:\Users\jerry\software\tools\QT\5.15.12\mingw81_64\bin\linguist.exe .\EyeOfProvidence\languageTranslation\SimplifiedChinese.ts
-C:\Users\jerry\software\tools\QT\5.15.12\mingw81_64\bin\lignusit .\languageTranslation\English.ts
 ```
 #### 2.3. Save and Generate .qm files
 ```bash
 lrelease your.pro
 ```
 ```bash
-C:\Qt\5.15.17\mingw81_64\bin\lrelease.exe .\ProvidenceEE.pro   
+C:\Users\jerry\software\tools\QT\5.15.12\mingw81_64\bin\lrelease.exe .\ProvidenceEE.pro   
 ```
 ### 3. New Requirements
 #### 3.1 Need to show Samples on Learning Screen

@@ -8,7 +8,7 @@ Rectangle {
     property string eqText2: ""
     property string eqText3: ""
     property string eqText4: ""
-    property alias t1Edit: txtFieldSingleFactorCoeff
+    property alias t1Edit: txtSystemSN
     color: pRgb(43, 112, 173)
     radius: 6
     Text {
@@ -44,36 +44,65 @@ Rectangle {
         color: "#abced5"
         anchors.left: parent.left
         anchors.leftMargin: 15
-        anchors.verticalCenter: txtFieldSingleFactorCoeff.verticalCenter
+        anchors.verticalCenter: txtSystemSN.verticalCenter
     }
-    TextField{
-        id: txtFieldSingleFactorCoeff
+
+    Text {
+        id: txtSystemSN
+        text: "N/A"
+        font.family: GlobalSystemDefine.fontBold
+        font.bold: false
+        font.pixelSize: 16
+        color: "#abced5"
         width: 155
         height: 40
         anchors.left: parent.left
         anchors.leftMargin: 130
         anchors.top: systemLine.bottom
         anchors.topMargin: 10
-        horizontalAlignment: TextInput.AlignHCenter
-        verticalAlignment: TextInput.AlignVCenter
-        color: pRgb(43, 112, 173)
+        verticalAlignment: Text.AlignVCenter
+    }
+
+    Text {
+        // text: qsTr("剩余天数") + ":
+        id: titleExpiredDays
+        text: GlobalLanguageDefine.strExpiredDays + ": "
         font.family: GlobalSystemDefine.fontBold
         font.bold: true
         font.pixelSize: 16
-        background: Rectangle{
-            radius: 6
-            border.width: 3
-            border.color: "#99ccff"
-        }
-        text: eqText1
-        inputMethodHints: Qt.ImhDigitsOnly
-        MouseArea {
-            anchors.fill: parent
-            onPressed: {
-                txtFieldSingleFactorCoeff.forceActiveFocus()
-                // keyboardType = 0
-            }
+        color: "#abced5"
+        anchors.left: parent.left
+        anchors.leftMargin: 15
+        anchors.verticalCenter: txtExpiredDays.verticalCenter
+    }
+
+    Text {
+        id : txtExpiredDays
+        text: "N/A"
+        font.family: GlobalSystemDefine.fontBold
+        font.bold: false
+        font.pixelSize: 16
+        color: "#abced5"
+        width: 155
+        height: 40
+        anchors.left: parent.left
+        anchors.leftMargin: 130
+        anchors.top: txtSystemSN.bottom
+        anchors.topMargin: 10
+        verticalAlignment: Text.AlignVCenter
+    }
+
+    HBPrimaryButton {
+        id: btnLoadLicense
+        height: 40
+        width: (parent.width - 20) / 2
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: 10
+        text: GlobalLanguageDefine.strLoadLicense
+        onPressed: {
         }
     }
+
 
 }
