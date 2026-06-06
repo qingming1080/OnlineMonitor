@@ -11,11 +11,13 @@ Rectangle{
     property string versionText: GlobalLanguageDefine.strSystemVersion + ": " + GlobalSystemDefine.strVersionNumber
     property string currentTime: GlobalMessageDefine.getCurrentTime()
 
-    Connections{
+    Connections
+    {
         target: window
         function onSignalOneSecondEvent()
         {
             footer.currentTime = GlobalMessageDefine.getCurrentTime()
+            isUSBAvailable = History.isAvailaleDiskUSB()
         }
     }
 
@@ -35,6 +37,19 @@ Rectangle{
     function hideError()
     {
         validMessage.hideError()
+    }
+
+    Text
+    {
+        id: txtUSBAccessStatus
+        color: "#E8E8E8"
+        anchors.left: parent.left
+        anchors.leftMargin: 20
+        anchors.top: timeRect.top
+        font.family: GlobalSystemDefine.fontBold
+        font.bold: true
+        font.pixelSize:14
+        text: isUSBAvailable ? GlobalLanguageDefine.strUSBConnected : GlobalLanguageDefine.strNoUSB
     }
 
     Text

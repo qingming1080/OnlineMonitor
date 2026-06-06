@@ -13,7 +13,6 @@ import DeviceObj                1.0
 import DeviceInfoEnum           1.0
 Rectangle {
     property int itemCount: DeviceManager.DeviceCounter
-    property bool isUSBAvailable: false
     property string buttonColor: "#0d988c"
     property DeviceObj deviceObj: null
 
@@ -37,13 +36,6 @@ Rectangle {
         }
     }
 
-    Connections {
-        target: window
-        function onSignalOneSecondEvent()
-        {
-            isUSBAvailable = History.isAvailaleDiskUSB()
-        }
-    }
 
     color: pRgb(153, 204, 255)
     Component.onCompleted: {
@@ -740,23 +732,11 @@ Rectangle {
 
     }
 
-    Text {
-        id: usbVisableText
-        anchors.left: parent.left
-        anchors.leftMargin: 25
-        anchors.bottom: parent.bottom
-        anchors.bottomMargin: 10
-        text: isUSBAvailable ? GlobalLanguageDefine.strUSBConnected : GlobalLanguageDefine.strNoUSB
-        color: "#E8E8E8"
-        font.family: GlobalSystemDefine.fontBold
-        font.bold: true
-        font.pixelSize: 20
-    }
-
     Button{
         width: 120
         height: 36
-        anchors.bottom: usbVisableText.bottom
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: 10
         anchors.right: parent.right
         anchors.rightMargin: 35
         visible: isUSBAvailable

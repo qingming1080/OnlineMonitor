@@ -137,6 +137,7 @@ Window {
         primaryNumpad.visible = true
         primaryNumpad.selectAll()
     }
+
     function showFullKeyboard(textField)
     {
         if (textField) {
@@ -148,7 +149,8 @@ Window {
         }
     }
 
-    Connections {
+    Connections
+    {
         target: History
         function onSignalExportPrograss(current, total)
         {
@@ -158,6 +160,7 @@ Window {
             }
         }
     }
+
     Connections
     {
         target: window

@@ -75,6 +75,7 @@ Rectangle {
             id: btnReadUSB
             width: (parent.width - 20) / 2
             text: GlobalLanguageDefine.strReadUSB
+            visible: isUSBAvailable
             onPressed: {
             }
         }
@@ -83,6 +84,7 @@ Rectangle {
             id: btnUpgrade
             width: (parent.width - 20) / 2
             text: GlobalLanguageDefine.strSoftwareUpgrade
+            visible: isUSBAvailable
             onPressed: {
             }
         }
