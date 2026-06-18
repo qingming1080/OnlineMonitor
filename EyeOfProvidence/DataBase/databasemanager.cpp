@@ -1407,7 +1407,7 @@ bool DataBaseManager::insertProductionRowBatch(const QList<DB_PRODUCTION>& dataL
                           "WHERE id IN ("
                           "   SELECT id FROM %1 "
                           "   ORDER BY id ASC "
-                          "   LIMIT (SELECT MAX(COUNT(*) - 5000, 0) FROM %1)"
+                          "   LIMIT (SELECT MAX(COUNT(*) - 200000, 0) FROM %1)"
                           ")"
                           ).arg(PRODUCTION_TABLENAME);
 

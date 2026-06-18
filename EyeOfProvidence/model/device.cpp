@@ -204,7 +204,7 @@ bool Device::IsProductionPresetChanged(const HBModbusClient::WELD_PRESET &data)
     int weldPressure = m_ptrProduction->getWPSetting();
     float energy_lower = static_cast<float>(0.95 * energy);
     float energy_upper = static_cast<float>(1.05 * energy);
-    float amplitude_lower = static_cast<float>(1.05 * amplitude);
+    float amplitude_lower = static_cast<float>(0.95 * amplitude);
     float amplitude_upper = static_cast<float>(1.05 * amplitude);
     float triggerPressure_lower = static_cast<float>(0.95 * triggerPressure);
     float triggerPressure_upper = static_cast<float>(1.05 * triggerPressure);
